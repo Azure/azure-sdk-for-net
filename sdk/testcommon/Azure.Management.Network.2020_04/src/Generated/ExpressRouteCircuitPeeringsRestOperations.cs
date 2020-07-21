@@ -177,14 +177,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeering value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,14 +213,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeering value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,14 +361,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeeringListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,14 +392,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeeringListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,14 +440,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeeringListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -511,14 +476,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRouteCircuitPeeringListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
-                        }
+                        value = ExpressRouteCircuitPeeringListResult.DeserializeExpressRouteCircuitPeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

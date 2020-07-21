@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationRuleCondition. </summary>
         public ApplicationRuleCondition()
         {
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            Protocols = new ChangeTrackingList<FirewallPolicyRuleConditionApplicationProtocol>();
+            TargetUrls = new ChangeTrackingList<string>();
+            TargetFqdns = new ChangeTrackingList<string>();
+            FqdnTags = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
             RuleConditionType = FirewallPolicyRuleConditionType.ApplicationRuleCondition;
         }
 
@@ -42,18 +50,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of source IP addresses for this rule. </summary>
-        public IList<string> SourceAddresses { get; set; }
+        public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or Service Tags. </summary>
-        public IList<string> DestinationAddresses { get; set; }
+        public IList<string> DestinationAddresses { get; }
         /// <summary> Array of Application Protocols. </summary>
-        public IList<FirewallPolicyRuleConditionApplicationProtocol> Protocols { get; set; }
+        public IList<FirewallPolicyRuleConditionApplicationProtocol> Protocols { get; }
         /// <summary> List of Urls for this rule condition. </summary>
-        public IList<string> TargetUrls { get; set; }
+        public IList<string> TargetUrls { get; }
         /// <summary> List of FQDNs for this rule condition. </summary>
-        public IList<string> TargetFqdns { get; set; }
+        public IList<string> TargetFqdns { get; }
         /// <summary> List of FQDN Tags for this rule condition. </summary>
-        public IList<string> FqdnTags { get; set; }
+        public IList<string> FqdnTags { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; set; }
+        public IList<string> SourceIpGroups { get; }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VmAgentVersion != null)
+            if (Optional.IsDefined(VmAgentVersion))
             {
                 writer.WritePropertyName("vmAgentVersion");
                 writer.WriteStringValue(VmAgentVersion);
             }
-            if (ExtensionHandlers != null)
+            if (Optional.IsCollectionDefined(ExtensionHandlers))
             {
                 writer.WritePropertyName("extensionHandlers");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Statuses != null)
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses");
                 writer.WriteStartArray();
@@ -46,64 +46,38 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineAgentInstanceView DeserializeVirtualMachineAgentInstanceView(JsonElement element)
         {
-            string vmAgentVersion = default;
-            IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default;
-            IList<InstanceViewStatus> statuses = default;
+            Optional<string> vmAgentVersion = default;
+            Optional<IList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
+            Optional<IList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmAgentVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vmAgentVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extensionHandlers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineExtensionHandlerInstanceView> array = new List<VirtualMachineExtensionHandlerInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineExtensionHandlerInstanceView.DeserializeVirtualMachineExtensionHandlerInstanceView(item));
-                        }
+                        array.Add(VirtualMachineExtensionHandlerInstanceView.DeserializeVirtualMachineExtensionHandlerInstanceView(item));
                     }
                     extensionHandlers = array;
                     continue;
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
-                        }
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
                     }
                     statuses = array;
                     continue;
                 }
             }
-            return new VirtualMachineAgentInstanceView(vmAgentVersion, extensionHandlers, statuses);
+            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, Optional.ToList(extensionHandlers), Optional.ToList(statuses));
         }
     }
 }

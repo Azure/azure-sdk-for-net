@@ -87,14 +87,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
-                        }
+                        value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,14 +113,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
-                        }
+                        value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,14 +153,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,14 +174,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -374,14 +346,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
-                        }
+                        value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,14 +372,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
-                        }
+                        value = ServicePrincipal.DeserializeServicePrincipal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,14 +415,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -490,14 +441,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -540,14 +484,7 @@ namespace Azure.Graph.Rbac
                     {
                         KeyCredentialListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
-                        }
+                        value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,14 +510,7 @@ namespace Azure.Graph.Rbac
                     {
                         KeyCredentialListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
-                        }
+                        value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -696,14 +626,7 @@ namespace Azure.Graph.Rbac
                     {
                         PasswordCredentialListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
-                        }
+                        value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -729,14 +652,7 @@ namespace Azure.Graph.Rbac
                     {
                         PasswordCredentialListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
-                        }
+                        value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -851,14 +767,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -884,14 +793,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -934,14 +836,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -972,14 +867,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1017,14 +905,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1050,14 +931,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
-                        }
+                        value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

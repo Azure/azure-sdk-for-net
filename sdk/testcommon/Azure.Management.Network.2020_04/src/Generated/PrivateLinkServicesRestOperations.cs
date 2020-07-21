@@ -163,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
-                        }
+                        value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +195,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
-                        }
+                        value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -338,14 +324,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -371,14 +350,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,14 +385,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +405,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -508,14 +466,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -552,14 +503,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -624,14 +568,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,14 +609,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -815,14 +745,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -853,14 +776,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -912,14 +828,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceVisibility value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
-                        }
+                        value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -950,14 +859,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceVisibility value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
-                        }
+                        value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1016,14 +918,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceVisibility value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
-                        }
+                        value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1059,14 +954,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceVisibility value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
-                        }
+                        value = PrivateLinkServiceVisibility.DeserializePrivateLinkServiceVisibility(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1109,14 +997,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1142,14 +1023,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1199,14 +1073,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1237,14 +1104,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1287,14 +1147,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1325,14 +1178,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1370,14 +1216,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1403,14 +1242,7 @@ namespace Azure.Management.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1458,14 +1290,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1501,14 +1326,7 @@ namespace Azure.Management.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1551,14 +1369,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1589,14 +1400,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1644,14 +1448,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1687,14 +1484,7 @@ namespace Azure.Management.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

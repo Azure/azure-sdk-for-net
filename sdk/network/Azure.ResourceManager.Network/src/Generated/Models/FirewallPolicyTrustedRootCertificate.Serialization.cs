@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (KeyVaultSecretId != null)
+            if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId");
                 writer.WriteStringValue(KeyVaultSecretId);
@@ -33,16 +33,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyTrustedRootCertificate DeserializeFirewallPolicyTrustedRootCertificate(JsonElement element)
         {
-            string name = default;
-            string keyVaultSecretId = default;
+            Optional<string> name = default;
+            Optional<string> keyVaultSecretId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -52,10 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("keyVaultSecretId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             keyVaultSecretId = property0.Value.GetString();
                             continue;
                         }
@@ -63,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyTrustedRootCertificate(name, keyVaultSecretId);
+            return new FirewallPolicyTrustedRootCertificate(name.Value, keyVaultSecretId.Value);
         }
     }
 }

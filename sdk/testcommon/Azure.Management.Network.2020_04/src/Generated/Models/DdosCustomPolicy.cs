@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of DdosCustomPolicy. </summary>
         public DdosCustomPolicy()
         {
+            PublicIPAddresses = new ChangeTrackingList<SubResource>();
+            ProtocolCustomSettings = new ChangeTrackingList<ProtocolCustomSettingsFormat>();
         }
 
         /// <summary> Initializes a new instance of DdosCustomPolicy. </summary>
@@ -46,6 +49,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </summary>
         public IList<SubResource> PublicIPAddresses { get; }
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
-        public IList<ProtocolCustomSettingsFormat> ProtocolCustomSettings { get; set; }
+        public IList<ProtocolCustomSettingsFormat> ProtocolCustomSettings { get; }
     }
 }

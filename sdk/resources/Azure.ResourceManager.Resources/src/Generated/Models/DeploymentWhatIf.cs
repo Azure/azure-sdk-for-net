@@ -24,15 +24,6 @@ namespace Azure.ResourceManager.Resources.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DeploymentWhatIf. </summary>
-        /// <param name="location"> The location to store the deployment data. </param>
-        /// <param name="properties"> The deployment properties. </param>
-        internal DeploymentWhatIf(string location, DeploymentWhatIfProperties properties)
-        {
-            Location = location;
-            Properties = properties;
-        }
-
         /// <summary> The location to store the deployment data. </summary>
         public string Location { get; set; }
         /// <summary> The deployment properties. </summary>

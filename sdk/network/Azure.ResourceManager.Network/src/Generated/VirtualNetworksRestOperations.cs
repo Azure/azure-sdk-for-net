@@ -163,14 +163,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetwork value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-                        }
+                        value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +195,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetwork value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-                        }
+                        value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -353,14 +339,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetwork value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-                        }
+                        value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -396,14 +375,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetwork value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
-                        }
+                        value = VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -438,14 +410,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,14 +430,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,14 +473,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,14 +499,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,14 +555,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IPAddressAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IPAddressAvailabilityResult.DeserializeIPAddressAvailabilityResult(document.RootElement);
-                        }
+                        value = IPAddressAvailabilityResult.DeserializeIPAddressAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -654,14 +591,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IPAddressAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IPAddressAvailabilityResult.DeserializeIPAddressAvailabilityResult(document.RootElement);
-                        }
+                        value = IPAddressAvailabilityResult.DeserializeIPAddressAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -711,14 +641,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListUsageResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -749,14 +672,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListUsageResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -794,14 +710,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -827,14 +736,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -877,14 +779,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -915,14 +810,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -970,14 +858,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListUsageResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1013,14 +894,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkListUsageResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
-                        }
+                        value = VirtualNetworkListUsageResult.DeserializeVirtualNetworkListUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

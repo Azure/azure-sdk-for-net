@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(managedRuleSets));
             }
 
+            Exclusions = new ChangeTrackingList<OwaspCrsExclusionEntry>();
             ManagedRuleSets = managedRuleSets.ToList();
         }
 
@@ -32,11 +34,11 @@ namespace Azure.ResourceManager.Network.Models
         internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets)
         {
             Exclusions = exclusions;
-            ManagedRuleSets = managedRuleSets ?? new List<ManagedRuleSet>();
+            ManagedRuleSets = managedRuleSets;
         }
 
         /// <summary> The Exclusions that are applied on the policy. </summary>
-        public IList<OwaspCrsExclusionEntry> Exclusions { get; set; }
+        public IList<OwaspCrsExclusionEntry> Exclusions { get; }
         /// <summary> The managed rule sets that are associated with the policy. </summary>
         public IList<ManagedRuleSet> ManagedRuleSets { get; }
     }

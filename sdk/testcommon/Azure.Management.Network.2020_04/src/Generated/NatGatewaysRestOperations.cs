@@ -163,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +195,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,14 +341,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,14 +377,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +412,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -467,14 +432,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,14 +475,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,14 +501,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -595,14 +539,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,14 +565,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -678,14 +608,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -716,14 +639,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

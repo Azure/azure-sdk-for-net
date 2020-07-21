@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -21,6 +22,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of StorageAccount. </summary>

@@ -89,14 +89,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroup.DeserializeIpGroup(document.RootElement);
-                        }
+                        value = IpGroup.DeserializeIpGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,14 +121,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroup.DeserializeIpGroup(document.RootElement);
-                        }
+                        value = IpGroup.DeserializeIpGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,14 +265,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroup.DeserializeIpGroup(document.RootElement);
-                        }
+                        value = IpGroup.DeserializeIpGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -322,14 +301,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroup.DeserializeIpGroup(document.RootElement);
-                        }
+                        value = IpGroup.DeserializeIpGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -446,14 +418,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -479,14 +444,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,14 +479,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,14 +499,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -598,14 +542,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,14 +573,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -681,14 +611,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -714,14 +637,7 @@ namespace Azure.ResourceManager.Network
                     {
                         IpGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
-                        }
+                        value = IpGroupListResult.DeserializeIpGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

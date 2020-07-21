@@ -23,16 +23,5 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(blobContainerSasUri));
             }
         }
-
-        /// <summary> Initializes a new instance of ThrottledRequestsInput. </summary>
-        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
-        /// <param name="fromTime"> From time of the query. </param>
-        /// <param name="toTime"> To time of the query. </param>
-        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
-        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
-        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
-        internal ThrottledRequestsInput(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName)
-        {
-        }
     }
 }

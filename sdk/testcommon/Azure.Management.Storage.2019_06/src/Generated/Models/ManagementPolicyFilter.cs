@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
@@ -23,7 +24,9 @@ namespace Azure.Management.Storage.Models
                 throw new ArgumentNullException(nameof(blobTypes));
             }
 
+            PrefixMatch = new ChangeTrackingList<string>();
             BlobTypes = blobTypes.ToList();
+            BlobIndexMatch = new ChangeTrackingList<TagFilter>();
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
@@ -33,15 +36,15 @@ namespace Azure.Management.Storage.Models
         internal ManagementPolicyFilter(IList<string> prefixMatch, IList<string> blobTypes, IList<TagFilter> blobIndexMatch)
         {
             PrefixMatch = prefixMatch;
-            BlobTypes = blobTypes ?? new List<string>();
+            BlobTypes = blobTypes;
             BlobIndexMatch = blobIndexMatch;
         }
 
         /// <summary> An array of strings for prefixes to be match. </summary>
-        public IList<string> PrefixMatch { get; set; }
+        public IList<string> PrefixMatch { get; }
         /// <summary> An array of predefined enum values. Only blockBlob is supported. </summary>
         public IList<string> BlobTypes { get; }
         /// <summary> An array of blob index tag based filters, there can be at most 10 tag filters. </summary>
-        public IList<TagFilter> BlobIndexMatch { get; set; }
+        public IList<TagFilter> BlobIndexMatch { get; }
     }
 }

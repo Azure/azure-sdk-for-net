@@ -85,14 +85,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,14 +111,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,14 +154,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -201,14 +180,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,14 +225,7 @@ namespace Azure.Management.Resources
                     {
                         ProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
-                        }
+                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -282,14 +247,7 @@ namespace Azure.Management.Resources
                     {
                         ProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
-                        }
+                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -336,14 +294,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -370,14 +321,7 @@ namespace Azure.Management.Resources
                     {
                         Provider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Provider.DeserializeProvider(document.RootElement);
-                        }
+                        value = Provider.DeserializeProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,14 +361,7 @@ namespace Azure.Management.Resources
                     {
                         ProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
-                        }
+                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,14 +389,7 @@ namespace Azure.Management.Resources
                     {
                         ProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
-                        }
+                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

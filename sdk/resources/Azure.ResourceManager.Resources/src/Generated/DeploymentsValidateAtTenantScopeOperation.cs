@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Resources
         DeploymentValidateResult IOperationSource<DeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DeploymentValidateResult.DeserializeDeploymentValidateResult(document.RootElement);
-            }
+            return DeploymentValidateResult.DeserializeDeploymentValidateResult(document.RootElement);
         }
 
         async ValueTask<DeploymentValidateResult> IOperationSource<DeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DeploymentValidateResult.DeserializeDeploymentValidateResult(document.RootElement);
-            }
+            return DeploymentValidateResult.DeserializeDeploymentValidateResult(document.RootElement);
         }
     }
 }

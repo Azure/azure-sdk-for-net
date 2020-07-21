@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BackendAddressPool. </summary>
         public BackendAddressPool()
         {
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
+            LoadBalancingRules = new ChangeTrackingList<SubResource>();
+            OutboundRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressPool. </summary>
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> An array of references to IP addresses defined in network interfaces. </summary>
         public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; }
         /// <summary> An array of backend addresses. </summary>
-        public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; set; }
+        public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; }
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
         public IList<SubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>

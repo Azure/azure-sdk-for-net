@@ -147,14 +147,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,14 +179,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -295,14 +281,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -328,14 +307,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -386,14 +358,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,14 +389,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
-                        }
+                        value = ResourceGroup.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -551,14 +509,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -580,14 +531,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,14 +571,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -662,14 +599,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
-                        }
+                        value = ResourceGroupListResult.DeserializeResourceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

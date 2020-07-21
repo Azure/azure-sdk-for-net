@@ -16,102 +16,63 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static KeyValue DeserializeKeyValue(JsonElement element)
         {
-            string key = default;
-            string label = default;
-            string value = default;
-            string contentType = default;
-            string eTag = default;
-            DateTimeOffset? lastModified = default;
-            bool? locked = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            Optional<string> key = default;
+            Optional<string> label = default;
+            Optional<string> value = default;
+            Optional<string> contentType = default;
+            Optional<string> eTag = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<bool> locked = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     key = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     label = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("locked"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     locked = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new KeyValue(key, label, value, contentType, eTag, lastModified, locked, tags);
+            return new KeyValue(key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
         }
     }
 }

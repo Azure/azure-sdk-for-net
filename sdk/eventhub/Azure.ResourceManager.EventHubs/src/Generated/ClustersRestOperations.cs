@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AvailableClustersList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
-                        }
+                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AvailableClustersList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
-                        }
+                        value = AvailableClustersList.DeserializeAvailableClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,14 +133,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
-                        }
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,14 +159,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
-                        }
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,14 +208,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Cluster value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Cluster.DeserializeCluster(document.RootElement);
-                        }
+                        value = Cluster.DeserializeCluster(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -274,14 +239,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Cluster value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Cluster.DeserializeCluster(document.RootElement);
-                        }
+                        value = Cluster.DeserializeCluster(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -567,14 +525,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceIdListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
-                        }
+                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,14 +556,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceIdListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
-                        }
+                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -655,14 +599,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
-                        }
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -693,14 +630,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
-                        }
+                        value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

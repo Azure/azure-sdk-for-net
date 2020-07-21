@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Storage.Models
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
@@ -36,6 +39,6 @@ namespace Azure.Management.Storage.Models
         /// <summary> The private link resource required member names. </summary>
         public IList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; set; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

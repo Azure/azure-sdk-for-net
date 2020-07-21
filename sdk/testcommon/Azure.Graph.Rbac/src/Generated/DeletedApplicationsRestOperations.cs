@@ -85,14 +85,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,14 +111,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,14 +151,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +172,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,14 +272,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,14 +298,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,14 +336,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -411,14 +362,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

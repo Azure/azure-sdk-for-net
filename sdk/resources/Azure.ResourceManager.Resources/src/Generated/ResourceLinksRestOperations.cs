@@ -143,14 +143,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,14 +175,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,14 +215,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -262,14 +241,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -309,14 +281,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,14 +302,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -386,14 +344,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,14 +370,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,14 +409,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -499,14 +436,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,14 +479,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,14 +510,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

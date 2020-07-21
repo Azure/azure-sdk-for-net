@@ -107,14 +107,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
-                        }
+                        value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,14 +153,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
-                        }
+                        value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,14 +312,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
-                        }
+                        value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -374,14 +353,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
-                        }
+                        value = ConsumerGroup.DeserializeConsumerGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -448,14 +420,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
-                        }
+                        value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +458,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
-                        }
+                        value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,14 +513,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
-                        }
+                        value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,14 +556,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ConsumerGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
-                        }
+                        value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

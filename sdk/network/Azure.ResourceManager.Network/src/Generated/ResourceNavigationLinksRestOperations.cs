@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ResourceNavigationLinksListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceNavigationLinksListResult.DeserializeResourceNavigationLinksListResult(document.RootElement);
-                        }
+                        value = ResourceNavigationLinksListResult.DeserializeResourceNavigationLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,14 +128,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ResourceNavigationLinksListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceNavigationLinksListResult.DeserializeResourceNavigationLinksListResult(document.RootElement);
-                        }
+                        value = ResourceNavigationLinksListResult.DeserializeResourceNavigationLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
@@ -22,6 +23,7 @@ namespace Azure.Management.Storage.Models
                 throw new ArgumentNullException(nameof(location));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
 
@@ -38,7 +40,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
     }

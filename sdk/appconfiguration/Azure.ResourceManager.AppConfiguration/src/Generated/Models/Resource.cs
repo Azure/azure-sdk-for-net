@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
@@ -49,6 +51,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The location of the resource. This cannot be changed after the resource is created. </summary>
         public string Location { get; set; }
         /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            ProtectedWords = new List<string>();
+            ProtectedWords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
             PreserveOriginal = preserveOriginal;
             SplitOnNumerics = splitOnNumerics;
             StemEnglishPossessive = stemEnglishPossessive;
-            ProtectedWords = protectedWords ?? new List<string>();
+            ProtectedWords = protectedWords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 

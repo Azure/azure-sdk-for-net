@@ -372,14 +372,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHost value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
-                        }
+                        value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -415,14 +408,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHost value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
-                        }
+                        value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -472,14 +458,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHostListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
-                        }
+                        value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -510,14 +489,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHostListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
-                        }
+                        value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -565,14 +537,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHostListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
-                        }
+                        value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,14 +573,7 @@ namespace Azure.Management.Compute
                     {
                         DedicatedHostListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
-                        }
+                        value = DedicatedHostListResult.DeserializeDedicatedHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

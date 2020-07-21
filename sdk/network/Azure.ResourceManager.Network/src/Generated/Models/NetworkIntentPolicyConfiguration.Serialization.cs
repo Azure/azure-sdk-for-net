@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NetworkIntentPolicyName != null)
+            if (Optional.IsDefined(NetworkIntentPolicyName))
             {
                 writer.WritePropertyName("networkIntentPolicyName");
                 writer.WriteStringValue(NetworkIntentPolicyName);
             }
-            if (SourceNetworkIntentPolicy != null)
+            if (Optional.IsDefined(SourceNetworkIntentPolicy))
             {
                 writer.WritePropertyName("sourceNetworkIntentPolicy");
                 writer.WriteObjectValue(SourceNetworkIntentPolicy);

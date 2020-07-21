@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         public NetworkInterface()
         {
+            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfiguration>();
+            HostedWorkloads = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
@@ -64,7 +68,7 @@ namespace Azure.Management.Network.Models
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         public PrivateEndpoint PrivateEndpoint { get; }
         /// <summary> A list of IPConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
+        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; }
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         public IList<NetworkInterfaceTapConfiguration> TapConfigurations { get; }
         /// <summary> The DNS settings in network interface. </summary>

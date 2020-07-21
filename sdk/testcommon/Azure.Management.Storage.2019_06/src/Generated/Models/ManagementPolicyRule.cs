@@ -14,8 +14,9 @@ namespace Azure.Management.Storage.Models
     {
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
+        /// <param name="type"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
-        public ManagementPolicyRule(string name, ManagementPolicyDefinition definition)
+        public ManagementPolicyRule(string name, RuleType type, ManagementPolicyDefinition definition)
         {
             if (name == null)
             {
@@ -27,7 +28,7 @@ namespace Azure.Management.Storage.Models
             }
 
             Name = name;
-            Type = "Lifecycle";
+            Type = type;
             Definition = definition;
         }
 
@@ -36,7 +37,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="type"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
-        internal ManagementPolicyRule(bool? enabled, string name, string type, ManagementPolicyDefinition definition)
+        internal ManagementPolicyRule(bool? enabled, string name, RuleType type, ManagementPolicyDefinition definition)
         {
             Enabled = enabled;
             Name = name;
@@ -49,7 +50,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         public string Name { get; set; }
         /// <summary> The valid value is Lifecycle. </summary>
-        public string Type { get; set; }
+        public RuleType Type { get; set; }
         /// <summary> An object that defines the Lifecycle rule. </summary>
         public ManagementPolicyDefinition Definition { get; set; }
     }

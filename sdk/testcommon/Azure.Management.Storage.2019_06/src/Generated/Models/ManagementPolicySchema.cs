@@ -30,7 +30,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         internal ManagementPolicySchema(IList<ManagementPolicyRule> rules)
         {
-            Rules = rules ?? new List<ManagementPolicyRule>();
+            Rules = rules;
         }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>

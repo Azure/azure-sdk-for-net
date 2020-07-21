@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of Disallowed. </summary>
         public Disallowed()
         {
+            DiskTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Disallowed. </summary>
@@ -25,6 +27,6 @@ namespace Azure.Management.Compute.Models
         }
 
         /// <summary> A list of disk types. </summary>
-        public IList<string> DiskTypes { get; set; }
+        public IList<string> DiskTypes { get; }
     }
 }

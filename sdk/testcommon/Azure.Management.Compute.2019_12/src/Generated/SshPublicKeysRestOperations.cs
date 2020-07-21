@@ -70,14 +70,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,14 +133,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,14 +159,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,14 +218,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,14 +255,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,14 +313,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,14 +349,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,14 +470,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -564,14 +501,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
-                        }
+                        value = SshPublicKeyResource.DeserializeSshPublicKeyResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -621,14 +551,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyGenerateKeyPairResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyGenerateKeyPairResult.DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement);
-                        }
+                        value = SshPublicKeyGenerateKeyPairResult.DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -659,14 +582,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeyGenerateKeyPairResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeyGenerateKeyPairResult.DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement);
-                        }
+                        value = SshPublicKeyGenerateKeyPairResult.DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -704,14 +620,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -737,14 +646,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -787,14 +689,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -825,14 +720,7 @@ namespace Azure.Management.Compute
                     {
                         SshPublicKeysGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
-                        }
+                        value = SshPublicKeysGroupListResult.DeserializeSshPublicKeysGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

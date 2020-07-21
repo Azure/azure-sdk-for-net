@@ -540,14 +540,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVM value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVM.DeserializeVirtualMachineScaleSetVM(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVM.DeserializeVirtualMachineScaleSetVM(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -583,14 +576,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVM value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVM.DeserializeVirtualMachineScaleSetVM(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVM.DeserializeVirtualMachineScaleSetVM(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,14 +633,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMInstanceView value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -690,14 +669,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMInstanceView value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -762,14 +734,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -803,14 +768,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1474,14 +1432,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1520,14 +1471,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetVMListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetVMListResult.DeserializeVirtualMachineScaleSetVMListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
