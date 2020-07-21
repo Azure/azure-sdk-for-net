@@ -11,12 +11,18 @@
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the apiVersion 2020-06-01-preview azure-rest-api-specs,
+        Updating with the apiVersion 2020-06-01-preview azure-rest-api-specs.
         Includes: 
-		Seperating the DatabaseAccountCreateUpdateProperties from DatabaseAccountCreateUpdateParameters
-		Introducing RestorableDatabaseAccounts, which are the database accounts which can be restored
-		Adding the parameters in DatabaseAccountCreateUpdateProperties to start a restore from a restorable database account to a secific timestamp
-		Allowing the users to set BackupPolicy during account creation, and also update the backup policy properties.
+		    Separating the DatabaseAccountCreateUpdateProperties from DatabaseAccountCreateUpdateParameters.
+		    DatabaseAccountCreateUpdateProperties has two derived classes: DefaultRequestDatabaseAccountCreateUpdateProperties and RestoreRequestDatabaseAccountCreateUpdateProperties
+		    RestoreRequestDatabaseAccountCreateUpdateProperties has RestoreParameters object which is used to define:
+		      - The source account to restore from.
+		      - The timestamp to restore the source account to.
+		      - The subset of databases and collections to restore.
+		    Introducing RestorableDatabaseAccounts, which are the database accounts(live and deleted) which can be source for a restore.
+		    Adding BackupPolicy to DatabaseAccountCreateUpdateProperties and DatabaseAccountUpdateParameters.
+		      - Accounts can be created either with ContinuousModeBackupPolicy or PeriodicModeBackupPolicy.
+		      - The backup interval and backup retention properties for a Periodic backup policy mode accounts can be updated.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
