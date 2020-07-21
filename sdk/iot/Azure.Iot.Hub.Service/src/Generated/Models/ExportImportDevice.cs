@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,37 +16,8 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
         public ExportImportDevice()
         {
-        }
-
-        /// <summary> Initializes a new instance of ExportImportDevice. </summary>
-        /// <param name="id"> Device Id is always required. </param>
-        /// <param name="moduleId"> ModuleId is applicable to modules only. </param>
-        /// <param name="eTag"> ETag parameter is only used for pre-conditioning the update when importMode is updateIfMatchETag. </param>
-        /// <param name="importMode"> . </param>
-        /// <param name="status"> Status is optional and defaults to enabled. </param>
-        /// <param name="statusReason"> . </param>
-        /// <param name="authentication"> Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys. </param>
-        /// <param name="twinETag"> twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag. </param>
-        /// <param name="tags"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="properties"> Properties are optional and defaults to empty object. </param>
-        /// <param name="capabilities"> Capabilities param is optional and defaults to no capability. </param>
-        /// <param name="deviceScope"> . </param>
-        /// <param name="parentScopes"> . </param>
-        internal ExportImportDevice(string id, string moduleId, string eTag, ExportImportDeviceImportMode? importMode, ExportImportDeviceStatus? status, string statusReason, AuthenticationMechanism authentication, string twinETag, IDictionary<string, object> tags, PropertyContainer properties, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
-        {
-            Id = id;
-            ModuleId = moduleId;
-            ETag = eTag;
-            ImportMode = importMode;
-            Status = status;
-            StatusReason = statusReason;
-            Authentication = authentication;
-            TwinETag = twinETag;
-            Tags = tags;
-            Properties = properties;
-            Capabilities = capabilities;
-            DeviceScope = deviceScope;
-            ParentScopes = parentScopes;
+            Tags = new ChangeTrackingDictionary<string, object>();
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Device Id is always required. </summary>
@@ -63,12 +35,12 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag. </summary>
         public string TwinETag { get; set; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IDictionary<string, object> Tags { get; set; }
+        public IDictionary<string, object> Tags { get; }
         /// <summary> Properties are optional and defaults to empty object. </summary>
         public PropertyContainer Properties { get; set; }
         /// <summary> Capabilities param is optional and defaults to no capability. </summary>
         public DeviceCapabilities Capabilities { get; set; }
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        public IList<string> ParentScopes { get; }
     }
 }

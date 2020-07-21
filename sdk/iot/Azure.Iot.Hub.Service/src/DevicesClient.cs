@@ -152,15 +152,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Key.Authentication,
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
-                    ParentScopes = x.Key.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -181,15 +178,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Key.Authentication,
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
-                    ParentScopes = x.Key.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -209,13 +203,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -235,13 +228,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -265,14 +257,13 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -296,14 +287,13 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -513,11 +503,9 @@ namespace Azure.Iot.Hub.Service
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -538,13 +526,11 @@ namespace Azure.Iot.Hub.Service
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.UpdateTwin
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }

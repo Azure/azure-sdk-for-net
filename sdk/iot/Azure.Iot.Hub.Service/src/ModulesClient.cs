@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -179,10 +180,8 @@ namespace Azure.Iot.Hub.Service
                     Id = x.Key.DeviceId,
                     ModuleId = x.Key.ModuleId,
                     Authentication = x.Key.Authentication,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -205,10 +204,8 @@ namespace Azure.Iot.Hub.Service
                     Id = x.Key.DeviceId,
                     ModuleId = x.Key.ModuleId,
                     Authentication = x.Key.Authentication,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -508,11 +505,9 @@ namespace Azure.Iot.Hub.Service
                 {
                     Id = x.DeviceId,
                     ModuleId = x.ModuleId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -534,13 +529,11 @@ namespace Azure.Iot.Hub.Service
                 {
                     Id = x.DeviceId,
                     ModuleId = x.ModuleId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.UpdateTwin
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -578,5 +571,6 @@ namespace Azure.Iot.Hub.Service
         {
             return _deviceMethodClient.InvokeModuleMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
         }
+
     }
 }
