@@ -14,6 +14,8 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class DatabaseAccountOperationsTests
     {
+        const string location = "EAST US 2";
+
         [Fact]
         public void DatabaseAccountCRUDTests()
         {
@@ -30,7 +32,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
 
                 List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US"));
+                locations.Add(new Location(locationName: location));
                 DefaultRequestDatabaseAccountCreateUpdateProperties databaseAccountCreateUpdateProperties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                 {
                     ConsistencyPolicy = new ConsistencyPolicy
@@ -54,7 +56,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                 {
-                    Location = "EAST US",
+                    Location = location,
                     Tags = new Dictionary<string, string>
                     {
                         {"key1","value1"},
@@ -75,7 +77,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountUpdateParameters databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters
                 {
-                    Location = "EAST US",
+                    Location = location,
                     Tags = new Dictionary<string, string>
                     {
                         {"key3","value3"},
