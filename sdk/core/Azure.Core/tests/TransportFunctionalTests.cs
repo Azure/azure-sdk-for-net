@@ -12,8 +12,22 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpClientTransportFunctionalTests : PipelineTestBase
+    [TestFixture(typeof(HttpClientTransport))]
+    [TestFixture(typeof(HttpWebRequestTransport))]
+    public class TransportFunctionalTests : PipelineTestBase
     {
+        private readonly Type _transportType;
+
+        public TransportFunctionalTests(Type transportType)
+        {
+            _transportType = transportType;
+        }
+
+        private HttpPipelineTransport GetTransport()
+        {
+            return (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+        }
+
         [NonParallelizable]
         [Theory]
         [TestCase("HTTP_PROXY", "http://microsoft.com")]
@@ -31,7 +45,7 @@ namespace Azure.Core.Tests
                 {
                     Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
 
-                    var transport = new HttpClientTransport();
+                    var transport = GetTransport();
                     Request request = transport.CreateRequest();
                     request.Uri.Reset(new Uri(url));
                     Response response = await ExecuteRequest(request, transport);
@@ -56,7 +70,7 @@ namespace Azure.Core.Tests
                     await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
                 }))
             {
-                var transport = new HttpClientTransport();
+                var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
@@ -77,7 +91,7 @@ namespace Azure.Core.Tests
                     await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
                 }))
             {
-                var transport = new HttpClientTransport();
+                var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);
@@ -97,11 +111,12 @@ namespace Azure.Core.Tests
                     return Task.CompletedTask;
                 }))
             {
-                var transport = new HttpClientTransport();
+                var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
-                Assert.AreEqual("An error occurred while sending the request.", exception.Message);
+                Assert.IsNotEmpty(exception.Message);
+                Assert.AreEqual(0, exception.Status);
             }
         }
 
@@ -119,7 +134,7 @@ namespace Azure.Core.Tests
                     context.Abort();
                 }))
             {
-                var transport = new HttpClientTransport();
+                var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
                 Response response = await ExecuteRequest(request, transport);

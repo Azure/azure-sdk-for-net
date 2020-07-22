@@ -14,14 +14,30 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [TestFixture(typeof(HttpClientTransport))]
+    [TestFixture(typeof(HttpWebRequestTransport))]
     public class HttpPipelineFunctionalTests
     {
+        private readonly Type _transportType;
+
+        public HttpPipelineFunctionalTests(Type transportType)
+        {
+            _transportType = transportType;
+        }
+
+        private TestOptions GetOptions()
+        {
+            var options = new TestOptions();
+            options.Transport = (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+            return options;
+        }
+
         [Test]
         public async Task SendRequestBuffersResponse()
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -48,7 +64,7 @@ namespace Azure.Core.Tests
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -88,14 +104,11 @@ namespace Azure.Core.Tests
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions()
-            {
-                Retry =
-                {
-                    Delay = TimeSpan.FromMilliseconds(2),
-                    NetworkTimeout = TimeSpan.FromSeconds(5)
-                },
-            });
+            var clientOptions = new TestOptions();
+            clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(2);
+            clientOptions.Retry.NetworkTimeout = TimeSpan.FromSeconds(5);
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(clientOptions);
 
             int bodySize = 1000;
             int reqNum = 0;
@@ -145,7 +158,7 @@ namespace Azure.Core.Tests
         public async Task RetriesTransportFailures()
         {
             int i = 0;
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 context =>
@@ -214,7 +227,7 @@ namespace Azure.Core.Tests
         {
             var testDoneTcs = new CancellationTokenSource();
             int i = 0;
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using TestServer testServer = new TestServer(
@@ -332,7 +345,7 @@ namespace Azure.Core.Tests
         {
             IFormCollection formCollection = null;
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
             using TestServer testServer = new TestServer(
                 context =>
                 {
