@@ -10,11 +10,11 @@ using System;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The ErrorResponse. </summary>
-    internal partial class ErrorResponse_internal
+    internal partial class ErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponse_internal. </summary>
+        /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> . </param>
-        internal ErrorResponse_internal(FormRecognizerError error)
+        internal ErrorResponse(FormRecognizerError error)
         {
             if (error == null)
             {

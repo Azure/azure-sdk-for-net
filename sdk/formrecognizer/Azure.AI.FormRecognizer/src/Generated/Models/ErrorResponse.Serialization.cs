@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class ErrorResponse_internal
+    internal partial class ErrorResponse
     {
-        internal static ErrorResponse_internal DeserializeErrorResponse_internal(JsonElement element)
+        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
             FormRecognizerError error = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ErrorResponse_internal(error);
+            return new ErrorResponse(error);
         }
     }
 }
