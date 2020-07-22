@@ -168,7 +168,7 @@ namespace Azure.Core.Tests
 
                 return callCount == 2
                     ? throw new InvalidOperationException("Call Failed")
-                    : new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMilliseconds(100));
+                    : new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMilliseconds(500));
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
@@ -181,7 +181,7 @@ namespace Azure.Core.Tests
             responseMre.Set();
 
             await Task.WhenAll(firstRequestTask, secondRequestTask);
-            await Task.Delay(100);
+            await Task.Delay(1_000);
 
             responseMre.Reset();
             requestMre.Reset();
