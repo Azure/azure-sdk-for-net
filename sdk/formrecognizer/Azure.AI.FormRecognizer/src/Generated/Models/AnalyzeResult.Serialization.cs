@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class AnalyzeResult_internal
+    internal partial class AnalyzeResult
     {
-        internal static AnalyzeResult_internal DeserializeAnalyzeResult_internal(JsonElement element)
+        internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
             string version = default;
             Optional<IReadOnlyList<ReadResult_internal>> readResults = default;
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new AnalyzeResult_internal(version, Optional.ToList(readResults), Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors));
+            return new AnalyzeResult(version, Optional.ToList(readResults), Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors));
         }
     }
 }

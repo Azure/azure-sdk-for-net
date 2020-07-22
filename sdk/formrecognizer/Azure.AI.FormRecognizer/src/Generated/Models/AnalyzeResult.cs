@@ -12,11 +12,11 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Analyze operation result. </summary>
-    internal partial class AnalyzeResult_internal
+    internal partial class AnalyzeResult
     {
-        /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
+        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
-        internal AnalyzeResult_internal(string version)
+        internal AnalyzeResult(string version)
         {
             if (version == null)
             {
@@ -30,13 +30,13 @@ namespace Azure.AI.FormRecognizer.Models
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
+        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
         /// <param name="readResults"> Text extracted from the input. </param>
         /// <param name="pageResults"> Page-level information extracted from the input. </param>
         /// <param name="documentResults"> Document-level information extracted from the input. </param>
         /// <param name="errors"> List of errors reported during the analyze operation. </param>
-        internal AnalyzeResult_internal(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<FormRecognizerError> errors)
+        internal AnalyzeResult(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<FormRecognizerError> errors)
         {
             Version = version;
             ReadResults = readResults;
