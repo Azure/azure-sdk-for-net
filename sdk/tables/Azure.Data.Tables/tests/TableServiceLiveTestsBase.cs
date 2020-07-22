@@ -145,6 +145,35 @@ namespace Azure.Data.Tables.Tests
         }
 
         /// <summary>
+        /// Creates a list of Dictionary table entities.
+        /// </summary>
+        /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
+        /// <param name="count">The number of entities to create</param>
+        /// <returns></returns>
+        protected static List<DynamicTableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        {
+
+            // Create some entities.
+            return Enumerable.Range(1, count).Select(n =>
+            {
+                string number = n.ToString();
+                return new DynamicTableEntity(new Dictionary<string, object>
+                    {
+                        {"PartitionKey", partitionKeyValue},
+                        {"RowKey", n.ToString("D2")},
+                        {StringTypePropertyName, $"This is table entity number {n:D2}"},
+                        {DateTypePropertyName, new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
+                        {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
+                        {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
+                        {Int64TypePropertyName, long.Parse(number)},
+                        {DoubleTypePropertyName, (double)n},
+                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {IntTypePropertyName, n},
+                    });
+            }).ToList();
+        }
+
+        /// <summary>
         /// Creates a list of strongly typed table entities.
         /// </summary>
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>

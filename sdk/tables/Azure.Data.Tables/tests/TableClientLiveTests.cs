@@ -90,6 +90,29 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
+        public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
+        {
+            List<IDictionary<string, object>> entityResults;
+            List<DynamicTableEntity> entitiesToCreate = CreateDictionaryTableEntities(PartitionKeyValue, 20);
+
+            // Create the new entities.
+
+            foreach (var entity in entitiesToCreate)
+            {
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
         public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
