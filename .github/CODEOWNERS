@@ -34,7 +34,6 @@
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
-/sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
