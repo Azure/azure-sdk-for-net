@@ -183,6 +183,7 @@ namespace Azure.Core.Tests
             await Task.WhenAll(firstRequestTask, secondRequestTask);
             await Task.Delay(1_000);
 
+            Assert.AreEqual(1, callCount);
             responseMre.Reset();
             requestMre.Reset();
 
@@ -192,6 +193,7 @@ namespace Azure.Core.Tests
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await failedTask);
 
+            Assert.AreEqual(2, callCount);
             responseMre.Reset();
             requestMre.Reset();
 
