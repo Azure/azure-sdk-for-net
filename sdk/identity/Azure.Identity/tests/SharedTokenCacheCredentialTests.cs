@@ -18,6 +18,46 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task VerifyAuthenticationRecordOption()
+        {
+            var expectedUsername = "mockuser@mockdomain.com";
+
+            var expectedHomeId = $"{Guid.NewGuid()}.{Guid.NewGuid()}";
+
+            var expectedEnvironment = KnownAuthorityHosts.AzureCloud.ToString();
+
+            var acquireTokenSilentCalled = false;
+
+            var options = new SharedTokenCacheCredentialOptions
+            {
+                AuthenticationRecord = new AuthenticationRecord(expectedUsername, expectedEnvironment, expectedHomeId, Guid.NewGuid().ToString())
+            };
+
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                Accounts = new IAccount[] { new MockAccount("nonexpecteduser@mockdomain.com") },
+                ExtendedSilentAuthFactory = (_, account, _, _) =>
+                {
+                    Assert.AreEqual(expectedUsername, account.Username);
+
+                    Assert.AreEqual(expectedEnvironment, account.Environment);
+
+                    Assert.AreEqual(expectedHomeId, account.HomeAccountId.Identifier);
+
+                    acquireTokenSilentCalled = true;
+
+                    return AuthenticationResultFactory.Create();
+                }
+            };
+
+            var credential = InstrumentClient(new SharedTokenCacheCredential(null, null, options, null, mockMsalClient));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.IsTrue(acquireTokenSilentCalled);
+        }
+
+        [Test]
         public async Task OneAccountNoTentantNoUsername()
         {
             string expToken = Guid.NewGuid().ToString();

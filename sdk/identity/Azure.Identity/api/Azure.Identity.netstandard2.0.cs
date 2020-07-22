@@ -197,6 +197,7 @@ namespace Azure.Identity
     {
         public SharedTokenCacheCredentialOptions() { }
         public bool AllowUnencryptedCache { get { throw null; } set { } }
+        public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
