@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Stopwords = new List<string>();
+            Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
 
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </param>
         internal StopwordsTokenFilter(string oDataType, string name, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(oDataType, name)
         {
-            Stopwords = stopwords ?? new List<string>();
+            Stopwords = stopwords;
             StopwordsList = stopwordsList;
             IgnoreCase = ignoreCase;
             RemoveTrailingStopWords = removeTrailingStopWords;

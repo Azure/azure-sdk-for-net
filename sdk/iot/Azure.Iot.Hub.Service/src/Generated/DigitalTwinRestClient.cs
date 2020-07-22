@@ -76,14 +76,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,14 +102,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,14 +157,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,14 +189,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,14 +236,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,14 +267,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DigitalTwinInterfaces value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
-                        }
+                        value = DigitalTwinInterfaces.DeserializeDigitalTwinInterfaces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,14 +317,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -400,14 +351,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -483,14 +427,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -534,14 +471,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

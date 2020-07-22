@@ -470,7 +470,14 @@ namespace Azure.Iot.Hub.Service.Tests
 
             foreach (DeviceIdentity device in devices)
             {
-                devicesAndTwins.Add(device, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+                var twinProperties = new TwinProperties();
+
+                foreach (var desiredProperty in desiredProperties)
+                {
+                    twinProperties.Desired.Add(desiredProperty);
+                }
+
+                devicesAndTwins.Add(device, new TwinData { Properties = twinProperties });
             }
 
             return devicesAndTwins;

@@ -18,24 +18,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Health Details for backup items.
     /// </summary>
-    public partial class HealthDetails
+    public partial class ResourceHealthDetails
     {
         /// <summary>
-        /// Initializes a new instance of the HealthDetails class.
+        /// Initializes a new instance of the ResourceHealthDetails class.
         /// </summary>
-        public HealthDetails()
+        public ResourceHealthDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HealthDetails class.
+        /// Initializes a new instance of the ResourceHealthDetails class.
         /// </summary>
         /// <param name="code">Health Code</param>
         /// <param name="title">Health Title</param>
         /// <param name="message">Health Message</param>
         /// <param name="recommendations">Health Recommended Actions</param>
-        public HealthDetails(int? code = default(int?), string title = default(string), string message = default(string), IList<string> recommendations = default(IList<string>))
+        public ResourceHealthDetails(int? code = default(int?), string title = default(string), string message = default(string), IList<string> recommendations = default(IList<string>))
         {
             Code = code;
             Title = title;

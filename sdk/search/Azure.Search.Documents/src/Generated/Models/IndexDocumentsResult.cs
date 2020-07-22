@@ -23,14 +23,14 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
         internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results)
         {
-            Results = results ?? new List<IndexingResult>();
+            Results = results;
         }
 
         /// <summary> The list of status information for each document in the indexing request. </summary>

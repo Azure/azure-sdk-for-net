@@ -26,7 +26,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient() { InteractiveAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -52,7 +52,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); }
             };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -84,7 +84,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { throw new MsalUiRequiredException("errorCode", "message"); }
             };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 

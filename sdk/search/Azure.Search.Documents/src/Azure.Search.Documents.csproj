@@ -14,7 +14,6 @@
 
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

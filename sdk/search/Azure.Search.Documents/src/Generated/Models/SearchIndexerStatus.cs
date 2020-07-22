@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Status = status;
-            ExecutionHistory = executionHistory.ToArray();
+            ExecutionHistory = executionHistory.ToList();
             Limits = limits;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Status = status;
             LastResult = lastResult;
-            ExecutionHistory = executionHistory ?? new List<IndexerExecutionResult>();
+            ExecutionHistory = executionHistory;
             Limits = limits;
         }
 

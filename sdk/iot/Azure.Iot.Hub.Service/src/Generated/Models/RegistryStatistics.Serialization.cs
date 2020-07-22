@@ -14,40 +14,28 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static RegistryStatistics DeserializeRegistryStatistics(JsonElement element)
         {
-            long? totalDeviceCount = default;
-            long? enabledDeviceCount = default;
-            long? disabledDeviceCount = default;
+            Optional<long> totalDeviceCount = default;
+            Optional<long> enabledDeviceCount = default;
+            Optional<long> disabledDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeviceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     totalDeviceCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("enabledDeviceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("disabledDeviceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     disabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new RegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
+            return new RegistryStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
         }
     }
 }

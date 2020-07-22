@@ -15,42 +15,27 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static DigitalTwinInterfaces DeserializeDigitalTwinInterfaces(JsonElement element)
         {
-            IReadOnlyDictionary<string, PnpInterface> interfaces = default;
-            long? version = default;
+            Optional<IReadOnlyDictionary<string, PnpInterface>> interfaces = default;
+            Optional<long> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interfaces"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, PnpInterface> dictionary = new Dictionary<string, PnpInterface>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, PnpInterface.DeserializePnpInterface(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, PnpInterface.DeserializePnpInterface(property0.Value));
                     }
                     interfaces = dictionary;
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new DigitalTwinInterfaces(interfaces, version);
+            return new DigitalTwinInterfaces(Optional.ToDictionary(interfaces), Optional.ToNullable(version));
         }
     }
 }
