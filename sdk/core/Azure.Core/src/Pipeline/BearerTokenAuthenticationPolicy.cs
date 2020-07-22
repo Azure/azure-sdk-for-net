@@ -32,11 +32,11 @@ namespace Azure.Core.Pipeline
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryTimeout) {
+        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay) {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
-            _accessTokenCache = new AccessTokenCache(credential, scopes.ToArray(), tokenRefreshOffset, tokenRefreshRetryTimeout);
+            _accessTokenCache = new AccessTokenCache(credential, scopes.ToArray(), tokenRefreshOffset, tokenRefreshRetryDelay);
         }
 
         /// <inheritdoc />
@@ -77,16 +77,16 @@ namespace Azure.Core.Pipeline
             private readonly TokenCredential _credential;
             private readonly string[] _scopes;
             private readonly TimeSpan _tokenRefreshOffset;
-            private readonly TimeSpan _tokenRefreshRetryTimeout;
+            private readonly TimeSpan _tokenRefreshRetryDelay;
 
             private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
             private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
-            public AccessTokenCache(TokenCredential credential, string[] scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryTimeout)
+            public AccessTokenCache(TokenCredential credential, string[] scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
             {
                 _credential = credential;
                 _scopes = scopes;
                 _tokenRefreshOffset = tokenRefreshOffset;
-                _tokenRefreshRetryTimeout = tokenRefreshRetryTimeout;
+                _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
             }
 
             public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, bool async)
@@ -189,7 +189,7 @@ namespace Azure.Core.Pipeline
 
             private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, HttpMessage httpMessage, bool async)
             {
-                var cts = new CancellationTokenSource(_tokenRefreshRetryTimeout);
+                var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try
                 {
                     HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token);
@@ -202,7 +202,7 @@ namespace Azure.Core.Pipeline
                 }
                 catch (Exception e)
                 {
-                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryTimeout));
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(httpMessage.Request.ClientRequestId, e.ToString());
                 }
                 finally

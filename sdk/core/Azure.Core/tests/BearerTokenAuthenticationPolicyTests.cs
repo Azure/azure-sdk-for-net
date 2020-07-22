@@ -464,8 +464,8 @@ namespace Azure.Core.Tests
                 return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
             }, IsAsync);
 
-            var tokenRefreshRetryTimeout = TimeSpan.FromSeconds(2);
-            var policy = new BearerTokenAuthenticationPolicy(credential, new[] {"scope"}, TimeSpan.FromMinutes(2), tokenRefreshRetryTimeout);
+            var tokenRefreshRetryDelay = TimeSpan.FromSeconds(2);
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] {"scope"}, TimeSpan.FromMinutes(2), tokenRefreshRetryDelay);
             MockTransport transport = CreateMockTransport(r =>
             {
                 requestMre.Set();
@@ -494,7 +494,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/TokenFromCache"));
 
-            await Task.Delay((int)tokenRefreshRetryTimeout.TotalMilliseconds + 1_000);
+            await Task.Delay((int)tokenRefreshRetryDelay.TotalMilliseconds + 1_000);
             credentialMre.Reset();
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/5/TokenFromCache/GetTokenFailed"));
@@ -511,7 +511,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth4Value, auth5Value);
 
             Assert.AreEqual(2, getTokenRequestTimes.Count);
-            Assert.True(getTokenRequestTimes[1] - getTokenRequestTimes[0] > tokenRefreshRetryTimeout);
+            Assert.True(getTokenRequestTimes[1] - getTokenRequestTimes[0] > tokenRefreshRetryDelay);
         }
 
         [Test]
