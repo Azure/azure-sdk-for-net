@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -38,7 +39,8 @@ namespace Azure.Core.Pipeline
             {
                 if (message.Request.Content != null)
                 {
-                    if (message.Request.Content.TryComputeLength(out var length))
+                    if (request.ContentLength == -1 &&
+                        message.Request.Content.TryComputeLength(out var length))
                     {
                         request.ContentLength = length;
                     }
@@ -62,6 +64,18 @@ namespace Azure.Core.Pipeline
             request.Proxy = _proxy;
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
+                if (messageRequestHeader.Name == HttpHeader.Names.ContentLength)
+                {
+                    request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == "Host")
+                {
+                    request.Host = messageRequestHeader.Value;
+                    continue;
+                }
+
                 request.Headers.Add(messageRequestHeader.Name, messageRequestHeader.Value);
             }
 

@@ -17,99 +17,6 @@ namespace Azure.Core.Tests
 {
     public class HttpClientTransportTests : PipelineTestBase
     {
-        public static object[] ContentWithLength =>
-            new object[]
-            {
-                new object[] { RequestContent.Create(new byte[10]), 10 },
-                new object[] { RequestContent.Create(new byte[10], 5, 5), 5 },
-                new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
-                new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
-                new object[] { RequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
-            };
-
-        [TestCaseSource(nameof(ContentWithLength))]
-        public async Task ContentLengthIsSetForArrayContent(RequestContent content, int expectedLength)
-        {
-            long contentLength = 0;
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => contentLength = httpRequestMessage.Content.Headers.ContentLength.Value
-                );
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://example.com"));
-            request.Content = content;
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual(expectedLength, contentLength);
-        }
-
-        [Test]
-        public async Task SettingHeaderOverridesDefaultContentLength()
-        {
-            long contentLength = 0;
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => contentLength = httpRequestMessage.Content.Headers.ContentLength.Value);
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://example.com"));
-            request.Content = RequestContent.Create(new byte[10]);
-            request.Headers.Add("Content-Length", "50");
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual(50, contentLength);
-        }
-
-        [Test]
-        public async Task HostHeaderSetFromUri()
-        {
-            string host = null;
-            Uri uri = null;
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage =>
-                {
-                    uri = httpRequestMessage.RequestUri;
-                    host = httpRequestMessage.Headers.Host;
-                });
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("http://example.com:340"));
-
-            await ExecuteRequest(request, transport);
-
-            // HttpClientHandler would correctly set Host header from UriBuilder when it's not set explicitly
-            Assert.AreEqual("http://example.com:340/", uri.ToString());
-            Assert.Null(host);
-        }
-
-        [Test]
-        public async Task SettingHeaderOverridesDefaultHost()
-        {
-            string host = null;
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage =>
-                {
-                    host = httpRequestMessage.Headers.Host;
-                });
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri("https://example.com:340"));
-            request.Headers.Add("Host", "example.org");
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual("example.org", host);
-        }
-
         [Test]
         public async Task DoesntDisposeContentIfStreamGotReplaced()
         {
@@ -135,40 +42,6 @@ namespace Azure.Core.Tests
             response.Dispose();
 
             Assert.False(disposeTrackingContent.IsDisposed);
-        }
-
-        public static object[][] Methods => new[]
-        {
-            new object[] { RequestMethod.Delete, "DELETE" },
-            new object[] { RequestMethod.Get, "GET" },
-            new object[] { RequestMethod.Patch, "PATCH" },
-            new object[] { RequestMethod.Post, "POST" },
-            new object[] { RequestMethod.Put, "PUT" },
-            new object[] { RequestMethod.Head, "HEAD" },
-            new object[] { new RequestMethod("custom"), "CUSTOM" },
-        };
-
-        [Theory]
-        [TestCaseSource(nameof(Methods))]
-        public async Task CanGetAndSetMethod(RequestMethod method, string expectedMethod)
-        {
-            HttpMethod httpMethod = null;
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage =>
-                {
-                    httpMethod = httpRequestMessage.Method;
-                });
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = transport.CreateRequest();
-            request.Method = method;
-            request.Uri.Reset(new Uri("https://example.com:340"));
-
-            Assert.AreEqual(method, request.Method);
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual(expectedMethod, httpMethod.Method);
         }
 
         [Test]
@@ -236,40 +109,6 @@ namespace Azure.Core.Tests
                 new object[] { "Date", "11/12/19", false },
                 new object[] { "Custom-Header", "11/12/19", false }
             };
-
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
-        {
-            IEnumerable<string> httpHeaderValues = null;
-
-            var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage =>
-                {
-                    Assert.True(
-                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
-                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
-                });
-
-            var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            Request request = CreateRequest(transport);
-
-            request.Headers.Add(headerName, headerValue);
-
-            Assert.True(request.Headers.TryGetValue(headerName, out var value));
-            Assert.AreEqual(headerValue, value);
-
-            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
-            Assert.AreEqual(headerValue, value);
-
-            CollectionAssert.AreEqual(new[]
-            {
-                new HttpHeader(headerName, headerValue),
-            }, request.Headers);
-
-            await ExecuteRequest(request, transport);
-
-            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
-        }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
         public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
