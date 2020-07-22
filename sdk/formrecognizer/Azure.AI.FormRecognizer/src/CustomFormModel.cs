@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Training
                     fieldMap)};
         }
 
-        private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult_internal trainResult)
+        private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
             if (trainResult?.TrainingDocuments != null)
@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Training
             return trainingDocs;
         }
 
-        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult_internal trainResult)
+        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult trainResult)
         {
             var errors = new List<FormRecognizerError>();
             foreach (var error in trainResult?.Errors)
