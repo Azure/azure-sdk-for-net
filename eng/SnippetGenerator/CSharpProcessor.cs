@@ -11,7 +11,7 @@ namespace SnippetGenerator
 {
     public class CSharpProcessor
     {
-        private static readonly string _snippetFormat = "{3} <code snippet=\"{0}\">{1}{2} </code>";
+        private static readonly string _snippetFormat = "{3} <code snippet=\"{0}\" language="csharp">{1}{2} </code>";
         private static readonly Regex _snippetRegex = new Regex("^(?<indent>\\s*)\\/{3}\\s*<code snippet=\\\"(?<name>[\\w:]+)\\\">.*?\\/{3}\\s*<\\/code>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
