@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
-    internal partial class DocumentResult_internal
+    internal partial class DocumentResult
     {
-        /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
+        /// <summary> Initializes a new instance of DocumentResult. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
-        internal DocumentResult_internal(string docType, IEnumerable<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        internal DocumentResult(string docType, IEnumerable<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             if (docType == null)
             {
@@ -38,11 +38,11 @@ namespace Azure.AI.FormRecognizer.Models
             Fields = fields;
         }
 
-        /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
+        /// <summary> Initializes a new instance of DocumentResult. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
-        internal DocumentResult_internal(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        internal DocumentResult(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DocType = docType;
             PageRange = pageRange;

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DocumentResult_internal
+    internal partial class DocumentResult
     {
-        internal static DocumentResult_internal DeserializeDocumentResult_internal(JsonElement element)
+        internal static DocumentResult DeserializeDocumentResult(JsonElement element)
         {
             string docType = default;
             IReadOnlyList<int> pageRange = default;
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new DocumentResult_internal(docType, pageRange, fields);
+            return new DocumentResult(docType, pageRange, fields);
         }
     }
 }

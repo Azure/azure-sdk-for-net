@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             string version = default;
             Optional<IReadOnlyList<ReadResult_internal>> readResults = default;
             Optional<IReadOnlyList<PageResult_internal>> pageResults = default;
-            Optional<IReadOnlyList<DocumentResult_internal>> documentResults = default;
+            Optional<IReadOnlyList<DocumentResult>> documentResults = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,10 +64,10 @@ namespace Azure.AI.FormRecognizer.Models
                         documentResults = null;
                         continue;
                     }
-                    List<DocumentResult_internal> array = new List<DocumentResult_internal>();
+                    List<DocumentResult> array = new List<DocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
+                        array.Add(DocumentResult.DeserializeDocumentResult(item));
                     }
                     documentResults = array;
                     continue;

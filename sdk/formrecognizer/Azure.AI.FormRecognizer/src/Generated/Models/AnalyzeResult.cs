@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Models
             Version = version;
             ReadResults = new ChangeTrackingList<ReadResult_internal>();
             PageResults = new ChangeTrackingList<PageResult_internal>();
-            DocumentResults = new ChangeTrackingList<DocumentResult_internal>();
+            DocumentResults = new ChangeTrackingList<DocumentResult>();
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageResults"> Page-level information extracted from the input. </param>
         /// <param name="documentResults"> Document-level information extracted from the input. </param>
         /// <param name="errors"> List of errors reported during the analyze operation. </param>
-        internal AnalyzeResult(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<FormRecognizerError> errors)
+        internal AnalyzeResult(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult> documentResults, IReadOnlyList<FormRecognizerError> errors)
         {
             Version = version;
             ReadResults = readResults;
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Page-level information extracted from the input. </summary>
         public IReadOnlyList<PageResult_internal> PageResults { get; }
         /// <summary> Document-level information extracted from the input. </summary>
-        public IReadOnlyList<DocumentResult_internal> DocumentResults { get; }
+        public IReadOnlyList<DocumentResult> DocumentResults { get; }
         /// <summary> List of errors reported during the analyze operation. </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
     }
