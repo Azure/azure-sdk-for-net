@@ -9,11 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class ModelsSummary_internal
+    public partial class ModelsSummary
     {
-        internal static ModelsSummary_internal DeserializeModelsSummary_internal(JsonElement element)
+        internal static ModelsSummary DeserializeModelsSummary(JsonElement element)
         {
             int count = default;
             int limit = default;
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new ModelsSummary_internal(count, limit, lastUpdatedDateTime);
+            return new ModelsSummary(count, limit, lastUpdatedDateTime);
         }
     }
 }

@@ -124,7 +124,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Model>> GetCustomModelAsync(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelRequest(modelId, includeKeys);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -132,9 +132,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Model_internal value = default;
+                        Model value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Model_internal.DeserializeModel_internal(document.RootElement);
+                        value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model_internal> GetCustomModel(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
+        public Response<Model> GetCustomModel(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelRequest(modelId, includeKeys);
             _pipeline.Send(message, cancellationToken);
@@ -154,9 +154,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Model_internal value = default;
+                        Model value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Model_internal.DeserializeModel_internal(document.RootElement);
+                        value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

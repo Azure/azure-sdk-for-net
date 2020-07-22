@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
             string version = default;
-            Optional<IReadOnlyList<ReadResult_internal>> readResults = default;
-            Optional<IReadOnlyList<PageResult_internal>> pageResults = default;
+            Optional<IReadOnlyList<ReadResult>> readResults = default;
+            Optional<IReadOnlyList<PageResult>> pageResults = default;
             Optional<IReadOnlyList<DocumentResult>> documentResults = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
@@ -34,10 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
                         readResults = null;
                         continue;
                     }
-                    List<ReadResult_internal> array = new List<ReadResult_internal>();
+                    List<ReadResult> array = new List<ReadResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReadResult_internal.DeserializeReadResult_internal(item));
+                        array.Add(ReadResult.DeserializeReadResult(item));
                     }
                     readResults = array;
                     continue;
@@ -49,10 +49,10 @@ namespace Azure.AI.FormRecognizer.Models
                         pageResults = null;
                         continue;
                     }
-                    List<PageResult_internal> array = new List<PageResult_internal>();
+                    List<PageResult> array = new List<PageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PageResult_internal.DeserializePageResult_internal(item));
+                        array.Add(PageResult.DeserializePageResult(item));
                     }
                     pageResults = array;
                     continue;

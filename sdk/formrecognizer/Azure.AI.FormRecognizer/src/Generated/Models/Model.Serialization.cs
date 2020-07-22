@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class Model_internal
+    internal partial class Model
     {
-        internal static Model_internal DeserializeModel_internal(JsonElement element)
+        internal static Model DeserializeModel(JsonElement element)
         {
             ModelInfo_internal modelInfo = default;
             Optional<KeysResult> keys = default;
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new Model_internal(modelInfo, keys.Value, trainResult.Value);
+            return new Model(modelInfo, keys.Value, trainResult.Value);
         }
     }
 }

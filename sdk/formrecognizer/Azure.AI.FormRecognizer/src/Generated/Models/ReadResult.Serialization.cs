@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class ReadResult_internal
+    internal partial class ReadResult
     {
-        internal static ReadResult_internal DeserializeReadResult_internal(JsonElement element)
+        internal static ReadResult DeserializeReadResult(JsonElement element)
         {
             int page = default;
             float angle = default;
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult_internal(page, angle, width, height, unit, Optional.ToNullable(language), Optional.ToList(lines));
+            return new ReadResult(page, angle, width, height, unit, Optional.ToNullable(language), Optional.ToList(lines));
         }
     }
 }

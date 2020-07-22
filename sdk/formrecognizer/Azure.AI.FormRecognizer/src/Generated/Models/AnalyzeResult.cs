@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Version = version;
-            ReadResults = new ChangeTrackingList<ReadResult_internal>();
-            PageResults = new ChangeTrackingList<PageResult_internal>();
+            ReadResults = new ChangeTrackingList<ReadResult>();
+            PageResults = new ChangeTrackingList<PageResult>();
             DocumentResults = new ChangeTrackingList<DocumentResult>();
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageResults"> Page-level information extracted from the input. </param>
         /// <param name="documentResults"> Document-level information extracted from the input. </param>
         /// <param name="errors"> List of errors reported during the analyze operation. </param>
-        internal AnalyzeResult(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult> documentResults, IReadOnlyList<FormRecognizerError> errors)
+        internal AnalyzeResult(string version, IReadOnlyList<ReadResult> readResults, IReadOnlyList<PageResult> pageResults, IReadOnlyList<DocumentResult> documentResults, IReadOnlyList<FormRecognizerError> errors)
         {
             Version = version;
             ReadResults = readResults;
@@ -48,9 +48,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; }
         /// <summary> Text extracted from the input. </summary>
-        public IReadOnlyList<ReadResult_internal> ReadResults { get; }
+        public IReadOnlyList<ReadResult> ReadResults { get; }
         /// <summary> Page-level information extracted from the input. </summary>
-        public IReadOnlyList<PageResult_internal> PageResults { get; }
+        public IReadOnlyList<PageResult> PageResults { get; }
         /// <summary> Document-level information extracted from the input. </summary>
         public IReadOnlyList<DocumentResult> DocumentResults { get; }
         /// <summary> List of errors reported during the analyze operation. </summary>

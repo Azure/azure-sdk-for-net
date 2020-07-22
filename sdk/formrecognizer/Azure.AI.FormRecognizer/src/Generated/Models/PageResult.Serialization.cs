@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class PageResult_internal
+    internal partial class PageResult
     {
-        internal static PageResult_internal DeserializePageResult_internal(JsonElement element)
+        internal static PageResult DeserializePageResult(JsonElement element)
         {
             int page = default;
             Optional<int?> clusterId = default;
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new PageResult_internal(page, Optional.ToNullable(clusterId), Optional.ToList(keyValuePairs), Optional.ToList(tables));
+            return new PageResult(page, Optional.ToNullable(clusterId), Optional.ToList(keyValuePairs), Optional.ToList(tables));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="summary"> Summary of all trained custom models. </param>
         /// <param name="modelList"> Collection of trained custom models. </param>
         /// <param name="nextLink"> Link to the next page of custom models. </param>
-        internal Models(ModelsSummary_internal summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
+        internal Models(ModelsSummary summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
         {
             Summary = summary;
             ModelList = modelList;
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Summary of all trained custom models. </summary>
-        public ModelsSummary_internal Summary { get; }
+        public ModelsSummary Summary { get; }
         /// <summary> Collection of trained custom models. </summary>
         public IReadOnlyList<ModelInfo_internal> ModelList { get; }
         /// <summary> Link to the next page of custom models. </summary>

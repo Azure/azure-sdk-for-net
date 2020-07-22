@@ -16,14 +16,14 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static Models DeserializeModels(JsonElement element)
         {
-            Optional<ModelsSummary_internal> summary = default;
+            Optional<ModelsSummary> summary = default;
             Optional<IReadOnlyList<ModelInfo_internal>> modelList = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
                 {
-                    summary = ModelsSummary_internal.DeserializeModelsSummary_internal(property.Value);
+                    summary = ModelsSummary.DeserializeModelsSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))
