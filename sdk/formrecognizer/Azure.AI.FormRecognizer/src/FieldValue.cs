@@ -13,9 +13,9 @@ namespace Azure.AI.FormRecognizer.Models
     public readonly struct FieldValue
     {
         private readonly FieldValue_internal _fieldValue;
-        private readonly IReadOnlyList<ReadResult_internal> _readResults;
+        private readonly IReadOnlyList<ReadResult> _readResults;
 
-        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
+        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
         {
             Type = fieldValue.Type;
             _fieldValue = fieldValue;

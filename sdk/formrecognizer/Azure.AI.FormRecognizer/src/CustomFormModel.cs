@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CustomFormModel
     {
-        internal CustomFormModel(Model_internal model)
+        internal CustomFormModel(Model model)
         {
             ModelId = model.ModelInfo.ModelId.ToString();
             Status = model.ModelInfo.Status;
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model model)
         {
             if (model.Keys != null)
                 return ConvertFromUnlabeled(model.Keys);
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Training
             return null;
         }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertFromUnlabeled(KeysResult_internal keys)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromUnlabeled(KeysResult keys)
         {
             var subModels = new List<CustomFormSubmodel>();
 
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Training
             return subModels;
         }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model)
         {
             var fieldMap = new Dictionary<string, CustomFormModelField>();
 
