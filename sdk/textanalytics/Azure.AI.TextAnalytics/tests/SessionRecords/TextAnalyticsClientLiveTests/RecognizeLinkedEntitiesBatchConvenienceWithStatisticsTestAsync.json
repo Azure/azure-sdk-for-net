@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/linking?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking?showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "192",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-72ce61f31e6680448f93edb11fc5ef04-9fd1206f1eba1e42-00",
+        "traceparent": "00-21967453dd676e43837f639a52e3eeb8-0dbd58f2c80e074d-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cebfc48521f800c85fe23c8dd3af35d5",
         "x-ms-return-client-request-id": "true"
@@ -31,14 +31,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2795f9bc-2f34-4d5f-bd58-11846b6c2fe2",
+        "apim-request-id": "11ff3286-f76f-4db0-ab2b-de4f684cb2ca",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 07 Feb 2020 19:13:33 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "statistics": {
@@ -62,7 +62,7 @@
                     "text": "Bill Gates",
                     "offset": 25,
                     "length": 10,
-                    "score": 0.45485126470303006
+                    "confidenceScore": 0.52
                   }
                 ],
                 "language": "en",
@@ -77,7 +77,7 @@
                     "text": "Paul Allen",
                     "offset": 40,
                     "length": 10,
-                    "score": 0.46860302900784023
+                    "confidenceScore": 0.54
                   }
                 ],
                 "language": "en",
@@ -92,7 +92,7 @@
                     "text": "Microsoft",
                     "offset": 0,
                     "length": 9,
-                    "score": 0.4029093227589069
+                    "confidenceScore": 0.49
                   }
                 ],
                 "language": "en",
@@ -100,7 +100,8 @@
                 "url": "https://en.wikipedia.org/wiki/Microsoft",
                 "dataSource": "Wikipedia"
               }
-            ]
+            ],
+            "warnings": []
           },
           {
             "id": "1",
@@ -116,7 +117,7 @@
                     "text": "Pike place market",
                     "offset": 0,
                     "length": 17,
-                    "score": 0.76924872758183072
+                    "confidenceScore": 0.86
                   }
                 ],
                 "language": "en",
@@ -131,7 +132,7 @@
                     "text": "Seattle",
                     "offset": 33,
                     "length": 7,
-                    "score": 0.2361670688278743
+                    "confidenceScore": 0.27
                   }
                 ],
                 "language": "en",
@@ -139,7 +140,8 @@
                 "url": "https://en.wikipedia.org/wiki/Seattle",
                 "dataSource": "Wikipedia"
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
@@ -150,6 +152,6 @@
   "Variables": {
     "RandomSeed": "1347461816",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternCaptureTokenFilter : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PreserveOriginal != null)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal");
                 writer.WriteBooleanValue(PreserveOriginal.Value);
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         internal static PatternCaptureTokenFilter DeserializePatternCaptureTokenFilter(JsonElement element)
         {
             IList<string> patterns = default;
-            bool? preserveOriginal = default;
+            Optional<bool> preserveOriginal = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -48,24 +48,13 @@ namespace Azure.Search.Documents.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     patterns = array;
                     continue;
                 }
                 if (property.NameEquals("preserveOriginal"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
@@ -80,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternCaptureTokenFilter(odataType, name, patterns, preserveOriginal);
+            return new PatternCaptureTokenFilter(odataType, name, patterns, Optional.ToNullable(preserveOriginal));
         }
     }
 }

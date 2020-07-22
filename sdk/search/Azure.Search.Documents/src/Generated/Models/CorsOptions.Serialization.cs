@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CorsOptions : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MaxAgeInSeconds != null)
+            if (Optional.IsDefined(MaxAgeInSeconds))
             {
                 writer.WritePropertyName("maxAgeInSeconds");
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
         internal static CorsOptions DeserializeCorsOptions(JsonElement element)
         {
             IList<string> allowedOrigins = default;
-            long? maxAgeInSeconds = default;
+            Optional<long> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"))
@@ -42,29 +42,18 @@ namespace Azure.Search.Documents.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     allowedOrigins = array;
                     continue;
                 }
                 if (property.NameEquals("maxAgeInSeconds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxAgeInSeconds = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, maxAgeInSeconds);
+            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
         }
     }
 }

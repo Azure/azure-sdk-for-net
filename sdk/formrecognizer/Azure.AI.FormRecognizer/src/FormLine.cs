@@ -6,8 +6,9 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a line of text recognized from the input document.
     /// </summary>
-    public class FormLine : FormContent
+    public class FormLine : FormElement
     {
         internal FormLine(TextLine_internal textLine, int pageNumber)
             : base(new BoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
@@ -15,8 +16,10 @@ namespace Azure.AI.FormRecognizer.Models
             Words = ConvertWords(textLine.Words, pageNumber);
         }
 
-        /// <summary> List of words in the text line. </summary>
-        public IReadOnlyList<FormWord> Words { get; internal set; }
+        /// <summary>
+        /// A list of the words that make up the line.
+        /// </summary>
+        public IReadOnlyList<FormWord> Words { get; }
 
         private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
         {

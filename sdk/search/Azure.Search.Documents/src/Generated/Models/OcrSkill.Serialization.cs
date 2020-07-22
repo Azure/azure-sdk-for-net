@@ -9,41 +9,36 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class OcrSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TextExtractionAlgorithm != null)
-            {
-                writer.WritePropertyName("textExtractionAlgorithm");
-                writer.WriteStringValue(TextExtractionAlgorithm.Value.ToSerialString());
-            }
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (ShouldDetectOrientation != null)
+            if (Optional.IsDefined(ShouldDetectOrientation))
             {
                 writer.WritePropertyName("detectOrientation");
                 writer.WriteBooleanValue(ShouldDetectOrientation.Value);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
@@ -67,41 +62,23 @@ namespace Azure.Search.Documents.Models
 
         internal static OcrSkill DeserializeOcrSkill(JsonElement element)
         {
-            TextExtractionAlgorithm? textExtractionAlgorithm = default;
-            OcrSkillLanguage? defaultLanguageCode = default;
-            bool? detectOrientation = default;
+            Optional<OcrSkillLanguage> defaultLanguageCode = default;
+            Optional<bool> detectOrientation = default;
             string odataType = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("textExtractionAlgorithm"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    textExtractionAlgorithm = property.Value.GetString().ToTextExtractionAlgorithm();
-                    continue;
-                }
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultLanguageCode = new OcrSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("detectOrientation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     detectOrientation = property.Value.GetBoolean();
                     continue;
                 }
@@ -112,28 +89,16 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -142,14 +107,7 @@ namespace Azure.Search.Documents.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
-                        }
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
                     }
                     inputs = array;
                     continue;
@@ -159,20 +117,13 @@ namespace Azure.Search.Documents.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
-                        }
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
                     }
                     outputs = array;
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name, description, context, inputs, outputs, textExtractionAlgorithm, defaultLanguageCode, detectOrientation);
+            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation));
         }
     }
 }

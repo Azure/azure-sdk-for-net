@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Uses Java regexes to emit multiple tokens - one for each capture group in one or more patterns. This token filter is implemented using Apache Lucene. </summary>
     public partial class PatternCaptureTokenFilter : TokenFilter
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(patterns));
             }
 
-            Patterns = patterns.ToArray();
+            Patterns = patterns.ToList();
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
@@ -43,9 +43,6 @@ namespace Azure.Search.Documents.Models
             PreserveOriginal = preserveOriginal;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
-
-        /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; }
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

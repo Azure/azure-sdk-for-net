@@ -7,31 +7,37 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a table recognized from the input document.
     /// </summary>
     public class FormTable
     {
-        internal FormTable(DataTable_internal table, ReadResult_internal readResult)
+        internal FormTable(DataTable_internal table, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
         {
+            ReadResult_internal readResult = readResults[pageIndex];
+
             PageNumber = readResult.Page;
             ColumnCount = table.Columns;
             RowCount = table.Rows;
-            Cells = ConvertCells(table.Cells, readResult);
+            Cells = ConvertCells(table.Cells, readResults, readResult.Page);
         }
 
         /// <summary>
-        /// The 1-based page number in the input document.
+        /// The 1-based number of the page in which this table is present.
         /// </summary>
         public int PageNumber { get; }
 
         /// <summary>
+        /// A list of cells contained in this table.
         /// </summary>
         public IReadOnlyList<FormTableCell> Cells { get; }
 
         /// <summary>
+        /// The number of columns in this table.
         /// </summary>
         public int ColumnCount { get; }
 
         /// <summary>
+        /// The number of rows in this table.
         /// </summary>
         public int RowCount { get; }
 
@@ -58,13 +64,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
 
-            foreach (var result in cellsResult)
+            foreach (var cellResult in cellsResult)
             {
-                cells.Add(new FormTableCell(result, readResult));
+                cells.Add(new FormTableCell(cellResult, readResults, pageNumber));
             }
 
             return cells;

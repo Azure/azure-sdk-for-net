@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             DocType = docType;
-            PageRange = pageRange.ToArray();
+            PageRange = pageRange.ToList();
             Fields = fields;
         }
 

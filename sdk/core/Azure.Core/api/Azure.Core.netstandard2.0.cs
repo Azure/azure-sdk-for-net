@@ -458,6 +458,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
+        public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }

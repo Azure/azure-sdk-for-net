@@ -1,0 +1,318 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "1505",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "ec8f1b224af8d9bff1f430bc1b15db2c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "wldfvoaj",
+        "fields": [
+          {
+            "name": "hotelId",
+            "type": "Edm.String",
+            "key": true,
+            "retrievable": true,
+            "searchable": false,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false
+          },
+          {
+            "name": "hotelName",
+            "type": "Edm.String",
+            "key": false,
+            "retrievable": true,
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false
+          },
+          {
+            "name": "description",
+            "type": "Edm.String",
+            "key": false,
+            "retrievable": true,
+            "searchable": true,
+            "filterable": false,
+            "sortable": false,
+            "facetable": false,
+            "analyzer": "en.lucene"
+          },
+          {
+            "name": "tags",
+            "type": "Collection(Edm.String)",
+            "key": false,
+            "retrievable": true,
+            "searchable": true,
+            "filterable": true,
+            "sortable": false,
+            "facetable": true
+          },
+          {
+            "name": "address",
+            "type": "Edm.ComplexType",
+            "fields": [
+              {
+                "name": "streetAddress",
+                "type": "Edm.String",
+                "key": false,
+                "retrievable": true,
+                "searchable": true,
+                "filterable": false,
+                "sortable": false,
+                "facetable": false
+              },
+              {
+                "name": "city",
+                "type": "Edm.String",
+                "key": false,
+                "retrievable": true,
+                "searchable": true,
+                "filterable": true,
+                "sortable": true,
+                "facetable": true
+              },
+              {
+                "name": "stateProvince",
+                "type": "Edm.String",
+                "key": false,
+                "retrievable": true,
+                "searchable": true,
+                "filterable": true,
+                "sortable": true,
+                "facetable": true
+              },
+              {
+                "name": "country",
+                "type": "Edm.String",
+                "key": false,
+                "retrievable": true,
+                "searchable": true,
+                "filterable": true,
+                "sortable": true,
+                "facetable": true
+              },
+              {
+                "name": "postalCode",
+                "type": "Edm.String",
+                "key": false,
+                "retrievable": true,
+                "searchable": true,
+                "filterable": true,
+                "sortable": true,
+                "facetable": true
+              }
+            ]
+          }
+        ],
+        "suggesters": [
+          {
+            "name": "sg",
+            "searchMode": "analyzingInfixMatching",
+            "sourceFields": [
+              "hotelName",
+              "description"
+            ]
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "ec8f1b22-4af8-d9bf-f1f4-30bc1b15db2c",
+        "Content-Length": "2550",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 17 Jul 2020 21:45:51 GMT",
+        "elapsed-time": "1077",
+        "ETag": "W/\u00220x8D82A9AC65BB875\u0022",
+        "Expires": "-1",
+        "Location": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2020-06-30",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "ec8f1b22-4af8-d9bf-f1f4-30bc1b15db2c",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "ec8f1b22-4af8-d9bf-f1f4-30bc1b15db2c"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D82A9AC65BB875\u0022",
+        "name": "wldfvoaj",
+        "defaultScoringProfile": null,
+        "fields": [
+          {
+            "name": "hotelId",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": true,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "hotelName",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "description",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": "en.lucene",
+            "synonymMaps": []
+          },
+          {
+            "name": "tags",
+            "type": "Collection(Edm.String)",
+            "searchable": true,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "address",
+            "type": "Edm.ComplexType",
+            "fields": [
+              {
+                "name": "streetAddress",
+                "type": "Edm.String",
+                "searchable": true,
+                "filterable": false,
+                "retrievable": true,
+                "sortable": false,
+                "facetable": false,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "city",
+                "type": "Edm.String",
+                "searchable": true,
+                "filterable": true,
+                "retrievable": true,
+                "sortable": true,
+                "facetable": true,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "stateProvince",
+                "type": "Edm.String",
+                "searchable": true,
+                "filterable": true,
+                "retrievable": true,
+                "sortable": true,
+                "facetable": true,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "country",
+                "type": "Edm.String",
+                "searchable": true,
+                "filterable": true,
+                "retrievable": true,
+                "sortable": true,
+                "facetable": true,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "postalCode",
+                "type": "Edm.String",
+                "searchable": true,
+                "filterable": true,
+                "retrievable": true,
+                "sortable": true,
+                "facetable": true,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "synonymMaps": []
+              }
+            ]
+          }
+        ],
+        "scoringProfiles": [],
+        "corsOptions": null,
+        "suggesters": [
+          {
+            "name": "sg",
+            "searchMode": "analyzingInfixMatching",
+            "sourceFields": [
+              "hotelName",
+              "description"
+            ]
+          }
+        ],
+        "analyzers": [],
+        "tokenizers": [],
+        "tokenFilters": [],
+        "charFilters": [],
+        "encryptionKey": null,
+        "similarity": {
+          "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
+          "k1": null,
+          "b": null
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2102937546",
+    "SearchIndexName": null,
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-pakrymsearch2"
+  }
+}

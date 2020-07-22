@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     public class PartitionReceiver : IAsyncDisposable
     {
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the client is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -74,7 +78,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed { get; protected set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            protected set => _closed = value;
+        }
 
         /// <summary>
         ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
@@ -182,7 +190,11 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+
         }
 
         /// <summary>
@@ -219,7 +231,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -251,7 +266,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -348,8 +366,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             IsClosed = true;
 
-            var clientHash = GetHashCode().ToString();
-            Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
+            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -362,7 +380,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -378,12 +396,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the transport

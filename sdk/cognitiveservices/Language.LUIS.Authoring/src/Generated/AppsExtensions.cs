@@ -525,7 +525,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='luisApplu'>
+            /// <param name='luisAppLu'>
             /// A LUIS application structure.
             /// </param>
             /// <param name='appName'>
@@ -536,9 +536,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Guid> ImportLuFromatAsync(this IApps operations, string luisApplu, string appName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> ImportLuFormatAsync(this IApps operations, string luisAppLu, string appName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ImportLuFromatWithHttpMessagesAsync(luisApplu, appName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ImportLuFormatWithHttpMessagesAsync(luisAppLu, appName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,0 +1,1159 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "2227",
+        "Content-Type": "application/json",
+        "traceparent": "00-b14b20f1028f97449e3e21222f9c00c7-cdcabba7952f2541-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "719e8dac28fd9b3cfce9636118e05032",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "qgrsmesk",
+        "skills": [
+          {
+            "defaultLanguageCode": "en",
+            "textSplitMode": "pages",
+            "maximumPageLength": 5000,
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "context": "/document/reviews_text",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "pages"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "context": "/document/reviews_text/pages/*",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_text/pages/*"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "Sentiment"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "Language"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "context": "/document/reviews_text/pages/*",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_Text/pages/*"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "Keyphrases"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "name",
+                "source": "/document/name"
+              },
+              {
+                "name": "reviews_date",
+                "source": "/document/reviews_date"
+              },
+              {
+                "name": "reviews_rating",
+                "source": "/documents/reviews_rating"
+              },
+              {
+                "name": "reviews_text",
+                "source": "/documents/reviews_text"
+              },
+              {
+                "name": "reviews_title",
+                "source": "/document/reviews_title"
+              },
+              {
+                "name": "AzureSearch_DocumentKey",
+                "source": "/document/AzureSearch_DocumentKey"
+              },
+              {
+                "name": "pages",
+                "sourceContext": "/document/reviews_text/pages/*",
+                "inputs": [
+                  {
+                    "name": "SentimentScore",
+                    "source": "/document/reviews_text/pages/*/Sentiment"
+                  },
+                  {
+                    "name": "LanguageCode",
+                    "source": "/document/Language"
+                  },
+                  {
+                    "name": "Page",
+                    "source": "/document/reviews_text/pages/*"
+                  },
+                  {
+                    "name": "keyphrase",
+                    "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                    "inputs": [
+                      {
+                        "name": "Keyphrases",
+                        "source": "/document/reviews_text/pages/*/Keyphrases/*"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "tableprojection"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "719e8dac-28fd-9b3c-fce9-636118e05032",
+        "Content-Length": "3209",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "91",
+        "ETag": "W/\u00220x8D82A8EFAA3FCF9\u0022",
+        "Expires": "-1",
+        "Location": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "719e8dac-28fd-9b3c-fce9-636118e05032",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "719e8dac-28fd-9b3c-fce9-636118e05032"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D82A8EFAA3FCF9\u0022",
+        "name": "qgrsmesk",
+        "description": null,
+        "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text",
+            "defaultLanguageCode": "en",
+            "textSplitMode": "pages",
+            "maximumPageLength": 5000,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "pages"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "Sentiment"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "name": null,
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "Language"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "maxKeyPhraseCount": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_Text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "Keyphrases"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "name": null,
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "name",
+                "source": "/document/name",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_date",
+                "source": "/document/reviews_date",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_rating",
+                "source": "/documents/reviews_rating",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_text",
+                "source": "/documents/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_title",
+                "source": "/document/reviews_title",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "AzureSearch_DocumentKey",
+                "source": "/document/AzureSearch_DocumentKey",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "pages",
+                "source": null,
+                "sourceContext": "/document/reviews_text/pages/*",
+                "inputs": [
+                  {
+                    "name": "SentimentScore",
+                    "source": "/document/reviews_text/pages/*/Sentiment",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "LanguageCode",
+                    "source": "/document/Language",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "Page",
+                    "source": "/document/reviews_text/pages/*",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "keyphrase",
+                    "source": null,
+                    "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                    "inputs": [
+                      {
+                        "name": "Keyphrases",
+                        "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                        "sourceContext": null,
+                        "inputs": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "tableprojection"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
+          "description": null
+        },
+        "knowledgeStore": null,
+        "encryptionKey": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "2512",
+        "Content-Type": "application/json",
+        "If-Match": "\u00220x8D82A8EFAA3FCF9\u0022",
+        "Prefer": "return=representation",
+        "traceparent": "00-b76d6c121fcbe34380b1c1666916a451-b74ce1f9b3494544-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "679371d6c884723bbe56b85c3c72fed0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "qgrsmesk",
+        "description": "Update description",
+        "skills": [
+          {
+            "defaultLanguageCode": "en",
+            "textSplitMode": "pages",
+            "maximumPageLength": 5000,
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "context": "/document/reviews_text",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "pages"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "context": "/document/reviews_text/pages/*",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_text/pages/*",
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "Sentiment"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "Language"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "context": "/document/reviews_text/pages/*",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_Text/pages/*",
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "Keyphrases"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "name",
+                "source": "/document/name",
+                "inputs": []
+              },
+              {
+                "name": "reviews_date",
+                "source": "/document/reviews_date",
+                "inputs": []
+              },
+              {
+                "name": "reviews_rating",
+                "source": "/documents/reviews_rating",
+                "inputs": []
+              },
+              {
+                "name": "reviews_text",
+                "source": "/documents/reviews_text",
+                "inputs": []
+              },
+              {
+                "name": "reviews_title",
+                "source": "/document/reviews_title",
+                "inputs": []
+              },
+              {
+                "name": "AzureSearch_DocumentKey",
+                "source": "/document/AzureSearch_DocumentKey",
+                "inputs": []
+              },
+              {
+                "name": "pages",
+                "sourceContext": "/document/reviews_text/pages/*",
+                "inputs": [
+                  {
+                    "name": "SentimentScore",
+                    "source": "/document/reviews_text/pages/*/Sentiment",
+                    "inputs": []
+                  },
+                  {
+                    "name": "LanguageCode",
+                    "source": "/document/Language",
+                    "inputs": []
+                  },
+                  {
+                    "name": "Page",
+                    "source": "/document/reviews_text/pages/*",
+                    "inputs": []
+                  },
+                  {
+                    "name": "keyphrase",
+                    "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                    "inputs": [
+                      {
+                        "name": "Keyphrases",
+                        "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                        "inputs": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "tableprojection"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        },
+        "@odata.etag": "\u00220x8D82A8EFAA3FCF9\u0022"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "679371d6-c884-723b-be56-b85c3c72fed0",
+        "Content-Length": "3225",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "95",
+        "ETag": "W/\u00220x8D82A8EFAB6C508\u0022",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "679371d6-c884-723b-be56-b85c3c72fed0",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "679371d6-c884-723b-be56-b85c3c72fed0"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D82A8EFAB6C508\u0022",
+        "name": "qgrsmesk",
+        "description": "Update description",
+        "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text",
+            "defaultLanguageCode": "en",
+            "textSplitMode": "pages",
+            "maximumPageLength": 5000,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "pages"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "Sentiment"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "name": null,
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "Language"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "name": null,
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "maxKeyPhraseCount": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_Text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "Keyphrases"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "name": null,
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "name",
+                "source": "/document/name",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_date",
+                "source": "/document/reviews_date",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_rating",
+                "source": "/documents/reviews_rating",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_text",
+                "source": "/documents/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_title",
+                "source": "/document/reviews_title",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "AzureSearch_DocumentKey",
+                "source": "/document/AzureSearch_DocumentKey",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "pages",
+                "source": null,
+                "sourceContext": "/document/reviews_text/pages/*",
+                "inputs": [
+                  {
+                    "name": "SentimentScore",
+                    "source": "/document/reviews_text/pages/*/Sentiment",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "LanguageCode",
+                    "source": "/document/Language",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "Page",
+                    "source": "/document/reviews_text/pages/*",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "keyphrase",
+                    "source": null,
+                    "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                    "inputs": [
+                      {
+                        "name": "Keyphrases",
+                        "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                        "sourceContext": null,
+                        "inputs": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "tableprojection"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
+          "description": null
+        },
+        "knowledgeStore": null,
+        "encryptionKey": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-9462771ee94f5345a8e8900882cf8425-62ccabd7ba4e4843-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f1c57e6ece060e33a389385319a9f862",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "f1c57e6e-ce06-0e33-a389-385319a9f862",
+        "Content-Length": "3225",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "29",
+        "ETag": "W/\u00220x8D82A8EFAB6C508\u0022",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f1c57e6e-ce06-0e33-a389-385319a9f862",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "f1c57e6e-ce06-0e33-a389-385319a9f862"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D82A8EFAB6C508\u0022",
+        "name": "qgrsmesk",
+        "description": "Update description",
+        "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "name": "#1",
+            "description": null,
+            "context": "/document/reviews_text",
+            "defaultLanguageCode": "en",
+            "textSplitMode": "pages",
+            "maximumPageLength": 5000,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "pages"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "name": "#2",
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "Sentiment"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "name": "#3",
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "Language"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "name": "#4",
+            "description": null,
+            "context": "/document/reviews_text/pages/*",
+            "defaultLanguageCode": "en",
+            "maxKeyPhraseCount": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/documents/reviews_Text/pages/*",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/Language",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "Keyphrases"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "name": "#5",
+            "description": null,
+            "context": "/document",
+            "inputs": [
+              {
+                "name": "name",
+                "source": "/document/name",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_date",
+                "source": "/document/reviews_date",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_rating",
+                "source": "/documents/reviews_rating",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_text",
+                "source": "/documents/reviews_text",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "reviews_title",
+                "source": "/document/reviews_title",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "AzureSearch_DocumentKey",
+                "source": "/document/AzureSearch_DocumentKey",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "pages",
+                "source": null,
+                "sourceContext": "/document/reviews_text/pages/*",
+                "inputs": [
+                  {
+                    "name": "SentimentScore",
+                    "source": "/document/reviews_text/pages/*/Sentiment",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "LanguageCode",
+                    "source": "/document/Language",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "Page",
+                    "source": "/document/reviews_text/pages/*",
+                    "sourceContext": null,
+                    "inputs": []
+                  },
+                  {
+                    "name": "keyphrase",
+                    "source": null,
+                    "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                    "inputs": [
+                      {
+                        "name": "Keyphrases",
+                        "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                        "sourceContext": null,
+                        "inputs": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "tableprojection"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
+          "description": null
+        },
+        "knowledgeStore": null,
+        "encryptionKey": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "If-Match": "\u00220x8D82A8EFAB6C508\u0022",
+        "traceparent": "00-a5bc22f68ddc0042956972d11167157e-ece16c11b491c24b-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "0c24f8073ecce4ed512cb2a66fdf5e89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "0c24f807-3ecc-e4ed-512c-b2a66fdf5e89",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "44",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "0c24f807-3ecc-e4ed-512c-b2a66fdf5e89",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "0c24f807-3ecc-e4ed-512c-b2a66fdf5e89"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets?$select=name\u0026api-version=2020-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-cdf85b0a5eb15649a6c3b6f31c17198c-1323dfb786de6944-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "99f292ea5f1b082c3e85c3fb90e85815",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "99f292ea-5f1b-082c-3e85-c3fb90e85815",
+        "Content-Length": "123",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "18",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "99f292ea-5f1b-082c-3e85-c3fb90e85815",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "99f292ea-5f1b-082c-3e85-c3fb90e85815"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets(name)",
+        "value": [
+          {
+            "name": "jnayotai"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027jfkaevts\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-bca9dc9000c82d4fa03d0c62d3344ffa-05adca54ac936e4d-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4355565ef14e300491e09fda1b8c9ec4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "4355565e-f14e-3004-91e0-9fda1b8c9ec4",
+        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
+        "elapsed-time": "425",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "4355565e-f14e-3004-91e0-9fda1b8c9ec4",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "4355565e-f14e-3004-91e0-9fda1b8c9ec4"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "BlobContainerName": "yqsoctmu",
+    "RandomSeed": "1965957870",
+    "SearchIndexName": "jfkaevts",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch",
+    "SEARCH_STORAGE_KEY": "Sanitized",
+    "SEARCH_STORAGE_NAME": "pakrysearchstg"
+  }
+}

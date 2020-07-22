@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -34,8 +35,9 @@ namespace Azure.AI.FormRecognizer.Models
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Text = text;
-            BoundingBox = boundingBox.ToArray();
+            BoundingBox = boundingBox.ToList();
             Confidence = confidence;
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataTableCell_internal. </summary>

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class KeywordMarkerTokenFilter : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase != null)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         internal static KeywordMarkerTokenFilter DeserializeKeywordMarkerTokenFilter(JsonElement element)
         {
             IList<string> keywords = default;
-            bool? ignoreCase = default;
+            Optional<bool> ignoreCase = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -48,24 +48,13 @@ namespace Azure.Search.Documents.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     keywords = array;
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
@@ -80,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeywordMarkerTokenFilter(odataType, name, keywords, ignoreCase);
+            return new KeywordMarkerTokenFilter(odataType, name, keywords, Optional.ToNullable(ignoreCase));
         }
     }
 }

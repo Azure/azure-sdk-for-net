@@ -17,7 +17,13 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionSet_CRUD()
         {
-            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", location: supportedZoneLocation);
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", EncryptionType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
+        }
+
+        [Fact]
+        public void DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys()
+        {
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys", EncryptionType.EncryptionAtRestWithPlatformAndCustomerKeys, location: supportedZoneLocation);
         }
 
         [Fact]

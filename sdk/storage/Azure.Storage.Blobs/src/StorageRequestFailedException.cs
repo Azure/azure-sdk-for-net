@@ -78,6 +78,6 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Error.Message, content: null, response.GetErrorCode(Error.Code));
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: DataLakeStorageErrorDetails.Message, content: null, response.GetErrorCode(DataLakeStorageErrorDetails.Code));
     }
 }

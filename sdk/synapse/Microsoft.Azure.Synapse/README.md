@@ -15,7 +15,15 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
-## Prerequisites
+### Install the package
+
+Install the Azure Synapse client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Microsoft.Azure.Synapse
+```
+
+### Prerequisites
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, including Azure Synapse, you need to first [create an account](https://account.windowsazure.com/Home/Index). If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits.
 

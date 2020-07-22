@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Files.Shares.Tests;
@@ -48,6 +48,30 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shareName, builder.ShareName);
             Assert.AreEqual(filePath, builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionStringEscapePath()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string directoryName = "!#@&=;äÄ";
+            string fileName = "#$=;!öÖ";
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+            ShareFileClient initalFile = InstrumentClient(directory.GetFileClient(fileName));
+            Response<ShareFileInfo> createResponse = await initalFile.CreateAsync(Constants.KB);
+
+            // Act
+            ShareFileClient file = new ShareFileClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{directoryName}/{fileName}",
+                GetOptions());
+            Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
         [Test]
@@ -273,7 +297,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -360,18 +384,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+
+            // Make Read Only SAS for the Share
+            AccountSasBuilder sas = new AccountSasBuilder
+            {
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.Service,
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+            };
+            sas.SetPermissions(AccountSasPermissions.Read);
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+            ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.ExistsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => { });
         }
 
         [Test]
@@ -406,18 +458,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task DeleteIfExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task DeleteIfExistsAsync_Error()
         {
             // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+
+            // Make Read Only SAS for the Share
+            AccountSasBuilder sas = new AccountSasBuilder
+            {
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.Service,
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+            };
+            sas.SetPermissions(AccountSasPermissions.Read);
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+            ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => { });
         }
 
         [Test]
@@ -434,7 +514,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -458,7 +538,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -516,6 +596,46 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
             Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(maxSize: Constants.KB);
+
+            Response<ShareSnapshotInfo> createSnapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient = test.Share.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+
+            ShareFileClient snapshotFileClient = snapshotShareClient.GetDirectoryClient(test.Directory.Name).GetFileClient(file.Name);
+
+            // Act
+            Response<ShareFileProperties> getPropertiesResponse = await snapshotFileClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(getPropertiesResponse.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_SnapshotFailed()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(maxSize: Constants.KB);
+
+            ShareClient snapshotShareClient = test.Share.WithSnapshot("2020-06-26T00:49:21.0000000Z");
+
+            ShareFileClient snapshotFileClient = snapshotShareClient.GetDirectoryClient(test.Directory.Name).GetFileClient(file.Name);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                snapshotFileClient.GetPropertiesAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
@@ -1210,7 +1330,31 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await dest.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [Test]
+        public async Task StartCopyAsync_NonAsciiSourceUri()
+        {
+            // Arrange
+            await using DisposingFile testSource = await GetTestFileAsync(fileName: GetNewNonAsciiFileName());
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+
+            // Act
+            Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(source.Uri);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
@@ -1430,7 +1574,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Properties are equal
                 Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
-                AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
+                AssertDictionaryEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
                 Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
@@ -1986,9 +2130,15 @@ namespace Azure.Storage.Files.Shares.Test
             var data = GetRandomBuffer(dataSize);
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var timesFaulted = 0;
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     range: new HttpRange(offset, dataSize),
@@ -2011,6 +2161,7 @@ namespace Azure.Storage.Files.Shares.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]
@@ -2163,6 +2314,59 @@ namespace Azure.Storage.Files.Shares.Test
                     sourceRange: sourceRange,
                     conditions: conditions),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+        }
+
+        [Test]
+        [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
+        // TODO: #7645
+        public async Task UploadRangeFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            var directoryName = this.GetNewDirectoryName();
+            var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            var fileName = this.GetNewNonAsciiFileName();
+            var data = this.GetRandomBuffer(Constants.KB);
+            var sourceFile = this.InstrumentClient(directory.GetFileClient(fileName));
+            await sourceFile.CreateAsync(maxSize: 1024);
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceFile.UploadRangeAsync(new HttpRange(0, 1024), stream);
+            }
+
+            var destFile = directory.GetFileClient("destFile");
+            await destFile.CreateAsync(maxSize: 1024);
+            var destRange = new HttpRange(256, 256);
+            var sourceRange = new HttpRange(512, 256);
+
+            var sasFile = this.InstrumentClient(
+                this.GetServiceClient_FileServiceSasShare(test.Share.Name)
+                .GetShareClient(test.Share.Name)
+                .GetDirectoryClient(directoryName)
+                .GetFileClient(fileName));
+
+            // Act
+            await destFile.UploadRangeFromUriAsync(
+                sourceUri: sasFile.Uri,
+                range: destRange,
+                sourceRange: sourceRange);
+
+            // Assert
+            var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
+            var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
+
+            var sourceStream = new MemoryStream();
+            await sourceDownloadResponse.Value.Content.CopyToAsync(sourceStream);
+
+            var destStream = new MemoryStream();
+            await destDownloadResponse.Value.Content.CopyToAsync(destStream);
+
+            TestHelper.AssertSequenceEqual(sourceStream.ToArray(), destStream.ToArray());
         }
 
         [Test]
@@ -2439,6 +2643,298 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetShareLeaseClient(leaseId)).BreakAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenReadAsync()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync().ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_BufferSize()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+
+            int downloadedBytes = 0;
+
+            while (downloadedBytes < size)
+            {
+                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
+            }
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_OffsetAndBufferSize()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            byte[] expected = new byte[size];
+            Array.Copy(data, size / 2, expected, size / 2, size / 2);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(
+                position: size / 2,
+                bufferSize: size / 8)
+                .ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            int downloadedBytes = size / 2;
+
+            while (downloadedBytes < size)
+            {
+                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
+            }
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(expected, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Error()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = test.Directory.GetFileClient(GetNewFileName());
+            Stream outputStream = await file.OpenReadAsync();
+            byte[] bytes = new byte[Constants.KB];
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Lease()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = fileLease.LeaseId
+            };
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(conditions: conditions).ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_InvalidLease()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(conditions: conditions).ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                outputStream.ReadAsync(outputBytes, 0, size),
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
+        public async Task OpenReadAsync_StrangeOffsetsTest()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            int size = Constants.KB;
+            byte[] exectedData = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(exectedData);
+            await file.UploadAsync(stream);
+
+            Stream outputStream = await file.OpenReadAsync(position: 0, bufferSize: 157);
+            byte[] actualData = new byte[size];
+            int offset = 0;
+
+            // Act
+            int count = 0;
+            int readBytes = -1;
+            while (readBytes != 0)
+            {
+                for (count = 6; count < 37; count += 6)
+                {
+                    readBytes = await outputStream.ReadAsync(actualData, offset, count);
+                    if (readBytes == 0)
+                    {
+                        break;
+                    }
+                    offset += readBytes;
+                }
+            }
+
+            // Assert
+            TestHelper.AssertSequenceEqual(exectedData, actualData);
+        }
+
+        [Test]
+        [Ignore("Don't want to record 1 GB of data.")]
+        public async Task OpenReadAsync_LargeData()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            int size = 1 * Constants.GB;
+            byte[] exectedData = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(exectedData);
+            await file.UploadAsync(stream);
+
+            Stream outputStream = await file.OpenReadAsync();
+            int readSize = 8 * Constants.MB;
+            byte[] actualData = new byte[readSize];
+            int offset = 0;
+
+            // Act
+            for (int i = 0; i < size / readSize; i++)
+            {
+
+                await outputStream.ReadAsync(actualData, 0, readSize);
+                for (int j = 0; j < readSize; j++)
+                {
+                    // Assert
+                    if (actualData[j] != exectedData[offset + j])
+                    {
+                        Assert.Fail($"Index {offset + j} does not match.  Expected: {exectedData[offset + j]} Actual: {actualData[j]}");
+                    }
+                }
+                offset += readSize;
+            }
+        }
+
+        [Test]
+        public async Task OpenReadAsync_InvalidParameterTests()
+        {
+            // Arrange
+            ShareFileClient file = new ShareFileClient(new Uri("https://www.doesntmatter.com"));
+            Stream stream = await file.OpenReadAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                stream.ReadAsync(buffer: null, offset: 0, count: 10),
+                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
+                    e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
+                    e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
+                    e.Message));
+        }
+
+        public async Task GetFileClient_AsciiName()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            var name = GetNewFileName();
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
+            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
+        [Test]
+        public async Task GetFileClient_NonAsciiName()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            var name = GetNewNonAsciiFileName();
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
+            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
         }
 
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)

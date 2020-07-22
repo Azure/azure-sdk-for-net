@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of NetworkRuleSet resource.
+    /// Description of topic resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class NetworkRuleSet : Resource
@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="defaultAction">Default Action for Network Rule Set.
         /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="virtualNetworkRules">List VirtualNetwork Rules</param>

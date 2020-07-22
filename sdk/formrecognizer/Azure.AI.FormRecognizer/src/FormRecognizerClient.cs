@@ -2,42 +2,113 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
+    /// The client to use to connect to the Form Recognizer Azure Cognitive Service to recognize
+    /// information from forms and images and extract it into structured data. It provides the ability to analyze receipts,
+    /// to recognize form content, and to extract fields from custom forms with models trained on custom form types.
     /// </summary>
     public class FormRecognizerClient
     {
-        internal readonly ServiceClient ServiceClient;
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        internal readonly ServiceRestClient ServiceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        internal readonly ClientDiagnostics Diagnostics;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizerClient"/>.
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
         /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <remarks>
+        /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
+        /// can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new FormRecognizerClientOptions())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizerClient"/>.
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
         /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <remarks>
+        /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
+        /// can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
-            var diagnostics = new ClientDiagnostics(options);
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormRecognizerClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new FormRecognizerClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormRecognizerClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
+        /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        internal FormRecognizerClient(ClientDiagnostics diagnostics, ServiceRestClient serviceClient)
+        {
+            Diagnostics = diagnostics;
+            ServiceClient = serviceClient;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
         /// </summary>
         protected FormRecognizerClient()
         {
@@ -48,87 +119,131 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeOptions"></param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
-            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
+            Argument.AssertNotNull(form, nameof(form));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContent)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
+
+                Response response = ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeOptions"></param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
-            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(form, nameof(form));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContent)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
+
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, form, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeOptions"></param>
+        /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            Argument.AssertNotNull(formUri, nameof(formUri));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContentFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeOptions"></param>
+        /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(formUri, nameof(formUri));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContentFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -138,83 +253,131 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="receiptLocale"></param>>
-        /// <param name="contentType"></param>
-        /// <param name="recognizeOptions"></param>
+        /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, ContentType contentType, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receipt, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            Argument.AssertNotNull(receipt, nameof(receipt));
 
             recognizeOptions ??= new RecognizeOptions();
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeReceipts)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
+
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
-        /// <param name="contentType"></param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, ContentType contentType, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receipt, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            Argument.AssertNotNull(receipt, nameof(receipt));
 
             recognizeOptions ??= new RecognizeOptions();
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeReceipts)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
+
+                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptUri, nameof(receiptUri));
+
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeReceiptsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation.Value"/> upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, string receiptLocale="en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptUri, nameof(receiptUri));
+
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeReceiptsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -222,95 +385,179 @@ namespace Azure.AI.FormRecognizer
         #region Custom Forms
 
         /// <summary>
-        /// Recognizes pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
-        /// completion will contain extracted pages from the input document.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
+        /// completion will contain recognized pages from the input document.</returns>
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
-            //// TODO: automate content-type detection
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
-            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
-            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeCustomForms)}");
+            scope.Start();
+
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+
+                Response response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Recognizes pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
-        /// completion will contain extracted pages from the input document.</returns>
-        [ForwardsClientCalls]
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
+        /// completion will contain recognized pages from the input document.</returns>
         public virtual RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeCustomFormsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Recognizes pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
-        /// completion will contain extracted pages from the input document.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
+        /// completion will contain recognized pages from the input document.</returns>
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
-            //// TODO: automate content-type detection
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
-            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeCustomForms)}");
+            scope.Start();
+
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+
+                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Recognizes pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
         /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
+        /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
-        /// completion will contain extracted pages from the input document.</returns>
-        [ForwardsClientCalls]
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
+        /// completion will contain recognized pages from the input document.</returns>
         public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
-            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            recognizeOptions ??= new RecognizeOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeCustomFormsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
 
-        #region Training client
         /// <summary>
+        /// Used as part of argument validation. Detects the <see cref="FormContentType"/> of a stream and
+        /// throws an <see cref="ArgumentException"/> in case of failure.
         /// </summary>
-        /// <returns></returns>
-        public virtual FormTrainingClient GetFormTrainingClient()
+        /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
+        /// <param name="paramName">The original parameter name of the <paramref name="stream"/>. Used to create exceptions in case of failure.</param>
+        /// <returns>The detected <see cref="FormContentType"/>.</returns>
+        /// <exception cref="ArgumentException">Thrown when detection fails or cannot be performed.</exception>
+        private static FormContentType DetectContentType(Stream stream, string paramName)
         {
-            throw new NotImplementedException();
-        }
+            FormContentType contentType;
 
-        #endregion Training client
+            if (!stream.CanSeek)
+            {
+                throw new ArgumentException($"Content type cannot be detected because stream is not seekable. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
+            }
+
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException($"Content type cannot be detected because stream is not readable. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
+            }
+
+            if (!stream.TryGetContentType(out contentType))
+            {
+                throw new ArgumentException($"Content type of the stream could not be detected. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
+            }
+
+            return contentType;
+        }
     }
 }

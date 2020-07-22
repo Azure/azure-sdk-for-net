@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/sentiment?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "222",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8bb348113259ca40b49957fdd98a64a5-70a02f2d103f874b-00",
+        "traceparent": "00-4f8a50771026ca4f83a07ab0f7bbc60b-768c33405533d546-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "579c804c95affd5d48f58ca7c824669c",
         "x-ms-return-client-request-id": "true"
@@ -31,14 +31,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f122d5fb-e6c9-4244-a8bd-f36e033d26eb",
+        "apim-request-id": "61dfedcb-dc9b-44f2-a773-0f89791ca585",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 07 Feb 2020 19:13:32 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "105"
+        "x-envoy-upstream-service-time": "88"
       },
       "ResponseBody": {
         "statistics": {
@@ -55,7 +55,7 @@
               "charactersCount": 66,
               "transactionsCount": 1
             },
-            "documentScores": {
+            "confidenceScores": {
               "positive": 1.0,
               "neutral": 0.0,
               "negative": 0.0
@@ -63,25 +63,28 @@
             "sentences": [
               {
                 "sentiment": "positive",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 1.0,
                   "neutral": 0.0,
                   "negative": 0.0
                 },
                 "offset": 0,
-                "length": 34
+                "length": 34,
+                "text": "That was the best day of my life!."
               },
               {
                 "sentiment": "positive",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 1.0,
                   "neutral": 0.0,
                   "negative": 0.0
                 },
                 "offset": 35,
-                "length": 31
+                "length": 31,
+                "text": "I had a lot of fun at the park."
               }
-            ]
+            ],
+            "warnings": []
           },
           {
             "id": "1",
@@ -90,7 +93,7 @@
               "charactersCount": 62,
               "transactionsCount": 1
             },
-            "documentScores": {
+            "confidenceScores": {
               "positive": 0.0,
               "neutral": 0.0,
               "negative": 1.0
@@ -98,35 +101,38 @@
             "sentences": [
               {
                 "sentiment": "neutral",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 0.02,
                   "neutral": 0.85,
                   "negative": 0.13
                 },
                 "offset": 0,
-                "length": 43
+                "length": 43,
+                "text": "I\u0027m not sure how I feel about this product."
               },
               {
                 "sentiment": "negative",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 0.0,
                   "neutral": 0.0,
                   "negative": 1.0
                 },
                 "offset": 44,
-                "length": 18
+                "length": 18,
+                "text": "It is complicated."
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-04-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "521540654",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

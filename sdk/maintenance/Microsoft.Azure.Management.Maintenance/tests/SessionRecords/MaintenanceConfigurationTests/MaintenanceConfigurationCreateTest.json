@@ -67,10 +67,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg8049/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk1868?api-version=2018-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnODA0OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGsxODY4P2FwaS12ZXJzaW9uPTIwMTgtMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg8049/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk1868?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnODA0OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGsxODY4P2FwaS12ZXJzaW9uPTIwMjAtMDctMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"maintenanceScope\": \"Host\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n  \"startDateTime\": \"2020-04-01 01:00:00\"\r\n ,\r\n    \"maintenanceScope\": \"Host\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "d02cb00e-4f46-4f3d-a52c-c53d8eb0d912"
@@ -129,7 +129,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"extensionProperties\": {},\r\n    \"maintenanceScope\": \"Host\"\r\n  },\r\n  \"id\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg8049/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk1868\",\r\n  \"name\": \"maintenancesdk1868\",\r\n  \"type\": \"Microsoft.Maintenance/maintenanceConfigurations\"\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"extensionProperties\": {},\r\n  \"maintenanceWindow\":{ \"startDateTime\": \"2020-04-01 01:00:00\"\r\n }, \r\n    \"maintenanceScope\": \"Host\"\r\n  },\r\n  \"id\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg8049/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk1868\",\r\n  \"name\": \"maintenancesdk1868\",\r\n  \"type\": \"Microsoft.Maintenance/maintenanceConfigurations\"\r\n}",
       "StatusCode": 200
     }
   ],

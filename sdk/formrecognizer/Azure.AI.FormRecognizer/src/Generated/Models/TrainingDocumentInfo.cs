@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             DocumentName = documentName;
             PageCount = pageCount;
-            Errors = errors.ToArray();
+            Errors = errors.ToList();
             Status = status;
         }
 

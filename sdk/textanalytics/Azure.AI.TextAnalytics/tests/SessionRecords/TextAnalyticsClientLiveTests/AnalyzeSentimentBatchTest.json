@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/sentiment",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "224",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-dfee0f86089a0747a87f53d82e21c604-4e9bf95ec8d91344-00",
+        "traceparent": "00-30e3ed66cfb7e543b7cd787b5a16f1d8-6ff75edc8930ba47-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "9b1a7a4849c013a2dbd83a823b800418",
         "x-ms-return-client-request-id": "true"
@@ -31,21 +31,21 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "297a3fe0-648b-40c5-8dc6-370bce8cdbba",
+        "apim-request-id": "a589ee77-4591-4dfc-bb56-a584733c8805",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 07 Feb 2020 19:13:30 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "105"
+        "x-envoy-upstream-service-time": "93"
       },
       "ResponseBody": {
         "documents": [
           {
             "id": "1",
             "sentiment": "positive",
-            "documentScores": {
+            "confidenceScores": {
               "positive": 1.0,
               "neutral": 0.0,
               "negative": 0.0
@@ -53,30 +53,33 @@
             "sentences": [
               {
                 "sentiment": "positive",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 1.0,
                   "neutral": 0.0,
                   "negative": 0.0
                 },
                 "offset": 0,
-                "length": 52
+                "length": 52,
+                "text": "Pike Place Market is my favorite Seattle attraction."
               },
               {
                 "sentiment": "positive",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 1.0,
                   "neutral": 0.0,
                   "negative": 0.0
                 },
                 "offset": 54,
-                "length": 25
+                "length": 25,
+                "text": "We had so much fun there."
               }
-            ]
+            ],
+            "warnings": []
           },
           {
             "id": "2",
             "sentiment": "negative",
-            "documentScores": {
+            "confidenceScores": {
               "positive": 0.06,
               "neutral": 0.1,
               "negative": 0.84
@@ -84,35 +87,38 @@
             "sentences": [
               {
                 "sentiment": "negative",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 0.11,
                   "neutral": 0.18,
                   "negative": 0.71
                 },
                 "offset": 0,
-                "length": 24
+                "length": 24,
+                "text": "Esta comida no me gusta."
               },
               {
                 "sentiment": "negative",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 0.01,
                   "neutral": 0.01,
                   "negative": 0.98
                 },
                 "offset": 25,
-                "length": 31
+                "length": 31,
+                "text": "Siempre que la como me enfermo."
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-04-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "224927572",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.Training
         internal static Model_internal DeserializeModel_internal(JsonElement element)
         {
             ModelInfo_internal modelInfo = default;
-            KeysResult_internal keys = default;
-            TrainResult_internal trainResult = default;
+            Optional<KeysResult_internal> keys = default;
+            Optional<TrainResult_internal> trainResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
@@ -28,24 +28,16 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("keys"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keys = KeysResult_internal.DeserializeKeysResult_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainResult"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     trainResult = TrainResult_internal.DeserializeTrainResult_internal(property.Value);
                     continue;
                 }
             }
-            return new Model_internal(modelInfo, keys, trainResult);
+            return new Model_internal(modelInfo, keys.Value, trainResult.Value);
         }
     }
 }

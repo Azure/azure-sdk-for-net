@@ -1,6 +1,6 @@
 variables:
-  DocWardenVersion: '0.5.0'
-  DotNetCoreSDKVersion: '3.1.100'
+  DocWardenVersion: '0.6.1'
+  DotNetCoreSDKVersion: '3.1.301'
   DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
   ConvertToProjectReferenceOption: ''
@@ -9,3 +9,4 @@ variables:
     BuildConfiguration: 'Debug'
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
+  DocFxVersion: 'v2.56.1'

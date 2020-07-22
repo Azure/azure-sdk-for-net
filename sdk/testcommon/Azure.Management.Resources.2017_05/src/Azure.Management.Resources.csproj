@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>0.1.6-preview.1</Version>
+    <PackageId>Azure.Management.Resources</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.Resources</Description>
+    <PackageTags>azure;management;resources</PackageTags>
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
+  </PropertyGroup>
+</Project>

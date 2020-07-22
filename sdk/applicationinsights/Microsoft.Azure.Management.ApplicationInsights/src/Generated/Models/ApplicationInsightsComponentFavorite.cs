@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// with this favorite definition</param>
         /// <param name="category">Favorite category, as defined by the user at
         /// creation time.</param>
-        /// <param name="isGeneratedFromTemplate">Flag denoting whether or not
+        /// <param name="isGeneratedFromTemplate">Flag denoting wether or not
         /// this favorite was generated from a template.</param>
         /// <param name="userId">Unique user id of the specific user that owns
         /// this favorite.</param>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         public string Category { get; set; }
 
         /// <summary>
-        /// Gets or sets flag denoting whether or not this favorite was
+        /// Gets or sets flag denoting wether or not this favorite was
         /// generated from a template.
         /// </summary>
         [JsonProperty(PropertyName = "IsGeneratedFromTemplate")]

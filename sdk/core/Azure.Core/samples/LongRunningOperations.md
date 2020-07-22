@@ -13,7 +13,7 @@ The `WaitForCompletionAsync` method is an easy way to wait for operation complet
 SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
 // Start the operation
-DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
 Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
 DeletedSecret value = response.Value;
@@ -28,7 +28,7 @@ The `UpdateStatusAsync` method can be used to manually poll for the operation st
 
 ```C# Snippet:OperationUpdateStatus
 // Start the operation
-DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
 await operation.UpdateStatusAsync();
 

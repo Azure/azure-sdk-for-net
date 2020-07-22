@@ -3,10 +3,13 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core.Testing;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -25,42 +28,92 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
+        /// Creates a fake <see cref="FormRecognizerClient" />.
+        /// </summary>
+        /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateClient()
+        {
+            var fakeEndpoint = new Uri("http://notreal.azure.com");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential);
+        }
+
+        /// <summary>
+        /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
+        /// Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+
+        /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void ConstructorRequiresTheEndpoint()
         {
-            var credential = new AzureKeyCredential("key");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, credential));
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, credential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, tokenCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, tokenCredential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, keyCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, keyCredential, new FormRecognizerClientOptions()));
         }
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
-        public void ConstructorRequiresTheCredential()
+        public void ConstructorRequiresTheTokenCredential()
         {
             var endpoint = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, null));
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, null, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential), new FormRecognizerClientOptions()));
         }
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
+        public void ConstructorRequiresTheAzureKeyCredential()
+        {
+            var endpoint = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
+        /// </summary>
+        [Test]
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
-            var credential = new AzureKeyCredential("key");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, credential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
+        }
+
+        [Test]
+        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                await client.StartRecognizeContentFromUriAsync(uri);
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         /// <summary>
@@ -68,7 +121,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeContentRequiresTheFormFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -83,12 +135,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeContentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, default, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, options, cancellationSource.Token));
         }
 
         /// <summary>
@@ -96,7 +149,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeContentFromUriRequiresTheFormFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -116,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, default, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -124,11 +176,10 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null, ContentType.Jpeg));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null));
         }
 
         /// <summary>
@@ -139,12 +190,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeReceiptsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -152,7 +204,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeReceiptsFromUriRequiresTheReceiptFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -176,17 +227,124 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
-        /// Test Framework functionalities.
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
         /// </summary>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void StartRecognizeCustomFormsRequiresTheModelId(string modelId)
         {
-            var fakeEndpoint = new Uri("http://localhost");
-            var fakeCredential = new AzureKeyCredential("fakeKey");
-            var client = new FormRecognizerClient(fakeEndpoint, fakeCredential);
+            var client = CreateInstrumentedClient();
+            var expectedType = modelId == null
+                ? typeof(ArgumentNullException)
+                : typeof(ArgumentException);
 
-            return InstrumentClient(client);
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            var options = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+
+            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsAsync(modelId, stream, options));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsRequiresTheFormFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsValidatesTheModelIdFormat()
+        {
+            var client = CreateClient();
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            var options = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void StartRecognizeCustomFormsFromUriRequiresTheModelId(string modelId)
+        {
+            var client = CreateInstrumentedClient();
+            var expectedType = modelId == null
+                ? typeof(ArgumentNullException)
+                : typeof(ArgumentException);
+
+            var uri = new Uri("https://tobeornot.to.be");
+
+            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsFromUriRequiresTheFormFileUri()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsFromUriValidatesTheModelIdFormat()
+        {
+            var client = CreateClient();
+            var uri = new Uri("https://thatistheques.ti.on");
+
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
         }
     }
 }

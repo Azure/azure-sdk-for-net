@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.Management.Storage</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.Storage</Description>
+    <PackageTags>azure;management;storage</PackageTags>
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
+  </PropertyGroup>
+</Project>

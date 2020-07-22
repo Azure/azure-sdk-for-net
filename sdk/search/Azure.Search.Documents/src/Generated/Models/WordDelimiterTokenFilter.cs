@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Splits words into subwords and performs optional transformations on subword groups. This token filter is implemented using Apache Lucene. </summary>
     public partial class WordDelimiterTokenFilter : TokenFilter
@@ -22,6 +23,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            ProtectedWords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 
@@ -71,7 +73,5 @@ namespace Azure.Search.Documents.Models
         public bool? SplitOnNumerics { get; set; }
         /// <summary> A value indicating whether to remove trailing &quot;&apos;s&quot; for each subword. Default is true. </summary>
         public bool? StemEnglishPossessive { get; set; }
-        /// <summary> A list of tokens to protect from being delimited. </summary>
-        public IList<string> ProtectedWords { get; set; }
     }
 }

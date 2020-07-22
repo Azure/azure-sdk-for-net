@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</PackageId>
+    <Description>Provides developers with libraries for managing Live video analytics edge module using direct methods</Description>
+    <Version>1.0.0-preview.1</Version>
+    <AssemblyName>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</AssemblyName>
+    <PackageTags>Azure Media Live Video Analytics;Live Video Analytics;LVA;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        Release of Live video analytics V1 API
+            ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Devices" />
+    <PackageReference Include="Microsoft.Azure.Devices.Client" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
+    <PackageReference Include="System.ValueTuple" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+</Project>

@@ -1,15 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.Concurrent;
-    using System.Threading;
-    using System.Threading.Tasks;
-
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal sealed class ConcurrentExpiringSet<TKey>
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         public readonly ConcurrentDictionary<TKey, DateTimeOffset> dictionary;
 
@@ -27,39 +29,39 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
         public ConcurrentExpiringSet()
         {
-            this.dictionary = new ConcurrentDictionary<TKey, DateTimeOffset>();
-            this.dictionaryAsCollection = dictionary;
+            dictionary = new ConcurrentDictionary<TKey, DateTimeOffset>();
+            dictionaryAsCollection = dictionary;
             _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
         public void AddOrUpdate(TKey key, DateTimeOffset expiration)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
-            this.dictionary[key] = expiration;
-            this.cleanupTaskCompletionSource.TrySetResult(true);
+            dictionary[key] = expiration;
+            cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
-            return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTimeOffset.UtcNow;
+            return dictionary.TryGetValue(key, out var expiration) && expiration > DateTimeOffset.UtcNow;
         }
 
         public void Close()
         {
-            if (Interlocked.Exchange(ref this.closeSignaled, 1) != 0)
+            if (Interlocked.Exchange(ref closeSignaled, 1) != 0)
             {
                 return;
             }
 
-            this.closed = true;
+            closed = true;
 
-            this.tokenSource.Cancel();
-            this.cleanupTaskCompletionSource.TrySetCanceled();
-            this.dictionary.Clear();
-            this.tokenSource.Dispose();
+            tokenSource.Cancel();
+            cleanupTaskCompletionSource.TrySetCanceled();
+            dictionary.Clear();
+            tokenSource.Dispose();
         }
 
         public async Task CollectExpiredEntriesAsync(CancellationToken token)
@@ -68,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             {
                 try
                 {
-                    await this.cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
                     await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
@@ -78,19 +80,19 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
                 var isEmpty = true;
                 var utcNow = DateTimeOffset.UtcNow;
-                foreach (var kvp in this.dictionary)
+                foreach (var kvp in dictionary)
                 {
                     isEmpty = false;
                     var expiration = kvp.Value;
                     if (utcNow > expiration)
                     {
-                        this.dictionaryAsCollection.Remove(kvp);
+                        dictionaryAsCollection.Remove(kvp);
                     }
                 }
 
                 if (isEmpty)
                 {
-                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 }
             }
         }

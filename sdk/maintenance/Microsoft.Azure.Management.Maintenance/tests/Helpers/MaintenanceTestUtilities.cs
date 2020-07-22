@@ -42,6 +42,7 @@ namespace Maintenance.Tests
             var maintenanceConfiguration = new MaintenanceConfiguration(
                 name: maintenanceConfigurationName,
                 location: "westus",
+                startDateTime: "2020-04-01 01:00:00" ,
                 maintenanceScope: MaintenanceScope.Host);
 
             return maintenanceConfiguration;
@@ -50,6 +51,7 @@ namespace Maintenance.Tests
         public static void VerifyMaintenanceConfigurationProperties(MaintenanceConfiguration expected, MaintenanceConfiguration actual)
         {
             Assert.NotNull(actual);
+            Assert.Equal(expected.StartDateTime,actual.StartDateTime);
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Location, actual.Location);
             Assert.Equal(expected.MaintenanceScope, actual.MaintenanceScope);

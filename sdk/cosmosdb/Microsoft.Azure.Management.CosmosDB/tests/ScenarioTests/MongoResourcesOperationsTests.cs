@@ -68,10 +68,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
                     Resource = new MongoDBDatabaseResource {Id = databaseName},
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 MongoDBDatabaseGetResults mongoDBDatabaseGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -89,7 +86,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new MongoDBDatabaseResource { Id = databaseName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -112,10 +109,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Id = collectionName,
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 MongoDBCollectionGetResults mongoDBCollectionGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;

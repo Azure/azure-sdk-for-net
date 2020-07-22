@@ -26,17 +26,17 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
-            return new SharedTokenCacheCredential(tenantId, username, Pipeline);
+            return new SharedTokenCacheCredential(tenantId, username, null, Pipeline);
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline);
+            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { EnablePersistentCache = true }, Pipeline);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
         {
-            return new AzureCliCredential(Pipeline, new AzureCliCredentialClient());
+            return new AzureCliCredential(Pipeline, default);
         }
 
         public virtual TokenCredential CreateVisualStudioCredential(string tenantId)
@@ -46,7 +46,7 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
         {
-            return new VisualStudioCodeCredential(tenantId, Pipeline, default, default);
+            return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
         }
     }
 }

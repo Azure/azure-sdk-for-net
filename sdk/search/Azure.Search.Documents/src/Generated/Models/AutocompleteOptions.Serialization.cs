@@ -16,52 +16,46 @@ namespace Azure.Search.Documents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SearchText != null)
-            {
-                writer.WritePropertyName("search");
-                writer.WriteStringValue(SearchText);
-            }
-            if (Mode != null)
+            writer.WritePropertyName("search");
+            writer.WriteStringValue(SearchText);
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("autocompleteMode");
                 writer.WriteStringValue(Mode.Value.ToSerialString());
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteStringValue(Filter);
             }
-            if (UseFuzzyMatching != null)
+            if (Optional.IsDefined(UseFuzzyMatching))
             {
                 writer.WritePropertyName("fuzzy");
                 writer.WriteBooleanValue(UseFuzzyMatching.Value);
             }
-            if (HighlightPostTag != null)
+            if (Optional.IsDefined(HighlightPostTag))
             {
                 writer.WritePropertyName("highlightPostTag");
                 writer.WriteStringValue(HighlightPostTag);
             }
-            if (HighlightPreTag != null)
+            if (Optional.IsDefined(HighlightPreTag))
             {
                 writer.WritePropertyName("highlightPreTag");
                 writer.WriteStringValue(HighlightPreTag);
             }
-            if (MinimumCoverage != null)
+            if (Optional.IsDefined(MinimumCoverage))
             {
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (SearchFieldsRaw != null)
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields");
                 writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (SuggesterName != null)
-            {
-                writer.WritePropertyName("suggesterName");
-                writer.WriteStringValue(SuggesterName);
-            }
-            if (Size != null)
+            writer.WritePropertyName("suggesterName");
+            writer.WriteStringValue(SuggesterName);
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top");
                 writer.WriteNumberValue(Size.Value);

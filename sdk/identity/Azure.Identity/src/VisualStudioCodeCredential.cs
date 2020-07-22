@@ -15,9 +15,9 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio Code
+    /// Enables authentication to Azure Active Directory using data from Visual Studio Code.
     /// </summary>
-    internal class VisualStudioCodeCredential : TokenCredential
+    public class VisualStudioCodeCredential : TokenCredential
     {
         private const string CredentialsSection = "VS Code Azure";
         private const string ClientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
@@ -28,23 +28,21 @@ namespace Azure.Identity
         private readonly MsalPublicClient _client;
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-        protected VisualStudioCodeCredential() : this(default, default) {}
+        public VisualStudioCodeCredential() : this(default, default, default, default, default) { }
 
-        /// <inheritdoc />
-        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Options for configuring the credential.</param>
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
 
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, pipeline, pipeline.CreateMsalPublicClient(ClientId), fileSystem, vscAdapter)
+        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
         {
-        }
-
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-        {
-            _tenantId = tenantId ?? "common";
-            _pipeline = pipeline;
-            _client = client;
+            _tenantId = options?.TenantId ?? "common";
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
@@ -68,7 +66,7 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
 
-                if (!IsBase64UrlString(storedCredentials))
+                if (!IsRefreshTokenString(storedCredentials))
                 {
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
@@ -76,23 +74,22 @@ namespace Azure.Identity
                 var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
-            catch (OperationCanceledException e)
+            catch (MsalUiRequiredException e)
             {
-                scope.Failed(e);
-                throw;
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
             }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
-        private static bool IsBase64UrlString(string str)
+        private static bool IsRefreshTokenString(string str)
         {
             for (var index = 0; index < str.Length; index++)
             {
                 var ch = (uint)str[index];
-                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-')
+                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-' && ch != '.')
                 {
                     return false;
                 }

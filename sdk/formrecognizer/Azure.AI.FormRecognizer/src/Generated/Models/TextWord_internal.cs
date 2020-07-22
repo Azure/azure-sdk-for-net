@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
-            BoundingBox = boundingBox.ToArray();
+            BoundingBox = boundingBox.ToList();
         }
 
         /// <summary> Initializes a new instance of TextWord_internal. </summary>

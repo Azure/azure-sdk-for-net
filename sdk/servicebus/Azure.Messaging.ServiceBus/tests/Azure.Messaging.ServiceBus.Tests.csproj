@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 
@@ -26,7 +27,8 @@
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
-
-  <!-- Import the Azure.Core test framework (shared source) -->
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+  
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Transactions" />
+  </ItemGroup>
 </Project>

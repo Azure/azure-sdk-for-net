@@ -66,15 +66,15 @@ namespace Azure.Identity
             {
                 if (clientSecret != null)
                 {
-                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
+                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
                 }
                 else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
+                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
                 }
                 else if (clientCertificatePath != null)
                 {
-                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath);
+                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                throw scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
@@ -136,15 +136,9 @@ namespace Azure.Identity
 
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-                 throw scope.FailAndWrap(e);
+                 throw scope.FailWrapAndThrow(e);
             }
         }
     }

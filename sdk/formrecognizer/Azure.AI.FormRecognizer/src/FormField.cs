@@ -4,117 +4,121 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a field recognized in an input form.
     /// </summary>
     public class FormField
     {
-#pragma warning disable CA1801
-        internal FormField(KeyValuePair_internal field, ReadResult_internal readResult)
+        internal FormField(string name, int pageNumber, KeyValuePair_internal field, IReadOnlyList<ReadResult_internal> readResults)
         {
-#pragma warning restore CA1801
-            //Confidence = field.Confidence;
+            Confidence = field.Confidence;
+            Name = name;
 
-            //Name = field.Key.Text;
-            //NameBoundingBox = new BoundingBox(field.Key.BoundingBox);
+            BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
+            IReadOnlyList<FormElement> labelFormElement = field.Key.Elements != null
+                ? ConvertTextReferences(field.Key.Elements, readResults)
+                : new List<FormElement>();
+            LabelData = new FieldData(field.Key.Text, pageNumber, labelBoundingBox, labelFormElement);
 
-            //if (field.Key.Elements != null)
-            //{
-            //    NameTextElements = ConvertTextReferences(readResult, field.Key.Elements);
-            //}
+            BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
+            IReadOnlyList<FormElement> valueFormElement = field.Value.Elements != null
+                ? ConvertTextReferences(field.Value.Elements, readResults)
+                : new List<FormElement>();
+            ValueData = new FieldData(field.Value.Text, pageNumber, valueBoundingBox, valueFormElement);
 
-            //Value = field.Value.Text;
-            //ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-
-            //if (field.Value.Elements != null)
-            //{
-            //    ValueTextElements = ConvertTextReferences(readResult, field.Value.Elements);
-            //}
+            Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
         internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
         {
-            Confidence = fieldValue.Confidence ?? 1.0f;
+            Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
-            LabelText = null;
+            LabelData = null;
 
-            IReadOnlyList<FormContent> formContent = default;
-            if (fieldValue.Elements != null)
-            {
-                formContent = ConvertTextReferences(fieldValue.Elements, readResults);
-            }
+            IReadOnlyList<FormElement> FormElement = fieldValue.Elements != null
+                ? ConvertTextReferences(fieldValue.Elements, readResults)
+                : new List<FormElement>();
 
             // TODO: FormEnum<T> ?
             BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
 
-            ValueText = new FieldText(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, formContent);
+            ValueData = new FieldData(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, FormElement);
             Value = new FieldValue(fieldValue, readResults);
         }
 
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
-        /// Text from the form that labels the form field.
+        /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; internal set; }
+        public FieldData LabelData { get; }
 
         /// <summary>
+        /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; internal set; }
+        public FieldData ValueData { get; }
 
         /// <summary>
+        /// The strongly-typed value of this <see cref="FormField"/>.
         /// </summary>
-        public FieldValue Value { get; internal set; }
+        public FieldValue Value { get; }
 
         /// <summary>
+        /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
         /// </summary>
         public float Confidence { get; }
 
-        internal static IReadOnlyList<FormContent> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<FormElement> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
         {
-            List<FormContent> formContent = new List<FormContent>();
+            List<FormElement> FormElement = new List<FormElement>();
             foreach (var reference in references)
             {
-                formContent.Add(ResolveTextReference(readResults, reference));
+                FormElement.Add(ResolveTextReference(readResults, reference));
             }
-            return formContent;
+            return FormElement;
         }
 
-        private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
+        private static FormElement ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
 
             // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
-            // "#/readResults/3/lines/7/words/12"
-            string[] segments = reference.Split('/');
+            // "#/analyzeResult/readResults/3/lines/7/words/12" from DocumentResult
+            // "#/readResults/3/lines/7/words/12" from PageResult
 
-            // Line Reference
-            if (segments.Length == 5)
+            // Word Reference
+            var wordMatch = _wordRegex.Match(reference);
+            if (wordMatch.Success && wordMatch.Groups.Count == 4)
             {
-                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
-                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
-
-                return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
-            }
-            else if (segments.Length == 7)
-            {
-                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
-                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
-                var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
+                int pageIndex = int.Parse(wordMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(wordMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
+                int wordIndex = int.Parse(wordMatch.Groups["wordIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], pageIndex + 1);
             }
-            else
+
+            // Line Reference
+            var lineMatch = _lineRegex.Match(reference);
+            if (lineMatch.Success && lineMatch.Groups.Count == 3)
             {
-                throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+                int pageIndex = int.Parse(lineMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(lineMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
+
+                return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
             }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
     }
 }

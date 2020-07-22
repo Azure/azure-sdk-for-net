@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/recognition/general",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c9c5edf8a382374e93b6192f59032b81-e51df3a27780ff46-00",
+        "traceparent": "00-e81121f65bdc3f41ac47ea302b696684-4942716d0d1fa74d-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200227.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "07ad4077476a418d44cfbd63dd8b9b76",
         "x-ms-return-client-request-id": "true"
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "58f4275b-f82c-4342-8559-102bf57b16e4",
+        "apim-request-id": "4c336945-7370-4b62-9960-ad0b2fb9a671",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 27 Feb 2020 17:33:53 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "54"
+        "x-envoy-upstream-service-time": "80"
       },
       "ResponseBody": {
         "documents": [
@@ -41,32 +41,40 @@
             "id": "0",
             "entities": [
               {
+                "text": "trip",
+                "category": "Event",
+                "offset": 18,
+                "length": 4,
+                "confidenceScore": 0.61
+              },
+              {
                 "text": "Seattle",
-                "type": "Location",
-                "subtype": "GPE",
+                "category": "Location",
+                "subcategory": "GPE",
                 "offset": 26,
                 "length": 7,
-                "score": 0.92
+                "confidenceScore": 0.82
               },
               {
                 "text": "last week",
-                "type": "DateTime",
-                "subtype": "DateRange",
+                "category": "DateTime",
+                "subcategory": "DateRange",
                 "offset": 34,
                 "length": 9,
-                "score": 0.8
+                "confidenceScore": 0.8
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2020-02-01"
+        "modelVersion": "2020-04-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1060086319",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

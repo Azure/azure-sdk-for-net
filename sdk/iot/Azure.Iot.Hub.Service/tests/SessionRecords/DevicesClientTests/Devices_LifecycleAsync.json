@@ -1,0 +1,164 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/testDevice57405026?api-version=2020-03-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200616.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "7199857ec501b44f5b1e16f6b24a710c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "153",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "iothub-errorcode": "DeviceNotFound",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "59dd6620-aeac-49b5-b6ac-cb55829f6908"
+      },
+      "ResponseBody": {
+        "Message": "ErrorCode:DeviceNotFound;testDevice57405026",
+        "ExceptionMessage": "Tracking ID:9c61c6b1c22e4fbf9747dde38e995284-TimeStamp:06/16/2020 22:34:56"
+      }
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/testDevice57405026?api-version=2020-03-13",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200616.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "b4379d4563261aacb6caed522b30be56",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "deviceId": "testDevice57405026"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "602",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "ETag": "\u0022NzUzMzQwNTQ4\u0022",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "d6bd86f4-2b38-4298-80fc-12e6792c6281"
+      },
+      "ResponseBody": {
+        "deviceId": "testDevice57405026",
+        "generationId": "637279436963743765",
+        "etag": "NzUzMzQwNTQ4",
+        "connectionState": "Disconnected",
+        "status": "enabled",
+        "statusReason": null,
+        "connectionStateUpdatedTime": "0001-01-01T00:00:00",
+        "statusUpdatedTime": "0001-01-01T00:00:00",
+        "lastActivityTime": "0001-01-01T00:00:00",
+        "cloudToDeviceMessageCount": 0,
+        "authentication": {
+          "symmetricKey": {
+            "primaryKey": "gT9h6sBk1DdThl7X8q72D0o5TPJI5wbxP9ilMbv7BwM=",
+            "secondaryKey": "4lAXP9CSPQuDkAkacZxU91D/fvh\u002B01DVVs0pc3K/zYM="
+          },
+          "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+          },
+          "type": "sas"
+        },
+        "capabilities": {
+          "iotEdge": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/testDevice57405026?api-version=2020-03-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200616.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "524a1450ce9d39fb510860d0d648e4be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "605",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "ETag": "\u0022NzUzMzQwNTQ4\u0022",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "9d4bf215-4206-42dd-ad97-040cc261274e"
+      },
+      "ResponseBody": {
+        "deviceId": "testDevice57405026",
+        "generationId": "637279436963743765",
+        "etag": "NzUzMzQwNTQ4",
+        "connectionState": "Disconnected",
+        "status": "enabled",
+        "statusReason": null,
+        "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
+        "statusUpdatedTime": "0001-01-01T00:00:00Z",
+        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "cloudToDeviceMessageCount": 0,
+        "authentication": {
+          "symmetricKey": {
+            "primaryKey": "gT9h6sBk1DdThl7X8q72D0o5TPJI5wbxP9ilMbv7BwM=",
+            "secondaryKey": "4lAXP9CSPQuDkAkacZxU91D/fvh\u002B01DVVs0pc3K/zYM="
+          },
+          "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+          },
+          "type": "sas"
+        },
+        "capabilities": {
+          "iotEdge": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/testDevice57405026?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200616.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "86892cd14ec91b3bd97fbb36d8fd892b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "6711bca8-1e38-486e-b29e-57c6284160c6"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "IOT_HUB_CONNECTION_STRING": "HostName=AzadE2EHub33.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "RandomSeed": "295524903"
+  }
+}

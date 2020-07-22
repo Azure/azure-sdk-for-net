@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The Customer's Policy.
+    /// The customer's Policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class CustomerPolicy : Resource
@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="viewCharges">Customer can view retail prices. Possible
-        /// values include: 'Allowed', 'NotAllowed'</param>
+        /// <param name="viewCharges">The policy that controls whether the
+        /// users in customer's organization can view charges at pay-as-you-go
+        /// prices. Possible values include: 'Allowed', 'NotAllowed'</param>
         public CustomerPolicy(string id = default(string), string name = default(string), string type = default(string), string viewCharges = default(string))
             : base(id, name, type)
         {
@@ -50,8 +51,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets customer can view retail prices. Possible values
-        /// include: 'Allowed', 'NotAllowed'
+        /// Gets or sets the policy that controls whether the users in
+        /// customer's organization can view charges at pay-as-you-go prices.
+        /// Possible values include: 'Allowed', 'NotAllowed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.viewCharges")]
         public string ViewCharges { get; set; }

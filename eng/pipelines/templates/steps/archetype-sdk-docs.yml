@@ -3,16 +3,6 @@ steps:
     displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
     inputs:
       version: $(DotNetCoreSDKVersion)
-  - task: UsePythonVersion@0
-    displayName: 'Use Python 3.6'
-    inputs:
-      versionSpec: '3.6'
-  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
-    parameters:
-      TargetFolder: '.'
-      RootFolder: '.'
-      BuildSHA: $(Build.SourceVersion)
-      RepoId: 'Azure/azure-sdk-for-net'
   - pwsh: |
       # Download and Extract or restore Packages required for Doc Generation
       Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
@@ -20,7 +10,7 @@ steps:
       -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
 
       Write-Host "Download and Extract docfx to Build.BinariesDirectory/docfx"
-      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/$(DocFxVersion)/docfx.zip" `
       -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
 
       Write-Host "Restore ${{parameters.DocGenerationDir}}/assets/docgen.csproj, to get ECMA2Yml and popimport"

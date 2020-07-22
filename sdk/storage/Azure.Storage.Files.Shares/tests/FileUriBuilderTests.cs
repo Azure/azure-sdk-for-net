@@ -3,7 +3,7 @@
 
 using System;
 using System.Net;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.Test
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.file.core.windows.net/share?snapshot=2011-03-09T01:42:34.9360000Z";
+            var uriString = "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -206,7 +206,34 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(string.Empty, shareUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder4.AccountName);
+        }
 
+        [Test]
+        public void FileUriBuilder_SpecialCharacters()
+        {
+            // Unencoded.  We want to encode the special characters.
+            string path = "!'();/[]@&%=+$/,#äÄö/ÖüÜß;";
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net/share"))
+            {
+                DirectoryOrFilePath = path
+            };
+            Uri uri = shareUriBuilder.ToUri();
+
+            Assert.AreEqual(
+                new Uri("https://account.file.core.windows.net/share/%21%27%28%29%3B/%5B%5D%40%26%25%3D%2B%24/%2C%23äÄö/ÖüÜß%3B"),
+                uri);
+
+            // Encoded.  We want to encode again, because this is the literal path the customer wants.
+            path = "%21%27%28%29%3B/%5B%5D%40%26%25%3D%2B%24/%2C%23äÄö/ÖüÜß%3B";
+            shareUriBuilder = new ShareUriBuilder(new Uri("https://account.file.core.windows.net/share"))
+            {
+                DirectoryOrFilePath = path
+            };
+            uri = shareUriBuilder.ToUri();
+
+            Assert.AreEqual(
+                new Uri("https://account.file.core.windows.net/share/%2521%2527%2528%2529%253B/%255B%255D%2540%2526%2525%253D%252B%2524/%252C%2523äÄö/ÖüÜß%253B"),
+                uri);
         }
     }
 }

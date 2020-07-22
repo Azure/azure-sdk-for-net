@@ -60,7 +60,7 @@ namespace Azure.Core
         public bool HasResponse => _response != null;
 
         /// <summary>
-        /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
+        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
         /// </summary>
         public CancellationToken CancellationToken { get; internal set; }
 

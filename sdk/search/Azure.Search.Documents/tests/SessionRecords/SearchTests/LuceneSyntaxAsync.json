@@ -1,46 +1,46 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-amyysbpg.search.windows.net/indexes(\u0027gerhvwda\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "110",
+        "Content-Length": "75",
         "Content-Type": "application/json",
-        "traceparent": "00-6673f6d37f6ac34dbce8b13825c7f906-a296c29375cd7449-00",
+        "traceparent": "00-35ad745c3023854a81c1e61b1f0fe8ba-ab9cd2baabd6164f-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "547bdca856ac6b95fbe8f0f9687543ee",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
         "queryType": "full",
-        "scoringParameters": [],
         "search": "hotelName:roch~",
         "select": "hotelName,rating"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "177",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 11 Mar 2020 18:37:48 GMT",
+        "client-request-id": "547bdca8-56ac-6b95-fbe8-f0f9687543ee",
+        "Content-Length": "76",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 17 Jul 2020 20:26:43 GMT",
         "elapsed-time": "8",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "547bdca8-56ac-6b95-fbe8-f0f9687543ee",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "547bdca8-56ac-6b95-fbe8-f0f9687543ee"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-amyysbpg.search.windows.net/indexes(\u0027gerhvwda\u0027)/$metadata#docs(*)",
         "value": [
           {
-            "@search.score": 1.8411939,
+            "@search.score": 1.2057109,
             "hotelName": "Roach Motel",
             "rating": 1
           }
@@ -50,7 +50,8 @@
   ],
   "Variables": {
     "RandomSeed": "1340537138",
-    "SearchIndexName": "gerhvwda",
-    "SearchServiceName": "azs-net-amyysbpg"
+    "SearchIndexName": "aypqybvw",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
   }
 }

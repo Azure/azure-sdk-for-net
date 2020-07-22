@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -20,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void EncryptDecryptSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample4KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

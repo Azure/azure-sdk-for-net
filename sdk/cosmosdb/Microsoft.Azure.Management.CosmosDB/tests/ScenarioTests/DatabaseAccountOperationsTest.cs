@@ -47,7 +47,10 @@ namespace CosmosDB.Tests.ScenarioTests
                         MaxIntervalInSeconds = 1000
                     },
                     Locations = locations,
-                    IpRangeFilter = "192.168.1.0/24,10.0.0.0/24",
+                    IpRules = new List<IpAddressOrRange>
+                    {
+                        new IpAddressOrRange("23.43.230.120")
+                    },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
                     EnableMultipleWriteLocations = true,
@@ -80,7 +83,10 @@ namespace CosmosDB.Tests.ScenarioTests
                         MaxIntervalInSeconds = 12000
                     },
                     Locations = locations,
-                    IpRangeFilter = "192.168.3.0/24,110.0.0.0/24",
+                    IpRules = new List<IpAddressOrRange>
+                    {
+                        new IpAddressOrRange("23.43.230.120")
+                    },
                     IsVirtualNetworkFilterEnabled = false,
                     EnableAutomaticFailover = true,
                     EnableCassandraConnector = true,

@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V3_0_preview_1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_1;
 
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
@@ -23,9 +23,14 @@ namespace Azure.AI.TextAnalytics
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version 3.0-preview.1
+            /// Version 3.0
             /// </summary>
-            V3_0_preview_1 = 1
+            V3_0 = 1,
+
+            /// <summary>
+            /// Version 3.1-preview.1
+            /// </summary>
+            V3_1_Preview_1 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -64,14 +69,13 @@ namespace Azure.AI.TextAnalytics
 
         internal string GetVersionString()
         {
-            switch (Version)
+            return Version switch
             {
-                case ServiceVersion.V3_0_preview_1:
-                    return "v3.0-preview.1";
+                ServiceVersion.V3_0 => "v3.0",
+                ServiceVersion.V3_1_Preview_1 => "v3.1-preview.1",
 
-                default:
-                    throw new ArgumentException($"Version {Version.ToString()} not supported.");
-            }
+                _ => throw new ArgumentException($"Version {Version.ToString()} not supported."),
+            };
         }
     }
 }

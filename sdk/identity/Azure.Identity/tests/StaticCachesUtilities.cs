@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests
     {
         private static readonly Lazy<Action> s_clearStaticMetadataProvider = new Lazy<Action>(() =>
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.StaticMetadataProvider", true);
+            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.NetworkCacheMetadataProvider", true);
             MethodInfo clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance);
             NewExpression callConstructor = Expression.New(staticMetadataProviderType);
             MethodCallExpression invokeClear = Expression.Call(callConstructor, clearMethod);
@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
         {
             var assembly = typeof(PublicClientApplication).Assembly;
             Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityEndpointResolutionManager", true);
-            Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Core.IServiceBundle", true);
+            Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Internal.IServiceBundle", true);
             Type booleanType = typeof(bool);
 
             ConstructorInfo[] constructors = authorityEndpointResolutionManagerType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);

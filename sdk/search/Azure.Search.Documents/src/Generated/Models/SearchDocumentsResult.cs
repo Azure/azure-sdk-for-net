@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
@@ -24,7 +25,8 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of SearchDocumentsResult. </summary>

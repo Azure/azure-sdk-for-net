@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
-            BoundingBox = boundingBox.ToArray();
-            Words = words.ToArray();
+            BoundingBox = boundingBox.ToList();
+            Words = words.ToList();
         }
 
         /// <summary> Initializes a new instance of TextLine_internal. </summary>

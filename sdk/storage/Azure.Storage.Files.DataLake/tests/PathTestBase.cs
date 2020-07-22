@@ -3,17 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
     public class PathTestBase : DataLakeTestBase
     {
-        public PathTestBase(bool async) : this(async, null) { }
-
-        public PathTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+        public PathTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
+            : base(async, serviceVersion, mode)
         {
         }
 

@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
