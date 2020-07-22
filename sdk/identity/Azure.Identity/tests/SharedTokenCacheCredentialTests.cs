@@ -24,13 +24,13 @@ namespace Azure.Identity.Tests
 
             var expectedHomeId = $"{Guid.NewGuid()}.{Guid.NewGuid()}";
 
-            var expectedEnvironment = KnownAuthorityHosts.AzureCloud.ToString();
+            var expectedEnvironment = AzureAuthorityHosts.AzureCloud.ToString();
 
             var acquireTokenSilentCalled = false;
 
             var options = new SharedTokenCacheCredentialOptions
             {
-                AuthenticationRecord = new AuthenticationRecord(expectedUsername, expectedEnvironment, expectedHomeId, Guid.NewGuid().ToString())
+                AuthenticationRecord = new AuthenticationRecord(expectedUsername, expectedEnvironment, expectedHomeId, Guid.NewGuid().ToString(), Guid.NewGuid().ToString())
             };
 
             var mockMsalClient = new MockMsalPublicClient
