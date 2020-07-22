@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -12,6 +13,11 @@ namespace Azure.Data.Tables
 {
     internal static class DictionaryTableExtensions
     {
+        /// <summary>
+        /// A cache for reflected <see cref="PropertyInfo"/> array for the given <see cref="Type"/>.
+        /// </summary>
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> s_propertyInfoCache = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
         /// <summary>
         /// Returns a new Dictionary with the appropriate Odata type annotation for a given propertyName value pair.
         /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
@@ -109,8 +115,12 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
         {
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            var result = new List<T>();
+            PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
+
+            var result = new List<T>(entityList.Count);
 
             foreach (var entity in entityList)
             {
@@ -127,7 +137,11 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
         {
-            properties ??= typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
+
             var result = new T();
 
             // Iterate through each property of the entity and set them as the correct type.

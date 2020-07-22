@@ -161,7 +161,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties
     {
         public Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get { throw null; } }
     }
     public partial class Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties
     {
@@ -171,20 +171,20 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class ConfigurationContent
     {
         public ConfigurationContent() { }
-        public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> ModulesContent { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ModulesContent { get { throw null; } }
     }
     public partial class ConfigurationMetrics
     {
         public ConfigurationMetrics() { }
-        public System.Collections.Generic.IDictionary<string, string> Queries { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, long> Results { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Queries { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, long> Results { get { throw null; } }
     }
     public partial class ConfigurationQueriesTestInput
     {
         public ConfigurationQueriesTestInput() { }
-        public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } }
         public string TargetCondition { get { throw null; } set { } }
     }
     public partial class ConfigurationQueriesTestResponse
@@ -236,7 +236,7 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public string GenerationId { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.DeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdatedTime { get { throw null; } set { } }
@@ -518,7 +518,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class DigitalTwinInterfacesPatch
     {
         public DigitalTwinInterfacesPatch() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties> Interfaces { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties> Interfaces { get { throw null; } }
     }
     public partial class DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired
     {
@@ -535,11 +535,11 @@ namespace Azure.Iot.Hub.Service.Models
         public string Id { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceImportMode? ImportMode { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.PropertyContainer Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public string TwinETag { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -851,8 +851,8 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class PropertyContainer
     {
         public PropertyContainer() { }
-        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
     }
     public partial class PurgeMessageQueueResult
     {
@@ -942,7 +942,7 @@ namespace Azure.Iot.Hub.Service.Models
         public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } set { } }
         public string Etag { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ConfigurationMetrics Metrics { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -981,20 +981,20 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.TwinProperties Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.TwinStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdateTime { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public long? Version { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.X509Thumbprint X509Thumbprint { get { throw null; } set { } }
     }
     public partial class TwinProperties
     {
         public TwinProperties() { }
-        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TwinStatus : System.IEquatable<Azure.Iot.Hub.Service.Models.TwinStatus>
