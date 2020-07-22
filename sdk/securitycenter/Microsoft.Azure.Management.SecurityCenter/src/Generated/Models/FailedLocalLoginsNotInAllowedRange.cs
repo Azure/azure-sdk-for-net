@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of failed local logins is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FailedLocalLoginsNotInAllowedRange")]
     public partial class FailedLocalLoginsNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>
