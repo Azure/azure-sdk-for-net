@@ -129,7 +129,7 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ResponseDelayEvent, requestId, seconds);
         }
 
-        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Request [{0}] exception {1}")]
+        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
         public void ExceptionResponse(string requestId, string exception)
         {
             WriteEvent(ExceptionResponseEvent, requestId, exception);
