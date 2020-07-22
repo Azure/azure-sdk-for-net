@@ -34,9 +34,9 @@ namespace Azure.Identity
     }
     public static partial class AzureAuthorityHosts
     {
-        public static System.Uri AzureChinaCloud { get { throw null; } }
-        public static System.Uri AzureCloud { get { throw null; } }
-        public static System.Uri AzureGermanCloud { get { throw null; } }
+        public static System.Uri AzureChina { get { throw null; } }
+        public static System.Uri AzurePublicCloud { get { throw null; } }
+        public static System.Uri AzureGermany { get { throw null; } }
         public static System.Uri AzureGovernment { get { throw null; } }
     }
     public partial class AzureCliCredential : Azure.Core.TokenCredential
