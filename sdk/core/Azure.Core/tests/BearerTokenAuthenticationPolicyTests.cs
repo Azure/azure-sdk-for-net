@@ -169,7 +169,7 @@ namespace Azure.Core.Tests
 
                 return callCount == 2
                     ? throw new InvalidOperationException("Call Failed")
-                    : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(500));
+                    : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
@@ -179,9 +179,10 @@ namespace Azure.Core.Tests
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2"));
 
             requestMre.Wait();
+            await Task.Delay(200);
             responseMre.Set();
-            await Task.Delay(1_000);
 
+            await Task.Delay(800);
             await Task.WhenAll(firstRequestTask, secondRequestTask);
 
             Assert.AreEqual(1, callCount);
