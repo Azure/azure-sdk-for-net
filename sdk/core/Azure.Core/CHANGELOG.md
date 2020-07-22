@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-preview.1 (Unreleased)
+## 1.4.0-preview.1 (Unreleased) 
 
 ### Fixed
 - Connection leak for retried non-buffered requests on .NET Framework.
