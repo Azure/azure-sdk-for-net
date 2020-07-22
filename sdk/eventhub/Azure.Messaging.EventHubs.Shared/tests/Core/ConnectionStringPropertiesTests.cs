@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ValidateDetectsMultipleEventNames()
+        public void ValidateDetectsMultipleEventHubNames()
         {
             var eventHubName = "myHub";
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=[unique_fake]";

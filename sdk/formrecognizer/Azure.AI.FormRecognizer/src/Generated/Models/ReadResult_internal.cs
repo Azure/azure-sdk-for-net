@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -25,6 +26,7 @@ namespace Azure.AI.FormRecognizer.Models
             Width = width;
             Height = height;
             Unit = unit;
+            Lines = new ChangeTrackingList<TextLine_internal>();
         }
 
         /// <summary> Initializes a new instance of ReadResult_internal. </summary>

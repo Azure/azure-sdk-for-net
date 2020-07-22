@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,14 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,14 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,14 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -286,14 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -511,14 +469,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -544,14 +495,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

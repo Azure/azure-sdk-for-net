@@ -87,6 +87,46 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void PrivateStorePrivateOffersTest()
+        {
+            var privateStoreId = "a70d384d-ec34-47dd-9d38-ec6df452cba1";
+            var offerId = "test_test_pmc2pc1.test-managed-app-private-indirect-gov";
+            var subscriptionId = "bc17bb69-1264-4f90-a9f6-0e51e29d5281";
+            var planId = "test-managed-app";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                using (var client = context.GetServiceClient<MarketplaceManagementClient>())
+                {
+                    var offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
+                    Assert.True(!offers.Any());
+
+
+                    var offerToCreate = new Offer
+                    {
+                        SpecificPlanIdsLimitation = new List<string> { planId }
+                    };
+
+                    var offer = client.PrivateStorePrivateOffer.CreateOrUpdate(subscriptionId, privateStoreId, offerId, offerToCreate);
+                    Assert.Equal(offer.UniqueOfferId, offerId);
+                    Assert.True(offer.SpecificPlanIdsLimitation.Count == 1);
+
+                    offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
+                    Assert.True(offers.Count() == 1);
+                    var privateOffer = offers.FirstOrDefault();
+                    if (privateOffer != null)
+                    {
+                        Assert.Equal(privateOffer.UniqueOfferId, offerId);
+                    }
+                    
+                    client.PrivateStoreOffer.Delete(privateStoreId, offerId);
+
+                    offers = client.PrivateStorePrivateOffers.List(subscriptionId, privateStoreId);
+                    Assert.True(!offers.Any());
+                }
+            }
+        }
 
     }
 }

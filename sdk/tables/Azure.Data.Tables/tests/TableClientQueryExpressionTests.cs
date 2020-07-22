@@ -87,7 +87,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void TestFilterExpressions(string expectedFilter, Expression<Func<ComplexEntity, bool>> expression)
         {
-            var filter = client.CreateFilter(expression);
+            var filter = TableClient.CreateFilter(expression);
 
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }

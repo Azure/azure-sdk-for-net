@@ -14,40 +14,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string invokedByType = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> invokedByType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("invokedByType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     invokedByType = property.Value.GetString();
                     continue;
                 }
             }
-            return new PipelineRunInvokedBy(name, id, invokedByType);
+            return new PipelineRunInvokedBy(name.Value, id.Value, invokedByType.Value);
         }
     }
 }

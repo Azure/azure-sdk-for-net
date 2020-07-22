@@ -108,27 +108,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the event handler.</value>
-        public int MaxConcurrentCalls
-        {
-            get => _maxConcurrentCalls;
-
-            private set
-            {
-                _maxConcurrentCalls = value;
-                _maxConcurrentAcceptSessions = Math.Min(value, 2 * Environment.ProcessorCount);
-            }
-        }
+        public int MaxConcurrentCalls { get; }
 
         /// <summary>
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         public TimeSpan? MaxReceiveWaitTime { get; }
-
-        private int _maxConcurrentCalls;
-        private int _maxConcurrentAcceptSessions;
-
-        private const int DefaultMaxConcurrentCalls = 1;
-        private const int DefaultMaxConcurrentSessions = 8;
 
         /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusProcessor"/> should automatically
         /// complete messages after the event handler has completed processing. If the event handler
@@ -153,6 +138,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+        internal int MaxConcurrentSessions { get; }
+        internal int MaxConcurrentCallsPerSession { get; }
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
@@ -168,15 +155,21 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="isSessionEntity">Whether or not the processor is associated with a session entity.</param>
         /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">The set of options to use when configuring the processor.</param>
-        /// <param name="sessionIds">An optional set of session Ids to limit processing to.</param>
-        ///
+        /// <param name="sessionIds">An optional set of session Ids to limit processing to.
+        /// Only applies if isSessionEntity is true.</param>
+        /// <param name="maxConcurrentSessions">The max number of sessions that can be processed concurrently.
+        /// Only applies if isSessionEntity is true.</param>
+        /// <param name="maxConcurrentCallsPerSession">The max number of concurrent calls per session.
+        /// Only applies if isSessionEntity is true.</param>
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
             IList<ServiceBusPlugin> plugins,
             ServiceBusProcessorOptions options,
-            string[] sessionIds = default)
+            string[] sessionIds = default,
+            int maxConcurrentSessions = default,
+            int maxConcurrentCallsPerSession = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -192,17 +185,20 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
-            if (MaxConcurrentCalls == 0)
-            {
-                MaxConcurrentCalls = isSessionEntity ? DefaultMaxConcurrentSessions : DefaultMaxConcurrentCalls;
-            }
-            MessageHandlerSemaphore = new SemaphoreSlim(
-                MaxConcurrentCalls,
-                MaxConcurrentCalls);
+            MaxConcurrentSessions = maxConcurrentSessions;
+            MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
 
+            int maxCalls = isSessionEntity ?
+                MaxConcurrentSessions * MaxConcurrentCallsPerSession :
+                MaxConcurrentCalls;
+
+            MessageHandlerSemaphore = new SemaphoreSlim(
+                maxCalls,
+                maxCalls);
+            var maxAcceptSessions = Math.Min(maxCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
-                _maxConcurrentAcceptSessions,
-                _maxConcurrentAcceptSessions);
+                maxAcceptSessions,
+                maxAcceptSessions);
 
             MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             AutoComplete = _options.AutoComplete;
@@ -479,7 +475,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (IsSessionProcessor)
             {
-                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentCalls;
+                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentSessions;
                 for (int i = 0; i < numReceivers; i++)
                 {
                     var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
@@ -497,7 +493,8 @@ namespace Azure.Messaging.ServiceBus
                             _processErrorAsync,
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
-                            _plugins));
+                            _plugins,
+                            MaxConcurrentCallsPerSession));
                 }
             }
             else

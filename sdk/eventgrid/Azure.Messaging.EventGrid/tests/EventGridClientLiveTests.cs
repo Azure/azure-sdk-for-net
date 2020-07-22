@@ -36,6 +36,18 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
+        public async Task CanPublishEventWithCustomObjectPayload()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+            await client.PublishEventsAsync(GetEventsListWithCustomPayload());
+        }
+
+        [Test]
         public async Task CanPublishEventToDomain()
         {
             EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
@@ -45,7 +57,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     new AzureKeyCredential(TestEnvironment.DomainKey),
                     options));
             await client.PublishEventsAsync(GetEventsWithTopicsList());
-
         }
 
         [Test]
@@ -58,6 +69,18 @@ namespace Azure.Messaging.EventGrid.Tests
                     new AzureKeyCredential(TestEnvironment.CloudEventTopicKey),
                     options));
             await client.PublishCloudEventsAsync(GetCloudEventsList());
+        }
+
+        [Test]
+        public async Task CanPublishCloudEventWithCustomObjectPayload()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.CloudEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CloudEventTopicKey),
+                    options));
+            await client.PublishCloudEventsAsync(GetCloudEventsListWithCustomPayload());
         }
 
         [Test]
@@ -125,8 +148,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             return eventsList;
         }
-
-        private IList<EventGridEvent> GetEventsWithTopicsList()
+        private IList<EventGridEvent> GetEventsListWithCustomPayload()
         {
             List<EventGridEvent> eventsList = new List<EventGridEvent>();
 
@@ -135,13 +157,32 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(
                     new EventGridEvent(
                         Recording.Random.NewGuid().ToString(),
-                        $"Topic-{i}",
+                        $"Subject-{i}",
+                        new TestPayload("name", i),
+                        "Microsoft.MockPublisher.TestEvent",
+                        Recording.Now,
+                        "1.0"));
+            }
+
+            return eventsList;
+        }
+
+        private IList<EventGridEvent> GetEventsWithTopicsList()
+        {
+            List<EventGridEvent> eventsList = new List<EventGridEvent>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                EventGridEvent newEGEvent = new EventGridEvent(
+                        Recording.Random.NewGuid().ToString(),
                         $"Subject-{i}",
                         "hello",
                         "Microsoft.MockPublisher.TestEvent",
                         Recording.Now,
-                        "1",
-                        "1.0"));
+                        "1.0");
+                newEGEvent.Topic = $"Topic-{i}";
+
+                eventsList.Add(newEGEvent);
             }
 
             return eventsList;
@@ -159,6 +200,24 @@ namespace Azure.Messaging.EventGrid.Tests
                         $"Subject-{i}",
                         "record",
                         "1.0"));
+            }
+
+            return eventsList;
+        }
+
+        private IList<CloudEvent> GetCloudEventsListWithCustomPayload()
+        {
+            List<CloudEvent> eventsList = new List<CloudEvent>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                CloudEvent cloudEvent = new CloudEvent(
+                    Recording.Random.NewGuid().ToString(),
+                    $"Subject-{i}",
+                    "record",
+                    "1.0");
+                cloudEvent.Data = new TestPayload("name", i);
+                eventsList.Add(cloudEvent);
             }
 
             return eventsList;

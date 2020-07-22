@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of NotebookListResponse. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal NotebookListResponse(IReadOnlyList<NotebookResource> value, string nextLink)
         {
-            Value = value ?? new List<NotebookResource>();
+            Value = value;
             NextLink = nextLink;
         }
 

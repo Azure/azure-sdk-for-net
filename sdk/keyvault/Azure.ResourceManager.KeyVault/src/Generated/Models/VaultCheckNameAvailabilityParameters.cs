@@ -25,15 +25,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             Type = "Microsoft.KeyVault/vaults";
         }
 
-        /// <summary> Initializes a new instance of VaultCheckNameAvailabilityParameters. </summary>
-        /// <param name="name"> The vault name. </param>
-        /// <param name="type"> The type of resource, Microsoft.KeyVault/vaults. </param>
-        internal VaultCheckNameAvailabilityParameters(string name, string type)
-        {
-            Name = name;
-            Type = type;
-        }
-
         /// <summary> The vault name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
