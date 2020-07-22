@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
 
             var expectedHomeId = $"{Guid.NewGuid()}.{Guid.NewGuid()}";
 
-            var expectedEnvironment = AzureAuthorityHosts.AzureCloud.ToString();
+            var expectedEnvironment = AzureAuthorityHosts.AzurePublicCloud.ToString();
 
             var acquireTokenSilentCalled = false;
 

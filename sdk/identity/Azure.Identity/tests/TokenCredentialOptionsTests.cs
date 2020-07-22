@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void EnvAuthorityHost()
         {
-            string envHostValue = AzureAuthorityHosts.AzureChinaCloud.ToString();
+            string envHostValue = AzureAuthorityHosts.AzureChina.ToString();
 
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {
@@ -44,11 +44,11 @@ namespace Azure.Identity.Tests
         [Test]
         public void CustomAuthorityHost()
         {
-            string envHostValue = AzureAuthorityHosts.AzureGermanCloud.ToString();
+            string envHostValue = AzureAuthorityHosts.AzureGermany.ToString();
 
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {
-                Uri customUri = AzureAuthorityHosts.AzureChinaCloud;
+                Uri customUri = AzureAuthorityHosts.AzureChina;
 
                 TokenCredentialOptions option = new TokenCredentialOptions() { AuthorityHost = customUri };
                 Uri authHost = option.AuthorityHost;
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
             {
                 TokenCredentialOptions option = new TokenCredentialOptions();
 
-                Assert.AreEqual(option.AuthorityHost, AzureAuthorityHosts.AzureCloud);
+                Assert.AreEqual(option.AuthorityHost, AzureAuthorityHosts.AzurePublicCloud);
             }
         }
     }
