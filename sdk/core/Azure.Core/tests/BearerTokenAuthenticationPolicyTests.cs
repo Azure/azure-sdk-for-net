@@ -163,12 +163,13 @@ namespace Azure.Core.Tests
             var credential = new TokenCredentialStub((r, c) =>
             {
                 callCount++;
+                var offsetTime = DateTimeOffset.UtcNow;
                 requestMre.Set();
                 responseMre.Wait(c);
 
                 return callCount == 2
                     ? throw new InvalidOperationException("Call Failed")
-                    : new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMilliseconds(500));
+                    : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(500));
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
@@ -179,9 +180,9 @@ namespace Azure.Core.Tests
 
             requestMre.Wait();
             responseMre.Set();
+            await Task.Delay(1_000);
 
             await Task.WhenAll(firstRequestTask, secondRequestTask);
-            await Task.Delay(1_000);
 
             Assert.AreEqual(1, callCount);
             responseMre.Reset();
