@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextWord_internal
+    internal partial class TextWord
     {
-        internal static TextWord_internal DeserializeTextWord_internal(JsonElement element)
+        internal static TextWord DeserializeTextWord(JsonElement element)
         {
             string text = default;
             IReadOnlyList<float> boundingBox = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextWord_internal(text, boundingBox, Optional.ToNullable(confidence));
+            return new TextWord(text, boundingBox, Optional.ToNullable(confidence));
         }
     }
 }

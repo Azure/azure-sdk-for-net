@@ -14,11 +14,11 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Custom model training result. </summary>
-    internal partial class TrainResult_internal
+    internal partial class TrainResult
     {
-        /// <summary> Initializes a new instance of TrainResult_internal. </summary>
+        /// <summary> Initializes a new instance of TrainResult. </summary>
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
-        internal TrainResult_internal(IEnumerable<TrainingDocumentInfo> trainingDocuments)
+        internal TrainResult(IEnumerable<TrainingDocumentInfo> trainingDocuments)
         {
             if (trainingDocuments == null)
             {
@@ -30,12 +30,12 @@ namespace Azure.AI.FormRecognizer.Models
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
-        /// <summary> Initializes a new instance of TrainResult_internal. </summary>
+        /// <summary> Initializes a new instance of TrainResult. </summary>
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
         /// <param name="fields"> List of fields used to train the model and the train operation error reported by each. </param>
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult_internal(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
+        internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;

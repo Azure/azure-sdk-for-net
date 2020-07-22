@@ -11,11 +11,11 @@ using Azure.AI.FormRecognizer.Training;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter to train a new custom model. </summary>
-    internal partial class TrainRequest_internal
+    internal partial class TrainRequest
     {
-        /// <summary> Initializes a new instance of TrainRequest_internal. </summary>
+        /// <summary> Initializes a new instance of TrainRequest. </summary>
         /// <param name="source"> Source path containing the training documents. </param>
-        public TrainRequest_internal(string source)
+        public TrainRequest(string source)
         {
             if (source == null)
             {

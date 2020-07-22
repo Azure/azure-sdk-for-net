@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
         /// <param name="trainResult"> Custom model training result. </param>
-        internal Model(ModelInfo_internal modelInfo, KeysResult keys, TrainResult_internal trainResult)
+        internal Model(ModelInfo_internal modelInfo, KeysResult keys, TrainResult trainResult)
         {
             ModelInfo = modelInfo;
             Keys = keys;
@@ -41,6 +41,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Keys extracted by the custom model. </summary>
         public KeysResult Keys { get; }
         /// <summary> Custom model training result. </summary>
-        public TrainResult_internal TrainResult { get; }
+        public TrainResult TrainResult { get; }
     }
 }

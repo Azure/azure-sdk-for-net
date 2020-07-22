@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateTrainCustomModelAsyncRequest(TrainRequest_internal trainRequest)
+        internal HttpMessage CreateTrainCustomModelAsyncRequest(TrainRequest trainRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> TrainCustomModelAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> TrainCustomModelAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, SourcePath_internal fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -312,7 +312,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -331,7 +331,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -652,7 +652,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, SourcePath_internal fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -680,7 +680,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -698,7 +698,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -829,7 +829,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(SourcePath_internal fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -852,7 +852,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -869,7 +869,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             _pipeline.Send(message, cancellationToken);

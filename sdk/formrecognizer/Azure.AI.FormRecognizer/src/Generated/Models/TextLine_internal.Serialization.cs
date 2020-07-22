@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             string text = default;
             IReadOnlyList<float> boundingBox = default;
             Optional<Language_internal> language = default;
-            IReadOnlyList<TextWord_internal> words = default;
+            IReadOnlyList<TextWord> words = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -43,10 +43,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("words"))
                 {
-                    List<TextWord_internal> array = new List<TextWord_internal>();
+                    List<TextWord> array = new List<TextWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextWord_internal.DeserializeTextWord_internal(item));
+                        array.Add(TextWord.DeserializeTextWord(item));
                     }
                     words = array;
                     continue;

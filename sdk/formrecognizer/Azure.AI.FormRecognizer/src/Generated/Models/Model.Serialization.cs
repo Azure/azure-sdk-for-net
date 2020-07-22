@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ModelInfo_internal modelInfo = default;
             Optional<KeysResult> keys = default;
-            Optional<TrainResult_internal> trainResult = default;
+            Optional<TrainResult> trainResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("trainResult"))
                 {
-                    trainResult = TrainResult_internal.DeserializeTrainResult_internal(property.Value);
+                    trainResult = TrainResult.DeserializeTrainResult(property.Value);
                     continue;
                 }
             }

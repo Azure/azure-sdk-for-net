@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing a word. </summary>
-    internal partial class TextWord_internal
+    internal partial class TextWord
     {
-        /// <summary> Initializes a new instance of TextWord_internal. </summary>
+        /// <summary> Initializes a new instance of TextWord. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
-        internal TextWord_internal(string text, IEnumerable<float> boundingBox)
+        internal TextWord(string text, IEnumerable<float> boundingBox)
         {
             if (text == null)
             {
@@ -32,11 +32,11 @@ namespace Azure.AI.FormRecognizer.Models
             BoundingBox = boundingBox.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextWord_internal. </summary>
+        /// <summary> Initializes a new instance of TextWord. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal TextWord_internal(string text, IReadOnlyList<float> boundingBox, float? confidence)
+        internal TextWord(string text, IReadOnlyList<float> boundingBox, float? confidence)
         {
             Text = text;
             BoundingBox = boundingBox;

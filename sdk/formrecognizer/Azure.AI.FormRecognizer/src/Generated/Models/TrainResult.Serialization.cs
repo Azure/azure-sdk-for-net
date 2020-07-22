@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TrainResult_internal
+    internal partial class TrainResult
     {
-        internal static TrainResult_internal DeserializeTrainResult_internal(JsonElement element)
+        internal static TrainResult DeserializeTrainResult(JsonElement element)
         {
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
             Optional<IReadOnlyList<CustomFormModelField>> fields = default;
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult_internal(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToList(errors));
         }
     }
 }
