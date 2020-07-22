@@ -9,7 +9,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-
+    /// <summary>
+    /// A <see cref="TableEntity"/> type which allows callers direct access to the property map of the entity.
+    /// </summary>
     public partial class DynamicTableEntity
     {
         private readonly IDictionary<string, object> _properties;
@@ -59,6 +61,7 @@ namespace Azure.Data.Tables
         /// Constructs an instance of a <see cref="TableEntity" />.
         /// </summary>
         public DynamicTableEntity()
+            : this(null)
         {
         }
 
@@ -68,6 +71,7 @@ namespace Azure.Data.Tables
         /// <param name="partitionKey">A string containing the partition key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
         /// <param name="rowKey">A string containing the row key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
         public DynamicTableEntity(string partitionKey, string rowKey)
+            : this(null)
         {
             PartitionKey = partitionKey;
             RowKey = rowKey;
@@ -210,6 +214,7 @@ namespace Azure.Data.Tables
         /// </summary>
         private static void EnforceType(Type requestedType, Type givenType)
         {
+            requestedType.IsAssignableFrom(givenType);
             if (givenType != requestedType)
             {
                 throw new InvalidOperationException(string.Format(
