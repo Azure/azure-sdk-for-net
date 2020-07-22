@@ -53,22 +53,19 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'DomainControlValidationRequestTimedOut', 'IssuingCertificate',
         /// 'DeployingCertificate', 'CertificateDeployed',
         /// 'DeletingCertificate', 'CertificateDeleted'</param>
-        /// <param name="customHttpsParameters">Certificate parameters for
-        /// securing custom HTTPS</param>
         /// <param name="validationData">Special validation or data may be
         /// required when delivering CDN to some regions due to local
         /// compliance reasons. E.g. ICP license number of a custom domain is
         /// required to deliver content in China.</param>
         /// <param name="provisioningState">Provisioning status of the custom
         /// domain.</param>
-        public CustomDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), string resourceState = default(string), string customHttpsProvisioningState = default(string), string customHttpsProvisioningSubstate = default(string), CustomDomainHttpsParameters customHttpsParameters = default(CustomDomainHttpsParameters), string validationData = default(string), string provisioningState = default(string))
+        public CustomDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), string resourceState = default(string), string customHttpsProvisioningState = default(string), string customHttpsProvisioningSubstate = default(string), string validationData = default(string), string provisioningState = default(string))
             : base(id, name, type)
         {
             HostName = hostName;
             ResourceState = resourceState;
             CustomHttpsProvisioningState = customHttpsProvisioningState;
             CustomHttpsProvisioningSubstate = customHttpsProvisioningSubstate;
-            CustomHttpsParameters = customHttpsParameters;
             ValidationData = validationData;
             ProvisioningState = provisioningState;
             CustomInit();
@@ -116,12 +113,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string CustomHttpsProvisioningSubstate { get; private set; }
 
         /// <summary>
-        /// Gets or sets certificate parameters for securing custom HTTPS
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customHttpsParameters")]
-        public CustomDomainHttpsParameters CustomHttpsParameters { get; set; }
-
-        /// <summary>
         /// Gets or sets special validation or data may be required when
         /// delivering CDN to some regions due to local compliance reasons.
         /// E.g. ICP license number of a custom domain is required to deliver
@@ -147,10 +138,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (HostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "HostName");
-            }
-            if (CustomHttpsParameters != null)
-            {
-                CustomHttpsParameters.Validate();
             }
         }
     }
