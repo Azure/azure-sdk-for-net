@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             try
             {
                 MockResponse response = new MockResponse(
-                    (int)HttpStatusCode.TooManyRequests);
+                    429);
                 var request = new MockRequest() { Method = RequestMethod.Put };
                 await _requestResponse.ThrowIfRequestFailedAsync(request, response);
             }
@@ -211,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Assert.AreEqual(ServiceBusException.FailureReason.GeneralError, ex.Reason);
                 Assert.IsTrue(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
-                Assert.AreEqual((int)HttpStatusCode.TooManyRequests, inner.Status);
+                Assert.AreEqual(429, inner.Status);
                 return;
             }
             Assert.Fail("No exception!");
