@@ -33,7 +33,7 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Authentication request [{0}] exception {1}")]
+        [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
         public void BackgroundRefreshFailed(string requestId, string exception)
         {
             WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
@@ -129,7 +129,7 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ResponseDelayEvent, requestId, seconds);
         }
 
-        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
+        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Request [{0}] exception {1}")]
         public void ExceptionResponse(string requestId, string exception)
         {
             WriteEvent(ExceptionResponseEvent, requestId, exception);
