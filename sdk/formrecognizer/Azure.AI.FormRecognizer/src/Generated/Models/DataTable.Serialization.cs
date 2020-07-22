@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DataTable_internal
+    internal partial class DataTable
     {
-        internal static DataTable_internal DeserializeDataTable_internal(JsonElement element)
+        internal static DataTable DeserializeDataTable(JsonElement element)
         {
             int rows = default;
             int columns = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new DataTable_internal(rows, columns, cells);
+            return new DataTable(rows, columns, cells);
         }
     }
 }

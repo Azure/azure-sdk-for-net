@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             int page = default;
             Optional<int?> clusterId = default;
             Optional<IReadOnlyList<KeyValuePair_internal>> keyValuePairs = default;
-            Optional<IReadOnlyList<DataTable_internal>> tables = default;
+            Optional<IReadOnlyList<DataTable>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -48,10 +48,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("tables"))
                 {
-                    List<DataTable_internal> array = new List<DataTable_internal>();
+                    List<DataTable> array = new List<DataTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTable_internal.DeserializeDataTable_internal(item));
+                        array.Add(DataTable.DeserializeDataTable(item));
                     }
                     tables = array;
                     continue;

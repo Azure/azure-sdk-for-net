@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted table contained in a page. </summary>
-    internal partial class DataTable_internal
+    internal partial class DataTable
     {
-        /// <summary> Initializes a new instance of DataTable_internal. </summary>
+        /// <summary> Initializes a new instance of DataTable. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable_internal(int rows, int columns, IEnumerable<DataTableCell_internal> cells)
+        internal DataTable(int rows, int columns, IEnumerable<DataTableCell_internal> cells)
         {
             if (cells == null)
             {
@@ -30,11 +30,11 @@ namespace Azure.AI.FormRecognizer.Models
             Cells = cells.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataTable_internal. </summary>
+        /// <summary> Initializes a new instance of DataTable. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable_internal(int rows, int columns, IReadOnlyList<DataTableCell_internal> cells)
+        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell_internal> cells)
         {
             Rows = rows;
             Columns = columns;

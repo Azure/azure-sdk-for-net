@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Page = page;
             KeyValuePairs = new ChangeTrackingList<KeyValuePair_internal>();
-            Tables = new ChangeTrackingList<DataTable_internal>();
+            Tables = new ChangeTrackingList<DataTable>();
         }
 
         /// <summary> Initializes a new instance of PageResult_internal. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="clusterId"> Cluster identifier. </param>
         /// <param name="keyValuePairs"> List of key-value pairs extracted from the page. </param>
         /// <param name="tables"> List of data tables extracted from the page. </param>
-        internal PageResult_internal(int page, int? clusterId, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<DataTable_internal> tables)
+        internal PageResult_internal(int page, int? clusterId, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<DataTable> tables)
         {
             Page = page;
             ClusterId = clusterId;
@@ -42,6 +42,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> List of key-value pairs extracted from the page. </summary>
         public IReadOnlyList<KeyValuePair_internal> KeyValuePairs { get; }
         /// <summary> List of data tables extracted from the page. </summary>
-        public IReadOnlyList<DataTable_internal> Tables { get; }
+        public IReadOnlyList<DataTable> Tables { get; }
     }
 }
