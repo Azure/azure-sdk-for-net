@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class AnalyzeOperationResult_internal
+    internal partial class AnalyzeOperationResult
     {
-        internal static AnalyzeOperationResult_internal DeserializeAnalyzeOperationResult_internal(JsonElement element)
+        internal static AnalyzeOperationResult DeserializeAnalyzeOperationResult(JsonElement element)
         {
             OperationStatus status = default;
             DateTimeOffset createdDateTime = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new AnalyzeOperationResult_internal(status, createdDateTime, lastUpdatedDateTime, analyzeResult.Value);
+            return new AnalyzeOperationResult(status, createdDateTime, lastUpdatedDateTime, analyzeResult.Value);
         }
     }
 }

@@ -11,25 +11,25 @@ using Azure.AI.FormRecognizer;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued analyze operation. </summary>
-    internal partial class AnalyzeOperationResult_internal
+    internal partial class AnalyzeOperationResult
     {
-        /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
+        /// <summary> Initializes a new instance of AnalyzeOperationResult. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        internal AnalyzeOperationResult_internal(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime)
+        internal AnalyzeOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
-        /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
+        /// <summary> Initializes a new instance of AnalyzeOperationResult. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="analyzeResult"> Results of the analyze operation. </param>
-        internal AnalyzeOperationResult_internal(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, AnalyzeResult_internal analyzeResult)
+        internal AnalyzeOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, AnalyzeResult_internal analyzeResult)
         {
             Status = status;
             CreatedDateTime = createdDateTime;

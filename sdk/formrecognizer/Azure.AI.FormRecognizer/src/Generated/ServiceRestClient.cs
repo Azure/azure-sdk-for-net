@@ -365,7 +365,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeFormResultRequest(modelId, resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -373,9 +373,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult_internal> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeFormResultRequest(modelId, resultId);
             _pipeline.Send(message, cancellationToken);
@@ -395,9 +395,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -729,7 +729,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeReceiptResultRequest(resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -737,9 +737,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -750,7 +750,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult_internal> GetAnalyzeReceiptResult(Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult> GetAnalyzeReceiptResult(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeReceiptResultRequest(resultId);
             _pipeline.Send(message, cancellationToken);
@@ -758,9 +758,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -900,7 +900,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeLayoutResultRequest(resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -908,9 +908,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -921,7 +921,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult_internal> GetAnalyzeLayoutResult(Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult> GetAnalyzeLayoutResult(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeLayoutResultRequest(resultId);
             _pipeline.Send(message, cancellationToken);
@@ -929,9 +929,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        AnalyzeOperationResult_internal value = default;
+                        AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
