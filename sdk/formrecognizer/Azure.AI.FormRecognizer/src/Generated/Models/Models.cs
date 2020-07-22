@@ -6,24 +6,25 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Response to the list custom models operation. </summary>
-    internal partial class Models_internal
+    internal partial class Models
     {
-        /// <summary> Initializes a new instance of Models_internal. </summary>
-        internal Models_internal()
+        /// <summary> Initializes a new instance of Models. </summary>
+        internal Models()
         {
             ModelList = new ChangeTrackingList<ModelInfo_internal>();
         }
 
-        /// <summary> Initializes a new instance of Models_internal. </summary>
+        /// <summary> Initializes a new instance of Models. </summary>
         /// <param name="summary"> Summary of all trained custom models. </param>
         /// <param name="modelList"> Collection of trained custom models. </param>
         /// <param name="nextLink"> Link to the next page of custom models. </param>
-        internal Models_internal(ModelsSummary_internal summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
+        internal Models(ModelsSummary_internal summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
         {
             Summary = summary;
             ModelList = modelList;

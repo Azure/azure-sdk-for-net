@@ -955,7 +955,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models_internal>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListCustomModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -963,9 +963,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -975,7 +975,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> ListCustomModels(CancellationToken cancellationToken = default)
+        public Response<Models.Models> ListCustomModels(CancellationToken cancellationToken = default)
         {
             using var message = CreateListCustomModelsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -983,9 +983,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1009,7 +1009,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1017,9 +1017,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1029,7 +1029,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        public Response<Models.Models> GetCustomModels(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -1037,9 +1037,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1063,7 +1063,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models_internal>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.Models>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1076,9 +1076,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1089,7 +1089,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<Models.Models> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1102,9 +1102,9 @@ namespace Azure.AI.FormRecognizer
             {
                 case 200:
                     {
-                        Models_internal value = default;
+                        Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models_internal.DeserializeModels_internal(document.RootElement);
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

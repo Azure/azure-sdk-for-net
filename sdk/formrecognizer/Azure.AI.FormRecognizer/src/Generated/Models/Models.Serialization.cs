@@ -7,13 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class Models_internal
+    internal partial class Models
     {
-        internal static Models_internal DeserializeModels_internal(JsonElement element)
+        internal static Models DeserializeModels(JsonElement element)
         {
             Optional<ModelsSummary_internal> summary = default;
             Optional<IReadOnlyList<ModelInfo_internal>> modelList = default;
@@ -41,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new Models_internal(summary.Value, Optional.ToList(modelList), nextLink.Value);
+            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
         }
     }
 }
