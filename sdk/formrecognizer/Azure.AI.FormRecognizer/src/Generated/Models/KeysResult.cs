@@ -8,14 +8,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Keys extracted by the custom model. </summary>
-    internal partial class KeysResult_internal
+    internal partial class KeysResult
     {
-        /// <summary> Initializes a new instance of KeysResult_internal. </summary>
+        /// <summary> Initializes a new instance of KeysResult. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
-        internal KeysResult_internal(IReadOnlyDictionary<string, IList<string>> clusters)
+        internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)
         {
             if (clusters == null)
             {

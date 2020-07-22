@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class KeyValuePair_internal
+    internal partial class KeyValuePair
     {
-        internal static KeyValuePair_internal DeserializeKeyValuePair_internal(JsonElement element)
+        internal static KeyValuePair DeserializeKeyValuePair(JsonElement element)
         {
             Optional<string> label = default;
-            KeyValueElement_internal key = default;
-            KeyValueElement_internal value = default;
+            KeyValueElement key = default;
+            KeyValueElement value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,12 +27,12 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("key"))
                 {
-                    key = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
+                    key = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    value = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
+                    value = KeyValueElement.DeserializeKeyValueElement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"))
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValuePair_internal(label.Value, key, value, confidence);
+            return new KeyValuePair(label.Value, key, value, confidence);
         }
     }
 }

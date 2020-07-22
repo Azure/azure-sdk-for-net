@@ -10,13 +10,13 @@ using System;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted key-value pair. </summary>
-    internal partial class KeyValuePair_internal
+    internal partial class KeyValuePair
     {
-        /// <summary> Initializes a new instance of KeyValuePair_internal. </summary>
+        /// <summary> Initializes a new instance of KeyValuePair. </summary>
         /// <param name="key"> Information about the extracted key in a key-value pair. </param>
         /// <param name="value"> Information about the extracted value in a key-value pair. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal KeyValuePair_internal(KeyValueElement_internal key, KeyValueElement_internal value, float confidence)
+        internal KeyValuePair(KeyValueElement key, KeyValueElement value, float confidence)
         {
             if (key == null)
             {
@@ -32,12 +32,12 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of KeyValuePair_internal. </summary>
+        /// <summary> Initializes a new instance of KeyValuePair. </summary>
         /// <param name="label"> A user defined label for the key/value pair entry. </param>
         /// <param name="key"> Information about the extracted key in a key-value pair. </param>
         /// <param name="value"> Information about the extracted value in a key-value pair. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal KeyValuePair_internal(string label, KeyValueElement_internal key, KeyValueElement_internal value, float confidence)
+        internal KeyValuePair(string label, KeyValueElement key, KeyValueElement value, float confidence)
         {
             Label = label;
             Key = key;
@@ -48,9 +48,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> A user defined label for the key/value pair entry. </summary>
         public string Label { get; }
         /// <summary> Information about the extracted key in a key-value pair. </summary>
-        public KeyValueElement_internal Key { get; }
+        public KeyValueElement Key { get; }
         /// <summary> Information about the extracted value in a key-value pair. </summary>
-        public KeyValueElement_internal Value { get; }
+        public KeyValueElement Value { get; }
         /// <summary> Confidence value. </summary>
         public float Confidence { get; }
     }

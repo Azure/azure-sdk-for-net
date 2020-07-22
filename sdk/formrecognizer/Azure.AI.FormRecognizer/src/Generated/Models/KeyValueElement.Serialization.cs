@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class KeyValueElement_internal
+    internal partial class KeyValueElement
     {
-        internal static KeyValueElement_internal DeserializeKeyValueElement_internal(JsonElement element)
+        internal static KeyValueElement DeserializeKeyValueElement(JsonElement element)
         {
             string text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement_internal(text, Optional.ToList(boundingBox), Optional.ToList(elements));
+            return new KeyValueElement(text, Optional.ToList(boundingBox), Optional.ToList(elements));
         }
     }
 }

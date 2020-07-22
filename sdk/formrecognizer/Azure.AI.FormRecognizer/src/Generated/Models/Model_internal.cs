@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -30,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
         /// <param name="trainResult"> Custom model training result. </param>
-        internal Model_internal(ModelInfo_internal modelInfo, KeysResult_internal keys, TrainResult_internal trainResult)
+        internal Model_internal(ModelInfo_internal modelInfo, KeysResult keys, TrainResult_internal trainResult)
         {
             ModelInfo = modelInfo;
             Keys = keys;
@@ -40,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary> Basic custom model information. </summary>
         public ModelInfo_internal ModelInfo { get; }
         /// <summary> Keys extracted by the custom model. </summary>
-        public KeysResult_internal Keys { get; }
+        public KeysResult Keys { get; }
         /// <summary> Custom model training result. </summary>
         public TrainResult_internal TrainResult { get; }
     }

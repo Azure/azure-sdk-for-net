@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal static Model_internal DeserializeModel_internal(JsonElement element)
         {
             ModelInfo_internal modelInfo = default;
-            Optional<KeysResult_internal> keys = default;
+            Optional<KeysResult> keys = default;
             Optional<TrainResult_internal> trainResult = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("keys"))
                 {
-                    keys = KeysResult_internal.DeserializeKeysResult_internal(property.Value);
+                    keys = KeysResult.DeserializeKeysResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainResult"))

@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class KeysResult_internal
+    internal partial class KeysResult
     {
-        internal static KeysResult_internal DeserializeKeysResult_internal(JsonElement element)
+        internal static KeysResult DeserializeKeysResult(JsonElement element)
         {
             IReadOnlyDictionary<string, IList<string>> clusters = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer
                     continue;
                 }
             }
-            return new KeysResult_internal(clusters);
+            return new KeysResult(clusters);
         }
     }
 }

@@ -12,11 +12,11 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted key or value in a key-value pair. </summary>
-    internal partial class KeyValueElement_internal
+    internal partial class KeyValueElement
     {
-        /// <summary> Initializes a new instance of KeyValueElement_internal. </summary>
+        /// <summary> Initializes a new instance of KeyValueElement. </summary>
         /// <param name="text"> The text content of the key or value. </param>
-        internal KeyValueElement_internal(string text)
+        internal KeyValueElement(string text)
         {
             if (text == null)
             {
@@ -28,11 +28,11 @@ namespace Azure.AI.FormRecognizer.Models
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KeyValueElement_internal. </summary>
+        /// <summary> Initializes a new instance of KeyValueElement. </summary>
         /// <param name="text"> The text content of the key or value. </param>
         /// <param name="boundingBox"> Bounding box of the key or value. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this key or value. </param>
-        internal KeyValueElement_internal(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements)
+        internal KeyValueElement(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<string> elements)
         {
             Text = text;
             BoundingBox = boundingBox;
