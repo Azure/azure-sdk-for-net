@@ -3,40 +3,40 @@
 
 using System;
 
-namespace Azure.Core.Spatial
+namespace Azure.Core.GeoJson
 {
     /// <summary>
-    /// Represents information about the coordinate range of the <see cref="Geometry"/>.
+    /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
     /// </summary>
     public readonly struct GeoBoundingBox : IEquatable<GeoBoundingBox>
     {
         /// <summary>
-        /// The westmost value of <see cref="Geometry"/> coordinates.
+        /// The westmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double West { get; }
 
         /// <summary>
-        /// The southmost value of <see cref="Geometry"/> coordinates.
+        /// The southmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double South { get; }
 
         /// <summary>
-        /// The eastmost value of <see cref="Geometry"/> coordinates.
+        /// The eastmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double East { get; }
 
         /// <summary>
-        /// The northmost value of <see cref="Geometry"/> coordinates.
+        /// The northmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double North { get; }
 
         /// <summary>
-        /// The minimum altitude value of <see cref="Geometry"/> coordinates.
+        /// The minimum altitude value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double? MinAltitude { get; }
 
         /// <summary>
-        /// The maximum altitude value of <see cref="Geometry"/> coordinates.
+        /// The maximum altitude value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double? MaxAltitude { get; }
 

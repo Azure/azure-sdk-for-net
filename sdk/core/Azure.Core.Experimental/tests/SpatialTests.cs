@@ -3,7 +3,7 @@
 
 using System.IO;
 using System.Text.Json;
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinate);
+            Assert.AreEqual(P(0), point.Position);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinate);
+            Assert.AreEqual(P(0), point.Position);
             Assert.AreEqual(P(1).Longitude, point.BoundingBox.Value.West);
             Assert.AreEqual(P(1).Latitude, point.BoundingBox.Value.South);
 
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
                         $" }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinate);
+            Assert.AreEqual(P(0), point.Position);
             Assert.AreEqual(1, point.AdditionalProperties["additionalNumber"]);
             Assert.AreEqual(2.2, point.AdditionalProperties["additionalNumber2"]);
             Assert.AreEqual(9999999999999999999L, point.AdditionalProperties["additionalNumber3"]);
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Coordinates);
+            }, polygon.Rings[0].Positions);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Coordinates);
+            }, polygon.Rings[0].Positions);
 
             CollectionAssert.AreEqual(new[]
             {
@@ -114,7 +114,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
-            }, polygon.Rings[1].Coordinates);
+            }, polygon.Rings[1].Positions);
         }
 
         [Test]
@@ -122,11 +122,11 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
-            var multipoint = AssertRoundtrip<GeoMultiPoint>(input);
+            var multipoint = AssertRoundtrip<GeoPointCollection>(input);
             Assert.AreEqual(2, multipoint.Points.Count);
 
-            Assert.AreEqual(P(0), multipoint.Points[0].Coordinate);
-            Assert.AreEqual(P(1), multipoint.Points[1].Coordinate);
+            Assert.AreEqual(P(0), multipoint.Points[0].Position);
+            Assert.AreEqual(P(1), multipoint.Points[1].Position);
         }
 
         [Test]
@@ -134,20 +134,20 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeoMultiLine>(input);
+            var polygon = AssertRoundtrip<GeoLineCollection>(input);
             Assert.AreEqual(2, polygon.Lines.Count);
 
             CollectionAssert.AreEqual(new[]
             {
                 P(0),
                 P(1)
-            }, polygon.Lines[0].Coordinates);
+            }, polygon.Lines[0].Positions);
 
             CollectionAssert.AreEqual(new[]
             {
                 P(2),
                 P(3)
-            }, polygon.Lines[1].Coordinates);
+            }, polygon.Lines[1].Positions);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
                         $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}] ]" +
                         $" ] ]}}";
 
-            var multiPolygon = AssertRoundtrip<GeoMultiPolygon>(input);
+            var multiPolygon = AssertRoundtrip<GeoPolygonCollection>(input);
 
             var polygon = multiPolygon.Polygons[0];
 
@@ -173,7 +173,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Coordinates);
+            }, polygon.Rings[0].Positions);
 
             polygon = multiPolygon.Polygons[1];
             Assert.AreEqual(2, polygon.Rings.Count);
@@ -185,7 +185,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Coordinates);
+            }, polygon.Rings[0].Positions);
 
             CollectionAssert.AreEqual(new[]
             {
@@ -194,7 +194,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
-            }, polygon.Rings[1].Coordinates);
+            }, polygon.Rings[1].Positions);
         }
 
         [Test]
@@ -204,11 +204,11 @@ namespace Azure.Core.Tests
 
             var collection = AssertRoundtrip<GeoCollection>(input);
             var point = (GeoPoint) collection.Geometries[0];
-            Assert.AreEqual(P(0), point.Coordinate);
+            Assert.AreEqual(P(0), point.Position);
 
             var lineString = (GeoLine) collection.Geometries[1];
-            Assert.AreEqual(P(1), lineString.Coordinates[0]);
-            Assert.AreEqual(P(2), lineString.Coordinates[1]);
+            Assert.AreEqual(P(1), lineString.Positions[0]);
+            Assert.AreEqual(P(2), lineString.Positions[1]);
 
             Assert.AreEqual(2, collection.Geometries.Count);
         }
@@ -223,17 +223,17 @@ namespace Azure.Core.Tests
             return $"{1.1 * number:G17}, {2.2 * number:G17}, {3.3 * number:G17}";
         }
 
-        private GeoCoordinate P(int number)
+        private GeoPosition P(int number)
         {
             if (_points == 2)
             {
-                return new GeoCoordinate(new GeographyCoordinate(1.1 * number, 2.2 * number));
+                return new GeoPosition(1.1 * number, 2.2 * number);
             }
 
-            return new GeoCoordinate(new GeographyCoordinate(1.1 * number, 2.2 * number, 3.3 * number));
+            return new GeoPosition(1.1 * number, 2.2 * number, 3.3 * number);
         }
 
-        private T AssertRoundtrip<T>(string json) where T: Geometry
+        private T AssertRoundtrip<T>(string json) where T: GeoObject
         {
             var element = JsonDocument.Parse(json).RootElement;
             var geometry = GeoJsonConverter.Read(element);
@@ -253,8 +253,8 @@ namespace Azure.Core.Tests
             };
 
             // Serialize and deserialize as a base class
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(Geometry), options);
-            var geometry3 = JsonSerializer.Deserialize<Geometry>(bytes, options);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(GeoObject), options);
+            var geometry3 = JsonSerializer.Deserialize<GeoObject>(bytes, options);
 
             // Serialize and deserialize as a concrete class
             var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3, options);

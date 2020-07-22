@@ -3,18 +3,37 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Spatial
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a point geometry.
     /// </summary>
-    public sealed class GeoPoint : Geometry
+    public sealed class GeoPoint : GeoObject
     {
         /// <summary>
         /// Initializes new instance of <see cref="GeoPoint"/>.
         /// </summary>
+        /// <param name="longitude">The longitude of the point.</param>
+        /// <param name="latitude">The latitude of the point.</param>
+        public GeoPoint(double longitude, double latitude): this(new GeoPosition(longitude, latitude), null, DefaultProperties)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoPoint"/>.
+        /// </summary>
+        /// <param name="longitude">The longitude of the point.</param>
+        /// <param name="latitude">The latitude of the point.</param>
+        /// <param name="altitude">The altitude of the point.</param>
+        public GeoPoint(double longitude, double latitude, double? altitude): this(new GeoPosition(longitude, latitude, altitude), null, DefaultProperties)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoPoint"/>.
+        /// </summary>
         /// <param name="position">The position of the point.</param>
-        public GeoPoint(GeometryCoordinate position): this(position, null, DefaultProperties)
+        public GeoPoint(GeoPosition position): this(position, null, DefaultProperties)
         {
         }
 
@@ -23,38 +42,15 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="position">The position of the point.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public GeoPoint(GeometryCoordinate position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(new GeoCoordinate(position), boundingBox, additionalProperties)
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoPoint(GeoPosition position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
-            Coordinate = new GeoCoordinate(position);
-        }
-
-        /// <summary>
-        /// Initializes new instance of <see cref="GeoPoint"/>.
-        /// </summary>
-        /// <param name="position">The position of the point.</param>
-        public GeoPoint(GeographyCoordinate position): this(position, null, DefaultProperties)
-        {
-        }
-
-        /// <summary>
-        /// Initializes new instance of <see cref="GeoPoint"/>.
-        /// </summary>
-        /// <param name="position">The position of the point.</param>
-        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public GeoPoint(GeographyCoordinate position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(new GeoCoordinate(position), boundingBox, additionalProperties)
-        {
-        }
-
-        internal GeoPoint(GeoCoordinate coordinate, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
-        {
-            Coordinate = coordinate;
+            Position = position;
         }
 
         /// <summary>
         /// Gets position of the point.
         /// </summary>
-        public GeoCoordinate Coordinate { get; }
+        public GeoPosition Position { get; }
     }
 }
