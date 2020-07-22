@@ -45,7 +45,7 @@ These client types can be instantiated by calling a simple constructor,
 or its overload that takes various configuration options. 
 These options are passed as a parameter that extends ```ClientOptions``` class exposed by Azure.Core.
 Various service specific options are usually added to its subclasses, but a set of SDK-wide options are 
-available directly on ```ClientOptions```.
+available directly on ```ClientOptions```. 
 
 ```C# Snippet:ConfigurationHelloWorld
 SecretClientOptions options = new SecretClientOptions()
