@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
 using Azure.Data.Tables.Models;
+using System.Threading.Tasks;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -13,33 +14,31 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void CreateDeleteTable()
+        public async Task CreateDeleteTableAsync()
         {
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies1p1";
+            string tableName = "OfficeSupplies1p2";
 
-            #region Snippet:TablesSample1CreateClient
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
-            #endregion
 
             try
             {
-                #region Snippet:TablesSample1CreateTable
+                #region Snippet:TablesSample1CreateTableAsync
                 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-                TableItem table = serviceClient.CreateTable(tableName);
+                TableItem table = await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
                 Console.WriteLine($"The created table's name is {table.TableName}.");
                 #endregion
             }
             finally
             {
-                #region Snippet:TablesSample1DeleteTable
+                #region Snippet:TablesSample1DeleteTableAsync
                 // Deletes the table made previously.
-                serviceClient.DeleteTable(tableName);
+                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
                 #endregion
             }
         }
