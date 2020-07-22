@@ -131,7 +131,7 @@ namespace Azure.Identity
         {
             if (_record != null)
             {
-                return (AuthenticationAccount)_record;
+                return new AuthenticationAccount(_record);
             }
 
             List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
