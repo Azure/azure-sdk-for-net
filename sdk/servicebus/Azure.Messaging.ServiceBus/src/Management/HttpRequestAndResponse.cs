@@ -40,7 +40,8 @@ namespace Azure.Messaging.ServiceBus.Management
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-        private async Task ThrowIfRequestFailed(Request request, Response response)
+
+        internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
             {
@@ -55,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     innerException: ex);
             }
 
-            if (response.Status == (int)HttpStatusCode.NotFound || response.Status == (int)HttpStatusCode.NoContent)
+            if (response.Status == (int)HttpStatusCode.NotFound)
             {
                 throw new ServiceBusException(
                     ex.Message,
@@ -276,7 +277,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            await ThrowIfRequestFailed(request, response).ConfigureAwait(false);
+            await ThrowIfRequestFailedAsync(request, response).ConfigureAwait(false);
             return response;
         }
 

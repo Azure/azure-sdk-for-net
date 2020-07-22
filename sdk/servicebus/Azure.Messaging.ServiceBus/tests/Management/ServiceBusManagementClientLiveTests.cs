@@ -467,7 +467,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsIfEntityDoesnotExist()
+        public async Task ThrowsIfEntityDoesNotExist()
         {
             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
