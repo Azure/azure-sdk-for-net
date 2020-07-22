@@ -11,7 +11,7 @@ namespace Azure.Core.GeoJson
     /// <summary>
     /// Converts a <see cref="GeoObject"/> value from and to JSON in GeoJSON format.
     /// </summary>
-    public class GeoJsonConverter : JsonConverter<GeoObject>
+    public sealed class GeoJsonConverter : JsonConverter<GeoObject>
     {
         private const string PointType = "Point";
         private const string LineStringType = "LineString";

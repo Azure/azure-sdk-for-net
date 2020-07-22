@@ -8,7 +8,7 @@ namespace Azure.Core.GeoJson
     /// <summary>
     /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
     /// </summary>
-    public readonly struct GeoBoundingBox : IEquatable<GeoBoundingBox>
+    public sealed class GeoBoundingBox : IEquatable<GeoBoundingBox>
     {
         /// <summary>
         /// The westmost value of <see cref="GeoObject"/> coordinates.

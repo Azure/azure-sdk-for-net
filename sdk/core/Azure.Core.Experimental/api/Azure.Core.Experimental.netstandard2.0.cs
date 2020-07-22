@@ -100,12 +100,10 @@ namespace Azure.Core
 }
 namespace Azure.Core.GeoJson
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoBoundingBox : System.IEquatable<Azure.Core.GeoJson.GeoBoundingBox>
+    public sealed partial class GeoBoundingBox : System.IEquatable<Azure.Core.GeoJson.GeoBoundingBox>
     {
-        private readonly int _dummyPrimitive;
-        public GeoBoundingBox(double west, double south, double east, double north) { throw null; }
-        public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude) { throw null; }
+        public GeoBoundingBox(double west, double south, double east, double north) { }
+        public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude) { }
         public double East { get { throw null; } }
         public double? MaxAltitude { get { throw null; } }
         public double? MinAltitude { get { throw null; } }
@@ -118,14 +116,14 @@ namespace Azure.Core.GeoJson
     }
     public sealed partial class GeoCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoObject>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoObject>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoObject>, System.Collections.IEnumerable
     {
-        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoObject> geometries) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoObject> geometries, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoObject> geometries) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoObject> geometries, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public int Count { get { throw null; } }
         public Azure.Core.GeoJson.GeoObject this[int index] { get { throw null; } }
         public System.Collections.Generic.IEnumerator<Azure.Core.GeoJson.GeoObject> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GeoJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.GeoJson.GeoObject>
+    public sealed partial class GeoJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.GeoJson.GeoObject>
     {
         public GeoJsonConverter() { }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
@@ -134,14 +132,14 @@ namespace Azure.Core.GeoJson
     }
     public sealed partial class GeoLine : Azure.Core.GeoJson.GeoObject
     {
-        public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPosition> Positions { get { throw null; } }
     }
     public sealed partial class GeoLineCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoLine>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoLine>, System.Collections.IEnumerable
     {
-        public GeoLineCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> lines) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoLineCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> lines, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoLineCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> lines) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoLineCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> lines, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public int Count { get { throw null; } }
         public Azure.Core.GeoJson.GeoLine this[int index] { get { throw null; } }
         public System.Collections.Generic.IEnumerator<Azure.Core.GeoJson.GeoLine> GetEnumerator() { throw null; }
@@ -157,16 +155,16 @@ namespace Azure.Core.GeoJson
     }
     public sealed partial class GeoPoint : Azure.Core.GeoJson.GeoObject
     {
-        public GeoPoint(Azure.Core.GeoJson.GeoPosition position) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPoint(Azure.Core.GeoJson.GeoPosition position, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPoint(double longitude, double latitude) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPoint(double longitude, double latitude, double? altitude) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPoint(Azure.Core.GeoJson.GeoPosition position) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPoint(Azure.Core.GeoJson.GeoPosition position, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPoint(double longitude, double latitude) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPoint(double longitude, double latitude, double? altitude) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } }
     }
     public sealed partial class GeoPointCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPoint>, System.Collections.IEnumerable
     {
-        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint> points) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint> points, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint> points) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint> points, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public int Count { get { throw null; } }
         public Azure.Core.GeoJson.GeoPoint this[int index] { get { throw null; } }
         public System.Collections.Generic.IEnumerator<Azure.Core.GeoJson.GeoPoint> GetEnumerator() { throw null; }
@@ -174,14 +172,14 @@ namespace Azure.Core.GeoJson
     }
     public sealed partial class GeoPolygon : Azure.Core.GeoJson.GeoObject
     {
-        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoLine> Rings { get { throw null; } }
     }
     public sealed partial class GeoPolygonCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPolygon>, System.Collections.IEnumerable
     {
-        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon> polygons) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
-        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon> polygons, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon> polygons) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon> polygons, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public int Count { get { throw null; } }
         public Azure.Core.GeoJson.GeoPolygon this[int index] { get { throw null; } }
         public System.Collections.Generic.IEnumerator<Azure.Core.GeoJson.GeoPolygon> GetEnumerator() { throw null; }
