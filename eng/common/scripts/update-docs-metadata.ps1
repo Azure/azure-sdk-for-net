@@ -6,49 +6,23 @@ param (
   $WorkDirectory, # a clean folder that we can work in
   $ReleaseSHA, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
   $RepoId, # full repo id. EG azure/azure-sdk-for-net  DevOps: $(Build.Repository.Id). Used as a part of VerifyPackages
-  $Repository, # EG: "Maven", "PyPI", "NPM"
 
   # arguments necessary to power the docs release
   $DocRepoLocation, # the location on disk where we have cloned the documentation repository
-  $Language, # EG: js, java, dotnet. Used in language for the embedded readme.
   $DocRepoContentLocation = "docs-ref-services/" # within the doc repo, where does our readme go?
 )
 
 
 # import artifact parsing and semver handling
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
-. (Join-Path $PSScriptRoot SemVer.ps1)
 
-function GetMetaData($lang){
-  switch ($lang) {
-    "java" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/java-packages.csv"
-      break
-    }
-    ".net" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
-      break
-    }
-    "python" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/python-packages.csv"
-      break
-    }
-    "javascript" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/js-packages.csv"
-      break
-    }
-    default {
-      Write-Host "Unrecognized Language: $language"
-      exit(1)
-    }
-  }
-
-  $metadataResponse = Invoke-WebRequest-WithHandling -url $metadataUri -method "GET" | ConvertFrom-Csv
-
+function GetMetaData(){
+  $metadataResponse = Invoke-WebRequest-WithHandling -url $MetadataUri -method "GET" | ConvertFrom-Csv
   return $metadataResponse
 }
 
-function GetAdjustedReadmeContent($pkgInfo, $lang){
+function GetAdjustedReadmeContent($pkgInfo)
+{
     $date = Get-Date -Format "MM/dd/yyyy"
     $service = ""
 
@@ -56,8 +30,7 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
     $pkgId = $pkgInfo.PackageId.Replace("@azure/", "")
 
     try {
-      $metadata = GetMetaData -lang $lang
-
+      $metadata = GetMetaData
       $service = $metadata | ? { $_.Package -eq $pkgId }
 
       if ($service) {
@@ -79,7 +52,7 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
       $fileContent = $pkgInfo.ReadmeContent -replace $foundTitle, "$foundTitle - Version $($pkgInfo.PackageVersion) `n"
     }
 
-    $header = "---`ntitle: $foundTitle`nkeywords: Azure, $lang, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $lang`nms.service: $service`n---`n"
+    $header = "---`ntitle: $foundTitle`nkeywords: Azure, $Language, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $Language`nms.service: $service`n---`n"
 
     if ($fileContent) {
       return "$header`n$fileContent"
@@ -90,14 +63,15 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
 }
 
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgs = VerifyPackages -pkgRepository $Repository `
+$pkgs = VerifyPackages -pkgRepository $PackageRepository `
   -artifactLocation $ArtifactLocation `
   -workingDirectory $WorkDirectory `
   -apiUrl $apiUrl `
   -releaseSha $ReleaseSHA `
   -continueOnError $True
 
-if ($pkgs) {
+if ($pkgs) 
+{
   Write-Host "Given the visible artifacts, readmes will be copied for the following packages"
   Write-Host ($pkgs | % { $_.PackageId })
 
@@ -113,7 +87,7 @@ if ($pkgs) {
     $readmeLocation = Join-Path $DocRepoLocation $DocRepoContentLocation $readmeName
 
     if ($packageInfo.ReadmeContent) {
-      $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo -lang $Language
+      $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo
     }
 
     if ($adjustedContent) {

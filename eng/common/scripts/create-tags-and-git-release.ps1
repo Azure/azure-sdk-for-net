@@ -6,11 +6,8 @@ param (
   # used by VerifyPackages
   $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
   $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
-  $packageRepository, # used to indicate destination against which we will check the existing version.
-  # valid options: PyPI, Nuget, NPM, Maven, C
   # used by CreateTags
   $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
-
   # used by Git Release
   $repoOwner = "", # the owning organization of the repository. EG "Azure"
   $repoName = "", # the name of the repository. EG "azure-sdk-for-java"
@@ -27,12 +24,10 @@ Write-Host "Using API URL $apiUrl"
 $pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 
 if ($pkgList) {
-  Write-Host "Given the visible artifacts, github releases will be created for the following:"
-
+  Write-Host "Given the visible artifacts, github releases will be created for the following:"#
   foreach ($packageInfo in $pkgList) {
     Write-Host $packageInfo.Tag
-  }
-
+  }#
   # CREATE TAGS and RELEASES
   CreateReleases -pkgList $pkgList -releaseApiUrl $apiUrl/releases -releaseSha $releaseSha
 }

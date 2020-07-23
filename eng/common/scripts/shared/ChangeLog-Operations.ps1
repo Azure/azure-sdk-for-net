@@ -120,8 +120,3 @@ function Confirm-ChangeLogEntry {
   }
   return $true
 }
- 
-Export-ModuleMember -Function 'Get-ChangeLogEntries'
-Export-ModuleMember -Function 'Get-ChangeLogEntry'
-Export-ModuleMember -Function 'Get-ChangeLogEntryAsString'
-Export-ModuleMember -Function 'Confirm-ChangeLogEntry'

@@ -64,95 +64,6 @@ class PackageProps
     }
 }
 
-function Extract-PkgProps ($pkgPath, $serviceName, $pkgName, $lang)
-{
-    if ($lang -eq "net")
-    {
-        return Extract-DotNetPkgProps -pkgPath $pkgPath -serviceName $serviceName -pkgName $pkgName 
-    }
-    if ($lang -eq "java")
-    {
-        return Extract-JavaPkgProps -pkgPath $pkgPath -serviceName $serviceName -pkgName $pkgName 
-    }
-    if ($lang -eq "js")
-    {
-        return Extract-JsPkgProps -pkgPath $pkgPath -serviceName $serviceName -pkgName $pkgName 
-    }
-    if ($lang -eq "python")
-    {
-        return Extract-PythonPkgProps -pkgPath $pkgPath -serviceName $serviceName -pkgName $pkgName 
-    }
-}
-
-function Extract-DotNetPkgProps ($pkgPath, $serviceName, $pkgName)
-{
-    $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-    if (Test-Path $projectPath)
-    {
-        $projectData = New-Object -TypeName XML
-        $projectData.load($projectPath)
-        $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-        return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceName)
-    } 
-    else 
-    {
-        return $null
-    }
-}
-
-function Extract-JsPkgProps ($pkgPath, $serviceName, $pkgName)
-{
-    $projectPath = Join-Path $pkgPath "package.json"
-    if (Test-Path $projectPath)
-    {
-        $projectJson = Get-Content $projectPath | ConvertFrom-Json
-        $jsStylePkgName = $pkgName.replace("azure-", "@azure/")
-        if ($projectJson.name -eq "$jsStylePkgName")
-        {
-            return [PackageProps]::new($projectJson.name, $projectJson.version, $pkgPath, $serviceName)
-        }
-    }
-    return $null
-}
-
-function Extract-PythonPkgProps ($pkgPath, $serviceName, $pkgName)
-{
-    $pkgName = $pkgName.Replace('_', '-')
-
-    if (Test-Path (Join-Path $pkgPath "setup.py"))
-    {
-        $setupLocation = $pkgPath.Replace('\','/')
-        pushd $RepoRoot
-        $setupProps = (python -c "import sys; import os; sys.path.append(os.path.join('scripts', 'devops_tasks')); from common_tasks import parse_setup; obj=parse_setup('$setupLocation'); print('{0},{1}'.format(obj[0], obj[1]));") -split ","
-        popd
-        if (($setupProps -ne $null) -and ($setupProps[0] -eq $pkgName))
-        {
-            return [PackageProps]::new($setupProps[0], $setupProps[1], $pkgPath, $serviceName)
-        }
-    }
-    return $null
-}
-
-function Extract-JavaPkgProps ($pkgPath, $serviceName, $pkgName)
-{
-    $projectPath = Join-Path $pkgPath "pom.xml"
-
-    if (Test-Path $projectPath)
-    {
-        $projectData = New-Object -TypeName XML
-        $projectData.load($projectPath)
-        $projectPkgName = $projectData.project.artifactId
-        $pkgVersion = $projectData.project.version
-        $pkgGroup = $projectData.project.groupId
-
-        if ($projectPkgName -eq $pkgName)
-        {
-            return [PackageProps]::new($pkgName, $pkgVersion.ToString(), $pkgPath, $serviceName, $pkgGroup)
-        }
-    }
-    return $null
-}
-
 # Takes package name and service Name
 # Returns important properties of the package as related to the language repo
 # Returns a PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
@@ -164,11 +75,7 @@ function Get-PkgProperties
         [Parameter(Mandatory=$true)]
         [string]$PackageName,
         [Parameter(Mandatory=$true)]
-        [string]$ServiceName,
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("net","java","js","python")]
-        [string]$Language,
-        [string]$RepoRoot="${PSScriptRoot}/../../../.."
+        [string]$ServiceName
     )
 
     $pkgDirectoryName = $null
@@ -185,7 +92,7 @@ function Get-PkgProperties
     foreach ($directory in $directoriesPresent)
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
-        $pkgProps = Extract-PkgProps -pkgPath $pkgDirectoryPath -serviceName $ServiceName -pkgName $PackageName -lang $Language
+        $pkgProps = &$ExtractPkgProps -pkgPath $pkgDirectoryPath -serviceName $ServiceName -pkgName $PackageName
         if ($pkgProps -ne $null)
         {
             return $pkgProps
@@ -194,17 +101,13 @@ function Get-PkgProperties
     Write-Error "Failed to retrive Properties for $PackageName"
 }
 
-# Takes ServiceName, Language, and Repo Root Directory
+# Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
 # Returns an Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
 function Get-AllPkgProperties
 {
     Param
     (
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("net","java","js","python")]
-        [string]$Language,
-        [string]$RepoRoot="${PSScriptRoot}/../../../..",
         [string]$ServiceName=$null
     )
 
@@ -222,7 +125,7 @@ function Get-AllPkgProperties
                 $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
                 if ($activePkgList -ne $null)
                 {
-                    $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -serviceName $dir.Name -language $Language -repoRoot $RepoRoot -pkgPropsResult $pkgPropsResult
+                    $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -serviceName $dir.Name -pkgPropsResult $pkgPropsResult
                 }
             }
         }
@@ -235,7 +138,7 @@ function Get-AllPkgProperties
             $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
             if ($activePkgList -ne $null)
             {
-                $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -serviceName $ServiceName -language $Language -repoRoot $RepoRoot -pkgPropsResult $pkgPropsResult
+                $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -serviceName $ServiceName -pkgPropsResult $pkgPropsResult
             }
         }
     }
@@ -243,11 +146,11 @@ function Get-AllPkgProperties
     return $pkgPropsResult
 }
 
-function Operate-OnPackages ($activePkgList, $serviceName, $language, $repoRoot, [Array]$pkgPropsResult)
+function Operate-OnPackages ($activePkgList, $serviceName, [Array]$pkgPropsResult)
 {
     foreach ($pkg in $activePkgList)
     {
-        $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceName $serviceName -Language $language -RepoRoot $repoRoot
+        $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceName $serviceName
         $pkgPropsResult += $pkgProps
     }
     return $pkgPropsResult
@@ -274,6 +177,3 @@ function Get-PkgListFromYml ($ciYmlPath)
     }
     return $artifactsInCI
 }
-
-Export-ModuleMember -Function 'Get-PkgProperties'
-Export-ModuleMember -Function 'Get-AllPkgProperties'
