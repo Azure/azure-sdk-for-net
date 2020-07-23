@@ -212,43 +212,48 @@ namespace Azure.Core.Tests
                  new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false }
              };
 
-        [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-        public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
-        {
-            StringValues httpHeaderValues;
+         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
+         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
+         {
+             StringValues httpHeaderValues;
 
-            using TestServer testServer = new TestServer(
-                context =>
-                {
-                    Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
-                });
+             using TestServer testServer = new TestServer(
+                 context =>
+                 {
+                     Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+                 });
 
-            var transport = GetTransport();
-            Request request = CreateRequest(transport, testServer);
+             var transport = GetTransport();
+             Request request = CreateRequest(transport, testServer);
 
-            request.Headers.Add(headerName, headerValue);
+             request.Headers.Add(headerName, headerValue);
 
-            if (contentHeader)
-            {
-                request.Content = RequestContent.Create(new byte[16]);
-            }
+             if (contentHeader)
+             {
+                 request.Content = RequestContent.Create(new byte[16]);
+             }
 
-            Assert.True(request.Headers.TryGetValue(headerName, out var value));
-            Assert.AreEqual(headerValue, value);
+             Assert.True(request.Headers.TryGetValue(headerName, out var value));
+             Assert.AreEqual(headerValue, value);
 
-            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
-            Assert.AreEqual(headerValue, value);
+             Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
+             Assert.AreEqual(headerValue, value);
 
-            CollectionAssert.AreEqual(new[]
-            {
-                new HttpHeader(headerName, headerValue),
-            }, request.Headers);
+             CollectionAssert.AreEqual(new[]
+             {
+                 new HttpHeader(headerName, headerValue),
+             }, request.Headers);
 
-            await ExecuteRequest(request, transport);
+             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
-        }
+             Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+         }
 
+         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
+         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader)
+         {
+             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader);
+         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
         public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)

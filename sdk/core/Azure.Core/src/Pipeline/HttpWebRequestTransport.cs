@@ -93,49 +93,49 @@ namespace Azure.Core.Pipeline
             request.Proxy = _proxy;
             foreach (var messageRequestHeader in messageRequest.Headers)
             {
-                if (messageRequestHeader.Name == HttpHeader.Names.ContentLength)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
                     request.ContentLength = int.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.Host)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Host, StringComparison.OrdinalIgnoreCase))
                 {
                     request.Host = messageRequestHeader.Value;
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.Date)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Date, StringComparison.OrdinalIgnoreCase))
                 {
                     request.Date = DateTime.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.ContentType)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentType, StringComparison.OrdinalIgnoreCase))
                 {
                     request.ContentType = messageRequestHeader.Value;
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.UserAgent)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.UserAgent, StringComparison.OrdinalIgnoreCase))
                 {
                     request.UserAgent = messageRequestHeader.Value;
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.Accept)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Accept, StringComparison.OrdinalIgnoreCase))
                 {
                     request.Accept = messageRequestHeader.Value;
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.Referer)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Referer, StringComparison.OrdinalIgnoreCase))
                 {
                     request.Referer = messageRequestHeader.Value;
                     continue;
                 }
 
-                if (messageRequestHeader.Name == HttpHeader.Names.Range)
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Range, StringComparison.OrdinalIgnoreCase))
                 {
                     var value = RangeHeaderValue.Parse(messageRequestHeader.Value);
                     if (value.Unit != "bytes")
