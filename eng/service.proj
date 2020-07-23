@@ -36,5 +36,4 @@
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
   </Target>
-
 </Project>
