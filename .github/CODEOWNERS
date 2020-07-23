@@ -9,45 +9,59 @@
 /sdk/                                           @AlexGhiondea
 
 # Core
+# PRLabel: %Azure.Core
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # Extensions
 /sdk/extensions/                                @parkym
 
 # Service teams
+# PRLabel: %AzConfig
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+# PRLabel: %Batch
 /sdk/batch/                                     @bgklein @xingwu1 
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
+# PRLabel: %DigitalTwins
 /sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
 
+# PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
+# PRLabel: %Event Hubs
 /sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
-/sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
-/sdk/identity/                                  @schaabs
+# PRLabel: %Azure.Identity
+/sdk/identity/                                  @schaabs @alexanderSher
 
+# PRLabel: %Iot
 /sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
 
+# PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
 
+# PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
+# PRLabel: %Service Bus
 /sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
+# PRLabel: %Storage
 /sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
+# PRLabel: %Tables
 /sdk/tables/                                    @christothes
 
+# PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                             @annelo-msft @maririos
 
+# PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
 # Smoke tests
