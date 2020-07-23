@@ -172,13 +172,20 @@ namespace Azure.Storage.Blobs
         /// </returns>
         internal static IList<ObjectReplicationPolicy> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
         {
-            // If the dictionary contains a key with policy id, we are not required to do any parsing since
-            // the policy id should already be stored in the ObjectReplicationDestinationPolicyId.
-            if (OrIds.First().Key == "policy-id")
+            try
             {
+                // If the dictionary contains a key with policy id, we are not required to do any parsing since
+                // the policy id should already be stored in the ObjectReplicationDestinationPolicyId.
+                KeyValuePair<string, string> destPolicy = OrIds.Single(id => (id.Key == "policy-id"));
                 return default;
             }
-            List <ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
+            catch (Exception)
+            {
+                // If an exception is thrown by Single then we have confirmed that there's not a policy id already
+                // stored in the ObjectReplicationDestinationPolicyId and that we have the unparsed
+                // Object Replication headers from the source blob.
+            }
+            List<ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrIds)
             {
                 string[] ParsedIds = status.Key.Split('_');
@@ -188,7 +195,7 @@ namespace Azure.Storage.Blobs
                     OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
                     {
                         RuleId = ParsedIds[1],
-                        ReplicationStatus = (ObjectReplicationStatus) Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                        ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                 }
                 else
