@@ -7,19 +7,16 @@ namespace Azure.Data.Tables
         public DynamicTableEntity(string partitionKey, string rowKey) { }
         public int Count { get { throw null; } }
         public override string ETag { get { throw null; } set { } }
-        public bool IsReadOnly { get { throw null; } }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
         public override string PartitionKey { get { throw null; } set { } }
         public override string RowKey { get { throw null; } set { } }
-        public override System.DateTimeOffset Timestamp { get { throw null; } }
-        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
-        public void Add(System.Collections.Generic.KeyValuePair<string, object> item) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
+        System.Collections.Generic.ICollection<object> System.Collections.Generic.IDictionary<System.String,System.Object>.Values { get { throw null; } }
+        public override System.DateTimeOffset? Timestamp { get { throw null; } }
         public void Add(string key, object value) { }
         public void Clear() { }
-        public bool Contains(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         public bool ContainsKey(string key) { throw null; }
-        public void CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] array, int arrayIndex) { }
         public byte[] GetBinary(string key) { throw null; }
         public bool GetBoolean(string key) { throw null; }
         public System.DateTime GetDateTime(string key) { throw null; }
@@ -29,8 +26,11 @@ namespace Azure.Data.Tables
         public int GetInt32(string key) { throw null; }
         public long GetInt64(string key) { throw null; }
         public string GetString(string key) { throw null; }
-        public bool Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         public bool Remove(string key) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> item) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] array, int arrayIndex) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
@@ -84,7 +84,7 @@ namespace Azure.Data.Tables
         public virtual string ETag { get { throw null; } set { } }
         public virtual string PartitionKey { get { throw null; } set { } }
         public virtual string RowKey { get { throw null; } set { } }
-        public virtual System.DateTimeOffset Timestamp { get { throw null; } set { } }
+        public virtual System.DateTimeOffset? Timestamp { get { throw null; } set { } }
     }
     public partial class TableServiceClient
     {
