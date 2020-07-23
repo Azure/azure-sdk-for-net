@@ -58,29 +58,40 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case ArraySegment<byte> arraySegment when arraySegment.Count == arraySegment.Array?.Length:
                     return arraySegment.Array;
                 case ArraySegment<byte> arraySegment:
-                {
-                    var byteArray = new byte[arraySegment.Count];
-                    Array.ConstrainedCopy(
-                        sourceArray: arraySegment.Array,
-                        sourceIndex: arraySegment.Offset,
-                        destinationArray: byteArray,
-                        destinationIndex: 0,
-                        length: arraySegment.Count);
-                    return byteArray;
-                }
+                    {
+                        var byteArray = new byte[arraySegment.Count];
+                        Array.ConstrainedCopy(
+                            sourceArray: arraySegment.Array,
+                            sourceIndex: arraySegment.Offset,
+                            destinationArray: byteArray,
+                            destinationIndex: 0,
+                            length: arraySegment.Count);
+                        return byteArray;
+                    }
                 default:
                     return null;
             }
         }
 
-        private static ServiceBusReceivedMessage ToServiceBusDataMessage(this AmqpMessage message)
+        // TODO: [WIP] This gets the data bytes via the BodyStream, and this method is current unused.
+        // This ignores the already parsed DataBody information, which is potentially faster and uses less memory.
+        // However, I'm not confident that doing it this way won't cause unknown issues.
+        // This is a drop-in replacement for GetDataViaDataBody.
+        private static IEnumerable<byte[]> GetDataViaBodyStream(AmqpMessage message)
         {
-            // TODO: WIP
             using var streamData = message.BodyStream;
             var data = new byte[streamData.Length];
             streamData.Read(data, 0, (int)streamData.Length);
-            // IEnumerable<byte[]> data = (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(new[]{ data }) };
+            return new[] { data };
+        }
+
+        private static IEnumerable<byte[]> GetDataViaDataBody(AmqpMessage message) =>
+            (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
+
+        private static ServiceBusReceivedMessage ToServiceBusDataMessage(this AmqpMessage message)
+        {
+            IEnumerable<byte[]> data = GetDataViaDataBody(message);
+            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(data) };
         }
 
         private static ServiceBusReceivedMessage ToServiceBusSequenceMessage(this AmqpMessage message)
