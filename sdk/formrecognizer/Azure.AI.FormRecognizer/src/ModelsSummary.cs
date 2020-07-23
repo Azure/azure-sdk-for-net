@@ -7,7 +7,7 @@ namespace Azure.AI.FormRecognizer.Models
     // caught by our autorest filter:
     //   $.definitions.*
     // This happens because the "summary" property is not part of the "definitions" section,
-    // but a subproperty defined in the "Models" definition.
+    // but a property defined in the "Models" definition.
 
     internal partial class ModelsSummary
     {
