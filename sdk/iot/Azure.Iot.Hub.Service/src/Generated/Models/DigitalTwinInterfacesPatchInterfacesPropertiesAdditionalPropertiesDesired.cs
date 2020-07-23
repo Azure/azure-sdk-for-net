@@ -15,13 +15,6 @@ namespace Azure.Iot.Hub.Service.Models
         {
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired. </summary>
-        /// <param name="value"> The desired value of the interface property to set in a digitalTwin. </param>
-        internal DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired(object value)
-        {
-            Value = value;
-        }
-
         /// <summary> The desired value of the interface property to set in a digitalTwin. </summary>
         public object Value { get; set; }
     }

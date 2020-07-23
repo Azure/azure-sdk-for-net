@@ -369,15 +369,25 @@ namespace Azure.Messaging.EventHubs.Processor
                 { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString(CultureInfo.InvariantCulture) }
             };
 
-            async Task updateCheckpointAsync(CancellationToken updateCheckpointToken)
-            {
-                using var blobContent = new MemoryStream(Array.Empty<byte>());
-                await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken).ConfigureAwait(false);
-            };
-
             try
             {
-                await ApplyRetryPolicy(updateCheckpointAsync, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    // Assume the blob is present and attempt to set the metadata.
+
+                    await ApplyRetryPolicy(token => blobClient.SetMetadataAsync(metadata, cancellationToken: token), cancellationToken).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when ((ex.ErrorCode == BlobErrorCode.BlobNotFound) || (ex.ErrorCode == BlobErrorCode.ContainerNotFound))
+                {
+                    // If the blob wasn't present, fall-back to trying to create a new one.
+
+                    await ApplyRetryPolicy(async token =>
+                    {
+                        using var blobContent = new MemoryStream(Array.Empty<byte>());
+                        await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: token).ConfigureAwait(false);
+
+                    }, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
         public DeviceIdentity()
         {
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
@@ -65,6 +67,6 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Status of Capabilities enabled on the device. </summary>
         public DeviceCapabilities Capabilities { get; set; }
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        public IList<string> ParentScopes { get; }
     }
 }

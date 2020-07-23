@@ -398,7 +398,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
         {
             var ruleDescriptionMap = new AmqpMap();
 
@@ -427,12 +427,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ruleDescriptionMap;
         }
 
-        public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        public static RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
         {
             var filter = GetFilter(amqpDescription.Filter);
             var ruleAction = GetRuleAction(amqpDescription.Action);
 
-            var ruleDescription = new RuleDescription(amqpDescription.RuleName, filter)
+            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
             {
                 Action = ruleAction
             };

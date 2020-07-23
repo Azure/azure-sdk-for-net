@@ -18,10 +18,10 @@
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">
-    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6223/autorest-3.0.6223.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion>3.0.6283</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200625.1/autorest-csharp-v3-3.0.0-dev.20200625.1.tgz</_AutoRestCSharpVersion>
+  <PropertyGroup>
+    <_AutoRestVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest/releases/download/autorest-3.0.6223/autorest-3.0.6223.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">3.0.6283</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200625.1/autorest-csharp-v3-3.0.0-dev.20200625.1.tgz</_AutoRestCSharpVersion>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >

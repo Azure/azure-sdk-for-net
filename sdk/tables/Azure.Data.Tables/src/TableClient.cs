@@ -120,6 +120,68 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        public virtual async Task<Response<DynamicTableEntity>> CreateEntityAsync(DynamicTableEntity entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.InsertEntityAsync(_table,
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
+
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        public virtual Response<DynamicTableEntity> CreateEntity(DynamicTableEntity entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.InsertEntity(_table,
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
+
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -225,6 +287,148 @@ namespace Azure.Data.Tables
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual Response<IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual async Task<Response<IDictionary<string, object>>> GetEntityAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -996,20 +1200,15 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal ExpressionParser GetExpressionParser()
-        {
-            if (_isPremiumEndpoint)
-            {
-                //TODO: Port TableExtensionExpressionParser
-                throw new NotImplementedException();
-            }
-            else
-            {
-                return new ExpressionParser();
-            }
-        }
+        /// <summary>
+        /// Creates an Odata filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="TableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expresssion.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
-        internal string Bind(Expression expression)
+        internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
@@ -1022,7 +1221,7 @@ namespace Azure.Data.Tables
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
             // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
-            ExpressionParser parser = GetExpressionParser();
+            ExpressionParser parser = new ExpressionParser();
             parser.Translate(normalizedExpression);
 
             // Return the FilterString.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Uri = uri;
-            HttpHeaders = new Dictionary<string, string>();
+            HttpHeaders = new ChangeTrackingDictionary<string, string>();
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
@@ -53,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
         {
             Uri = uri;
-            HttpHeaders = httpHeaders ?? new Dictionary<string, string>();
+            HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
             BatchSize = batchSize;

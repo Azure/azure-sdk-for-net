@@ -79,14 +79,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobProperties.DeserializeJobProperties(document.RootElement);
-                        }
+                        value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,14 +105,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobProperties.DeserializeJobProperties(document.RootElement);
-                        }
+                        value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,26 +138,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<JobProperties> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<JobProperties> array = new List<JobProperties>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(JobProperties.DeserializeJobProperties(item));
                         }
-                        else
-                        {
-                            List<JobProperties> array = new List<JobProperties>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(JobProperties.DeserializeJobProperties(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,26 +163,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<JobProperties> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<JobProperties> array = new List<JobProperties>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(JobProperties.DeserializeJobProperties(item));
                         }
-                        else
-                        {
-                            List<JobProperties> array = new List<JobProperties>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(JobProperties.DeserializeJobProperties(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,14 +208,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobProperties.DeserializeJobProperties(document.RootElement);
-                        }
+                        value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -283,14 +234,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobProperties.DeserializeJobProperties(document.RootElement);
-                        }
+                        value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -330,14 +274,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -365,14 +302,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -414,14 +344,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -447,14 +370,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -503,14 +419,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -541,14 +450,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -589,14 +491,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -622,14 +517,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         JobResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = JobResponse.DeserializeJobResponse(document.RootElement);
-                        }
+                        value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,14 +560,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         QueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        }
+                        value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -701,14 +582,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         QueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        }
+                        value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

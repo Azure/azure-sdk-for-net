@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ElisionTokenFilter
     {
         /// <summary> The set of articles to remove. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Articles { get; }
     }
 }

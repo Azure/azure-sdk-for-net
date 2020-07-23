@@ -82,6 +82,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -156,6 +157,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
@@ -225,6 +227,26 @@ namespace Azure.Data.Tables
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreateDeleteRequest(string table, string requestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/Tables('", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("')", false);
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (requestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", requestId);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         /// <summary> Operation permanently deletes the specified table. </summary>
@@ -318,6 +340,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -422,6 +445,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -433,7 +457,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesWithPartitionAndRowKeyHeaders>> QueryEntitiesWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntitiesWithPartitionAndRowKeyHeaders>> QueryEntitiesWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -455,9 +479,14 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        TableEntityQueryResponse value = default;
+                        IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -473,7 +502,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesWithPartitionAndRowKeyHeaders> QueryEntitiesWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntitiesWithPartitionAndRowKeyHeaders> QueryEntitiesWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -495,9 +524,14 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        TableEntityQueryResponse value = default;
+                        IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetObject());
+                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -538,6 +572,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             if (tableEntityProperties != null)
             {
@@ -892,6 +927,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             if (tableEntityProperties != null)
             {
@@ -1103,6 +1139,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             if (tableAcl != null)
             {
