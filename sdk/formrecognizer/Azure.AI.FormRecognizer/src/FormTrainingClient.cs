@@ -300,7 +300,7 @@ namespace Azure.AI.FormRecognizer.Training
                 try
                 {
                     Response<Models.Models> response = ServiceClient.ListCustomModels(cancellationToken);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -317,7 +317,7 @@ namespace Azure.AI.FormRecognizer.Training
                 try
                 {
                     Response<Models.Models> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,7 +345,7 @@ namespace Azure.AI.FormRecognizer.Training
                 try
                 {
                     Response<Models.Models> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,7 +362,7 @@ namespace Azure.AI.FormRecognizer.Training
                 try
                 {
                     Response<Models.Models> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

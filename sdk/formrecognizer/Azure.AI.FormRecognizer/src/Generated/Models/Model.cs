@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of Model. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
-        internal Model(ModelInfo_internal modelInfo)
+        internal Model(CustomFormModelInfo modelInfo)
         {
             if (modelInfo == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
         /// <param name="trainResult"> Custom model training result. </param>
-        internal Model(ModelInfo_internal modelInfo, KeysResult keys, TrainResult trainResult)
+        internal Model(CustomFormModelInfo modelInfo, KeysResult keys, TrainResult trainResult)
         {
             ModelInfo = modelInfo;
             Keys = keys;
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Basic custom model information. </summary>
-        public ModelInfo_internal ModelInfo { get; }
+        public CustomFormModelInfo ModelInfo { get; }
         /// <summary> Keys extracted by the custom model. </summary>
         public KeysResult Keys { get; }
         /// <summary> Custom model training result. </summary>

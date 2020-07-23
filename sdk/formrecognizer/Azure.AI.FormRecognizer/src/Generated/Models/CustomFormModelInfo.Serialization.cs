@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    internal partial class ModelInfo_internal
+    public partial class CustomFormModelInfo
     {
-        internal static ModelInfo_internal DeserializeModelInfo_internal(JsonElement element)
+        internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element)
         {
-            Guid modelId = default;
+            string modelId = default;
             CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (property.NameEquals("modelId"))
                 {
-                    modelId = property.Value.GetGuid();
+                    modelId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new ModelInfo_internal(modelId, status, createdDateTime, lastUpdatedDateTime);
+            return new CustomFormModelInfo(modelId, status, createdDateTime, lastUpdatedDateTime);
         }
     }
 }

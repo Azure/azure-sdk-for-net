@@ -15,14 +15,14 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static Model DeserializeModel(JsonElement element)
         {
-            ModelInfo_internal modelInfo = default;
+            CustomFormModelInfo modelInfo = default;
             Optional<KeysResult> keys = default;
             Optional<TrainResult> trainResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
                 {
-                    modelInfo = ModelInfo_internal.DeserializeModelInfo_internal(property.Value);
+                    modelInfo = CustomFormModelInfo.DeserializeCustomFormModelInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keys"))

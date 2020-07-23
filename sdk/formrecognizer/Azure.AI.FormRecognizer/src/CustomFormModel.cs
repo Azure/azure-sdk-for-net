@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CustomFormModel(Model model)
         {
-            ModelId = model.ModelInfo.ModelId.ToString();
+            ModelId = model.ModelInfo.ModelId;
             Status = model.ModelInfo.Status;
-            TrainingStartedOn = model.ModelInfo.CreatedDateTime;
-            TrainingCompletedOn = model.ModelInfo.LastUpdatedDateTime;
+            TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
+            TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
             Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);

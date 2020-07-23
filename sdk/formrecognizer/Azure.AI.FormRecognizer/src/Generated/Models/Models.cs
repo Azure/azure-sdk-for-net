@@ -17,14 +17,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of Models. </summary>
         internal Models()
         {
-            ModelList = new ChangeTrackingList<ModelInfo_internal>();
+            ModelList = new ChangeTrackingList<CustomFormModelInfo>();
         }
 
         /// <summary> Initializes a new instance of Models. </summary>
         /// <param name="summary"> Summary of all trained custom models. </param>
         /// <param name="modelList"> Collection of trained custom models. </param>
         /// <param name="nextLink"> Link to the next page of custom models. </param>
-        internal Models(ModelsSummary summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
+        internal Models(ModelsSummary summary, IReadOnlyList<CustomFormModelInfo> modelList, string nextLink)
         {
             Summary = summary;
             ModelList = modelList;
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Summary of all trained custom models. </summary>
         public ModelsSummary Summary { get; }
         /// <summary> Collection of trained custom models. </summary>
-        public IReadOnlyList<ModelInfo_internal> ModelList { get; }
+        public IReadOnlyList<CustomFormModelInfo> ModelList { get; }
         /// <summary> Link to the next page of custom models. </summary>
         public string NextLink { get; }
     }

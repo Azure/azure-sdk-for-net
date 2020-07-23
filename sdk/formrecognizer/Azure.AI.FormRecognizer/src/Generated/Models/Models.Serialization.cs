@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal static Models DeserializeModels(JsonElement element)
         {
             Optional<ModelsSummary> summary = default;
-            Optional<IReadOnlyList<ModelInfo_internal>> modelList = default;
+            Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,10 +28,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("modelList"))
                 {
-                    List<ModelInfo_internal> array = new List<ModelInfo_internal>();
+                    List<CustomFormModelInfo> array = new List<CustomFormModelInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        array.Add(CustomFormModelInfo.DeserializeCustomFormModelInfo(item));
                     }
                     modelList = array;
                     continue;
