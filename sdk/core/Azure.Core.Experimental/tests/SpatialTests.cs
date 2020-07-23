@@ -35,14 +35,14 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtrip<GeoPoint>(input);
             Assert.AreEqual(P(0), point.Position);
-            Assert.AreEqual(P(1).Longitude, point.BoundingBox.Value.West);
-            Assert.AreEqual(P(1).Latitude, point.BoundingBox.Value.South);
+            Assert.AreEqual(P(1).Longitude, point.BoundingBox.West);
+            Assert.AreEqual(P(1).Latitude, point.BoundingBox.South);
 
-            Assert.AreEqual(P(2).Longitude, point.BoundingBox.Value.East);
-            Assert.AreEqual(P(2).Latitude, point.BoundingBox.Value.North);
+            Assert.AreEqual(P(2).Longitude, point.BoundingBox.East);
+            Assert.AreEqual(P(2).Latitude, point.BoundingBox.North);
 
-            Assert.AreEqual(P(1).Altitude, point.BoundingBox.Value.MinAltitude);
-            Assert.AreEqual(P(2).Altitude, point.BoundingBox.Value.MaxAltitude);
+            Assert.AreEqual(P(1).Altitude, point.BoundingBox.MinAltitude);
+            Assert.AreEqual(P(2).Altitude, point.BoundingBox.MaxAltitude);
         }
 
         [Test]
