@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await receiver.DeadLetterMessageAsync(msg.LockToken);
 
             List<QueueRuntimeProperties> runtimeInfoList = new List<QueueRuntimeProperties>();
-            await foreach (QueueRuntimeProperties queueRuntimeInfo in mgmtClient.GetQueuesRuntimeInfoAsync())
+            await foreach (QueueRuntimeProperties queueRuntimeInfo in mgmtClient.GetQueuesRuntimePropertiesAsync())
             {
                 runtimeInfoList.Add(queueRuntimeInfo);
             }
@@ -339,7 +339,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(3, runtimeInfo.TotalMessageCount);
             Assert.True(runtimeInfo.SizeInBytes > 0);
 
-            QueueRuntimeProperties singleRuntimeInfo = await mgmtClient.GetQueueRuntimeInfoAsync(runtimeInfo.Name);
+            QueueRuntimeProperties singleRuntimeInfo = await mgmtClient.GetQueueRuntimePropertiesAsync(runtimeInfo.Name);
 
             Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
             Assert.AreEqual(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
@@ -388,7 +388,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await receiver.DeadLetterMessageAsync(msg.LockToken);
 
             List<SubscriptionRuntimeProperties> runtimeInfoList = new List<SubscriptionRuntimeProperties>();
-            await foreach (SubscriptionRuntimeProperties subscriptionRuntimeInfo in client.GetSubscriptionsRuntimeInfoAsync(topicName))
+            await foreach (SubscriptionRuntimeProperties subscriptionRuntimeInfo in client.GetSubscriptionsRuntimePropertiesAsync(topicName))
             {
                 runtimeInfoList.Add(subscriptionRuntimeInfo);
             }
@@ -408,7 +408,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(0, runtimeInfo.ScheduledMessageCount);
             Assert.AreEqual(2, runtimeInfo.TotalMessageCount);
 
-            SubscriptionRuntimeProperties singleRuntimeInfo = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
+            SubscriptionRuntimeProperties singleRuntimeInfo = await client.GetSubscriptionRuntimePropertiesAsync(topicName, subscriptionName);
 
             Assert.AreEqual(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
             Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
@@ -441,7 +441,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
             List<TopicRuntimeProperties> runtimeInfoList = new List<TopicRuntimeProperties>();
-            await foreach (TopicRuntimeProperties topicRuntimeInfo in client.GetTopicsRuntimeInfoAsync())
+            await foreach (TopicRuntimeProperties topicRuntimeInfo in client.GetTopicsRuntimePropertiesAsync())
             {
                 runtimeInfoList.Add(topicRuntimeInfo);
             }
@@ -455,7 +455,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
             Assert.AreEqual(1, runtimeInfo.SubscriptionCount);
 
-            TopicRuntimeProperties singleTopicRI = await client.GetTopicRuntimeInfoAsync(runtimeInfo.Name);
+            TopicRuntimeProperties singleTopicRI = await client.GetTopicRuntimePropertiesAsync(runtimeInfo.Name);
 
             Assert.AreEqual(runtimeInfo.AccessedAt, singleTopicRI.AccessedAt);
             Assert.AreEqual(runtimeInfo.CreatedAt, singleTopicRI.CreatedAt);

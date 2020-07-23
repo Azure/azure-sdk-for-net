@@ -411,15 +411,15 @@ namespace Azure.Messaging.ServiceBus.Management
 
         #endregion
 
-        #region GetRuntimeInfo
+        #region GetRuntimeProperties
         /// <summary>
-        /// Retrieves the runtime information of a queue.
+        /// Retrieves the runtime properties of a queue.
         /// </summary>
         ///
         /// <param name="name">The name of the queue relative to service bus namespace.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns><see cref="QueueRuntimeProperties"/> containing runtime information about the queue.</returns>
+        /// <returns><see cref="QueueRuntimeProperties"/> containing runtime properties about the queue.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of queue name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
@@ -427,7 +427,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<QueueRuntimeProperties>> GetQueueRuntimeInfoAsync(
+        public virtual async Task<Response<QueueRuntimeProperties>> GetQueueRuntimePropertiesAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -435,18 +435,18 @@ namespace Azure.Messaging.ServiceBus.Management
 
             Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
-            QueueRuntimeProperties runtimeInfo = QueueRuntimePropertiesExtensions.ParseFromContent(result);
+            QueueRuntimeProperties runtimeProperties = QueueRuntimePropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(runtimeInfo, response);
+            return Response.FromValue(runtimeProperties, response);
         }
 
         /// <summary>
-        /// Retrieves the runtime information of a topic.
+        /// Retrieves the runtime properties of a topic.
         /// </summary>
         /// <param name="name">The name of the topic relative to service bus namespace.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns><see cref="TopicRuntimeProperties"/> containing runtime information about the topic.</returns>
+        /// <returns><see cref="TopicRuntimeProperties"/> containing runtime properties about the topic.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
@@ -454,7 +454,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<TopicRuntimeProperties>> GetTopicRuntimeInfoAsync(
+        public virtual async Task<Response<TopicRuntimeProperties>> GetTopicRuntimePropertiesAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -462,20 +462,20 @@ namespace Azure.Messaging.ServiceBus.Management
 
             Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
-            TopicRuntimeProperties runtimeInfo = TopicRuntimePropertiesExtensions.ParseFromContent(result);
+            TopicRuntimeProperties runtimeProperties = TopicRuntimePropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(runtimeInfo, response);
+            return Response.FromValue(runtimeProperties, response);
         }
 
         /// <summary>
-        /// Retrieves the runtime information of a subscription.
+        /// Retrieves the runtime properties of a subscription.
         /// </summary>
         ///
         /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="subscriptionName">The subscription name.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns><see cref="SubscriptionRuntimeProperties"/> containing runtime information about the subscription.</returns>
+        /// <returns><see cref="SubscriptionRuntimeProperties"/> containing runtime properties about the subscription.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
@@ -483,7 +483,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<SubscriptionRuntimeProperties>> GetSubscriptionRuntimeInfoAsync(
+        public virtual async Task<Response<SubscriptionRuntimeProperties>> GetSubscriptionRuntimePropertiesAsync(
             string topicName,
             string subscriptionName,
             CancellationToken cancellationToken = default)
@@ -493,9 +493,9 @@ namespace Azure.Messaging.ServiceBus.Management
 
             Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
-            SubscriptionRuntimeProperties runtimeInfo = SubscriptionRuntimePropertiesExtensions.ParseFromContent(topicName, result);
+            SubscriptionRuntimeProperties runtimeProperties = SubscriptionRuntimePropertiesExtensions.ParseFromContent(topicName, result);
 
-            return Response.FromValue(runtimeInfo, response);
+            return Response.FromValue(runtimeProperties, response);
         }
 
         #endregion
@@ -600,21 +600,21 @@ namespace Azure.Messaging.ServiceBus.Management
 
         #endregion
 
-        #region GetEntitesRuntimeInfo
+        #region GetEntitiesRuntimeProperties
         /// <summary>
-        /// Retrieves the list of runtime information for queues present in the namespace.
+        /// Retrieves the list of runtime properties for queues present in the namespace.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues runtime information.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<QueueRuntimeProperties> GetQueuesRuntimeInfoAsync(CancellationToken cancellationToken = default) =>
+        public virtual AsyncPageable<QueueRuntimeProperties> GetQueuesRuntimePropertiesAsync(CancellationToken cancellationToken = default) =>
             PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
                 QueuesPath,
                 nextSkip,
@@ -622,19 +622,19 @@ namespace Azure.Messaging.ServiceBus.Management
                 cancellationToken));
 
         /// <summary>
-        /// Retrieves the list of runtime information for topics present in the namespace.
+        /// Retrieves the list of runtime properties for topics present in the namespace.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics runtime information.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<TopicRuntimeProperties> GetTopicsRuntimeInfoAsync(CancellationToken cancellationToken = default) =>
+        public virtual AsyncPageable<TopicRuntimeProperties> GetTopicsRuntimePropertiesAsync(CancellationToken cancellationToken = default) =>
             PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
                 TopicsPath,
                 nextSkip,
@@ -642,20 +642,20 @@ namespace Azure.Messaging.ServiceBus.Management
                 cancellationToken));
 
         /// <summary>
-        /// Retrieves the list of runtime information for subscriptions present in the namespace.
+        /// Retrieves the list of runtime properties for subscriptions present in the namespace.
         /// </summary>
         ///
         /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        ///  <returns>An <see cref="AsyncPageable{T}"/> describing the subscriptions runtime information.</returns>
+        ///  <returns>An <see cref="AsyncPageable{T}"/> describing the subscriptions runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<SubscriptionRuntimeProperties> GetSubscriptionsRuntimeInfoAsync(
+        public virtual AsyncPageable<SubscriptionRuntimeProperties> GetSubscriptionsRuntimePropertiesAsync(
             string topicName,
             CancellationToken cancellationToken = default)
         {
