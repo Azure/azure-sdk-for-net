@@ -432,35 +432,6 @@ namespace Azure.Messaging.ServiceBus
         AmqpWebSockets = 1,
     }
 }
-namespace Azure.Messaging.ServiceBus.Amqp
-{
-    public enum AmqpBodyType
-    {
-        Data = 0,
-        Sequence = 1,
-        Value = 2,
-    }
-    public static partial class ServiceBusMessageExtensions
-    {
-        public static Azure.Messaging.ServiceBus.Amqp.AmqpBodyType GetAmqpBodyType(this Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
-        public static System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> GetAmqpDataBody(this Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
-        public static System.Collections.Generic.IEnumerable<System.Collections.IList> GetAmqpSequenceBody(this Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
-        public static object GetAmqpValueBody(this Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
-    }
-    public static partial class ServiceBusReceivedMessageExtensions
-    {
-        public static Azure.Messaging.ServiceBus.Amqp.AmqpBodyType GetAmqpBodyType(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-        public static System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> GetAmqpDataBody(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-        public static System.Collections.Generic.IEnumerable<System.Collections.IList> GetAmqpSequenceBody(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-        public static object GetAmqpValueBody(this Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-    }
-    public static partial class ServiceBusSenderExtensions
-    {
-        public static Azure.Messaging.ServiceBus.ServiceBusMessage CreateAmqpDataMessage(this Azure.Messaging.ServiceBus.ServiceBusSender sender, System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
-        public static Azure.Messaging.ServiceBus.ServiceBusMessage CreateAmqpSequenceMessage(this Azure.Messaging.ServiceBus.ServiceBusSender sender, System.Collections.Generic.IEnumerable<System.Collections.IList> sequence) { throw null; }
-        public static Azure.Messaging.ServiceBus.ServiceBusMessage CreateAmqpValueMessage(this Azure.Messaging.ServiceBus.ServiceBusSender sender, object value) { throw null; }
-    }
-}
 namespace Azure.Messaging.ServiceBus.Management
 {
     public enum AccessRights
