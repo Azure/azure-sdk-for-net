@@ -9,7 +9,7 @@
     <AssemblyName>Microsoft.Azure.Management.AzureStackHCI</AssemblyName>
     <PackageId>Microsoft.Azure.Management.AzureStackHCI</PackageId>
     <PackageTags>Microsoft Azure Stack HCI Management;AzureStackHCI;AzSHCI;</PackageTags>
-    <PackageReleaseNotes>This is the first major version of the Azure Stack HCI .NET SDK, based on version 2020-03-01-preview of the Azure Stack HCI REST APIs. New in this GA version are billing periods and enrollment account support for backward compatibility.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is the first major version of the Azure Stack HCI .NET SDK, based on version 2020-03-01-preview of the Azure Stack HCI REST APIs. It allows for management operations on cluster resource.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
