@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsResource. </summary>

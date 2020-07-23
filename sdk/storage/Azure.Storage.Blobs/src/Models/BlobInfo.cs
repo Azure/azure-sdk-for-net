@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -32,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The details and Content returned from downloading a blob
     /// </summary>
-    public partial class BlobDownloadInfo : IDisposable
+    public partial class BlobDownloadInfo : IDisposable, IDownloadedContent
     {
         /// <summary>
         /// Internal flattened property representation

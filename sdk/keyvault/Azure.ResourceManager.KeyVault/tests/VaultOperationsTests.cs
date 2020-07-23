@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.KeyVault.Models;
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = null;
 
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-            parameters.Tags = Tags;
+            parameters.Tags.InitializeFrom(Tags);
 
             var rawVault = await VaultsClient.StartCreateOrUpdateAsync(
                 ResGroupName,
@@ -67,14 +67,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             //Update
-            AccessPolicy.Permissions.Secrets = new SecretPermissions[] { SecretPermissions.Get, SecretPermissions.Set };
-            AccessPolicy.Permissions.Keys = null;
-            AccessPolicy.Permissions.Storage = new StoragePermissions[] { StoragePermissions.Get, StoragePermissions.Regeneratekey };
-            createdVault.Properties.AccessPolicies = new[] { AccessPolicy };
+            AccessPolicy.Permissions.Secrets.Clear();
+            AccessPolicy.Permissions.Secrets.Add(SecretPermissions.Get);
+            AccessPolicy.Permissions.Secrets.Add(SecretPermissions.Set);
+            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermissions>).Reset();
+
+            AccessPolicy.Permissions.Storage.Clear();
+            AccessPolicy.Permissions.Storage.Add(StoragePermissions.Get);
+            AccessPolicy.Permissions.Storage.Add(StoragePermissions.Regeneratekey);
+
+            createdVault.Properties.AccessPolicies.Clear();
+            createdVault.Properties.AccessPolicies.Add(AccessPolicy);
             createdVault.Properties.Sku.Name = SkuName.Premium;
 
             parameters = new VaultCreateOrUpdateParameters(Location, createdVault.Properties);
-            parameters.Tags = Tags;
+            parameters.Tags.InitializeFrom(Tags);
             var rawUpdateVault = await VaultsClient.StartCreateOrUpdateAsync(
                 resourceGroupName: ResGroupName,
                 vaultName: VaultName,
@@ -140,7 +147,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             this.VaultProperties.EnableSoftDelete = false;
 
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-            parameters.Tags = this.Tags;
+            parameters.Tags.InitializeFrom(Tags);
             var vault = await VaultsClient.StartCreateOrUpdateAsync(
                 resourceGroupName: this.ResGroupName,
                 vaultName: this.VaultName,
@@ -160,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = null;
 
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-            parameters.Tags = Tags;
+            parameters.Tags.InitializeFrom(Tags);
 
             var createVault = await VaultsClient.StartCreateOrUpdateAsync(
                 resourceGroupName: ResGroupName,
@@ -231,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             {
                 string vaultName = Recording.GenerateAssetName("sdktestvault");
                 var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-                parameters.Tags = Tags;
+                parameters.Tags.InitializeFrom(Tags);
                 var createdVault = await VaultsClient.StartCreateOrUpdateAsync(
                     resourceGroupName: ResGroupName,
                     vaultName: vaultName,
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public async Task KeyVaultManagementRecoverDeletedVault()
         {
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-            parameters.Tags = Tags;
+            parameters.Tags.InitializeFrom(Tags);
             var createdVault = await VaultsClient.StartCreateOrUpdateAsync(
                 resourceGroupName: ResGroupName,
                 vaultName: VaultName,
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
 
             parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
-            parameters.Tags = Tags;
+            parameters.Tags.InitializeFrom(Tags);
             // Recover in default mode
             var recoveredRawVault = await VaultsClient.StartCreateOrUpdateAsync(
                 resourceGroupName: ResGroupName,
@@ -343,10 +350,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             int n = 3;
             List<string> resourceIds = new List<string>();
             List<string> vaultNameList = new List<string>();
-            var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties)
-            {
-                Tags = Tags
-            };
+            var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
+            parameters.Tags.InitializeFrom(Tags);
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktestvault");

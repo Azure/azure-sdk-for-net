@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
-            Functions = new List<ScoringFunction>();
+            Functions = new ChangeTrackingList<ScoringFunction>();
         }
 
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             TextWeights = textWeights;
-            Functions = functions ?? new List<ScoringFunction>();
+            Functions = functions;
             FunctionAggregation = functionAggregation;
         }
 

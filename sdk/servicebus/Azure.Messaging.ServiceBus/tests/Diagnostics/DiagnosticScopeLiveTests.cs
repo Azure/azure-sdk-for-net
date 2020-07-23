@@ -334,7 +334,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         AutoComplete = false,
                         MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
-                        MaxConcurrentCalls = 1
+                        MaxConcurrentSessions = 1
                     });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
                 int processedMsgCt = 0;

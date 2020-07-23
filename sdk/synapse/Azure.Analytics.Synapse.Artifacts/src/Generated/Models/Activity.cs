@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,7 +25,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Name = name;
-            AdditionalProperties = new Dictionary<string, object>();
+            DependsOn = new ChangeTrackingList<ActivityDependency>();
+            UserProperties = new ChangeTrackingList<UserProperty>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "Activity";
         }
 
@@ -42,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Description = description;
             DependsOn = dependsOn;
             UserProperties = userProperties;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Activity name. </summary>
@@ -52,9 +55,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Activity description. </summary>
         public string Description { get; set; }
         /// <summary> Activity depends on condition. </summary>
-        public IList<ActivityDependency> DependsOn { get; set; }
+        public IList<ActivityDependency> DependsOn { get; }
         /// <summary> Activity user properties. </summary>
-        public IList<UserProperty> UserProperties { get; set; }
+        public IList<UserProperty> UserProperties { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

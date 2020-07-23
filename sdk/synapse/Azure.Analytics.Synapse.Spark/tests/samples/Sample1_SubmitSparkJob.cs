@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Samples
             SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
             {
                 ClassName = "WordCount",
-                Arguments = new List<string>
+                Arguments =
                 {
                     string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt", fileSystem, storageAccount),
                     string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/result/", fileSystem, storageAccount),

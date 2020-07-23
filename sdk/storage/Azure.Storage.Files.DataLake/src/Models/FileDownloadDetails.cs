@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string CopyStatusDescription { get; internal set; }
 
         /// <summary>
-        /// String identifier for this copy operation. Use with Get Blob Properties to check the status of this copy
+        /// String identifier for this copy operation. Use with Get Properties to check the status of this copy
         /// operation, or pass to Abort Copy Blob to abort a pending copy.
         /// </summary>
         public string CopyId { get; internal set; }

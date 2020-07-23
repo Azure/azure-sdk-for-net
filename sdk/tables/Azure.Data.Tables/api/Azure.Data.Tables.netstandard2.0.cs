@@ -1,14 +1,51 @@
 namespace Azure.Data.Tables
 {
+    public partial class DynamicTableEntity : Azure.Data.Tables.TableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
+    {
+        public DynamicTableEntity() { }
+        public DynamicTableEntity(System.Collections.Generic.IDictionary<string, object> values) { }
+        public DynamicTableEntity(string partitionKey, string rowKey) { }
+        public int Count { get { throw null; } }
+        public override string ETag { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
+        public object this[string key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
+        public override string PartitionKey { get { throw null; } set { } }
+        public override string RowKey { get { throw null; } set { } }
+        public override System.DateTimeOffset Timestamp { get { throw null; } }
+        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
+        public void Add(System.Collections.Generic.KeyValuePair<string, object> item) { }
+        public void Add(string key, object value) { }
+        public void Clear() { }
+        public bool Contains(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
+        public bool ContainsKey(string key) { throw null; }
+        public void CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] array, int arrayIndex) { }
+        public byte[] GetBinary(string key) { throw null; }
+        public bool GetBoolean(string key) { throw null; }
+        public System.DateTime GetDateTime(string key) { throw null; }
+        public double GetDouble(string key) { throw null; }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        public System.Guid GetGuid(string key) { throw null; }
+        public int GetInt32(string key) { throw null; }
+        public long GetInt64(string key) { throw null; }
+        public string GetString(string key) { throw null; }
+        public bool Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
+        public bool Remove(string key) { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(string key, out object value) { throw null; }
+    }
     public partial class TableClient
     {
         protected TableClient() { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> Create(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.Tables.DynamicTableEntity> CreateEntity(Azure.Data.Tables.DynamicTableEntity entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.ObjectModel.ReadOnlyDictionary<string, object>> CreateEntity(System.Collections.Generic.IDictionary<string, object> entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.DynamicTableEntity>> CreateEntityAsync(Azure.Data.Tables.DynamicTableEntity entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.ObjectModel.ReadOnlyDictionary<string, object>>> CreateEntityAsync(System.Collections.Generic.IDictionary<string, object> entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
         public virtual Azure.Response<T> CreateEntity<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
+        public static string CreateFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
         public virtual Azure.Response Delete(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>> GetAccessPolicy(int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,10 +81,10 @@ namespace Azure.Data.Tables
     {
         public TableEntity() { }
         public TableEntity(string partitionKey, string rowKey) { }
-        public string ETag { get { throw null; } set { } }
-        public string PartitionKey { get { throw null; } set { } }
-        public string RowKey { get { throw null; } set { } }
-        public System.DateTimeOffset Timestamp { get { throw null; } set { } }
+        public virtual string ETag { get { throw null; } set { } }
+        public virtual string PartitionKey { get { throw null; } set { } }
+        public virtual string RowKey { get { throw null; } set { } }
+        public virtual System.DateTimeOffset Timestamp { get { throw null; } set { } }
     }
     public partial class TableServiceClient
     {
@@ -221,7 +258,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableServiceProperties
     {
         public TableServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } }
         public Azure.Data.Tables.Models.TableMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Data.Tables.Models.LoggingSettings Logging { get { throw null; } set { } }
         public Azure.Data.Tables.Models.TableMetrics MinuteMetrics { get { throw null; } set { } }
@@ -230,13 +267,6 @@ namespace Azure.Data.Tables.Models
     {
         internal TableServiceStats() { }
         public Azure.Data.Tables.Models.GeoReplication GeoReplication { get { throw null; } }
-    }
-}
-namespace Azure.Data.Tables.Queryable
-{
-    public static partial class TableClientExtensions
-    {
-        public static string CreateFilter<T>(this Azure.Data.Tables.TableClient client, System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
     }
 }
 namespace Azure.Data.Tables.Sas

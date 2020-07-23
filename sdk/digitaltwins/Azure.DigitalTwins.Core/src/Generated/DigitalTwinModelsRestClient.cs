@@ -88,14 +88,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         PagedModelDataCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
-                        }
+                        value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,14 +116,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         PagedModelDataCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
-                        }
+                        value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,14 +166,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         ModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModelData.DeserializeModelData(document.RootElement);
-                        }
+                        value = ModelData.DeserializeModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -219,14 +198,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         ModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModelData.DeserializeModelData(document.RootElement);
-                        }
+                        value = ModelData.DeserializeModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,14 +341,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         PagedModelDataCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
-                        }
+                        value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -410,14 +375,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         PagedModelDataCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
-                        }
+                        value = PagedModelDataCollection.DeserializePagedModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -16,7 +16,9 @@ namespace Azure.Storage.Files.Shares
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, share, or file.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata">
+    /// Naming and Referencing Shares, Directories, Files, and Metadata</see>.
     /// </summary>
     public class ShareUriBuilder
     {

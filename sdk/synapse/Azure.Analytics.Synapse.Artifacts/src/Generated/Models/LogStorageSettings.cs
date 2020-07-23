@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of LogStorageSettings. </summary>
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Log storage linked service reference. </summary>

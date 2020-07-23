@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static DigitalTwinsDescriptionListResult DeserializeDigitalTwinsDescriptionListResult(JsonElement element)
         {
-            string nextLink = default;
-            IReadOnlyList<DigitalTwinsDescription> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DigitalTwinsDescription>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DigitalTwinsDescription> array = new List<DigitalTwinsDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DigitalTwinsDescription.DeserializeDigitalTwinsDescription(item));
-                        }
+                        array.Add(DigitalTwinsDescription.DeserializeDigitalTwinsDescription(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new DigitalTwinsDescriptionListResult(nextLink, value);
+            return new DigitalTwinsDescriptionListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

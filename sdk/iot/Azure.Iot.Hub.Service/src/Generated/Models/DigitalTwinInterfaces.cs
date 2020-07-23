@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of DigitalTwinInterfaces. </summary>
         internal DigitalTwinInterfaces()
         {
+            Interfaces = new ChangeTrackingDictionary<string, PnpInterface>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinInterfaces. </summary>

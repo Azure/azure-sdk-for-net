@@ -13,7 +13,8 @@ namespace Azure.Storage.Blobs.Specialized
     /// operations in a single request via <see cref="BlobBatchClient.SubmitBatch"/>.
     ///
     /// For more information, see
-    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch" />.
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch">
+    /// Blob Batch</see>.
     /// </summary>
     public class BlobBatch : IDisposable
     {
@@ -113,7 +114,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to delete.
@@ -160,7 +161,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobUri">
         /// The blob to delete's primary <see cref="Uri"/> endpoint.
@@ -206,8 +207,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
-        /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// information about block blob level tiering see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to set the tier of.
@@ -258,7 +260,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
         /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
+        ///
         /// </summary>
         /// <param name="blobUri">
         /// The blob's primary <see cref="Uri"/> endpoint.

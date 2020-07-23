@@ -179,16 +179,18 @@ namespace Azure.Messaging.EventGrid
                             new CloudEvent(
                                 cloudEvent.Id,
                                 cloudEvent.Source,
-                                new EventGridSerializer(
+                                cloudEvent.Type,
+                                cloudEvent.Specversion)
+                            {
+                                Data = new EventGridSerializer(
                                     cloudEvent.Data,
                                     _serializer,
                                     cancellationToken),
-                                cloudEvent.Type,
-                                cloudEvent.Time,
-                                cloudEvent.Specversion,
-                                cloudEvent.Dataschema,
-                                cloudEvent.Datacontenttype,
-                                cloudEvent.Subject));
+                                Time = cloudEvent.Time,
+                                Datacontenttype = cloudEvent.Datacontenttype,
+                                Dataschema = cloudEvent.Dataschema,
+                                Subject = cloudEvent.Subject
+                            });
                     }
                     else
                     {

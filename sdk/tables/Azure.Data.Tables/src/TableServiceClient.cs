@@ -55,14 +55,15 @@ namespace Azure.Data.Tables
             var endpointString = endpoint.ToString();
             var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
             HttpPipeline pipeline;
+            var acceptPolicy = new TableAcceptHeaderPipelinePolicy();
 
             if (policy == default)
             {
-                pipeline = HttpPipelineBuilder.Build(options);
+                pipeline = HttpPipelineBuilder.Build(options, acceptPolicy);
             }
             else
             {
-                pipeline = HttpPipelineBuilder.Build(options, policy);
+                pipeline = HttpPipelineBuilder.Build(options, policy, acceptPolicy);
             }
 
             _diagnostics = new ClientDiagnostics(options);
@@ -225,7 +226,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -248,7 +249,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
