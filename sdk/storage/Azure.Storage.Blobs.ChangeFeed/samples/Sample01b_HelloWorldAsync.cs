@@ -26,11 +26,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
 
             #region Snippet:SampleSnippetsChangeFeed_GetAllEvents
             // Get all the events in the change feed.
@@ -51,11 +48,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             #region Snippet:SampleSnippetsChangeFeed_GetEventsBetweenStartAndEndTime
@@ -85,33 +79,28 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             #region Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
-            IAsyncEnumerator<Page<BlobChangeFeedEvent>> enumerator = changeFeedClient
-                .GetChangesAsync()
-                .AsPages(pageSizeHint: 10)
-                .GetAsyncEnumerator();
-
-            await enumerator.MoveNextAsync();
-
-            foreach (BlobChangeFeedEvent changeFeedEvent in enumerator.Current.Values)
+            string continuationToken = null;
+            await foreach (Page<BlobChangeFeedEvent> page in changeFeedClient.GetChangesAsync().AsPages(pageSizeHint: 10))
             {
-                changeFeedEvents.Add(changeFeedEvent);
+                foreach (BlobChangeFeedEvent changeFeedEvent in page.Values)
+                {
+                    changeFeedEvents.Add(changeFeedEvent);
+                }
+
+                // Get the change feed continuation token.  The continuation token is not required to get each page of events,
+                // it is intended to be saved and used to resume iterating at a later date.
+                continuationToken = page.ContinuationToken;
+                break;
             }
 
-            // get the change feed cursor.  The cursor is not required to get each page of events,
-            // it is intended to be saved and used to resume iterating at a later date.
-            string cursor = enumerator.Current.ContinuationToken;
-
-            // Resume iterating from the pervious position with the cursor.
+            // Resume iterating from the pervious position with the continuation token.
             await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync(
-                continuationToken: cursor))
+                continuationToken: continuationToken))
             {
                 changeFeedEvents.Add(changeFeedEvent);
             }
