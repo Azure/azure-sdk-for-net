@@ -12,14 +12,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageExtensions
     {
-        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
-        {
-            var body = new Data
-            {
-                Value = new ArraySegment<byte>(message.Body.Bytes.IsEmpty ? Array.Empty<byte>() : message.Body.Bytes.ToArray())
-            };
-            return AmqpMessage.Create(body);
-        }
+        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message) =>
+            AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(message.Body.Bytes.IsEmpty ? Array.Empty<byte>() : message.Body.Bytes.ToArray()) });
 
         private static byte[] GetByteArray(this Data data)
         {
@@ -94,16 +88,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return flattened;
         }
 
-        private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data)
-        {
-            byte[] flattened = ConvertAndFlattenData(data);
-            return new ServiceBusMessage(BinaryData.FromMemory(flattened ?? ReadOnlyMemory<byte>.Empty));
-        }
+        private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data) =>
+            new ServiceBusMessage(BinaryData.FromMemory(ConvertAndFlattenData(data) ?? ReadOnlyMemory<byte>.Empty));
 
-        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
-        {
-            IEnumerable<byte[]> data = GetDataViaDataBody(message);
-            return new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(data) };
-        }
+        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message) =>
+            new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(GetDataViaDataBody(message)) };
     }
 }
