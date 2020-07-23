@@ -4,10 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -40,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message as a string.</param>
         public ServiceBusMessage(string body)
         {
-            TransportBody = new AmqpTransportBody { Body = new BinaryData(body) };
+            Body = new BinaryData(body);
             Properties = new Dictionary<string, object>();
         }
 
@@ -57,14 +54,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified <see cref="BinaryData"/> instance.
         /// </summary>
         /// <param name="body">The payload of the message.</param>
-        public ServiceBusMessage(BinaryData body) :
-            this(new AmqpTransportBody { Body = body })
+        public ServiceBusMessage(BinaryData body)
         {
-        }
-
-        internal ServiceBusMessage(TransportBody transportBody)
-        {
-            TransportBody = transportBody;
+            Body = body;
             Properties = new Dictionary<string, object>();
         }
 
@@ -76,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            TransportBody = receivedMessage.SentMessage.TransportBody;
+            Body = receivedMessage.SentMessage.Body;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
             Label = receivedMessage.Label;
@@ -101,13 +93,7 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public BinaryData Body
-        {
-            get => TransportBody.Body;
-            set => TransportBody.Body = value;
-        }
-
-        internal TransportBody TransportBody { get; }
+        public BinaryData Body { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.

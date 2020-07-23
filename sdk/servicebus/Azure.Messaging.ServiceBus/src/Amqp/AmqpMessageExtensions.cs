@@ -12,13 +12,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageExtensions
     {
-        private static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusMessage message) =>
-            ((AmqpTransportBody)message.TransportBody).Data ?? new[] { message.TransportBody.Body.Bytes };
-
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            IEnumerable<Data> body = message.GetAmqpDataBody().Select(d =>
-                new Data { Value = new ArraySegment<byte>(d.IsEmpty ? Array.Empty<byte>() : d.ToArray()) });
+            var body = new Data
+            {
+                Value = new ArraySegment<byte>(message.Body.Bytes.IsEmpty ? Array.Empty<byte>() : message.Body.Bytes.ToArray())
+            };
             return AmqpMessage.Create(body);
         }
 
@@ -63,12 +62,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         // Returns via the out parameter the flattened collection of bytes.
         // A majority of the time, data will only contain 1 element.
-        // The method is optimized for this situation to return nothing and only give back the pre-existing array via the flattened parameter.
-        private static IEnumerable<ReadOnlyMemory<byte>> ConvertAndFlattenData(IEnumerable<byte[]> data, out byte[] flattened)
+        // The method is optimized for this situation to return the pre-existing array.
+        private static byte[] ConvertAndFlattenData(IEnumerable<byte[]> data)
         {
-            flattened = null;
+            byte[] flattened = null;
             List<byte> flattenedList = null;
-            List<ReadOnlyMemory<byte>> dataList = null;
             var dataCount = 0;
             foreach (byte[] byteArray in data)
             {
@@ -80,11 +78,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 else
                 {
-                    // We defer creating these lists since this case will rarely happen.
+                    // We defer creating this list since this case will rarely happen.
                     flattenedList ??= new List<byte>(flattened!);
                     flattenedList.AddRange(byteArray);
-                    dataList ??= new List<ReadOnlyMemory<byte>> { flattened! };
-                    dataList.Add(byteArray);
                 }
 
                 dataCount++;
@@ -95,19 +91,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 flattened = flattenedList!.ToArray();
             }
 
-            return dataList;
+            return flattened;
         }
 
         private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data)
         {
-            IEnumerable<ReadOnlyMemory<byte>> dataBody = ConvertAndFlattenData(data, out byte[] flattened);
-            var transportBody = new AmqpTransportBody
-            {
-                Body = BinaryData.FromMemory(flattened ?? ReadOnlyMemory<byte>.Empty),
-                Data = dataBody
-            };
-
-            return new ServiceBusMessage(transportBody);
+            byte[] flattened = ConvertAndFlattenData(data);
+            return new ServiceBusMessage(BinaryData.FromMemory(flattened ?? ReadOnlyMemory<byte>.Empty));
         }
 
         public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
