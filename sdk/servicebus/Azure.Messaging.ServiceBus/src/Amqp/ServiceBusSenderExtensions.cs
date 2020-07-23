@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IEnumerable<ReadOnlyMemory<byte>> dataBody = ConvertAndFlattenData(data, out byte[] flattened);
             var transportBody = new AmqpTransportBody
             {
-                Body = new BinaryData(flattened ?? ReadOnlyMemory<byte>.Empty),
+                Body = BinaryData.FromMemory(flattened ?? ReadOnlyMemory<byte>.Empty),
                 Data = dataBody,
                 BodyType = AmqpBodyType.Data
             };

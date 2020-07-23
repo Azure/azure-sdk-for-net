@@ -194,7 +194,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(AmqpBodyType.Data, msg.GetAmqpBodyType());
             Assert.Null(msg.GetAmqpValueBody());
             Assert.Null(msg.GetAmqpSequenceBody());
-            Assert.AreEqual(bodyBytes, msg.Body.AsBytes().ToArray());
+            Assert.AreEqual(bodyBytes, msg.Body.Bytes.ToArray());
 
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
             Assert.NotNull(amqpTransportBody);
@@ -212,7 +212,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
             Assert.Null(received.GetAmqpValueBody());
             Assert.Null(received.GetAmqpSequenceBody());
-            Assert.AreEqual(bodyBytes, received.Body.AsBytes().ToArray());
+            Assert.AreEqual(bodyBytes, received.Body.Bytes.ToArray());
 
             var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
             Assert.NotNull(receivedTransportBody);
@@ -241,7 +241,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(AmqpBodyType.Data, msg.GetAmqpBodyType());
             Assert.Null(msg.GetAmqpValueBody());
             Assert.Null(msg.GetAmqpSequenceBody());
-            Assert.AreEqual(bodyBytesAll, msg.Body.AsBytes().ToArray());
+            Assert.AreEqual(bodyBytesAll, msg.Body.Bytes.ToArray());
 
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
             Assert.NotNull(amqpTransportBody);
@@ -264,7 +264,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
             Assert.Null(received.GetAmqpValueBody());
             Assert.Null(received.GetAmqpSequenceBody());
-            Assert.AreEqual(bodyBytesAll, received.Body.AsBytes().ToArray());
+            Assert.AreEqual(bodyBytesAll, received.Body.Bytes.ToArray());
 
             var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
             Assert.NotNull(receivedTransportBody);
@@ -296,7 +296,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var msg = sender.CreateAmqpSequenceMessage(body);
             Assert.AreEqual(AmqpBodyType.Sequence, msg.GetAmqpBodyType());
             Assert.Null(msg.GetAmqpValueBody());
-            Assert.AreEqual(default(BinaryData).AsBytes(), msg.GetAmqpDataBody().First());
+            Assert.AreEqual(default(BinaryData).Bytes, msg.GetAmqpDataBody().First());
             Assert.AreEqual(default(BinaryData), msg.Body);
 
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var received = await receiver.ReceiveMessageAsync();
             Assert.AreEqual(AmqpBodyType.Sequence, received.GetAmqpBodyType());
             Assert.Null(received.GetAmqpValueBody());
-            Assert.AreEqual(default(BinaryData).AsBytes(), received.GetAmqpDataBody().First());
+            Assert.AreEqual(default(BinaryData).Bytes, received.GetAmqpDataBody().First());
             Assert.AreEqual(default(BinaryData), received.Body);
 
             var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
@@ -350,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var msg = sender.CreateAmqpValueMessage(body);
             Assert.AreEqual(AmqpBodyType.Value, msg.GetAmqpBodyType());
             Assert.Null(msg.GetAmqpSequenceBody());
-            Assert.AreEqual(default(BinaryData).AsBytes(), msg.GetAmqpDataBody().First());
+            Assert.AreEqual(default(BinaryData).Bytes, msg.GetAmqpDataBody().First());
             Assert.AreEqual(default(BinaryData), msg.Body);
 
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var received = await receiver.ReceiveMessageAsync();
             Assert.AreEqual(AmqpBodyType.Value, received.GetAmqpBodyType());
             Assert.Null(received.GetAmqpSequenceBody());
-            Assert.AreEqual(default(BinaryData).AsBytes(), received.GetAmqpDataBody().First());
+            Assert.AreEqual(default(BinaryData).Bytes, received.GetAmqpDataBody().First());
             Assert.AreEqual(default(BinaryData), received.Body);
 
             var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
