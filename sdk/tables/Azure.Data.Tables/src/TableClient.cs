@@ -233,6 +233,15 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
@@ -249,8 +258,8 @@ namespace Azure.Data.Tables
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
 
-            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-            return Response.FromValue(result, response.GetRawResponse());
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -259,6 +268,15 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
@@ -285,6 +303,15 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
@@ -312,6 +339,15 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual async Task<Response<IDictionary<string, object>>> GetEntityAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
