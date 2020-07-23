@@ -54,16 +54,7 @@ namespace Azure.Data.Tables
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
             var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
-            HttpPipeline pipeline;
-
-            if (policy == default)
-            {
-                pipeline = HttpPipelineBuilder.Build(options);
-            }
-            else
-            {
-                pipeline = HttpPipelineBuilder.Build(options, policy);
-            }
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
