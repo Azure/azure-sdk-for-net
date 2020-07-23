@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 {
     public class AzuriteFixture : IDisposable
     {
-        private const int AccountPoolSize = 30;
+        private const int AccountPoolSize = 50;
         private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
         private string tempDirectory;
         private Process process;

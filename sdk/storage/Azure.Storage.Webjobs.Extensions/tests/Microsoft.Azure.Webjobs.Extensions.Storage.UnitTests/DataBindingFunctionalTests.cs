@@ -17,11 +17,19 @@ using Microsoft.Azure.Storage;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
-    public class DataBindingFunctionalTests
+    public class DataBindingFunctionalTests : IClassFixture<AzuriteFixture>
     {
+        private readonly AzuriteFixture azuriteFixture;
+
+        public DataBindingFunctionalTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
+
         [Fact]
         public async Task BindStringableParameter_CanInvoke()
         {
@@ -29,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseFakeStorage();
+                    b.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                 });
 
 

@@ -8,12 +8,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Queue;
 using Moq;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class InstanceTests
+    public class InstanceTests : IClassFixture<AzuriteFixture>
     {
         private const string QueueName = "input";
+        private readonly AzuriteFixture azuriteFixture;
+
+        public InstanceTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         [Fact]
         public async Task Trigger_CanBeInstanceMethod()
@@ -21,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
             CloudQueueMessage expectedMessage = new CloudQueueMessage(expectedGuid);
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(expectedMessage, QueueName);
 
             var prog = new InstanceProgram();
@@ -58,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
             CloudQueueMessage expectedMessage = new CloudQueueMessage(expectedGuid);
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(expectedMessage, QueueName);
 
             var prog = new InstanceAsyncProgram();
@@ -95,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             CloudQueueMessage expectedMessage = new CloudQueueMessage("ignore");
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(expectedMessage, QueueName);
 
             IHost host = new HostBuilder()
@@ -141,7 +148,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IJobActivator activator = activatorMock.Object;
 
             CloudQueueMessage message = new CloudQueueMessage("ignore");
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             await account.AddQueueMessageAsync(message, QueueName);
 
             IHost host = new HostBuilder()

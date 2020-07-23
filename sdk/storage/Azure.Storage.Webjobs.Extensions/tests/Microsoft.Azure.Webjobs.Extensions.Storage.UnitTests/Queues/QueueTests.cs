@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                {
-                   builder.UseFakeStorage();
+                   builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                })
                .ConfigureServices(services =>
                {
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                 {
-                    builder.UseFakeStorage();
+                    builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                 })
                 .ConfigureServices(services =>
                 {
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<T>>(b =>
                 {
-                    b.UseFakeStorage();
+                    b.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                 })
                 .Build();
 

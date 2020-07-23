@@ -8,20 +8,27 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Queue;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class HostStopTests
+    public class HostStopTests : IClassFixture<AzuriteFixture>
     {
         private const string QueueName = "input";
         private static readonly TaskCompletionSource<object> _functionStarted = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<object> _stopHostCalled = new TaskCompletionSource<object>();
         private static readonly TaskCompletionSource<bool> _testTaskSource = new TaskCompletionSource<bool>();
+        private readonly AzuriteFixture azuriteFixture;
+
+        public HostStopTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         [Fact]
         public async Task Stop_TriggersCancellationToken()
         {
-            StorageAccount account = new FakeStorageAccount();
+            StorageAccount account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             CloudQueue queue = await CreateQueueAsync(account, QueueName);
             CloudQueueMessage message = new CloudQueueMessage("ignore");
             await queue.AddMessageAsync(message);
