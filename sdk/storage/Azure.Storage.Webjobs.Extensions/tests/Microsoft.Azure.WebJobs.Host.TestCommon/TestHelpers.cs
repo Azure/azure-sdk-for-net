@@ -54,9 +54,9 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         }
 
         // Test error if not reached within a timeout
-        public static TResult AwaitWithTimeout<TResult>(this Task<TResult> taskSource)
+        public static async Task<TResult> AwaitWithTimeout<TResult>(this Task<TResult> taskSource)
         {
-            Await(() => taskSource.IsCompleted).Wait();
+            await Await(() => taskSource.IsCompleted);
             return taskSource.Result;
         }
 

@@ -9,11 +9,19 @@ using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.Storage.Blob;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
-    public class StorageBlobScanInfoManagerTests
+    public class StorageBlobScanInfoManagerTests : IClassFixture<AzuriteFixture>
     {
+        private readonly AzuriteFixture azuriteFixture;
+
+        public StorageBlobScanInfoManagerTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
+
         [Fact]
         public async Task LoadLatestScan_NoContainer_ReturnsNull()
         {
@@ -21,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var client = account.CreateCloudBlobClient();
 
             // by default there is no table in this client
@@ -39,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var client = account.CreateCloudBlobClient();
             var container = client.GetContainerReference(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -58,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = "account=" + Guid.NewGuid().ToString();
             string containerName = "container-" + Guid.NewGuid().ToString();
 
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var client = account.CreateCloudBlobClient();
             var container = client.GetContainerReference(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -80,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var client = account.CreateCloudBlobClient();
             var container = client.GetContainerReference(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
@@ -105,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string storageAccountName = Guid.NewGuid().ToString();
             string containerName = Guid.NewGuid().ToString();
 
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var client = account.CreateCloudBlobClient();
             var container = client.GetContainerReference(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();

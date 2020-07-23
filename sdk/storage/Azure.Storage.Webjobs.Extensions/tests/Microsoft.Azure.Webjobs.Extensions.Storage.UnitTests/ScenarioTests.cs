@@ -5,11 +5,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class ScenarioTests
+    public class ScenarioTests : IClassFixture<AzuriteFixture>
     {
         private const string ContainerName = "container";
         private const string BlobName = "blob";
@@ -17,6 +18,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string OutputBlobName = "blob.out";
         private const string OutputBlobPath = ContainerName + "/" + OutputBlobName;
         private const string QueueName = "queue";
+        private readonly AzuriteFixture azuriteFixture;
+
+        public ScenarioTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         [Fact]
         public async Task BlobTriggerToQueueTriggerToBlob_WritesFinalBlob()
@@ -45,9 +52,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return container;
         }
 
-        private static async Task<StorageAccount> CreateFakeStorageAccountAsync()
+        private async Task<StorageAccount> CreateFakeStorageAccountAsync()
         {
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
 
             // make sure our system containers are present
             var container = await CreateContainerAsync(account, "azure-webjobs-hosts");

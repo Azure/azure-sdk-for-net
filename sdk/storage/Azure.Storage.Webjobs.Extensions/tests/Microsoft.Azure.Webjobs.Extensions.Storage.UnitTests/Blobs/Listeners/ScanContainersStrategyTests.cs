@@ -9,11 +9,19 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.Storage.Blob;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
-    public class ScanContainersStrategyTests
+    public class ScanContainersStrategyTests : IClassFixture<AzuriteFixture>
     {
+        private readonly AzuriteFixture azuriteFixture;
+
+        public ScanContainersStrategyTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
+
         [Fact]
         public async Task TestBlobListener()
         {
@@ -54,9 +62,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             product.Execute();
         }
 
-        private static StorageAccount CreateFakeStorageAccount()
+        private StorageAccount CreateFakeStorageAccount()
         {
-            return new FakeStorageAccount();
+            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
         private class LambdaBlobTriggerExecutor : ITriggerExecutor<BlobTriggerExecutorContext>

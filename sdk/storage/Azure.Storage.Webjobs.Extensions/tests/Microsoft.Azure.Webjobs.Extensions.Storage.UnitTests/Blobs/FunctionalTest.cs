@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                     // start listeners. One of them will set the completition task
                     await jobHost.StartAsync();
 
-                    var result = src.Task.AwaitWithTimeout(); // blocks
+                    var result = await src.Task.AwaitWithTimeout(); // blocks
 
                     await jobHost.StopAsync();
 

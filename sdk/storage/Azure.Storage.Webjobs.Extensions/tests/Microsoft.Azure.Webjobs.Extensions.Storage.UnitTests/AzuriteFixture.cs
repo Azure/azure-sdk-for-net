@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 {
     public class AzuriteFixture : IDisposable
     {
-        private const int AccountPoolSize = 20;
+        private const int AccountPoolSize = 30;
         private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
         private string tempDirectory;
         private Process process;
@@ -42,7 +42,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
+            process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
+            {
+                using (var sw = File.AppendText("C:\\tmp\\azurite.log.txt"))
+                {
+                    sw.WriteLine(e.Data);
+                }
+            };
             process.Start();
+            process.BeginOutputReadLine();
         }
 
         public AzuriteAccount GetAccount()
