@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -12,41 +12,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageExtensions
     {
-        private static AmqpMessage ToAmqpDataMessage(this ServiceBusMessage message)
+        private static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusMessage message) =>
+            ((AmqpTransportBody)message.TransportBody).Data ?? new[] { message.TransportBody.Body.Bytes };
+
+        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
             IEnumerable<Data> body = message.GetAmqpDataBody().Select(d =>
                 new Data { Value = new ArraySegment<byte>(d.IsEmpty ? Array.Empty<byte>() : d.ToArray()) });
             return AmqpMessage.Create(body);
-        }
-
-        private static AmqpMessage ToAmqpSequenceMessage(this ServiceBusMessage message) =>
-            AmqpMessage.Create(message.GetAmqpSequenceBody().Select(s => new AmqpSequence(s)));
-
-        private static AmqpMessage ToAmqpValueMessage(this ServiceBusMessage message) =>
-            AmqpMessage.Create(new AmqpValue { Value = message.GetAmqpValueBody() });
-
-        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message) =>
-            message.GetAmqpBodyType() switch
-            {
-                AmqpBodyType.Value => message.ToAmqpValueMessage(),
-                AmqpBodyType.Sequence => message.ToAmqpSequenceMessage(),
-                // Data
-                _ => message.ToAmqpDataMessage()
-            };
-
-        public static AmqpBodyType GetBodyType(this AmqpMessage message)
-        {
-            if ((message.BodyType & SectionFlag.AmqpValue) != 0 && message.ValueBody.Value != null)
-            {
-                return AmqpBodyType.Value;
-            }
-
-            if ((message.BodyType & SectionFlag.AmqpSequence) != 0 && message.SequenceBody != null)
-            {
-                return AmqpBodyType.Sequence;
-            }
-
-            return AmqpBodyType.Data;
         }
 
         private static byte[] GetByteArray(this Data data)
@@ -73,6 +46,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private static IEnumerable<byte[]> GetDataViaDataBody(AmqpMessage message) =>
+            (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
+
         // TODO: [WIP] This gets the data bytes via the BodyStream, and this method is current unused.
         // This ignores the already parsed DataBody information, which is potentially faster and uses less memory.
         // However, I'm not confident that doing it this way won't cause unknown issues.
@@ -85,36 +61,59 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new[] { data };
         }
 
-        private static IEnumerable<byte[]> GetDataViaDataBody(AmqpMessage message) =>
-            (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
+        // Returns via the out parameter the flattened collection of bytes.
+        // A majority of the time, data will only contain 1 element.
+        // The method is optimized for this situation to return nothing and only give back the pre-existing array via the flattened parameter.
+        private static IEnumerable<ReadOnlyMemory<byte>> ConvertAndFlattenData(IEnumerable<byte[]> data, out byte[] flattened)
+        {
+            flattened = null;
+            List<byte> flattenedList = null;
+            List<ReadOnlyMemory<byte>> dataList = null;
+            var dataCount = 0;
+            foreach (byte[] byteArray in data)
+            {
+                // Only the first array is needed if it is the only valid array.
+                // This should be the case 99% of the time.
+                if (dataCount == 0)
+                {
+                    flattened = byteArray;
+                }
+                else
+                {
+                    // We defer creating these lists since this case will rarely happen.
+                    flattenedList ??= new List<byte>(flattened!);
+                    flattenedList.AddRange(byteArray);
+                    dataList ??= new List<ReadOnlyMemory<byte>> { flattened! };
+                    dataList.Add(byteArray);
+                }
 
-        private static ServiceBusReceivedMessage ToServiceBusDataMessage(this AmqpMessage message)
+                dataCount++;
+            }
+
+            if (dataCount > 1)
+            {
+                flattened = flattenedList!.ToArray();
+            }
+
+            return dataList;
+        }
+
+        private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data)
+        {
+            IEnumerable<ReadOnlyMemory<byte>> dataBody = ConvertAndFlattenData(data, out byte[] flattened);
+            var transportBody = new AmqpTransportBody
+            {
+                Body = BinaryData.FromMemory(flattened ?? ReadOnlyMemory<byte>.Empty),
+                Data = dataBody
+            };
+
+            return new ServiceBusMessage(transportBody);
+        }
+
+        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
         {
             IEnumerable<byte[]> data = GetDataViaDataBody(message);
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(data) };
+            return new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(data) };
         }
-
-        private static ServiceBusReceivedMessage ToServiceBusSequenceMessage(this AmqpMessage message)
-        {
-            IEnumerable<IList> sequence = message.SequenceBody.Select(s => s.List);
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpSequenceMessage(sequence) };
-        }
-
-        private static ServiceBusReceivedMessage ToServiceBusValueMessage(this AmqpMessage message)
-        {
-            object value = AmqpMessageConverter.TryGetNetObjectFromAmqpObject(message.ValueBody.Value, MappingType.MessageBody, out var dotNetObject)
-                ? dotNetObject
-                : message.ValueBody.Value;
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpValueMessage(value) };
-        }
-
-        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message) =>
-            message.GetBodyType() switch
-            {
-                AmqpBodyType.Value => message.ToServiceBusValueMessage(),
-                AmqpBodyType.Sequence => message.ToServiceBusSequenceMessage(),
-                // Data
-                _ => message.ToServiceBusDataMessage()
-            };
     }
 }
