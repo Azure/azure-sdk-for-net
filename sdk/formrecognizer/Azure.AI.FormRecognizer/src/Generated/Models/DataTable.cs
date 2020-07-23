@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable(int rows, int columns, IEnumerable<DataTableCell_internal> cells)
+        internal DataTable(int rows, int columns, IEnumerable<DataTableCell> cells)
         {
             if (cells == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell_internal> cells)
+        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells)
         {
             Rows = rows;
             Columns = columns;
@@ -46,6 +46,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Number of columns. </summary>
         public int Columns { get; }
         /// <summary> List of cells contained in the table. </summary>
-        public IReadOnlyList<DataTableCell_internal> Cells { get; }
+        public IReadOnlyList<DataTableCell> Cells { get; }
     }
 }

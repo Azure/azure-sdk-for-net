@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             int rows = default;
             int columns = default;
-            IReadOnlyList<DataTableCell_internal> cells = default;
+            IReadOnlyList<DataTableCell> cells = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"))
@@ -32,10 +32,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("cells"))
                 {
-                    List<DataTableCell_internal> array = new List<DataTableCell_internal>();
+                    List<DataTableCell> array = new List<DataTableCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTableCell_internal.DeserializeDataTableCell_internal(item));
+                        array.Add(DataTableCell.DeserializeDataTableCell(item));
                     }
                     cells = array;
                     continue;

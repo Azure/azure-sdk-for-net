@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DataTableCell_internal
+    internal partial class DataTableCell
     {
     }
 }

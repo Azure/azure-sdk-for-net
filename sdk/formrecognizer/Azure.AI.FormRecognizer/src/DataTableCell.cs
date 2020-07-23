@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
+// TODO: this file can be completely removed once we solve:
+// https://github.com/Azure/azure-sdk-for-net/issues/11487
+
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenModel("DataTableCell")]
-    internal partial class DataTableCell_internal
+    internal partial class DataTableCell
     {
-        internal static DataTableCell_internal DeserializeDataTableCell_internal(JsonElement element)
+        internal static DataTableCell DeserializeDataTableCell(JsonElement element)
         {
             int rowIndex = default;
             int columnIndex = default;
@@ -112,7 +115,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new DataTableCell_internal(rowIndex, columnIndex, rowSpan, columnSpan, text, boundingBox, confidence, elements, isHeader, isFooter);
+            return new DataTableCell(rowIndex, columnIndex, rowSpan, columnSpan, text, boundingBox, confidence, elements, isHeader, isFooter);
         }
     }
 }

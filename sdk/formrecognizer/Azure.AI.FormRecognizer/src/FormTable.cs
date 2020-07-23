@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, IReadOnlyList<ReadResult> readResults, int pageNumber)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell> cellsResult, IReadOnlyList<ReadResult> readResults, int pageNumber)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
 
