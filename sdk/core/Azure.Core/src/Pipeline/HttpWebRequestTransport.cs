@@ -8,15 +8,18 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
+#if NETFRAMEWORK
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
-    public class HttpWebRequestTransport : HttpPipelineTransport
+    internal class HttpWebRequestTransport : HttpPipelineTransport
     {
+        public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
         private readonly IWebProxy? _proxy;
 
         /// <summary>
@@ -33,8 +36,19 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
+            ProcessInternal(message, false).EnsureCompleted();
+        }
+
+        /// <inheritdoc />
+        public override async ValueTask ProcessAsync(HttpMessage message)
+        {
+            await ProcessInternal(message, true);
+        }
+
+        private async ValueTask ProcessInternal(HttpMessage message, bool async)
+        {
             var request = CreateRequest(message.Request);
-            using var registration = message.CancellationToken.Register(() => request.Abort());
+            using var registration = message.CancellationToken.Register(state => ((HttpWebRequest) state).Abort(), request);
             try
             {
                 if (message.Request.Content != null)
@@ -45,11 +59,26 @@ namespace Azure.Core.Pipeline
                         request.ContentLength = length;
                     }
 
-                    var requestStream = request.GetRequestStream();
-                    message.Request.Content.WriteTo(requestStream, message.CancellationToken);
+                    var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
+
+                    if (async)
+                    {
+                        await message.Request.Content.WriteToAsync(requestStream, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        message.Request.Content.WriteTo(requestStream, message.CancellationToken);
+                    }
                 }
 
-                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse) request.GetResponse());
+                var webResponse = async ? await request.GetResponseAsync().ConfigureAwait(false) : request.GetResponse();
+
+                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse) webResponse);
+            }
+            // WebException is thrown in the case of .Abort() call
+            catch (WebException) when (message.CancellationToken.IsCancellationRequested)
+            {
+                message.CancellationToken.ThrowIfCancellationRequested();
             }
             catch (WebException webException)
             {
@@ -70,9 +99,66 @@ namespace Azure.Core.Pipeline
                     continue;
                 }
 
-                if (messageRequestHeader.Name == "Host")
+                if (messageRequestHeader.Name == HttpHeader.Names.Host)
                 {
                     request.Host = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.Date)
+                {
+                    request.Date = DateTime.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.ContentType)
+                {
+                    request.ContentType = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.UserAgent)
+                {
+                    request.UserAgent = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.Accept)
+                {
+                    request.Accept = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.Referer)
+                {
+                    request.Referer = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (messageRequestHeader.Name == HttpHeader.Names.Range)
+                {
+                    var value = RangeHeaderValue.Parse(messageRequestHeader.Value);
+                    if (value.Unit != "bytes")
+                    {
+                        throw new InvalidOperationException("Only ranges with bytes unit supported.");
+                    }
+
+                    foreach (var rangeItem in value.Ranges)
+                    {
+                        if (rangeItem.From == null)
+                        {
+                            throw new InvalidOperationException("Only ranges with Offset supported.");
+                        }
+
+                        if (rangeItem.To == null)
+                        {
+                            request.AddRange(rangeItem.From.Value);
+                        }
+                        else
+                        {
+                            request.AddRange(rangeItem.From.Value, rangeItem.To.Value);
+                        }
+                    }
                     continue;
                 }
 
@@ -80,13 +166,6 @@ namespace Azure.Core.Pipeline
             }
 
             return request;
-        }
-
-        /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message)
-        {
-            Process(message);
-            return default;
         }
 
         /// <inheritdoc />
@@ -117,7 +196,7 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _webResponse.Dispose();
+                ContentStream?.Dispose();
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
@@ -219,4 +298,5 @@ namespace Azure.Core.Pipeline
             }
         }
     }
+#endif
 }

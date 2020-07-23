@@ -6,26 +6,31 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [TestFixture(typeof(HttpClientTransport))]
-    [TestFixture(typeof(HttpWebRequestTransport))]
+    [TestFixture(typeof(HttpClientTransport), true)]
+    [TestFixture(typeof(HttpClientTransport), false)]
+#if NETFRAMEWORK
+    [TestFixture(typeof(HttpWebRequestTransport), true)]
+    [TestFixture(typeof(HttpWebRequestTransport), false)]
+#endif
     public class TransportFunctionalTests : PipelineTestBase
     {
         private readonly Type _transportType;
 
-        public TransportFunctionalTests(Type transportType)
+        public TransportFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
         {
-            _transportType = transportType;
+             _transportType = transportType;
         }
 
         private HttpPipelineTransport GetTransport()
@@ -139,18 +144,18 @@ namespace Azure.Core.Tests
 
         public static object[][] Methods => new[]
         {
-            new object[] { RequestMethod.Delete, "DELETE" },
-            new object[] { RequestMethod.Get, "GET" },
-            new object[] { RequestMethod.Patch, "PATCH" },
-            new object[] { RequestMethod.Post, "POST" },
-            new object[] { RequestMethod.Put, "PUT" },
-            new object[] { RequestMethod.Head, "HEAD" },
-            new object[] { new RequestMethod("custom"), "CUSTOM" },
+            new object[] { RequestMethod.Delete, "DELETE", false },
+            new object[] { RequestMethod.Get, "GET", false },
+            new object[] { RequestMethod.Patch, "PATCH", false },
+            new object[] { RequestMethod.Post, "POST", true },
+            new object[] { RequestMethod.Put, "PUT", true },
+            new object[] { RequestMethod.Head, "HEAD", false },
+            new object[] { new RequestMethod("custom"), "CUSTOM", false },
         };
 
         [Theory]
         [TestCaseSource(nameof(Methods))]
-        public async Task CanGetAndSetMethod(RequestMethod method, string expectedMethod)
+        public async Task CanGetAndSetMethod(RequestMethod method, string expectedMethod, bool content = false)
         {
             string httpMethod = null;
             using TestServer testServer = new TestServer(
@@ -164,6 +169,11 @@ namespace Azure.Core.Tests
             request.Method = method;
             request.Uri.Reset(testServer.Address);
 
+            if (content)
+            {
+                request.Content = RequestContent.Create(Array.Empty<byte>());
+            }
+
             Assert.AreEqual(method, request.Method);
 
             await ExecuteRequest(request, transport);
@@ -171,25 +181,38 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedMethod, httpMethod);
         }
 
+        public static object[] AllHeadersWithValuesAndType =>
+            HeadersWithValuesAndType.Concat(SpecialHeadersWithValuesAndType).ToArray();
+
          public static object[] HeadersWithValuesAndType =>
             new object[]
             {
                 new object[] { "Allow", "adcde", true },
+                new object[] { "Accept", "adcde", true },
+                new object[] { "Referer", "adcde", true },
+                new object[] { "User-Agent", "adcde", true },
                 new object[] { "Content-Disposition", "adcde", true },
                 new object[] { "Content-Encoding", "adcde", true },
                 new object[] { "Content-Language", "en-US", true },
-                new object[] { "Content-Length", "16", true },
                 new object[] { "Content-Location", "adcde", true },
                 new object[] { "Content-MD5", "adcde", true },
                 new object[] { "Content-Range", "adcde", true },
                 new object[] { "Content-Type", "text/xml", true },
                 new object[] { "Expires", "11/12/19", true },
                 new object[] { "Last-Modified", "11/12/19", true },
-                new object[] { "Date", "11/12/19", false },
-                new object[] { "Custom-Header", "11/12/19", false }
+                new object[] { "Custom-Header", "11/12/19", false },
             };
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+         public static object[] SpecialHeadersWithValuesAndType =>
+             new object[]
+             {
+                 new object[] { "Range", "bytes=0-", false },
+                 new object[] { "Range", "bytes=0-100", false },
+                 new object[] { "Content-Length", "16", true },
+                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false }
+             };
+
+        [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
         {
             StringValues httpHeaderValues;
@@ -204,6 +227,11 @@ namespace Azure.Core.Tests
             Request request = CreateRequest(transport, testServer);
 
             request.Headers.Add(headerName, headerValue);
+
+            if (contentHeader)
+            {
+                request.Content = RequestContent.Create(new byte[16]);
+            }
 
             Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -221,13 +249,315 @@ namespace Azure.Core.Tests
             Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
         }
 
-        private static Request CreateRequest(HttpPipelineTransport transport, TestServer server, byte[] bytes = null)
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)
         {
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+
+            Assert.False(request.Headers.TryGetValue(headerName, out string value));
+            Assert.IsNull(value);
+
+            Assert.False(request.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            Assert.IsNull(values);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            StringValues httpHeaderValues;
+
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+                });
+
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
+
+            request.Headers.Add(headerName, headerValue);
+            request.Headers.Add(headerName, anotherHeaderValue);
+
+            Assert.True(request.Headers.Contains(headerName));
+
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(request.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.AreEqual(new[]
+            {
+                new HttpHeader(headerName, joinedHeaderValues),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            StringAssert.Contains(headerValue, httpHeaderValues.ToString());
+            StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Response.Headers.Add(headerName, headerValue);
+                });
+
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
+
+            Response response = await ExecuteRequest(request, transport);
+
+            Assert.True(response.Headers.Contains(headerName));
+
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(headerValue, value);
+
+            Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            CollectionAssert.AreEqual(new[] { headerValue }, values);
+
+            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Response.Headers.Add(headerName,
+                        new StringValues(new[]
+                        {
+                            headerValue,
+                            anotherHeaderValue
+                        }));
+                });
+
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
+
+            Response response = await ExecuteRequest(request, transport);
+
+            Assert.True(response.Headers.Contains(headerName));
+
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                });
+
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
+
+            request.Headers.Add(headerName, headerValue);
+            Assert.True(request.Headers.Remove(headerName));
+            Assert.False(request.Headers.Remove(headerName));
+
+            Assert.False(request.Headers.TryGetValue(headerName, out _));
+            Assert.False(request.Headers.TryGetValue(headerName.ToUpper(), out _));
+            Assert.False(request.Headers.Contains(headerName.ToUpper()));
+
+            await ExecuteRequest(request, transport);
+        }
+
+        [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
+        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+
+            StringValues httpHeaderValues;
+
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+                });
+
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
+
+            request.Headers.Add(headerName, "Random value");
+            request.Headers.SetValue(headerName, headerValue);
+
+            if (contentHeader)
+            {
+                request.Content = RequestContent.Create(new byte[16]);
+            }
+
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(headerValue, value);
+
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
+            Assert.AreEqual(headerValue, value);
+
+            CollectionAssert.AreEqual(new[]
+            {
+                new HttpHeader(headerName, headerValue),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+        }
+
+        [Test]
+        public async Task CanGetAndSetContent()
+        {
+            byte[] requestBytes = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    using var memoryStream = new MemoryStream();
+                    context.Request.Body.CopyTo(memoryStream);
+                    requestBytes = memoryStream.ToArray();
+                });
+
+            var bytes = Encoding.ASCII.GetBytes("Hello world");
+            var content = RequestContent.Create(bytes);
+            var transport = GetTransport();
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
-            request.Uri.Reset(server.Address);
-            request.Content = RequestContent.Create(bytes ?? Array.Empty<byte>());
-            return request;
+            request.Uri.Reset(testServer.Address);
+            request.Content = content;
+
+            Assert.AreEqual(content, request.Content);
+
+            await ExecuteRequest(request, transport);
+
+            CollectionAssert.AreEqual(bytes, requestBytes);
+        }
+
+        [Test]
+        public async Task RequestAndResponseHasRequestId()
+        {
+            using TestServer testServer = new TestServer(context => { });
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            Assert.IsNotEmpty(request.ClientRequestId);
+            Assert.True(Guid.TryParse(request.ClientRequestId, out _));
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            Response response = await ExecuteRequest(request, transport);
+            Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
+        }
+
+        [Test]
+        public async Task RequestIdCanBeOverriden()
+        {
+            using TestServer testServer = new TestServer(context => { });
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+
+            request.ClientRequestId = "123";
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            Response response = await ExecuteRequest(request, transport);
+            Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
+        }
+
+        [Test]
+        public async Task ReasonPhraseIsExposed()
+        {
+            using TestServer testServer = new TestServer(context =>
+            {
+                context.Response
+                    .HttpContext
+                    .Features
+                    .Get<IHttpResponseFeature>()
+                    .ReasonPhrase = "Custom ReasonPhrase";
+            });
+
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            Response response = await ExecuteRequest(request, transport);
+
+            Assert.AreEqual("Custom ReasonPhrase", response.ReasonPhrase);
+        }
+
+        [Test]
+        public async Task StreamRequestContentCanBeSentMultipleTimes()
+        {
+            var requests = new List<long?>();
+
+            using TestServer testServer = new TestServer(context =>
+            {
+                requests.Add(context.Request.ContentLength);
+            });
+
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(testServer.Address);
+
+            request.Content = RequestContent.Create(new MemoryStream(new byte[] { 1, 2, 3 }));
+
+            await ExecuteRequest(request, transport);
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(new long [] {3, 3}, requests);
+        }
+
+        [Test]
+        public async Task RequestContentIsNotDisposedOnSend()
+        {
+            using TestServer testServer = new TestServer(context =>{});
+
+            DisposeTrackingContent disposeTrackingContent = new DisposeTrackingContent();
+            var transport = GetTransport();
+
+            using (Request request = transport.CreateRequest())
+            {
+                request.Content = disposeTrackingContent;
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
+                Assert.False(disposeTrackingContent.IsDisposed);
+            }
+
+            Assert.True(disposeTrackingContent.IsDisposed);
+        }
+        [Test]
+        public void GetIsDefaultMethod()
+        {
+            var transport = GetTransport();
+            var request = transport.CreateRequest();
+            Assert.AreEqual("GET", request.Method.Method);
+        }
+
+        [Test]
+        public void ClientRequestIdSetterThrowsOnNull()
+        {
+            var transport = GetTransport();
+            var request = transport.CreateRequest();
+            Assert.Throws<ArgumentNullException>(() => request.ClientRequestId = null);
         }
 
         [NonParallelizable]
@@ -345,6 +675,40 @@ namespace Azure.Core.Tests
 
                 Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
             }
+        }
+
+        private static Request CreateRequest(HttpPipelineTransport transport, TestServer server, byte[] bytes = null)
+        {
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(server.Address);
+            request.Content = RequestContent.Create(bytes ?? Array.Empty<byte>());
+            return request;
+        }
+
+        public class DisposeTrackingContent : RequestContent
+        {
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                return Task.CompletedTask;
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = 0;
+                return false;
+            }
+
+            public override void Dispose()
+            {
+                IsDisposed = true;
+            }
+
+            public bool IsDisposed { get; set; }
         }
     }
 }
