@@ -21,23 +21,28 @@ namespace Azure.Iot.Hub.Service
         private const string ContinuationTokenHeader = "x-ms-continuation";
         private const string HubDeviceQuery = "select * from devices";
 
-        private readonly RegistryManagerRestClient _registryManagerClient;
-        private readonly TwinRestClient _twinClient;
-        private readonly DeviceMethodRestClient _deviceMethodClient;
+        private readonly DevicesRestClient _devicesRestClient;
+        private readonly QueryRestClient _queryRestClient;
 
+        /// <summary>
+        /// Initializes a new instance of DevicesClient.
+        /// </summary>
         protected DevicesClient()
         {
         }
 
-        internal DevicesClient(RegistryManagerRestClient registryManagerClient, TwinRestClient twinRestClient, DeviceMethodRestClient deviceMethodRestClient)
+        /// <summary>
+        /// Initializes a new instance of DevicesClient.
+        /// <param name="devicesRestClient"> The REST client to perform device, device twin, and bulk operations. </param>
+        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// </summary>
+        internal DevicesClient(DevicesRestClient devicesRestClient, QueryRestClient queryRestClient)
         {
-            Argument.AssertNotNull(registryManagerClient, nameof(registryManagerClient));
-            Argument.AssertNotNull(twinRestClient, nameof(twinRestClient));
-            Argument.AssertNotNull(deviceMethodRestClient, nameof(deviceMethodRestClient));
+            Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
+            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
 
-            _registryManagerClient = registryManagerClient;
-            _twinClient = twinRestClient;
-            _deviceMethodClient = deviceMethodRestClient;
+            _devicesRestClient = devicesRestClient;
+            _queryRestClient = queryRestClient;
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
-            return _registryManagerClient.CreateOrUpdateDeviceAsync(deviceIdentity.DeviceId, deviceIdentity, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.CreateOrUpdateIdentityAsync(deviceIdentity.DeviceId, deviceIdentity, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
-            return _registryManagerClient.CreateOrUpdateDevice(deviceIdentity.DeviceId, deviceIdentity, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.CreateOrUpdateIdentity(deviceIdentity.DeviceId, deviceIdentity, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +93,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<DeviceIdentity>> GetIdentityAsync(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _registryManagerClient.GetDeviceAsync(deviceId, cancellationToken);
+            return _devicesRestClient.GetDeviceAsync(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +104,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<DeviceIdentity> GetIdentity(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _registryManagerClient.GetDevice(deviceId, cancellationToken);
+            return _devicesRestClient.GetDevice(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +121,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
-            return _registryManagerClient.DeleteDeviceAsync(deviceIdentity.DeviceId, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.DeleteIdentityAsync(deviceIdentity.DeviceId, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +138,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
-            return _registryManagerClient.DeleteDevice(deviceIdentity.DeviceId, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.DeleteIdentity(deviceIdentity.DeviceId, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +164,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +190,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +215,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithParentScopes(x.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +240,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithParentScopes(x.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +270,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 }.WithParentScopes(x.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +300,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 }.WithParentScopes(x.ParentScopes));
 
-            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +325,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -345,7 +350,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -362,7 +367,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Query = HubDeviceQuery
                 };
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
+                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
                     querySpecification,
                     null,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -379,7 +384,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Query = HubDeviceQuery
                 };
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
+                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
                     querySpecification,
                     nextLink,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -407,7 +412,7 @@ namespace Azure.Iot.Hub.Service
                     Query = HubDeviceQuery
                 };
 
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
                     querySpecification,
                     null,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -424,7 +429,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Query = HubDeviceQuery
                 };
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
                     querySpecification,
                     nextLink,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -445,7 +450,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The device's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<TwinData>> GetTwinAsync(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _twinClient.GetDeviceTwinAsync(deviceId, cancellationToken);
+            return _devicesRestClient.GetTwinAsync(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -456,7 +461,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The device's twin, including reported properties and desired properties.</returns>
         public virtual Response<TwinData> GetTwin(string deviceId, CancellationToken cancellationToken = default)
         {
-            return _twinClient.GetDeviceTwin(deviceId, cancellationToken);
+            return _devicesRestClient.GetTwin(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +475,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, twinUpdate.Etag);
-            return _twinClient.UpdateDeviceTwinAsync(twinUpdate.DeviceId, twinUpdate, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.UpdateTwinAsync(twinUpdate.DeviceId, twinUpdate, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -484,7 +489,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, twinUpdate.Etag);
-            return _twinClient.UpdateDeviceTwin(twinUpdate.DeviceId, twinUpdate, ifMatchHeaderValue, cancellationToken);
+            return _devicesRestClient.UpdateTwin(twinUpdate.DeviceId, twinUpdate, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +512,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -532,7 +537,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -544,7 +549,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The result of the method invocation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return _deviceMethodClient.InvokeDeviceMethodAsync(deviceId, directMethodRequest, cancellationToken);
+            return _devicesRestClient.InvokeMethodAsync(deviceId, directMethodRequest, cancellationToken);
         }
 
         /// <summary>
@@ -556,7 +561,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The result of the method invocation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<CloudToDeviceMethodResponse> InvokeMethod(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return _deviceMethodClient.InvokeDeviceMethod(deviceId, directMethodRequest, cancellationToken);
+            return _devicesRestClient.InvokeMethod(deviceId, directMethodRequest, cancellationToken);
         }
     }
 }

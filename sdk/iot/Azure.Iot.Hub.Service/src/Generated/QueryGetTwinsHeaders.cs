@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service
 {
-    internal class RegistryManagerQueryIotHubHeaders
+    internal class QueryGetTwinsHeaders
     {
         private readonly Response _response;
-        public RegistryManagerQueryIotHubHeaders(Response response)
+        public QueryGetTwinsHeaders(Response response)
         {
             _response = response;
         }
-        /// <summary> Type of the list of items. </summary>
+        /// <summary> The type of list of items. </summary>
         public string XMsItemType => _response.Headers.TryGetValue("x-ms-item-type", out string value) ? value : null;
-        /// <summary> Continuation token. </summary>
+        /// <summary> The continuation token used to get the next page of results. </summary>
         public string XMsContinuation => _response.Headers.TryGetValue("x-ms-continuation", out string value) ? value : null;
     }
 }

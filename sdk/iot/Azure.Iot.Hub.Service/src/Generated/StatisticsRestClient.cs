@@ -16,20 +16,20 @@ using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
-    internal partial class FaultInjectionRestClient
+    internal partial class StatisticsRestClient
     {
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of FaultInjectionRestClient. </summary>
+        /// <summary> Initializes a new instance of StatisticsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public FaultInjectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
+        public StatisticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
             if (apiVersion == null)
@@ -43,32 +43,32 @@ namespace Azure.Iot.Hub.Service
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest()
+        internal HttpMessage CreateGetDeviceStatisticsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendPath("/faultInjection", false);
+            uri.AppendPath("/statistics/devices", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
 
-        /// <summary> Gets the FaultInjection entity. </summary>
+        /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FaultInjectionProperties>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
+            using var message = CreateGetDeviceStatisticsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FaultInjectionProperties value = default;
+                        RegistryStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FaultInjectionProperties.DeserializeFaultInjectionProperties(document.RootElement);
+                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -76,19 +76,19 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Gets the FaultInjection entity. </summary>
+        /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FaultInjectionProperties> Get(CancellationToken cancellationToken = default)
+        public Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
+            using var message = CreateGetDeviceStatisticsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FaultInjectionProperties value = default;
+                        RegistryStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FaultInjectionProperties.DeserializeFaultInjectionProperties(document.RootElement);
+                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,60 +96,54 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateSetRequest(FaultInjectionProperties value)
+        internal HttpMessage CreateGetServiceStatisticsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendPath("/faultInjection", false);
+            uri.AppendPath("/statistics/service", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
-            request.Content = content;
             return message;
         }
 
-        /// <summary> Creates or updates the FaultInjection entity. </summary>
-        /// <param name="value"> The FaultInjectionProperties to use. </param>
+        /// <summary> Gets service statistics of the IoT Hub identity registry, such as connected device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            using var message = CreateSetRequest(value);
+            using var message = CreateGetServiceStatisticsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
+                    {
+                        ServiceStatistics value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Creates or updates the FaultInjection entity. </summary>
-        /// <param name="value"> The FaultInjectionProperties to use. </param>
+        /// <summary> Gets service statistics of the IoT Hub identity registry, such as connected device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Set(FaultInjectionProperties value, CancellationToken cancellationToken = default)
+        public Response<ServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            using var message = CreateSetRequest(value);
+            using var message = CreateGetServiceStatisticsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
+                    {
+                        ServiceStatistics value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

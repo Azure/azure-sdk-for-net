@@ -58,8 +58,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <summary> Gets a configuration on the IoT Hub for automatic device/module management. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TwinConfiguration>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -84,8 +84,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <summary> Gets a configuration on the IoT Hub for automatic device/module management. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinConfiguration> Get(string id, CancellationToken cancellationToken = default)
         {
@@ -132,10 +132,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="configuration"> The Configuration to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="configuration"> The configuration to be created or updated. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -165,10 +165,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="configuration"> The Configuration to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="configuration"> The configuration to be created or updated. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -216,9 +216,9 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <summary> Deletes a configuration on the IoT Hub for automatic device/module management. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -238,9 +238,9 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <summary> Deletes a configuration on the IoT Hub for automatic device/module management. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Delete(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -277,8 +277,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="top"> The Integer to use. </param>
+        /// <summary> Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported. </summary>
+        /// <param name="top"> The number of configurations to retrieve. Value will be overridden if greater than the maximum deployment count for the IoT Hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
@@ -303,8 +303,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="top"> The Integer to use. </param>
+        /// <summary> Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported. </summary>
+        /// <param name="top"> The number of configurations to retrieve. Value will be overridden if greater than the maximum deployment count for the IoT Hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IReadOnlyList<TwinConfiguration>> GetConfigurations(int? top = null, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="input"> The ConfigurationQueriesTestInput to use. </param>
+        /// <summary> Validates target condition and custom metric queries for a configuration on the IoT Hub. </summary>
+        /// <param name="input"> The configuration for target condition and custom metric queries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
@@ -372,8 +372,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="input"> The ConfigurationQueriesTestInput to use. </param>
+        /// <summary> Validates target condition and custom metric queries for a configuration on the IoT Hub. </summary>
+        /// <param name="input"> The configuration for target condition and custom metric queries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ConfigurationQueriesTestResponse> TestQueries(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
@@ -417,11 +417,11 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Applies the provided configuration content to the specified edge device. Configuration content must have modules content For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Device ID. </param>
-        /// <param name="content"> Configuration Content. </param>
+        /// <summary> Applies the configuration content to an edge device. </summary>
+        /// <param name="id"> The unique identifier of the edge device. </param>
+        /// <param name="content"> The configuration content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<object>> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -436,25 +436,18 @@ namespace Azure.Iot.Hub.Service
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        object value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetObject();
-                        return Response.FromValue(value, message.Response);
-                    }
                 case 204:
-                    return Response.FromValue<object>(null, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Applies the provided configuration content to the specified edge device. Configuration content must have modules content For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Device ID. </param>
-        /// <param name="content"> Configuration Content. </param>
+        /// <summary> Applies the configuration content to an edge device. </summary>
+        /// <param name="id"> The unique identifier of the edge device. </param>
+        /// <param name="content"> The configuration content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<object> ApplyOnEdgeDevice(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
+        public Response ApplyOnEdgeDevice(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -469,15 +462,8 @@ namespace Azure.Iot.Hub.Service
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        object value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetObject();
-                        return Response.FromValue(value, message.Response);
-                    }
                 case 204:
-                    return Response.FromValue<object>(null, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
