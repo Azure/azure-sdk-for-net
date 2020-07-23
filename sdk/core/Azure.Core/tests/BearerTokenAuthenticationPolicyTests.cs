@@ -162,7 +162,7 @@ namespace Azure.Core.Tests
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
             {
-                callCount++;
+                Interlocked.Increment(ref callCount);
                 var offsetTime = DateTimeOffset.UtcNow;
                 requestMre.Set();
                 responseMre.Wait(c);
