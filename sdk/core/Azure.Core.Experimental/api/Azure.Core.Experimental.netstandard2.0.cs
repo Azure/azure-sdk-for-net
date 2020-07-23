@@ -101,6 +101,41 @@ namespace Azure.Core
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
     }
 }
+namespace Azure.Core.JsonPatch
+{
+    public partial class JsonPatchDocument
+    {
+        public JsonPatchDocument() { }
+        public System.Collections.ObjectModel.Collection<Azure.Core.JsonPatch.JsonPatchOperation> Operations { get { throw null; } }
+        public void AppendAdd(string path, string rawJsonValue) { }
+        public void AppendCopy(string from, string path, string rawJsonValue) { }
+        public void AppendMove(string from, string path, string rawJsonValue) { }
+        public void AppendRemove(string path) { }
+        public void AppendTest(string path, string rawJsonValue) { }
+        public override string ToString() { throw null; }
+    }
+    public partial class JsonPatchOperation
+    {
+        public JsonPatchOperation(Azure.Core.JsonPatch.JsonPatchOperationKind kind, string path, string? from, string? rawJsonValue) { }
+        public string? From { get { throw null; } }
+        public Azure.Core.JsonPatch.JsonPatchOperationKind Kind { get { throw null; } }
+        public string Path { get { throw null; } }
+        public string? RawJsonValue { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JsonPatchOperationKind
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JsonPatchOperationKind(string operation) { throw null; }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Add { get { throw null; } }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Copy { get { throw null; } }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Move { get { throw null; } }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Remove { get { throw null; } }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Replace { get { throw null; } }
+        public static Azure.Core.JsonPatch.JsonPatchOperationKind Test { get { throw null; } }
+    }
+}
 namespace Azure.Core.Spatial
 {
     public sealed partial class CollectionGeometry : Azure.Core.Spatial.Geometry
