@@ -24,6 +24,6 @@ if (Test-Path $EngScriptsLanguageSettings) {
 }
 
 # Transformed Functions
-$ExtractPkgProps = "Extract-${Language}-PkgProperties"
-$ParsePkgInfoFn = "Parse-${PackageRepository}-Package"
-$StageAndUpload = "StageAndUpload-${Language}-Docs"
+$ExtractPkgProps = "Extract-${Language}-PkgPropertiesFn"
+$ParsePkgInfoFn = "Parse-${PackageRepository}-PackageFn"
+$StageAndUpload = "StageAndUpload-${Language}-DocsFn"

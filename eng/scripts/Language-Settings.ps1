@@ -3,7 +3,7 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 
-function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
+function Extract-dotnet-PkgPropertiesFn ($pkgPath, $serviceName, $pkgName)
 {
     $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
     if (Test-Path $projectPath)
@@ -48,7 +48,7 @@ function IsNugetPackageVersionPublished($pkgId, $pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
-function Parse-Nuget-Package($pkg, $workingDirectory) 
+function Parse-Nuget-PackageFn($pkg, $workingDirectory) 
 {
     $workFolder = "$workingDirectory$($pkg.Basename)"
     $origFolder = Get-Location
@@ -88,7 +88,7 @@ function Parse-Nuget-Package($pkg, $workingDirectory)
 }
 
 # Stage and Upload Docs to blob Storage
-function StageAndUpload-dotnet-Docs()
+function StageAndUpload-dotnet-DocsFn()
 {
     $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
     $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
