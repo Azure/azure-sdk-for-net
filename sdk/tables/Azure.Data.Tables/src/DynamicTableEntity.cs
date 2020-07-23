@@ -22,7 +22,7 @@ namespace Azure.Data.Tables
         /// <value>A string containing the partition key for the entity.</value>
         public override string PartitionKey
         {
-            get { return _properties.TryGetValue(TableConstants.PropertyNames.PartitionKey, out object value) ? (string)value : default; }
+            get { return GetString(TableConstants.PropertyNames.PartitionKey); }
             set { _properties[TableConstants.PropertyNames.PartitionKey] = value; }
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Data.Tables
         /// <value>A string containing the row key for the entity.</value>
         public override string RowKey
         {
-            get { return _properties.TryGetValue(TableConstants.PropertyNames.RowKey, out object value) ? (string)value : default; }
+            get { return GetString(TableConstants.PropertyNames.RowKey); }
             set { _properties[TableConstants.PropertyNames.RowKey] = value; }
         }
 
@@ -42,9 +42,9 @@ namespace Azure.Data.Tables
         /// meaning that each time the entity is modified, the value of Timestamp increases for that entity. This property should not be set on insert or update operations (the value will be ignored).
         /// </summary>
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
-        public override DateTimeOffset Timestamp
+        public override DateTimeOffset? Timestamp
         {
-            get { return _properties.TryGetValue(TableConstants.PropertyNames.TimeStamp, out object value) ? (DateTimeOffset)value : default; }
+            get { return GetDateTime(TableConstants.PropertyNames.TimeStamp); }
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.Data.Tables
         /// <value>A string containing the ETag value for the entity.</value>
         public override string ETag
         {
-            get { return _properties.TryGetValue(TableConstants.PropertyNames.Etag, out object value) ? (string)value : default; }
+            get { return GetString(TableConstants.PropertyNames.Etag); }
             set { _properties[TableConstants.PropertyNames.Etag] = value; }
         }
 
@@ -95,6 +95,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="string" />.</exception>
         public string GetString(string key) => GetValue<string>(key);
 
         /// <summary>
@@ -104,6 +105,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type byte array.</exception>
         public byte[] GetBinary(string key) => GetValue<byte[]>(key);
 
         /// <summary>
@@ -113,6 +115,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="bool" />.</exception>
         public bool GetBoolean(string key) => GetValue<bool>(key);
 
         /// <summary>
@@ -122,6 +125,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="DateTime" />.</exception>
         public DateTime GetDateTime(string key) => GetValue<DateTime>(key);
 
         /// <summary>
@@ -131,6 +135,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="double" />.</exception>
         public double GetDouble(string key) => GetValue<double>(key);
 
         /// <summary>
@@ -140,6 +145,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="Guid" />.</exception>
         public Guid GetGuid(string key) => GetValue<Guid>(key);
 
         /// <summary>
@@ -149,6 +155,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="int" />.</exception>
         public int GetInt32(string key) => GetValue<int>(key);
 
         /// <summary>
@@ -158,6 +165,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="long" />.</exception>
         public long GetInt64(string key) => GetValue<long>(key);
 
         /// <summary>
@@ -165,11 +173,12 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The property name.</param>
         /// <param name="value">The property value.</param>
+        /// <exception cref="InvalidOperationException">The given <paramref name="value"/> does not match the type of the existing value at <paramref name="key"/>.</exception>
         private protected void SetValue(string key, object value)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            if (_properties.TryGetValue(key, out object existingValue))
+            if (value != null && _properties.TryGetValue(key, out object existingValue) && existingValue != null)
             {
                 EnforceType(existingValue.GetType(), value.GetType());
             }
@@ -182,6 +191,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">The expected type of the property value.</typeparam>
         /// <param name="key">The property name.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of given type <typeparamref name="T"/>.</exception>
         private protected T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
 
         /// <summary>
@@ -190,14 +200,12 @@ namespace Azure.Data.Tables
         /// <param name="key">The property name.</param>
         /// <param name="type">The expected type of the property value.</param>
         /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <paramref name="type"/>.</exception>
         private protected object GetValue(string key, Type type = null)
         {
             if (!_properties.TryGetValue(key, out object value))
             {
-                KeyNotFoundException exception = new KeyNotFoundException(
-                    "Could not find a member called '" + key + "' in the document.");
-                exception.Data["MissingName"] = key;
-                throw exception;
+                return null;
             }
 
             if (type != null)

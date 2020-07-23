@@ -45,7 +45,7 @@ namespace Azure.Data.Tables
         public bool Remove(string key) => _properties.Remove(key);
 
         /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => TryGetValue(key, out value);
+        public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
 
         /// <inheritdoc />
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => SetValue(item.Key, item.Value);
