@@ -1424,7 +1424,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13563")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task StartCopyFromUriAsync_Source_IfTags()
         {
@@ -1468,7 +1467,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13563")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task StartCopyFromUriAsync_Source_IfTagsFailed()
         {
