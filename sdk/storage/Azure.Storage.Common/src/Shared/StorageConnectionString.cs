@@ -864,7 +864,7 @@ namespace Azure.Storage
 
             if (string.IsNullOrEmpty(endpointSuffix))
             {
-                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
+                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultBlobHostnamePrefix, endpointSuffix, sasToken);
