@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 {
     public class AzuriteFixture : IDisposable
     {
-        private const int AccountPoolSize = 10;
+        private const int AccountPoolSize = 20;
         private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
         private string tempDirectory;
         private Process process;
@@ -74,15 +73,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
                 return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:10000/{Name};QueueEndpoint=http://127.0.0.1:10001/{Name};";
             }
         }
-    }
-
-    [CollectionDefinition("Azurite collection")]
-#pragma warning disable SA1402 // File may only contain a single type
-    public class AzuriteCollection : ICollectionFixture<AzuriteFixture>
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        // This class has no code, and is never created. Its purpose is simply
-        // to be the place to apply [CollectionDefinition] and all the
-        // ICollectionFixture<> interfaces.
     }
 }

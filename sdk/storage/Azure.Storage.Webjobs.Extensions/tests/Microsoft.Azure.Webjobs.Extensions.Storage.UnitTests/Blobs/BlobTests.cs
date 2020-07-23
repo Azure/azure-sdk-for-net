@@ -13,8 +13,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Collection("Azurite collection")]
-    public class BlobTests
+    public class BlobTests : IClassFixture<AzuriteFixture>
     {
         private const string TriggerQueueName = "input";
         private const string ContainerName = "container";
