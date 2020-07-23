@@ -111,7 +111,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
 
             // Get year paths
-            years = await GetYearPaths(
+            years = await GetYearPathsInternal(
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
-        internal async Task<Queue<string>> GetYearPaths(
+        internal async Task<Queue<string>> GetYearPathsInternal(
             bool async,
             CancellationToken cancellationToken)
         {
