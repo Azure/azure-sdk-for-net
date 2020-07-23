@@ -55,15 +55,14 @@ namespace Azure.Data.Tables
             var endpointString = endpoint.ToString();
             var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
             HttpPipeline pipeline;
-            var acceptPolicy = new TableAcceptHeaderPipelinePolicy();
 
             if (policy == default)
             {
-                pipeline = HttpPipelineBuilder.Build(options, acceptPolicy);
+                pipeline = HttpPipelineBuilder.Build(options);
             }
             else
             {
-                pipeline = HttpPipelineBuilder.Build(options, policy, acceptPolicy);
+                pipeline = HttpPipelineBuilder.Build(options, policy);
             }
 
             _diagnostics = new ClientDiagnostics(options);

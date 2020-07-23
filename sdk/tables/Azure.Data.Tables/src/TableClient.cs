@@ -233,6 +233,112 @@ namespace Azure.Data.Tables
             }
         }
 
+        public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+            return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        public virtual Response<IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<IDictionary<string, object>>> GetEntityAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
