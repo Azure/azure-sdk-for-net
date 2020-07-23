@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
-        /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
+        /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
-        public abstract Task<IList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+        public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maximumMessageCount,
             TimeSpan? maxWaitTime,
             CancellationToken cancellationToken);
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Also, unlike <see cref="ReceiveMessagesAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
         /// </remarks>
         /// <returns></returns>
-        public abstract Task<IList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+        public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             long? sequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default);
@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public abstract Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IList<long> sequenceNumbers,
             CancellationToken cancellationToken = default);
 

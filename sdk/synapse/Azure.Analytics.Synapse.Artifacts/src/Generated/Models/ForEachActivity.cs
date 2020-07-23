@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Items = items;
-            Activities = activities.ToArray();
+            Activities = activities.ToList();
             Type = "ForEach";
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IsSequential = isSequential;
             BatchCount = batchCount;
             Items = items;
-            Activities = activities ?? new List<Activity>();
+            Activities = activities;
             Type = type ?? "ForEach";
         }
 

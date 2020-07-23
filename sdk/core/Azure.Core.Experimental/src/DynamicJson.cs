@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 #pragma warning disable 1591
@@ -495,18 +496,18 @@ namespace Azure.Core
             return new DynamicJson(JsonDocument.Parse(serialized).RootElement);
         }
 
-        public static DynamicJson Serialize<T>(T value, ObjectSerializer serializer)
+        public static DynamicJson Serialize<T>(T value, ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             using var memoryStream = new MemoryStream();
-            serializer.Serialize(memoryStream, value, typeof(T));
+            serializer.Serialize(memoryStream, value, typeof(T), cancellationToken);
             memoryStream.Position = 0;
             return new DynamicJson(JsonDocument.Parse(memoryStream).RootElement);
         }
 
-        public static async Task<DynamicJson> SerializeAsync<T>(T value, ObjectSerializer serializer)
+        public static async Task<DynamicJson> SerializeAsync<T>(T value, ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             using var memoryStream = new MemoryStream();
-            await serializer.SerializeAsync(memoryStream, value, typeof(T)).ConfigureAwait(false);
+            await serializer.SerializeAsync(memoryStream, value, typeof(T), cancellationToken).ConfigureAwait(false);
             memoryStream.Position = 0;
             return new DynamicJson(JsonDocument.Parse(memoryStream).RootElement);
         }
@@ -516,16 +517,16 @@ namespace Azure.Core
             return JsonSerializer.Deserialize<T>(ToString(), options);
         }
 
-        public T Deserialize<T>(ObjectSerializer serializer)
+        public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) serializer.Deserialize(stream, typeof(T));
+            return (T) serializer.Deserialize(stream, typeof(T), cancellationToken);
         }
 
-        public async Task<T> DeserializeAsync<T>(ObjectSerializer serializer)
+        public async Task<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false);
+            return (T) await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false);
         }
 
         private struct Number

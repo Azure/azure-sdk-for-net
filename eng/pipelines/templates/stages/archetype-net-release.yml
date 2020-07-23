@@ -61,6 +61,11 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+                      parameters:
+                        PackageName: ${{artifact.name}}
+                        ServiceName: ${{parameters.ServiceDirectory}}
+                        ForRelease: true
                     - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                       parameters:
                         SourceFolder: ${{parameters.ArtifactName}}-signed
@@ -275,9 +280,3 @@ stages:
           command: push
           packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
           publishVstsFeed: $(DevOpsFeedID)
-      - task: MSBuild@1
-        displayName: 'Publish to blobfeed'
-        condition: and(succeeded(), eq('${{ parameters.DevOpsFeedID }}', variables['DevOpsFeedID']))
-        inputs:
-          solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
-          msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'

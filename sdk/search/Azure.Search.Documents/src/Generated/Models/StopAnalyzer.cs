@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Stopwords = new List<string>();
+            Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.StopAnalyzer";
         }
 
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="stopwords"> A list of stopwords. </param>
         internal StopAnalyzer(string oDataType, string name, IList<string> stopwords) : base(oDataType, name)
         {
-            Stopwords = stopwords ?? new List<string>();
+            Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";
         }
     }

@@ -39,8 +39,12 @@ var options = new ServiceBusSessionProcessorOptions
     // If I want more fine-grained control over settlement, I can set this to false.
     AutoComplete = false,
 
-    // I can also allow for multi-threading
-    MaxConcurrentCalls = 2
+    // I can also allow for processing multiple sessions
+    MaxConcurrentSessions = 5,
+
+    // By default, there will be a single concurrent call per session. I can 
+    // increase that here to enable parallel processing within each session.
+    MaxConcurrentCallsPerSession = 2
 };
 
 // create a session processor that we can use to process the messages
@@ -58,7 +62,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
     var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message

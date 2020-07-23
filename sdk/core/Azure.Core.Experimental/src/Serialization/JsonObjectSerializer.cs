@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core
@@ -33,20 +34,20 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public override void Serialize(Stream stream, object? value, Type inputType)
+        public override void Serialize(Stream stream, object? value, Type inputType, CancellationToken cancellationToken)
         {
             var buffer = JsonSerializer.SerializeToUtf8Bytes(value, inputType, _options);
             stream.Write(buffer, 0, buffer.Length);
         }
 
         /// <inheritdoc />
-        public override async ValueTask SerializeAsync(Stream stream, object? value, Type inputType)
+        public override async ValueTask SerializeAsync(Stream stream, object? value, Type inputType, CancellationToken cancellationToken)
         {
-            await JsonSerializer.SerializeAsync(stream, value, inputType, _options).ConfigureAwait(false);
+            await JsonSerializer.SerializeAsync(stream, value, inputType, _options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType)
+        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
@@ -54,9 +55,9 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType)
+        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            return await JsonSerializer.DeserializeAsync(stream, returnType, _options).ConfigureAwait(false);
+            return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

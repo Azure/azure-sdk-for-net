@@ -12,8 +12,8 @@ we should merge the Service and Index swagger files together but for now we
 copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 input-file:
-- $(this-folder)/swagger/searchindex.json
-- $(this-folder)/swagger/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks
@@ -75,6 +75,112 @@ directive:
 - from: searchservice.json
   where: $.definitions.Suggester.properties.searchMode
   transform: $["x-ms-enum"].name = "SuggesterMode";
+```
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SynonymMap
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchField
+  transform: >
+    $.properties.indexAnalyzer["x-nullable"] = true;
+    $.properties.searchAnalyzer["x-nullable"] = true;
+    $.properties.analyzer["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ScoringProfile
+  transform: >
+    $.properties.text["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndex
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+    $.properties.corsOptions["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.BM25Similarity
+  transform: >
+    $.properties.k1["x-nullable"] = true;
+    $.properties.b["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataChangeDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataDeletionDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexer
+  transform: >
+    $.properties.disabled["x-nullable"] = true;
+    $.properties.schedule["x-nullable"] = true;
+    $.properties.parameters["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.suggestedFrom["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexingParameters
+  transform: >
+    $.properties.batchSize["x-nullable"] = true;
+    $.properties.maxFailedItems["x-nullable"] = true;
+    $.properties.maxFailedItemsPerBatch["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.FieldMapping
+  transform: >
+    $.properties.mappingFunction["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexerExecutionResult
+  transform: >
+    $.properties.endTime["x-nullable"] = true;
 ```
 
 ## C# Customizations

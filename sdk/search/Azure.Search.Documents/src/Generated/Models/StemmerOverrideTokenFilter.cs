@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(rules));
             }
 
-            Rules = rules.ToArray();
+            Rules = rules.ToList();
             ODataType = "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
         internal StemmerOverrideTokenFilter(string oDataType, string name, IList<string> rules) : base(oDataType, name)
         {
-            Rules = rules ?? new List<string>();
+            Rules = rules;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
     }

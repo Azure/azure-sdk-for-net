@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Articles = new List<string>();
+            Articles = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="articles"> The set of articles to remove. </param>
         internal ElisionTokenFilter(string oDataType, string name, IList<string> articles) : base(oDataType, name)
         {
-            Articles = articles ?? new List<string>();
+            Articles = articles;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
     }

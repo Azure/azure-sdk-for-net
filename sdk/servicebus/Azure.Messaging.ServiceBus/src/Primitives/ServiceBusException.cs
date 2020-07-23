@@ -135,11 +135,6 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The exception was the result of a general error within the client library.</summary>
             GeneralError,
 
-            /// <summary>An operation has been attempted using an Service Bus client instance
-            /// which has already been closed.
-            /// </summary>
-            ClientClosed,
-
             /// <summary>A Service Bus resource cannot be found by the Service Bus service.</summary>
             MessagingEntityNotFound,
 

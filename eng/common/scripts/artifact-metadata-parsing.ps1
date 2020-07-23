@@ -1,3 +1,4 @@
+Import-Module "${PSScriptRoot}/modules/ChangeLog-Operations.psm1"
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
@@ -8,8 +9,8 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
     Write-Host "Creating release $($pkgInfo.Tag)"
 
     $releaseNotes = ""
-    if ($pkgInfo.ReleaseNotes[$pkgInfo.PackageVersion].ReleaseContent -ne $null) {
-      $releaseNotes = $pkgInfo.ReleaseNotes[$pkgInfo.PackageVersion].ReleaseContent
+    if ($pkgInfo.ReleaseNotes -ne $null) {
+      $releaseNotes = $pkgInfo.ReleaseNotes
     }
 
     $isPrerelease = $False
@@ -96,7 +97,7 @@ function ParseMavenPackage($pkg, $workingDirectory) {
 
   $changeLogLoc = @(Get-ChildItem -Path $pkg.DirectoryName -Recurse -Include "$($pkg.Basename)-changelog.md")[0]
   if ($changeLogLoc) {
-    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
 
   $readmeContentLoc = @(Get-ChildItem -Path $pkg.DirectoryName -Recurse -Include "$($pkg.Basename)-readme.md")[0]
@@ -169,22 +170,21 @@ function ParseNPMPackage($pkg, $workingDirectory) {
   tar -xzf $pkg
 
   $packageJSON = ResolvePkgJson -workFolder $workFolder | Get-Content | ConvertFrom-Json
+  $pkgId = $packageJSON.name
+  $pkgVersion = $packageJSON.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
   if ($changeLogLoc) {
-    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
 
-  $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
+  $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md") | Select-Object -Last 1
   if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
 
   cd $origFolder
   Remove-Item $workFolder -Force  -Recurse -ErrorAction SilentlyContinue
-
-  $pkgId = $packageJSON.name
-  $pkgVersion = $packageJSON.version
 
   $resultObj = New-Object PSObject -Property @{
     PackageId      = $pkgId
@@ -229,10 +229,12 @@ function ParseNugetPackage($pkg, $workingDirectory) {
   Copy-Item -Path $pkg -Destination $zipFileLocation
   Expand-Archive -Path $zipFileLocation -DestinationPath $workFolder
   [xml] $packageXML = Get-ChildItem -Path "$workFolder/*.nuspec" | Get-Content
+  $pkgId = $packageXML.package.metadata.id
+  $pkgVersion = $packageXML.package.metadata.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
   if ($changeLogLoc) {
-    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
 
   $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
@@ -241,8 +243,6 @@ function ParseNugetPackage($pkg, $workingDirectory) {
   }
 
   Remove-Item $workFolder -Force  -Recurse -ErrorAction SilentlyContinue
-  $pkgId = $packageXML.package.metadata.id
-  $pkgVersion = $packageXML.package.metadata.version
 
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
@@ -297,13 +297,15 @@ function ParsePyPIPackage($pkg, $workingDirectory) {
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
   if ($changeLogLoc) {
-    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
 
-  $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
+  $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md") | Select-Object -Last 1
+
   if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
+
   Remove-Item $workFolder -Force  -Recurse -ErrorAction SilentlyContinue
 
   return New-Object PSObject -Property @{
@@ -321,10 +323,12 @@ function ParseCArtifact($pkg, $workingDirectory) {
   $releaseNotes = ""
   $readmeContent = ""
 
+  $pkgVersion = $packageInfo.version
+
   $changeLogLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
   if ($changeLogLoc)
   {
-    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
   
   $readmeContentLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "README.md")[0]
@@ -333,8 +337,8 @@ function ParseCArtifact($pkg, $workingDirectory) {
   }
 
   return New-Object PSObject -Property @{
-    PackageId      = ''
-    PackageVersion = $packageInfo.version
+    PackageId      = 'azure-sdk-for-c'
+    PackageVersion = $pkgVersion
     # Artifact info is always considered deployable for C becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
     # CheckArtifactShaAgainstTagsList

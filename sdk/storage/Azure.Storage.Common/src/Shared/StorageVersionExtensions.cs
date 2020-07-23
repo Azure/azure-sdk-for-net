@@ -34,7 +34,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
-            ServiceVersion.V2019_07_07;
+            ServiceVersion.V2019_12_12;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -50,10 +50,13 @@ namespace Azure.Storage
 #if BlobSDK || FileSDK || DataLakeSDK
                 ServiceVersion.V2019_02_02 => "2019-02-02",
                 ServiceVersion.V2019_07_07 => "2019-07-07",
+                // TODO this is temporary until 73 goes to stage.
+                ServiceVersion.V2019_12_12 => "2019-12-12",
 #elif QueueSDK
                 // Queues just bumped the version number without changing the swagger
                 ServiceVersion.V2019_02_02 => "2018-11-09",
                 ServiceVersion.V2019_07_07 => "2018-11-09",
+                ServiceVersion.V2019_12_12 => "2018-11-09",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
@@ -69,8 +72,10 @@ namespace Azure.Storage
             {
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_02_02 =>
                              Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_02_02,
-        Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_07_07 =>
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_07_07 =>
                              Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_12_12 =>
+                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_12_12,
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
 #endif

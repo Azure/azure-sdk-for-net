@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
@@ -20,6 +19,8 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
+            #region Snippet:FormRecognizerSampleManageCustomModelsAsync
+
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -35,8 +36,8 @@ namespace Azure.AI.FormRecognizer.Samples
                 Console.WriteLine($"Custom Model Info:");
                 Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
                 Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
-                Console.WriteLine($"    Completed on: : {modelInfo.CompletedOn}");
+                Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
+                Console.WriteLine($"    Training model completed on: : {modelInfo.TrainingCompletedOn}");
             }
 
             // Create a new model to store in the account
@@ -63,6 +64,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // Delete the model from the account.
             await client.DeleteModelAsync(model.ModelId);
+
+            #endregion
         }
     }
 }

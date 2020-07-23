@@ -13,7 +13,7 @@ parameters:
 #   "TestApplicationId": "<test app id>",
 #   "TestApplicationSecret": "<test app secret>",
 #   "ProvisionerApplicationId": "<provisoner app id>",
-#   "ProvisoinerApplicationSecret": "<provisoner app secert>",
+#   "ProvisionerApplicationSecret": "<provisoner app secert>",
 #   "Environment": "AzureCloud | AzureGov | AzureChina | <other environment>"
 # }
 

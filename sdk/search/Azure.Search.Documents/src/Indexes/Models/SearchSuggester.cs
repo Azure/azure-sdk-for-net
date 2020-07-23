@@ -41,7 +41,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The list of field names to which the suggester applies. Each field must be searchable. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> SourceFields { get; }
 
         [CodeGenMember("searchMode")]

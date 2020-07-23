@@ -176,6 +176,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int PluginCompleteEvent = 97;
         internal const int PluginExceptionEvent = 98;
 
+        internal const int MaxMessagesExceedsPrefetchEvent = 99;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -1309,6 +1311,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ManagementSerializedExceptionEvent, objectName, details);
+            }
+        }
+
+        [Event(MaxMessagesExceedsPrefetchEvent, Level = EventLevel.Warning, Message = "Prefetch count for receiver with Identifier {0} is less than the max messages requested. When using prefetch, it isn't possible to receive more than the prefetch count in any single Receive call: PrefetchCount: {1}; MaxMessages: {2}")]
+        public virtual void MaxMessagesExceedsPrefetch(string identifier, int prefetchCount, int maxMessages)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
             }
         }
         #endregion

@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(mappings));
             }
 
-            Mappings = mappings.ToArray();
+            Mappings = mappings.ToList();
             ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
         internal MappingCharFilter(string oDataType, string name, IList<string> mappings) : base(oDataType, name)
         {
-            Mappings = mappings ?? new List<string>();
+            Mappings = mappings;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.MappingCharFilter";
         }
     }

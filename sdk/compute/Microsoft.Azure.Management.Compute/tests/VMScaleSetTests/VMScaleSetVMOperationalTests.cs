@@ -341,6 +341,53 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// Covers following operations:
+        /// Create RG
+        /// Create VM Scale Set with managed boot diagnostics enabled
+        /// RetrieveBootDiagnosticsData for a VM instance
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_ManagedBootDiagnostics()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                instanceId = "0";
+                bool passed = false;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    InitializeCommon(context);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true,
+                        faultDomainCount: 1, bootDiagnosticsProfile: GetManagedDiagnosticsProfile());
+                    var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmScaleSet.Name, instanceId);
+                    ValidateBootDiagnosticsInstanceView(getInstanceViewResponse.BootDiagnostics, hasError: false,
+                        enabledWithManagedBootDiagnostics: true);
+                    RetrieveBootDiagnosticsDataResult bootDiagnosticsData =
+                        m_CrpClient.VirtualMachineScaleSetVMs.RetrieveBootDiagnosticsData(rgName, vmScaleSet.Name, instanceId);
+                    ValidateBootDiagnosticsData(bootDiagnosticsData);
+
+                    passed = true;
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
         private Disk CreateDataDisk(string diskName)
         {
             var disk = new Disk

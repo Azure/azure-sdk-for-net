@@ -9,7 +9,9 @@
     "variables": {
         "apiVersion": "2020-04-01-preview",
         "eventGridTopicName": "[concat(parameters('baseName'), 'topic')]",
-        "eventGridDomainName": "[concat(parameters('baseName'), 'domain')]"
+        "eventGridDomainName": "[concat(parameters('baseName'), 'domain')]",
+        "cloudeventTopicName": "[concat(parameters('baseName'), 'cloudevent-topic')]",
+        "customeventTopicName": "[concat(parameters('baseName'), 'customevent-topic')]"
     },
     "resources": [
         {
@@ -19,12 +21,56 @@
             "location": "[resourceGroup().location]"
         },
         {
-        "name": "[variables('eventGridDomainName')]",
-        "type": "Microsoft.EventGrid/domains",
-        "apiVersion": "[variables('apiVersion')]",
-        "location": "[resourceGroup().location]",
-        "properties": {}
-        } 
+            "name": "[variables('eventGridDomainName')]",
+            "type": "Microsoft.EventGrid/domains",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[resourceGroup().location]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.EventGrid/topics",
+            "apiVersion": "[variables('apiVersion')]",
+            "name": "[variables('cloudeventTopicName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "inputSchema": "CloudEventSchemaV1_0"
+             }
+        },
+        {
+            "type": "Microsoft.EventGrid/topics",
+            "apiVersion": "[variables('apiVersion')]",
+            "name": "[variables('customeventTopicName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "inputSchema": "CustomEventSchema",
+                "inputSchemaMapping": {
+                    "inputSchemaMappingType": "Json",
+                    "properties": {
+                        "dataVersion": {
+                            "defaultValue": "default",
+                            "sourceField": "TestVersion"
+                        },
+                        "eventTime": {
+                            "sourceField": "TestEventTime"
+                        },
+                        "eventType": {
+                            "defaultValue": "default",
+                            "sourceField": "TestEventType"
+                        },
+                        "id": {
+                            "sourceField": "TestID"
+                        },
+                        "subject": {
+                            "defaultValue": "default",
+                            "sourceField": "TestSubject"
+                        },
+                        "topic": {
+                            "sourceField": "TestTopic"
+                        }
+                    }
+                }
+            }
+        }
     ],
     "outputs": {
         "EVENT_GRID_TOPIC_ENDPOINT": {
@@ -42,6 +88,22 @@
         "EVENT_GRID_DOMAIN_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.EventGrid/domains', variables('eventGridDomainName')), variables('apiVersion')).key1]"
+        },
+        "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('cloudeventTopicName')).endpoint]"
+        },
+        "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('cloudeventTopicName')), variables('apiVersion')).key1]"
+        },
+        "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('customeventTopicName')).endpoint]"
+        },
+        "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('customeventTopicName')), variables('apiVersion')).key1]"
         }
     }
 }

@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
+                IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
@@ -158,7 +158,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
+                IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {

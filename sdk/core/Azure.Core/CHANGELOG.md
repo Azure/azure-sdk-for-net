@@ -1,6 +1,11 @@
 # Release History
 
-## 1.3.0-preview.1 (Unreleased)
+## 1.4.0-preview.1 (Unreleased)
+
+### Fixed
+- Connection leak for retried non-buffered requests on .NET Framework.
+
+## 1.3.0 (2020-07-02)
 
 ### Added
 - `HttpPipeline.CreateClientRequestIdScope` method to allow setting client request id on outgoing requests.

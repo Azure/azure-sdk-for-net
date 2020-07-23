@@ -23,13 +23,16 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
         internal const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS URL use for storing documents used for live tests.</summary>
+        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents used for live tests.</summary>
         internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
-        /// <summary>The name of the environment variable for the target resource identifier use for copying custom models live tests.</summary>
+        /// <summary>The name of the environment variable for the multipage Blob Container SAS URL to use for storing documents used for live tests.</summary>
+        internal const string MultipageBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL";
+
+        /// <summary>The name of the environment variable for the target resource identifier to use for copying custom models live tests.</summary>
         internal const string TargetResourceIdEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_ID";
 
-        /// <summary>The name of the environment variable for the target resource region use for copying custom models live tests.</summary>
+        /// <summary>The name of the environment variable for the target resource region to use for copying custom models live tests.</summary>
         internal const string TargetResourceRegionEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_REGION";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
@@ -41,6 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName);
         public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
         public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 

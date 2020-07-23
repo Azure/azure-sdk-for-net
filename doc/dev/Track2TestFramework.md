@@ -256,4 +256,95 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
+# Support multi service version testing
+
+To enable multi-version testing add the `ClientTestFixture` attribute listing all the service versions to the test class itself or a base class:
+
+```C#
+[ClientTestFixture(
+    BlobClientOptions.ServiceVersion.V2019_02_02,
+    BlobClientOptions.ServiceVersion.V2019_07_07)]
+public abstract class BlobTestBase : StorageTestBase
+{
+    private readonly BlobClientOptions.ServiceVersion _serviceVersion;
+
+    public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
+        : base(async, mode)
+    {
+        _serviceVersion = serviceVersion;
+    }
+
+    // ...
+}
+```
+
+Add a `ServiceVersion` parameter to the test class constructor and use the provided service version to create the `ClientOptions` instance.
+
+```C#
+public BlobClientOptions GetOptions() =>
+    new BlobClientOptions(_serviceVersion) { /* ... */ };
+```
+
+To control what service versions test would run against use the `ServiceVersion` attribute by setting it's `Min` or `Max` properties (inclusive).
+
+```C#
+[Test]
+[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
+public async Task UploadOverwritesExistingBlob()
+{
+    // ...
+}
+```
+
+How it looks it the test explorer:
+
+![image](https://user-images.githubusercontent.com/1697911/72942831-52c7ca00-3d29-11ea-9b7e-2e54198d800d.png)
+
+**Note:** If test recordings are enabled, the recordings will be generated against the latests version of the service.
+
+## Support for an additional test parameter
+
+The `ClientTestFixture` attribute also supports specifying an additional array of parameter values to send to the test class. 
+Similar to the service versions, this results in the creation of a permutation of each test for each parameter value specified. 
+Example usage is shown below:
+
+```c#
+// Add a new test suite parameter with no serviceVersions variants
+[ClientTestFixture(
+    serviceVersions: default,
+    additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
+public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
+{
+    protected readonly TableEndpointType _endpointType;
+
+    public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+        : base(isAsync, recordedTestMode)
+    {
+        _endpointType = endpointType;
+    }
+```
+
+```c#
+// Both serviceVersions variants and a new test suite parameter
+[ClientTestFixture(
+    serviceVersions: new object[] { TableClientOptions.ServiceVersion.V2019_02_02, TableClientOptions.ServiceVersion.V2019_07_07 },
+    additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
+public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
+{
+    protected readonly TableEndpointType _endpointType;
+    TableClientOptions.ServiceVersion _serviceVersion
+
+    public TableServiceLiveTestsBase(bool isAsync, TableClientOptions.ServiceVersion serviceVersion, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+        : base(isAsync, recordedTestMode)
+    {
+        _serviceVersion = serviceVersion;
+        _endpointType = endpointType;
+    }
+```
+
+**Note:** Additional parameter options work with test recordings and will create differentiated SessionRecords test class directory names for each additional parameter option. 
+For example:
+
+`/SessionRecords/TableClientLiveTests(CosmosTable)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
+`/SessionRecords/TableClientLiveTests(Storage)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
 

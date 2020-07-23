@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Expression = expression;
-            Activities = activities.ToArray();
+            Activities = activities.ToList();
             Type = "Until";
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Expression = expression;
             Timeout = timeout;
-            Activities = activities ?? new List<Activity>();
+            Activities = activities;
             Type = type ?? "Until";
         }
 

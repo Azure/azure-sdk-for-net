@@ -8,7 +8,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Represents a cell contained in a table recognized from the input document.
     /// </summary>
-    public class FormTableCell : FormContent
+    public class FormTableCell : FormElement
     {
         internal FormTableCell(DataTableCell_internal dataTableCell, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
             : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.Models
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan ?? 1;
-            TextContent = dataTableCell.Elements != null
+            FieldElements = dataTableCell.Elements != null
                 ? FormField.ConvertTextReferences(dataTableCell.Elements, readResults)
-                : new List<FormContent>();
+                : new List<FormElement>();
         }
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowSpan { get; }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of references to
-        /// the text elements constituting this cell. An empty list otherwise. For calls to recognize content, this
+        /// When <see cref="RecognizeOptions.IncludeFieldElements"/> is set to <c>true</c>, a list of references to
+        /// the field elements constituting this cell is returned. An empty list otherwise. For calls to recognize content, this
         /// list is always populated.
         /// </summary>
-        public IReadOnlyList<FormContent> TextContent { get; }
+        public IReadOnlyList<FormElement> FieldElements { get; }
     }
 }

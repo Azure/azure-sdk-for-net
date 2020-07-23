@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Flag specifying that blobs for which blocks have
         /// been uploaded, but which have not been committed using
-        /// <see cref="Specialized.BlockBlobClient.CommitBlockListAsync"/> should be
+        /// <see cref="Specialized.BlockBlobClient.CommitBlockListAsync(System.Collections.Generic.IEnumerable{string}, CommitBlockListOptions, System.Threading.CancellationToken)"/> should be
         /// included.
         /// </summary>
         Uncommitted = 2,
@@ -38,6 +38,12 @@ namespace Azure.Storage.Blobs.Models
         /// included in the response.
         /// </summary>
         Deleted = 4,
+
+        /// <summary>
+        /// Flag specifying that the blob's version should be
+        /// included.  Versions are listed from oldest to newest.
+        /// </summary>
+        Version = 8,
 
         /// <summary>
         /// Flag specifying that blobs of all states should be included.

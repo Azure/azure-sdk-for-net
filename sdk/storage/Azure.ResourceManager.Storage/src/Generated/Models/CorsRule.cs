@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new ArgumentNullException(nameof(allowedHeaders));
             }
 
-            AllowedOrigins = allowedOrigins.ToArray();
-            AllowedMethods = allowedMethods.ToArray();
+            AllowedOrigins = allowedOrigins.ToList();
+            AllowedMethods = allowedMethods.ToList();
             MaxAgeInSeconds = maxAgeInSeconds;
-            ExposedHeaders = exposedHeaders.ToArray();
-            AllowedHeaders = allowedHeaders.ToArray();
+            ExposedHeaders = exposedHeaders.ToList();
+            AllowedHeaders = allowedHeaders.ToList();
         }
 
         /// <summary> Initializes a new instance of CorsRule. </summary>

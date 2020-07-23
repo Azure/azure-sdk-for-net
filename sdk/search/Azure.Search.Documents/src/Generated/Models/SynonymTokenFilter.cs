@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(synonyms));
             }
 
-            Synonyms = synonyms.ToArray();
+            Synonyms = synonyms.ToList();
             ODataType = "#Microsoft.Azure.Search.SynonymTokenFilter";
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="expand"> A value indicating whether all words in the list of synonyms (if =&gt; notation is not used) will map to one another. If true, all words in the list of synonyms (if =&gt; notation is not used) will map to one another. The following list: incredible, unbelievable, fabulous, amazing is equivalent to: incredible, unbelievable, fabulous, amazing =&gt; incredible, unbelievable, fabulous, amazing. If false, the following list: incredible, unbelievable, fabulous, amazing will be equivalent to: incredible, unbelievable, fabulous, amazing =&gt; incredible. Default is true. </param>
         internal SynonymTokenFilter(string oDataType, string name, IList<string> synonyms, bool? ignoreCase, bool? expand) : base(oDataType, name)
         {
-            Synonyms = synonyms ?? new List<string>();
+            Synonyms = synonyms;
             IgnoreCase = ignoreCase;
             Expand = expand;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.SynonymTokenFilter";

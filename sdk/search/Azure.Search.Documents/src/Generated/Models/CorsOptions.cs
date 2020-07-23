@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(allowedOrigins));
             }
 
-            AllowedOrigins = allowedOrigins.ToArray();
+            AllowedOrigins = allowedOrigins.ToList();
         }
 
         /// <summary> Initializes a new instance of CorsOptions. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxAgeInSeconds"> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </param>
         internal CorsOptions(IList<string> allowedOrigins, long? maxAgeInSeconds)
         {
-            AllowedOrigins = allowedOrigins ?? new List<string>();
+            AllowedOrigins = allowedOrigins;
             MaxAgeInSeconds = maxAgeInSeconds;
         }
         /// <summary> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </summary>

@@ -38,20 +38,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified string, using UTF-8 encoding.
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
-        public ServiceBusMessage(string body) :
-            this(body, Encoding.UTF8)
+        public ServiceBusMessage(string body)
         {
-        }
-
-        /// <summary>
-        /// Creates a new message from the specified string, using the specified encoding.
-        /// </summary>
-        /// <param name="body">The payload of the message as a string.</param>
-        /// <param name="encoding">The encoding to use for the body.</param>
-        public ServiceBusMessage(string body, Encoding encoding)
-        {
-            Argument.AssertNotNull(encoding, nameof(encoding));
-            TransportBody = new AmqpTransportBody { Body = new BinaryData(body, encoding) };
+            TransportBody = new AmqpTransportBody { Body = new BinaryData(body) };
             Properties = new Dictionary<string, object>();
         }
 
@@ -60,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(new BinaryData(body))
+            this(BinaryData.FromMemory(body))
         {
         }
 

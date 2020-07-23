@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -62,7 +63,7 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
-        /// A list of pages describing the recognized form content elements present in the input
+        /// A list of pages describing the recognized form elements present in the input
         /// document.
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
@@ -108,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (pageNumber >= PageRange.FirstPageNumber && pageNumber <= PageRange.LastPageNumber)
                 {
-                    pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults, i));
+                    pages.Add(new FormPage(pageResults.Any() ? pageResults[i] : null, readResults, i));
                 }
             }
 

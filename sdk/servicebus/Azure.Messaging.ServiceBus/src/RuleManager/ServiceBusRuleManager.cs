@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
             RuleDescription description,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNull(description, nameof(description));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             EntityNameFormatter.CheckValidRuleName(description.Name);
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
             string ruleName,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RemoveRuleStart(Identifier, ruleName);
@@ -185,7 +185,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
 
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
             IList<RuleDescription> rulesDescription;

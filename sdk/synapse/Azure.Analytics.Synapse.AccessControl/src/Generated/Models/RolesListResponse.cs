@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RolesListResponse. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal RolesListResponse(IReadOnlyList<SynapseRole> value, string nextLink)
         {
-            Value = value ?? new List<SynapseRole>();
+            Value = value;
             NextLink = nextLink;
         }
 

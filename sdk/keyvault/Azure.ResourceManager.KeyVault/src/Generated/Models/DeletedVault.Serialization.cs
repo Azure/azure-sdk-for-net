@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedVault DeserializeDeletedVault(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            DeletedVaultProperties properties = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<DeletedVaultProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = DeletedVaultProperties.DeserializeDeletedVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new DeletedVault(id, name, type, properties);
+            return new DeletedVault(id.Value, name.Value, type.Value, properties.Value);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +19,8 @@ namespace Azure.Search.Documents.Models
         internal SearchResult(double score)
         {
             Score = score;
-            AdditionalProperties = new Dictionary<string, object>();
+            Highlights = new ChangeTrackingDictionary<string, IList<string>>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SearchResult. </summary>
@@ -29,7 +31,7 @@ namespace Azure.Search.Documents.Models
         {
             Score = score;
             Highlights = highlights;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>

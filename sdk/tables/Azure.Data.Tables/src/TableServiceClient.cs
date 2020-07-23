@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Sas;
 
 namespace Azure.Data.Tables
 {
@@ -16,6 +17,7 @@ namespace Azure.Data.Tables
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly ServiceRestClient _serviceOperations;
+        private readonly ServiceRestClient _secondaryServiceOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
@@ -51,20 +53,23 @@ namespace Azure.Data.Tables
 
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
+            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
             HttpPipeline pipeline;
+            var acceptPolicy = new TableAcceptHeaderPipelinePolicy();
 
             if (policy == default)
             {
-                pipeline = HttpPipelineBuilder.Build(options);
+                pipeline = HttpPipelineBuilder.Build(options, acceptPolicy);
             }
             else
             {
-                pipeline = HttpPipelineBuilder.Build(options, policy);
+                pipeline = HttpPipelineBuilder.Build(options, policy, acceptPolicy);
             }
 
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
             _version = options.VersionString;
 
             string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
@@ -88,6 +93,30 @@ namespace Azure.Data.Tables
         protected TableServiceClient()
         { }
 
+        /// <summary>
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current account.
+        /// </summary>
+        /// <param name="permissions"><see cref="TableAccountSasPermissions"/> containing the allowed permissions.</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
+        public virtual TableAccountSasBuilder GetSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
+        {
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
+        }
+
+        /// <summary>
+        /// Gets a <see cref="TableAccountSasBuilder"/> instance scoped to the current table.
+        /// </summary>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
+        public virtual TableAccountSasBuilder GetSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
+        {
+            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
+        }
+
         public virtual TableClient GetTableClient(string tableName)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -99,11 +128,11 @@ namespace Azure.Data.Tables
         /// Gets a list of tables from the storage account.
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
             scope.Start();
@@ -114,7 +143,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                     null,
                     null,
-                    new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                    new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
@@ -122,7 +151,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                        null,
                        nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                       new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                        cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -139,10 +168,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
 
             return PageableHelpers.CreateEnumerable(_ =>
@@ -154,7 +183,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                             null,
                             null,
-                            new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                            new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                             cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
@@ -172,7 +201,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                         null,
                         nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                        new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                         cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
@@ -197,7 +226,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -220,7 +249,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -335,6 +364,42 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _serviceOperations.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TableServiceStats>> GetTableServiceStatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = await _secondaryServiceOperations.GetStatisticsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TableServiceStats> GetTableServiceStats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = _secondaryServiceOperations.GetStatistics(cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)

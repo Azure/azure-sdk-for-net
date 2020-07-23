@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -34,8 +35,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells.ToArray();
-            AdditionalProperties = new Dictionary<string, object>();
+            Cells = cells.ToList();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>
@@ -55,8 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells ?? new List<NotebookCell>();
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            Cells = cells;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the notebook. </summary>
