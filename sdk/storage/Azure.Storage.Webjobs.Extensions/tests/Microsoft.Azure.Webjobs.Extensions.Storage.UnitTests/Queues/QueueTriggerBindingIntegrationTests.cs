@@ -3,8 +3,6 @@
 
 using System;
 using System.Reflection;
-using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Host.Timers;
@@ -14,20 +12,21 @@ using Microsoft.Azure.Storage.Queue;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
-    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>
+    public class QueueTriggerBindingIntegrationTests : IClassFixture<InvariantCultureFixture>, IClassFixture<AzuriteFixture>
     {
         private ITriggerBinding _binding;
 
-        public QueueTriggerBindingIntegrationTests()
+        public QueueTriggerBindingIntegrationTests(AzuriteFixture azuriteFixture)
         {
             IQueueTriggerArgumentBindingProvider provider = new UserTypeArgumentBindingProvider();
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
-            var fakeAccount = new FakeStorage.FakeAccount();
+            var fakeAccount = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             CloudQueue queue = fakeAccount.CreateCloudQueueClient().GetQueueReference("queueName");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);

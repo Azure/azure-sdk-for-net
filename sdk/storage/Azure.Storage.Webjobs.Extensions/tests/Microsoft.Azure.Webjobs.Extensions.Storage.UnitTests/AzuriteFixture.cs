@@ -9,6 +9,15 @@ using System.Text;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 {
+    /// <summary>
+    /// This class manages Azurite Lifecycle for a test class.
+    /// - Creates accounts pool, so that each test has own account, bump up pool size if you're running out of accounts
+    /// - Starts Azurite process
+    /// - Tears down Azurite process after test class is run
+    /// It requires Azurite V3. See instalation insturctions here https://github.com/Azure/Azurite.
+    /// After installing Azuirte define env variable AzureWebJobsStorageAzuriteLocation that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
+    /// NodeJS installation is also required and node.exe should be in the $PATH.
+    /// </summary>
     public class AzuriteFixture : IDisposable
     {
         private const int AccountPoolSize = 50;
