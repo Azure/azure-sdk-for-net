@@ -27,13 +27,13 @@ namespace Azure.Data.Tables
         public ICollection<string> Keys => _properties.Keys;
 
         /// <inheritdoc />
-        public ICollection<object> Values => _properties.Values;
+        ICollection<object> IDictionary<string, object>.Values => _properties.Values;
 
         /// <inheritdoc />
         public int Count => _properties.Count;
 
         /// <inheritdoc />
-        public bool IsReadOnly => _properties.IsReadOnly;
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _properties.IsReadOnly;
 
         /// <inheritdoc />
         public void Add(string key, object value) => SetValue(key, value);
@@ -45,22 +45,22 @@ namespace Azure.Data.Tables
         public bool Remove(string key) => _properties.Remove(key);
 
         /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out object value) => TryGetValue(key, out value);
 
         /// <inheritdoc />
-        public void Add(KeyValuePair<string, object> item) => SetValue(item.Key, item.Value);
+        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => SetValue(item.Key, item.Value);
 
         /// <inheritdoc />
         public void Clear()=> _properties.Clear();
 
         /// <inheritdoc />
-        public bool Contains(KeyValuePair<string, object> item) => _properties.Contains(item);
+        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) => _properties.Contains(item);
 
         /// <inheritdoc />
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => _properties.CopyTo(array, arrayIndex);
+        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => _properties.CopyTo(array, arrayIndex);
 
         /// <inheritdoc />
-        public bool Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
+        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
 
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _properties.GetEnumerator();
