@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
             // Use contract resolvers that sort the serialized properties case-insensitively for deterministic assertions.
             _resolver = camelCase ? (DefaultContractResolver)new SortedCamelCasePropertyNamesContractResolver() : new SortedDefaultContractResolver();
 
-            _jsonObjectSerializer = new NewtonsoftJsonObjectSerializer(true, new JsonSerializerSettings
+            _jsonObjectSerializer = new NewtonsoftJsonObjectSerializer(new JsonSerializerSettings
             {
                 ContractResolver = _resolver,
                 Converters = new[]
@@ -43,6 +43,13 @@ namespace Azure.Core.Tests
 
         private string SerializedName(string name) => _resolver.GetResolvedPropertyName(name);
 
+
+        [Test]
+        public void ConstructorRequiresArgument()
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new NewtonsoftJsonObjectSerializer(null));
+            Assert.AreEqual("settings", ex.ParamName);
+        }
 
         [Test]
         public void CanSerializeAnObject()

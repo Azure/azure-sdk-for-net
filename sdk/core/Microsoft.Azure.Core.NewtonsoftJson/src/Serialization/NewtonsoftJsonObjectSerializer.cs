@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -22,25 +23,27 @@ namespace Azure.Core
         // Older StreamReader and StreamWriter would otherwise default to this.
         private static readonly Encoding UTF8NoBOM = new UTF8Encoding(false, true);
 
+        private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         private readonly JsonSerializer _serializer;
 
         /// <summary>
-        /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/> using <see cref="JsonConvert.DefaultSettings"/>.
+        /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/>.
         /// </summary>
-        public NewtonsoftJsonObjectSerializer() : this(true)
+        public NewtonsoftJsonObjectSerializer() : this(new JsonSerializerSettings())
         {
         }
 
         /// <summary>
         /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/>.
         /// </summary>
-        /// <param name="useDefaultSettings">Whether to use <see cref="JsonConvert.DefaultSettings"/> unless overridden with any given <paramref name="settingsOverrides"/>.</param>
-        /// <param name="settingsOverrides">The <see cref="JsonSerializerSettings"/> instance to use when serializing/deserializing.</param>
-        public NewtonsoftJsonObjectSerializer(bool useDefaultSettings, JsonSerializerSettings? settingsOverrides = null)
+        /// <param name="settings">The <see cref="JsonSerializerSettings"/> instance to use when serializing/deserializing.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null.</exception>
+        public NewtonsoftJsonObjectSerializer(JsonSerializerSettings settings)
         {
-            _serializer = useDefaultSettings ?
-                JsonSerializer.CreateDefault(settingsOverrides) :
-                JsonSerializer.Create(settingsOverrides);
+            Argument.AssertNotNull(settings, nameof(settings));
+
+            _cache = new ConcurrentDictionary<MemberInfo, string?>();
+            _serializer = JsonSerializer.Create(settings);
         }
 
         /// <inheritdoc />
@@ -83,20 +86,23 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(memberInfo, nameof(memberInfo));
 
-            if (_serializer.ContractResolver.ResolveContract(memberInfo.ReflectedType) is JsonObjectContract contract)
+            return _cache.GetOrAdd(memberInfo, m =>
             {
-                foreach (JsonProperty property in contract.Properties)
+                if (_serializer.ContractResolver.ResolveContract(m.ReflectedType) is JsonObjectContract contract)
                 {
-                    if (!property.Ignored &&
-                        string.Equals(property.UnderlyingName, memberInfo.Name, StringComparison.Ordinal) &&
-                        property.DeclaringType == memberInfo.DeclaringType)
+                    foreach (JsonProperty property in contract.Properties)
                     {
-                        return property.PropertyName;
+                        if (!property.Ignored &&
+                            string.Equals(property.UnderlyingName, m.Name, StringComparison.Ordinal) &&
+                            property.DeclaringType == m.DeclaringType)
+                        {
+                            return property.PropertyName;
+                        }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            });
         }
     }
 }

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -18,7 +17,7 @@ namespace Azure.Core
     /// </summary>
     public class JsonObjectSerializer : ObjectSerializer, ISerializedNameProvider
     {
-        private readonly Dictionary<Type, MemberInfo[]> _cache;
+        private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         private readonly JsonSerializerOptions _options;
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace Azure.Core
             _options = options ?? throw new ArgumentNullException(nameof(options));
 
             // TODO: Consider using WeakReference cache to allow the GC to collect if the JsonObjectSerialized is held for a long duration.
-            _cache = new Dictionary<Type, MemberInfo[]>();
+            _cache = new ConcurrentDictionary<MemberInfo, string?>();
         }
 
         /// <inheritdoc />
@@ -73,57 +72,44 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(memberInfo, nameof(memberInfo));
 
-            if (!_cache.TryGetValue(memberInfo.ReflectedType, out MemberInfo[] members))
+            return _cache.GetOrAdd(memberInfo, m =>
             {
-                members = GetMembers(memberInfo.ReflectedType).ToArray();
-            }
+                // Mimics property enumeration based on:
+                // * https://github.com/dotnet/corefx/blob/v3.1.0/src/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L130-L191
+                // * TODO: Add support for fields when .NET 5 GAs (https://github.com/Azure/azure-sdk-for-net/issues/13627)
 
-            foreach (MemberInfo member in members)
-            {
-                if (member == memberInfo)
+                if (m is PropertyInfo propertyInfo)
                 {
-                    return GetPropertyName(memberInfo);
-                }
-            }
-
-            return null;
-        }
-
-        private static IEnumerable<MemberInfo> GetMembers(Type type)
-        {
-            // Mimics property enumeration based on:
-            // * https://github.com/dotnet/corefx/blob/v3.1.0/src/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L130-L191
-            // * TODO: https://github.com/dotnet/runtime/blob/dc8b6f90/src/libraries/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L147-L155
-
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (PropertyInfo propertyInfo in properties)
-            {
-                // Ignore indexers.
-                if (propertyInfo.GetIndexParameters().Length > 0)
-                {
-                    continue;
-                }
-
-                // Only support public getters and/or setters.
-                if (propertyInfo.GetMethod?.IsPublic == true ||
-                    propertyInfo.SetMethod?.IsPublic == true)
-                {
-                    if (propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                    // Ignore indexers.
+                    if (propertyInfo.GetIndexParameters().Length > 0)
                     {
-                        continue;
+                        return null;
                     }
 
-                    // Ignore - but do not assert correctness - for JsonExtensionDataAttribute based on
-                    // https://github.com/dotnet/corefx/blob/v3.1.0/src/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L244-L261
-                    if (propertyInfo.GetCustomAttribute<JsonExtensionDataAttribute>() != null)
+                    // Only support public getters and/or setters.
+                    if (propertyInfo.GetMethod?.IsPublic == true ||
+                        propertyInfo.SetMethod?.IsPublic == true)
                     {
-                        continue;
-                    }
+                        if (propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                        {
+                            return null;
+                        }
 
-                    // No need to validate collisions since they are based on the serialized name.
-                    yield return propertyInfo;
+                        // Ignore - but do not assert correctness - for JsonExtensionDataAttribute based on
+                        // https://github.com/dotnet/corefx/blob/v3.1.0/src/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L244-L261
+                        if (propertyInfo.GetCustomAttribute<JsonExtensionDataAttribute>() != null)
+                        {
+                            return null;
+                        }
+
+                        // No need to validate collisions since they are based on the serialized name.
+                        return GetPropertyName(propertyInfo);
+                    }
                 }
-            }
+
+                // The member is unsupported or ignored.
+                return null;
+            });
         }
 
         private string GetPropertyName(MemberInfo memberInfo)
