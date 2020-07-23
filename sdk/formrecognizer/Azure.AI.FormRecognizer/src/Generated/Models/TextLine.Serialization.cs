@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine_internal
+    internal partial class TextLine
     {
-        internal static TextLine_internal DeserializeTextLine_internal(JsonElement element)
+        internal static TextLine DeserializeTextLine(JsonElement element)
         {
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            Optional<Language_internal> language = default;
+            Optional<Language> language = default;
             IReadOnlyList<TextWord> words = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("language"))
                 {
-                    language = new Language_internal(property.Value.GetString());
+                    language = new Language(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("words"))
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextLine_internal(text, boundingBox, Optional.ToNullable(language), words);
+            return new TextLine(text, boundingBox, Optional.ToNullable(language), words);
         }
     }
 }

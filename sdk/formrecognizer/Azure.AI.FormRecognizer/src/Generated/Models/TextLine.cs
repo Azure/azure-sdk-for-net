@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing an extracted text line. </summary>
-    internal partial class TextLine_internal
+    internal partial class TextLine
     {
-        /// <summary> Initializes a new instance of TextLine_internal. </summary>
+        /// <summary> Initializes a new instance of TextLine. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>
-        internal TextLine_internal(string text, IEnumerable<float> boundingBox, IEnumerable<TextWord> words)
+        internal TextLine(string text, IEnumerable<float> boundingBox, IEnumerable<TextWord> words)
         {
             if (text == null)
             {
@@ -38,12 +38,12 @@ namespace Azure.AI.FormRecognizer.Models
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextLine_internal. </summary>
+        /// <summary> Initializes a new instance of TextLine. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="language"> The detected language of this line, if different from the overall page language. </param>
         /// <param name="words"> List of words in the text line. </param>
-        internal TextLine_internal(string text, IReadOnlyList<float> boundingBox, Language_internal? language, IReadOnlyList<TextWord> words)
+        internal TextLine(string text, IReadOnlyList<float> boundingBox, Language? language, IReadOnlyList<TextWord> words)
         {
             Text = text;
             BoundingBox = boundingBox;
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Bounding box of an extracted line. </summary>
         public IReadOnlyList<float> BoundingBox { get; }
         /// <summary> The detected language of this line, if different from the overall page language. </summary>
-        public Language_internal? Language { get; }
+        public Language? Language { get; }
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<TextWord> Words { get; }
     }

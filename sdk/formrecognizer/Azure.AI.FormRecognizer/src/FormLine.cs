@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormLine : FormElement
     {
-        internal FormLine(TextLine_internal textLine, int pageNumber)
+        internal FormLine(TextLine textLine, int pageNumber)
             : base(new BoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
             Words = ConvertWords(textLine.Words, pageNumber);
