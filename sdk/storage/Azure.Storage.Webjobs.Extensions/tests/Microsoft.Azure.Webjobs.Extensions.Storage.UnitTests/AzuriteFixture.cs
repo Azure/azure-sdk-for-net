@@ -17,6 +17,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
     /// It requires Azurite V3. See instalation insturctions here https://github.com/Azure/Azurite.
     /// After installing Azuirte define env variable AzureWebJobsStorageAzuriteLocation that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
     /// NodeJS installation is also required and node.exe should be in the $PATH.
+    ///
+    /// The lifecycle of this class is managed by XUnit, see https://xunit.net/docs/shared-context.
     /// </summary>
     public class AzuriteFixture : IDisposable
     {
