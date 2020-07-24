@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-1e9a96eb-3acc-196c-a797-e4947f209a29?sv=2019-12-12\u0026st=2020-06-01T19%3A21%3A31Z\u0026se=2020-06-01T21%3A21%3A31Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-1e9a96eb-3acc-196c-a797-e4947f209a29?sv=2020-02-10\u0026st=2020-06-01T19%3A21%3A31Z\u0026se=2020-06-01T21%3A21%3A31Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-c592754bd2e0264d96d386cb5df0b95d-19eccd5052b3bc46-00",
