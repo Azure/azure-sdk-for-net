@@ -16,6 +16,7 @@
 - Added Rest as Sink Type in Copy Sink
 - Added NewClusterLogDestination property to Azure Databricks linked service
 - Support expression (object) type for data flow staging folder path
+- Add new type "AzPowerShellSetup" to parameter "ExpressCustomSetup" for "AzureRmDataFactoryV2IntegrationRuntime" cmd to install Azure PowerShell
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
