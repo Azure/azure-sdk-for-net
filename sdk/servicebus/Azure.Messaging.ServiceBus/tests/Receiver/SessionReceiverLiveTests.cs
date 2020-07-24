@@ -16,6 +16,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13717")]
         [TestCase(1, null)]
         [TestCase(1, "key")]
         [TestCase(10000, null)]
