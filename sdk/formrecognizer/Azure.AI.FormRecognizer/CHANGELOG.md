@@ -2,6 +2,10 @@
 
 ## 1.0.0-preview.5 (Unreleased)
 
+### Breaking changes
+
+- Property `Type` renamed to `ValueType` on `FieldValue`.
+
 ### Fixes
 
 - Constructor in `TrainingFileFilter` made public.
@@ -18,7 +22,6 @@
 - Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
 - Property `LabelText` renamed to `LabelData` on `FormField`.
 - Property `ValueText` renamed to `ValueData` on `FormField`.
-- Property `Type` renamed to `ValueType` on `FieldValue`.
 - Property `TextContent` renamed to `FieldElements` on `FieldData` and `FormTableCell`.
 - Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
 - Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
