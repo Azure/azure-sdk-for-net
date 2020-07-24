@@ -91,7 +91,7 @@ namespace Azure.Core.Pipeline
                     else
                     {
                         // Rethrow a singular exception
-                        if (exceptions?.Count == 1)
+                        if (exceptions!.Count == 1)
                         {
                             ExceptionDispatchInfo.Capture(lastException).Throw();
                         }

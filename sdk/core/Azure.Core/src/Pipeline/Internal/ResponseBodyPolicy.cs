@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
             {
                 if (_networkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    cts.Token.Register(state => ((Stream)state)?.Dispose(), responseContentStream);
+                    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
 
                 try

@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -23,6 +24,7 @@ namespace Azure.Core.Buffers
             {
                 if (MemoryMarshal.TryGetArray(buffer, out ArraySegment<byte> arraySegment))
                 {
+                    Debug.Assert(arraySegment.Array != null);
                     await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                 }
                 else
@@ -55,6 +57,7 @@ namespace Azure.Core.Buffers
                 {
                     if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))
                     {
+                        Debug.Assert(arraySegment.Array != null);
                         await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                     }
                     else

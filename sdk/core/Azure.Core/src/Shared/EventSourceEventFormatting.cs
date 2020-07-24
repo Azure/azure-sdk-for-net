@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+#nullable enable
 
 namespace Azure.Core.Shared
 {
@@ -12,7 +15,7 @@ namespace Azure.Core.Shared
     {
         public static string Format(EventWrittenEventArgs eventData)
         {
-            var payloadArray = eventData.Payload.ToArray();
+            var payloadArray = eventData.Payload?.ToArray() ?? Array.Empty<object?>();
 
             ProcessPayloadArray(payloadArray);
 
@@ -24,16 +27,19 @@ namespace Azure.Core.Shared
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(eventData.EventName);
 
-            for (int i = 0; i < eventData.PayloadNames.Count; i++)
+            if (eventData.PayloadNames != null)
             {
-                stringBuilder.AppendLine();
-                stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                for (int i = 0; i < eventData.PayloadNames.Count; i++)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                }
             }
 
             return stringBuilder.ToString();
         }
 
-        private static void ProcessPayloadArray(object[] payloadArray)
+        private static void ProcessPayloadArray(object?[] payloadArray)
         {
             for (int i = 0; i < payloadArray.Length; i++)
             {
@@ -41,7 +47,7 @@ namespace Azure.Core.Shared
             }
         }
 
-        private static object FormatValue(object o)
+        private static object? FormatValue(object? o)
         {
             if (o is byte[] bytes)
             {

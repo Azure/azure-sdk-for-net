@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
-        private readonly HttpClient _client;
+        private readonly HttpMessageInvoker _client;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -49,33 +49,62 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
+#if NETCOREAPP
+            ProcessAsync(message, false).EnsureCompleted();
+#else
             // Intentionally blocking here
-            ProcessAsync(message).GetAwaiter().GetResult();
+            ProcessAsync(message, true).GetAwaiter().GetResult();
+#endif
         }
 
         /// <inheritdoc />
         public sealed override async ValueTask ProcessAsync(HttpMessage message)
         {
-            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
+            await ProcessAsync(message, true).ConfigureAwait(false);
+        }
+
+#pragma warning disable CA1801 // async parameter unused on netstandard
+        private async Task ProcessAsync(HttpMessage message, bool async)
+#pragma warning restore CA1801
+        {
+            using HttpRequestMessage httpRequest = BuildRequestMessage(message);
+            HttpResponseMessage responseMessage;
+            Stream? contentStream = null;
+            try
             {
-                HttpResponseMessage responseMessage;
-                Stream? contentStream = null;
-                try
+#if NETCOREAPP
+                if (!async)
                 {
-                    responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                    responseMessage = _client.Send(httpRequest, message.CancellationToken);
+                }
+                else
+#endif
+                {
+                    responseMessage = await _client.SendAsync(httpRequest, message.CancellationToken)
                         .ConfigureAwait(false);
-                    if (responseMessage.Content != null)
+                }
+
+                if (responseMessage.Content != null)
+                {
+#if NETCOREAPP
+                    if (!async)
+                    {
+                        contentStream = responseMessage.Content.ReadAsStream();
+                    }
+                    else
+#endif
                     {
                         contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
                     }
-                }
-                catch (HttpRequestException e)
-                {
-                    throw new RequestFailedException(e.Message, e);
-                }
 
-                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+                }
             }
+            catch (HttpRequestException e)
+            {
+                throw new RequestFailedException(e.Message, e);
+            }
+
+            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient()
@@ -112,7 +141,9 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
-            return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
+            return headers.TryGetValues(name, out values) ||
+                   content != null &&
+                   content.Headers.TryGetValues(name, out values);
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
@@ -332,7 +363,7 @@ namespace Azure.Core.Pipeline
 
                 public CancellationToken CancellationToken { get; set; }
 
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
                 {
                     Debug.Assert(PipelineContent != null);
                     await PipelineContent!.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
@@ -365,7 +396,7 @@ namespace Azure.Core.Pipeline
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            public override string ReasonPhrase => _responseMessage.ReasonPhrase;
+            public override string ReasonPhrase => _responseMessage.ReasonPhrase ?? string.Empty;
 
             public override Stream? ContentStream
             {

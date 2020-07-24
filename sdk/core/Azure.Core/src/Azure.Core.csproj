@@ -7,9 +7,11 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <!-- NET5 has more culture-specific overloads but we can't use them everywhere  -->
+    <NoWarn Condition="'$(TargetFramework)' == 'netcoreapp5.0'">$(NoWarn);CA1307</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

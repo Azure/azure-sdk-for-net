@@ -108,7 +108,7 @@ namespace Azure.Core
         /// </summary>
         public static string? DefaultApplicationId { get; set; }
 
-        private static bool? EnvironmentVariableToBool(string value)
+        private static bool? EnvironmentVariableToBool(string? value)
         {
             if (string.Equals("true", value, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
