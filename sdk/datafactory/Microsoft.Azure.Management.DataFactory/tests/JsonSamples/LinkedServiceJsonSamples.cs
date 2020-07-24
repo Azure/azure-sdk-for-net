@@ -2473,6 +2473,7 @@ namespace DataFactory.Tests.JsonSamples
             newClusterNumOfWorker: ""1"",
             newClusterNodeType: ""Standard_DS3_v2"",
             newClusterDriverNodeType: ""Standard_DS3_v2"",
+            newClusterLogDestination: ""dbfs:/test"",
             newClusterInitScripts: [
                 ""someScript""
             ],
