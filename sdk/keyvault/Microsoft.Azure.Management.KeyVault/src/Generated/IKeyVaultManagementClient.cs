@@ -92,5 +92,10 @@ namespace Microsoft.Azure.Management.KeyVault
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IManagedHsmsOperations.
+        /// </summary>
+        IManagedHsmsOperations ManagedHsms { get; }
+
     }
 }
