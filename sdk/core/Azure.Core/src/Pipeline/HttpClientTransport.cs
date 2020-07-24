@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
-        private readonly HttpMessageInvoker _client;
+        private readonly HttpClient _client;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -75,12 +75,12 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP
                 if (!async)
                 {
-                    responseMessage = _client.Send(httpRequest, message.CancellationToken);
+                    responseMessage = _client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
                 }
                 else
 #endif
                 {
-                    responseMessage = await _client.SendAsync(httpRequest, message.CancellationToken)
+                    responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                         .ConfigureAwait(false);
                 }
 
@@ -375,6 +375,14 @@ namespace Azure.Core.Pipeline
 
                     return PipelineContent!.TryComputeLength(out length);
                 }
+
+#if NETCOREAPP
+                protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                {
+                    Debug.Assert(PipelineContent != null);
+                    PipelineContent.WriteTo(stream, CancellationToken);
+                }
+#endif
             }
         }
 

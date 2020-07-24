@@ -69,6 +69,7 @@ namespace Azure.Core.Tests
             byte[] buffer = { 0 };
 
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            TaskCompletionSource<object> blockRequestTsc = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -90,7 +91,7 @@ namespace Azure.Core.Tests
 
                     await ExecuteRequest(message, httpPipeline);
 
-                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+                    Assert.AreEqual(false, message.Response.ContentStream.CanSeek);
 
                     extractedStream = message.ExtractResponseContent();
                 }

@@ -47,7 +47,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
@@ -55,7 +55,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override async ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
         }
