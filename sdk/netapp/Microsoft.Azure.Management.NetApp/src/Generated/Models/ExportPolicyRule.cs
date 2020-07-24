@@ -33,8 +33,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="unixReadOnly">Read only access</param>
         /// <param name="unixReadWrite">Read and write access</param>
         /// <param name="cifs">Allows CIFS protocol</param>
-        /// <param name="nfsv3">Allows NFSv3 protocol</param>
-        /// <param name="nfsv41">Allows NFSv4.1 protocol</param>
+        /// <param name="nfsv3">Allows NFSv3 protocol. Enable only for NFSv3
+        /// type volumes</param>
+        /// <param name="nfsv41">Allows NFSv4.1 protocol. Enable only for
+        /// NFSv4.1 type volumes</param>
         /// <param name="allowedClients">Client ingress specification as comma
         /// separated string with IPv4 CIDRs, IPv4 host addresses and host
         /// names</param>
@@ -80,13 +82,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? Cifs { get; set; }
 
         /// <summary>
-        /// Gets or sets allows NFSv3 protocol
+        /// Gets or sets allows NFSv3 protocol. Enable only for NFSv3 type
+        /// volumes
         /// </summary>
         [JsonProperty(PropertyName = "nfsv3")]
         public bool? Nfsv3 { get; set; }
 
         /// <summary>
-        /// Gets or sets allows NFSv4.1 protocol
+        /// Gets or sets allows NFSv4.1 protocol. Enable only for NFSv4.1 type
+        /// volumes
         /// </summary>
         [JsonProperty(PropertyName = "nfsv41")]
         public bool? Nfsv41 { get; set; }
