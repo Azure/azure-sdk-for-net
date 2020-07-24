@@ -11,15 +11,18 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class BackupClientLiveTests : BackupRestoreTestBase
     {
-        public BackupClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public BackupClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
         [Test]
-        [Ignore("Waiting on a service bug to be resolved.")]
         public async Task Backup()
         {
             var source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-            BackupOperation backupOperation = await Client.StartBackupAsync(new Uri(TestEnvironment.StorageUri), SasToken, source.Token);
+
+            UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
+            builder.Path = BlobContainerName;
+
+            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, SasToken, source.Token);
 
             Uri result = await backupOperation.WaitForCompletionAsync(source.Token);
 
