@@ -55,7 +55,9 @@ namespace Azure.Core.Pipeline
         {
             if (!task.IsCompleted)
             {
+#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
                 return EnsureCompleted(task.AsTask());
+#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
             }
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
@@ -66,7 +68,9 @@ namespace Azure.Core.Pipeline
         {
             if (!task.IsCompleted)
             {
+#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
                 EnsureCompleted(task.AsTask());
+#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
             }
             else
             {
