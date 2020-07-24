@@ -70,43 +70,43 @@ namespace Azure.AI.FormRecognizer.Models
             new CustomFormSubmodel(formType, accuracy, fields);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FieldData"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FieldData"/> class.
         /// </summary>
         /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
-        /// <returns>A new <see cref="Models.FieldData"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FieldData"/> instance for mocking.</returns>
         public static FieldData FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements) =>
             new FieldData(boundingBox, pageNumber, text, fieldElements);
 
         // TODO: FieldValue
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormField"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormField"/> class.
         /// </summary>
         /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
         /// <param name="labelData">Contains the text, bounding box and content of the label of the field in the form.</param>
         /// <param name="valueData">Contains the text, bounding box and content of the value of the field in the form.</param>
         /// <param name="value">The strongly-typed value of this field.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        /// <returns>A new <see cref="Models.FormField"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormField"/> instance for mocking.</returns>
         public static FormField FormField(string name, FieldData labelData, FieldData valueData, FieldValue value, float confidence) =>
             new FormField(name, labelData, valueData, value, confidence);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormLine"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormLine"/> class.
         /// </summary>
         /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="words">A list of the words that make up the line.</param>
-        /// <returns>A new <see cref="Models.FormLine"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
         public static FormLine FormLine(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words) =>
             new FormLine(boundingBox, pageNumber, text, words);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormPage"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPage"/> class.
         /// </summary>
         /// <param name="pageNumber">The 1-based page number in the input document.</param>
         /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
@@ -115,51 +115,51 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="unit">The unit used by the width, height and <see cref="BoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
-        /// <returns>A new <see cref="Models.FormPage"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
         public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables) =>
             new FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormPageCollection"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPageCollection"/> class.
         /// This class is a read-only wrapper around the specified list.
         /// </summary>
         /// <param name="list">The list to wrap.</param>
-        /// <returns>A new <see cref="Models.FormPageCollection"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormPageCollection"/> instance for mocking.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static FormPageCollection FormPageCollection(IList<FormPage> list) =>
             new FormPageCollection(list);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormPageRange"/> struct.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPageRange"/> struct.
         /// </summary>
         /// <param name="firstPageNumber">The first page number of the range.</param>
         /// <param name="lastPageNumber">The last page number of the range.</param>
-        /// <returns>A new <see cref="Models.FormPageRange"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormPageRange"/> instance for mocking.</returns>
         public static FormPageRange FormPageRange(int firstPageNumber, int lastPageNumber) =>
             new FormPageRange(firstPageNumber, lastPageNumber);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormRecognizerError"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormRecognizerError"/> class.
         /// </summary>
         /// <param name="errorCode">The error code.</param>
         /// <param name="message">The error message.</param>
-        /// <returns>A new <see cref="Models.FormRecognizerError"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormRecognizerError"/> instance for mocking.</returns>
         public static FormRecognizerError FormRecognizerError(string errorCode, string message) =>
             new FormRecognizerError(errorCode, message);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormTable"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTable"/> class.
         /// </summary>
         /// <param name="pageNumber">The 1-based number of the page in which this table is present.</param>
         /// <param name="columnCount">The number of columns in this table.</param>
         /// <param name="rowCount">The number of rows in this table.</param>
         /// <param name="cells">A list of cells contained in this table.</param>
-        /// <returns>A new <see cref="Models.FormTable"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormTable"/> instance for mocking.</returns>
         public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells) =>
             new FormTable(pageNumber, columnCount, rowCount, cells);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormTableCell"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTableCell"/> class.
         /// </summary>
         /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
@@ -172,38 +172,38 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="isFooter"><c>true</c> if this cell is a footer cell. Otherwise, <c>false</c>.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this cell.</param>
-        /// <returns>A new <see cref="Models.FormTableCell"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormTableCell"/> instance for mocking.</returns>
         public static FormTableCell FormTableCell(BoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements) =>
             new FormTableCell(boundingBox, pageNumber, text, columnIndex, rowIndex, columnSpan, rowSpan, isHeader, isFooter, confidence, fieldElements);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.FormWord"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormWord"/> class.
         /// </summary>
         /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        /// <returns>A new <see cref="Models.FormWord"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormWord"/> instance for mocking.</returns>
         public static FormWord FormWord(BoundingBox boundingBox, int pageNumber, string text, float confidence) =>
             new FormWord(boundingBox, pageNumber, text, confidence);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.RecognizedForm"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.RecognizedForm"/> class.
         /// </summary>
         /// <param name="formType">The type of form the model identified the submitted form to be.</param>
         /// <param name="pageRange">The range of pages this form spans.</param>
         /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
         /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
-        /// <returns>A new <see cref="Models.RecognizedForm"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.RecognizedForm"/> instance for mocking.</returns>
         public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages) =>
             new RecognizedForm(formType, pageRange, fields, pages);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Models.RecognizedFormCollection"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.RecognizedFormCollection"/> class.
         /// This class is a read-only wrapper around the specified list.
         /// </summary>
         /// <param name="list">The list to wrap.</param>
-        /// <returns>A new <see cref="Models.RecognizedFormCollection"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="FormRecognizer.Models.RecognizedFormCollection"/> instance for mocking.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static RecognizedFormCollection RecognizedFormCollection(IList<RecognizedForm> list) =>
             new RecognizedFormCollection(list);
