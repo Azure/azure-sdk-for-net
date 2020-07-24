@@ -131,6 +131,9 @@ namespace Azure.Core
             /// Returns. <code>"If-Unmodified-Since"</code>
             /// </summary>
             public static string IfUnmodifiedSince => "If-Unmodified-Since";
+
+            internal static string Referer => "Referer";
+            internal static string Host => "Host";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

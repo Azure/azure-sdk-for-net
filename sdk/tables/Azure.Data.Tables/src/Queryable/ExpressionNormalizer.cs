@@ -142,7 +142,7 @@ namespace Azure.Data.Tables.Queryable
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
             }
 
-            if (visited.Method == ReflectionUtil.DictionaryGetItemMethodInfo && visited.Arguments.Count == 1 && visited.Arguments[0] is ConstantExpression ce)
+            if (ReflectionUtil.s_dictionaryMethodInfosHash.Contains(visited.Method) && visited.Arguments.Count == 1 && visited.Arguments[0] is ConstantExpression)
             {
                 return visited;
             }

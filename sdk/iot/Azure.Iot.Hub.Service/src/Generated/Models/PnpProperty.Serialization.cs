@@ -14,30 +14,22 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static PnpProperty DeserializePnpProperty(JsonElement element)
         {
-            PnpReported reported = default;
-            PnpDesired desired = default;
+            Optional<PnpReported> reported = default;
+            Optional<PnpDesired> desired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reported"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reported = PnpReported.DeserializePnpReported(property.Value);
                     continue;
                 }
                 if (property.NameEquals("desired"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     desired = PnpDesired.DeserializePnpDesired(property.Value);
                     continue;
                 }
             }
-            return new PnpProperty(reported, desired);
+            return new PnpProperty(reported.Value, desired.Value);
         }
     }
 }

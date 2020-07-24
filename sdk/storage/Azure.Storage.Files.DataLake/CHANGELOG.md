@@ -5,6 +5,7 @@
 - Updated DataLakeSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 - Fixed bug where DataLakeFileClient.Query() failed when query response was > ~200 MB.
 - Added DataLakeFileClient.OpenRead().
+- Fixed bug where DataLakeFileClient.Query() would buffer the query response before parsing the Avro contents.
 
 ## 12.3.0-preview.1 (2020-07-03)
 - Added support for service version 2019-12-12.

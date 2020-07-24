@@ -1262,10 +1262,12 @@ namespace Azure.Storage.Blobs.Test
             await appendBlob.SealAsync();
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
             Response<BlobDownloadInfo> downloadResponse  = await appendBlob.DownloadAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
             Assert.IsTrue(propertiesResponse.Value.IsSealed);
             Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
+            Assert.IsTrue(blobs.First().Properties.IsSealed);
         }
 
         [Test]

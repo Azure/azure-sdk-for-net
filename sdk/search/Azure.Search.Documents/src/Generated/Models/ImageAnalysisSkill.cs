@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -27,8 +28,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
-            VisualFeatures = new List<VisualFeature>();
-            Details = new List<ImageDetail>();
+            VisualFeatures = new ChangeTrackingList<VisualFeature>();
+            Details = new ChangeTrackingList<ImageDetail>();
             ODataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 
@@ -45,8 +46,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal ImageAnalysisSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage? defaultLanguageCode, IList<VisualFeature> visualFeatures, IList<ImageDetail> details) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
-            VisualFeatures = visualFeatures ?? new List<VisualFeature>();
-            Details = details ?? new List<ImageDetail>();
+            VisualFeatures = visualFeatures;
+            Details = details;
             ODataType = oDataType ?? "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 

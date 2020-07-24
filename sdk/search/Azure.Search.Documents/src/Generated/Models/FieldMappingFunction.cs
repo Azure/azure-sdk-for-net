@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
-            Parameters = new Dictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal FieldMappingFunction(string name, IDictionary<string, object> parameters)
         {
             Name = name;
-            Parameters = parameters ?? new Dictionary<string, object>();
+            Parameters = parameters;
         }
 
         /// <summary> The name of the field mapping function. </summary>

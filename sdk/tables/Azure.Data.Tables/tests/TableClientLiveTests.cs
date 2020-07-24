@@ -90,6 +90,29 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
+        public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
+        {
+            List<IDictionary<string, object>> entityResults;
+            List<DynamicTableEntity> entitiesToCreate = CreateDictionaryTableEntities(PartitionKeyValue, 20);
+
+            // Create the new entities.
+
+            foreach (var entity in entitiesToCreate)
+            {
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
         public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
@@ -813,6 +836,26 @@ namespace Azure.Data.Tables.Tests
             Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
             Assert.That(policies.Value[0].AccessPolicy.Start, Is.EqualTo(policyToCreate[0].AccessPolicy.Start));
 
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task GetEntityReturnsSingleEntity()
+        {
+            IDictionary<string, object> entityResults;
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, UpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
         }
     }
 }

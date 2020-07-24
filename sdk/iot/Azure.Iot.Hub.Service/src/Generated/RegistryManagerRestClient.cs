@@ -69,14 +69,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         RegistryStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
-                        }
+                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,14 +89,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         RegistryStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
-                        }
+                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -136,14 +122,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ServiceStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
-                        }
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,14 +142,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ServiceStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
-                        }
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,26 +180,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<DeviceIdentity> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<DeviceIdentity> array = new List<DeviceIdentity>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
                         }
-                        else
-                        {
-                            List<DeviceIdentity> array = new List<DeviceIdentity>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -248,26 +206,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<DeviceIdentity> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<DeviceIdentity> array = new List<DeviceIdentity>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
                         }
-                        else
-                        {
-                            List<DeviceIdentity> array = new List<DeviceIdentity>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -316,14 +260,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         BulkRegistryOperationResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
-                        }
+                        value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -350,14 +287,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         BulkRegistryOperationResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
-                        }
+                        value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -411,26 +341,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<TwinData> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<TwinData> array = new List<TwinData>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(TwinData.DeserializeTwinData(item));
                         }
-                        else
-                        {
-                            List<TwinData> array = new List<TwinData>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(TwinData.DeserializeTwinData(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -459,26 +375,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<TwinData> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<TwinData> array = new List<TwinData>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(TwinData.DeserializeTwinData(item));
                         }
-                        else
-                        {
-                            List<TwinData> array = new List<TwinData>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(TwinData.DeserializeTwinData(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -518,14 +420,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DeviceIdentity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
-                        }
+                        value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -551,14 +446,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DeviceIdentity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
-                        }
+                        value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -612,14 +500,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DeviceIdentity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
-                        }
+                        value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -651,14 +532,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         DeviceIdentity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
-                        }
+                        value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -761,14 +635,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         PurgeMessageQueueResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
-                        }
+                        value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -794,14 +661,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         PurgeMessageQueueResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
-                        }
+                        value = PurgeMessageQueueResult.DeserializePurgeMessageQueueResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -842,26 +702,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<ModuleIdentity> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<ModuleIdentity> array = new List<ModuleIdentity>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
                         }
-                        else
-                        {
-                            List<ModuleIdentity> array = new List<ModuleIdentity>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -887,26 +733,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<ModuleIdentity> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<ModuleIdentity> array = new List<ModuleIdentity>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
                         }
-                        else
-                        {
-                            List<ModuleIdentity> array = new List<ModuleIdentity>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -953,14 +785,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ModuleIdentity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
-                        }
+                        value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -991,14 +816,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ModuleIdentity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
-                        }
+                        value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1060,14 +878,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ModuleIdentity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
-                        }
+                        value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1105,14 +916,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ModuleIdentity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
-                        }
+                        value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

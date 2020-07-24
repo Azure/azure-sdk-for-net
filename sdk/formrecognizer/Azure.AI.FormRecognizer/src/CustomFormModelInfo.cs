@@ -2,22 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Describes a model trained in a Cognitive Services Account and its status.
     /// </summary>
-    public class CustomFormModelInfo
+    [CodeGenModel("ModelInfo")]
+    public partial class CustomFormModelInfo
     {
-        internal CustomFormModelInfo(ModelInfo_internal modelInfo)
-        {
-            ModelId = modelInfo.ModelId.ToString();
-            TrainingStartedOn = modelInfo.CreatedDateTime;
-            TrainingCompletedOn = modelInfo.LastUpdatedDateTime;
-            Status = modelInfo.Status;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomFormModelInfo"/> class.
         /// </summary>
@@ -46,11 +40,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The date and time (UTC) when model training was started.
         /// </summary>
+        [CodeGenMember("CreatedDateTime")]
         public DateTimeOffset TrainingStartedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
+        [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset TrainingCompletedOn { get; }
     }
 }

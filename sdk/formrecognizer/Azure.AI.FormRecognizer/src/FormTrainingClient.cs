@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -128,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
 
                 ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
@@ -163,7 +162,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
 
                 ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
@@ -197,7 +196,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
-                Response<Model_internal> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
+                Response<Model> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
                 return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,7 +224,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
-                Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
+                Response<Model> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,8 +299,8 @@ namespace Azure.AI.FormRecognizer.Training
 
                 try
                 {
-                    Response<Models_internal> response = ServiceClient.ListCustomModels(cancellationToken);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    Response<Models.Models> response = ServiceClient.ListCustomModels(cancellationToken);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -317,8 +316,8 @@ namespace Azure.AI.FormRecognizer.Training
 
                 try
                 {
-                    Response<Models_internal> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    Response<Models.Models> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,8 +344,8 @@ namespace Azure.AI.FormRecognizer.Training
 
                 try
                 {
-                    Response<Models_internal> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    Response<Models.Models> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,8 +361,8 @@ namespace Azure.AI.FormRecognizer.Training
 
                 try
                 {
-                    Response<Models_internal> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                    Response<Models.Models> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -388,7 +387,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                Response<Models_internal> response = ServiceClient.GetCustomModels(cancellationToken);
+                Response<Models.Models> response = ServiceClient.GetCustomModels(cancellationToken);
                 return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,7 +410,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                Response<Models_internal> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                Response<Models.Models> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
             }
             catch (Exception e)
