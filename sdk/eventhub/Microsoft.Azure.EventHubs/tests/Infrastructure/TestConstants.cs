@@ -15,7 +15,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         internal const string EventHubsSecretEnvironmentVariableName = "EVENTHUB_CLIENT_SECRET";
         internal const string AuthorityHostEnvironmentVariableName = "AZURE_AUTHORITY_HOST";
         internal const string ServiceManagementUrlEnvironmentVariableName = "SERVICE_MANAGEMENT_URL";
-        internal const string ResourceManagerEnvironmentVariableName = "RESOURCE_MANAGER";
+        internal const string ResourceManagerEnvironmentVariableName = "RESOURCE_MANAGER_URL";
         internal const string StorageEndpointSuffixEnvironmentVariableName = "STORAGE_ENDPOINT_SUFFIX";
 
         // General

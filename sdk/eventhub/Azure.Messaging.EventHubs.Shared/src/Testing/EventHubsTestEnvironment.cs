@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const string ServiceManagementUrlEnvironmentVariable = "SERVICE_MANAGEMENT_URL";
 
         /// <summary>The name of the environment variable used to specify resource manager to use for all tests.</summary>
-        private const string ResourceManagerEnvironmentVariable = "RESOURCE_MANAGER";
+        private const string ResourceManagerEnvironmentVariable = "RESOURCE_MANAGER_URL";
 
         /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
