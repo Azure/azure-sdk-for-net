@@ -173,7 +173,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 try
                 {
-                    Response<AnalyzeOperationResult_internal> update = async
+                    Response<AnalyzeOperationResult> update = async
                         ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
@@ -204,12 +204,12 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
             List<FormPage> pages = new List<FormPage>();
-            List<ReadResult_internal> rawPages = readResults.ToList();
+            List<ReadResult> rawPages = readResults.ToList();
 
             for (var pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
             {

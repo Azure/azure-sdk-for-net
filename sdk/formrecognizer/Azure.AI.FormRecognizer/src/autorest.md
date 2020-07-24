@@ -66,3 +66,13 @@ directive:
   transform: >
     $.properties.fields.additionalProperties["x-nullable"] = true;
 ```
+
+### Make generated models internal by default
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-accessibility"] = "internal"
+```
