@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,7 +19,7 @@ namespace Azure.Iot.Hub.Service
     public class ModulesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
-        private const string HubModuleQuery = "select * from modules";
+        private const string HubModuleQuery = "select * from devices.modules";
 
         private readonly RegistryManagerRestClient _registryManagerClient;
         private readonly TwinRestClient _twinClient;
@@ -161,6 +163,198 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
+        /// Create multiple modules with an initial twin. A maximum of 100 creations can be done per call,
+        /// and each creation must have a unique module identity. Multiple modules may be created on a single device.
+        /// All devices that these new modules will belong to must already exist.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="modules">The pairs of modules and their twins that will be created. For fields such as deviceId
+        /// where device and twin have a definition, the device value will override the twin value.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(IDictionary<ModuleIdentity, TwinData> modules, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = modules
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.Key.DeviceId,
+                    ModuleId = x.Key.ModuleId,
+                    Authentication = x.Key.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
+
+            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules with an initial twin. A maximum of 100 creations can be done per call,
+        /// and each creation must have a unique module identity. Multiple modules may be created on a single device.
+        /// All devices that these new modules will belong to must already exist.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="modules">The pairs of modules and their twins that will be created. For fields such as deviceId
+        /// where device and twin have a definition, the device value will override the twin value.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentitiesWithTwin(IDictionary<ModuleIdentity, TwinData> modules, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = modules
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.Key.DeviceId,
+                    ModuleId = x.Key.ModuleId,
+                    Authentication = x.Key.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
+
+            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules. A maximum of 100 creations can be done per call, and each module identity must be unique.
+        /// All devices that these modules will belong to must already exist. Multiple modules can be created at a time on a single device.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The module identities to create.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<ModuleIdentity> moduleIdentities, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                });
+
+            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules. A maximum of 100 creations can be done per call, and each module identity must be unique.
+        /// All devices that these modules will belong to must already exist. Multiple modules can be created at a time on a single device.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The module identities to create.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentities(IEnumerable<ModuleIdentity> moduleIdentities, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                });
+
+            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to update.</param>
+        /// <param name="precondition">The condition on which to update each module identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentitiesAsync(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                });
+
+            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to update.</param>
+        /// <param name="precondition">The condition on which to update each module identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> UpdateIdentities(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                });
+
+            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete multiple modules. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to delete.</param>
+        /// <param name="precondition">The condition on which to delete each device identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk deletion and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    ETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
+                });
+
+            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete multiple modules. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The devices to delete.</param>
+        /// <param name="precondition">The condition on which to delete each device identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk deletion and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    ETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
+                });
+
+            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
         /// List a set of module twins.
         /// </summary>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
@@ -295,6 +489,56 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
+        /// Update multiple modules' twins. A maximum of 100 updates can be done per call, and each operation must be done on a different module twin. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="twinUpdates">The new twins to replace the twins on existing devices.</param>
+        /// <param name="precondition">The condition on which to update each device twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = twinUpdates
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    TwinETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
+
+            return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules' twins. A maximum of 100 updates can be done per call, and each operation must be done on a different device twin. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="twinUpdates">The new twins to replace the twins on existing devices.</param>
+        /// <param name="precondition">The condition on which to update each device twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> UpdateTwins(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = twinUpdates
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    TwinETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.UpdateTwin
+                        : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
+
+            return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
         /// Invoke a method on a module.
         /// </summary>
         /// <param name="deviceId">The unique identifier of the device.</param>
@@ -327,5 +571,6 @@ namespace Azure.Iot.Hub.Service
         {
             return _deviceMethodClient.InvokeModuleMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
         }
+
     }
 }

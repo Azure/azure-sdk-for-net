@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,16 +16,10 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties. </summary>
         public Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties. </summary>
-        /// <param name="properties"> List of properties to update in an interface. </param>
-        internal Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties(IDictionary<string, Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> properties)
-        {
-            Properties = properties;
+            Properties = new ChangeTrackingDictionary<string, Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties>();
         }
 
         /// <summary> List of properties to update in an interface. </summary>
-        public IDictionary<string, Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get; set; }
+        public IDictionary<string, Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get; }
     }
 }

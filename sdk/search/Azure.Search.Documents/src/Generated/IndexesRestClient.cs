@@ -89,14 +89,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,14 +115,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -172,14 +158,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
-                        }
+                        value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,14 +179,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
-                        }
+                        value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,14 +251,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -321,14 +286,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,14 +408,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -483,14 +434,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,14 +480,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
-                        }
+                        value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -569,14 +506,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
-                        }
+                        value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -631,14 +561,7 @@ namespace Azure.Search.Documents
                     {
                         AnalyzeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
-                        }
+                        value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,14 +592,7 @@ namespace Azure.Search.Documents
                     {
                         AnalyzeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
-                        }
+                        value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

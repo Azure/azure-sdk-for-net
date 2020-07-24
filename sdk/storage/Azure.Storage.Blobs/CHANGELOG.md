@@ -3,6 +3,10 @@
 ## 12.5.0-preview.6 (Unreleased)
 - Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
 - Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
+- Fixed bug where BlockBlobClient.Query() would buffer the query response before parsing the Avro contents.
 
 ## 12.5.0-preview.5 (2020-07-03)
 - Added support for service version 2019-12-12.

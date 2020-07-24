@@ -2,9 +2,17 @@
 
 ## 1.0.0-preview.5 (Unreleased)
 
+### Breaking changes
+
+- Property `Type` renamed to `ValueType` on `FieldValue`.
+
 ### Fixes
 
 - Constructor in `TrainingFileFilter` made public.
+
+### New Features
+
+- Added diagnostics functionality to the `FormRecognizerClient`, to the `FormTrainingClient` and to long-running operation types.
 
 ## 1.0.0-preview.4 (2020-07-07)
 

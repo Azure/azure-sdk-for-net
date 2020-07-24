@@ -503,10 +503,11 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Updates an existing CDN endpoint with the specified endpoint name under the
-        /// specified subscription, resource group and profile. Only tags and Origin
-        /// HostHeader can be updated after creating an endpoint. To update origins,
-        /// use the Update Origin operation. To update custom domains, use the Update
-        /// Custom Domain operation.
+        /// specified subscription, resource group and profile. Only tags can be
+        /// updated after creating an endpoint. To update origins, use the Update
+        /// Origin operation. To update origin groups, use the Update Origin group
+        /// operation. To update custom domains, use the Update Custom Domain
+        /// operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -1390,10 +1391,11 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Updates an existing CDN endpoint with the specified endpoint name under the
-        /// specified subscription, resource group and profile. Only tags and Origin
-        /// HostHeader can be updated after creating an endpoint. To update origins,
-        /// use the Update Origin operation. To update custom domains, use the Update
-        /// Custom Domain operation.
+        /// specified subscription, resource group and profile. Only tags can be
+        /// updated after creating an endpoint. To update origins, use the Update
+        /// Origin operation. To update origin groups, use the Update Origin group
+        /// operation. To update custom domains, use the Update Custom Domain
+        /// operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.

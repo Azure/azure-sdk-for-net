@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="statistics">The statistics of the database.</param>
         /// <param name="isFollowed">Indicates whether the database is
         /// followed.</param>
-        public ReadWriteDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics), string isFollowed = default(string))
+        public ReadWriteDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics), bool? isFollowed = default(bool?))
             : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets indicates whether the database is followed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isFollowed")]
-        public string IsFollowed { get; private set; }
+        public bool? IsFollowed { get; private set; }
 
     }
 }

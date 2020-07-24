@@ -139,7 +139,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="devices">The pairs of devices their twins that will be created. For fields such as deviceId
+        /// <param name="devices">The pairs of devices and their twins that will be created. For fields such as deviceId
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
@@ -152,15 +152,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Key.Authentication,
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
-                    ParentScopes = x.Key.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -168,7 +165,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="devices">The pairs of devices their twins that will be created. For fields such as deviceId
+        /// <param name="devices">The pairs of devices and their twins that will be created. For fields such as deviceId
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
@@ -181,15 +178,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Key.Authentication,
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
-                    ParentScopes = x.Key.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
-                    Tags = x.Value.Tags,
-                    Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties).WithParentScopes(x.Key.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -197,7 +191,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="deviceIdentities">The devices identities to create.</param>
+        /// <param name="deviceIdentities">The device identities to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
@@ -209,13 +203,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -235,13 +228,12 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -265,14 +257,13 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -296,14 +287,13 @@ namespace Azure.Iot.Hub.Service
                     Authentication = x.Authentication,
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
-                    ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
                     Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
-                });
+                }.WithParentScopes(x.ParentScopes));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
@@ -358,7 +348,6 @@ namespace Azure.Iot.Hub.Service
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
 
-
         /// <summary>
         /// List a set of device twins.
         /// </summary>
@@ -386,7 +375,10 @@ namespace Azure.Iot.Hub.Service
 
             async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var querySpecification = new QuerySpecification();
+                var querySpecification = new QuerySpecification()
+                {
+                    Query = HubDeviceQuery
+                };
                 Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
                     querySpecification,
                     nextLink,
@@ -428,7 +420,10 @@ namespace Azure.Iot.Hub.Service
 
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var querySpecification = new QuerySpecification();
+                var querySpecification = new QuerySpecification()
+                {
+                    Query = HubDeviceQuery
+                };
                 Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
                     querySpecification,
                     nextLink,
@@ -508,11 +503,9 @@ namespace Azure.Iot.Hub.Service
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
         }
@@ -533,13 +526,11 @@ namespace Azure.Iot.Hub.Service
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
-                    Tags = x.Tags,
-                    Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.UpdateTwin
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
-                });
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Storage
 {
     internal static class Constants
@@ -38,6 +40,11 @@ namespace Azure.Storage
         /// buffers to staging <see cref="LargeBufferSize"/> buffers.
         /// </summary>
         public const int LargeUploadThreshold = 100 * Constants.MB;
+
+        /// <summary>
+        /// The minimum number of bytes to download in Open Read.
+        /// </summary>
+        public const int DefaultStreamingDownloadSize = 4 * Constants.MB;
 
         /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
@@ -153,6 +160,7 @@ namespace Azure.Storage
         {
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
+            public const int QuickQueryDownloadSize = 4 * Constants.MB;
 
             internal static class Append
             {
@@ -266,6 +274,8 @@ namespace Azure.Storage
             /// The Azure Storage error codes for Datalake Client.
             /// </summary>
             public const string AlreadyExists = "ContainerAlreadyExists";
+            public const string FilesystemNotFound = "FilesystemNotFound";
+            public const string PathNotFound = "PathNotFound";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -318,6 +328,7 @@ namespace Azure.Storage
             public const string MetaSegmentsPath = "meta/segments.json";
             public const long ChunkBlockDownloadSize = MB;
             public const int DefaultPageSize = 5000;
+            public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
             internal static class Event
             {

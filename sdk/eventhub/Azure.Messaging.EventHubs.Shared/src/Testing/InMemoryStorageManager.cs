@@ -48,6 +48,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
         /// </summary>
         ///
+        public InMemoryStorageManager() : this(null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
+        /// </summary>
+        ///
         /// <param name="logger">Logs activities performed by this storage manager.</param>
         ///
         public InMemoryStorageManager(Action<string> logger = null)

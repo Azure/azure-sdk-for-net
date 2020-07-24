@@ -82,14 +82,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RoleDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        }
+                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,14 +114,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RoleDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        }
+                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,14 +163,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RoleDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        }
+                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -221,14 +200,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RoleDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        }
+                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

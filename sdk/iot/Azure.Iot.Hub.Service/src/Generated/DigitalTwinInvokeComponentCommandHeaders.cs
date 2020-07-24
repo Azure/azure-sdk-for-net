@@ -17,6 +17,7 @@ namespace Azure.Iot.Hub.Service
         {
             _response = response;
         }
+        /// <summary> Device Generated Status Code for this Operation. </summary>
         public int? XMsCommandStatuscode => _response.Headers.TryGetValue("x-ms-command-statuscode", out int? value) ? value : null;
     }
 }

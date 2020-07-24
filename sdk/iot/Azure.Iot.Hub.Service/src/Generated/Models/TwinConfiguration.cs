@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinConfiguration. </summary>
         public TwinConfiguration()
         {
+            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of TwinConfiguration. </summary>
@@ -50,7 +52,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Gets Schema version for the configuration. </summary>
         public string SchemaVersion { get; set; }
         /// <summary> Gets or sets labels for the configuration. </summary>
-        public IDictionary<string, string> Labels { get; set; }
+        public IDictionary<string, string> Labels { get; }
         /// <summary> Gets or sets Content for the configuration. </summary>
         public ConfigurationContent Content { get; set; }
         /// <summary> Gets or sets Target Condition for the configuration. </summary>

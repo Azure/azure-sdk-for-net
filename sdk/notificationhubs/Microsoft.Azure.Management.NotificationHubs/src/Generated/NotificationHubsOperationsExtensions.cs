@@ -120,6 +120,58 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
+            /// Patch a NotificationHub in a namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a NotificationHub Resource.
+            /// </param>
+            public static NotificationHubResource Patch(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubPatchParameters parameters = default(NotificationHubPatchParameters))
+            {
+                return operations.PatchAsync(resourceGroupName, namespaceName, notificationHubName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patch a NotificationHub in a namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a NotificationHub Resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NotificationHubResource> PatchAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubPatchParameters parameters = default(NotificationHubPatchParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a notification hub associated with a namespace.
             /// </summary>
             /// <param name='operations'>
@@ -203,6 +255,58 @@ namespace Microsoft.Azure.Management.NotificationHubs
             public static async Task<NotificationHubResource> GetAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// test send a push notification
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Debug send parameters
+            /// </param>
+            public static DebugSendResponse DebugSend(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, object parameters = default(object))
+            {
+                return operations.DebugSendAsync(resourceGroupName, namespaceName, notificationHubName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// test send a push notification
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Debug send parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DebugSendResponse> DebugSendAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, object parameters = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DebugSendWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

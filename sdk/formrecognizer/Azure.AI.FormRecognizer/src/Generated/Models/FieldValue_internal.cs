@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -18,6 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
         internal FieldValue_internal(FieldValueType type)
         {
             Type = type;
+            ValueArray = new ChangeTrackingList<FieldValue_internal>();
+            ValueObject = new ChangeTrackingDictionary<string, FieldValue_internal>();
+            BoundingBox = new ChangeTrackingList<float>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FieldValue_internal. </summary>

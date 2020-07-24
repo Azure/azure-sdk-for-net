@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
@@ -111,6 +113,106 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(resource, sasQueryParameters.Resource);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+        }
+
+        [Test]
+        [TestCase("FTPUCALXDWR")]
+        [TestCase("rwdxlacuptf")]
+        public async Task AccountPermissionsRawPermissions(string permissionsString)
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.All
+            };
+
+            accountSasBuilder.SetPermissions(permissionsString);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            Uri uri = new Uri($"{test.Share.Uri}?{accountSasBuilder.ToSasQueryParameters(sharedKeyCredential)}");
+
+            ShareClient sasShareClient = new ShareClient(uri, GetOptions());
+
+            // Act
+            await sasShareClient.GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task AccountPermissionsRawPermissions_InvalidPermission()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.All
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => accountSasBuilder.SetPermissions("werteyfg"),
+                new ArgumentException("e is not a valid SAS permission"));
+        }
+
+        [Test]
+        [TestCase("LDWCR")]
+        [TestCase("rcwdl")]
+        public async Task SharePermissionsRawPermissions(string permissionsString)
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSasBuilder blobSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            blobSasBuilder.SetPermissions(
+                rawPermissions: permissionsString,
+                normalize: true);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            ShareUriBuilder blobUriBuilder = new ShareUriBuilder(test.Share.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            ShareClient sasShareClient = new ShareClient(blobUriBuilder.ToUri(), GetOptions());
+
+            // Act
+            await sasShareClient.GetRootDirectoryClient().GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task SharePermissionsRawPermissions_Invalid()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareSasBuilder blobSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => blobSasBuilder.SetPermissions(
+                    rawPermissions: "ptsdfsd",
+                    normalize: true),
+                new ArgumentException("s is not a valid SAS permission"));
         }
 
         private ShareSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath, TestConstants constants, string shareName, string filePath)

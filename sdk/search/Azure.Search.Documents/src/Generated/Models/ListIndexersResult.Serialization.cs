@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexer> array = new List<SearchIndexer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchIndexer.DeserializeSearchIndexer(item));
-                        }
+                        array.Add(SearchIndexer.DeserializeSearchIndexer(item));
                     }
                     value = array;
                     continue;

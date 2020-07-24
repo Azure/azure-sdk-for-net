@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class StopAnalyzer
     {
         /// <summary> A list of stopwords. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Stopwords { get; }
     }
 }

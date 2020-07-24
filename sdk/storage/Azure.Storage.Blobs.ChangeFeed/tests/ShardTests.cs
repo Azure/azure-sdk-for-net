@@ -66,8 +66,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Setup(r => r.BuildChunk(
                 It.IsAny<string>(),
-                It.IsAny<long?>(),
-                It.IsAny<long?>()))
+                It.IsAny<long>(),
+                It.IsAny<long>()))
                 .Returns(chunk.Object);
 
             chunk.Setup(r => r.BlockOffset).Returns(blockOffset);
@@ -166,8 +166,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Setup(r => r.BuildChunk(
                 It.IsAny<string>(),
-                It.IsAny<long?>(),
-                It.IsAny<long?>()))
+                It.IsAny<long>(),
+                It.IsAny<long>()))
                 .Returns(chunk.Object);
 
             chunk.Setup(r => r.HasNext()).Returns(false);
@@ -261,8 +261,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Setup(r => r.BuildChunk(
                 It.IsAny<string>(),
-                It.IsAny<long?>(),
-                It.IsAny<long?>()))
+                It.IsAny<long>(),
+                It.IsAny<long>()))
                 .Returns(chunk.Object);
 
             ShardFactory shardFactory = new ShardFactory(
@@ -352,8 +352,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Setup(r => r.BuildChunk(
                 It.IsAny<string>(),
-                It.IsAny<long?>(),
-                It.IsAny<long?>()))
+                It.IsAny<long>(),
+                It.IsAny<long>()))
                 .Returns(chunk.Object);
 
             chunk.Setup(r => r.HasNext()).Returns(true);
@@ -461,8 +461,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.SetupSequence(r => r.BuildChunk(
                 It.IsAny<string>(),
-                It.IsAny<long?>(),
-                It.IsAny<long?>()))
+                It.IsAny<long>(),
+                It.IsAny<long>()))
                 .Returns(chunks[0].Object)
                 .Returns(chunks[1].Object)
                 .Returns(chunks[2].Object)

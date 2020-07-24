@@ -110,7 +110,7 @@ namespace Azure.Identity.Tests
             var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
-                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, CredentialPipeline.GetInstance(null), mockMsalClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockMsalClient)
+                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, mockMsalClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
             );
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
