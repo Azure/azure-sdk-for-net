@@ -3097,6 +3097,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetPropertiesAsync_ContainerIdentitySAS()
         {
             BlobServiceClient oauthService = GetServiceClient_OauthAccount();
@@ -3261,6 +3262,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetPropertiesAsync_BlobIdentitySAS()
         {
             BlobServiceClient oauthService = GetServiceClient_OauthAccount();
@@ -3380,6 +3382,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetPropertiesAsync_SnapshotIdentitySAS()
         {
             BlobServiceClient oauthService = GetServiceClient_OauthAccount();

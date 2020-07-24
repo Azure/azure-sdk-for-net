@@ -11,7 +11,7 @@
         ],
         "x-ms-client-request-id": "00b89186-a1d4-71c8-7754-04d6be609494",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -26,7 +26,7 @@
         "x-ms-client-request-id": "00b89186-a1d4-71c8-7754-04d6be609494",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "e6aa42b5-401e-0028-4c52-382c08000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",

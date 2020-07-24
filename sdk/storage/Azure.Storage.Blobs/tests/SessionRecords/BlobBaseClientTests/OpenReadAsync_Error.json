@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "59741806-d3a7-61d7-52e1-ec45103d0deb",
         "x-ms-date": "Fri, 10 Jul 2020 02:39:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "59741806-d3a7-61d7-52e1-ec45103d0deb",
         "x-ms-request-id": "687bcfc3-d01e-00d0-0463-566ea2000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-date": "Fri, 10 Jul 2020 02:39:40 GMT",
         "x-ms-range": "bytes=0-4194303",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "7445bc15-56af-a316-68b5-398f5d1af14b",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "687bcfe6-d01e-00d0-1f63-566ea2000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -83,7 +83,7 @@
         "x-ms-client-request-id": "b3a8c196-5fc1-a10e-24ee-43ae38d1d08f",
         "x-ms-date": "Fri, 10 Jul 2020 02:39:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "b3a8c196-5fc1-a10e-24ee-43ae38d1d08f",
         "x-ms-request-id": "687bcffa-d01e-00d0-3263-566ea2000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     }

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "dcfc4294-5221-ab3b-68e9-29f03858ce34",
         "x-ms-date": "Fri, 03 Apr 2020 00:02:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "dcfc4294-5221-ab3b-68e9-29f03858ce34",
         "x-ms-request-id": "59b43f81-001e-0039-014b-09b6bc000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "329e1963-2cf9-240e-9a25-a03bbc4af4e8",
         "x-ms-date": "Fri, 03 Apr 2020 00:02:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ebynnskcuhoruvjecafqf\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-04-02T23:02:05.3847573Z\u003C/Start\u003E\u003CExpiry\u003E2020-04-03T01:02:05.3847573Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 200,
@@ -64,7 +64,7 @@
         ],
         "x-ms-client-request-id": "329e1963-2cf9-240e-9a25-a03bbc4af4e8",
         "x-ms-request-id": "59b43f98-001e-0039-124b-09b6bc000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "e27bfb37-f4b1-fe31-a16c-50a24f33a374",
         "x-ms-date": "Fri, 03 Apr 2020 00:02:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -103,7 +103,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "59b43fa3-001e-0039-1d4b-09b6bc000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     },
@@ -120,7 +120,7 @@
         "x-ms-client-request-id": "c0045785-11ce-3d37-710a-299af7ee57be",
         "x-ms-date": "Fri, 03 Apr 2020 00:02:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -137,7 +137,7 @@
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "c0045785-11ce-3d37-710a-299af7ee57be",
         "x-ms-request-id": "59b43fb4-001e-0039-2a4b-09b6bc000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ebynnskcuhoruvjecafqf\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-04-02T23:02:05.3847573Z\u003C/Start\u003E\u003CExpiry\u003E2020-04-03T01:02:05.3847573Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E"
     },
@@ -154,7 +154,7 @@
         "x-ms-client-request-id": "f71c50d2-e32f-50a5-51ae-61ad00902399",
         "x-ms-date": "Fri, 03 Apr 2020 00:02:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -167,7 +167,7 @@
         ],
         "x-ms-client-request-id": "f71c50d2-e32f-50a5-51ae-61ad00902399",
         "x-ms-request-id": "59b43fbf-001e-0039-324b-09b6bc000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     }

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "a5d4de22-9fe0-ab63-d343-58e59071e781",
         "x-ms-date": "Fri, 26 Jun 2020 01:35:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "a5d4de22-9fe0-ab63-d343-58e59071e781",
         "x-ms-request-id": "1a02607a-401a-0007-765a-4b21c3000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-date": "Fri, 26 Jun 2020 01:35:44 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "ccdd5855-9cfd-3799-b4ca-dde5409ae4a6",
         "x-ms-error-code": "InvalidQueryParameterValue",
         "x-ms-request-id": "1a02607d-401a-0007-775a-4b21c3000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidQueryParameterValue\u003C/Code\u003E\u003CMessage\u003EValue for one of the query parameters specified in the request URI is invalid.\n",
@@ -83,7 +83,7 @@
         "x-ms-date": "Fri, 26 Jun 2020 01:35:45 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -96,7 +96,7 @@
         ],
         "x-ms-client-request-id": "38904e29-1b94-0084-a5f1-3f404f84e845",
         "x-ms-request-id": "1a02607e-401a-0007-785a-4b21c3000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-version": "2020-02-10"
       },
       "ResponseBody": []
     }
