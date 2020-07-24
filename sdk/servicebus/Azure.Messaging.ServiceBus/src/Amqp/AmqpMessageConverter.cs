@@ -9,12 +9,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
+using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Primitives;
 using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
-using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -154,9 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body;
-            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
-            var amqpMessage = AmqpMessage.Create(new Data { Value = body });
+            var amqpMessage = sbMessage.ToAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
@@ -223,54 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
-            ServiceBusReceivedMessage sbMessage;
-
-            if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
-                && amqpMessage.ValueBody.Value != null)
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-
-                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out var dotNetObject))
-                {
-                    sbMessage.BodyObject = dotNetObject;
-                }
-                else
-                {
-                    sbMessage.BodyObject = amqpMessage.ValueBody.Value;
-                }
-            }
-            else if ((amqpMessage.BodyType & SectionFlag.Data) != 0
-                && amqpMessage.DataBody != null)
-            {
-                var dataSegments = new List<byte>();
-                foreach (var data in amqpMessage.DataBody)
-                {
-                    if (data.Value is byte[] byteArrayValue)
-                    {
-                        dataSegments.AddRange(byteArrayValue);
-                    }
-                    else if (data.Value is ArraySegment<byte> arraySegmentValue)
-                    {
-                        byte[] byteArray;
-                        if (arraySegmentValue.Count == arraySegmentValue.Array.Length)
-                        {
-                            byteArray = arraySegmentValue.Array;
-                        }
-                        else
-                        {
-                            byteArray = new byte[arraySegmentValue.Count];
-                            Array.ConstrainedCopy(arraySegmentValue.Array, arraySegmentValue.Offset, byteArray, 0, arraySegmentValue.Count);
-                        }
-                        dataSegments.AddRange(byteArray);
-                    }
-                }
-                sbMessage = new ServiceBusReceivedMessage(dataSegments.ToArray());
-            }
-            else
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-            }
-
+            ServiceBusReceivedMessage sbMessage = amqpMessage.ToServiceBusReceivedMessage();
             var sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {

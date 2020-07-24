@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
@@ -27,8 +26,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new message.
         /// </summary>
-        public ServiceBusMessage()
-            : this(default(ReadOnlyMemory<byte>))
+        public ServiceBusMessage() :
+            this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -46,10 +45,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
+            this(BinaryData.FromMemory(body))
         {
-            Body = BinaryData.FromMemory(body);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            Body = receivedMessage.Body;
+            Body = receivedMessage.SentMessage.Body;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
             Label = receivedMessage.Label;
