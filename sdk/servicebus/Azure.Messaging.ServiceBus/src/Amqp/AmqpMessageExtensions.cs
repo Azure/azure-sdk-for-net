@@ -86,7 +86,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data) =>
             new ServiceBusMessage(BinaryData.FromMemory(ConvertAndFlattenData(data) ?? ReadOnlyMemory<byte>.Empty));
 
-        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message) =>
-            new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(GetDataViaDataBody(message)) };
+        public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
+        {
+            if ((message.BodyType & SectionFlag.Data) != 0 && message.DataBody != null)
+            {
+                return new ServiceBusReceivedMessage { SentMessage = CreateAmqpDataMessage(GetDataViaDataBody(message)) };
+            }
+
+            return new ServiceBusReceivedMessage();
+        }
     }
 }
