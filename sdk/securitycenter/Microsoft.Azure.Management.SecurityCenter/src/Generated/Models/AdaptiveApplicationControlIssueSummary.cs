@@ -14,30 +14,30 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a summary of the alerts of the VM/server group
+    /// Represents a summary of the alerts of the machine group
     /// </summary>
-    public partial class AppWhitelistingIssueSummary
+    public partial class AdaptiveApplicationControlIssueSummary
     {
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingIssueSummary
-        /// class.
+        /// Initializes a new instance of the
+        /// AdaptiveApplicationControlIssueSummary class.
         /// </summary>
-        public AppWhitelistingIssueSummary()
+        public AdaptiveApplicationControlIssueSummary()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingIssueSummary
-        /// class.
+        /// Initializes a new instance of the
+        /// AdaptiveApplicationControlIssueSummary class.
         /// </summary>
         /// <param name="issue">Possible values include: 'ViolationsAudited',
         /// 'ViolationsBlocked', 'MsiAndScriptViolationsAudited',
         /// 'MsiAndScriptViolationsBlocked', 'ExecutableViolationsAudited',
         /// 'RulesViolatedManually'</param>
-        /// <param name="numberOfVms">The number of machines in the VM/server
-        /// group that have this alert</param>
-        public AppWhitelistingIssueSummary(string issue = default(string), double? numberOfVms = default(double?))
+        /// <param name="numberOfVms">The number of machines in the group that
+        /// have this alert</param>
+        public AdaptiveApplicationControlIssueSummary(string issue = default(string), double? numberOfVms = default(double?))
         {
             Issue = issue;
             NumberOfVms = numberOfVms;
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Security.Models
         public string Issue { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of machines in the VM/server group that
-        /// have this alert
+        /// Gets or sets the number of machines in the group that have this
+        /// alert
         /// </summary>
         [JsonProperty(PropertyName = "numberOfVms")]
         public double? NumberOfVms { get; set; }
