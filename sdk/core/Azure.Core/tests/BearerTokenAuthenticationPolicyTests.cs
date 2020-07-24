@@ -158,21 +158,19 @@ namespace Azure.Core.Tests
         public async Task BearerTokenAuthenticationPolicy_SucceededFailedSucceeded()
         {
             var requestMre = new ManualResetEventSlim(false);
-            var responseMre = new ManualResetEventSlim(false);
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
             {
                 Interlocked.Increment(ref callCount);
                 var offsetTime = DateTimeOffset.UtcNow;
                 requestMre.Set();
-                responseMre.Wait(c);
 
                 return callCount == 2
                     ? throw new InvalidOperationException("Call Failed")
                     : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
             }, IsAsync);
 
-            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(30));
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
 
             var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/1"));
@@ -180,30 +178,25 @@ namespace Azure.Core.Tests
 
             requestMre.Wait();
             await Task.Delay(200);
-            responseMre.Set();
 
             await Task.WhenAll(firstRequestTask, secondRequestTask);
             await Task.Delay(1000);
 
             Assert.AreEqual(1, callCount);
-            responseMre.Reset();
             requestMre.Reset();
 
             var failedTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/failed"));
             requestMre.Wait();
-            responseMre.Set();
 
             Assert.AreEqual(2, callCount);
             Assert.ThrowsAsync<InvalidOperationException>(async () => await failedTask);
 
-            responseMre.Reset();
             requestMre.Reset();
 
             firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/4"));
             secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/5"));
 
             requestMre.Wait();
-            responseMre.Set();
 
             await Task.WhenAll(firstRequestTask, secondRequestTask);
 
