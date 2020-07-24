@@ -42,7 +42,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
         {
-            await ProcessInternal(message, true);
+            await ProcessInternal(message, true).ConfigureAwait(false);
         }
 
         private async ValueTask ProcessInternal(HttpMessage message, bool async)
