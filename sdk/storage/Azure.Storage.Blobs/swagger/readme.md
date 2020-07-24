@@ -1433,6 +1433,8 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}?comp=query"]
   transform: >
+    $.post.responses["200"]["x-az-stream"] = true;
+    $.post.responses["206"]["x-az-stream"] = true;
     $.post.responses.default = {
         "description": "Failure",
         "x-az-response-name": "FailureNoContent",
