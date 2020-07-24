@@ -1379,6 +1379,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
+            /// <param name="forceFlag">Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
@@ -1415,6 +1416,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 int? maxRecords = default,
                 string continuation = default,
+                bool? forceFlag = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
                 bool? close = default,
@@ -1455,6 +1457,7 @@ namespace Azure.Storage.Files.DataLake
                         timeout,
                         maxRecords,
                         continuation,
+                        forceFlag,
                         position,
                         retainUncommittedData,
                         close,
@@ -1516,6 +1519,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
+            /// <param name="forceFlag">Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
@@ -1548,6 +1552,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 int? maxRecords = default,
                 string continuation = default,
+                bool? forceFlag = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
                 bool? close = default,
@@ -1595,6 +1600,11 @@ namespace Azure.Storage.Files.DataLake
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (maxRecords != null) { _request.Uri.AppendQuery("maxRecords", maxRecords.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
+                if (forceFlag != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Uri.AppendQuery("forceFlag", forceFlag.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
                 if (position != null) { _request.Uri.AppendQuery("position", position.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (retainUncommittedData != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -3032,6 +3042,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
+            /// <param name="forceFlag">Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this.</param>
             /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -3047,6 +3058,7 @@ namespace Azure.Storage.Files.DataLake
                 string version,
                 int? timeout = default,
                 string continuation = default,
+                bool? forceFlag = default,
                 int? maxRecords = default,
                 string acl = default,
                 string requestId = default,
@@ -3066,6 +3078,7 @@ namespace Azure.Storage.Files.DataLake
                         version,
                         timeout,
                         continuation,
+                        forceFlag,
                         maxRecords,
                         acl,
                         requestId))
@@ -3106,6 +3119,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
+            /// <param name="forceFlag">Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this.</param>
             /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -3117,6 +3131,7 @@ namespace Azure.Storage.Files.DataLake
                 string version,
                 int? timeout = default,
                 string continuation = default,
+                bool? forceFlag = default,
                 int? maxRecords = default,
                 string acl = default,
                 string requestId = default)
@@ -3142,6 +3157,11 @@ namespace Azure.Storage.Files.DataLake
                 _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode));
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
+                if (forceFlag != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Uri.AppendQuery("forceFlag", forceFlag.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
                 if (maxRecords != null) { _request.Uri.AppendQuery("maxRecords", maxRecords.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
