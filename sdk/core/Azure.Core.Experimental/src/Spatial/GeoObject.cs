@@ -17,6 +17,7 @@ namespace Azure.Core.GeoJson
     public abstract class GeoObject
     {
         internal static readonly IReadOnlyDictionary<string, object?> DefaultProperties = new ReadOnlyDictionary<string, object?>(new Dictionary<string, object?>());
+        private string? _serialized;
 
         /// <summary>
         /// Initializes a new instance of <see cref="GeoObject"/>.
@@ -47,10 +48,15 @@ namespace Azure.Core.GeoJson
         /// <returns></returns>
         public override string ToString()
         {
-            using MemoryStream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            GeoJsonConverter.Write(writer, this);
-            return Encoding.UTF8.GetString(stream.ToArray());
+            if (_serialized == null)
+            {
+                using MemoryStream stream = new MemoryStream();
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                GeoJsonConverter.Write(writer, this);
+                _serialized = Encoding.UTF8.GetString(stream.ToArray());
+            }
+
+            return _serialized;
         }
 
         /// <summary>
