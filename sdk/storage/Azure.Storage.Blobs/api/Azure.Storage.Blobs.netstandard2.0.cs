@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_12_12) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_02_10) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -47,6 +47,7 @@ namespace Azure.Storage.Blobs
             V2019_02_02 = 1,
             V2019_07_07 = 2,
             V2019_12_12 = 3,
+            V2020_02_10 = 4,
         }
     }
     public partial class BlobContainerClient
@@ -1319,7 +1320,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_12_12) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_02_10) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
