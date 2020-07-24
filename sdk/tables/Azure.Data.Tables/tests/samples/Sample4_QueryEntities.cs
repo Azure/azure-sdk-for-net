@@ -63,22 +63,21 @@ namespace Azure.Data.Tables.Samples
                     Console.WriteLine(qEntity["Product"]);
                 }
 
-                Console.WriteLine($"The results total {queryResults.Count()} that matched the query requirements.");
+                Console.WriteLine($"The query returned {queryResults.Count()} entities.");
                 #endregion
 
                 #region Snippet:TablesSample4QueryEntitiesExpressionTree
-                // Define an expression tree for filtering entities.
+                // Use the <see cref="TableClient"> to query the table using a filter expression.
                 double priceCutOff = 6.00;
-                Expression<Func<OfficeSupplyEntity, bool>> gtPrice = ent => ent.Price >= priceCutOff;
-
-                // Use the <see cref="TableClient"> to query the table and pass in the expression tree.
-                Pageable<OfficeSupplyEntity> queryResultsLINQ = client.Query(gtPrice);
+                Pageable<OfficeSupplyEntity> queryResultsLINQ = client.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 
                 // Iterate the <see cref="Pageable"> in order to access individual queried entities.
                 foreach (OfficeSupplyEntity qEntity in queryResultsLINQ)
                 {
                     Console.WriteLine($"{qEntity.Product}: ${qEntity.Price}");
                 }
+
+                Console.WriteLine($"The LINQ query returned {queryResultsLINQ.Count()} entities.");
                 #endregion
             }
             finally

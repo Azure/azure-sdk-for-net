@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
+            await serviceClient.CreateTableAsync(tableName);
 
             try
             {
@@ -44,7 +44,7 @@ namespace Azure.Data.Tables.Samples
                     {"Product", "Markers" },
                     {"Price", 5.00 },
                 };
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity);
 
                 var entity2 = new Dictionary<string, object>
                 {
@@ -53,39 +53,42 @@ namespace Azure.Data.Tables.Samples
                     {"Product", "Chair" },
                     {"Price", 7.00 },
                 };
-                await client.CreateEntityAsync(entity2).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity2);
 
                 #region Snippet:TablesSample4QueryEntitiesAsync
                 // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
-                List<IDictionary<string, object>> queryResults = await client.QueryAsync(filter: $"PartitionKey eq '{partitionKey}'").ToEnumerableAsync().ConfigureAwait(false);
+                AsyncPageable<IDictionary<string, object>> queryResults = client.QueryAsync(filter: $"PartitionKey eq '{partitionKey}'");
+                int count = 0;
 
                 // Iterate the list in order to access individual queried entities.
-                foreach (IDictionary<string, object> qEntity in queryResults)
+                await foreach (IDictionary<string, object> qEntity in queryResults)
                 {
                     Console.WriteLine(qEntity["Product"]);
+                    count++;
                 }
 
-                Console.WriteLine($"The results total {queryResults.Count} that matched the query requirements.");
+                Console.WriteLine($"The query returned {count} entities.");
                 #endregion
 
                 #region Snippet:TablesSample4QueryEntitiesExpressionTreeAsync
-                // Define an expression tree for filtering entities.
-                double priceCutOff = 6.00;
-                Expression<Func<OfficeSupplyEntity, bool>> gtPrice = ent => ent.Price >= priceCutOff;
-
                 // Use the <see cref="TableClient"> to query the table and pass in expression tree.
-                List<OfficeSupplyEntity> queryResultsLINQ = await client.QueryAsync(gtPrice).ToEnumerableAsync().ConfigureAwait(false);
+                double priceCutOff = 6.00;
+                AsyncPageable<OfficeSupplyEntity> queryResultsLINQ = client.QueryAsync<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+                count = 0;
 
                 // Iterate the <see cref="Pageable"> in order to access individual queried entities.
-                foreach (OfficeSupplyEntity qEntity in queryResultsLINQ)
+                await foreach (OfficeSupplyEntity qEntity in queryResultsLINQ)
                 {
                     Console.WriteLine($"{qEntity.Product}: ${qEntity.Price}");
+                    count++;
                 }
+
+                Console.WriteLine($"The LINQ query returned {count} entities.");
                 #endregion
             }
             finally
             {
-                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
+                await serviceClient.DeleteTableAsync(tableName);
             }
         }
     }

@@ -28,7 +28,7 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
+            await serviceClient.CreateTableAsync(tableName);
 
             try
             {
@@ -46,7 +46,7 @@ namespace Azure.Data.Tables.Samples
                 };
 
                 // Insert the newly created entity.
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity);
                 #endregion
 
                 #region Snippet:TablesSample2CreateStronglyTypedEntityAsync
@@ -60,18 +60,18 @@ namespace Azure.Data.Tables.Samples
                 };
 
                 // Insert the newly created entity.
-                await client.CreateEntityAsync(strongEntity).ConfigureAwait(false);
+                await client.CreateEntityAsync(strongEntity);
                 #endregion
 
                 #region Snippet:TablesSample2DeleteEntityAsync
                 // Delete the entity given the partition and row key.
-                await client.DeleteAsync(partitionKey, rowKey).ConfigureAwait(false);
+                await client.DeleteAsync(partitionKey, rowKey);
                 #endregion
 
             }
             finally
             {
-                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
+                await serviceClient.DeleteTableAsync(tableName);
             }
         }
     }

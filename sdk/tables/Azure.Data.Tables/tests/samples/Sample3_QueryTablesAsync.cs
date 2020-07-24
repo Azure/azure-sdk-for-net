@@ -19,21 +19,23 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies3p2A";
-            string table2Name = "OfficeSupplies3p2B";
+            string tableName = "OfficeSupplies3p2";
+            char label = 'A';
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
-            await serviceClient.CreateTableAsync(table2Name).ConfigureAwait(false);
+            for (int i = 0; i < 10; i++)
+            {
+                await serviceClient.CreateTableAsync(tableName + (char)(label + i));
+            }
 
             try
             {
-                #region Snippet:TablesSample4QueryEntitiesAsync
+                #region Snippet:TablesSample3QueryTablesAsync
                 // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
-                AsyncPageable<TableItem> queryTableResults = serviceClient.GetTablesAsync();
+                AsyncPageable<TableItem> queryTableResults = serviceClient.GetTablesAsync(filter: $"TableName gt '{tableName + (char)(label + 4)}'");
 
                 Console.WriteLine("The following are the names of the tables in the query results:");
 
@@ -46,8 +48,10 @@ namespace Azure.Data.Tables.Samples
             }
             finally
             {
-                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
-                await serviceClient.DeleteTableAsync(table2Name).ConfigureAwait(false);
+                for (int i = 0; i < 10; i++)
+                {
+                    await serviceClient.DeleteTableAsync(tableName + (char)(label + i));
+                }
             }
         }
     }

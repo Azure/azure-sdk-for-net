@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Samples
             {
                 #region Snippet:TablesSample1CreateTableAsync
                 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-                TableItem table = await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
+                TableItem table = await serviceClient.CreateTableAsync(tableName);
                 Console.WriteLine($"The created table's name is {table.TableName}.");
                 #endregion
             }
@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Samples
             {
                 #region Snippet:TablesSample1DeleteTableAsync
                 // Deletes the table made previously.
-                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
+                await serviceClient.DeleteTableAsync(tableName);
                 #endregion
             }
         }

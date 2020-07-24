@@ -44,23 +44,23 @@ namespace Azure.Data.Tables.Samples
                     {"Brand", "myCompany" }
                 };
 
-                // Entity doesn't exist in table, so invoking Upsert will simply insert the entity.
+                // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
                 client.UpsertEntity(entity);
 
                 // Delete an entity property.
                 entity.Remove("Brand");
 
-                // Entity does exist in the table, so invoking Upsert will replace it with the changed entity and delete the "Brand" property.
+                // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode (which defaults to Merge if not given).
+                // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
                 client.UpsertEntity(entity, UpdateMode.Replace);
                 #endregion
 
                 #region Snippet:TablesSample5UpdateEntity
                 // Query for entities to update.
-                Pageable<IDictionary<string, object>> queryResultsBefore = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+                Pageable<IDictionary<string, object>> queryResultsBefore = client.Query();
 
                 foreach (IDictionary<string, object> qEntity in queryResultsBefore)
                 {
-                    Console.WriteLine($"The price of {qEntity["Product"]} before updating: ${qEntity["Price"]}");
                     // Changing property of entity.
                     qEntity["Price"] = 7.00;
 
@@ -68,14 +68,16 @@ namespace Azure.Data.Tables.Samples
                     string eTag = qEntity["odata.etag"] as string;
 
                     // Updating to changed entity using its generated eTag.
-                    client.UpdateEntity(qEntity, qEntity["odata.etag"] as string);
+                    // Since no UpdateMode was passed, the request will default to Merge.
+                    client.UpdateEntity(qEntity, eTag);
                 }
                 #endregion
 
-                Pageable<IDictionary<string, object>> queryResultsAfter = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+                Pageable<IDictionary<string, object>> queryResultsAfter = client.Query();
                 foreach (IDictionary<string, object> qEntity in queryResultsAfter)
                 {
-                    Console.WriteLine($"The price of {qEntity["Product"]} after updating: ${qEntity["Price"]}");
+                    Console.WriteLine($"'Price' before updating: ${entity["Price"]}");
+                    Console.WriteLine($"'Price' after updating: ${qEntity["Price"]}");
                 }
             }
             finally
