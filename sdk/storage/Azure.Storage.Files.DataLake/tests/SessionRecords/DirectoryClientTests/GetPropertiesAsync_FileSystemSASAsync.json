@@ -66,7 +66,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-21255e8f-c1c9-629d-8458-11c0d98e1f66/test-directory-905b17e6-df95-d9a2-7bc0-f6626cd50bb2?sv=2019-12-12\u0026st=2020-06-01T19%3A25%3A09Z\u0026se=2020-06-01T21%3A25%3A09Z\u0026sr=c\u0026sp=racwdl\u0026sig=Sanitized",
+      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-21255e8f-c1c9-629d-8458-11c0d98e1f66/test-directory-905b17e6-df95-d9a2-7bc0-f6626cd50bb2?sv=2020-02-10\u0026st=2020-06-01T19%3A25%3A09Z\u0026se=2020-06-01T21%3A25%3A09Z\u0026sr=c\u0026sp=racwdl\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "traceparent": "00-8cc7ed70b0f71941b474c9f35340ff5e-b129715c35915642-00",

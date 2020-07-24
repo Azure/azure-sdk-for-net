@@ -33,7 +33,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-a63fee9e-918e-5eee-7d8f-74431ff2b108?sv=2019-12-12\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A40Z\u0026se=2020-06-01T21%3A26%3A40Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-a63fee9e-918e-5eee-7d8f-74431ff2b108?sv=2020-02-10\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A40Z\u0026se=2020-06-01T21%3A26%3A40Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "traceparent": "00-859452a669b86e47bbf1a7c3b6bd4162-d5dfd62eb050cc41-00",

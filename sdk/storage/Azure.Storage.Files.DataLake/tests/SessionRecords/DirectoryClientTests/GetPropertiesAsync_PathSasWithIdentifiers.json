@@ -100,7 +100,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1cd564e9-03b1-f859-cf9b-74cc7baade14/test-directory-35fb97e1-01f8-6170-e02f-80d938fc3a1f?sv=2019-12-12\u0026si=snvjyjmoccwugqaqsuwj\u0026sr=c\u0026sig=Sanitized",
+      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1cd564e9-03b1-f859-cf9b-74cc7baade14/test-directory-35fb97e1-01f8-6170-e02f-80d938fc3a1f?sv=2020-02-10\u0026si=snvjyjmoccwugqaqsuwj\u0026sr=c\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "User-Agent": [

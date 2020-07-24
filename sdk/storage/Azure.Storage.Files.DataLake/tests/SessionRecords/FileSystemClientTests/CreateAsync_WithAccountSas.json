@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1ac298f5-7d99-aa2e-b486-8c52033ee8db?sv=2019-12-12\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A39Z\u0026se=2020-06-01T21%3A26%3A39Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1ac298f5-7d99-aa2e-b486-8c52033ee8db?sv=2020-02-10\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A39Z\u0026se=2020-06-01T21%3A26%3A39Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-a41961647e4f624c9e391705c0a29b1b-2dd681180e16d749-00",
@@ -31,7 +31,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1ac298f5-7d99-aa2e-b486-8c52033ee8db?sv=2019-12-12\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A39Z\u0026se=2020-06-01T21%3A26%3A39Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seannsecanary.blob.core.windows.net/test-filesystem-1ac298f5-7d99-aa2e-b486-8c52033ee8db?sv=2020-02-10\u0026ss=b\u0026srt=sco\u0026st=2020-06-01T19%3A26%3A39Z\u0026se=2020-06-01T21%3A26%3A39Z\u0026sp=rwdlac\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "traceparent": "00-a6883abf5db2254b9a9a23f093df95a5-919ce9e8a559894d-00",

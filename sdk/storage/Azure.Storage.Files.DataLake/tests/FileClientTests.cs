@@ -756,6 +756,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetAccessControlAsync_FileSystemIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -835,6 +836,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetAccessControlAsync_PathIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -1142,6 +1144,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetPropertiesAsync_FileSystemIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -1205,6 +1208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("TODO re-enabled before merge - https://github.com/Azure/azure-sdk-for-net/issues/13705")]
         public async Task GetPropertiesAsync_PathIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
