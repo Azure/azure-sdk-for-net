@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormField
     {
-        internal FormField(string name, int pageNumber, KeyValuePair_internal field, IReadOnlyList<ReadResult_internal> readResults)
+        internal FormField(string name, int pageNumber, KeyValuePair field, IReadOnlyList<ReadResult> readResults)
         {
             Confidence = field.Confidence;
             Name = name;
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
-        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
         {
             Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public float Confidence { get; }
 
-        internal static IReadOnlyList<FormElement> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<FormElement> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult> readResults)
         {
             List<FormElement> FormElement = new List<FormElement>();
             foreach (var reference in references)
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Models
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        private static FormElement ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        private static FormElement ResolveTextReference(IReadOnlyList<ReadResult> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363

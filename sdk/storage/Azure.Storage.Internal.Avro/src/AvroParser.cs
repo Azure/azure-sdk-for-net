@@ -95,12 +95,9 @@ namespace Azure.Storage.Internal.Avro
         {
             byte b = await ReadByteAsync(stream, async, cancellationToken).ConfigureAwait(false);
 
-            if (b == 1)
+            if (b != 0)
                 return true;
-            else if (b == 0)
-                return false;
-            else
-                throw new InvalidOperationException("Byte was not a bool.");
+            return false;
         }
 
         /// <summary>
@@ -197,12 +194,8 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
-            #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-            #pragma warning disable AZC0108 // Incorrect 'async' parameter value.
             Func<Stream, bool, CancellationToken, Task<KeyValuePair<string, T>>> parsePair =
-                async (s, a, c) => await ReadMapPairAsync(s, parseItemAsync, a, c).ConfigureAwait(false);
-            #pragma warning restore AZC0108 // Incorrect 'async' parameter value.
-            #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                async (s, async, cancellationToken) => await ReadMapPairAsync(s, parseItemAsync, async, cancellationToken).ConfigureAwait(false);
             IEnumerable<KeyValuePair<string, T>> entries =
                 await ReadArrayAsync(stream, parsePair, async, cancellationToken).ConfigureAwait(false);
             return entries.ToDictionary();

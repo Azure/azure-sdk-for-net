@@ -2,6 +2,10 @@
 
 ## 1.0.0-preview.5 (Unreleased)
 
+### Breaking changes
+
+- Property `Type` renamed to `ValueType` on `FieldValue`.
+
 ### Fixes
 
 - Constructor in `TrainingFileFilter` made public.

@@ -7,7 +7,7 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp5.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <!-- NET5 has more culture-specific overloads but we can't use them everywhere  -->
@@ -21,6 +21,7 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>

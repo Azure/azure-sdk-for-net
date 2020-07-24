@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Xml.Linq;
 
 namespace Azure.Messaging.ServiceBus.Management
@@ -16,9 +17,15 @@ namespace Azure.Messaging.ServiceBus.Management
         {
         }
 
+        internal abstract AuthorizationRule Clone();
+
         /// <summary>Gets or sets the claim type.</summary>
         /// <value>The claim type.</value>
         public abstract string ClaimType { get; }
+
+        /// <summary>Gets or sets the claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</summary>
+        /// <value>The claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</value>
+        internal abstract string ClaimValue { get; }
 
         /// <summary>Gets or sets the list of rights.</summary>
         /// <value>The list of rights.</value>
@@ -36,10 +43,6 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>Gets or sets the date and time when the authorization rule was modified.</summary>
         /// <value>The date and time when the authorization rule was modified.</value>
         public DateTimeOffset ModifiedTime { get; internal set; }
-
-        /// <summary>Gets or sets the claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</summary>
-        /// <value>The claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</value>
-        internal abstract string ClaimValue { get; }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public abstract bool Equals(AuthorizationRule other);

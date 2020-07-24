@@ -81,7 +81,7 @@ namespace Azure.Core.Pipeline
                     }
                     else
                     {
-                        CopyTo(responseContentStream, bufferedStream, message.CancellationToken);
+                        CopyTo(responseContentStream, bufferedStream, cts);
                     }
 
                     responseContentStream.Dispose();
@@ -121,7 +121,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
+        private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
         {
             byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
             try
@@ -129,12 +129,14 @@ namespace Azure.Core.Pipeline
                 int read;
                 while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    cancellationTokenSource.CancelAfter(_networkTimeout);
                     destination.Write(buffer, 0, read);
                 }
             }
             finally
             {
+                cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }

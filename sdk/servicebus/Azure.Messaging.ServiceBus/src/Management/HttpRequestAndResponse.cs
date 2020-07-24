@@ -5,11 +5,9 @@ using System.IO;
 using Azure.Core;
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Primitives;
 using Azure.Core.Pipeline;
@@ -24,107 +22,100 @@ namespace Azure.Messaging.ServiceBus.Management
         private readonly string _fullyQualifiedNamespace;
         private readonly TokenCredential _tokenCredential;
         private readonly int _port;
+        private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
         /// Initializes a new <see cref="HttpRequestAndResponse"/> which can be used to send http request and response.
         /// </summary>
         public HttpRequestAndResponse(
             HttpPipeline pipeline,
+            ClientDiagnostics diagnostics,
             TokenCredential tokenCredential,
-            string fullyQualifiedNamespace
-            )
+            string fullyQualifiedNamespace)
         {
             _pipeline = pipeline;
+            _diagnostics = diagnostics;
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _port = GetPort(_fullyQualifiedNamespace);
         }
-        private static async Task<Exception> ValidateHttpResponse(Response response, Request request)
+
+
+        internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
             {
-                return null;
+                return;
             }
-
-            string exceptionMessage = string.Empty;
-            if (response.ContentStream != null)
-            {
-                exceptionMessage = await ReadAsString(response).ConfigureAwait(false);
-            }
-            exceptionMessage = ParseDetailIfAvailable(exceptionMessage) ?? response.ReasonPhrase;
-
+            RequestFailedException ex = await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             if (response.Status == (int)HttpStatusCode.Unauthorized)
             {
-                return new ServiceBusException(exceptionMessage, ServiceBusException.FailureReason.Unauthorized);
+                throw new ServiceBusException(
+                    ex.Message,
+                    ServiceBusException.FailureReason.Unauthorized,
+                    innerException: ex);
             }
 
-            if (response.Status == (int)HttpStatusCode.NotFound || response.Status == (int)HttpStatusCode.NoContent)
+            if (response.Status == (int)HttpStatusCode.NotFound)
             {
-                return new ServiceBusException(exceptionMessage, ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException(
+                    ex.Message,
+                    ServiceBusException.FailureReason.MessagingEntityNotFound,
+                    innerException: ex);
             }
 
             if (response.Status == (int)HttpStatusCode.Conflict)
             {
                 if (request.Method.Equals(RequestMethod.Delete))
                 {
-                    return new ServiceBusException(true, exceptionMessage);
+                    throw new ServiceBusException(true, ex.Message, innerException: ex);
                 }
 
                 if (request.Method.Equals(RequestMethod.Put) && request.Headers.TryGetValue("If-Match", out _))
                 {
                     // response.RequestMessage.Headers.IfMatch.Count > 0 is true for UpdateEntity scenario
-                    return new ServiceBusException(true, exceptionMessage);
+                    throw new ServiceBusException(
+                        true,
+                        ex.Message,
+                        innerException: ex);
                 }
 
-                if (exceptionMessage.Contains(ManagementClientConstants.ConflictOperationInProgressSubCode))
-                {
-                    return new ServiceBusException(true, exceptionMessage);
-                }
-
-                return new ServiceBusException(exceptionMessage, ServiceBusException.FailureReason.MessagingEntityAlreadyExists);
+                throw new ServiceBusException(
+                    ex.Message,
+                    ServiceBusException.FailureReason.MessagingEntityAlreadyExists,
+                    innerException: ex);
             }
 
             if (response.Status == (int)HttpStatusCode.Forbidden)
             {
-                if (exceptionMessage.Contains(ManagementClientConstants.ForbiddenInvalidOperationSubCode))
+                if (ex.Message.Contains(ManagementClientConstants.ForbiddenInvalidOperationSubCode))
                 {
-                    return new InvalidOperationException(exceptionMessage);
+                    throw new InvalidOperationException(ex.Message, ex);
                 }
 
-                return new ServiceBusException(exceptionMessage, ServiceBusException.FailureReason.QuotaExceeded);
+                throw new ServiceBusException(
+                    ex.Message,
+                    ServiceBusException.FailureReason.QuotaExceeded,
+                    innerException: ex);
             }
 
             if (response.Status == (int)HttpStatusCode.BadRequest)
             {
-                return new ArgumentException(exceptionMessage);
+                throw new ArgumentException(ex.Message, ex);
             }
 
             if (response.Status == (int)HttpStatusCode.ServiceUnavailable)
             {
-                return new ServiceBusException(exceptionMessage, ServiceBusException.FailureReason.ServiceBusy);
+                throw new ServiceBusException(
+                    ex.Message,
+                    ServiceBusException.FailureReason.ServiceBusy,
+                    innerException: ex);
             }
 
-            return new ServiceBusException(true, exceptionMessage + "; response status code: " + response.Status);
-        }
-
-        private static string ParseDetailIfAvailable(string content)
-        {
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                return null;
-            }
-
-            try
-            {
-                var errorContentXml = XElement.Parse(content);
-                XElement detail = errorContentXml.Element("Detail");
-
-                return detail?.Value ?? content;
-            }
-            catch (Exception)
-            {
-                return content;
-            }
+            throw new ServiceBusException(
+                true,
+                $"{ex.Message}; response status code: {response.Status}",
+                innerException: ex);
         }
 
         private Task<string> GetToken(Uri requestUri) =>
@@ -284,25 +275,10 @@ namespace Azure.Messaging.ServiceBus.Management
             }
             request.Headers.Add("UserAgent", $"SERVICEBUS/{ManagementClientConstants.ApiVersion}(api-origin={ClientInfo.Framework};os={ClientInfo.Platform};version={ClientInfo.Version};product={ClientInfo.Product})");
 
-            Response response;
-            try
-            {
-                response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (HttpRequestException exception)
-            {
-                throw new ServiceBusException(true, exception.Message);
-            }
+            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            Exception exceptionReturned = await ValidateHttpResponse(response, request).ConfigureAwait(false);
-            if (exceptionReturned == null)
-            {
-                return response;
-            }
-            else
-            {
-                throw exceptionReturned;
-            }
+            await ThrowIfRequestFailedAsync(request, response).ConfigureAwait(false);
+            return response;
         }
 
         private static async Task<string> ReadAsString(Response response)

@@ -13,12 +13,12 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void CreateTable()
+        public void CreateDeleteTable()
         {
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSupplies1p1";
 
             #region Snippet:TablesSample1CreateClient
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.

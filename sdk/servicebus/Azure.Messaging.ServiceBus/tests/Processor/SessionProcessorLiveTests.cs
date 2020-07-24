@@ -1434,33 +1434,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, int> sessionDict = new ConcurrentDictionary<string, int>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += args =>
+                {
+                        // If the connection drops due to network flakiness
+                        // after the message is received but before we
+                        // complete it, we will get a session lock
+                        // lost exception. We are still able to verify
+                        // that the message will be completed eventually.
+                        var exception = (ServiceBusException)args.Exception;
+                    if (!(args.Exception is ServiceBusException sbEx) ||
+                    sbEx.Reason != ServiceBusException.FailureReason.SessionLockLost)
+                    {
+                        Assert.Fail(args.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                };
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
                     var sessionId = args.SessionId;
-                    try
+                    sessionDict.AddOrUpdate(
+                        sessionId,
+                        1,
+                        (key, value) => value + 1);
+                    Assert.LessOrEqual(sessionDict[sessionId], maxCallsPerSession);
+                    // add a small delay to help verify that no other threads
+                    // will be processing this session concurrently.
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await args.CompleteMessageAsync(args.Message);
+                    var ct = Interlocked.Increment(ref messageCt);
+                    if (ct == totalMessages)
                     {
-                        sessionDict.AddOrUpdate(
-                            sessionId,
-                            1,
-                            (key, value) => value + 1);
-                        Assert.LessOrEqual(sessionDict[sessionId], maxCallsPerSession);
-                        // add a small delay to help verify that no other threads
-                        // will be processing this session concurrently.
-                        await Task.Delay(TimeSpan.FromSeconds(2));
-                        await args.CompleteMessageAsync(args.Message);
+                        tcs.SetResult(true);
                     }
-                    finally
-                    {
-                        var ct = Interlocked.Increment(ref messageCt);
-                        if (ct == totalMessages)
-                        {
-                            tcs.SetResult(true);
-                        }
-                        sessionDict[sessionId]--;
-                    }
+                    sessionDict[sessionId]--;
                 }
                 await tcs.Task;
                 await processor.StopProcessingAsync();

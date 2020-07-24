@@ -12,12 +12,12 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CustomFormModel
     {
-        internal CustomFormModel(Model_internal model)
+        internal CustomFormModel(Model model)
         {
-            ModelId = model.ModelInfo.ModelId.ToString();
+            ModelId = model.ModelInfo.ModelId;
             Status = model.ModelInfo.Status;
-            TrainingStartedOn = model.ModelInfo.CreatedDateTime;
-            TrainingCompletedOn = model.ModelInfo.LastUpdatedDateTime;
+            TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
+            TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
             Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model model)
         {
             if (model.Keys != null)
                 return ConvertFromUnlabeled(model.Keys);
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Training
             return null;
         }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertFromUnlabeled(KeysResult_internal keys)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromUnlabeled(KeysResult keys)
         {
             var subModels = new List<CustomFormSubmodel>();
 
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Training
             return subModels;
         }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model)
         {
             var fieldMap = new Dictionary<string, CustomFormModelField>();
 
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Training
                     fieldMap)};
         }
 
-        private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult_internal trainResult)
+        private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
             if (trainResult?.TrainingDocuments != null)
@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Training
             return trainingDocs;
         }
 
-        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult_internal trainResult)
+        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult trainResult)
         {
             var errors = new List<FormRecognizerError>();
             foreach (var error in trainResult?.Errors)

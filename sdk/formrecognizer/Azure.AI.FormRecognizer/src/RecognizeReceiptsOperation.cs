@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 try
                 {
-                    Response<AnalyzeOperationResult_internal> update = async
+                    Response<AnalyzeOperationResult> update = async
                         ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> receipts = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
