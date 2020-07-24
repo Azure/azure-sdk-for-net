@@ -14,17 +14,17 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Tests.Models
 {
     /// <summary>
-    /// The suite of tests for the <see cref="Operation{T}"/> subclasses.
+    /// The suite of mock tests for the <see cref="Operation{T}"/> subclasses.
     /// </summary>
-    public class OperationsTests : ClientTestBase
+    public class OperationsMockTests : ClientTestBase
     {
         private string DiagnosticNamespace = "Azure.AI.FormRecognizer";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationsTests"/> class.
+        /// Initializes a new instance of the <see cref="OperationsMockTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsTests(bool isAsync) : base(isAsync)
+        public OperationsMockTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -123,7 +123,8 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""modelInfo"": {
-                        ""status"": ""creating""
+                        ""status"": ""creating"",
+                        ""modelId"": ""00000000-0000-0000-0000-000000000000""
                     }
                 }"));
 
