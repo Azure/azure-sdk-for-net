@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class DeviceStatistics
+    public partial class DevicesStatistics
     {
-        internal static DeviceStatistics DeserializeDeviceStatistics(JsonElement element)
+        internal static DevicesStatistics DeserializeDevicesStatistics(JsonElement element)
         {
             Optional<long> totalDeviceCount = default;
             Optional<long> enabledDeviceCount = default;
@@ -35,7 +35,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
+            return new DevicesStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
         }
     }
 }

@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary>
-    /// Device statistics.
+    /// Devices statistics.
     /// </summary>
     [CodeGenModel("RegistryStatistics")]
-    public partial class DeviceStatistics
+    public partial class DevicesStatistics
     {
     }
 }

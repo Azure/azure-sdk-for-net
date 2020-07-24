@@ -26,8 +26,9 @@ namespace Azure.Iot.Hub.Service.Tests
         {
             IoTHubServiceClient client = GetClient();
 
-            Response<DeviceStatistics> stat = await client.Statistics.GetDeviceStatisticsAsync();
+            Response<DevicesStatistics> stat = await client.Statistics.GetDeviceStatisticsAsync();
 
+            Assert.IsNotNull(stat.Value, "Statistics response should not be null");
             Assert.IsNotNull(stat.Value.TotalDeviceCount, "TotalDeviceCount should not be null");
             Assert.IsNotNull(stat.Value.EnabledDeviceCount, "EnabledDeviceCount should not be null");
             Assert.IsNotNull(stat.Value.DisabledDeviceCount, "DisabledDeviceCount should not be null");
@@ -40,6 +41,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             Response<ServiceStatistics> stat = await client.Statistics.GetServiceStatisticsAsync();
 
+            Assert.IsNotNull(stat.Value, "Statistics response should not be null");
             Assert.IsNotNull(stat.Value.ConnectedDeviceCount, "ConnectedDeviceCount should not be null");
         }
     }

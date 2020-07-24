@@ -33,21 +33,41 @@ namespace Azure.Iot.Hub.Service
             _statisticsRestClient = statisticsRestClient;
         }
 
-        public virtual Response<DeviceStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets devices statistics of the IoT Hub identity registry.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The device statistics of the IoT Hub.</returns>
+        public virtual Response<DevicesStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatistics(cancellationToken);
         }
 
-        public virtual Task<Response<DeviceStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets devices statistics of the IoT Hub identity registry.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The device statistics of the IoT Hub.</returns>
+        public virtual Task<Response<DevicesStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatisticsAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// Gets service statistics of the IoT Hub.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The service statistics of the IoT Hub.</returns>
         public virtual Response<ServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetServiceStatistics(cancellationToken);
         }
 
+        /// <summary>
+        /// Gets service statistics of the IoT Hub.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The service statistics of the IoT Hub.</returns>
         public virtual Task<Response<ServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetServiceStatisticsAsync(cancellationToken);
