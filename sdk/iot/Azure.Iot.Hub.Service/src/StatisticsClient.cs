@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,7 +13,7 @@ namespace Azure.Iot.Hub.Service
     /// </summary>
     public class StatisticsClient
     {
-        private StatisticsRestClient _statisticsRestClient = null;
+        private readonly StatisticsRestClient _statisticsRestClient = null;
 
         /// <summary>
         /// Initializes a new instance of StatisticsClient.
@@ -36,12 +33,12 @@ namespace Azure.Iot.Hub.Service
             _statisticsRestClient = statisticsRestClient;
         }
 
-        public virtual Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
+        public virtual Response<DeviceStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatistics(cancellationToken);
         }
 
-        public virtual Task<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<DeviceStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatisticsAsync(cancellationToken);
         }

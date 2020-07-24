@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class RegistryStatistics
+    public partial class DeviceStatistics
     {
-        internal static RegistryStatistics DeserializeRegistryStatistics(JsonElement element)
+        internal static DeviceStatistics DeserializeDeviceStatistics(JsonElement element)
         {
             Optional<long> totalDeviceCount = default;
             Optional<long> enabledDeviceCount = default;
@@ -35,7 +35,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new RegistryStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
+            return new DeviceStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
         }
     }
 }
