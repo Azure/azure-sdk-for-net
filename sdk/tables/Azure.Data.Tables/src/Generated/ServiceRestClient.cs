@@ -222,7 +222,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableServiceStats, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, requestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -231,11 +231,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        TableServiceStats value = default;
+                        TableServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = TableServiceStats.DeserializeTableServiceStats(storageServiceStatsElement);
+                            value = TableServiceStatistics.DeserializeTableServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -248,7 +248,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableServiceStats, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, requestId);
             _pipeline.Send(message, cancellationToken);
@@ -257,11 +257,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        TableServiceStats value = default;
+                        TableServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = TableServiceStats.DeserializeTableServiceStats(storageServiceStatsElement);
+                            value = TableServiceStatistics.DeserializeTableServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

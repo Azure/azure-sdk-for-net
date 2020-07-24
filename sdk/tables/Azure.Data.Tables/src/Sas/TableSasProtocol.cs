@@ -7,7 +7,7 @@ namespace Azure.Data.Tables.Sas
     /// Defines the protocols permitted for Storage requests made with a shared
     /// access signature.
     /// </summary>
-    public enum SasProtocol
+    public enum TableSasProtocol
     {
         /// <summary>
         /// No protocol has been specified. If no value is specified,

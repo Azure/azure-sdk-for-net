@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class AccessPolicy : IXmlSerializable
+    public partial class TableAccessPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             writer.WriteStartElement("Start");
-            writer.WriteValue(Start, "O");
+            writer.WriteValue(StartsOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("Expiry");
-            writer.WriteValue(Expiry, "O");
+            writer.WriteValue(ExpiresOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("Permission");
             writer.WriteValue(Permission);
@@ -29,24 +29,24 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static AccessPolicy DeserializeAccessPolicy(XElement element)
+        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element)
         {
-            DateTimeOffset start = default;
-            DateTimeOffset expiry = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset expiresOn = default;
             string permission = default;
             if (element.Element("Start") is XElement startElement)
             {
-                start = startElement.GetDateTimeOffsetValue("O");
+                startsOn = startElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Expiry") is XElement expiryElement)
             {
-                expiry = expiryElement.GetDateTimeOffsetValue("O");
+                expiresOn = expiryElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Permission") is XElement permissionElement)
             {
                 permission = (string)permissionElement;
             }
-            return new AccessPolicy(start, expiry, permission);
+            return new TableAccessPolicy(startsOn, expiresOn, permission);
         }
     }
 }

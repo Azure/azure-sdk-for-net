@@ -15,7 +15,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of SignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
-        public SignedIdentifier(string id, AccessPolicy accessPolicy)
+        public SignedIdentifier(string id, TableAccessPolicy accessPolicy)
         {
             if (id == null)
             {
@@ -33,6 +33,6 @@ namespace Azure.Data.Tables.Models
         /// <summary> A unique id. </summary>
         public string Id { get; set; }
         /// <summary> The access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public TableAccessPolicy AccessPolicy { get; set; }
     }
 }

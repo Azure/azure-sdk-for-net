@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class GeoReplication
+    public partial class TableGeoReplication
     {
-        internal static GeoReplication DeserializeGeoReplication(XElement element)
+        internal static TableGeoReplication DeserializeTableGeoReplication(XElement element)
         {
-            GeoReplicationStatusType status = default;
-            DateTimeOffset lastSyncTime = default;
+            TableGeoReplicationStatus status = default;
+            DateTimeOffset lastSyncedOn = default;
             if (element.Element("Status") is XElement statusElement)
             {
-                status = new GeoReplicationStatusType(statusElement.Value);
+                status = new TableGeoReplicationStatus(statusElement.Value);
             }
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {
-                lastSyncTime = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new GeoReplication(status, lastSyncTime);
+            return new TableGeoReplication(status, lastSyncedOn);
         }
     }
 }
