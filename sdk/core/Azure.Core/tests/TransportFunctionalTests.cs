@@ -142,6 +142,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual("example.org", host.ToString());
         }
 
+        [Theory]
+        [TestCase(200)]
+        [TestCase(300)]
+        [TestCase(400)]
+        [TestCase(500)]
+        public async Task ReturnsStatusAndReasonMethod(int code)
+        {
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Response.StatusCode = code;
+                });
+
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Uri.Reset(testServer.Address);
+
+            var response = await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(code, response.Status);
+        }
+
         public static object[][] Methods => new[]
         {
             new object[] { RequestMethod.Delete, "DELETE", false },

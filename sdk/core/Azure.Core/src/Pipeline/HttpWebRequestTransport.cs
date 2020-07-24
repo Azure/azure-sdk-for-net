@@ -71,8 +71,16 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                var webResponse = async ? await request.GetResponseAsync().ConfigureAwait(false) : request.GetResponse();
-
+                WebResponse webResponse;
+                try
+                {
+                    webResponse = async ? await request.GetResponseAsync().ConfigureAwait(false) : request.GetResponse();
+                }
+                // HttpWebRequest throws for error responses catch that
+                catch (WebException exception) when (exception.Response != null)
+                {
+                    webResponse = exception.Response;
+                }
                 message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse) webResponse);
             }
             // WebException is thrown in the case of .Abort() call
