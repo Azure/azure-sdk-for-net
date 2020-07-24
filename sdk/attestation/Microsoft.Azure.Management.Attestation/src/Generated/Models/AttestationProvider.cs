@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="status">Status of attestation service. Possible values
-        /// include: 'Ready', 'NotReady', 'Error'</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -47,8 +45,10 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="trustModel">Trust model for the attestation service
         /// instance.</param>
+        /// <param name="status">Status of attestation service. Possible values
+        /// include: 'Ready', 'NotReady', 'Error'</param>
         /// <param name="attestUri">Gets the uri of attestation service</param>
-        public AttestationProvider(string location, string status, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string trustModel = default(string), string attestUri = default(string))
+        public AttestationProvider(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string trustModel = default(string), string status = default(string), string attestUri = default(string))
             : base(location, id, name, type, tags)
         {
             TrustModel = trustModel;
@@ -90,10 +90,6 @@ namespace Microsoft.Azure.Management.Attestation.Models
         public override void Validate()
         {
             base.Validate();
-            if (Status == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
-            }
         }
     }
 }
