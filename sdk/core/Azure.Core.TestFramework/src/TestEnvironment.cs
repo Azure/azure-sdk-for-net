@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Azure.Core.TestFramework
 {
@@ -125,15 +126,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    // Don't take a hard dependency on Azure.Identity
-                    var type = Type.GetType("Azure.Identity.ClientSecretCredential, Azure.Identity");
-                    if (type == null)
-                    {
-                        throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");
-                    }
-
-                    _credential = (TokenCredential)Activator.CreateInstance(
-                        type,
+                    _credential = new ClientSecretCredential(
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
                         GetVariable("CLIENT_SECRET")
