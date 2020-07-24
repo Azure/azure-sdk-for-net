@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Azure.Storage.Internal.Avro
 {
-    internal class AvroReader
+    internal class AvroReader : IDisposable
     {
         /// <summary>
         /// Stream containing the body of the Avro file.
@@ -61,13 +61,27 @@ namespace Azure.Storage.Internal.Avro
         private bool _initalized;
 
         /// <summary>
+        /// To detect redundant calls
+        /// </summary>
+        private bool _disposed = false;
+
+        /// <summary>
         /// Constructor for an AvroReader that will read from the
         /// beginning of an Avro file.
         /// </summary>
         public AvroReader(Stream dataStream)
         {
-            _dataStream = dataStream;
-            _headerStream = dataStream;
+            if (dataStream.CanSeek)
+            {
+                _dataStream = dataStream;
+                _headerStream = dataStream;
+            }
+            else
+            {
+                _dataStream = new StreamWithPosition(dataStream);
+                _headerStream = dataStream;
+            }
+
             _metadata = new Dictionary<string, string>();
             _initalized = false;
         }
@@ -82,8 +96,24 @@ namespace Azure.Storage.Internal.Avro
             long currentBlockOffset,
             long indexWithinCurrentBlock)
         {
-            _dataStream = dataStream;
-            _headerStream = headerStream;
+            if (dataStream.CanSeek)
+            {
+                _dataStream = dataStream;
+            }
+            else
+            {
+                _dataStream = new StreamWithPosition(dataStream);
+            }
+
+            if (headerStream.CanSeek)
+            {
+                _headerStream = headerStream;
+            }
+            else
+            {
+                _headerStream = new StreamWithPosition(headerStream);
+            }
+
             _metadata = new Dictionary<string, string>();
             _initalized = false;
             BlockOffset = currentBlockOffset;
@@ -196,6 +226,24 @@ namespace Azure.Storage.Internal.Avro
             }
 
             return result;
+        }
+
+        public void Dispose() => Dispose(true);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _dataStream.Dispose();
+                _headerStream.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }
