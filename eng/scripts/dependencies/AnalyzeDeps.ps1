@@ -48,7 +48,6 @@ Function Get-Nuspec($NupkgPath) {
     }
   }
 }
-
 Function Save-Dep($Deps, $TargetFramework, $DepName, $DepVersion, $DependentPackage) {
   if (-Not $Deps[$DepName]) {
     $Deps[$DepName] = @{ }
@@ -129,7 +128,7 @@ Function Get-PackageExport($Pkgs, $Internal) {
 # Analyze package dependencies
 $Pkgs = @{ }
 $Deps = @{ }
-foreach ($PkgFile in Resolve-Path $PackagesPath) {
+foreach ($PkgFile in (Get-ChildItem "$PackagesPath/*.nupkg")) {
   $Nuspec = Get-Nuspec $PkgFile
   $LibraryName = $Nuspec.package.metadata.id
   $LibraryVer = $Nuspec.package.metadata.version
