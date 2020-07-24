@@ -133,6 +133,10 @@ jobs:
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+        Windows_NetFramework_ProjectReferences:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
