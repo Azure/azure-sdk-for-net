@@ -3,54 +3,54 @@
 
 using System;
 
-namespace Azure.Core.Spatial
+namespace Azure.Core.GeoJson
 {
     /// <summary>
-    /// Represents information about the coordinate range of the <see cref="Geometry"/>.
+    /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
     /// </summary>
-    public readonly struct GeometryBoundingBox : IEquatable<GeometryBoundingBox>
+    public sealed class GeoBoundingBox : IEquatable<GeoBoundingBox>
     {
         /// <summary>
-        /// The westmost value of <see cref="Geometry"/> coordinates.
+        /// The westmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double West { get; }
 
         /// <summary>
-        /// The southmost value of <see cref="Geometry"/> coordinates.
+        /// The southmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double South { get; }
 
         /// <summary>
-        /// The eastmost value of <see cref="Geometry"/> coordinates.
+        /// The eastmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double East { get; }
 
         /// <summary>
-        /// The northmost value of <see cref="Geometry"/> coordinates.
+        /// The northmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double North { get; }
 
         /// <summary>
-        /// The minimum altitude value of <see cref="Geometry"/> coordinates.
+        /// The minimum altitude value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double? MinAltitude { get; }
 
         /// <summary>
-        /// The maximum altitude value of <see cref="Geometry"/> coordinates.
+        /// The maximum altitude value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double? MaxAltitude { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryBoundingBox"/>.
+        /// Initializes a new instance of <see cref="GeoBoundingBox"/>.
         /// </summary>
-        public GeometryBoundingBox(double west, double south, double east, double north) : this(west, south, east, north, null, null)
+        public GeoBoundingBox(double west, double south, double east, double north) : this(west, south, east, north, null, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryBoundingBox"/>.
+        /// Initializes a new instance of <see cref="GeoBoundingBox"/>.
         /// </summary>
-        public GeometryBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude)
+        public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude)
         {
             West = west;
             South = south;
@@ -61,7 +61,7 @@ namespace Azure.Core.Spatial
         }
 
         /// <inheritdoc />
-        public bool Equals(GeometryBoundingBox other)
+        public bool Equals(GeoBoundingBox other)
         {
             return West.Equals(other.West) &&
                    South.Equals(other.South) &&
@@ -74,7 +74,7 @@ namespace Azure.Core.Spatial
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            return obj is GeometryBoundingBox other && Equals(other);
+            return obj is GeoBoundingBox other && Equals(other);
         }
 
         /// <inheritdoc />

@@ -4,28 +4,28 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Core.Spatial
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a polygon consisting of outer ring and optional inner rings.
     /// </summary>
-    public sealed class PolygonGeometry : Geometry
+    public sealed class GeoPolygon : GeoObject
     {
         /// <summary>
-        /// Initializes new instance of <see cref="PolygonGeometry"/>.
+        /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
         /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
-        public PolygonGeometry(IEnumerable<LineGeometry> rings): this(rings, null, DefaultProperties)
+        public GeoPolygon(IEnumerable<GeoLine> rings): this(rings, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="PolygonGeometry"/>.
+        /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
         /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
-        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public PolygonGeometry(IEnumerable<LineGeometry> rings, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoPolygon(IEnumerable<GeoLine> rings, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(rings, nameof(rings));
 
@@ -35,6 +35,6 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Gets a set of rings that form the polygon.
         /// </summary>
-        public IReadOnlyList<LineGeometry> Rings { get; }
+        public IReadOnlyList<GeoLine> Rings { get; }
     }
 }
