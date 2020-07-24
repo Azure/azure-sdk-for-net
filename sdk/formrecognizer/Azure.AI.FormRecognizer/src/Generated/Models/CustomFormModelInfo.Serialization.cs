@@ -23,11 +23,6 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (property.NameEquals("modelId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        modelId = null;
-                        continue;
-                    }
                     modelId = property.Value.GetString();
                     continue;
                 }
