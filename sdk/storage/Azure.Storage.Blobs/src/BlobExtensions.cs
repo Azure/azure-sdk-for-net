@@ -181,13 +181,13 @@ namespace Azure.Storage.Blobs
             List <ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrIds)
             {
-                string[] ParsedIds = status.Key.Split('_');
-                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
+                string[] parsedIds = status.Key.Split('_');
+                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == parsedIds[0]);
                 if (policyIndex > -1)
                 {
                     OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
+                        RuleId = parsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus) Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                 }
@@ -196,12 +196,12 @@ namespace Azure.Storage.Blobs
                     IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
                     NewRuleStatus.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
+                        RuleId = parsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                     OrProperties.Add(new ObjectReplicationPolicy()
                     {
-                        PolicyId = ParsedIds[0],
+                        PolicyId = parsedIds[0],
                         Rules = NewRuleStatus
                     });
                 }

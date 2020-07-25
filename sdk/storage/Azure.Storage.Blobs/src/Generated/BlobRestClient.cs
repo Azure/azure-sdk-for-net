@@ -8462,7 +8462,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobQueryResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobQueryResult>> QueryAsync(
+            public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Blobs.Models.BlobQueryResult>, System.IO.Stream)> QueryAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8505,6 +8505,8 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
+                        // Avoid buffering if stream is going to be returned to the caller
+                        _message.BufferResponse = false;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -8518,7 +8520,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return QueryAsync_CreateResponse(clientDiagnostics, _response);
+                        return (QueryAsync_CreateResponse(clientDiagnostics, _response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)

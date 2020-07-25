@@ -250,9 +250,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             return new CustomFormModelInfo(
                 modelId,
+                status,
                 result.CreatedDateTime,
-                result.LastUpdatedDateTime,
-                status);
+                result.LastUpdatedDateTime);
         }
     }
 }
