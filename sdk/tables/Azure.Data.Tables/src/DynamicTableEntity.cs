@@ -173,7 +173,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="key">The property name.</param>
         /// <param name="value">The property value.</param>
-        /// <exception cref="InvalidOperationException">The given <paramref name="value"/> does not match the type of the existing value at <paramref name="key"/>.</exception>
+        /// <exception cref="InvalidOperationException">The given <paramref name="value"/> does not match the type of the existing value associated with given <paramref name="key"/>.</exception>
         private protected void SetValue(string key, object value)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));

@@ -35,13 +35,13 @@ namespace Azure.Tables.Tests
         [Test]
         public void ValidateDynamicEntityGetTypes()
         {
-            Assert.IsInstanceOf(typeof(byte[]), entityWithAllTypes.GetBinary("binary"));
-            Assert.IsInstanceOf(typeof(bool), entityWithAllTypes.GetBoolean("boolean"));
-            Assert.IsInstanceOf(typeof(DateTime), entityWithAllTypes.GetDateTime("datetime"));
-            Assert.IsInstanceOf(typeof(double), entityWithAllTypes.GetDouble("double"));
-            Assert.IsInstanceOf(typeof(Guid), entityWithAllTypes.GetGuid("guid"));
-            Assert.IsInstanceOf(typeof(int), entityWithAllTypes.GetInt32("int32"));
-            Assert.IsInstanceOf(typeof(long), entityWithAllTypes.GetInt64("int64"));
+            Assert.That(entityWithAllTypes.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
+            Assert.That(entityWithAllTypes.GetBoolean("boolean"), Is.InstanceOf(typeof(bool)));
+            Assert.That(entityWithAllTypes.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime)));
+            Assert.That(entityWithAllTypes.GetDouble("double"), Is.InstanceOf(typeof(double)));
+            Assert.That(entityWithAllTypes.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
+            Assert.That(entityWithAllTypes.GetInt32("int32"), Is.InstanceOf(typeof(int)));
+            Assert.That(entityWithAllTypes.GetInt64("int64"), Is.InstanceOf(typeof(long)));
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace Azure.Tables.Tests
         public void DynamicEntityGetNullOrNonexistentProperties()
         {
             // Test getting new property works.
-            Assert.IsFalse(entityWithoutPK.TryGetValue(TableConstants.PropertyNames.PartitionKey, out _));
-            Assert.IsNull(entityWithoutPK.PartitionKey);
+            Assert.That(entityWithoutPK.TryGetValue(TableConstants.PropertyNames.PartitionKey, out _), Is.False);
+            Assert.That(entityWithoutPK.PartitionKey, Is.Null);
 
             // Test getting a property that was set to null.
             entityWithAllTypes[TableConstants.PropertyNames.PartitionKey] = null;
-            Assert.IsNull(entityWithAllTypes[TableConstants.PropertyNames.PartitionKey]);
+            Assert.That(entityWithAllTypes[TableConstants.PropertyNames.PartitionKey], Is.Null);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.Tables.Tests
 
             // Test setting an existing property with the same type works.
             entity["exampleInt"] = false;
-            Assert.IsFalse(entity.GetBoolean("exampleInt"));
+            Assert.That(entity.GetBoolean("exampleInt"), Is.False);
         }
 
         /// <summary>
@@ -107,18 +107,19 @@ namespace Azure.Tables.Tests
             var entity = new DynamicTableEntity("partition", "row");
 
             // Test setting new property works.
-            string newStringKey = ":D";
-            Assert.IsNull(entity[newStringKey]);
-            entity[newStringKey] = "This property didn't exist!";
-            Assert.IsNotNull(entity[newStringKey]);
+            string stringKey = "key :D";
+            string stringValue = "value D:";
+            Assert.That(entity[stringKey], Is.Null);
+            entity[stringKey] = stringValue;
+            Assert.That(entity[stringKey], Is.EqualTo(stringValue));
 
             // Test setting existing value to null.
-            entity[newStringKey] = null;
-            Assert.IsNull(entity[newStringKey]);
+            entity[stringKey] = null;
+            Assert.That(entity[stringKey], Is.Null);
 
             // Test setting existing null value to a non-null value.
-            entity[newStringKey] = "This existed as null! Which is different from being nonexistent! :O";
-            Assert.IsNotNull(entity[newStringKey]);
+            entity[stringKey] = stringValue;
+            Assert.That(entity[stringKey], Is.EqualTo(stringValue));
         }
     }
 }
