@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Tests;
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
-namespace Azure.Search.Documents.Samples.Tests
+namespace Azure.Search.Documents.Tests
 {
     public class FieldBuilderTests
     {
@@ -219,7 +219,16 @@ namespace Azure.Search.Documents.Samples.Tests
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
                 nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Name),
-                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+
+                // The following fields were added since track 1, since setting the analyzers is only supported on searchable fields:
+                // https://docs.microsoft.com/rest/api/searchservice/create-index#-field-definitions-
+#pragma warning disable SA1115 // Parameter should follow comma
+                nameof(ReflectableModel.TextWithAnalyzer),
+                nameof(ReflectableModel.TextWithSearchAnalyzer),
+                nameof(ReflectableModel.TextWithIndexAnalyzer)
+#pragma warning restore SA1115 // Parameter should follow comma
+            );
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
@@ -266,7 +275,7 @@ namespace Azure.Search.Documents.Samples.Tests
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
-        public void NotIsHiddenOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse(
+        public void NotIsHiddenOnAllPropertiesExceptOnesWithIsHiddenSetToTrue(
             Type modelType)
         {
             // Was IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse
@@ -388,7 +397,7 @@ namespace Azure.Search.Documents.Samples.Tests
         [TestCase(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedPropertyTypes(Type modelType, string invalidPropertyName)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.Build(modelType));
 
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
@@ -412,7 +421,7 @@ namespace Azure.Search.Documents.Samples.Tests
         [TestCase(typeof(ICollection<decimal>))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.Build(modelType));
 
             string expectedErrorMessage =
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
@@ -429,7 +438,7 @@ namespace Azure.Search.Documents.Samples.Tests
             from tuple in testData
             select (type, tuple.dataType, tuple.fieldName);
 
-        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.BuildForType(modelType);
+        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.Build(modelType);
 
         private enum Direction
         {
@@ -498,7 +507,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable, IsSearchable, IsSortable, IsFacetable]
+            [SearchableField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
             public Direction Direction { get; set; }
         }
 
@@ -507,7 +516,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public decimal Price { get; set; }
         }
 
@@ -516,7 +525,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public IEnumerable<byte> Buffer { get; set; }
         }
 
@@ -525,7 +534,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string ID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public ICollection<char> Buffer { get; set; }
         }
 
@@ -534,7 +543,7 @@ namespace Azure.Search.Documents.Samples.Tests
             [KeyField]
             public string InnerID { get; set; }
 
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public int OtherField { get; set; }
         }
 
@@ -548,7 +557,7 @@ namespace Azure.Search.Documents.Samples.Tests
 
         private class InnerModelWithIgnoredProperties
         {
-            [IsFilterable]
+            [SimpleField(IsFilterable = true)]
             public int OtherField { get; set; }
 
             [JsonIgnore]

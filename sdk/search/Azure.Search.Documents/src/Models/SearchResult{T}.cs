@@ -108,8 +108,8 @@ namespace Azure.Search.Documents.Models
             {
                 using Stream stream = element.ToStream();
                 T document = async ?
-                    (T)await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(stream, typeof(T));
+                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
                 result.Document = document;
             }
             else

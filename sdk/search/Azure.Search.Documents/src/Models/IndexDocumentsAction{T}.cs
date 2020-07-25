@@ -100,11 +100,11 @@ namespace Azure.Search.Documents.Models
                 using MemoryStream stream = new MemoryStream();
                 if (async)
                 {
-                    await serializer.SerializeAsync(stream, Document, typeof(T)).ConfigureAwait(false);
+                    await serializer.SerializeAsync(stream, Document, typeof(T), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    serializer.Serialize(stream, Document, typeof(T));
+                    serializer.Serialize(stream, Document, typeof(T), cancellationToken);
                 }
                 json = stream.ToArray();
             }

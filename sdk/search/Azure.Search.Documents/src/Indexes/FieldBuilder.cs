@@ -5,10 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
@@ -16,7 +16,7 @@ using Azure.Core.Spatial;
 using Microsoft.Spatial;
 #endif
 
-namespace Azure.Search.Documents.Samples
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Builds field definitions for a search index by reflecting over a user-defined model type.
@@ -58,76 +58,23 @@ namespace Azure.Search.Documents.Samples
                 typeof(decimal),
             };
 
-        private static JsonNamingPolicy CamelCaseResolver { get; } = JsonNamingPolicy.CamelCase;
-
-        private static JsonNamingPolicy DefaultResolver { get; } = DefaultJsonNamingPolicy.Shared;
-
         /// <summary>
-        /// Creates a collection of <see cref="SearchField"/> objects corresponding to
-        /// the properties of the type supplied.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The type for which fields will be created, based on its properties.
-        /// </typeparam>
-        /// <returns>A collection of fields.</returns>
-        public static IList<SearchField> BuildForType<T>() => BuildForType(typeof(T));
-
-        /// <summary>
-        /// Creates a collection of <see cref="SearchField"/> objects corresponding to
+        /// Creates a list of <see cref="SearchField"/> objects corresponding to
         /// the properties of the type supplied.
         /// </summary>
         /// <param name="modelType">
         /// The type for which fields will be created, based on its properties.
         /// </param>
+        /// <param name="serializer">
+        /// The <see cref="ObjectSerializer"/> to use to generate field names that match JSON property names.
+        /// You should use the same value as <see cref="SearchClientOptions.Serializer"/>.
+        /// <see cref="JsonObjectSerializer"/> will be used if no value is provided.
+        /// </param>
         /// <returns>A collection of fields.</returns>
-        public static IList<SearchField> BuildForType(Type modelType)
+        /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
+        public static IList<SearchField> Build(Type modelType, ObjectSerializer serializer = null)
         {
-            bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType(modelType);
-            JsonNamingPolicy namingPolicy = useCamelCase
-                ? CamelCaseResolver
-                : DefaultResolver;
-            return BuildForType(modelType, namingPolicy);
-        }
-
-        /// <summary>
-        /// Creates a collection of <see cref="SearchField"/> objects corresponding to
-        /// the properties of the type supplied.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The type for which fields will be created, based on its properties.
-        /// </typeparam>
-        /// <param name="namingPolicy">
-        /// <see cref="JsonNamingPolicy"/> to use.
-        /// This ensures that the field names are generated in a way that is
-        /// consistent with the way the model will be serialized.
-        /// </param>
-        /// <returns>A collection of fields.</returns>
-        public static IList<SearchField> BuildForType<T>(JsonNamingPolicy namingPolicy) => BuildForType(typeof(T), namingPolicy);
-
-        /// <summary>
-        /// Creates a collection of <see cref="SearchField"/> objects corresponding to
-        /// the properties of the type supplied.
-        /// </summary>
-        /// <param name="modelType">
-        /// The type for which fields will be created, based on its properties.
-        /// </param>
-        /// <param name="namingPolicy">
-        /// <see cref="JsonNamingPolicy"/> to use.
-        /// Contract resolver that the SearchIndexClient will use.
-        /// This ensures that the field names are generated in a way that is
-        /// consistent with the way the model will be serialized.
-        /// </param>
-        /// <returns>A collection of fields.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="modelType"/> or <paramref name="namingPolicy"/> is null.</exception>
-        public static IList<SearchField> BuildForType(Type modelType, JsonNamingPolicy namingPolicy)
-        {
-            if (modelType is null)
-            { throw new ArgumentNullException(nameof(modelType));
-            }
-
-            if (namingPolicy is null)
-            { throw new ArgumentNullException(nameof(namingPolicy));
-            }
+            Argument.AssertNotNull(modelType, nameof(modelType));
 
             ArgumentException FailOnNonObjectDataType()
             {
@@ -138,7 +85,10 @@ namespace Azure.Search.Documents.Samples
                 throw new ArgumentException(errorMessage, nameof(modelType));
             }
 
-            if (ObjectInfo.TryGet(modelType, out ObjectInfo info))
+            serializer ??= new JsonObjectSerializer();
+            IMemberNameConverter nameProvider = serializer as IMemberNameConverter ?? DefaultSerializedNameProvider.Shared;
+
+            if (ObjectInfo.TryGet(modelType, nameProvider, out ObjectInfo info))
             {
                 if (info.Properties.Length == 0)
                 {
@@ -146,22 +96,23 @@ namespace Azure.Search.Documents.Samples
                 }
 
                 // Use Stack to avoid a dependency on ImmutableStack for now.
-                return BuildForTypeRecursive(modelType, info, namingPolicy, new Stack<Type>(new[] { modelType }));
+                return Build(modelType, info, nameProvider, new Stack<Type>(new[] { modelType }));
             }
 
             throw FailOnNonObjectDataType();
         }
 
-        private static IList<SearchField> BuildForTypeRecursive(
+        private static IList<SearchField> Build(
             Type modelType,
             ObjectInfo info,
-            JsonNamingPolicy namingPolicy,
+            IMemberNameConverter nameProvider,
             Stack<Type> processedTypes)
         {
-            SearchField BuildField(PropertyInfo prop)
+            SearchField BuildField(ObjectPropertyInfo prop)
             {
+                // The IMemberNameConverter will return null for implementation-specific ways of ignoring members.
                 static bool ShouldIgnore(Attribute attribute) =>
-                    attribute is JsonIgnoreAttribute || attribute is FieldBuilderIgnoreAttribute;
+                    attribute is FieldBuilderIgnoreAttribute;
 
                 IList<Attribute> attributes = prop.GetCustomAttributes(true).Cast<Attribute>().ToArray();
                 if (attributes.Any(ShouldIgnore))
@@ -181,11 +132,15 @@ namespace Azure.Search.Documents.Samples
                     try
                     {
                         IList<SearchField> subFields =
-                            BuildForTypeRecursive(underlyingClrType, info, namingPolicy, processedTypes);
+                            Build(underlyingClrType, info, nameProvider, processedTypes);
 
-                        string fieldName = namingPolicy.ConvertName(prop.Name);
+                        if (prop.SerializedName is null)
+                        {
+                            // Member is unsupported or ignored.
+                            return null;
+                        }
 
-                        SearchField field = new SearchField(fieldName, dataType);
+                        SearchField field = new SearchField(prop.SerializedName, dataType);
                         foreach (SearchField subField in subFields)
                         {
                             field.Fields.Add(subField);
@@ -201,50 +156,23 @@ namespace Azure.Search.Documents.Samples
 
                 SearchField CreateSimpleField(SearchFieldDataType SearchFieldDataType)
                 {
-                    string fieldName = namingPolicy.ConvertName(prop.Name);
+                    if (prop.SerializedName is null)
+                    {
+                        // Member is unsupported or ignored.
+                        return null;
+                    }
 
-                    SearchField field = new SearchField(fieldName, SearchFieldDataType);
+                    SearchField field = new SearchField(prop.SerializedName, SearchFieldDataType);
                     foreach (Attribute attribute in attributes)
                     {
                         switch (attribute)
                         {
-                            case IsSearchableAttribute _:
-                                field.IsSearchable = true;
+                            case SearchableFieldAttribute searchableFieldAttribute:
+                                ((ISearchFieldAttribute)searchableFieldAttribute).SetField(field);
                                 break;
 
-                            case IsFilterableAttribute _:
-                                field.IsFilterable = true;
-                                break;
-
-                            case IsSortableAttribute _:
-                                field.IsSortable = true;
-                                break;
-
-                            case IsFacetableAttribute _:
-                                field.IsFacetable = true;
-                                break;
-
-                            case IsRetrievableAttribute isRetrievableAttribute:
-                                field.IsHidden = !isRetrievableAttribute.IsRetrievable;
-                                break;
-
-                            case AnalyzerAttribute analyzerAttribute:
-                                field.AnalyzerName = analyzerAttribute.Name;
-                                break;
-
-                            case SearchAnalyzerAttribute searchAnalyzerAttribute:
-                                field.SearchAnalyzerName = searchAnalyzerAttribute.Name;
-                                break;
-
-                            case IndexAnalyzerAttribute indexAnalyzerAttribute:
-                                field.IndexAnalyzerName = indexAnalyzerAttribute.Name;
-                                break;
-
-                            case SynonymMapsAttribute synonymMapsAttribute:
-                                foreach (string synonymMapName in synonymMapsAttribute.SynonymMaps)
-                                {
-                                    field.SynonymMapNames.Add(synonymMapName);
-                                }
+                            case SimpleFieldAttribute simpleFieldAttribute:
+                                ((ISearchFieldAttribute)simpleFieldAttribute).SetField(field);
                                 break;
 
                             default:
@@ -276,7 +204,7 @@ namespace Azure.Search.Documents.Samples
                     return new ArgumentException(errorMessage, nameof(modelType));
                 }
 
-                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType, namingPolicy);
+                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType, nameProvider);
 
                 return dataTypeInfo.Match(
                     onUnknownDataType: () => throw FailOnUnknownDataType(),
@@ -287,7 +215,7 @@ namespace Azure.Search.Documents.Samples
             return info.Properties.Select(BuildField).Where(field => field != null).ToArray();
         }
 
-        private static IDataTypeInfo GetDataTypeInfo(Type propertyType, JsonNamingPolicy namingPolicy)
+        private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)
         {
             static bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
@@ -298,14 +226,14 @@ namespace Azure.Search.Documents.Samples
             }
             else if (IsNullableType(propertyType))
             {
-                return GetDataTypeInfo(propertyType.GenericTypeArguments[0], namingPolicy);
+                return GetDataTypeInfo(propertyType.GenericTypeArguments[0], nameProvider);
             }
             else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
-                IDataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType, namingPolicy);
+                IDataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType, nameProvider);
                 return DataTypeInfo.AsCollection(elementTypeInfo);
             }
-            else if (ObjectInfo.TryGet(propertyType, out ObjectInfo info))
+            else if (ObjectInfo.TryGet(propertyType, nameProvider, out ObjectInfo info))
             {
                 return DataTypeInfo.Complex(SearchFieldDataType.Complex, propertyType, info);
             }
@@ -424,32 +352,97 @@ namespace Azure.Search.Documents.Samples
 
         private class ObjectInfo
         {
-            private ObjectInfo(Type type)
+            private ObjectInfo(ObjectPropertyInfo[] properties)
             {
-                Properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                Properties = properties;
             }
 
-            public static bool TryGet(Type type, out ObjectInfo info)
+            public static bool TryGet(Type type, IMemberNameConverter nameProvider, out ObjectInfo info)
             {
-                // Close approximation to Newtonsoft.Json.Serialization.DefaultContractResolver.
+                // Close approximation to Newtonsoft.Json.Serialization.DefaultContractResolver that was used in Microsoft.Azure.Search.
                 if (!type.IsPrimitive && !type.IsEnum && !s_unsupportedTypes.Contains(type) && !s_primitiveTypeMap.ContainsKey(type) && !typeof(IEnumerable).IsAssignableFrom(type))
                 {
-                    info = new ObjectInfo(type);
-                    return true;
+                    const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+                    List<ObjectPropertyInfo> properties = new List<ObjectPropertyInfo>();
+                    foreach (PropertyInfo property in type.GetProperties(bindingFlags))
+                    {
+                        string serializedName = nameProvider.ConvertMemberName(property);
+                        if (serializedName != null)
+                        {
+                            properties.Add(new ObjectPropertyInfo(property, serializedName));
+                        }
+                    }
+
+                    foreach (FieldInfo field in type.GetFields(bindingFlags))
+                    {
+                        string serializedName = nameProvider.ConvertMemberName(field);
+                        if (serializedName != null)
+                        {
+                            properties.Add(new ObjectPropertyInfo(field, serializedName));
+                        }
+                    }
+
+                    if (properties.Count != 0)
+                    {
+                        info = new ObjectInfo(properties.ToArray());
+                        return true;
+                    }
                 }
 
                 info = null;
                 return false;
             }
 
-            public PropertyInfo[] Properties { get; }
+            public ObjectPropertyInfo[] Properties { get; }
         }
 
-        private class DefaultJsonNamingPolicy : JsonNamingPolicy
+        private struct ObjectPropertyInfo
         {
-            public static JsonNamingPolicy Shared { get; } = new DefaultJsonNamingPolicy();
+            private readonly MemberInfo _memberInfo;
 
-            public override string ConvertName(string name) => name;
+            public ObjectPropertyInfo(PropertyInfo property, string serializedName)
+            {
+                Debug.Assert(serializedName != null, $"{nameof(serializedName)} cannot be null");
+
+                _memberInfo = property;
+
+                SerializedName = serializedName;
+                PropertyType = property.PropertyType;
+            }
+
+            public ObjectPropertyInfo(FieldInfo field, string serializedName)
+            {
+                Debug.Assert(serializedName != null, $"{nameof(serializedName)} cannot be null");
+
+                _memberInfo = field;
+
+                SerializedName = serializedName;
+                PropertyType = field.FieldType;
+            }
+
+            public string Name => _memberInfo.Name;
+
+            public string SerializedName { get; }
+
+            public Type PropertyType { get; }
+
+            public static implicit operator MemberInfo(ObjectPropertyInfo property) =>
+                property._memberInfo;
+
+            public object[] GetCustomAttributes(bool inherit) =>
+                _memberInfo.GetCustomAttributes(inherit);
+        }
+
+        private class DefaultSerializedNameProvider : IMemberNameConverter
+        {
+            public static IMemberNameConverter Shared { get; } = new DefaultSerializedNameProvider();
+
+            private DefaultSerializedNameProvider()
+            {
+            }
+
+            public string ConvertMemberName(MemberInfo member) => member?.Name;
         }
     }
 }

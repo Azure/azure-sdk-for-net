@@ -2,6 +2,9 @@
 
 ## 11.1.0-preview.1 (Unreleased)
 
+### Added
+
+- Add `FieldBuilder` to easily create `SearchIndex` fields from a model type.
 
 ## 11.0.0 (2020-07-07)
 

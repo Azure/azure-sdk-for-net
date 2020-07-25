@@ -5,7 +5,7 @@ using System;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Samples
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Indicates that the target property should be ignored by <see cref="FieldBuilder"/>.

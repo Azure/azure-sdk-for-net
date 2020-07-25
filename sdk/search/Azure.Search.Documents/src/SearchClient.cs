@@ -183,7 +183,7 @@ namespace Azure.Search.Documents
                 Version.ToVersionString());
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1573 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
         /// <see cref="SearchIndexClient"/>.
@@ -217,7 +217,7 @@ namespace Azure.Search.Documents
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             SearchClientOptions.ServiceVersion version)
-        #pragma warning restore CS1572
+        #pragma warning restore CS1573
         {
             Debug.Assert(endpoint != null);
             Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));

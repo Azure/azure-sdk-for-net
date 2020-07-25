@@ -362,8 +362,8 @@ namespace Azure.Search.Documents
             else if (serializer != null)
             {
                 return async ?
-                    (T)await serializer.DeserializeAsync(json, typeof(T)).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(json, typeof(T));
+                    (T)await serializer.DeserializeAsync(json, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(json, typeof(T), cancellationToken);
             }
 #endif
             else if (async)
