@@ -52,8 +52,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // If I want more fine-grained control over settlement, I can set this to false.
                     AutoComplete = false,
 
-                    // I can also allow for multi-threading
-                    MaxConcurrentCalls = 2
+                    // I can also allow for processing multiple sessions
+                    MaxConcurrentSessions = 5,
+
+                    // By default, there will be a single concurrent call per session. I can
+                    // increase that here to enable parallel processing within each session.
+                    MaxConcurrentCallsPerSession = 2
                 };
 
                 // create a session processor that we can use to process the messages

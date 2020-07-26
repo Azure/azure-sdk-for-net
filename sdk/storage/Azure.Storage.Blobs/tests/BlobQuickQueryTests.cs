@@ -126,14 +126,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Don't want to record 120 MB of data.")]
+        [Ignore("Don't want to record 250 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task QueryAsync_Large()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            Stream stream = CreateDataStream(120 * Constants.MB);
+            Stream stream = CreateDataStream(250 * Constants.MB);
             await blockBlobClient.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage";
 

@@ -76,8 +76,14 @@ namespace Azure.Iot.Hub.Service
     public partial class ModulesClient
     {
         protected ModulesClient() { }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> CreateIdentities(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> CreateIdentitiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> CreateIdentitiesWithTwin(System.Collections.Generic.IDictionary<Azure.Iot.Hub.Service.Models.ModuleIdentity, Azure.Iot.Hub.Service.Models.TwinData> modules, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(System.Collections.Generic.IDictionary<Azure.Iot.Hub.Service.Models.ModuleIdentity, Azure.Iot.Hub.Service.Models.TwinData> modules, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity> CreateOrUpdateIdentity(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity>> CreateOrUpdateIdentityAsync(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> DeleteIdentities(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> DeleteIdentitiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIdentity(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIdentityAsync(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.ModuleIdentity>> GetIdentities(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -90,8 +96,12 @@ namespace Azure.Iot.Hub.Service
         public virtual Azure.AsyncPageable<Azure.Iot.Hub.Service.Models.TwinData> GetTwinsAsync(int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse> InvokeMethod(string deviceId, string moduleId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, string moduleId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> UpdateIdentities(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> UpdateIdentitiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.ModuleIdentity> moduleIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinData> UpdateTwin(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> UpdateTwinAsync(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> UpdateTwins(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> UpdateTwinsAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StatisticsClient
     {
@@ -151,7 +161,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties
     {
         public Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get { throw null; } }
     }
     public partial class Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties
     {
@@ -161,20 +171,20 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class ConfigurationContent
     {
         public ConfigurationContent() { }
-        public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> ModulesContent { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> ModulesContent { get { throw null; } }
     }
     public partial class ConfigurationMetrics
     {
         public ConfigurationMetrics() { }
-        public System.Collections.Generic.IDictionary<string, string> Queries { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, long> Results { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Queries { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, long> Results { get { throw null; } }
     }
     public partial class ConfigurationQueriesTestInput
     {
         public ConfigurationQueriesTestInput() { }
-        public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } }
         public string TargetCondition { get { throw null; } set { } }
     }
     public partial class ConfigurationQueriesTestResponse
@@ -226,7 +236,7 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public string GenerationId { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.DeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdatedTime { get { throw null; } set { } }
@@ -508,7 +518,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class DigitalTwinInterfacesPatch
     {
         public DigitalTwinInterfacesPatch() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties> Interfaces { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties> Interfaces { get { throw null; } }
     }
     public partial class DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired
     {
@@ -525,11 +535,11 @@ namespace Azure.Iot.Hub.Service.Models
         public string Id { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceImportMode? ImportMode { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.PropertyContainer Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public string TwinETag { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -841,8 +851,8 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class PropertyContainer
     {
         public PropertyContainer() { }
-        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
     }
     public partial class PurgeMessageQueueResult
     {
@@ -932,7 +942,7 @@ namespace Azure.Iot.Hub.Service.Models
         public System.DateTimeOffset? CreatedTimeUtc { get { throw null; } set { } }
         public string Etag { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ConfigurationMetrics Metrics { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -971,20 +981,20 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.TwinProperties Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.TwinStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdateTime { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
         public long? Version { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.X509Thumbprint X509Thumbprint { get { throw null; } set { } }
     }
     public partial class TwinProperties
     {
         public TwinProperties() { }
-        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Desired { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Reported { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TwinStatus : System.IEquatable<Azure.Iot.Hub.Service.Models.TwinStatus>

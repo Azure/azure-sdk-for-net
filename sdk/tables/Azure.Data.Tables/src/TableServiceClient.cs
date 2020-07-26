@@ -54,16 +54,7 @@ namespace Azure.Data.Tables
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
             var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
-            HttpPipeline pipeline;
-
-            if (policy == default)
-            {
-                pipeline = HttpPipelineBuilder.Build(options);
-            }
-            else
-            {
-                pipeline = HttpPipelineBuilder.Build(options, policy);
-            }
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
@@ -127,11 +118,11 @@ namespace Azure.Data.Tables
         /// Gets a list of tables from the storage account.
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
             scope.Start();
@@ -142,7 +133,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                     null,
                     null,
-                    new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                    new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
@@ -150,7 +141,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                        null,
                        nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                       new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                        cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -167,10 +158,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
 
             return PageableHelpers.CreateEnumerable(_ =>
@@ -182,7 +173,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                             null,
                             null,
-                            new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                            new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                             cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
@@ -200,7 +191,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                         null,
                         nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                        new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                         cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
@@ -225,7 +216,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -248,7 +239,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)

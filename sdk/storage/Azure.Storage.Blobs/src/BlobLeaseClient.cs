@@ -191,7 +191,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -237,7 +239,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -284,9 +288,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagCondition = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    if (conditions is BlobLeaseRequestConditions leaseConditions)
                     {
-                        tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                        tagCondition = leaseConditions?.TagConditions;
                     }
 
                     if (BlobClient != null)
@@ -355,7 +359,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -391,7 +397,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -427,7 +435,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -531,7 +541,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -567,7 +579,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -603,7 +617,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
@@ -713,7 +729,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -751,7 +769,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -789,7 +809,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -913,7 +935,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -970,7 +994,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -1027,7 +1053,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before

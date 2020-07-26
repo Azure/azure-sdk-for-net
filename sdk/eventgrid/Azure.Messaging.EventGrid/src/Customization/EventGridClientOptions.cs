@@ -37,6 +37,11 @@ namespace Azure.Messaging.EventGrid
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// Used to serialize the given events to JSON.
+        /// </summary>
+        public ObjectSerializer Serializer { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EventGridClientOptions"/>
         /// class.
         /// </summary>

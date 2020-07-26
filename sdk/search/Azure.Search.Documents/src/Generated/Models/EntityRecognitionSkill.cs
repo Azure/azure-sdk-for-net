@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
-            Categories = new List<EntityCategory>();
+            Categories = new ChangeTrackingList<EntityCategory>();
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
 
@@ -44,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
         internal EntityRecognitionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<EntityCategory> categories, EntityRecognitionSkillLanguage? defaultLanguageCode, bool? includeTypelessEntities, double? minimumPrecision) : base(oDataType, name, description, context, inputs, outputs)
         {
-            Categories = categories ?? new List<EntityCategory>();
+            Categories = categories;
             DefaultLanguageCode = defaultLanguageCode;
             IncludeTypelessEntities = includeTypelessEntities;
             MinimumPrecision = minimumPrecision;

@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            ErrorDefinition error = default;
+            Optional<ErrorDefinition> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorDefinition.DeserializeErrorDefinition(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(error);
+            return new ErrorResponse(error.Value);
         }
     }
 }

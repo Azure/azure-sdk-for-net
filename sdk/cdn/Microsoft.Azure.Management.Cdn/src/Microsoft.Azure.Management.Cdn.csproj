@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure CDN Management Library</Description>
-		<Version>4.3.0-preview</Version>
+		<Version>4.4.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
 		<PackageId>Microsoft.Azure.Management.Cdn</PackageId>
 		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management;</PackageTags>
-		<PackageReleaseNotes>Added CustomDomainHttpsParameters to CustomDomains returned by the API. Added minimumTlsVersion to CustomDomainPropertiesParameters.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added Private Link, Multi-origin, and URLSigning support.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Synapse
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\code\\AzureSDK\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e691ceee865ab60d1f2dca5b35488aeb784da221";
+      public static readonly String GithubCommidId = "b2a2f8bdac81a285f541d03f60b452f9fd8fe38a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

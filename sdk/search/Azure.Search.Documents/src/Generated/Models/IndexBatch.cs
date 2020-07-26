@@ -26,13 +26,6 @@ namespace Azure.Search.Documents.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of IndexBatch. </summary>
-        /// <param name="actions"> The actions in the batch. </param>
-        internal IndexBatch(IList<IndexAction> actions)
-        {
-            Actions = actions ?? new List<IndexAction>();
-        }
-
         /// <summary> The actions in the batch. </summary>
         public IList<IndexAction> Actions { get; }
     }

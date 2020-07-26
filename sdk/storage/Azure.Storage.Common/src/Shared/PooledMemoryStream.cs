@@ -15,7 +15,7 @@ namespace Azure.Storage.Shared
     /// Functions like a readable <see cref="MemoryStream"/> but uses an ArrayPool to supply the backing memory.
     /// This stream support buffering long sizes.
     /// </summary>
-    internal class PooledMemoryStream : StreamSlice
+    internal class PooledMemoryStream : SlicedStream
     {
         private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
 

@@ -301,3 +301,50 @@ How it looks it the test explorer:
 ![image](https://user-images.githubusercontent.com/1697911/72942831-52c7ca00-3d29-11ea-9b7e-2e54198d800d.png)
 
 **Note:** If test recordings are enabled, the recordings will be generated against the latests version of the service.
+
+## Support for an additional test parameter
+
+The `ClientTestFixture` attribute also supports specifying an additional array of parameter values to send to the test class. 
+Similar to the service versions, this results in the creation of a permutation of each test for each parameter value specified. 
+Example usage is shown below:
+
+```c#
+// Add a new test suite parameter with no serviceVersions variants
+[ClientTestFixture(
+    serviceVersions: default,
+    additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
+public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
+{
+    protected readonly TableEndpointType _endpointType;
+
+    public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+        : base(isAsync, recordedTestMode)
+    {
+        _endpointType = endpointType;
+    }
+```
+
+```c#
+// Both serviceVersions variants and a new test suite parameter
+[ClientTestFixture(
+    serviceVersions: new object[] { TableClientOptions.ServiceVersion.V2019_02_02, TableClientOptions.ServiceVersion.V2019_07_07 },
+    additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
+public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
+{
+    protected readonly TableEndpointType _endpointType;
+    TableClientOptions.ServiceVersion _serviceVersion
+
+    public TableServiceLiveTestsBase(bool isAsync, TableClientOptions.ServiceVersion serviceVersion, TableEndpointType endpointType, RecordedTestMode recordedTestMode) 
+        : base(isAsync, recordedTestMode)
+    {
+        _serviceVersion = serviceVersion;
+        _endpointType = endpointType;
+    }
+```
+
+**Note:** Additional parameter options work with test recordings and will create differentiated SessionRecords test class directory names for each additional parameter option. 
+For example:
+
+`/SessionRecords/TableClientLiveTests(CosmosTable)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
+`/SessionRecords/TableClientLiveTests(Storage)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
+

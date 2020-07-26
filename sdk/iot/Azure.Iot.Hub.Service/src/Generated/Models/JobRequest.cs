@@ -17,37 +17,6 @@ namespace Azure.Iot.Hub.Service.Models
         {
         }
 
-        /// <summary> Initializes a new instance of JobRequest. </summary>
-        /// <param name="jobId"> Job identifier. </param>
-        /// <param name="type">
-        /// Required.
-        /// 
-        /// The type of job to execute.
-        /// </param>
-        /// <param name="cloudToDeviceMethod">
-        /// Required if jobType is cloudToDeviceMethod.
-        /// 
-        /// The method type and parameters.
-        /// </param>
-        /// <param name="updateTwin"> Twin Representation. </param>
-        /// <param name="queryCondition">
-        /// Required if jobType is updateTwin or cloudToDeviceMethod.
-        /// 
-        /// Condition for device query to get devices to execute the job on.
-        /// </param>
-        /// <param name="startTime"> ISO 8601 date time to start the job. </param>
-        /// <param name="maxExecutionTimeInSeconds"> Max execution time in secounds (ttl duration). </param>
-        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds)
-        {
-            JobId = jobId;
-            Type = type;
-            CloudToDeviceMethod = cloudToDeviceMethod;
-            UpdateTwin = updateTwin;
-            QueryCondition = queryCondition;
-            StartTime = startTime;
-            MaxExecutionTimeInSeconds = maxExecutionTimeInSeconds;
-        }
-
         /// <summary> Job identifier. </summary>
         public string JobId { get; set; }
         /// <summary>

@@ -14,30 +14,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static DataFlowDebugCommandResponse DeserializeDataFlowDebugCommandResponse(JsonElement element)
         {
-            string status = default;
-            string data = default;
+            Optional<string> status = default;
+            Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("data"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     data = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataFlowDebugCommandResponse(status, data);
+            return new DataFlowDebugCommandResponse(status.Value, data.Value);
         }
     }
 }

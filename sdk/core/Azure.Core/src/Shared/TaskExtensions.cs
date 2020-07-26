@@ -8,12 +8,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {
+        public static WithCancellationTaskAwaitable<T> AwaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+            => new WithCancellationTaskAwaitable<T>(task, cancellationToken);
+
+        public static WithCancellationValueTaskAwaitable<T> AwaitWithCancellation<T>(this ValueTask<T> task, CancellationToken cancellationToken)
+            => new WithCancellationValueTaskAwaitable<T>(task, cancellationToken);
+
         public static T EnsureCompleted<T>(this Task<T> task)
         {
 #if DEBUG
@@ -132,6 +139,126 @@ namespace Azure.Core.Pipeline
 #pragma warning disable AZC0107 // Do not call public asynchronous method in synchronous scope.
             public void Dispose() => _asyncEnumerator.DisposeAsync().EnsureCompleted();
 #pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
+        }
+
+        public readonly struct WithCancellationTaskAwaitable<T>
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable<T> _awaitable;
+
+            public WithCancellationTaskAwaitable(Task<T> task, CancellationToken cancellationToken)
+            {
+                _awaitable = task.ConfigureAwait(false);
+                _cancellationToken = cancellationToken;
+            }
+
+            public WithCancellationTaskAwaiter<T> GetAwaiter() => new WithCancellationTaskAwaiter<T>(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
+        public readonly struct WithCancellationValueTaskAwaitable<T>
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredValueTaskAwaitable<T> _awaitable;
+
+            public WithCancellationValueTaskAwaitable(ValueTask<T> task, CancellationToken cancellationToken)
+            {
+                _awaitable = task.ConfigureAwait(false);
+                _cancellationToken = cancellationToken;
+            }
+
+            public WithCancellationValueTaskAwaiter<T> GetAwaiter() => new WithCancellationValueTaskAwaiter<T>(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
+        public readonly struct WithCancellationTaskAwaiter<T> : ICriticalNotifyCompletion
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter _taskAwaiter;
+
+            public WithCancellationTaskAwaiter(ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter awaiter, CancellationToken cancellationToken)
+            {
+                _taskAwaiter = awaiter;
+                _cancellationToken = cancellationToken;
+            }
+
+            public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
+
+            public void OnCompleted(Action continuation) => _taskAwaiter.OnCompleted(WrapContinuation(continuation));
+
+            public void UnsafeOnCompleted(Action continuation) => _taskAwaiter.UnsafeOnCompleted(WrapContinuation(continuation));
+
+            public T GetResult()
+            {
+                Debug.Assert(IsCompleted);
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
+                return _taskAwaiter.GetResult();
+            }
+
+            private Action WrapContinuation(in Action originalContinuation)
+                => _cancellationToken.CanBeCanceled
+                    ? new WithCancellationContinuationWrapper(originalContinuation, _cancellationToken).Continuation
+                    : originalContinuation;
+        }
+
+        public readonly struct WithCancellationValueTaskAwaiter<T> : ICriticalNotifyCompletion
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter _taskAwaiter;
+
+            public WithCancellationValueTaskAwaiter(ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter awaiter, CancellationToken cancellationToken)
+            {
+                _taskAwaiter = awaiter;
+                _cancellationToken = cancellationToken;
+            }
+
+            public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
+
+            public void OnCompleted(Action continuation) => _taskAwaiter.OnCompleted(WrapContinuation(continuation));
+
+            public void UnsafeOnCompleted(Action continuation) => _taskAwaiter.UnsafeOnCompleted(WrapContinuation(continuation));
+
+            public T GetResult()
+            {
+                Debug.Assert(IsCompleted);
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
+                return _taskAwaiter.GetResult();
+            }
+
+            private Action WrapContinuation(in Action originalContinuation)
+                => _cancellationToken.CanBeCanceled
+                    ? new WithCancellationContinuationWrapper(originalContinuation, _cancellationToken).Continuation
+                    : originalContinuation;
+        }
+
+        private class WithCancellationContinuationWrapper
+        {
+            private Action _originalContinuation;
+            private readonly CancellationTokenRegistration _registration;
+
+            public WithCancellationContinuationWrapper(Action originalContinuation, CancellationToken cancellationToken)
+            {
+                Action continuation = ContinuationImplementation;
+                _originalContinuation = originalContinuation;
+                _registration = cancellationToken.Register(continuation);
+                Continuation = continuation;
+            }
+
+            public Action Continuation { get; }
+
+            private void ContinuationImplementation()
+            {
+                Action originalContinuation = Interlocked.Exchange(ref _originalContinuation, null);
+                if (originalContinuation != null)
+                {
+                    _registration.Dispose();
+                    originalContinuation();
+                }
+            }
         }
     }
 }

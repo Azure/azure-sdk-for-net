@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
             RuleFilter filter,
             CancellationToken cancellationToken = default)
         {
-            await AddRuleAsync(new RuleDescription(name: ruleName, filter: filter), cancellationToken).ConfigureAwait(false);
+            await AddRuleAsync(new RuleProperties(name: ruleName, filter: filter), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public virtual async Task AddRuleAsync(
-            RuleDescription description,
+            RuleProperties description,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
@@ -182,13 +182,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public virtual async Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
 
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            IList<RuleDescription> rulesDescription;
+            IList<RuleProperties> rulesDescription;
 
             try
             {

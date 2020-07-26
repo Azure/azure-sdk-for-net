@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PipelineResource. </summary>
         public PipelineResource()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Activities = new ChangeTrackingList<Activity>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Variables = new ChangeTrackingDictionary<string, VariableSpecification>();
+            Annotations = new ChangeTrackingList<object>();
+            RunDimensions = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
@@ -43,23 +49,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Annotations = annotations;
             RunDimensions = runDimensions;
             Folder = folder;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the pipeline. </summary>
         public string Description { get; set; }
         /// <summary> List of activities in pipeline. </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
         /// <summary> List of parameters for pipeline. </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+        public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of variables for pipeline. </summary>
-        public IDictionary<string, VariableSpecification> Variables { get; set; }
+        public IDictionary<string, VariableSpecification> Variables { get; }
         /// <summary> The max number of concurrent runs for the pipeline. </summary>
         public int? Concurrency { get; set; }
         /// <summary> List of tags that can be used for describing the Pipeline. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         /// <summary> Dimensions emitted by Pipeline. </summary>
-        public IDictionary<string, object> RunDimensions { get; set; }
+        public IDictionary<string, object> RunDimensions { get; }
         /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
         public PipelineFolder Folder { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }

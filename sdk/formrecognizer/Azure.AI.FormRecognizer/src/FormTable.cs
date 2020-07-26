@@ -11,9 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTable
     {
-        internal FormTable(DataTable_internal table, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal FormTable(DataTable table, IReadOnlyList<ReadResult> readResults, int pageIndex)
         {
-            ReadResult_internal readResult = readResults[pageIndex];
+            ReadResult readResult = readResults[pageIndex];
 
             PageNumber = readResult.Page;
             ColumnCount = table.Columns;
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell> cellsResult, IReadOnlyList<ReadResult> readResults, int pageNumber)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
 

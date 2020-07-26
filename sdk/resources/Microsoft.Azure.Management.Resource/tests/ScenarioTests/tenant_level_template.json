@@ -4,15 +4,15 @@
   "parameters": {
     "managementGroupId": {
       "type": "string",
-      "defaultValue": "tiano-mgtest01"
+      "defaultValue": "gopremra-testmg"
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "afe8f803-7190-48e3-b41a-bc454e8aad1a"
+      "defaultValue": "a93e8c5c-63cb-4635-933f-6d166ac25187"
     },
     "roleDefinitionId": {
       "type": "string",
-      "defaultValue": "0cb07228-4614-4814-ac1a-c4e39793ce59"
+      "defaultValue": "3e2c15b3-905c-4b0f-8313-c48ae01ccdde"
     }
   },
   "variables": {
@@ -25,7 +25,7 @@
       "name": "[parameters('roleDefinitionId')]",
       "apiVersion": "2018-07-01",
       "properties": {
-        "roleName": "Tiano SDK Test Role",
+        "roleName": "test-app",
         "description": "something",
         "type": "CustomRole",
         "permissions": [
@@ -47,7 +47,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "mg-nested",
       "apiVersion": "2019-07-01",
-      "location": "West US",
+      "location": "East US",
       "scope": "[variables('managementGroupScope')]",
       "properties": {
         "template": {
