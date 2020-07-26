@@ -2092,6 +2092,8 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
+                List<string> blockIds = new List<string>();
+
                 if (options?.Overwrite == true)
                 {
                     await UploadInternal(
@@ -2109,19 +2111,30 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 else
                 {
-                    BlobProperties blobProperties = await GetPropertiesInternal(
+                    Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
                         conditions: options?.Conditions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    position = blobProperties.ContentLength;
+                    position = blobPropertiesResponse.Value.ContentLength;
+
+                    Response<BlockList> blockListResponse = await GetBlockListInternal(
+                        blockListTypes: BlockListTypes.Committed,
+                        snapshot: default,
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    blockIds.AddRange(blockListResponse.Value.CommittedBlocks.Select(r => r.Name));
                 }
 
                 return new BlockBlobWriteStream(
                     blockBlobClient: this,
                     bufferSize: options?.BufferSize ?? Constants.MB,
                     position: position,
+                    blockIds: blockIds,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);
             }

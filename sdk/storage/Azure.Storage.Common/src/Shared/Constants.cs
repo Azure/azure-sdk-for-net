@@ -288,7 +288,7 @@ namespace Azure.Storage
             public const int DefaultConcurrentTransfersCount = 5;
 
             /// <summary>
-            /// Max upload bytes for < Service Version 2019-12-12.
+            /// Max upload bytes for less than Service Version 2019-12-12.
             /// </summary>
             public const int Pre_2019_12_12_MaxAppendBytes = 100 * Constants.MB; // 100 MB
 
