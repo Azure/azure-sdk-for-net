@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -17,8 +18,8 @@ namespace Azure.Storage.Blobs.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB,
-        /// max is 100 MB.
+        /// The size of the buffer to use.  Default is 4 MB,
+        /// max is 4000 MB.  See <see cref="BlockBlobClient.BlockBlobMaxStageBlockLongBytes"/>.
         /// </summary>
         public long BufferSize { get; set; }
 

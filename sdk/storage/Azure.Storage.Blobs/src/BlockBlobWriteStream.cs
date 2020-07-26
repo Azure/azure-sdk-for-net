@@ -12,7 +12,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
-    internal class BlockBlobWriteStream : WriteStream
+    internal class BlockBlobWriteStream : StorageWriteStream
     {
         private readonly BlockBlobClient _blockBlobClient;
         private readonly BlobRequestConditions _conditions;
@@ -95,9 +95,9 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
             }
 
-            if (bufferSize > 100 * Constants.MB)
+            if (bufferSize > Constants.Blob.Block.MaxStageBytes)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 100 MB");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.Blob.Block.MaxStageBytes}");
             }
         }
 

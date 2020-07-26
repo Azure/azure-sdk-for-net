@@ -10,14 +10,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Shared
 {
-    internal abstract class WriteStream : Stream
+    internal abstract class StorageWriteStream : Stream
     {
         protected long _position;
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
 
-        protected WriteStream(
+        protected StorageWriteStream(
             long position,
             long bufferSize,
             IProgress<long> progressHandler)
@@ -88,17 +88,17 @@ namespace Azure.Storage.Shared
             // New bytes will fit in the buffer.
             if (count <= _bufferSize - _buffer.Position)
             {
-                await WriteToBuffer(async, buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                await WriteToBufferInternal(buffer, offset, count, async, cancellationToken).ConfigureAwait(false);
             }
             else
             {
                 // Finish filling the buffer.
                 int remainingSpace = (int)(_bufferSize - _buffer.Position);
-                await WriteToBuffer(
-                    async,
+                await WriteToBufferInternal(
                     buffer,
                     offset,
                     remainingSpace,
+                    async,
                     cancellationToken).ConfigureAwait(false);
                 remaining -= remainingSpace;
                 offset += remainingSpace;
@@ -109,11 +109,11 @@ namespace Azure.Storage.Shared
                 // We need to loop, because remaining bytes might be greater than _buffer size.
                 while (remaining > 0)
                 {
-                    await WriteToBuffer(
-                        async,
+                    await WriteToBufferInternal(
                         buffer,
                         offset,
                         (int)Math.Min(remaining, _bufferSize),
+                        async,
                         cancellationToken).ConfigureAwait(false);
 
                     // Renaming bytes won't fit in buffer.
@@ -150,11 +150,11 @@ namespace Azure.Storage.Shared
 
         protected abstract void ValidateBufferSize(long bufferSize);
 
-        protected async Task WriteToBuffer(
-            bool async,
+        protected async Task WriteToBufferInternal(
             byte[] buffer,
             int offset,
             int count,
+            bool async,
             CancellationToken cancellationToken)
         {
             if (async)

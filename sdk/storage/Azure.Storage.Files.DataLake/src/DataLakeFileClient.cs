@@ -27,8 +27,21 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// Supported value is now larger than <see cref="int.MaxValue"/>; please use
+        /// <see cref="MaxUploadLongBytes"/>.
         /// </summary>
-        public virtual int MaxUploadBytes => Constants.DataLake.MaxAppendBytes;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int MaxUploadBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
+            : int.MaxValue;  // value is larger than can be represented by an int
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// </summary>
+        public virtual long MaxUploadLongBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
+            : Constants.DataLake.MaxAppendBytes;
 
         #region ctors
         /// <summary>
@@ -3954,21 +3967,18 @@ namespace Azure.Storage.Files.DataLake
 
                 long position = 0;
 
-                if (options != null && options.Overwrite)
+                if (options?.Overwrite == true)
                 {
-                    if (async)
-                    {
-                        await CreateAsync(
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Create(
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken);
-                    }
+                    await CreateInternal(
+                        resourceType: PathResourceType.File,
+                        httpHeaders: default,
+                        metadata: default,
+                        permissions: default,
+                        umask: default,
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 else
                 {

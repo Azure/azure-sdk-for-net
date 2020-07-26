@@ -9,7 +9,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareFileWriteStream : WriteStream
+    internal class ShareFileWriteStream : StorageWriteStream
     {
         private readonly ShareFileClient _fileClient;
         private readonly ShareFileRequestConditions _conditions;
@@ -74,9 +74,9 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
             }
 
-            if (bufferSize > 100 * Constants.MB)
+            if (bufferSize > Constants.File.MaxFileUpdateRange)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.File.MaxFileUpdateRange}");
             }
         }
     }

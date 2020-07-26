@@ -11,7 +11,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
-    internal class AppendBlobWriteStream : WriteStream
+    internal class AppendBlobWriteStream : StorageWriteStream
     {
         private readonly AppendBlobClient _appendBlobClient;
         private readonly AppendBlobRequestConditions _conditions;
@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
             }
 
-            if (bufferSize > 4 * Constants.MB)
+            if (bufferSize > Constants.Blob.Append.MaxAppendBlockBytes)
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
             }

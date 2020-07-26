@@ -4791,9 +4791,9 @@ namespace Azure.Storage.Files.Shares
             ShareFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
-                async: false,
                 position: position,
                 options: options,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
@@ -4824,23 +4824,23 @@ namespace Azure.Storage.Files.Shares
             ShareFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
-                async: true,
                 position: position,
                 options: options,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="position">
         /// The offset within the blob to begin writing from.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4854,9 +4854,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
-            bool async,
             long position,
             ShareFileOpenWriteOptions options,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
@@ -4865,27 +4865,22 @@ namespace Azure.Storage.Files.Shares
             {
                 scope.Start();
 
-                if (options != null && options.Overwrite)
+                if (options?.Overwrite == true)
                 {
-                    if (async)
-                    {
-                        await CreateAsync(
-                            maxSize: options.MaxSize,
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Create(
-                            maxSize: options.MaxSize,
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken);
-                    }
+                    await CreateInternal(
+                        maxSize: options.MaxSize,
+                        httpHeaders: default,
+                        metadata: default,
+                        smbProperties: default,
+                        filePermission: default,
+                        conditions: options.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 return new ShareFileWriteStream(
                     fileClient: this,
-                    bufferSize: options?.BufferSize ?? Constants.MB,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);

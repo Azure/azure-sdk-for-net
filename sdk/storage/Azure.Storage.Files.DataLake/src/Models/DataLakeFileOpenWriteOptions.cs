@@ -18,16 +18,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB,
-        /// max is 100 MB.
+        /// The size of the buffer to use.  Default is 4 MB,
+        /// max is 4000 MB.  See <see cref="DataLakeFileClient.MaxUploadLongBytes"/>.
         /// </summary>
         public long BufferSize { get; set; }
-
-        /// <summary>
-        /// Required <see cref="Overwrite"/> is set to true.
-        /// Specifies the size of the new Page Blob.
-        /// </summary>
-        public long Size { get; set; }
 
         /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to add

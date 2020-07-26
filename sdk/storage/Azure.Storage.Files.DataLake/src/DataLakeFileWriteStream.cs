@@ -9,7 +9,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class DataLakeFileWriteStream : WriteStream
+    internal class DataLakeFileWriteStream : StorageWriteStream
     {
         private readonly DataLakeFileClient _fileClient;
         private readonly DataLakeRequestConditions _conditions;
@@ -37,25 +37,15 @@ namespace Azure.Storage.Files.DataLake
             {
                 _buffer.Position = 0;
 
-                if (async)
-                {
-                    await _fileClient.AppendAsync(
-                        content: _buffer,
-                        offset: _writeIndex,
-                        leaseId: _conditions?.LeaseId,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    _fileClient.Append(
-                        content: _buffer,
-                        offset: _writeIndex,
-                        leaseId: _conditions?.LeaseId,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken);
-                }
+                await _fileClient.AppendInternal(
+                    content: _buffer,
+                    offset: _writeIndex,
+                    contentHash: default,
+                    leaseId: _conditions?.LeaseId,
+                    progressHandler: _progressHandler,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
                 _buffer.Clear();
@@ -66,21 +56,15 @@ namespace Azure.Storage.Files.DataLake
         {
             await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
-            if (async)
-            {
-                await _fileClient.FlushAsync(
-                    position: _writeIndex,
-                    conditions: _conditions,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                _fileClient.Flush(
-                    position: _writeIndex,
-                    conditions: _conditions,
-                    cancellationToken: cancellationToken);
-            }
+            await _fileClient.FlushInternal(
+                position: _writeIndex,
+                retainUncommittedData: default,
+                close: default,
+                httpHeaders: default,
+                conditions: _conditions,
+                async: async,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         protected override void ValidateBufferSize(long bufferSize)
@@ -90,9 +74,9 @@ namespace Azure.Storage.Files.DataLake
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
             }
 
-            if (bufferSize > 100 * Constants.MB)
+            if (bufferSize > Constants.DataLake.MaxAppendBytes)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 100 MB");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.DataLake.MaxAppendBytes}");
             }
         }
     }

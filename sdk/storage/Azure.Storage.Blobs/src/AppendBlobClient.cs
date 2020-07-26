@@ -1415,8 +1415,8 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
-                async: false,
                 options: options,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
@@ -1443,19 +1443,19 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
-                async: true,
                 options: options,
+                async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1469,8 +1469,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
-            bool async,
             AppendBlobOpenWriteOptions options,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
@@ -1481,41 +1481,31 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
-                if (options != null && options.Overwrite)
+                if (options?.Overwrite == true)
                 {
-                    if (async)
-                    {
-                        await CreateAsync(
-                            conditions: options?.Conditions,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Create(
-                            conditions: options?.Conditions,
-                            cancellationToken: cancellationToken);
-                    }
+                    await CreateInternal(
+                        httpHeaders: default,
+                        metadata: default,
+                        tags: default,
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 else
                 {
-                    BlobProperties blobProperties;
-
-                    if (async)
-                    {
-                        blobProperties = await GetPropertiesAsync().ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        blobProperties = GetProperties();
-                    }
+                    BlobProperties blobProperties = await GetPropertiesInternal(
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
 
                     position = blobProperties.ContentLength;
                 }
 
                 return new AppendBlobWriteStream(
                     appendBlobClient: this,
-                    bufferSize: options?.BufferSize ?? Constants.MB,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);

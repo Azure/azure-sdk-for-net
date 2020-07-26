@@ -2092,38 +2092,28 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
-                if (options != null && options.Overwrite)
+                if (options?.Overwrite == true)
                 {
-                    if (async)
-                    {
-                        await UploadAsync(
-                            content: new MemoryStream(Array.Empty<byte>()),
-                            conditions: options.Conditions,
-                            progressHandler: options.ProgressHandler,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Upload(
-                            content: new MemoryStream(Array.Empty<byte>()),
-                            conditions: options.Conditions,
-                            progressHandler: options.ProgressHandler,
-                            cancellationToken: cancellationToken);
-                    }
+                    await UploadInternal(
+                        content: new MemoryStream(Array.Empty<byte>()),
+                        blobHttpHeaders: default,
+                        metadata: default,
+                        tags: default,
+                        conditions: options?.Conditions,
+                        accessTier: default,
+                        progressHandler: default,
+                        operationName: default,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 else
                 {
-                    BlobProperties blobProperties;
-
-                    if (async)
-                    {
-                        blobProperties = await GetPropertiesAsync().ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        blobProperties = GetProperties();
-                    }
+                    BlobProperties blobProperties = await GetPropertiesInternal(
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
 
                     position = blobProperties.ContentLength;
                 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -17,8 +18,8 @@ namespace Azure.Storage.Blobs.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB,
-        /// max is 4 MB.  Must be a increment of 512.
+        /// The size of the buffer to use.  Default is 4 MB,
+        /// max is 4 MB.  Must be a increment of 512.  See <see cref="PageBlobClient.PageBlobMaxUploadPagesBytes"/>.
         /// </summary>
         public long BufferSize { get; set; }
 

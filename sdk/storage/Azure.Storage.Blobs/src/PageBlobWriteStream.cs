@@ -10,7 +10,7 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
-    internal class PageBlobWriteStream : WriteStream
+    internal class PageBlobWriteStream : StorageWriteStream
     {
         private readonly PageBlobClient _pageBlobClient;
         private readonly PageBlobRequestConditions _conditions;
@@ -45,15 +45,15 @@ namespace Azure.Storage.Blobs
             // New bytes will fit in the buffer.
             if (count <= _bufferSize - _buffer.Position)
             {
-                await WriteToBuffer(async, buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                await WriteToBufferInternal(buffer, offset, count, async, cancellationToken).ConfigureAwait(false);
             }
             else
             {
                 // We need a multiple of 512 to flush.
-                if (_buffer.Length % 512 != 0)
+                if (_buffer.Length % Constants.Blob.Page.PageSize != 0)
                 {
-                    int bytesToWrite = (int)(512 - _buffer.Length % 512);
-                    await WriteToBuffer(async, buffer, offset, bytesToWrite, cancellationToken).ConfigureAwait(false);
+                    int bytesToWrite = (int)(Constants.Blob.Page.PageSize - _buffer.Length % Constants.Blob.Page.PageSize);
+                    await WriteToBufferInternal(buffer, offset, bytesToWrite, async, cancellationToken).ConfigureAwait(false);
                     remaining -= bytesToWrite;
                     offset += bytesToWrite;
                 }
@@ -63,11 +63,11 @@ namespace Azure.Storage.Blobs
 
                 while (remaining > 0)
                 {
-                    await WriteToBuffer(
-                        async,
+                    await WriteToBufferInternal(
                         buffer,
                         offset,
                         (int)Math.Min(remaining, _bufferSize),
+                        async,
                         cancellationToken).ConfigureAwait(false);
 
                     // Remaining bytes won't fit in buffer.
@@ -94,25 +94,15 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                if (async)
-                {
-                    await _pageBlobClient.UploadPagesAsync(
-                        _buffer,
-                        _writeIndex,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    _pageBlobClient.UploadPages(
-                        _buffer,
-                        _writeIndex,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken);
-                }
+                await _pageBlobClient.UploadPagesInternal(
+                    content: _buffer,
+                    offset: _writeIndex,
+                    transactionalContentHash: default,
+                    conditions: _conditions,
+                    progressHandler: _progressHandler,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
                 _buffer.Clear();
@@ -131,12 +121,12 @@ namespace Azure.Storage.Blobs
 
             if (bufferSize > 4 * Constants.MB)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.DefaultBufferSize}");
             }
 
             if (bufferSize % 512 != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be a multiple of 512");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must be a multiple of {Constants.Blob.Page.PageSize}");
             }
         }
     }

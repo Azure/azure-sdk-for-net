@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PageInfo>> UploadPagesInternal(
+        internal async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
             byte[] transactionalContentHash,
@@ -2990,28 +2990,23 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Start();
 
-                if (options != null && options.Overwrite)
+                if (options?.Overwrite == true)
                 {
-                    if (async)
-                    {
-                        await CreateAsync(
-                            size: options.Size,
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Create(
-                            size: options.Size,
-                            conditions: options.Conditions,
-                            cancellationToken: cancellationToken);
-                    }
+                    await CreateInternal(
+                        size: options.Size,
+                        sequenceNumber: default,
+                        httpHeaders: default,
+                        metadata: default,
+                        tags: default,
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
 
                 return new PageBlobWriteStream(
                     pageBlobClient: this,
-                    bufferSize: options?.BufferSize ?? Constants.MB,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);

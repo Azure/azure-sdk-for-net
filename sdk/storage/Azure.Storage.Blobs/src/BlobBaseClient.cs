@@ -3010,7 +3010,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobProperties>> GetPropertiesInternal(
+        internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
