@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,7 @@ using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using BenchmarkDotNet.Toolchains.Roslyn;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Test
@@ -1991,6 +1993,46 @@ namespace Azure.Storage.Files.Shares.Test
                     content: stream,
                     conditions: conditions),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+        }
+
+
+
+        [Test]
+        public async Task UploadAsync_ReadOnlyError()
+        {
+            // Arrange
+            const int size = 10 * Constants.KB;
+            var data = this.GetRandomBuffer(size);
+            string shareName = GetNewShareName();
+
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            ShareFileClient fileClient = InstrumentClient(
+                test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            await fileClient.CreateAsync(Constants.KB);
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                ShareName = shareName,
+                Resource = "f",
+                FilePath = fileClient.Path,
+                ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(1)
+            };
+            sasBuilder.SetPermissions(ShareFileSasPermissions.Read);
+            UriBuilder sasUri = new UriBuilder(fileClient.Uri)
+            {
+                Query = sasBuilder.ToSasQueryParameters(
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey)).ToString()
+            };
+
+            ShareFileClient readOnlyClient = new ShareFileClient(new Uri(sasUri.ToString()));
+
+            using var stream = new MemoryStream(data);
+            // Throws AuthorizationMismatchPermissions or AuthorizationFailed
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                readOnlyClient.UploadAsync(content: stream),
+                e => Assert.IsNotNull(e.ErrorCode));
         }
 
         public async Task ClearRangeAsync()
