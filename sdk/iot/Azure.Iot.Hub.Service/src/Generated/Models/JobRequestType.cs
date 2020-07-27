@@ -10,11 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary>
-    /// Required.
-    /// 
-    /// The type of job to execute.
-    /// </summary>
+    /// <summary> The job type. </summary>
     public readonly partial struct JobRequestType : IEquatable<JobRequestType>
     {
         private readonly string _value;
