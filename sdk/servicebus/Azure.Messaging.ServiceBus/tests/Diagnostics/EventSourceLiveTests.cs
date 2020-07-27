@@ -105,8 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.DisposeAsync();
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeStartEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeCompleteEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
-                // link closed event is fired asynchronously, so add a small
-                // delay
+                // link closed event is fired asynchronously, so add a small delay
                 await Task.Delay(TimeSpan.FromSeconds(5));
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ManagementLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
