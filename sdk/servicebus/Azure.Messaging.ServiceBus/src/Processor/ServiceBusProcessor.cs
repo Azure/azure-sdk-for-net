@@ -586,6 +586,13 @@ namespace Azure.Messaging.ServiceBus
 
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
+
+                    foreach (ReceiverManager receiverManager in _receiverManagers)
+                    {
+                        await receiverManager.CloseReceiverIfNeeded(
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
                 }
             }
             catch (Exception exception)

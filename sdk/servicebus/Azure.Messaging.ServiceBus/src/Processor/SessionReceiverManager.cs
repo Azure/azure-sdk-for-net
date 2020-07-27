@@ -163,8 +163,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public override async Task CloseReceiverIfNeeded(
-            CancellationToken processorCancellationToken,
-            bool forceClose = false)
+            CancellationToken processorCancellationToken)
         {
             bool releaseSemaphore = false;
             try

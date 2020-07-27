@@ -69,8 +69,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+            CancellationToken cancellationToken)
         {
             try
             {
