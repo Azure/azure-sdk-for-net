@@ -2964,7 +2964,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
                         await stream.CopyToAsync(openWriteStream);
-                        await stream.FlushAsync();
+                        await openWriteStream.FlushAsync();
                     });
             }
         }

@@ -3018,11 +3018,14 @@ namespace Azure.Storage.Blobs.Specialized
                     eTag = response.Value.ETag;
                 }
 
-                PageBlobRequestConditions conditions = options?.Conditions ?? new PageBlobRequestConditions();
-                if (conditions.IfMatch == null)
+                PageBlobRequestConditions conditions = new PageBlobRequestConditions()
                 {
-                    conditions.IfMatch = eTag;
-                }
+                    IfMatch = eTag,
+                    LeaseId = options?.Conditions?.LeaseId,
+                    IfSequenceNumberEqual = options?.Conditions?.IfSequenceNumberEqual,
+                    IfSequenceNumberLessThan = options?.Conditions?.IfSequenceNumberLessThan,
+                    IfSequenceNumberLessThanOrEqual = options?.Conditions?.IfSequenceNumberLessThanOrEqual
+                };
 
                 return new PageBlobWriteStream(
                     pageBlobClient: this,

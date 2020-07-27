@@ -4008,7 +4008,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return new DataLakeFileWriteStream(
                     fileClient: this,
-                    bufferSize: options?.BufferSize ?? Constants.MB,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);

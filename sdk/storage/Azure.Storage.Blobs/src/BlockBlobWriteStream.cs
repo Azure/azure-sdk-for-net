@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                string blockId = GenerateBlockId();
+                string blockId = GenerateBlockId(_position + _buffer.Length);
 
                 if (async)
                 {
@@ -101,11 +101,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private static string GenerateBlockId()
+        private static string GenerateBlockId(long offset)
         {
-            Guid guid = Guid.NewGuid();
-            byte[] bytes = Encoding.UTF8.GetBytes(guid.ToString());
-            return Convert.ToBase64String(bytes);
+            // TODO #8162 - Add in a random GUID so multiple simultaneous
+            // uploads won't stomp on each other and the first to commit wins.
+            // This will require some changes to our test framework's
+            // RecordedClientRequestIdPolicy.
+            byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
+            BitConverter.GetBytes(offset).CopyTo(id, 0);
+            return Convert.ToBase64String(id);
         }
     }
 }

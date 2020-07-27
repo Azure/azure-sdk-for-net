@@ -136,7 +136,6 @@ namespace Azure.Storage.Shared
                     }
                 }
             }
-            _position += count;
         }
 
         protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
@@ -170,6 +169,7 @@ namespace Azure.Storage.Shared
             {
                 _buffer.Write(buffer, offset, count);
             }
+            _position += count;
         }
 
         protected static void ValidateWriteParameters(byte[] buffer, int offset, int count)
