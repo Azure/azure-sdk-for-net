@@ -2025,7 +2025,7 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
             ShareFileClient readOnlyClient = InstrumentClient(
-                new ShareFileClient(new Uri(sasUri.ToString())));
+                new ShareFileClient(new Uri(sasUri.ToString()), GetOptions()));
 
             using (var stream = new MemoryStream(data))
             {
