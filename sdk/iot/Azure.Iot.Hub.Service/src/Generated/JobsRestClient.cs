@@ -17,20 +17,20 @@ using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
-    internal partial class JobRestClient
+    internal partial class JobsRestClient
     {
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of JobRestClient. </summary>
+        /// <summary> Initializes a new instance of JobsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public JobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
+        public JobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
             if (apiVersion == null)
@@ -61,8 +61,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Create a new import/export job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="jobProperties"> Specifies the job specification. </param>
+        /// <summary> Creates a new import or export job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
+        /// <param name="jobProperties"> The job specifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<JobProperties>> CreateImportExportJobAsync(JobProperties jobProperties, CancellationToken cancellationToken = default)
         {
@@ -87,8 +87,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Create a new import/export job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="jobProperties"> Specifies the job specification. </param>
+        /// <summary> Creates a new import or export job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
+        /// <param name="jobProperties"> The job specifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<JobProperties> CreateImportExportJob(JobProperties jobProperties, CancellationToken cancellationToken = default)
         {
@@ -126,7 +126,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Gets the status of all import/export jobs in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Gets the status of all import and export jobs in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<IReadOnlyList<JobProperties>>> GetImportExportJobsAsync(CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Gets the status of all import/export jobs in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Gets the status of all import and export jobs in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IReadOnlyList<JobProperties>> GetImportExportJobs(CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Gets the status of an import or export job in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Gets the status of an import or export job in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<JobProperties>> GetImportExportJobAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -216,8 +216,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Gets the status of an import or export job in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Gets the status of an import or export job in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<JobProperties> GetImportExportJob(string id, CancellationToken cancellationToken = default)
         {
@@ -256,8 +256,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Cancels an import or export job in an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Cancels an import or export job in the IoT Hub. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<object>> CancelImportExportJobAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -284,8 +284,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Cancels an import or export job in an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Cancels an import or export job in the IoT Hub. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<object> CancelImportExportJob(string id, CancellationToken cancellationToken = default)
         {
@@ -312,7 +312,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateGetJobRequest(string id)
+        internal HttpMessage CreateGetScheduledJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -326,17 +326,17 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Retrieves details of a scheduled job from an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Gets details of a scheduled job from the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobResponse>> GetJobAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<JobResponse>> GetScheduledJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetJobRequest(id);
+            using var message = CreateGetScheduledJobRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -352,17 +352,17 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Retrieves details of a scheduled job from an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Gets details of a scheduled job from the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobResponse> GetJob(string id, CancellationToken cancellationToken = default)
+        public Response<JobResponse> GetScheduledJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetJobRequest(id);
+            using var message = CreateGetScheduledJobRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -378,7 +378,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCreateJobRequest(string id, JobRequest jobRequest)
+        internal HttpMessage CreateCreateScheduledJobRequest(string id, JobRequest jobRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -396,11 +396,11 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
-        /// <param name="jobRequest"> The JobRequest to use. </param>
+        /// <summary> Creates a new job to schedule twin updates or direct methods on the IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
+        /// <param name="jobRequest"> The job request info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobResponse>> CreateJobAsync(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<JobResponse>> CreateScheduledJobAsync(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -411,7 +411,7 @@ namespace Azure.Iot.Hub.Service
                 throw new ArgumentNullException(nameof(jobRequest));
             }
 
-            using var message = CreateCreateJobRequest(id, jobRequest);
+            using var message = CreateCreateScheduledJobRequest(id, jobRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -427,11 +427,11 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
-        /// <param name="jobRequest"> The JobRequest to use. </param>
+        /// <summary> Creates a new job to schedule twin updates or direct methods on the IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
+        /// <param name="jobRequest"> The job request info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobResponse> CreateJob(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
+        public Response<JobResponse> CreateScheduledJob(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -442,7 +442,7 @@ namespace Azure.Iot.Hub.Service
                 throw new ArgumentNullException(nameof(jobRequest));
             }
 
-            using var message = CreateCreateJobRequest(id, jobRequest);
+            using var message = CreateCreateScheduledJobRequest(id, jobRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -458,7 +458,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCancelJobRequest(string id)
+        internal HttpMessage CreateCancelScheduledJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -473,17 +473,17 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Cancels a scheduled job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Cancels a scheduled job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobResponse>> CancelJobAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<JobResponse>> CancelScheduledJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateCancelJobRequest(id);
+            using var message = CreateCancelScheduledJobRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -499,17 +499,17 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Cancels a scheduled job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="id"> Job ID. </param>
+        /// <summary> Cancels a scheduled job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
+        /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobResponse> CancelJob(string id, CancellationToken cancellationToken = default)
+        public Response<JobResponse> CancelScheduledJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateCancelJobRequest(id);
+            using var message = CreateCancelScheduledJobRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -525,7 +525,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateQueryJobsRequest(string jobType, string jobStatus)
+        internal HttpMessage CreateQueryScheduledJobsRequest(string jobType, string jobStatus)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -546,13 +546,13 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about jobs only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="jobType"> Job Type. </param>
-        /// <param name="jobStatus"> Job Status. </param>
+        /// <summary> Gets the information about jobs using an IoT Hub query. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. </summary>
+        /// <param name="jobType"> The job type. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs#querying-for-progress-on-jobs for a list of possible job types. </param>
+        /// <param name="jobStatus"> The job status. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs#querying-for-progress-on-jobs for a list of possible statuses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<QueryResult>> QueryJobsAsync(string jobType = null, string jobStatus = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueryResult>> QueryScheduledJobsAsync(string jobType = null, string jobStatus = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryJobsRequest(jobType, jobStatus);
+            using var message = CreateQueryScheduledJobsRequest(jobType, jobStatus);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -568,13 +568,13 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about jobs only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="jobType"> Job Type. </param>
-        /// <param name="jobStatus"> Job Status. </param>
+        /// <summary> Gets the information about jobs using an IoT Hub query. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. </summary>
+        /// <param name="jobType"> The job type. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs#querying-for-progress-on-jobs for a list of possible job types. </param>
+        /// <param name="jobStatus"> The job status. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs#querying-for-progress-on-jobs for a list of possible statuses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<QueryResult> QueryJobs(string jobType = null, string jobStatus = null, CancellationToken cancellationToken = default)
+        public Response<QueryResult> QueryScheduledJobs(string jobType = null, string jobStatus = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryJobsRequest(jobType, jobStatus);
+            using var message = CreateQueryScheduledJobsRequest(jobType, jobStatus);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The AuthenticationMechanismType. </summary>
+    /// <summary> The type of authentication used to connect to the service. </summary>
     public readonly partial struct AuthenticationMechanismType : IEquatable<AuthenticationMechanismType>
     {
         private readonly string _value;
