@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database.</param>
         /// <param name="authenticationType">The authentication type. Possible
         /// values include: 'SQL', 'ADPassword'</param>
-        public ImportRequest(StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string databaseName, string edition, string serviceObjectiveName, string maxSizeBytes, AuthenticationType? authenticationType = default(AuthenticationType?))
+        public ImportRequest(StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string databaseName, DatabaseEdition edition, ServiceObjectiveName serviceObjectiveName, string maxSizeBytes, AuthenticationType? authenticationType = default(AuthenticationType?))
             : base(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType)
         {
             DatabaseName = databaseName;
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Hyperscale'
         /// </summary>
         [JsonProperty(PropertyName = "edition")]
-        public string Edition { get; set; }
+        public DatabaseEdition Edition { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the service objective to assign to the
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'DS1000', 'DS1200', 'DS1500', 'DS2000', 'ElasticPool'
         /// </summary>
         [JsonProperty(PropertyName = "serviceObjectiveName")]
-        public string ServiceObjectiveName { get; set; }
+        public ServiceObjectiveName ServiceObjectiveName { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum size for the newly imported database.
@@ -156,14 +156,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             if (DatabaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DatabaseName");
-            }
-            if (Edition == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Edition");
-            }
-            if (ServiceObjectiveName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceObjectiveName");
             }
             if (MaxSizeBytes == null)
             {

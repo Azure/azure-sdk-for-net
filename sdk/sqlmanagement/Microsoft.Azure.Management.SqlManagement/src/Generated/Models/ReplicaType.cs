@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ReplicaType.
     /// </summary>
-    public static class ReplicaType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ReplicaTypeConverter))]
+    public struct ReplicaType : System.IEquatable<ReplicaType>
     {
-        public const string Primary = "Primary";
-        public const string ReadableSecondary = "ReadableSecondary";
+        private ReplicaType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ReplicaType Primary = "Primary";
+
+        public static readonly ReplicaType ReadableSecondary = "ReadableSecondary";
+
+
+        /// <summary>
+        /// Underlying value of enum ReplicaType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ReplicaType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ReplicaType
+        /// </summary>
+        public bool Equals(ReplicaType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ReplicaType
+        /// </summary>
+        public static implicit operator ReplicaType(string value)
+        {
+            return new ReplicaType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ReplicaType to string
+        /// </summary>
+        public static implicit operator string(ReplicaType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ReplicaType
+        /// </summary>
+        public static bool operator == (ReplicaType e1, ReplicaType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ReplicaType
+        /// </summary>
+        public static bool operator != (ReplicaType e1, ReplicaType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ReplicaType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ReplicaType && Equals((ReplicaType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ReplicaType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

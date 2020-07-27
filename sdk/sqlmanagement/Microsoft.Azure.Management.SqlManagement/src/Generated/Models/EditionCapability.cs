@@ -36,15 +36,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// service objectives for the edition.</param>
         /// <param name="zoneRedundant">Whether or not zone redundancy is
         /// supported for the edition.</param>
+        /// <param name="readScale">The read scale capability for the
+        /// edition.</param>
+        /// <param name="supportedStorageCapabilities">The list of supported
+        /// storage capabilities for this edition</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public EditionCapability(string name = default(string), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public EditionCapability(string name = default(string), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>), bool? zoneRedundant = default(bool?), ReadScaleCapability readScale = default(ReadScaleCapability), IList<StorageCapability> supportedStorageCapabilities = default(IList<StorageCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
             ZoneRedundant = zoneRedundant;
+            ReadScale = readScale;
+            SupportedStorageCapabilities = supportedStorageCapabilities;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -72,6 +78,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "zoneRedundant")]
         public bool? ZoneRedundant { get; private set; }
+
+        /// <summary>
+        /// Gets the read scale capability for the edition.
+        /// </summary>
+        [JsonProperty(PropertyName = "readScale")]
+        public ReadScaleCapability ReadScale { get; private set; }
+
+        /// <summary>
+        /// Gets the list of supported storage capabilities for this edition
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedStorageCapabilities")]
+        public IList<StorageCapability> SupportedStorageCapabilities { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

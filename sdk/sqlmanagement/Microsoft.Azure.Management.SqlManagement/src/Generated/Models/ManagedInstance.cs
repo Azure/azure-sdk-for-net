@@ -102,9 +102,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Europe Standard Time".</param>
         /// <param name="instancePoolId">The Id of the instance pool this
         /// managed server belongs to.</param>
+        /// <param name="maintenanceConfigurationId">Specifies maintenance
+        /// configuration id to apply to this managed instance.</param>
         /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
         /// values: 'None', '1.0', '1.1', '1.2'</param>
-        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string minimalTlsVersion = default(string))
+        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), ManagedServerCreateMode? managedInstanceCreateMode = default(ManagedServerCreateMode?), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), ManagedInstanceLicenseType? licenseType = default(ManagedInstanceLicenseType?), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), ManagedInstanceProxyOverride? proxyOverride = default(ManagedInstanceProxyOverride?), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), string minimalTlsVersion = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -127,6 +129,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ProxyOverride = proxyOverride;
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             MinimalTlsVersion = minimalTlsVersion;
             CustomInit();
         }
@@ -161,7 +164,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Default', 'PointInTimeRestore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedInstanceCreateMode")]
-        public string ManagedInstanceCreateMode { get; set; }
+        public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
 
         /// <summary>
         /// Gets the fully qualified domain name of the managed instance.
@@ -203,7 +206,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// licenses). Possible values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public string LicenseType { get; set; }
+        public ManagedInstanceLicenseType? LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets the number of vCores. Allowed values: 8, 16, 24, 32,
@@ -263,7 +266,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Proxy', 'Redirect', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proxyOverride")]
-        public string ProxyOverride { get; set; }
+        public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
 
         /// <summary>
         /// Gets or sets id of the timezone. Allowed values are timezones
@@ -288,6 +291,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instancePoolId")]
         public string InstancePoolId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies maintenance configuration id to apply to
+        /// this managed instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Gets or sets minimal TLS version. Allowed values: 'None', '1.0',

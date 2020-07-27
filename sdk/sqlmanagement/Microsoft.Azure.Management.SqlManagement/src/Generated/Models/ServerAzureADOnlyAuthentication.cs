@@ -11,39 +11,39 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A request to check whether the specified name for a resource is
-    /// available.
+    /// Azure Active Directory only authentication.
     /// </summary>
-    public partial class CheckNameAvailabilityRequest
+    [Rest.Serialization.JsonTransformation]
+    public partial class ServerAzureADOnlyAuthentication : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityRequest
+        /// Initializes a new instance of the ServerAzureADOnlyAuthentication
         /// class.
         /// </summary>
-        public CheckNameAvailabilityRequest()
+        public ServerAzureADOnlyAuthentication()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityRequest
+        /// Initializes a new instance of the ServerAzureADOnlyAuthentication
         /// class.
         /// </summary>
-        public CheckNameAvailabilityRequest(string name)
+        /// <param name="azureADOnlyAuthentication">Azure Active Directory only
+        /// Authentication enabled.</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        public ServerAzureADOnlyAuthentication(bool azureADOnlyAuthentication, string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
-            Name = name;
+            AzureADOnlyAuthentication = azureADOnlyAuthentication;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for CheckNameAvailabilityRequest class.
-        /// </summary>
-        static CheckNameAvailabilityRequest()
-        {
-            Type = "Microsoft.Sql/servers";
         }
 
         /// <summary>
@@ -52,14 +52,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets azure Active Directory only Authentication enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.azureADOnlyAuthentication")]
+        public bool AzureADOnlyAuthentication { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -69,10 +65,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
+            //Nothing to validate
         }
     }
 }

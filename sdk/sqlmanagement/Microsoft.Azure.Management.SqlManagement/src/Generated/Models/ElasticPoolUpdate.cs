@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// elastic pool. Possible values include: 'LicenseIncluded',
         /// 'BasePrice'</param>
         /// <param name="tags">Resource tags.</param>
-        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), ElasticPoolLicenseType? licenseType = default(ElasticPoolLicenseType?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public string LicenseType { get; set; }
+        public ElasticPoolLicenseType? LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

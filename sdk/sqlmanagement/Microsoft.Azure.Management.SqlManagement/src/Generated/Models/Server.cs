@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// access is allowed for this server.  Value is optional but if passed
         /// in, must be 'Enabled' or 'Disabled'. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string))
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), ServerPublicNetworkAccess? publicNetworkAccess = default(ServerPublicNetworkAccess?))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
+        public ServerPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

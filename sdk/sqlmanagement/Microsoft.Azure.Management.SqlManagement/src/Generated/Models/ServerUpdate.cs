@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// in, must be 'Enabled' or 'Disabled'. Possible values include:
         /// 'Enabled', 'Disabled'</param>
         /// <param name="tags">Resource tags.</param>
-        public ServerUpdate(string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdate(string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), ServerPublicNetworkAccess? publicNetworkAccess = default(ServerPublicNetworkAccess?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
+        public ServerPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

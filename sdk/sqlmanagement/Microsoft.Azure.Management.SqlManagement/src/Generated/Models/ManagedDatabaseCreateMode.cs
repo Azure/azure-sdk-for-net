@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ManagedDatabaseCreateMode.
     /// </summary>
-    public static class ManagedDatabaseCreateMode
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ManagedDatabaseCreateModeConverter))]
+    public struct ManagedDatabaseCreateMode : System.IEquatable<ManagedDatabaseCreateMode>
     {
-        public const string Default = "Default";
-        public const string RestoreExternalBackup = "RestoreExternalBackup";
-        public const string PointInTimeRestore = "PointInTimeRestore";
-        public const string Recovery = "Recovery";
-        public const string RestoreLongTermRetentionBackup = "RestoreLongTermRetentionBackup";
+        private ManagedDatabaseCreateMode(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ManagedDatabaseCreateMode Default = "Default";
+
+        public static readonly ManagedDatabaseCreateMode RestoreExternalBackup = "RestoreExternalBackup";
+
+        public static readonly ManagedDatabaseCreateMode PointInTimeRestore = "PointInTimeRestore";
+
+        public static readonly ManagedDatabaseCreateMode Recovery = "Recovery";
+
+        public static readonly ManagedDatabaseCreateMode RestoreLongTermRetentionBackup = "RestoreLongTermRetentionBackup";
+
+
+        /// <summary>
+        /// Underlying value of enum ManagedDatabaseCreateMode
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ManagedDatabaseCreateMode
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ManagedDatabaseCreateMode
+        /// </summary>
+        public bool Equals(ManagedDatabaseCreateMode e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ManagedDatabaseCreateMode
+        /// </summary>
+        public static implicit operator ManagedDatabaseCreateMode(string value)
+        {
+            return new ManagedDatabaseCreateMode(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ManagedDatabaseCreateMode to string
+        /// </summary>
+        public static implicit operator string(ManagedDatabaseCreateMode e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ManagedDatabaseCreateMode
+        /// </summary>
+        public static bool operator == (ManagedDatabaseCreateMode e1, ManagedDatabaseCreateMode e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ManagedDatabaseCreateMode
+        /// </summary>
+        public static bool operator != (ManagedDatabaseCreateMode e1, ManagedDatabaseCreateMode e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ManagedDatabaseCreateMode
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ManagedDatabaseCreateMode && Equals((ManagedDatabaseCreateMode)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ManagedDatabaseCreateMode
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

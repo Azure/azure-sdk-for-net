@@ -10,21 +10,112 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobExecutionLifecycle.
     /// </summary>
-    public static class JobExecutionLifecycle
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(JobExecutionLifecycleConverter))]
+    public struct JobExecutionLifecycle : System.IEquatable<JobExecutionLifecycle>
     {
-        public const string Created = "Created";
-        public const string InProgress = "InProgress";
-        public const string WaitingForChildJobExecutions = "WaitingForChildJobExecutions";
-        public const string WaitingForRetry = "WaitingForRetry";
-        public const string Succeeded = "Succeeded";
-        public const string SucceededWithSkipped = "SucceededWithSkipped";
-        public const string Failed = "Failed";
-        public const string TimedOut = "TimedOut";
-        public const string Canceled = "Canceled";
-        public const string Skipped = "Skipped";
+        private JobExecutionLifecycle(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly JobExecutionLifecycle Created = "Created";
+
+        public static readonly JobExecutionLifecycle InProgress = "InProgress";
+
+        public static readonly JobExecutionLifecycle WaitingForChildJobExecutions = "WaitingForChildJobExecutions";
+
+        public static readonly JobExecutionLifecycle WaitingForRetry = "WaitingForRetry";
+
+        public static readonly JobExecutionLifecycle Succeeded = "Succeeded";
+
+        public static readonly JobExecutionLifecycle SucceededWithSkipped = "SucceededWithSkipped";
+
+        public static readonly JobExecutionLifecycle Failed = "Failed";
+
+        public static readonly JobExecutionLifecycle TimedOut = "TimedOut";
+
+        public static readonly JobExecutionLifecycle Canceled = "Canceled";
+
+        public static readonly JobExecutionLifecycle Skipped = "Skipped";
+
+
+        /// <summary>
+        /// Underlying value of enum JobExecutionLifecycle
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for JobExecutionLifecycle
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type JobExecutionLifecycle
+        /// </summary>
+        public bool Equals(JobExecutionLifecycle e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to JobExecutionLifecycle
+        /// </summary>
+        public static implicit operator JobExecutionLifecycle(string value)
+        {
+            return new JobExecutionLifecycle(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert JobExecutionLifecycle to string
+        /// </summary>
+        public static implicit operator string(JobExecutionLifecycle e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum JobExecutionLifecycle
+        /// </summary>
+        public static bool operator == (JobExecutionLifecycle e1, JobExecutionLifecycle e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum JobExecutionLifecycle
+        /// </summary>
+        public static bool operator != (JobExecutionLifecycle e1, JobExecutionLifecycle e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for JobExecutionLifecycle
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is JobExecutionLifecycle && Equals((JobExecutionLifecycle)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode JobExecutionLifecycle
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

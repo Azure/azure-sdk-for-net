@@ -10,25 +10,120 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseEdition.
     /// </summary>
-    public static class DatabaseEdition
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(DatabaseEditionConverter))]
+    public struct DatabaseEdition : System.IEquatable<DatabaseEdition>
     {
-        public const string Web = "Web";
-        public const string Business = "Business";
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string PremiumRS = "PremiumRS";
-        public const string Free = "Free";
-        public const string Stretch = "Stretch";
-        public const string DataWarehouse = "DataWarehouse";
-        public const string System = "System";
-        public const string System2 = "System2";
-        public const string GeneralPurpose = "GeneralPurpose";
-        public const string BusinessCritical = "BusinessCritical";
-        public const string Hyperscale = "Hyperscale";
+        private DatabaseEdition(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly DatabaseEdition Web = "Web";
+
+        public static readonly DatabaseEdition Business = "Business";
+
+        public static readonly DatabaseEdition Basic = "Basic";
+
+        public static readonly DatabaseEdition Standard = "Standard";
+
+        public static readonly DatabaseEdition Premium = "Premium";
+
+        public static readonly DatabaseEdition PremiumRS = "PremiumRS";
+
+        public static readonly DatabaseEdition Free = "Free";
+
+        public static readonly DatabaseEdition Stretch = "Stretch";
+
+        public static readonly DatabaseEdition DataWarehouse = "DataWarehouse";
+
+        public static readonly DatabaseEdition System = "System";
+
+        public static readonly DatabaseEdition System2 = "System2";
+
+        public static readonly DatabaseEdition GeneralPurpose = "GeneralPurpose";
+
+        public static readonly DatabaseEdition BusinessCritical = "BusinessCritical";
+
+        public static readonly DatabaseEdition Hyperscale = "Hyperscale";
+
+
+        /// <summary>
+        /// Underlying value of enum DatabaseEdition
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for DatabaseEdition
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type DatabaseEdition
+        /// </summary>
+        public bool Equals(DatabaseEdition e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to DatabaseEdition
+        /// </summary>
+        public static implicit operator DatabaseEdition(string value)
+        {
+            return new DatabaseEdition(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert DatabaseEdition to string
+        /// </summary>
+        public static implicit operator string(DatabaseEdition e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum DatabaseEdition
+        /// </summary>
+        public static bool operator == (DatabaseEdition e1, DatabaseEdition e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum DatabaseEdition
+        /// </summary>
+        public static bool operator != (DatabaseEdition e1, DatabaseEdition e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for DatabaseEdition
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is DatabaseEdition && Equals((DatabaseEdition)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode DatabaseEdition
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

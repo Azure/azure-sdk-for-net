@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ExtendedServerBlobAuditingPoliciesOperations.
+    /// Extension methods for ServerAzureADOnlyAuthenticationsOperations.
     /// </summary>
-    public static partial class ExtendedServerBlobAuditingPoliciesOperationsExtensions
+    public static partial class ServerAzureADOnlyAuthenticationsOperationsExtensions
     {
             /// <summary>
-            /// Gets an extended server's blob auditing policy.
+            /// Gets a specific Azure Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static ExtendedServerBlobAuditingPolicy Get(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName)
+            public static ServerAzureADOnlyAuthentication Get(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.GetAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets an extended server's blob auditing policy.
+            /// Gets a specific Azure Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExtendedServerBlobAuditingPolicy> GetAsync(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> GetAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates an extended server's blob auditing policy.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,15 +78,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of extended blob auditing policy
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
-            public static ExtendedServerBlobAuditingPolicy CreateOrUpdate(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, ExtendedServerBlobAuditingPolicy parameters)
+            public static ServerAzureADOnlyAuthentication CreateOrUpdate(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates an extended server's blob auditing policy.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,12 +101,13 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of extended blob auditing policy
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExtendedServerBlobAuditingPolicy> CreateOrUpdateAsync(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, ExtendedServerBlobAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> CreateOrUpdateAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -112,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Lists extended auditing settings of a server.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,13 +128,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<ExtendedServerBlobAuditingPolicy> ListByServer(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName)
+            public static void Delete(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists extended auditing settings of a server.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,7 +149,46 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExtendedServerBlobAuditingPolicy>> ListByServerAsync(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of server Azure Active Directory only authentications.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<ServerAzureADOnlyAuthentication> ListByServer(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of server Azure Active Directory only authentications.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ServerAzureADOnlyAuthentication>> ListByServerAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -154,7 +197,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates an extended server's blob auditing policy.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -167,15 +211,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of extended blob auditing policy
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
-            public static ExtendedServerBlobAuditingPolicy BeginCreateOrUpdate(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, ExtendedServerBlobAuditingPolicy parameters)
+            public static ServerAzureADOnlyAuthentication BeginCreateOrUpdate(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates an extended server's blob auditing policy.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -188,12 +234,13 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// Properties of extended blob auditing policy
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExtendedServerBlobAuditingPolicy> BeginCreateOrUpdateAsync(this IExtendedServerBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, ExtendedServerBlobAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> BeginCreateOrUpdateAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -202,7 +249,46 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Lists extended auditing settings of a server.
+            /// Deletes an existing server Active Directory only authentication property.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void BeginDelete(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing server Active Directory only authentication property.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,13 +296,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExtendedServerBlobAuditingPolicy> ListByServerNext(this IExtendedServerBlobAuditingPoliciesOperations operations, string nextPageLink)
+            public static IPage<ServerAzureADOnlyAuthentication> ListByServerNext(this IServerAzureADOnlyAuthenticationsOperations operations, string nextPageLink)
             {
                 return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists extended auditing settings of a server.
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,7 +313,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExtendedServerBlobAuditingPolicy>> ListByServerNextAsync(this IExtendedServerBlobAuditingPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServerAzureADOnlyAuthentication>> ListByServerNextAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -10,76 +10,222 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ServiceObjectiveName.
     /// </summary>
-    public static class ServiceObjectiveName
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ServiceObjectiveNameConverter))]
+    public struct ServiceObjectiveName : System.IEquatable<ServiceObjectiveName>
     {
-        public const string System = "System";
-        public const string System0 = "System0";
-        public const string System1 = "System1";
-        public const string System2 = "System2";
-        public const string System3 = "System3";
-        public const string System4 = "System4";
-        public const string System2L = "System2L";
-        public const string System3L = "System3L";
-        public const string System4L = "System4L";
-        public const string Free = "Free";
-        public const string Basic = "Basic";
-        public const string S0 = "S0";
-        public const string S1 = "S1";
-        public const string S2 = "S2";
-        public const string S3 = "S3";
-        public const string S4 = "S4";
-        public const string S6 = "S6";
-        public const string S7 = "S7";
-        public const string S9 = "S9";
-        public const string S12 = "S12";
-        public const string P1 = "P1";
-        public const string P2 = "P2";
-        public const string P3 = "P3";
-        public const string P4 = "P4";
-        public const string P6 = "P6";
-        public const string P11 = "P11";
-        public const string P15 = "P15";
-        public const string PRS1 = "PRS1";
-        public const string PRS2 = "PRS2";
-        public const string PRS4 = "PRS4";
-        public const string PRS6 = "PRS6";
-        public const string DW100 = "DW100";
-        public const string DW200 = "DW200";
-        public const string DW300 = "DW300";
-        public const string DW400 = "DW400";
-        public const string DW500 = "DW500";
-        public const string DW600 = "DW600";
-        public const string DW1000 = "DW1000";
-        public const string DW1200 = "DW1200";
-        public const string DW1000c = "DW1000c";
-        public const string DW1500 = "DW1500";
-        public const string DW1500c = "DW1500c";
-        public const string DW2000 = "DW2000";
-        public const string DW2000c = "DW2000c";
-        public const string DW3000 = "DW3000";
-        public const string DW2500c = "DW2500c";
-        public const string DW3000c = "DW3000c";
-        public const string DW6000 = "DW6000";
-        public const string DW5000c = "DW5000c";
-        public const string DW6000c = "DW6000c";
-        public const string DW7500c = "DW7500c";
-        public const string DW10000c = "DW10000c";
-        public const string DW15000c = "DW15000c";
-        public const string DW30000c = "DW30000c";
-        public const string DS100 = "DS100";
-        public const string DS200 = "DS200";
-        public const string DS300 = "DS300";
-        public const string DS400 = "DS400";
-        public const string DS500 = "DS500";
-        public const string DS600 = "DS600";
-        public const string DS1000 = "DS1000";
-        public const string DS1200 = "DS1200";
-        public const string DS1500 = "DS1500";
-        public const string DS2000 = "DS2000";
-        public const string ElasticPool = "ElasticPool";
+        private ServiceObjectiveName(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ServiceObjectiveName System = "System";
+
+        public static readonly ServiceObjectiveName System0 = "System0";
+
+        public static readonly ServiceObjectiveName System1 = "System1";
+
+        public static readonly ServiceObjectiveName System2 = "System2";
+
+        public static readonly ServiceObjectiveName System3 = "System3";
+
+        public static readonly ServiceObjectiveName System4 = "System4";
+
+        public static readonly ServiceObjectiveName System2L = "System2L";
+
+        public static readonly ServiceObjectiveName System3L = "System3L";
+
+        public static readonly ServiceObjectiveName System4L = "System4L";
+
+        public static readonly ServiceObjectiveName Free = "Free";
+
+        public static readonly ServiceObjectiveName Basic = "Basic";
+
+        public static readonly ServiceObjectiveName S0 = "S0";
+
+        public static readonly ServiceObjectiveName S1 = "S1";
+
+        public static readonly ServiceObjectiveName S2 = "S2";
+
+        public static readonly ServiceObjectiveName S3 = "S3";
+
+        public static readonly ServiceObjectiveName S4 = "S4";
+
+        public static readonly ServiceObjectiveName S6 = "S6";
+
+        public static readonly ServiceObjectiveName S7 = "S7";
+
+        public static readonly ServiceObjectiveName S9 = "S9";
+
+        public static readonly ServiceObjectiveName S12 = "S12";
+
+        public static readonly ServiceObjectiveName P1 = "P1";
+
+        public static readonly ServiceObjectiveName P2 = "P2";
+
+        public static readonly ServiceObjectiveName P3 = "P3";
+
+        public static readonly ServiceObjectiveName P4 = "P4";
+
+        public static readonly ServiceObjectiveName P6 = "P6";
+
+        public static readonly ServiceObjectiveName P11 = "P11";
+
+        public static readonly ServiceObjectiveName P15 = "P15";
+
+        public static readonly ServiceObjectiveName PRS1 = "PRS1";
+
+        public static readonly ServiceObjectiveName PRS2 = "PRS2";
+
+        public static readonly ServiceObjectiveName PRS4 = "PRS4";
+
+        public static readonly ServiceObjectiveName PRS6 = "PRS6";
+
+        public static readonly ServiceObjectiveName DW100 = "DW100";
+
+        public static readonly ServiceObjectiveName DW200 = "DW200";
+
+        public static readonly ServiceObjectiveName DW300 = "DW300";
+
+        public static readonly ServiceObjectiveName DW400 = "DW400";
+
+        public static readonly ServiceObjectiveName DW500 = "DW500";
+
+        public static readonly ServiceObjectiveName DW600 = "DW600";
+
+        public static readonly ServiceObjectiveName DW1000 = "DW1000";
+
+        public static readonly ServiceObjectiveName DW1200 = "DW1200";
+
+        public static readonly ServiceObjectiveName DW1000c = "DW1000c";
+
+        public static readonly ServiceObjectiveName DW1500 = "DW1500";
+
+        public static readonly ServiceObjectiveName DW1500c = "DW1500c";
+
+        public static readonly ServiceObjectiveName DW2000 = "DW2000";
+
+        public static readonly ServiceObjectiveName DW2000c = "DW2000c";
+
+        public static readonly ServiceObjectiveName DW3000 = "DW3000";
+
+        public static readonly ServiceObjectiveName DW2500c = "DW2500c";
+
+        public static readonly ServiceObjectiveName DW3000c = "DW3000c";
+
+        public static readonly ServiceObjectiveName DW6000 = "DW6000";
+
+        public static readonly ServiceObjectiveName DW5000c = "DW5000c";
+
+        public static readonly ServiceObjectiveName DW6000c = "DW6000c";
+
+        public static readonly ServiceObjectiveName DW7500c = "DW7500c";
+
+        public static readonly ServiceObjectiveName DW10000c = "DW10000c";
+
+        public static readonly ServiceObjectiveName DW15000c = "DW15000c";
+
+        public static readonly ServiceObjectiveName DW30000c = "DW30000c";
+
+        public static readonly ServiceObjectiveName DS100 = "DS100";
+
+        public static readonly ServiceObjectiveName DS200 = "DS200";
+
+        public static readonly ServiceObjectiveName DS300 = "DS300";
+
+        public static readonly ServiceObjectiveName DS400 = "DS400";
+
+        public static readonly ServiceObjectiveName DS500 = "DS500";
+
+        public static readonly ServiceObjectiveName DS600 = "DS600";
+
+        public static readonly ServiceObjectiveName DS1000 = "DS1000";
+
+        public static readonly ServiceObjectiveName DS1200 = "DS1200";
+
+        public static readonly ServiceObjectiveName DS1500 = "DS1500";
+
+        public static readonly ServiceObjectiveName DS2000 = "DS2000";
+
+        public static readonly ServiceObjectiveName ElasticPool = "ElasticPool";
+
+
+        /// <summary>
+        /// Underlying value of enum ServiceObjectiveName
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ServiceObjectiveName
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ServiceObjectiveName
+        /// </summary>
+        public bool Equals(ServiceObjectiveName e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ServiceObjectiveName
+        /// </summary>
+        public static implicit operator ServiceObjectiveName(string value)
+        {
+            return new ServiceObjectiveName(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ServiceObjectiveName to string
+        /// </summary>
+        public static implicit operator string(ServiceObjectiveName e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ServiceObjectiveName
+        /// </summary>
+        public static bool operator == (ServiceObjectiveName e1, ServiceObjectiveName e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ServiceObjectiveName
+        /// </summary>
+        public static bool operator != (ServiceObjectiveName e1, ServiceObjectiveName e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ServiceObjectiveName
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ServiceObjectiveName && Equals((ServiceObjectiveName)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ServiceObjectiveName
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

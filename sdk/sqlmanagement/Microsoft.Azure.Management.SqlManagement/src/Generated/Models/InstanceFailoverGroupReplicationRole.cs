@@ -10,13 +10,101 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for InstanceFailoverGroupReplicationRole.
     /// </summary>
-    public static class InstanceFailoverGroupReplicationRole
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(InstanceFailoverGroupReplicationRoleConverter))]
+    public struct InstanceFailoverGroupReplicationRole : System.IEquatable<InstanceFailoverGroupReplicationRole>
     {
-        public const string Primary = "Primary";
-        public const string Secondary = "Secondary";
+        private InstanceFailoverGroupReplicationRole(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly InstanceFailoverGroupReplicationRole Primary = "Primary";
+
+        public static readonly InstanceFailoverGroupReplicationRole Secondary = "Secondary";
+
+
+        /// <summary>
+        /// Underlying value of enum InstanceFailoverGroupReplicationRole
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public bool Equals(InstanceFailoverGroupReplicationRole e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public static implicit operator InstanceFailoverGroupReplicationRole(string value)
+        {
+            return new InstanceFailoverGroupReplicationRole(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert InstanceFailoverGroupReplicationRole
+        /// to string
+        /// </summary>
+        public static implicit operator string(InstanceFailoverGroupReplicationRole e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public static bool operator == (InstanceFailoverGroupReplicationRole e1, InstanceFailoverGroupReplicationRole e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public static bool operator != (InstanceFailoverGroupReplicationRole e1, InstanceFailoverGroupReplicationRole e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is InstanceFailoverGroupReplicationRole && Equals((InstanceFailoverGroupReplicationRole)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode InstanceFailoverGroupReplicationRole
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

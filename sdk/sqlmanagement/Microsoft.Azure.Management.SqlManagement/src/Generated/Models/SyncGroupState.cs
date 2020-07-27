@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncGroupState.
     /// </summary>
-    public static class SyncGroupState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SyncGroupStateConverter))]
+    public struct SyncGroupState : System.IEquatable<SyncGroupState>
     {
-        public const string NotReady = "NotReady";
-        public const string Error = "Error";
-        public const string Warning = "Warning";
-        public const string Progressing = "Progressing";
-        public const string Good = "Good";
+        private SyncGroupState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SyncGroupState NotReady = "NotReady";
+
+        public static readonly SyncGroupState Error = "Error";
+
+        public static readonly SyncGroupState Warning = "Warning";
+
+        public static readonly SyncGroupState Progressing = "Progressing";
+
+        public static readonly SyncGroupState Good = "Good";
+
+
+        /// <summary>
+        /// Underlying value of enum SyncGroupState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SyncGroupState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SyncGroupState
+        /// </summary>
+        public bool Equals(SyncGroupState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SyncGroupState
+        /// </summary>
+        public static implicit operator SyncGroupState(string value)
+        {
+            return new SyncGroupState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SyncGroupState to string
+        /// </summary>
+        public static implicit operator string(SyncGroupState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SyncGroupState
+        /// </summary>
+        public static bool operator == (SyncGroupState e1, SyncGroupState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SyncGroupState
+        /// </summary>
+        public static bool operator != (SyncGroupState e1, SyncGroupState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SyncGroupState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SyncGroupState && Equals((SyncGroupState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SyncGroupState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

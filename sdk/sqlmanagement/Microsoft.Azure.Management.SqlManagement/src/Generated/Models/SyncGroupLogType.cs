@@ -10,15 +10,100 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncGroupLogType.
     /// </summary>
-    public static class SyncGroupLogType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SyncGroupLogTypeConverter))]
+    public struct SyncGroupLogType : System.IEquatable<SyncGroupLogType>
     {
-        public const string All = "All";
-        public const string Error = "Error";
-        public const string Warning = "Warning";
-        public const string Success = "Success";
+        private SyncGroupLogType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SyncGroupLogType All = "All";
+
+        public static readonly SyncGroupLogType Error = "Error";
+
+        public static readonly SyncGroupLogType Warning = "Warning";
+
+        public static readonly SyncGroupLogType Success = "Success";
+
+
+        /// <summary>
+        /// Underlying value of enum SyncGroupLogType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SyncGroupLogType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SyncGroupLogType
+        /// </summary>
+        public bool Equals(SyncGroupLogType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SyncGroupLogType
+        /// </summary>
+        public static implicit operator SyncGroupLogType(string value)
+        {
+            return new SyncGroupLogType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SyncGroupLogType to string
+        /// </summary>
+        public static implicit operator string(SyncGroupLogType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SyncGroupLogType
+        /// </summary>
+        public static bool operator == (SyncGroupLogType e1, SyncGroupLogType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SyncGroupLogType
+        /// </summary>
+        public static bool operator != (SyncGroupLogType e1, SyncGroupLogType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SyncGroupLogType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SyncGroupLogType && Equals((SyncGroupLogType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SyncGroupLogType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
