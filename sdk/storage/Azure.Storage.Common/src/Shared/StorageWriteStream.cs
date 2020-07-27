@@ -24,7 +24,12 @@ namespace Azure.Storage.Shared
         {
             _position = position;
             _bufferSize = bufferSize;
-            _progressHandler = progressHandler;
+
+            if (progressHandler != null)
+            {
+                _progressHandler = new AggregatingProgressIncrementer(progressHandler);
+            }
+
             _buffer = new PooledMemoryStream(
                 arrayPool: ArrayPool<byte>.Shared,
                 absolutePosition: 0,

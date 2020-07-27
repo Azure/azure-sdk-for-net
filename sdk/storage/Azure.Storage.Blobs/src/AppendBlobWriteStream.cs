@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -28,7 +27,7 @@ namespace Azure.Storage.Blobs
         {
             ValidateBufferSize(bufferSize);
             _appendBlobClient = appendBlobClient;
-            _conditions = conditions;
+            _conditions = conditions ?? new AppendBlobRequestConditions();
         }
 
         protected override async Task AppendInternal(
@@ -39,22 +38,18 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                if (async)
-                {
-                    await _appendBlobClient.AppendBlockAsync(
-                        _buffer,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    _appendBlobClient.AppendBlock(
-                        _buffer,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken);
-                }
+                Response<BlobAppendInfo> response = await _appendBlobClient.AppendBlockInternal(
+                    content: _buffer,
+                    transactionalContentHash: default,
+                    conditions: _conditions,
+                    progressHandler: _progressHandler,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                _conditions.IfMatch = response.Value.ETag;
+                _conditions.IfAppendPositionEqual = null;
+                _conditions.IfMaxSizeLessThanOrEqual = null;
             }
 
             _buffer.Clear();

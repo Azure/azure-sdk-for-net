@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4000 MB.  See <see cref="DataLakeFileClient.MaxUploadLongBytes"/>.
         /// </summary>
-        public long BufferSize { get; set; }
+        public long? BufferSize { get; set; }
 
         /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to add

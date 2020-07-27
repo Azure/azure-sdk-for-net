@@ -2032,7 +2032,8 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// Opens a stream for writing to the blob.
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
         /// </summary>
         /// <param name="options">
         /// Optional parameters.
@@ -2060,7 +2061,8 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Opens a stream for writing to the blob.
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2092,49 +2094,31 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
-                List<string> blockIds = new List<string>();
+                await UploadInternal(
+                    content: new MemoryStream(Array.Empty<byte>()),
+                    blobHttpHeaders: default,
+                    metadata: default,
+                    tags: default,
+                    conditions: options?.Conditions,
+                    accessTier: default,
+                    progressHandler: default,
+                    operationName: default,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                if (options?.Overwrite == true)
-                {
-                    await UploadInternal(
-                        content: new MemoryStream(Array.Empty<byte>()),
-                        blobHttpHeaders: default,
-                        metadata: default,
-                        tags: default,
-                        conditions: options?.Conditions,
-                        accessTier: default,
-                        progressHandler: default,
-                        operationName: default,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
+                    conditions: options?.Conditions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                    position = blobPropertiesResponse.Value.ContentLength;
-
-                    Response<BlockList> blockListResponse = await GetBlockListInternal(
-                        blockListTypes: BlockListTypes.Committed,
-                        snapshot: default,
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    blockIds.AddRange(blockListResponse.Value.CommittedBlocks.Select(r => r.Name));
-                }
+                position = blobPropertiesResponse.Value.ContentLength;
 
                 return new BlockBlobWriteStream(
                     blockBlobClient: this,
-                    bufferSize: options?.BufferSize ?? Constants.MB,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    blockIds: blockIds,
                     conditions: options?.Conditions,
                     progressHandler: options?.ProgressHandler);
             }

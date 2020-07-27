@@ -1403,7 +1403,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync()
+        public async Task OpenWriteAsync_NewBlob()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1437,6 +1437,264 @@ namespace Azure.Storage.Blobs.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.AppendBlockAsync(content: originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                Overwrite = true
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(options: options);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, newData.Length));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(newData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AppendExistingBlob()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.AppendBlockAsync(content: originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync();
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            byte[] expectedData = new byte[2 * Constants.KB];
+            Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
+            Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.OpenWriteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(options);
+
+            await stream.CopyToAsync(openWriteStream);
+            stream.Position = 0;
+
+            await blob.AppendBlockAsync(stream);
+            stream.Position = 0;
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                stream.CopyToAsync(openWriteStream),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            TestProgress progress = new TestProgress();
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                ProgressHandler = progress,
+                BufferSize = 256
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(options);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            List<long> expectedProgress = new List<long>
+            {
+                0,
+                256,
+                256,
+                256,
+                512,
+                512,
+                512,
+                768,
+                768,
+                768,
+                1024,
+                1024
+            };
+
+            Assert.IsTrue(progress.List.Count == 12);
+            TestHelper.AssertSequenceEqual<long>(expectedProgress, progress.List);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            AccessConditionParameters[] testCases = new[]
+            {
+                new AccessConditionParameters(),
+                new AccessConditionParameters { IfModifiedSince = OldDate },
+                new AccessConditionParameters { IfUnmodifiedSince = NewDate },
+                new AccessConditionParameters { Match = ReceivedETag },
+                new AccessConditionParameters { NoneMatch = GarbageETag },
+                new AccessConditionParameters { LeaseId = ReceivedLeaseId },
+                new AccessConditionParameters { AppendPosE = 0 },
+                new AccessConditionParameters { MaxSizeLTE = 100 }
+            };
+            foreach (AccessConditionParameters parameters in testCases)
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await blob.CreateAsync();
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                byte[] data = GetRandomBuffer(7);
+                using Stream stream = new MemoryStream(data);
+
+                AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                // Act
+                Stream openWriteStream = await blob.OpenWriteAsync(options);
+                await stream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+
+                // Assert
+                Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+                MemoryStream dataResult = new MemoryStream();
+                await result.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(data.Length, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            AccessConditionParameters[] testCases = new[]
+            {
+                new AccessConditionParameters { IfModifiedSince = NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = OldDate },
+                new AccessConditionParameters { Match = GarbageETag },
+                new AccessConditionParameters { NoneMatch = ReceivedETag },
+                new AccessConditionParameters { LeaseId = garbageLeaseId },
+                new AccessConditionParameters { AppendPosE = 1 },
+                new AccessConditionParameters { MaxSizeLTE = 1 }
+            };
+            foreach (AccessConditionParameters parameters in testCases)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await blob.CreateAsync();
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                byte[] data = GetRandomBuffer(7);
+                using Stream stream = new MemoryStream(data);
+
+                AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                // Act
+                if (parameters.AppendPosE != null || parameters.MaxSizeLTE != null)
+                {
+                    Stream openWriteStream = await blob.OpenWriteAsync(options);
+                    await stream.CopyToAsync(openWriteStream);
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        openWriteStream.FlushAsync(),
+                        e => { });
+                }
+                else
+                {
+                    await TestHelper.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            Stream openWriteStream = await blob.OpenWriteAsync(options);
+                            await stream.CopyToAsync(openWriteStream);
+                            await stream.FlushAsync();
+                        });
+                }
+            }
         }
 
         private AppendBlobRequestConditions BuildDestinationAccessConditions(

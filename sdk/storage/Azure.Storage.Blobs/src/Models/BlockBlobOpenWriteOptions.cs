@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4000 MB.  See <see cref="BlockBlobClient.BlockBlobMaxStageBlockLongBytes"/>.
         /// </summary>
-        public long BufferSize { get; set; }
+        public long? BufferSize { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add

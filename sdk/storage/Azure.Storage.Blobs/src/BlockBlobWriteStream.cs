@@ -22,7 +22,6 @@ namespace Azure.Storage.Blobs
             BlockBlobClient blockBlobClient,
             long bufferSize,
             long position,
-            List<string> blockIds,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
                 position,
@@ -32,7 +31,7 @@ namespace Azure.Storage.Blobs
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
             _conditions = conditions;
-            _blockIds = blockIds;
+            _blockIds = new List<string>();
         }
 
         protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)

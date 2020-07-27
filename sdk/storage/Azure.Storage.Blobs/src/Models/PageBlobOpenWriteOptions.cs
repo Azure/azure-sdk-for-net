@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4 MB.  Must be a increment of 512.  See <see cref="PageBlobClient.PageBlobMaxUploadPagesBytes"/>.
         /// </summary>
-        public long BufferSize { get; set; }
+        public long? BufferSize { get; set; }
 
         /// <summary>
         /// Required if Overwrite is set to true.

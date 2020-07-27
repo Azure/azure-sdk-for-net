@@ -2113,8 +2113,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Can't record volatile block id - https://github.com/Azure/azure-sdk-for-net/issues/12660")]
-        public async Task OpenWriteAsync()
+        public async Task OpenWriteAsync_NewBlob()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2142,10 +2141,42 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
-            var dataResult = new MemoryStream();
+            MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.UploadAsync(content: originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                Overwrite = true
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(options: options);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, newData.Length));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(newData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

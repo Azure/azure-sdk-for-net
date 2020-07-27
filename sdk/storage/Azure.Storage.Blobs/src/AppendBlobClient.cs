@@ -944,7 +944,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobAppendInfo>> AppendBlockInternal(
+        internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
             byte[] transactionalContentHash,
             AppendBlobRequestConditions conditions,
@@ -1480,10 +1480,11 @@ namespace Azure.Storage.Blobs.Specialized
                 scope.Start();
 
                 long position = 0;
+                ETag eTag;
 
                 if (options?.Overwrite == true)
                 {
-                    await CreateInternal(
+                    Response<BlobContentInfo> createResponse = await CreateInternal(
                         httpHeaders: default,
                         metadata: default,
                         tags: default,
@@ -1491,23 +1492,34 @@ namespace Azure.Storage.Blobs.Specialized
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    eTag = createResponse.Value.ETag;
                 }
                 else
                 {
-                    BlobProperties blobProperties = await GetPropertiesInternal(
+                    Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
                         conditions: options?.Conditions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    position = blobProperties.ContentLength;
+                    position = blobPropertiesResponse.Value.ContentLength;
+                    eTag = blobPropertiesResponse.Value.ETag;
                 }
+
+                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
+                {
+                    IfMatch = eTag,
+                    LeaseId = options?.Conditions?.LeaseId,
+                    IfAppendPositionEqual = options?.Conditions?.IfAppendPositionEqual,
+                    IfMaxSizeLessThanOrEqual = options?.Conditions?.IfMaxSizeLessThanOrEqual
+                };
 
                 return new AppendBlobWriteStream(
                     appendBlobClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    conditions: options?.Conditions,
+                    conditions: conditions,
                     progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)

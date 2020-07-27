@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4 MB.
         /// </summary>
-        public long BufferSize { get; set; }
+        public long? BufferSize { get; set; }
 
         /// <summary>
         /// Required if Overwrite is set to true.
