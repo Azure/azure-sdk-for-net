@@ -2094,7 +2094,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
-                await UploadInternal(
+                Response<BlobContentInfo> response = await UploadInternal(
                     content: new MemoryStream(Array.Empty<byte>()),
                     blobHttpHeaders: default,
                     metadata: default,
@@ -2107,19 +2107,17 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-                Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
-                    conditions: options?.Conditions,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-                position = blobPropertiesResponse.Value.ContentLength;
+                BlobRequestConditions conditions = new BlobRequestConditions
+                {
+                    IfMatch = response.Value.ETag,
+                    LeaseId = options?.Conditions?.LeaseId
+                };
 
                 return new BlockBlobWriteStream(
                     blockBlobClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    conditions: options?.Conditions,
+                    conditions: conditions,
                     progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)

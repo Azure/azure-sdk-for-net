@@ -2179,8 +2179,168 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
         }
 
+        [Test]
+        public async Task OpenWriteAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.OpenWriteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync();
+
+            string blockId = GenerateBlockId();
+            await blob.StageBlockAsync(blockId, stream);
+            stream.Position = 0;
+            await blob.CommitBlockListAsync(new List<string> { blockId });
+
+            await stream.CopyToAsync(openWriteStream);
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                openWriteStream.FlushAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            TestProgress progress = new TestProgress();
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                ProgressHandler = progress,
+                BufferSize = 256
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(options);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            List<long> expectedProgress = new List<long>
+            {
+                0,
+                256,
+                256,
+                256,
+                512,
+                512,
+                512,
+                768,
+                768,
+                768,
+                1024,
+                1024
+            };
+
+            Assert.IsTrue(progress.List.Count == 12);
+            TestHelper.AssertSequenceEqual<long>(expectedProgress, progress.List);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditions()
+        {
+            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+                parameters.SourceIfMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfMatch);
+                BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+
+                BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                // Act
+                Stream openWriteStream = await blob.OpenWriteAsync(options);
+                await stream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+
+                // Assert
+                Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+                MemoryStream dataResult = new MemoryStream();
+                await result.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(data.Length, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditionsFail()
+        {
+            foreach (AccessConditionParameters parameters in AccessConditionsFail_Data)
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+                parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfNoneMatch);
+                BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+
+                BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.OpenWriteAsync(options),
+                    e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+            }
+        }
+
+        private static string GenerateBlockId()
+        {
+            Guid guid = Guid.NewGuid();
+            byte[] bytes = Encoding.UTF8.GetBytes(guid.ToString());
+            return Convert.ToBase64String(bytes);
+        }
+
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
+            {
+                IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
+                IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
+                IfModifiedSince = parameters.SourceIfModifiedSince,
+                IfUnmodifiedSince = parameters.SourceIfUnmodifiedSince
+            };
+
+        private BlobRequestConditions BuildBlobRequestConditions(AccessConditionParameters parameters)
+            => new BlobRequestConditions
             {
                 IfMatch = parameters.SourceIfMatch != null ? new ETag(parameters.SourceIfMatch) : default(ETag?),
                 IfNoneMatch = parameters.SourceIfNoneMatch != null ? new ETag(parameters.SourceIfNoneMatch) : default(ETag?),
