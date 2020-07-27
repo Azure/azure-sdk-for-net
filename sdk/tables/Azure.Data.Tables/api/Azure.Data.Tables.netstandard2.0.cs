@@ -186,12 +186,6 @@ namespace Azure.Data.Tables.Models
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
     }
-    public partial class TableEntityQueryResponse
-    {
-        internal TableEntityQueryResponse() { }
-        public string OdataMetadata { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, object>> Value { get { throw null; } }
-    }
     public partial class TableGeoReplication
     {
         internal TableGeoReplication() { }
