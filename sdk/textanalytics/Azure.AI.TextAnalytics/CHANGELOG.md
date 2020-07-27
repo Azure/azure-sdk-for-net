@@ -1,5 +1,8 @@
 # Release History
 
+## 5.0.0 (2020-07-27)
+- Re-release of version `1.0.1` with updated version `5.0.0`.
+
 ## 1.0.1 (2020-06-23)
 
 ### Fixes
