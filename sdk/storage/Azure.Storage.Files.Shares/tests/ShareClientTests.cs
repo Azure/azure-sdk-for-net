@@ -579,8 +579,8 @@ namespace Azure.Storage.Files.Shares.Test
 
             Assert.AreEqual(1, response.Value.Count());
             Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
         }
 
@@ -612,6 +612,42 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task SetAccessPolicyAsync_OptionalProperties()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareSignedIdentifier[] signedIdentifiersAfter =
+                new[]
+                {
+                    new ShareSignedIdentifier
+                    {
+                        Id = GetNewString(),
+                        // Create an AccessPolicy without Expiry
+                        AccessPolicy = new ShareAccessPolicy
+                        {
+                            PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                            Permissions = "rw"
+                        }
+                    }
+                };
+
+            // Act
+            Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiersAfter);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
+            ShareSignedIdentifier afterAcl = responseAfter.Value.First();
+            Assert.AreEqual(1, responseAfter.Value.Count());
+            Assert.AreEqual(signedIdentifiersAfter[0].Id, afterAcl.Id);
+            Assert.IsNull(afterAcl.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifiersAfter[0].AccessPolicy.Permissions, afterAcl.AccessPolicy.Permissions);
         }
 
         [Test]
