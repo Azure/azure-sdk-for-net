@@ -2007,7 +2007,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient fileClient = InstrumentClient(
                 test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
-            await fileClient.CreateAsync(Constants.KB);
+            await fileClient.CreateAsync(size);
             ShareSasBuilder sasBuilder = new ShareSasBuilder
             {
                 ShareName = shareName,
@@ -2030,7 +2030,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 // Throws AuthorizationMismatchPermissions or AuthorizationFailed
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    readOnlyClient.UploadAsync(content: stream),
+                    readOnlyClient.UploadAsync(stream),
                     e => Assert.IsNotNull(e.ErrorCode));
             }
         }
