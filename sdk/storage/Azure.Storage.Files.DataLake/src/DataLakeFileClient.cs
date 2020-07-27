@@ -3966,10 +3966,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 long position = 0;
+                ETag? eTag = null;
 
                 if (options?.Overwrite == true)
                 {
-                    await CreateInternal(
+                    Response<PathInfo> createResponse = await CreateInternal(
                         resourceType: PathResourceType.File,
                         httpHeaders: default,
                         metadata: default,
@@ -3979,29 +3980,38 @@ namespace Azure.Storage.Files.DataLake
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    eTag = createResponse.Value.ETag;
                 }
                 else
                 {
-                    PathProperties pathProperties;
+                    Response<PathProperties> propertiesResponse;
 
                     if (async)
                     {
-                        pathProperties = await GetPropertiesAsync().ConfigureAwait(false);
+                        propertiesResponse = await GetPropertiesAsync(conditions: options?.Conditions).ConfigureAwait(false);
                     }
                     else
                     {
-                        pathProperties = GetProperties();
+                        propertiesResponse = GetProperties(conditions: options?.Conditions);
                     }
 
-                    position = pathProperties.ContentLength;
+                    position = propertiesResponse.Value.ContentLength;
+                    eTag = propertiesResponse.Value.ETag;
                 }
+
+                DataLakeRequestConditions conditions = new DataLakeRequestConditions
+                {
+                    IfMatch = eTag,
+                    LeaseId = options?.Conditions?.LeaseId
+                };
 
                 return new DataLakeFileWriteStream(
                     fileClient: this,
                     bufferSize: options?.BufferSize ?? Constants.MB,
                     position: position,
                     conditions: options?.Conditions,
-                    progressHandler: options.ProgressHandler);
+                    progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)
             {

@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;
-            _conditions = conditions;
+            _conditions = conditions ?? new DataLakeRequestConditions();
             _writeIndex = position;
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.DataLake
         {
             await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
-            await _fileClient.FlushInternal(
+            Response<PathInfo> response = await _fileClient.FlushInternal(
                 position: _writeIndex,
                 retainUncommittedData: default,
                 close: default,
@@ -65,6 +65,8 @@ namespace Azure.Storage.Files.DataLake
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
+
+            _conditions.IfMatch = response.Value.ETag;
         }
 
         protected override void ValidateBufferSize(long bufferSize)

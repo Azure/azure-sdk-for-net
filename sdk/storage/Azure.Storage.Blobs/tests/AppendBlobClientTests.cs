@@ -1464,6 +1464,7 @@ namespace Azure.Storage.Blobs.Test
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
+            // Assert
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, newData.Length));
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);

@@ -3000,7 +3000,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileExpirationOrigin.CreationTime);
 
             // Act
-            Response <PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
+            Response<PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -3038,7 +3038,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn);
 
             // Act
-            Response <PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
+            Response<PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -3803,11 +3803,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenWriteAsync()
+        public async Task OpenWriteAsync_NewFile()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
             // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateAsync();
 
@@ -3836,6 +3835,220 @@ namespace Azure.Storage.Files.DataLake.Tests
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+            await file.UploadAsync(originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                Overwrite = true
+            };
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync(options: options);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<FileDownloadInfo> result = await file.ReadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(newData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AppendExistingFile()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+            await file.UploadAsync(originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync();
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            byte[] expectedData = new byte[2 * Constants.KB];
+            Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
+            Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
+
+            Response<FileDownloadInfo> result = await file.ReadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.OpenWriteAsync(),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync();
+
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+            stream.Position = 0;
+
+            await file.AppendAsync(stream, offset: Constants.KB);
+            await file.FlushAsync(2 * Constants.KB);
+
+            await stream.CopyToAsync(openWriteStream);
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                openWriteStream.FlushAsync(),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+        [Test]
+        public async Task OpenWriteAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            TestProgress progress = new TestProgress();
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                ProgressHandler = progress,
+                BufferSize = 256
+            };
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync(options);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            List<long> expectedProgress = new List<long>
+            {
+                0,
+                256,
+                256,
+                256,
+                512,
+                512,
+                512,
+                768,
+                768,
+                768,
+                1024,
+                1024
+            };
+
+            Assert.IsTrue(progress.List.Count == 12);
+            TestHelper.AssertSequenceEqual<long>(expectedProgress, progress.List);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+
+                DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+                {
+                    Conditions = conditions
+                };
+
+                // Act
+                Stream openWriteStream = await file.OpenWriteAsync(options);
+                await stream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+
+                // Assert
+                Response<FileDownloadInfo> result = await file.ReadAsync();
+                MemoryStream dataResult = new MemoryStream();
+                await result.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(data.Length, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+                {
+                    Conditions = conditions
+                };
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+
+                // Assert
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        await file.OpenWriteAsync(options);
+                    });
+            }
         }
     }
 }
