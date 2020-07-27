@@ -5,4 +5,9 @@
     <Description>Azure management client SDK for Azure resource provider ProviderFullName</Description>
     <PackageTags>azure;management;ProviderNameLowercase</PackageTags>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- TODO: Temp workaround. Should be fixed prior to release  -->
+    <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
+  </PropertyGroup>
 </Project>

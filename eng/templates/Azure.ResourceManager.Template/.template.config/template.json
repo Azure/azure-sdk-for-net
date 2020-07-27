@@ -9,7 +9,7 @@
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "Azure.Management.Template",
+  "sourceName": "Azure.ResourceManager.Template",
   "preferNameDirectory": true,
   "guids": [
     "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
