@@ -1677,24 +1677,13 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                if (parameters.AppendPosE != null || parameters.MaxSizeLTE != null)
-                {
-                    Stream openWriteStream = await blob.OpenWriteAsync(options);
-                    await stream.CopyToAsync(openWriteStream);
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        openWriteStream.FlushAsync(),
-                        e => { });
-                }
-                else
-                {
-                    await TestHelper.CatchAsync<Exception>(
-                        async () =>
-                        {
-                            Stream openWriteStream = await blob.OpenWriteAsync(options);
-                            await stream.CopyToAsync(openWriteStream);
-                            await stream.FlushAsync();
-                        });
-                }
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        Stream openWriteStream = await blob.OpenWriteAsync(options);
+                        await stream.CopyToAsync(openWriteStream);
+                        await openWriteStream.FlushAsync();
+                    });
             }
         }
 

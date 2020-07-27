@@ -2969,26 +2969,13 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                if (parameters.SequenceNumberLT != null
-                    || parameters.SequenceNumberLTE != null
-                    || parameters.SequenceNumberEqual != null)
-                {
-                    Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
-                    await stream.CopyToAsync(openWriteStream);
-                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                        openWriteStream.FlushAsync(),
-                        e => { });
-                }
-                else
-                {
-                    await TestHelper.CatchAsync<Exception>(
-                        async () =>
-                        {
-                            Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
-                            await stream.CopyToAsync(openWriteStream);
-                            await stream.FlushAsync();
-                        });
-                }
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
+                        await stream.CopyToAsync(openWriteStream);
+                        await stream.FlushAsync();
+                    });
             }
         }
 

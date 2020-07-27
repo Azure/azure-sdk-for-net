@@ -214,7 +214,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class AppendBlobOpenWriteOptions
     {
         public AppendBlobOpenWriteOptions() { }
-        public long BufferSize { get { throw null; } set { } }
+        public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions Conditions { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
@@ -903,7 +903,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlockBlobOpenWriteOptions
     {
         public BlockBlobOpenWriteOptions() { }
-        public long BufferSize { get { throw null; } set { } }
+        public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
@@ -1045,7 +1045,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class PageBlobOpenWriteOptions
     {
         public PageBlobOpenWriteOptions() { }
-        public long BufferSize { get { throw null; } set { } }
+        public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions Conditions { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
