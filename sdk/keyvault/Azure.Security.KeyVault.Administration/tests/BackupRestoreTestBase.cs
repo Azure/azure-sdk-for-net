@@ -56,6 +56,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         private string GenerateSasToken()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return RecordedTestSanitizer.SanitizeValue;
+            }
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -64,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 Services = AccountSasServices.Blobs,
 
                 // Allow access to the service level APIs.
-                ResourceTypes = AccountSasResourceTypes.Service,
+                ResourceTypes = AccountSasResourceTypes.All,
 
                 // Access expires in 1 hour.
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
