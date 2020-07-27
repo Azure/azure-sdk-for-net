@@ -22,10 +22,27 @@ namespace Azure.Data.Tables
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
         public TableServiceClient(Uri endpoint)
                 : this(endpoint, options: null)
         { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, default(TableSharedKeyPipelinePolicy), options)
         {
@@ -35,12 +52,31 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="credential">The shared key credential used to sign requests.</param>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
         {
@@ -61,10 +97,7 @@ namespace Azure.Data.Tables
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
             _version = options.VersionString;
-
-            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
-            _isPremiumEndpoint = (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
-                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
+            _isPremiumEndpoint = IsPremiumEndpoint(endpoint);
         }
 
         /// <summary>
@@ -397,6 +430,13 @@ namespace Azure.Data.Tables
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        internal static bool IsPremiumEndpoint(Uri endpoint)
+        {
+            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
+            return (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
+                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
         }
     }
 }

@@ -28,12 +28,13 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            await serviceClient.CreateTableAsync(tableName);
-
             try
             {
-                // Get a reference to the <see cref="TableClient" /> of the table.
-                var client = serviceClient.GetTableClient(tableName);
+                // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
+                var client = new TableClient(
+                    tableName,
+                    new Uri(storageUri),
+                    new TableSharedKeyCredential(accountName, storageAccountKey));
 
                 #region Snippet:TablesSample2CreateEntityAsync
                 // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
