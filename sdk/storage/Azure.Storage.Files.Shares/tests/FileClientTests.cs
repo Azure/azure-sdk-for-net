@@ -1995,8 +1995,6 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
-
-
         [Test]
         public async Task UploadAsync_ReadOnlyError()
         {
@@ -2028,11 +2026,13 @@ namespace Azure.Storage.Files.Shares.Test
 
             ShareFileClient readOnlyClient = new ShareFileClient(new Uri(sasUri.ToString()));
 
-            using var stream = new MemoryStream(data);
-            // Throws AuthorizationMismatchPermissions or AuthorizationFailed
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                readOnlyClient.UploadAsync(content: stream),
-                e => Assert.IsNotNull(e.ErrorCode));
+            using (var stream = new MemoryStream(data))
+            {
+                // Throws AuthorizationMismatchPermissions or AuthorizationFailed
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    readOnlyClient.UploadAsync(content: stream),
+                    e => Assert.IsNotNull(e.ErrorCode));
+            }
         }
 
         public async Task ClearRangeAsync()
