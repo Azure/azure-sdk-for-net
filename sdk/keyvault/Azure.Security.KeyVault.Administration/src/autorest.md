@@ -40,7 +40,7 @@ directive:
     return {
         "type": "integer",
         "format": "unixtime",
-        "description": "The end time of the backup operation in UTC",
+        "description": "The end time of the restore operation in UTC",
         "x-nullable": true
     };
 ```
@@ -54,7 +54,7 @@ directive:
     return {
         "type": "integer",
         "format": "unixtime",
-        "description": "The end time of the backup operation in UTC",
+        "description": "The end time of the restore operation in UTC",
         "x-nullable": true
     };
 ```
