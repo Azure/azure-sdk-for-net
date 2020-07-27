@@ -15,7 +15,7 @@ include-csproj: disable
 ```
 
 ## Swagger hacks
-These should eventually be fixed in the swagger files. See https://github.com/Azure/azure-rest-api-specs/pull/10262
+These should eventually be fixed in the swagger files. See Azure/azure-rest-api-specs#10262
 
 ### Add "x-nullable": true to FullBackupOperation.endTime
 ``` yaml
