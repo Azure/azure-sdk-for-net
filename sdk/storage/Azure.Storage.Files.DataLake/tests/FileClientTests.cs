@@ -3869,6 +3869,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_AppendExistingFile()
         {
             // Arrange
