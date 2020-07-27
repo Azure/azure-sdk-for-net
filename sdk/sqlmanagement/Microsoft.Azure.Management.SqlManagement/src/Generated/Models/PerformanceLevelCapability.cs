@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="value">Performance level value.</param>
         /// <param name="unit">Unit type used to measure performance level.
         /// Possible values include: 'DTU', 'VCores'</param>
-        public PerformanceLevelCapability(double? value = default(double?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?))
+        public PerformanceLevelCapability(double? value = default(double?), string unit = default(string))
         {
             Value = value;
             Unit = unit;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DTU', 'VCores'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public PerformanceLevelUnit? Unit { get; private set; }
+        public string Unit { get; private set; }
 
     }
 }

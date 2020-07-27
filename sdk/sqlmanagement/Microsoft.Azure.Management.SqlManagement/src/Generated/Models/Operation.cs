@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'user', 'system'</param>
         /// <param name="properties">Additional descriptions for the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), OperationOrigin? origin = default(OperationOrigin?), IDictionary<string, object> properties = default(IDictionary<string, object>))
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), IDictionary<string, object> properties = default(IDictionary<string, object>))
         {
             Name = name;
             Display = display;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'user', 'system'
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
-        public OperationOrigin? Origin { get; private set; }
+        public string Origin { get; private set; }
 
         /// <summary>
         /// Gets additional descriptions for the operation.

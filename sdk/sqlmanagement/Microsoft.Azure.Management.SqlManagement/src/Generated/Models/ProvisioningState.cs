@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ProvisioningState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ProvisioningStateConverter))]
-    public struct ProvisioningState : System.IEquatable<ProvisioningState>
+    public static class ProvisioningState
     {
-        private ProvisioningState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ProvisioningState Created = "Created";
-
-        public static readonly ProvisioningState InProgress = "InProgress";
-
-        public static readonly ProvisioningState Succeeded = "Succeeded";
-
-        public static readonly ProvisioningState Failed = "Failed";
-
-        public static readonly ProvisioningState Canceled = "Canceled";
-
-
-        /// <summary>
-        /// Underlying value of enum ProvisioningState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ProvisioningState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ProvisioningState
-        /// </summary>
-        public bool Equals(ProvisioningState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ProvisioningState
-        /// </summary>
-        public static implicit operator ProvisioningState(string value)
-        {
-            return new ProvisioningState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ProvisioningState to string
-        /// </summary>
-        public static implicit operator string(ProvisioningState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ProvisioningState
-        /// </summary>
-        public static bool operator == (ProvisioningState e1, ProvisioningState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ProvisioningState
-        /// </summary>
-        public static bool operator != (ProvisioningState e1, ProvisioningState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ProvisioningState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ProvisioningState && Equals((ProvisioningState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ProvisioningState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Created = "Created";
+        public const string InProgress = "InProgress";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string Canceled = "Canceled";
     }
 }

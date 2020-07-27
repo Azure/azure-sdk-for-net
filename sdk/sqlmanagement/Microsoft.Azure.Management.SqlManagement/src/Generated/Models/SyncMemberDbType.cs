@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncMemberDbType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(SyncMemberDbTypeConverter))]
-    public struct SyncMemberDbType : System.IEquatable<SyncMemberDbType>
+    public static class SyncMemberDbType
     {
-        private SyncMemberDbType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly SyncMemberDbType AzureSqlDatabase = "AzureSqlDatabase";
-
-        public static readonly SyncMemberDbType SqlServerDatabase = "SqlServerDatabase";
-
-
-        /// <summary>
-        /// Underlying value of enum SyncMemberDbType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for SyncMemberDbType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type SyncMemberDbType
-        /// </summary>
-        public bool Equals(SyncMemberDbType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to SyncMemberDbType
-        /// </summary>
-        public static implicit operator SyncMemberDbType(string value)
-        {
-            return new SyncMemberDbType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert SyncMemberDbType to string
-        /// </summary>
-        public static implicit operator string(SyncMemberDbType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum SyncMemberDbType
-        /// </summary>
-        public static bool operator == (SyncMemberDbType e1, SyncMemberDbType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum SyncMemberDbType
-        /// </summary>
-        public static bool operator != (SyncMemberDbType e1, SyncMemberDbType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for SyncMemberDbType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is SyncMemberDbType && Equals((SyncMemberDbType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode SyncMemberDbType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string AzureSqlDatabase = "AzureSqlDatabase";
+        public const string SqlServerDatabase = "SqlServerDatabase";
     }
 }

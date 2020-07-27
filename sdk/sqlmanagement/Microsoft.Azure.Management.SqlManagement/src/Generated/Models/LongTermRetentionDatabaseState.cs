@@ -10,100 +10,14 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for LongTermRetentionDatabaseState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(LongTermRetentionDatabaseStateConverter))]
-    public struct LongTermRetentionDatabaseState : System.IEquatable<LongTermRetentionDatabaseState>
+    public static class LongTermRetentionDatabaseState
     {
-        private LongTermRetentionDatabaseState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly LongTermRetentionDatabaseState All = "All";
-
-        public static readonly LongTermRetentionDatabaseState Live = "Live";
-
-        public static readonly LongTermRetentionDatabaseState Deleted = "Deleted";
-
-
-        /// <summary>
-        /// Underlying value of enum LongTermRetentionDatabaseState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for LongTermRetentionDatabaseState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type LongTermRetentionDatabaseState
-        /// </summary>
-        public bool Equals(LongTermRetentionDatabaseState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// LongTermRetentionDatabaseState
-        /// </summary>
-        public static implicit operator LongTermRetentionDatabaseState(string value)
-        {
-            return new LongTermRetentionDatabaseState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert LongTermRetentionDatabaseState to
-        /// string
-        /// </summary>
-        public static implicit operator string(LongTermRetentionDatabaseState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum LongTermRetentionDatabaseState
-        /// </summary>
-        public static bool operator == (LongTermRetentionDatabaseState e1, LongTermRetentionDatabaseState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum LongTermRetentionDatabaseState
-        /// </summary>
-        public static bool operator != (LongTermRetentionDatabaseState e1, LongTermRetentionDatabaseState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for LongTermRetentionDatabaseState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is LongTermRetentionDatabaseState && Equals((LongTermRetentionDatabaseState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode LongTermRetentionDatabaseState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string All = "All";
+        public const string Live = "Live";
+        public const string Deleted = "Deleted";
     }
 }

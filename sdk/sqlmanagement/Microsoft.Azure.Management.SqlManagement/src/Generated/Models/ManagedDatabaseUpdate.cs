@@ -58,11 +58,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// StorageContainerSasToken must be specified. Recovery: Creates a
         /// database by restoring a geo-replicated backup.
         /// RecoverableDatabaseId must be specified as the recoverable database
-        /// resource ID to restore. RestoreLongTermRetentionBackup: Create a
-        /// database by restoring from a long term retention backup
-        /// (longTermRetentionBackupResourceId required). Possible values
-        /// include: 'Default', 'RestoreExternalBackup', 'PointInTimeRestore',
-        /// 'Recovery', 'RestoreLongTermRetentionBackup'</param>
+        /// resource ID to restore. Possible values include: 'Default',
+        /// 'RestoreExternalBackup', 'PointInTimeRestore', 'Recovery'</param>
         /// <param name="storageContainerUri">Conditional. If createMode is
         /// RestoreExternalBackup, this value is required. Specifies the uri of
         /// the storage container where backups for this restore are
@@ -81,15 +78,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="recoverableDatabaseId">The resource identifier of the
         /// recoverable database associated with create operation of this
         /// database.</param>
-        /// <param name="longTermRetentionBackupResourceId">The name of the
-        /// Long Term Retention backup to be used for restore of this managed
-        /// database.</param>
-        /// <param name="autoCompleteRestore">Whether to auto complete restore
-        /// of this managed database.</param>
-        /// <param name="lastBackupName">Last backup file name for restore of
-        /// this managed database.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedDatabaseUpdate(string collation = default(string), ManagedDatabaseStatus? status = default(ManagedDatabaseStatus?), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), CatalogCollationType? catalogCollation = default(CatalogCollationType?), ManagedDatabaseCreateMode? createMode = default(ManagedDatabaseCreateMode?), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), string recoverableDatabaseId = default(string), string longTermRetentionBackupResourceId = default(string), bool? autoCompleteRestore = default(bool?), string lastBackupName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedDatabaseUpdate(string collation = default(string), string status = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), string catalogCollation = default(string), string createMode = default(string), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), string recoverableDatabaseId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Collation = collation;
             Status = status;
@@ -105,9 +95,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageContainerSasToken = storageContainerSasToken;
             FailoverGroupId = failoverGroupId;
             RecoverableDatabaseId = recoverableDatabaseId;
-            LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
-            AutoCompleteRestore = autoCompleteRestore;
-            LastBackupName = lastBackupName;
             Tags = tags;
             CustomInit();
         }
@@ -129,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public ManagedDatabaseStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets creation date of the database.
@@ -163,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.catalogCollation")]
-        public CatalogCollationType? CatalogCollation { get; set; }
+        public string CatalogCollation { get; set; }
 
         /// <summary>
         /// Gets or sets managed database create mode. PointInTimeRestore:
@@ -174,14 +161,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// StorageContainerUri and StorageContainerSasToken must be specified.
         /// Recovery: Creates a database by restoring a geo-replicated backup.
         /// RecoverableDatabaseId must be specified as the recoverable database
-        /// resource ID to restore. RestoreLongTermRetentionBackup: Create a
-        /// database by restoring from a long term retention backup
-        /// (longTermRetentionBackupResourceId required). Possible values
-        /// include: 'Default', 'RestoreExternalBackup', 'PointInTimeRestore',
-        /// 'Recovery', 'RestoreLongTermRetentionBackup'
+        /// resource ID to restore. Possible values include: 'Default',
+        /// 'RestoreExternalBackup', 'PointInTimeRestore', 'Recovery'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
-        public ManagedDatabaseCreateMode? CreateMode { get; set; }
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Gets or sets conditional. If createMode is RestoreExternalBackup,
@@ -225,27 +209,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.recoverableDatabaseId")]
         public string RecoverableDatabaseId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Long Term Retention backup to be used
-        /// for restore of this managed database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.longTermRetentionBackupResourceId")]
-        public string LongTermRetentionBackupResourceId { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to auto complete restore of this managed
-        /// database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.autoCompleteRestore")]
-        public bool? AutoCompleteRestore { get; set; }
-
-        /// <summary>
-        /// Gets or sets last backup file name for restore of this managed
-        /// database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastBackupName")]
-        public string LastBackupName { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

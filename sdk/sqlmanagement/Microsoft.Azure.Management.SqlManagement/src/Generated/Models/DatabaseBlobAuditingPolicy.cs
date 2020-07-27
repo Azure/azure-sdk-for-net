@@ -43,22 +43,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="kind">Resource kind.</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
-        /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled is
-        /// required.</param>
+        /// Enabled, storageEndpoint is required.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
-        /// of the auditing storage account.
-        /// If state is Enabled and storageEndpoint is specified, not
-        /// specifying the storageAccountAccessKey will use SQL server
-        /// system-assigned managed identity to access the storage.
-        /// Prerequisites for using managed identity authentication:
-        /// 1. Assign SQL Server a system-assigned managed identity in Azure
-        /// Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by
-        /// adding 'Storage Blob Data Contributor' RBAC role to the server
-        /// identity.
-        /// For more information, see [Auditing to storage using Managed
-        /// Identity
-        /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)</param>
+        /// of the auditing storage account. If state is Enabled and
+        /// storageEndpoint is specified, storageAccountAccessKey is
+        /// required.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the audit logs in the storage account.</param>
         /// <param name="auditActionsAndGroups">Specifies the Actions-Groups
@@ -160,12 +149,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or [Diagnostic Settings
         /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// </param>
-        /// <param name="queueDelayMs">Specifies the amount of time in
-        /// milliseconds that can elapse before audit actions are forced to be
-        /// processed.
-        /// The default minimum value is 1000 (1 second). The maximum is
-        /// 2,147,483,647.</param>
-        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?))
+        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -177,7 +161,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
-            QueueDelayMs = queueDelayMs;
             CustomInit();
         }
 
@@ -203,26 +186,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
         /// https://MyAccount.blob.core.windows.net). If state is Enabled,
-        /// storageEndpoint or isAzureMonitorTargetEnabled is required.
+        /// storageEndpoint is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the identifier key of the auditing storage
-        /// account.
-        /// If state is Enabled and storageEndpoint is specified, not
-        /// specifying the storageAccountAccessKey will use SQL server
-        /// system-assigned managed identity to access the storage.
-        /// Prerequisites for using managed identity authentication:
-        /// 1. Assign SQL Server a system-assigned managed identity in Azure
-        /// Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by
-        /// adding 'Storage Blob Data Contributor' RBAC role to the server
-        /// identity.
-        /// For more information, see [Auditing to storage using Managed
-        /// Identity
-        /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
+        /// account. If state is Enabled and storageEndpoint is specified,
+        /// storageAccountAccessKey is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
@@ -350,15 +322,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the amount of time in milliseconds that can
-        /// elapse before audit actions are forced to be processed.
-        /// The default minimum value is 1000 (1 second). The maximum is
-        /// 2,147,483,647.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queueDelayMs")]
-        public int? QueueDelayMs { get; set; }
 
         /// <summary>
         /// Validate the object.

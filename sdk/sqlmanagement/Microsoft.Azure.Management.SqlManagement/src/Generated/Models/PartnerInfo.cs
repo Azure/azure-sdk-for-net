@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="location">Geo location of the partner server.</param>
         /// <param name="replicationRole">Replication role of the partner
         /// server. Possible values include: 'Primary', 'Secondary'</param>
-        public PartnerInfo(string id, string location = default(string), FailoverGroupReplicationRole? replicationRole = default(FailoverGroupReplicationRole?))
+        public PartnerInfo(string id, string location = default(string), string replicationRole = default(string))
         {
             Id = id;
             Location = location;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Primary', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "replicationRole")]
-        public FailoverGroupReplicationRole? ReplicationRole { get; private set; }
+        public string ReplicationRole { get; private set; }
 
         /// <summary>
         /// Validate the object.

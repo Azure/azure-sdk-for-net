@@ -10,104 +10,17 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for UnitType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(UnitTypeConverter))]
-    public struct UnitType : System.IEquatable<UnitType>
+    public static class UnitType
     {
-        private UnitType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly UnitType Count = "count";
-
-        public static readonly UnitType Bytes = "bytes";
-
-        public static readonly UnitType Seconds = "seconds";
-
-        public static readonly UnitType Percent = "percent";
-
-        public static readonly UnitType CountPerSecond = "countPerSecond";
-
-        public static readonly UnitType BytesPerSecond = "bytesPerSecond";
-
-
-        /// <summary>
-        /// Underlying value of enum UnitType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for UnitType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type UnitType
-        /// </summary>
-        public bool Equals(UnitType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to UnitType
-        /// </summary>
-        public static implicit operator UnitType(string value)
-        {
-            return new UnitType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert UnitType to string
-        /// </summary>
-        public static implicit operator string(UnitType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum UnitType
-        /// </summary>
-        public static bool operator == (UnitType e1, UnitType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum UnitType
-        /// </summary>
-        public static bool operator != (UnitType e1, UnitType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for UnitType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is UnitType && Equals((UnitType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode UnitType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Count = "count";
+        public const string Bytes = "bytes";
+        public const string Seconds = "seconds";
+        public const string Percent = "percent";
+        public const string CountPerSecond = "countPerSecond";
+        public const string BytesPerSecond = "bytesPerSecond";
     }
 }

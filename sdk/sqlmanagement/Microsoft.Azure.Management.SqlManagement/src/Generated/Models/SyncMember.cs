@@ -42,11 +42,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// sync member.</param>
         /// <param name="sqlServerDatabaseId">SQL Server database id of the
         /// sync member.</param>
-        /// <param name="syncMemberAzureDatabaseResourceId">ARM resource id of
-        /// the sync member logical database, for sync members in
-        /// Azure.</param>
-        /// <param name="usePrivateLinkConnection">Whether to use private link
-        /// connection.</param>
         /// <param name="serverName">Server name of the member database in the
         /// sync member</param>
         /// <param name="databaseName">Database name of the member database in
@@ -65,14 +60,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'UnProvisioned', 'Provisioning', 'Provisioned', 'ProvisionFailed',
         /// 'DeProvisioning', 'DeProvisioned', 'DeProvisionFailed',
         /// 'Reprovisioning', 'ReprovisionFailed', 'UnReprovisioned'</param>
-        public SyncMember(string id = default(string), string name = default(string), string type = default(string), SyncMemberDbType? databaseType = default(SyncMemberDbType?), string syncAgentId = default(string), System.Guid? sqlServerDatabaseId = default(System.Guid?), string syncMemberAzureDatabaseResourceId = default(string), bool? usePrivateLinkConnection = default(bool?), string serverName = default(string), string databaseName = default(string), string userName = default(string), string password = default(string), SyncDirection? syncDirection = default(SyncDirection?), SyncMemberState? syncState = default(SyncMemberState?))
+        public SyncMember(string id = default(string), string name = default(string), string type = default(string), string databaseType = default(string), string syncAgentId = default(string), System.Guid? sqlServerDatabaseId = default(System.Guid?), string serverName = default(string), string databaseName = default(string), string userName = default(string), string password = default(string), string syncDirection = default(string), string syncState = default(string))
             : base(id, name, type)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
             SqlServerDatabaseId = sqlServerDatabaseId;
-            SyncMemberAzureDatabaseResourceId = syncMemberAzureDatabaseResourceId;
-            UsePrivateLinkConnection = usePrivateLinkConnection;
             ServerName = serverName;
             DatabaseName = databaseName;
             UserName = userName;
@@ -92,7 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'AzureSqlDatabase', 'SqlServerDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseType")]
-        public SyncMemberDbType? DatabaseType { get; set; }
+        public string DatabaseType { get; set; }
 
         /// <summary>
         /// Gets or sets ARM resource id of the sync agent in the sync member.
@@ -105,19 +98,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlServerDatabaseId")]
         public System.Guid? SqlServerDatabaseId { get; set; }
-
-        /// <summary>
-        /// Gets or sets ARM resource id of the sync member logical database,
-        /// for sync members in Azure.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.syncMemberAzureDatabaseResourceId")]
-        public string SyncMemberAzureDatabaseResourceId { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to use private link connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.usePrivateLinkConnection")]
-        public bool? UsePrivateLinkConnection { get; set; }
 
         /// <summary>
         /// Gets or sets server name of the member database in the sync member
@@ -149,7 +129,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Bidirectional', 'OneWayMemberToHub', 'OneWayHubToMember'
         /// </summary>
         [JsonProperty(PropertyName = "properties.syncDirection")]
-        public SyncDirection? SyncDirection { get; set; }
+        public string SyncDirection { get; set; }
 
         /// <summary>
         /// Gets sync state of the sync member. Possible values include:
@@ -161,7 +141,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Reprovisioning', 'ReprovisionFailed', 'UnReprovisioned'
         /// </summary>
         [JsonProperty(PropertyName = "properties.syncState")]
-        public SyncMemberState? SyncState { get; private set; }
+        public string SyncState { get; private set; }
 
     }
 }

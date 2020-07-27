@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ServerPublicNetworkAccess.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ServerPublicNetworkAccessConverter))]
-    public struct ServerPublicNetworkAccess : System.IEquatable<ServerPublicNetworkAccess>
+    public static class ServerPublicNetworkAccess
     {
-        private ServerPublicNetworkAccess(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ServerPublicNetworkAccess Enabled = "Enabled";
-
-        public static readonly ServerPublicNetworkAccess Disabled = "Disabled";
-
-
-        /// <summary>
-        /// Underlying value of enum ServerPublicNetworkAccess
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ServerPublicNetworkAccess
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ServerPublicNetworkAccess
-        /// </summary>
-        public bool Equals(ServerPublicNetworkAccess e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ServerPublicNetworkAccess
-        /// </summary>
-        public static implicit operator ServerPublicNetworkAccess(string value)
-        {
-            return new ServerPublicNetworkAccess(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ServerPublicNetworkAccess to string
-        /// </summary>
-        public static implicit operator string(ServerPublicNetworkAccess e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ServerPublicNetworkAccess
-        /// </summary>
-        public static bool operator == (ServerPublicNetworkAccess e1, ServerPublicNetworkAccess e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ServerPublicNetworkAccess
-        /// </summary>
-        public static bool operator != (ServerPublicNetworkAccess e1, ServerPublicNetworkAccess e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ServerPublicNetworkAccess
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ServerPublicNetworkAccess && Equals((ServerPublicNetworkAccess)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ServerPublicNetworkAccess
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

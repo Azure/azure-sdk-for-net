@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="state">Virtual Network Rule State. Possible values
         /// include: 'Initializing', 'InProgress', 'Ready', 'Deleting',
         /// 'Unknown'</param>
-        public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string), bool? ignoreMissingVnetServiceEndpoint = default(bool?), VirtualNetworkRuleState? state = default(VirtualNetworkRuleState?))
+        public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string), bool? ignoreMissingVnetServiceEndpoint = default(bool?), string state = default(string))
             : base(id, name, type)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Initializing', 'InProgress', 'Ready', 'Deleting', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public VirtualNetworkRuleState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Validate the object.
