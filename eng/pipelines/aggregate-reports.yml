@@ -2,14 +2,22 @@ trigger: none
 pr: none
 
 jobs:
-  - job: Generate
+  - job: GenerateReports
+
     variables:
       - template: templates/variables/globals.yml
+
     pool:
       vmImage: 'windows-2019'
+
     steps:
-      - pwsh: mkdir $(System.ArtifactsDirectory)/BuildArtifacts
-        displayName: Create Directory
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        inputs:
+          version: '$(DotNetCoreSDKVersion)'
+
+      - pwsh: mkdir '$(System.ArtifactsDirectory)/BuildArtifacts'
+        displayName: Create Artifact Directory
 
       - task: DownloadPipelineArtifact@2
         displayName: 'Download Pipeline Artifact'
@@ -22,31 +30,69 @@ jobs:
           artifactName: packages
           targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
 
-      - pwsh: Remove-Item Microsoft.Azure.*
-        workingDirectory: $(System.ArtifactsDirectory)/BuildArtifacts
-        displayName: Remove Track 1 Packages
+      - pwsh: |
+          mkdir '$(System.ArtifactsDirectory)/Packages'
+          Move-Item -Path '$(System.ArtifactsDirectory)/BuildArtifacts/*' -Destination '$(System.ArtifactsDirectory)/Packages/' -Include Azure.*.nupkg -Exclude *.symbols.nupkg
+        displayName: Isolate packages to process
 
       - pwsh: |
-          mkdir "$(Build.ArtifactStagingDirectory)/reports"
-          Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
-          & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(System.ArtifactsDirectory)/BuildArtifacts/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
-          -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
-        displayName: "Analyze dependencies"
+          mkdir '$(Build.ArtifactStagingDirectory)/reports'
+          Copy-Item -Path '$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html' -Destination '$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html'
+        displayName: Setup reports directory
 
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+      - task: PowerShell@2
+        displayName: Generate Dependency Report
         inputs:
-          version: "$(DotNetCoreSDKVersion)"
+          pwsh: true
+          filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
+          arguments: >
+            -PackagesPath '$(System.ArtifactsDirectory)/Packages/'
+            -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
+            -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
+            -DumpPath '$(Build.ArtifactStagingDirectory)/reports/data.js'
 
-      - pwsh: |
-          dotnet build eng/azure-sdk-deps.csproj  /t:GenerateDepsFile /p:PublishDepsFilePath=$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json
-        displayName: "Generate azure-sdk.deps.json"
+      - task: PowerShell@2
+        displayName: 'Generate azure-sdk.deps.json'
+        inputs:
+          pwsh: true
+          filePath: 'eng/scripts/dependencies/generate-deps.ps1'
+          arguments: >
+            -PackagesPath '$(System.ArtifactsDirectory)/Packages/'
+            -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+            -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
+
+      - task: PowerShell@2
+        displayName: 'Validate dependencies with pwsh servicing'
+        inputs:
+          pwsh: true
+          filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+          arguments: >
+            -PSDepsFile 'https://aka.ms/ps-deps-servicing'
+            -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+
+      - task: PowerShell@2
+        displayName: 'Validate dependencies with pwsh stable'
+        inputs:
+          pwsh: true
+          filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+          arguments: >
+            -PSDepsFile 'https://aka.ms/ps-deps-stable'
+            -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+
+      - task: PowerShell@2
+        displayName: 'Validate dependencies with pwsh preview'
+        inputs:
+          pwsh: true
+          filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+          arguments: >
+            -PSDepsFile 'https://aka.ms/ps-deps-preview'
+            -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
 
       - task: PublishPipelineArtifact@1
-        displayName: "Publish Report Artifacts"
+        displayName: 'Publish Report Artifacts'
         inputs:
           artifactName: reports
-          path: $(Build.ArtifactStagingDirectory)/reports
+          path: '$(Build.ArtifactStagingDirectory)/reports'
 
       - task: AzureFileCopy@2
         displayName: 'Upload dependency report'
