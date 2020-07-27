@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
         /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="permissions"/> is null. </exception>
         public AccessPolicyEntry(Guid tenantId, string objectId, Permissions permissions)
         {
             if (objectId == null)

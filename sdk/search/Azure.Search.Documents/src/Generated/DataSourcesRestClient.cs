@@ -30,7 +30,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
@@ -88,6 +88,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
         public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -122,6 +123,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
         public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -183,6 +185,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -207,6 +210,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public Response Delete(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -249,6 +253,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public async Task<Response<SearchIndexerDataSourceConnection>> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -275,6 +280,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public Response<SearchIndexerDataSourceConnection> Get(string dataSourceName, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -387,6 +393,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public async Task<Response<SearchIndexerDataSourceConnection>> CreateAsync(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
@@ -413,6 +420,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public Response<SearchIndexerDataSourceConnection> Create(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)

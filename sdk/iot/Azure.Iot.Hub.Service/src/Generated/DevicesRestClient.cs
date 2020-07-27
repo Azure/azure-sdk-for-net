@@ -29,7 +29,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DevicesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -138,6 +138,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
         /// <param name="devices"> The registry operations to perform. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devices"/> is null. </exception>
         public async Task<Response<BulkRegistryOperationResponse>> BulkRegistryOperationsAsync(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
         {
             if (devices == null)
@@ -165,6 +166,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
         /// <param name="devices"> The registry operations to perform. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devices"/> is null. </exception>
         public Response<BulkRegistryOperationResponse> BulkRegistryOperations(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
         {
             if (devices == null)
@@ -206,6 +208,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets a device from the identity registry of the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<DeviceIdentity>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -232,6 +235,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets a device from the identity registry of the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<DeviceIdentity> GetDevice(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -282,6 +286,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="device"> The contents of the device identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="device"/> is null. </exception>
         public async Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -314,6 +319,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="device"> The contents of the device identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="device"/> is null. </exception>
         public Response<DeviceIdentity> CreateOrUpdateIdentity(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -363,6 +369,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteIdentityAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -385,6 +392,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response DeleteIdentity(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -420,6 +428,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<TwinData>> GetTwinAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -446,6 +455,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<TwinData> GetTwin(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -496,6 +506,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> The device twin info that will replace the existing info. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public async Task<Response<TwinData>> ReplaceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -528,6 +539,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> The device twin info that will replace the existing info. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public Response<TwinData> ReplaceTwin(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -582,6 +594,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> The device twin info containing the tags and desired properties to be updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public async Task<Response<TwinData>> UpdateTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -614,6 +627,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> The device twin info containing the tags and desired properties to be updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public Response<TwinData> UpdateTwin(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -664,6 +678,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="directMethodRequest"> The parameters to execute a direct method on the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="directMethodRequest"/> is null. </exception>
         public async Task<Response<CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)
@@ -695,6 +710,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="directMethodRequest"> The parameters to execute a direct method on the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="directMethodRequest"/> is null. </exception>
         public Response<CloudToDeviceMethodResponse> InvokeMethod(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)

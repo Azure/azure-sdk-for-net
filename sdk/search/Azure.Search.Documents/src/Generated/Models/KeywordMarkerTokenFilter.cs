@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="keywords"> A list of words to mark as keywords. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keywords"/> is null. </exception>
         public KeywordMarkerTokenFilter(string name, IEnumerable<string> keywords) : base(name)
         {
             if (name == null)

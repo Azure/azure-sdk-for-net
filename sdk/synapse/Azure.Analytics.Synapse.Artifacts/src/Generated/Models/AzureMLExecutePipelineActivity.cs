@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mlPipelineId"/> is null. </exception>
         public AzureMLExecutePipelineActivity(string name, object mlPipelineId) : base(name)
         {
             if (name == null)

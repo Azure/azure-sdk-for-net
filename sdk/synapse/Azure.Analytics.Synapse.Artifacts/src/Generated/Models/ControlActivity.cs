@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ControlActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ControlActivity(string name) : base(name)
         {
             if (name == null)

@@ -10,27 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class PrivateEndpointConnectionItem : IUtf8JsonSerializable
+    public partial class PrivateEndpointConnectionItem
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
-            {
-                writer.WritePropertyName("privateEndpoint");
-                writer.WriteObjectValue(PrivateEndpoint);
-            }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static PrivateEndpointConnectionItem DeserializePrivateEndpointConnectionItem(JsonElement element)
         {
             Optional<PrivateEndpoint> privateEndpoint = default;
