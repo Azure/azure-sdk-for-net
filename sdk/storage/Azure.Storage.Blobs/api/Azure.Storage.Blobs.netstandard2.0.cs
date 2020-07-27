@@ -905,7 +905,6 @@ namespace Azure.Storage.Blobs.Models
         public BlockBlobOpenWriteOptions() { }
         public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
     }
     public partial class BlockInfo

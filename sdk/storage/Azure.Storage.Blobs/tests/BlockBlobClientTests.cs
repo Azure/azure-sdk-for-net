@@ -2161,13 +2161,9 @@ namespace Azure.Storage.Blobs.Test
 
             byte[] newData = GetRandomBuffer(Constants.KB);
             using Stream newStream = new MemoryStream(newData);
-            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
-            {
-                Overwrite = true
-            };
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(options: options);
+            Stream openWriteStream = await blob.OpenWriteAsync();
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
