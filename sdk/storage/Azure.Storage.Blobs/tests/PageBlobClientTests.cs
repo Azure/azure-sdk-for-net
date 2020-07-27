@@ -2888,18 +2888,8 @@ namespace Azure.Storage.Blobs.Test
             await openWriteStream.FlushAsync();
 
             // Assert
-            List<long> expectedProgress = new List<long>
-            {
-                0,
-                512,
-                512,
-                512,
-                1024,
-                1024
-            };
-
-            Assert.IsTrue(progress.List.Count == 6);
-            TestHelper.AssertSequenceEqual<long>(expectedProgress, progress.List);
+            Assert.IsTrue(progress.List.Count > 0);
+            Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
         }
 
         [Test]
