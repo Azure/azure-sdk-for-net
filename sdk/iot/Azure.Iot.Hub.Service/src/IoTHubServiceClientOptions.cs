@@ -9,7 +9,7 @@ namespace Azure.Iot.Hub.Service
     /// <summary>
     /// Options that allow configuration of requests sent to the IoTHub service.
     /// </summary>
-    public class IoTHubServiceClientOptions : ClientOptions
+    public class IotHubServiceClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2020_03_13;
 
@@ -33,10 +33,10 @@ namespace Azure.Iot.Hub.Service
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IoTHubServiceClientOptions"/>
+        /// Initializes a new instance of the <see cref="IotHubServiceClientOptions"/>
         /// class.
         /// </summary>
-        public IoTHubServiceClientOptions(ServiceVersion version = LatestVersion)
+        public IotHubServiceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
         }
