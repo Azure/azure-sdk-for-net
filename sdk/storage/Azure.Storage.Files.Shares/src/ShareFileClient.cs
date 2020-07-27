@@ -4878,6 +4878,7 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
+
                 return new ShareFileWriteStream(
                     fileClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
