@@ -477,6 +477,36 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task CanGetAndSetContentStream()
+        {
+            byte[] requestBytes = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    using var memoryStream = new MemoryStream();
+                    context.Request.Body.CopyTo(memoryStream);
+                    requestBytes = memoryStream.ToArray();
+                });
+
+            var stream = new MemoryStream();
+            stream.SetLength(10*1024);
+            var content = RequestContent.Create(stream);
+            var transport = GetTransport();
+
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(testServer.Address);
+            request.Content = content;
+
+            Assert.AreEqual(content, request.Content);
+
+            await ExecuteRequest(request, transport);
+
+            CollectionAssert.AreEqual(stream.ToArray(), requestBytes);
+            Assert.AreEqual(10*1024, requestBytes.Length);
+        }
+
+        [Test]
         public async Task RequestAndResponseHasRequestId()
         {
             using TestServer testServer = new TestServer(context => { });
