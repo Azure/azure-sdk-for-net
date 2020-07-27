@@ -2990,9 +2990,11 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Start();
 
+                ETag? eTag = null;
+
                 if (options?.Overwrite == true)
                 {
-                    await CreateInternal(
+                    Response<BlobContentInfo> response = await CreateInternal(
                         size: options.Size,
                         sequenceNumber: default,
                         httpHeaders: default,
@@ -3002,13 +3004,31 @@ namespace Azure.Storage.Blobs.Specialized
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    eTag = response.Value.ETag;
+                }
+                else
+                {
+                    Response<BlobProperties> response = await GetPropertiesInternal(
+                        conditions: options?.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    eTag = response.Value.ETag;
+                }
+
+                PageBlobRequestConditions conditions = options?.Conditions ?? new PageBlobRequestConditions();
+                if (conditions.IfMatch == null)
+                {
+                    conditions.IfMatch = eTag;
                 }
 
                 return new PageBlobWriteStream(
                     pageBlobClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    conditions: options?.Conditions,
+                    conditions: conditions,
                     progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)

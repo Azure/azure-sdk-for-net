@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -2715,7 +2716,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync()
+        public async Task OpenWriteAsync_NewBlob()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -2749,6 +2750,246 @@ namespace Azure.Storage.Blobs.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Overwrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            long size = Constants.KB;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, size);
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.UploadPagesAsync(originalStream, offset: 0);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                Overwrite = true,
+                Size = size
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options: options);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(newData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_UpdateExistingBlob()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 2 * Constants.KB);
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.UploadPagesAsync(originalStream, offset: 0);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            byte[] expectedData = new byte[2 * Constants.KB];
+            Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
+            Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                Overwrite = true
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.OpenWriteAsync(position: 0, options: options),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 3 * Constants.KB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                BufferSize = 512
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+
+            await stream.CopyToAsync(openWriteStream);
+            stream.Position = 0;
+
+            await blob.UploadPagesAsync(stream, offset: Constants.KB);
+            stream.Position = 0;
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                stream.CopyToAsync(openWriteStream),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            TestProgress progress = new TestProgress();
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                ProgressHandler = progress,
+                BufferSize = 512
+            };
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            List<long> expectedProgress = new List<long>
+            {
+                0,
+                512,
+                512,
+                512,
+                1024,
+                1024
+            };
+
+            Assert.IsTrue(progress.List.Count == 6);
+            TestHelper.AssertSequenceEqual<long>(expectedProgress, progress.List);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
+
+                PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                Stream stream = new MemoryStream(data);
+
+                // Act
+                Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+                await stream.CopyToAsync(openWriteStream);
+                await openWriteStream.FlushAsync();
+
+                // Assert
+                Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+                MemoryStream dataResult = new MemoryStream();
+                await result.Value.Content.CopyToAsync(dataResult);
+                Assert.AreEqual(data.Length, dataResult.Length);
+                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetUploadClearAsync_AccessConditionsFail_Data(garbageLeaseId))
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    sequenceNumbers: true);
+
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+
+                PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+                {
+                    Conditions = accessConditions
+                };
+
+                // Act
+                if (parameters.SequenceNumberLT != null
+                    || parameters.SequenceNumberLTE != null
+                    || parameters.SequenceNumberEqual != null)
+                {
+                    Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
+                    await stream.CopyToAsync(openWriteStream);
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        openWriteStream.FlushAsync(),
+                        e => { });
+                }
+                else
+                {
+                    await TestHelper.CatchAsync<Exception>(
+                        async () =>
+                        {
+                            Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
+                            await stream.CopyToAsync(openWriteStream);
+                            await stream.FlushAsync();
+                        });
+                }
+            }
         }
 
         private PageBlobRequestConditions BuildAccessConditions(

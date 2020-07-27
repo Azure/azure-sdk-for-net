@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs
         {
             ValidateBufferSize(bufferSize);
             _pageBlobClient = pageBlobClient;
-            _conditions = conditions;
+            _conditions = conditions ?? new PageBlobRequestConditions();
             _writeIndex = position;
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                await _pageBlobClient.UploadPagesInternal(
+                Response<PageInfo> response = await _pageBlobClient.UploadPagesInternal(
                     content: _buffer,
                     offset: _writeIndex,
                     transactionalContentHash: default,
@@ -103,6 +103,8 @@ namespace Azure.Storage.Blobs
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
+
+                _conditions.IfMatch = response.Value.ETag;
 
                 _writeIndex += _buffer.Length;
                 _buffer.Clear();
