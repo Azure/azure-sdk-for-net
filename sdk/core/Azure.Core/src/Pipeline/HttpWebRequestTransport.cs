@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
                         request.ContentLength = length;
                     }
 
-                    var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
+                    using var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
 
                     if (async)
                     {

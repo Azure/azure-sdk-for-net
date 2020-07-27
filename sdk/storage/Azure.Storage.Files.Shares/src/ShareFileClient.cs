@@ -4035,30 +4035,18 @@ namespace Azure.Storage.Files.Shares
         {
             // Try to upload the file as a single range
             Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
-            try
+            var length = content.Length;
+            if (length <= singleRangeThreshold)
             {
-                var length = content.Length;
-                if (length <= singleRangeThreshold)
-                {
-                    return await UploadRangeInternal(
-                        new HttpRange(0, length),
-                        content,
-                        null,
-                        progressHandler,
-                        conditions,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex is RequestFailedException
-                    && ((RequestFailedException)ex).ErrorCode.Equals(
-                        Constants.File.Errors.LeaseNotPresentWithFileOperation, StringComparison.InvariantCulture))
-                {
-                    throw;
-                }
+                return await UploadRangeInternal(
+                    new HttpRange(0, length),
+                    content,
+                    null,
+                    progressHandler,
+                    conditions,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
 
             // Otherwise naively split the file into ranges and upload them individually

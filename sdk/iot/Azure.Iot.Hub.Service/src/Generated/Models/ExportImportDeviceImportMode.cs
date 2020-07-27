@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The ExportImportDeviceImportMode. </summary>
+    /// <summary> The type of registry operation and ETag preferences. </summary>
     public readonly partial struct ExportImportDeviceImportMode : IEquatable<ExportImportDeviceImportMode>
     {
         private readonly string _value;
