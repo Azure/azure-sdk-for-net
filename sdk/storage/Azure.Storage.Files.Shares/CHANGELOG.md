@@ -1,5 +1,8 @@
 # Release History
 
+## 12.3.0-preview.3 (Unreleased)
+
+
 ## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
 - Updated ShareSasBuilder to correctly order raw string permissions and make the permissions lowercase.
