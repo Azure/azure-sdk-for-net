@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     else
                     {
-                       await args.CompleteMessageAsync(args.Message);
+                        await args.CompleteMessageAsync(args.Message);
                     }
                     if (args.Message.MessageId == "9")
                     {
@@ -1363,9 +1363,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                 await client.CreateSessionReceiverAsync(
                                     scope.QueueName,
                                     new ServiceBusSessionReceiverOptions
-                                {
-                                    SessionId = args.SessionId
-                                });
+                                    {
+                                        SessionId = args.SessionId
+                                    },
+                                    args.CancellationToken);
                                 break;
                             case ServiceBusErrorSource.UserCallback:
                                 await Task.Delay(delayDuration);
@@ -1513,12 +1514,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += args =>
                 {
-                        // If the connection drops due to network flakiness
-                        // after the message is received but before we
-                        // complete it, we will get a session lock
-                        // lost exception. We are still able to verify
-                        // that the message will be completed eventually.
-                        var exception = (ServiceBusException)args.Exception;
+                    // If the connection drops due to network flakiness
+                    // after the message is received but before we
+                    // complete it, we will get a session lock
+                    // lost exception. We are still able to verify
+                    // that the message will be completed eventually.
+                    var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
                     sbEx.Reason != ServiceBusException.FailureReason.SessionLockLost)
                     {
