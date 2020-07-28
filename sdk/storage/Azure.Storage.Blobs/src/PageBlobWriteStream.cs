@@ -27,6 +27,7 @@ namespace Azure.Storage.Blobs
                 progressHandler)
         {
             ValidateBufferSize(bufferSize);
+            ValidatePosition(position);
             _pageBlobClient = pageBlobClient;
             _conditions = conditions ?? new PageBlobRequestConditions();
             _writeIndex = position;
@@ -129,6 +130,14 @@ namespace Azure.Storage.Blobs
             if (bufferSize % 512 != 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must be a multiple of {Constants.Blob.Page.PageSize}");
+            }
+        }
+
+        private void ValidatePosition(long position)
+        {
+            if (position % Constants.Blob.Page.PageSize != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(position), $"Must be a multiple of {Constants.Blob.Page.PageSize}");
             }
         }
     }
