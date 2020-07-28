@@ -134,6 +134,12 @@ namespace Microsoft.Azure.Management.DataShare
         /// <param name='skipToken'>
         /// Continuation Token
         /// </param>
+        /// <param name='filter'>
+        /// Filters the results using OData syntax.
+        /// </param>
+        /// <param name='orderby'>
+        /// Sorts the results using OData syntax.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -149,7 +155,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Share>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Share>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), string filter = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Synchronizations in a share
         /// </summary>
@@ -168,6 +174,12 @@ namespace Microsoft.Azure.Management.DataShare
         /// <param name='skipToken'>
         /// Continuation token
         /// </param>
+        /// <param name='filter'>
+        /// Filters the results using OData syntax.
+        /// </param>
+        /// <param name='orderby'>
+        /// Sorts the results using OData syntax.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -183,7 +195,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ShareSynchronization>>> ListSynchronizationsWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ShareSynchronization>>> ListSynchronizationsWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), string filter = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List data set level details for a share synchronization
         /// </summary>
@@ -205,6 +217,12 @@ namespace Microsoft.Azure.Management.DataShare
         /// <param name='skipToken'>
         /// Continuation token
         /// </param>
+        /// <param name='filter'>
+        /// Filters the results using OData syntax.
+        /// </param>
+        /// <param name='orderby'>
+        /// Sorts the results using OData syntax.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -220,7 +238,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SynchronizationDetails>>> ListSynchronizationDetailsWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SynchronizationDetails>>> ListSynchronizationDetailsWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken = default(string), string filter = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a share
         /// </summary>

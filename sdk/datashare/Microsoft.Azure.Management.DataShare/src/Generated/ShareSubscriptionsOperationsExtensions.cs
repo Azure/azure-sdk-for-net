@@ -201,9 +201,15 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation Token
             /// </param>
-            public static IPage<ShareSubscription> ListByAccount(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string))
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
+            public static IPage<ShareSubscription> ListByAccount(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string filter = default(string), string orderby = default(string))
             {
-                return operations.ListByAccountAsync(resourceGroupName, accountName, skipToken).GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName, skipToken, filter, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -224,12 +230,18 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation Token
             /// </param>
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ShareSubscription>> ListByAccountAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ShareSubscription>> ListByAccountAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string filter = default(string), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, filter, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -314,9 +326,15 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
-            public static IPage<ShareSubscriptionSynchronization> ListSynchronizations(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string))
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
+            public static IPage<ShareSubscriptionSynchronization> ListSynchronizations(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), string filter = default(string), string orderby = default(string))
             {
-                return operations.ListSynchronizationsAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken).GetAwaiter().GetResult();
+                return operations.ListSynchronizationsAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,12 +358,18 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ShareSubscriptionSynchronization>> ListSynchronizationsAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ShareSubscriptionSynchronization>> ListSynchronizationsAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), string filter = default(string), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSynchronizationsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSynchronizationsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -375,9 +399,15 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
-            public static IPage<SynchronizationDetails> ListSynchronizationDetails(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = default(string))
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
+            public static IPage<SynchronizationDetails> ListSynchronizationDetails(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = default(string), string filter = default(string), string orderby = default(string))
             {
-                return operations.ListSynchronizationDetailsAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, skipToken).GetAwaiter().GetResult();
+                return operations.ListSynchronizationDetailsAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, skipToken, filter, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -404,12 +434,18 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SynchronizationDetails>> ListSynchronizationDetailsAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SynchronizationDetails>> ListSynchronizationDetailsAsync(this IShareSubscriptionsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = default(string), string filter = default(string), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSynchronizationDetailsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSynchronizationDetailsWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, shareSubscriptionSynchronization, skipToken, filter, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
