@@ -361,7 +361,7 @@ namespace ContainerRegistry.Tests
                 var exportPipeline = registryClient.ExportPipelines.Create(
                     resourceGroup.Name,
                     registry.Name,
-                    TestUtilities.GenerateName("exportPipeline"),
+                    TestUtilities.GenerateName("acrexportpipeline"),
                     new ExportPipeline
                     {
                         Location = resourceGroup.Location,
@@ -428,7 +428,7 @@ namespace ContainerRegistry.Tests
                 var importPipeline = registryClient.ImportPipelines.Create(
                     resourceGroup.Name,
                     registry.Name,
-                    TestUtilities.GenerateName("importPipeline"),
+                    TestUtilities.GenerateName("acrimportpipeline"),
                     new ImportPipeline
                     {
                         Location = resourceGroup.Location,
