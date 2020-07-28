@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and functions like, Language Detection, Sentiment Analysis, Key Phrase Extraction, Named Entity Recognition, and Linked Entity Recognition.</Description>
+    <Description>Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and features like Language Detection, Sentiment Analysis, Key Phrase Extraction, Named Entity Recognition, and Linked Entity Recognition.</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
     <Version>1.1.0-preview.1</Version>
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
