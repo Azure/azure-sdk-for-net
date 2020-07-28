@@ -15,6 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of TrainRequest. </summary>
         /// <param name="source"> Source path containing the training documents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)
         {
             if (source == null)

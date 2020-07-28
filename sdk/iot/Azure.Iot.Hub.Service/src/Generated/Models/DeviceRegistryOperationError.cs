@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Encapsulates device registry operation error details. </summary>
+    /// <summary> The device registry operation error details. </summary>
     public partial class DeviceRegistryOperationError
     {
         /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
@@ -16,11 +16,11 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
-        /// <param name="deviceId"> The ID of the device that indicated the error. </param>
-        /// <param name="errorCode"> ErrorCode associated with the error. </param>
-        /// <param name="errorStatus"> Additional details associated with the error. </param>
-        /// <param name="moduleId"> . </param>
-        /// <param name="operation"> . </param>
+        /// <param name="deviceId"> The unique identifier of the device. </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorStatus"> The details of the error. </param>
+        /// <param name="moduleId"> The unique identifier of the module, if applicable. </param>
+        /// <param name="operation"> The type of the operation that failed. </param>
         internal DeviceRegistryOperationError(string deviceId, DeviceRegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation)
         {
             DeviceId = deviceId;
@@ -30,13 +30,15 @@ namespace Azure.Iot.Hub.Service.Models
             Operation = operation;
         }
 
-        /// <summary> The ID of the device that indicated the error. </summary>
+        /// <summary> The unique identifier of the device. </summary>
         public string DeviceId { get; }
-        /// <summary> ErrorCode associated with the error. </summary>
+        /// <summary> The error code. </summary>
         public DeviceRegistryOperationErrorCode? ErrorCode { get; }
-        /// <summary> Additional details associated with the error. </summary>
+        /// <summary> The details of the error. </summary>
         public string ErrorStatus { get; }
+        /// <summary> The unique identifier of the module, if applicable. </summary>
         public string ModuleId { get; }
+        /// <summary> The type of the operation that failed. </summary>
         public string Operation { get; }
     }
 }

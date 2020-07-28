@@ -1,6 +1,6 @@
 # Release History
 
-## 12.3.0-preview.2 (Unreleased)
+## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
 - Updated DataLakeSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 - Fixed bug where DataLakeFileClient.Query() failed when query response was > ~200 MB.

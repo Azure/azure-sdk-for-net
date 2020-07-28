@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FieldMappingFunction(string name)
         {
             if (name == null)

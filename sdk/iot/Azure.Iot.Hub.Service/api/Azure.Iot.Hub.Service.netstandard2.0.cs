@@ -158,16 +158,6 @@ namespace Azure.Iot.Hub.Service.Models
         public object Payload { get { throw null; } }
         public int? Status { get { throw null; } }
     }
-    public partial class Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties
-    {
-        public Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties> Properties { get { throw null; } }
-    }
-    public partial class Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties
-    {
-        public Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties() { }
-        public Azure.Iot.Hub.Service.Models.DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired Desired { get { throw null; } set { } }
-    }
     public partial class ConfigurationContent
     {
         public ConfigurationContent() { }
@@ -192,13 +182,6 @@ namespace Azure.Iot.Hub.Service.Models
         internal ConfigurationQueriesTestResponse() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomMetricQueryErrors { get { throw null; } }
         public string TargetConditionError { get { throw null; } }
-    }
-    public partial class DesiredState
-    {
-        internal DesiredState() { }
-        public int? Code { get { throw null; } }
-        public string Description { get { throw null; } }
-        public long? Version { get { throw null; } }
     }
     public partial class DeviceCapabilities
     {
@@ -433,6 +416,7 @@ namespace Azure.Iot.Hub.Service.Models
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode OperationNotAllowedInCurrentState { get { throw null; } }
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode OperationNotAvailableInCurrentTier { get { throw null; } }
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode OrchestrationOperationFailed { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode OrphanDiscoveryDocument { get { throw null; } }
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode PartitionNotFound { get { throw null; } }
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode PreconditionFailed { get { throw null; } }
         public static Azure.Iot.Hub.Service.Models.DeviceRegistryOperationErrorCode ProvisioningRecordConflict { get { throw null; } }
@@ -514,16 +498,6 @@ namespace Azure.Iot.Hub.Service.Models
         public static implicit operator Azure.Iot.Hub.Service.Models.DeviceStatus (string value) { throw null; }
         public static bool operator !=(Azure.Iot.Hub.Service.Models.DeviceStatus left, Azure.Iot.Hub.Service.Models.DeviceStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DigitalTwinInterfacesPatch
-    {
-        public DigitalTwinInterfacesPatch() { }
-        public System.Collections.Generic.IDictionary<string, Azure.Iot.Hub.Service.Models.Components10Jnwi5SchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalproperties> Interfaces { get { throw null; } }
-    }
-    public partial class DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired
-    {
-        public DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired() { }
-        public object Value { get { throw null; } set { } }
     }
     public partial class ExportImportDevice
     {
@@ -618,9 +592,11 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class JobProperties
     {
         public JobProperties() { }
+        public string ConfigurationsBlobName { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeUtc { get { throw null; } set { } }
         public bool? ExcludeKeysInExport { get { throw null; } set { } }
         public string FailureReason { get { throw null; } set { } }
+        public bool? IncludeConfigurations { get { throw null; } set { } }
         public string InputBlobContainerUri { get { throw null; } set { } }
         public string InputBlobName { get { throw null; } set { } }
         public string JobId { get { throw null; } set { } }

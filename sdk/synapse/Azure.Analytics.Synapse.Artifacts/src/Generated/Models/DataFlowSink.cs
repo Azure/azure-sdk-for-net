@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of DataFlowSink. </summary>
         /// <param name="name"> Transformation name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowSink(string name) : base(name)
         {
             if (name == null)

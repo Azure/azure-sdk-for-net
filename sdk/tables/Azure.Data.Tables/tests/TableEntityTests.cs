@@ -18,7 +18,6 @@ namespace Azure.Tables.Tests
         { }
 
         private DynamicTableEntity entityWithoutPK = new DynamicTableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
-        private DynamicTableEntity entityWithoutRK = new DynamicTableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
         private DynamicTableEntity entityWithAllTypes = new DynamicTableEntity {
             { TableConstants.PropertyNames.PartitionKey, "partition" },
             { TableConstants.PropertyNames.RowKey, "row" },
@@ -34,22 +33,22 @@ namespace Azure.Tables.Tests
         /// Validates the typed getters.
         /// </summary>
         [Test]
-        public void ValidateDynamicTableEntityGetTypes()
+        public void ValidateDynamicEntityGetTypes()
         {
-            Assert.IsInstanceOf(typeof(byte[]), entityWithAllTypes.GetBinary("binary"));
-            Assert.IsInstanceOf(typeof(bool), entityWithAllTypes.GetBoolean("boolean"));
-            Assert.IsInstanceOf(typeof(DateTime), entityWithAllTypes.GetDateTime("datetime"));
-            Assert.IsInstanceOf(typeof(double), entityWithAllTypes.GetDouble("double"));
-            Assert.IsInstanceOf(typeof(Guid), entityWithAllTypes.GetGuid("guid"));
-            Assert.IsInstanceOf(typeof(int), entityWithAllTypes.GetInt32("int32"));
-            Assert.IsInstanceOf(typeof(long), entityWithAllTypes.GetInt64("int64"));
+            Assert.That(entityWithAllTypes.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
+            Assert.That(entityWithAllTypes.GetBoolean("boolean"), Is.InstanceOf(typeof(bool)));
+            Assert.That(entityWithAllTypes.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime)));
+            Assert.That(entityWithAllTypes.GetDouble("double"), Is.InstanceOf(typeof(double)));
+            Assert.That(entityWithAllTypes.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
+            Assert.That(entityWithAllTypes.GetInt32("int32"), Is.InstanceOf(typeof(int)));
+            Assert.That(entityWithAllTypes.GetInt64("int64"), Is.InstanceOf(typeof(long)));
         }
 
         /// <summary>
         /// Validates the typed getters throws InvalidOperationException when the retrieved value doesn't match the type.
         /// </summary>
         [Test]
-        public void DynamicTableEntityGetWrongTypesThrows()
+        public void DynamicEntityGetWrongTypesThrows()
         {
             Assert.That(() => entityWithAllTypes.GetBinary("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a Binary.");
             Assert.That(() => entityWithAllTypes.GetBoolean("datetime"), Throws.InstanceOf<InvalidOperationException>(), "GetBoolean should validate that the value for the inputted key is a Boolean.");
@@ -61,25 +60,66 @@ namespace Azure.Tables.Tests
         }
 
         /// <summary>
+        /// Validates getting properties involving null.
+        /// </summary>
+        [Test]
+        public void DynamicEntityGetNullOrNonexistentProperties()
+        {
+            // Test getting new property works.
+            Assert.That(entityWithoutPK.TryGetValue(TableConstants.PropertyNames.PartitionKey, out _), Is.False);
+            Assert.That(entityWithoutPK.PartitionKey, Is.Null);
+
+            // Test getting a property that was set to null.
+            entityWithAllTypes[TableConstants.PropertyNames.PartitionKey] = null;
+            Assert.That(entityWithAllTypes[TableConstants.PropertyNames.PartitionKey], Is.Null);
+        }
+
+        /// <summary>
         /// Validates setting values makes correct changes.
         /// </summary>
         [Test]
-        public void ValidateDynamicTableEntitySetType()
+        public void ValidateDynamicEntitySetType()
         {
-            // Test setting new value with same type works.
-            entityWithAllTypes["boolean"] = false;
-            Assert.IsFalse(entityWithAllTypes.GetBoolean("boolean"));
+            var entity = new DynamicTableEntity("partition", "row") { { "exampleBool", true } };
 
-            // TODO: Fix error when setting an existing value to null.
+            // Test setting an existing property with the same type works.
+            entity["exampleInt"] = false;
+            Assert.That(entity.GetBoolean("exampleInt"), Is.False);
         }
 
         /// <summary>
         /// Validates setting values to a different type throws InvalidOperationException.
         /// </summary>
         [Test]
-        public void DynamicTableEntitySetWrongTypeThrows()
+        public void DynamicEntitySetWrongTypeThrows()
         {
-            Assert.That(() => entityWithAllTypes["boolean"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a new value validates that the new type matches the existing type.");
+            var entity = new DynamicTableEntity("partition", "row") { { "exampleBool", true } };
+
+            Assert.That(() => entity["exampleBool"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a value with mismatched types should throw an exception.");
+        }
+
+        /// <summary>
+        /// Validates setting required and additional properties involving null.
+        /// </summary>
+        [Test]
+        public void DynamicEntitySetNullProperties()
+        {
+            var entity = new DynamicTableEntity("partition", "row");
+
+            // Test setting new property works.
+            string stringKey = "key :D";
+            string stringValue = "value D:";
+            Assert.That(entity[stringKey], Is.Null);
+            entity[stringKey] = stringValue;
+            Assert.That(entity[stringKey], Is.EqualTo(stringValue));
+
+            // Test setting existing value to null.
+            entity[stringKey] = null;
+            Assert.That(entity[stringKey], Is.Null);
+
+            // Test setting existing null value to a non-null value.
+            entity[stringKey] = stringValue;
+            Assert.That(entity[stringKey], Is.EqualTo(stringValue));
         }
     }
 }

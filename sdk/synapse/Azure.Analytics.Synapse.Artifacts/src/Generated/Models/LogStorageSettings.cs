@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of LogStorageSettings. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogStorageSettings(LinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)

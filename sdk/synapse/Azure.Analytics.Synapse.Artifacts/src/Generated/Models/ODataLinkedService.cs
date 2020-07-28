@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ODataLinkedService. </summary>
         /// <param name="url"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ODataLinkedService(object url)
         {
             if (url == null)

@@ -26,7 +26,7 @@ namespace Azure.Data.Tables
         /// meaning that each time the entity is modified, the value of Timestamp increases for that entity. This property should not be set on insert or update operations (the value will be ignored).
         /// </summary>
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
-        public virtual DateTimeOffset Timestamp { get; set; }
+        public virtual DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's ETag. Set this value to '*' in order to force an overwrite to an entity as part of an update operation.
