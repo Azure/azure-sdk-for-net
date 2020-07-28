@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsPatchDescription : IUtf8JsonSerializable
+    internal partial class DigitalTwinsPatchDescription : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

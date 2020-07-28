@@ -18,6 +18,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="read"> Indicates whether all read requests should be logged. </param>
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
         public LoggingSettings(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
         {
             if (version == null)

@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SsisLogLocation. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of SSIS log location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
         public SsisLogLocation(object logPath, SsisLogLocationType type)
         {
             if (logPath == null)

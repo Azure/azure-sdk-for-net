@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SqlScript. </summary>
         /// <param name="content"> The content of the SQL script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SqlScript(SqlScriptContent content)
         {
             if (content == null)

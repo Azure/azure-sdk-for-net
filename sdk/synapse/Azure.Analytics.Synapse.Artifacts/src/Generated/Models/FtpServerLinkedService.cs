@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of FtpServerLinkedService. </summary>
         /// <param name="host"> Host name of the FTP server. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public FtpServerLinkedService(object host)
         {
             if (host == null)

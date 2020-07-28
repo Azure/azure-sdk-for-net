@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
         public AzureKeyVaultSecretReference(LinkedServiceReference store, object secretName)
         {
             if (store == null)
