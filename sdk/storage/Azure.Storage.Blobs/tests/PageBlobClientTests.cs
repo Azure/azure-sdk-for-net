@@ -2190,53 +2190,55 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
             var data = GetRandomBuffer(Constants.KB);
-            var expectedData = new byte[4 * Constants.KB];
-            data.CopyTo(expectedData, 0);
 
             // Create Page Blob
             PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
             // Update data to firstPageBlob
-            using (var stream = new MemoryStream(data))
-            {
-                await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-            }
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+            stream.Position = 0;
 
             // Create Snapshot
             Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
 
-            var snapshot = snapshotResponse.Value.Snapshot;
+            string snapshot0 = snapshotResponse.Value.Snapshot;
 
-            PageBlobClient destinationBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            Dictionary<string, string> tags = new Dictionary<string, string>
-            {
-                { "coolTag", "true" }
-            };
-            await destinationBlob.SetTagsAsync(tags);
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
             PageBlobRequestConditions conditions = new PageBlobRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            // Act
-            Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
+            // Associate the blobs via incremental copy
+            await destinationBlob.StartCopyIncrementalAsync(
                 sourceUri: sourceBlob.Uri,
-                snapshot: snapshot,
-                conditions: conditions);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+                snapshot: snapshot0);
 
-            // Assert
-            Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
-            Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
+            // Need to wait for 1st copy to complete.
+            await Delay(5000);
+
+            // Update destination tags
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destinationBlob.SetTagsAsync(tags);
+
+            // Update source blob
+            await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+
+            // Create new snapshot
+            snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot1 = snapshotResponse.Value.Snapshot;
+
+            // Act
+            await destinationBlob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    snapshot: snapshot1,
+                    conditions: conditions);
         }
 
         [Test]
@@ -2249,22 +2251,19 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
             var data = GetRandomBuffer(Constants.KB);
-            var expectedData = new byte[4 * Constants.KB];
-            data.CopyTo(expectedData, 0);
 
             // Create Page Blob
             PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
             // Update data to firstPageBlob
-            using (var stream = new MemoryStream(data))
-            {
-                await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-            }
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+            stream.Position = 0;
 
             // Create Snapshot
             Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
 
-            var snapshot = snapshotResponse.Value.Snapshot;
+            string snapshot0 = snapshotResponse.Value.Snapshot;
 
             PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
@@ -2273,11 +2272,24 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            // Associate the blobs via incremental copy
+            await destinationBlob.StartCopyIncrementalAsync(
+                sourceUri: sourceBlob.Uri,
+                snapshot: snapshot0);
+
+            // Update source blob
+            await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+
+            // Create new snapshot
+            snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot1 = snapshotResponse.Value.Snapshot;
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destinationBlob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
-                    snapshot: snapshot,
+                    snapshot: snapshot1,
                     conditions: conditions),
                     e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
