@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/servicefabric/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3903ebec90f50617c36911b25d499a7ae867b740";
+      public static readonly String GithubCommidId = "9a54501ec38eda0daa0bf1d9af106473cc0536d4";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

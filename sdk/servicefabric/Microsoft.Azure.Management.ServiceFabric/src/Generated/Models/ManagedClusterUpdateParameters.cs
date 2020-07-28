@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
         /// proxy.</param>
         /// <param name="tags">Managed cluster update parameters</param>
-        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), LoadBalancingRule loadBalancingRules = default(LoadBalancingRule), ClientCertificate clients = default(ClientCertificate), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), SettingsSectionDescription fabricSettings = default(SettingsSectionDescription), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ClientConnectionPort = clientConnectionPort;
             HttpGatewayConnectionPort = httpGatewayConnectionPort;
@@ -104,13 +104,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Gets or sets describes a load balancing rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public LoadBalancingRule LoadBalancingRules { get; set; }
+        public IList<LoadBalancingRule> LoadBalancingRules { get; set; }
 
         /// <summary>
         /// Gets or sets client certificates for the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clients")]
-        public ClientCertificate Clients { get; set; }
+        public IList<ClientCertificate> Clients { get; set; }
 
         /// <summary>
         /// Gets or sets azure active directory.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fabricSettings")]
-        public SettingsSectionDescription FabricSettings { get; set; }
+        public IList<SettingsSectionDescription> FabricSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the Service Fabric runtime version of the cluster.
@@ -179,15 +179,33 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         {
             if (LoadBalancingRules != null)
             {
-                LoadBalancingRules.Validate();
+                foreach (var element in LoadBalancingRules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
             if (Clients != null)
             {
-                Clients.Validate();
+                foreach (var element1 in Clients)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
             if (FabricSettings != null)
             {
-                FabricSettings.Validate();
+                foreach (var element2 in FabricSettings)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
             }
             if (ClusterUpgradeDescription != null)
             {

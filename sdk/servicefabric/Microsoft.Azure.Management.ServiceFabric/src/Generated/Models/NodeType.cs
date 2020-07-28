@@ -75,7 +75,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// 'latest'.</param>
         /// <param name="vmSecrets">virtual machine secretes.</param>
         /// <param name="vmExtensions">virtual machine extensions.</param>
-        public NodeType(bool isPrimary, int vmInstanceCount, int diskSizeInGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>))
+        /// <param name="provisioningState">The provisioning state of the
+        /// managed cluster resource. Possible values include: 'None',
+        /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
+        /// 'Canceled', 'Deleting', 'Deleted', 'Other'</param>
+        public NodeType(bool isPrimary, int vmInstanceCount, int diskSizeInGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), string provisioningState = default(string))
             : base(id, name, type, tags)
         {
             IsPrimary = isPrimary;
@@ -92,6 +96,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             VmImageVersion = vmImageVersion;
             VmSecrets = vmSecrets;
             VmExtensions = vmExtensions;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -207,6 +212,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.vmExtensions")]
         public IList<VMSSExtension> VmExtensions { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the managed cluster resource.
+        /// Possible values include: 'None', 'Creating', 'Created', 'Updating',
+        /// 'Succeeded', 'Failed', 'Canceled', 'Deleting', 'Deleted', 'Other'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
