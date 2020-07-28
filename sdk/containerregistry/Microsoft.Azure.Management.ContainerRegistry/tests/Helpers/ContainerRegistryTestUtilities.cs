@@ -15,6 +15,7 @@ using Xunit;
 using Resource = Microsoft.Azure.Management.ContainerRegistry.Models.Resource;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 using SkuName = Microsoft.Azure.Management.ContainerRegistry.Models.SkuName;
+using ResourceIdentityType = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType;
 
 namespace ContainerRegistry.Tests
 {
@@ -158,8 +159,62 @@ namespace ContainerRegistry.Tests
                 resourceGroupName,
                 registryName,
                 NormalizeLocation(location),
-                location,
-                DefaultTags);
+                new Replication
+                {
+                    Location = location,
+                    Tags = DefaultTags
+                });
+        }
+
+        public static ExportPipeline CreatedContainerRegistryExportPipeline(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string location)
+        {
+            return client.ExportPipelines.Create(
+                resourceGroupName,
+                registryName,
+                TestUtilities.GenerateName("exportPipeline"),
+                new ExportPipeline
+                {
+                    Location = location,
+                    Identity = new IdentityProperties
+                    {
+                        Type = ResourceIdentityType.SystemAssigned
+                    },
+                    Target = new ExportPipelineTargetProperties
+                    {
+                        Type = "AzureStorageBlobContainer",
+                        Uri = "https://accountname.blob.core.windows.net/containername",
+                        KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                    }
+                });
+        }
+
+        public static ImportPipeline CreatedContainerRegistryImportPipeline(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string location)
+        {
+            return client.ImportPipelines.Create(
+                resourceGroupName,
+                registryName,
+                TestUtilities.GenerateName("importPipeline"),
+                new ImportPipeline
+                {
+                    Location = location,
+                    Identity = new IdentityProperties
+                    {
+                        Type = ResourceIdentityType.SystemAssigned
+                    },
+                    Source = new ImportPipelineSourceProperties
+                    {
+                        Type = "AzureStorageBlobContainer",
+                        Uri = "https://accountname.blob.core.windows.net/containername",
+                        KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                    },
+                    Trigger = new PipelineTriggerProperties
+                    {
+                        SourceTrigger = new PipelineSourceTriggerProperties
+                        {
+                            Status = "Enabled"
+                        }
+                    }
+                });
         }
 
         public static void ValidateResourceDefaultTags(Resource resource)

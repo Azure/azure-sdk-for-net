@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="logLink">The link to logs for a run on a azure
         /// container registry.</param>
-        public RunGetLogResult(string logLink = default(string))
+        /// <param name="logArtifactLink">The link to logs in registry for a
+        /// run on a azure container registry.</param>
+        public RunGetLogResult(string logLink = default(string), string logArtifactLink = default(string))
         {
             LogLink = logLink;
+            LogArtifactLink = logArtifactLink;
             CustomInit();
         }
 
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "logLink")]
         public string LogLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets the link to logs in registry for a run on a azure
+        /// container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "logArtifactLink")]
+        public string LogArtifactLink { get; set; }
 
     }
 }
