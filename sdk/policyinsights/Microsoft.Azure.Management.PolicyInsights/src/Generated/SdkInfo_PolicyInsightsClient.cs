@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("PolicyInsights", "Operations", "2019-10-01"),
-                new Tuple<string, string, string>("PolicyInsights", "PolicyEvents", "2018-04-04"),
+                new Tuple<string, string, string>("PolicyInsights", "PolicyEvents", "2019-10-01"),
                 new Tuple<string, string, string>("PolicyInsights", "PolicyMetadata", "2019-10-01"),
                 new Tuple<string, string, string>("PolicyInsights", "PolicyStates", "2019-10-01"),
                 new Tuple<string, string, string>("PolicyInsights", "PolicyTrackedResources", "2018-07-01-preview"),
@@ -28,16 +28,5 @@ namespace Microsoft.Azure.Management.PolicyInsights
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4407";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/policyinsights/resource-manager/readme.md --csharp --version=2.0.4407 --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "37f5c959dbe79cf4f51f0ccc3001ec0438eeebb9";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
