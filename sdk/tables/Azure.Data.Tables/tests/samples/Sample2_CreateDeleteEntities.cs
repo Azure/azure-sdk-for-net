@@ -78,10 +78,22 @@ namespace Azure.Data.Tables.Samples
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
         // Define a strongly typed entity by extending the <see cref="TableEntity"> class.
-        public class OfficeSupplyEntity : TableEntity
+        public class OfficeSupplyEntity : ITableEntity
         {
+            public OfficeSupplyEntity() { }
+
+            public OfficeSupplyEntity(string partitionKey, string rowKey)
+            {
+                PartitionKey = partitionKey;
+                RowKey = rowKey;
+            }
+
             public string Product { get; set; }
             public double Price { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public string ETag { get; set; }
         }
         #endregion
     }
