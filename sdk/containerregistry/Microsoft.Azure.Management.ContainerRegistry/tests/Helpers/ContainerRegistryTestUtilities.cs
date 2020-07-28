@@ -15,7 +15,7 @@ using Xunit;
 using Resource = Microsoft.Azure.Management.ContainerRegistry.Models.Resource;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 using SkuName = Microsoft.Azure.Management.ContainerRegistry.Models.SkuName;
-using ResourceIdentityType = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType;
+
 
 namespace ContainerRegistry.Tests
 {
