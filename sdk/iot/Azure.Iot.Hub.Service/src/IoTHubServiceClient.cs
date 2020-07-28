@@ -19,6 +19,7 @@ namespace Azure.Iot.Hub.Service
         private readonly DevicesRestClient _devicesRestClient;
         private readonly ModulesRestClient _modulesRestClient;
         private readonly QueryRestClient _queryRestClient;
+        private readonly StatisticsRestClient _statisticsRestClient;
 
         /// <summary>
         /// place holder for Devices.
@@ -97,11 +98,12 @@ namespace Azure.Iot.Hub.Service
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
             Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
             Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
 
-            Statistics = new StatisticsClient();
+            Statistics = new StatisticsClient(_statisticsRestClient);
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
             Jobs = new JobsClient();
@@ -146,11 +148,12 @@ namespace Azure.Iot.Hub.Service
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
             Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
             Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
 
-            Statistics = new StatisticsClient();
+            Statistics = new StatisticsClient(_statisticsRestClient);
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
             Jobs = new JobsClient();

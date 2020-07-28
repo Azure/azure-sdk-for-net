@@ -105,7 +105,11 @@ namespace Azure.Iot.Hub.Service
     }
     public partial class StatisticsClient
     {
-        public StatisticsClient() { }
+        protected StatisticsClient() { }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.DevicesStatistics> GetDevicesStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.DevicesStatistics>> GetDevicesStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.ServiceStatistics> GetServiceStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.ServiceStatistics>> GetServiceStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Iot.Hub.Service.Models
@@ -480,6 +484,13 @@ namespace Azure.Iot.Hub.Service.Models
         public string DeviceId { get { throw null; } }
         public string WarningCode { get { throw null; } }
         public string WarningStatus { get { throw null; } }
+    }
+    public partial class DevicesStatistics
+    {
+        internal DevicesStatistics() { }
+        public long? DisabledDeviceCount { get { throw null; } }
+        public long? EnabledDeviceCount { get { throw null; } }
+        public long? TotalDeviceCount { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceStatus : System.IEquatable<Azure.Iot.Hub.Service.Models.DeviceStatus>
@@ -872,13 +883,6 @@ namespace Azure.Iot.Hub.Service.Models
     {
         public QuerySpecification() { }
         public string Query { get { throw null; } set { } }
-    }
-    public partial class RegistryStatistics
-    {
-        internal RegistryStatistics() { }
-        public long? DisabledDeviceCount { get { throw null; } }
-        public long? EnabledDeviceCount { get { throw null; } }
-        public long? TotalDeviceCount { get { throw null; } }
     }
     public partial class ServiceStatistics
     {
