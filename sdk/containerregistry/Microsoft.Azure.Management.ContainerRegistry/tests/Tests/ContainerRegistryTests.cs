@@ -357,7 +357,25 @@ namespace ContainerRegistry.Tests
 
                 // Create container registry and exportPipeline
                 var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
-                var exportPipeline = ContainerRegistryTestUtilities.CreatedContainerRegistryExportPipeline(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
+
+                var exportPipeline = registryClient.ExportPipelines.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("exportPipeline"),
+                    new ExportPipeline
+                    {
+                        Location = resourceGroup.Location,
+                        Identity = new IdentityProperties
+                        {
+                            Type = ResourceIdentityType.SystemAssigned
+                        },
+                        Target = new ExportPipelineTargetProperties
+                        {
+                            Type = "AzureStorageBlobContainer",
+                            Uri = "https://accountname.blob.core.windows.net/containername",
+                            KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                        }
+                    });
 
                 // Validate the created exportPipeline
                 Assert.Equal(ProvisioningState.Succeeded, exportPipeline.ProvisioningState);
@@ -406,7 +424,32 @@ namespace ContainerRegistry.Tests
 
                 // Create container registry and exportPipeline
                 var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
-                var importPipeline = ContainerRegistryTestUtilities.CreatedContainerRegistryImportPipeline(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
+
+                var importPipeline = registryClient.ImportPipelines.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("importPipeline"),
+                    new ImportPipeline
+                    {
+                        Location = resourceGroup.Location,
+                        Identity = new IdentityProperties
+                        {
+                            Type = ResourceIdentityType.SystemAssigned
+                        },
+                        Source = new ImportPipelineSourceProperties
+                        {
+                            Type = "AzureStorageBlobContainer",
+                            Uri = "https://accountname.blob.core.windows.net/containername",
+                            KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                        },
+                        Trigger = new PipelineTriggerProperties
+                        {
+                            SourceTrigger = new PipelineSourceTriggerProperties
+                            {
+                                Status = "Enabled"
+                            }
+                        }
+                    });
 
                 // Validate the created exportPipeline
                 Assert.Equal(ProvisioningState.Succeeded, importPipeline.ProvisioningState);
