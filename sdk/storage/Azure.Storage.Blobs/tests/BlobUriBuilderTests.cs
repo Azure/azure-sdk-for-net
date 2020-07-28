@@ -343,6 +343,31 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobUriBuilder_CustomUri_AccountContainerBlobTest()
+        {
+            // Arrange
+            var uriString = "https://www.mycustomname.com/containername/blobname";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("www.mycustomname.com", blobUriBuilder.Host);
+            Assert.AreEqual(String.Empty, blobUriBuilder.AccountName);
+            Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blobname", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_SnapshotTest()
         {
             // Arrange

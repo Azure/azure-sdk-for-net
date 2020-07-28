@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
@@ -32,9 +33,15 @@ namespace Azure.Storage.Blobs
         private readonly bool _isIPStyleUri;
 
         /// <summary>
-        /// Whether the Uri is an emulator-style Uri (i.e. it is an IP Uri or the domain does not include Constants.Blob.UriSubdomain).
+        /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
-        private readonly bool _isEmulatorStyleUri;
+        private readonly bool _isPathStyleUri;
+
+        /// <summary>
+        /// List of ports used for path style addressing.
+        /// Copied from Microsoft.Azure.Storage.Core.Util
+        /// </summary>
+        private static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -179,13 +186,8 @@ namespace Azure.Storage.Blobs
                 var startIndex = 0;
 
                 _isIPStyleUri = uri.IsHostIPEndPointStyle();
-                _isEmulatorStyleUri = (_isIPStyleUri || (
-                        !uri.Host.Contains(Constants.Blob.UriSubDomain) &&
-                        !uri.Host.Contains(Constants.File.UriSubDomain) && // Ensure host is not for wrong service
-                        !uri.Host.Contains(Constants.Queue.UriSubDomain) && // Ensure host is not for wrong service
-                        !uri.Host.EndsWith(".", StringComparison.InvariantCulture) // Ensure host is not "<account>."
-                ));
-                if (_isEmulatorStyleUri)
+                _isPathStyleUri = _isIPStyleUri || PathStylePorts.Contains(uri.Port);
+                if (_isPathStyleUri)
                 {
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
@@ -289,7 +291,7 @@ namespace Azure.Storage.Blobs
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isEmulatorStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
