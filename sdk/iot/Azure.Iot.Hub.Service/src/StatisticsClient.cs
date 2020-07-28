@@ -37,8 +37,8 @@ namespace Azure.Iot.Hub.Service
         /// Gets devices statistics of the IoT Hub identity registry.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The device statistics of the IoT Hub.</returns>
-        public virtual Response<DevicesStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
+        /// <returns>The devices statistics of the IoT Hub.</returns>
+        public virtual Response<DevicesStatistics> GetDevicesStatistics(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatistics(cancellationToken);
         }
@@ -47,8 +47,8 @@ namespace Azure.Iot.Hub.Service
         /// Gets devices statistics of the IoT Hub identity registry.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The device statistics of the IoT Hub.</returns>
-        public virtual Task<Response<DevicesStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
+        /// <returns>The devices statistics of the IoT Hub.</returns>
+        public virtual Task<Response<DevicesStatistics>> GetDevicesStatisticsAsync(CancellationToken cancellationToken = default)
         {
             return _statisticsRestClient.GetDeviceStatisticsAsync(cancellationToken);
         }
