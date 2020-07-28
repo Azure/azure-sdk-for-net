@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample2DeleteEntityAsync
                 // Delete the entity given the partition and row key.
-                await client.DeleteAsync(partitionKey, rowKey);
+                await client.DeleteEntityAsync(partitionKey, rowKey);
                 #endregion
 
             }

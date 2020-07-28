@@ -66,7 +66,7 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample2DeleteEntity
                 // Delete the entity given the partition and row key.
-                client.Delete(partitionKey, rowKey);
+                client.DeleteEntity(partitionKey, rowKey);
                 #endregion
 
             }
