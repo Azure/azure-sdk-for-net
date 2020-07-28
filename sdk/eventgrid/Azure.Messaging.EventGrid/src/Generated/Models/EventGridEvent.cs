@@ -19,6 +19,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventType"> The type of the event that occurred. </param>
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> is null. </exception>
         public EventGridEvent(string id, string subject, object data, string eventType, DateTimeOffset eventTime, string dataVersion)
         {
             if (id == null)

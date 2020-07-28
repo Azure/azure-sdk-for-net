@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public KeyVaultManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, KeyVaultManagementClientOptions options = null)
         {
             if (subscriptionId == null)

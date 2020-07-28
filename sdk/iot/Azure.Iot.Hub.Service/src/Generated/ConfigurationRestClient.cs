@@ -29,7 +29,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ConfigurationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -61,6 +61,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets a configuration on the IoT Hub for automatic device/module management. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<TwinConfiguration>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -87,6 +88,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets a configuration on the IoT Hub for automatic device/module management. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<TwinConfiguration> Get(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -137,6 +139,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="configuration"> The configuration to be created or updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
         public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -170,6 +173,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="configuration"> The configuration to be created or updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
         public Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -220,6 +224,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -242,6 +247,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Delete(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -349,6 +355,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Validates target condition and custom metric queries for a configuration on the IoT Hub. </summary>
         /// <param name="input"> The configuration for target condition and custom metric queries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public async Task<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -375,6 +382,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Validates target condition and custom metric queries for a configuration on the IoT Hub. </summary>
         /// <param name="input"> The configuration for target condition and custom metric queries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public Response<ConfigurationQueriesTestResponse> TestQueries(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -421,6 +429,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the edge device. </param>
         /// <param name="content"> The configuration content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         public async Task<Response> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -447,6 +456,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the edge device. </param>
         /// <param name="content"> The configuration content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         public Response ApplyOnEdgeDevice(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
             if (id == null)
