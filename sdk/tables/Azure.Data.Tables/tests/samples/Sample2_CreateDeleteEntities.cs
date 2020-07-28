@@ -80,14 +80,6 @@ namespace Azure.Data.Tables.Samples
         // Define a strongly typed entity by extending the <see cref="TableEntity"> class.
         public class OfficeSupplyEntity : ITableEntity
         {
-            public OfficeSupplyEntity() { }
-
-            public OfficeSupplyEntity(string partitionKey, string rowKey)
-            {
-                PartitionKey = partitionKey;
-                RowKey = rowKey;
-            }
-
             public string Product { get; set; }
             public double Price { get; set; }
             public string PartitionKey { get; set; }
