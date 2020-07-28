@@ -69,7 +69,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table in the storage account.
+        /// Creates the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
@@ -90,7 +90,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table in the storage account.
+        /// Creates the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
@@ -111,7 +111,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes a table in the storage account.
+        /// Deletes the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
@@ -131,7 +131,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes a table in the storage account.
+        /// Deletes the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
