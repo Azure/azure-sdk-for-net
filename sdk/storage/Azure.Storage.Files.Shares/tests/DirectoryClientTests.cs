@@ -988,7 +988,8 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient fileFromDirectoryClient = InstrumentClient(directoryClient.GetFileClient(fileName));
             Response<ShareFileInfo> createResponse = await fileFromDirectoryClient.CreateAsync(Constants.KB);
 
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
+            string endPointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.{endPointSuffix}/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
 
             ShareFileClient fileFromConstructor = new ShareFileClient(
                 TestConfigDefault.ConnectionString,
@@ -1051,7 +1052,8 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directoryFromDirectoryClient = InstrumentClient(directoryClient.GetSubdirectoryClient(subDirectoryName));
             Response<ShareDirectoryInfo> createResponse = await directoryFromDirectoryClient.CreateAsync();
 
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
+            string endPointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.{endPointSuffix}/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
 
 
             ShareDirectoryClient directoryFromConstructor = new ShareDirectoryClient(
