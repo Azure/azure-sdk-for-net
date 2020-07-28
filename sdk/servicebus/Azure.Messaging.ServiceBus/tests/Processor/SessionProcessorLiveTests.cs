@@ -187,6 +187,73 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanDelayProcessingOfSession()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, byte[]> sessions = new ConcurrentDictionary<string, byte[]>();
+                for (int i = 0; i < 10; i++)
+                {
+                    var sessionId = "sessionId";
+                    await sender.SendMessageAsync(new ServiceBusMessage()
+                    {
+                        MessageId = i.ToString(),
+                        SessionId = sessionId
+                    });
+                    sessions.TryAdd(sessionId, null);
+                }
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxAutoLockRenewalDuration = lockDuration,
+                    AutoComplete = false
+                };
+                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                bool receivedDelayMsg = false;
+                List<string> receivedMessages = new List<string>();
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    receivedMessages.Add(args.Message.MessageId);
+                    if (args.Message.MessageId == "5" && !receivedDelayMsg)
+                    {
+                        receivedDelayMsg = true;
+                        // simulate the situation where we need to
+                        // delay processing on subsequent messages until
+                        // this message can be handled
+                        await Task.Delay(lockDuration.Add(lockDuration));
+                    }
+                    else
+                    {
+                       await args.CompleteMessageAsync(args.Message);
+                    }
+                    if (args.Message.MessageId == "9")
+                    {
+                        tcs.SetResult(true);
+                    }
+                }
+
+                await tcs.Task;
+                Assert.AreEqual(
+                    new List<string> { "0", "1", "2", "3", "4", "5", "5", "6", "7", "8", "9" },
+                    receivedMessages);
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]

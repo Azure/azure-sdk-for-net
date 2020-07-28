@@ -351,12 +351,12 @@ namespace Azure.Messaging.ServiceBus
 
         protected override async Task OnMessageHandler(
             ServiceBusReceivedMessage message,
-            CancellationToken processorCancellationToken)
+            CancellationToken cancellationToken)
         {
             var args = new ProcessSessionMessageEventArgs(
                 message,
                 _receiver,
-                processorCancellationToken);
+                cancellationToken);
             await _messageHandler(args).ConfigureAwait(false);
         }
     }

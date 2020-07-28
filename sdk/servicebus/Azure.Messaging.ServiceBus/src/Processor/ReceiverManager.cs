@@ -142,11 +142,11 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="processorCancellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         private async Task ProcessOneMessage(
             ServiceBusReceivedMessage message,
-            CancellationToken processorCancellationToken)
+            CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             CancellationTokenSource renewLockCancellationTokenSource = null;
@@ -158,7 +158,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
+                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus
 
                 errorSource = ServiceBusErrorSource.UserCallback;
 
-                await OnMessageHandler(message, processorCancellationToken).ConfigureAwait(false);
+                await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
 
                 if (Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     _processorOptions.AutoComplete &&
@@ -184,7 +184,8 @@ namespace Azure.Messaging.ServiceBus
 
                 await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
-            catch (Exception ex) when (!(ex is TaskCanceledException))
+            catch (Exception ex)
+            when (!cancellationToken.IsCancellationRequested)
             {
                 ThrowIfSessionLockLost(ex, errorSource);
                 await RaiseExceptionReceived(
