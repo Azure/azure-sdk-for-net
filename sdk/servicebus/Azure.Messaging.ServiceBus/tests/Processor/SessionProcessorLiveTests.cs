@@ -230,9 +230,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (args.Message.MessageId == "5" && !receivedDelayMsg)
                     {
                         receivedDelayMsg = true;
-                        // simulate the situation where we need to
-                        // delay processing on subsequent messages until
-                        // this message can be handled
+                        // Simulate the situation where we need to delay processing on
+                        // subsequent messages until this message can be handled.
                         await Task.Delay(lockDuration.Add(lockDuration));
                     }
                     else
