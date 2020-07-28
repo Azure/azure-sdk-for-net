@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private void ValidatePosition(long position)
+        private static void ValidatePosition(long position)
         {
             if (position % Constants.Blob.Page.PageSize != 0)
             {
