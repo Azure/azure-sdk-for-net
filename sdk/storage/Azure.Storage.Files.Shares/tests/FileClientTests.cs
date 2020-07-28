@@ -1995,8 +1995,6 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
-
-
         [Test]
         public async Task UploadAsync_ReadOnlyError()
         {
@@ -2006,33 +2004,34 @@ namespace Azure.Storage.Files.Shares.Test
             string shareName = GetNewShareName();
 
             await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
-            ShareFileClient fileClient = InstrumentClient(
-                test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+            ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
-            await fileClient.CreateAsync(Constants.KB);
+            await fileClient.CreateAsync(size);
             ShareSasBuilder sasBuilder = new ShareSasBuilder
             {
                 ShareName = shareName,
                 Resource = "f",
                 FilePath = fileClient.Path,
-                ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(1)
+                ExpiresOn = Recording.UtcNow.AddHours(+1)
             };
             sasBuilder.SetPermissions(ShareFileSasPermissions.Read);
             UriBuilder sasUri = new UriBuilder(fileClient.Uri)
             {
-                Query = sasBuilder.ToSasQueryParameters(
-                    new StorageSharedKeyCredential(
+                Query = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey)).ToString()
             };
 
-            ShareFileClient readOnlyClient = new ShareFileClient(new Uri(sasUri.ToString()));
+            ShareFileClient readOnlyClient = InstrumentClient(
+                new ShareFileClient(new Uri(sasUri.ToString()), GetOptions()));
 
-            using var stream = new MemoryStream(data);
-            // Throws AuthorizationMismatchPermissions or AuthorizationFailed
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                readOnlyClient.UploadAsync(content: stream),
-                e => Assert.IsNotNull(e.ErrorCode));
+            using (var stream = new MemoryStream(data))
+            {
+                // Throws AuthorizationMismatchPermissions or AuthorizationFailed
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    readOnlyClient.UploadAsync(stream),
+                    e => Assert.IsNotNull(e.ErrorCode));
+            }
         }
 
         public async Task ClearRangeAsync()
