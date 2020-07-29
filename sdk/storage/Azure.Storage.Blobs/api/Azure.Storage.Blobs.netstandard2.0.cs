@@ -1097,11 +1097,16 @@ namespace Azure.Storage.Blobs.Models
         StandardZrs = 3,
         PremiumLrs = 4,
     }
-    public partial class TaggedBlobItem
+    public partial class TaggedBlobItem : System.IEquatable<Azure.Storage.Blobs.Models.TaggedBlobItem>
     {
         internal TaggedBlobItem() { }
         public string BlobContainerName { get { throw null; } }
         public string BlobName { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.TaggedBlobItem other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.TaggedBlobItem left, Azure.Storage.Blobs.Models.TaggedBlobItem right) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.TaggedBlobItem left, Azure.Storage.Blobs.Models.TaggedBlobItem right) { throw null; }
     }
     public partial class UserDelegationKey
     {
