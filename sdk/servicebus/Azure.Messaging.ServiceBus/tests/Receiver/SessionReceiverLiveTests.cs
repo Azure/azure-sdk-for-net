@@ -16,24 +16,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13717")]
-        [TestCase(1, null)]
-        [TestCase(1, "key")]
-        [TestCase(10000, null)]
-        [TestCase(null, null)]
-        public async Task PeekSession(long? sequenceNumber, string partitionKey)
+        [TestCase(1)]
+        [TestCase(10000)]
+        [TestCase(null)]
+        public async Task PeekSession(long? sequenceNumber)
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
-
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, partitionKey).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, sessionId)
+                    .AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
@@ -62,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
                     Assert.AreEqual(sentMsg.Body.ToString(), peekedText);
-                    Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
+                    Assert.AreEqual(sentMsg.SessionId, peekedMessage.SessionId);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     ct++;
                 }

@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         return SBMessageToAmqpMessage(sbMessage);
                     }
-                }), firstMessage);
+                }).ToList(), firstMessage);
         }
 
         /// <summary>
