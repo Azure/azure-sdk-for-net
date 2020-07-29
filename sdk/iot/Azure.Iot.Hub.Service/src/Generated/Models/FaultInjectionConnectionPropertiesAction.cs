@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The action to perform. </summary>
-    public readonly partial struct FaultInjectionConnectionPropertiesAction : IEquatable<FaultInjectionConnectionPropertiesAction>
+    internal readonly partial struct FaultInjectionConnectionPropertiesAction : IEquatable<FaultInjectionConnectionPropertiesAction>
     {
         private readonly string _value;
 

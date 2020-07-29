@@ -190,7 +190,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class DeviceCapabilities
     {
         public DeviceCapabilities() { }
-        public bool? IotEdge { get { throw null; } set { } }
+        public bool? IsIotEdgeDevice { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceConnectionState : System.IEquatable<Azure.Iot.Hub.Service.Models.DeviceConnectionState>
@@ -567,38 +567,6 @@ namespace Azure.Iot.Hub.Service.Models
         public static implicit operator Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus (string value) { throw null; }
         public static bool operator !=(Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus left, Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class FaultInjectionConnectionProperties
-    {
-        public FaultInjectionConnectionProperties() { }
-        public Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction? Action { get { throw null; } set { } }
-        public int? BlockDurationInMinutes { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FaultInjectionConnectionPropertiesAction : System.IEquatable<Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FaultInjectionConnectionPropertiesAction(string value) { throw null; }
-        public static Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction CloseAll { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction None { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction Periodic { get { throw null; } }
-        public bool Equals(Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction left, Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction right) { throw null; }
-        public static implicit operator Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction (string value) { throw null; }
-        public static bool operator !=(Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction left, Azure.Iot.Hub.Service.Models.FaultInjectionConnectionPropertiesAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class FaultInjectionProperties
-    {
-        public FaultInjectionProperties() { }
-        public Azure.Iot.Hub.Service.Models.FaultInjectionConnectionProperties Connection { get { throw null; } set { } }
-        public string IotHubName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } set { } }
     }
     public partial class JobProperties
     {
