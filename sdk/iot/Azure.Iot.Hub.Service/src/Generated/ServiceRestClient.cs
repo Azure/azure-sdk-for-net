@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
@@ -41,7 +42,7 @@ namespace Azure.Iot.Hub.Service
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendDeviceCommandRequest()
+        internal HttpMessage CreateSendDeviceMessageRequest(string iothubTo, string messageId, string iothubMessageSchema, string iothubContentType, string iothubContentEncoding, string iothubCreationTimeUtc, string absoluteExpiryTime, string correlationId, Enum18 iothubAck, object payload)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,13 +52,75 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/messages/deviceBound", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("iothub-to", iothubTo);
+            request.Headers.Add("message-id", messageId);
+            request.Headers.Add("iothub-message-schema", iothubMessageSchema);
+            request.Headers.Add("iothub-content-type", iothubContentType);
+            request.Headers.Add("iothub-content-encoding", iothubContentEncoding);
+            request.Headers.Add("iothub-creation-time-utc", iothubCreationTimeUtc);
+            request.Headers.Add("absolute-expiry-time", absoluteExpiryTime);
+            request.Headers.Add("correlation-id", correlationId);
+            request.Headers.Add("iothub-ack", iothubAck.ToString());
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(payload);
+            request.Content = content;
             return message;
         }
 
+        /// <summary> Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information. </summary>
+        /// <param name="iothubTo"> The destination of the message. </param>
+        /// <param name="messageId"> The unique identifier for the cloud-to-device message being sent. </param>
+        /// <param name="iothubMessageSchema"> The schema of the message payload content. </param>
+        /// <param name="iothubContentType"> The content type of the message payload. </param>
+        /// <param name="iothubContentEncoding"> The content encoding type of the message payload. </param>
+        /// <param name="iothubCreationTimeUtc"> Custom date property set by the originator of the message (in UTC). </param>
+        /// <param name="absoluteExpiryTime"> The time when this message is considered expired (in UTC). </param>
+        /// <param name="correlationId"> Used in message responses and feedback. </param>
+        /// <param name="iothubAck"> Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback. </param>
+        /// <param name="payload"> The cloud-to-device message payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> SendDeviceCommandAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="iothubTo"/>, <paramref name="messageId"/>, <paramref name="iothubMessageSchema"/>, <paramref name="iothubContentType"/>, <paramref name="iothubContentEncoding"/>, <paramref name="iothubCreationTimeUtc"/>, <paramref name="absoluteExpiryTime"/>, <paramref name="correlationId"/>, or <paramref name="payload"/> is null. </exception>
+        public async Task<Response> SendDeviceMessageAsync(string iothubTo, string messageId, string iothubMessageSchema, string iothubContentType, string iothubContentEncoding, string iothubCreationTimeUtc, string absoluteExpiryTime, string correlationId, Enum18 iothubAck, object payload, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendDeviceCommandRequest();
+            if (iothubTo == null)
+            {
+                throw new ArgumentNullException(nameof(iothubTo));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (iothubMessageSchema == null)
+            {
+                throw new ArgumentNullException(nameof(iothubMessageSchema));
+            }
+            if (iothubContentType == null)
+            {
+                throw new ArgumentNullException(nameof(iothubContentType));
+            }
+            if (iothubContentEncoding == null)
+            {
+                throw new ArgumentNullException(nameof(iothubContentEncoding));
+            }
+            if (iothubCreationTimeUtc == null)
+            {
+                throw new ArgumentNullException(nameof(iothubCreationTimeUtc));
+            }
+            if (absoluteExpiryTime == null)
+            {
+                throw new ArgumentNullException(nameof(absoluteExpiryTime));
+            }
+            if (correlationId == null)
+            {
+                throw new ArgumentNullException(nameof(correlationId));
+            }
+            if (payload == null)
+            {
+                throw new ArgumentNullException(nameof(payload));
+            }
+
+            using var message = CreateSendDeviceMessageRequest(iothubTo, messageId, iothubMessageSchema, iothubContentType, iothubContentEncoding, iothubCreationTimeUtc, absoluteExpiryTime, correlationId, iothubAck, payload);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -68,10 +131,59 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
+        /// <summary> Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information. </summary>
+        /// <param name="iothubTo"> The destination of the message. </param>
+        /// <param name="messageId"> The unique identifier for the cloud-to-device message being sent. </param>
+        /// <param name="iothubMessageSchema"> The schema of the message payload content. </param>
+        /// <param name="iothubContentType"> The content type of the message payload. </param>
+        /// <param name="iothubContentEncoding"> The content encoding type of the message payload. </param>
+        /// <param name="iothubCreationTimeUtc"> Custom date property set by the originator of the message (in UTC). </param>
+        /// <param name="absoluteExpiryTime"> The time when this message is considered expired (in UTC). </param>
+        /// <param name="correlationId"> Used in message responses and feedback. </param>
+        /// <param name="iothubAck"> Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback. </param>
+        /// <param name="payload"> The cloud-to-device message payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response SendDeviceCommand(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="iothubTo"/>, <paramref name="messageId"/>, <paramref name="iothubMessageSchema"/>, <paramref name="iothubContentType"/>, <paramref name="iothubContentEncoding"/>, <paramref name="iothubCreationTimeUtc"/>, <paramref name="absoluteExpiryTime"/>, <paramref name="correlationId"/>, or <paramref name="payload"/> is null. </exception>
+        public Response SendDeviceMessage(string iothubTo, string messageId, string iothubMessageSchema, string iothubContentType, string iothubContentEncoding, string iothubCreationTimeUtc, string absoluteExpiryTime, string correlationId, Enum18 iothubAck, object payload, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendDeviceCommandRequest();
+            if (iothubTo == null)
+            {
+                throw new ArgumentNullException(nameof(iothubTo));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (iothubMessageSchema == null)
+            {
+                throw new ArgumentNullException(nameof(iothubMessageSchema));
+            }
+            if (iothubContentType == null)
+            {
+                throw new ArgumentNullException(nameof(iothubContentType));
+            }
+            if (iothubContentEncoding == null)
+            {
+                throw new ArgumentNullException(nameof(iothubContentEncoding));
+            }
+            if (iothubCreationTimeUtc == null)
+            {
+                throw new ArgumentNullException(nameof(iothubCreationTimeUtc));
+            }
+            if (absoluteExpiryTime == null)
+            {
+                throw new ArgumentNullException(nameof(absoluteExpiryTime));
+            }
+            if (correlationId == null)
+            {
+                throw new ArgumentNullException(nameof(correlationId));
+            }
+            if (payload == null)
+            {
+                throw new ArgumentNullException(nameof(payload));
+            }
+
+            using var message = CreateSendDeviceMessageRequest(iothubTo, messageId, iothubMessageSchema, iothubContentType, iothubContentEncoding, iothubCreationTimeUtc, absoluteExpiryTime, correlationId, iothubAck, payload);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

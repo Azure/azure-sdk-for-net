@@ -1458,12 +1458,94 @@
     },
     "/messages/deviceBound": {
       "post": {
-        "operationId": "SendDeviceCommand",
-        "consumes": [],
+        "summary": "Send a cloud-to-device message to device.",
+        "description": "Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information.",
+        "operationId": "SendDeviceMessage",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "iothub-to",
+            "in": "header",
+            "description": "The destination of the message.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "message-id",
+            "in": "header",
+            "description": "The unique identifier for the cloud-to-device message being sent.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "The cloud-to-device message payload.",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "name": "iothub-message-schema",
+            "in": "header",
+            "description": "The schema of the message payload content.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "iothub-content-type",
+            "in": "header",
+            "description": "The content type of the message payload.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "iothub-content-encoding",
+            "in": "header",
+            "description": "The content encoding type of the message payload.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "iothub-creation-time-utc",
+            "in": "header",
+            "description": "Custom date property set by the originator of the message (in UTC).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "absolute-expiry-time",
+            "in": "header",
+            "description": "The time when this message is considered expired (in UTC).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "correlation-id",
+            "in": "header",
+            "description": "Used in message responses and feedback.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "iothub-ack",
+            "in": "header",
+            "description": "Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback.",
+            "required": true,
+            "enum": [
+              "none",
+              "positive",
+              "negative",
+              "full"
+            ],
+            "type": "string"
+          },
           {
             "$ref": "#/parameters/api-version"
           }
