@@ -1,7 +1,31 @@
 # Release History
 
-## 12.5.0-preview.5 (Unreleased)
+## 12.5.0-preview.7 (Unreleased)
 
+
+## 12.5.0-preview.6 (2020-07-27)
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
+- Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
+- Fixed bug where BlockBlobClient.Query() would buffer the query response before parsing the Avro contents.
+
+## 12.5.0-preview.5 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Blob Tags.
+- Added support for Blob Version.
+- Added support for Object Replication Service.
+- Added support for Append Seal.
+- Added support for Jumbo Blobs.
+- Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
+- Added RehydratePriority to BlobProperties and BlobItemProperties.
+- Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
+- Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
+- Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
 
 ## 12.5.0-preview.4 (2020-06)
 - This preview contains bug fixes to improve quality.
