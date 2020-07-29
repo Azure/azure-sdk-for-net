@@ -266,13 +266,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                // send 1 message for each thread and use a different session for each message
-                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
                     await sender.SendMessageAsync(GetMessage(sessionId));
-                    sessions.TryAdd(sessionId, true);
                 }
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -282,12 +279,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
-                TaskCompletionSource<bool>[] completionSources = Enumerable
-                .Range(0, numThreads)
-                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
-                .ToArray();
-
-                var completionSourceIndex = -1;
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -295,39 +287,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
-                    try
+                    var message = args.Message;
+                    switch (numThreads)
                     {
-                        var message = args.Message;
-                        switch (numThreads)
-                        {
-                            case 1:
-                                await args.CompleteMessageAsync(message, args.CancellationToken);
-                                break;
-                            case 5:
-                                await args.AbandonMessageAsync(message);
-                                break;
-                            case 10:
-                                await args.DeadLetterMessageAsync(message);
-                                break;
-                            case 20:
-                                await args.DeferMessageAsync(message);
-                                break;
-                        }
-                        Interlocked.Increment(ref messageCt);
-                        sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.AreEqual(message.SessionId, args.SessionId);
-                        Assert.IsNotNull(args.SessionLockedUntil);
+                        case 1:
+                            await args.CompleteMessageAsync(message, args.CancellationToken);
+                            break;
+                        case 5:
+                            await args.AbandonMessageAsync(message);
+                            break;
+                        case 10:
+                            await args.DeadLetterMessageAsync(message);
+                            break;
+                        case 20:
+                            await args.DeferMessageAsync(message);
+                            break;
                     }
-                    finally
+                    int count = Interlocked.Increment(ref messageCt);
+                    Assert.AreEqual(message.SessionId, args.SessionId);
+                    Assert.IsNotNull(args.SessionLockedUntil);
+                    if (count == numThreads)
                     {
-                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        if (setIndex < completionSources.Length)
-                        {
-                            completionSources[setIndex].SetResult(true);
-                        }
+                        tcs.SetResult(true);
                     }
                 }
-                await Task.WhenAll(completionSources.Select(source => source.Task));
+                await tcs.Task;
                 await processor.StopProcessingAsync();
 
                 // there is only one message for each session, and one
@@ -343,9 +327,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Assert.AreEqual(numThreads, messageCt);
                 }
-
-                // we should have received messages from each of the sessions
-                Assert.AreEqual(0, sessions.Count);
             }
         }
 
