@@ -273,7 +273,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
+            Assert.AreEqual("AuthorizationError", ex.ErrorCode);
         }
 
         [Test]
