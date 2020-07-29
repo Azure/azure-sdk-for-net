@@ -217,9 +217,11 @@ We can decorate our own C# types with [attributes from `System.Text.Json`](https
 public class Hotel
 {
     [JsonPropertyName("hotelId")]
+    [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
     public string Id { get; set; }
 
     [JsonPropertyName("hotelName")]
+    [SearchableField(IsFilterable = true, IsSortable = true)]
     public string Name { get; set; }
 }
 ```
@@ -276,8 +278,8 @@ SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 ### Creating an index
 
 You can use the `SearchIndexClient` to create a search index. Fields can be
-defined using convenient `SimpleField`, `SearchableField`, or `ComplexField`
-classes. Indexes can also define suggesters, lexical analyzers, and more.
+defined from a model class using `FieldBuilder`. Indexes can also define
+suggesters, lexical analyzers, and more:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -287,7 +289,26 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
-// Create the index
+// Create the index using FieldBuilder.
+SearchIndex index = new SearchIndex("hotels")
+{
+    Fields = FieldBuilder.Build(typeof(Hotel)),
+    Suggesters =
+    {
+        // Suggest query terms from the hotelName field.
+        new SearchSuggester("sg", "hotelName")
+    }
+};
+
+client.CreateIndex(index);
+```
+
+In scenarios when the model is not known or cannot be modified, you can
+also create fields explicitly using convenient `SimpleField`,
+`SearchableField`, or `ComplexField` classes:
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+// Create the index using field definitions.
 SearchIndex index = new SearchIndex("hotels")
 {
     Fields =
@@ -310,8 +331,8 @@ SearchIndex index = new SearchIndex("hotels")
     },
     Suggesters =
     {
-        // Suggest query terms from both the hotelName and description fields.
-        new SearchSuggester("sg", "hotelName", "description")
+        // Suggest query terms from the hotelName field.
+        new SearchSuggester("sg", "hotelName")
     }
 };
 

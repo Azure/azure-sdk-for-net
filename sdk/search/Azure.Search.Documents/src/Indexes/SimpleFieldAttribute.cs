@@ -55,30 +55,15 @@ namespace Azure.Search.Documents.Indexes
 
         private protected void SetField(SearchField field)
         {
-            if (IsKey)
-            {
-                field.IsKey = IsKey;
-            }
+            field.IsKey = IsKey;
+            field.IsHidden = IsHidden;
+            field.IsFilterable = IsFilterable;
+            field.IsFacetable = IsFacetable;
+            field.IsSortable = IsSortable;
 
-            if (IsHidden)
-            {
-                field.IsHidden = IsHidden;
-            }
-
-            if (IsFilterable)
-            {
-                field.IsFilterable = IsFilterable;
-            }
-
-            if (IsFacetable)
-            {
-                field.IsFacetable = IsFacetable;
-            }
-
-            if (IsSortable)
-            {
-                field.IsSortable = IsSortable;
-            }
+            // Use a SearchableFieldAttribute instead, which will override this property.
+            // The service will return Searchable == false for all non-searchable simple types.
+            field.IsSearchable = false;
         }
     }
 }

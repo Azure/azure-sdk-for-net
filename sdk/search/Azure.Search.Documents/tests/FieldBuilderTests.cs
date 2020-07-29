@@ -361,7 +361,9 @@ namespace Azure.Search.Documents.Tests
                     Fields =
                     {
                         new SearchField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
-                        new SearchField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
+
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
                     }
                 }
             };
@@ -381,7 +383,8 @@ namespace Azure.Search.Documents.Tests
                 {
                     Fields =
                     {
-                        new SearchField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
                     }
                 }
             };

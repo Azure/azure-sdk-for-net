@@ -10,6 +10,8 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex
     {
+        private IList<SearchField> _fields;
+
         [CodeGenMember("etag")]
         private string _etag;
 
@@ -25,9 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
+            _fields = new ChangeTrackingList<SearchField>();
+
             Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
             CharFilters = new ChangeTrackingList<CharFilter>();
-            Fields = new ChangeTrackingList<SearchField>();
             ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
@@ -48,9 +51,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
+            // Allow the underlying list to be mutated.
+            _fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)fields.ToList());
+
             Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
             CharFilters = new ChangeTrackingList<CharFilter>();
-            Fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)fields.ToArray());
             ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
@@ -74,11 +79,69 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<CharFilter> CharFilters { get; }
 
         /// <summary>
-        /// Gets the fields in the index.
-        /// Use <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> for help defining valid indexes.
+        /// Gets or sets the fields in the index.
+        /// Use <see cref="FieldBuilder"/> to define fields based on a model class,
+        /// or <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> for help defining valid indexes.
         /// Index fields have many constraints that are not validated with <see cref="SearchField"/> until the index is created on the server.
         /// </summary>
-        public IList<SearchField> Fields { get; }
+        /// <example>
+        /// You can create fields from a model class using <see cref="FieldBuilder"/>:
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex">
+        /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
+        /// {
+        ///     Fields = FieldBuilder.Build(typeof(Hotel)),
+        ///     Suggesters =
+        ///     {
+        ///         // Suggest query terms from the hotelName field.
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///     }
+        /// };
+        /// </code>
+        /// For this reason, <see cref="Fields"/> is settable. In scenarios when the model is not known or cannot be modified, you can
+        /// also create fields explicitly using helper classes:
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex">
+        /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
+        /// {
+        ///     Fields =
+        ///     {
+        ///         new SimpleField(&quot;hotelId&quot;, SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;hotelName&quot;) { IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;description&quot;) { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        ///         new SearchableField(&quot;tags&quot;, collection: true) { IsFilterable = true, IsFacetable = true },
+        ///         new ComplexField(&quot;address&quot;)
+        ///         {
+        ///             Fields =
+        ///             {
+        ///                 new SearchableField(&quot;streetAddress&quot;),
+        ///                 new SearchableField(&quot;city&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;stateProvince&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;country&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;postalCode&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true }
+        ///             }
+        ///         }
+        ///     },
+        ///     Suggesters =
+        ///     {
+        ///         // Suggest query terms from the hotelName field.
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///     }
+        /// };
+        /// </code>
+        /// </example>
+        public IList<SearchField> Fields
+        {
+            get => _fields;
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
+                }
+
+                // Allow the underlying list to be mutated.
+                _fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)value.ToList());
+            }
+        }
 
         /// <summary>
         /// Gets the scoring profiles for the index.
