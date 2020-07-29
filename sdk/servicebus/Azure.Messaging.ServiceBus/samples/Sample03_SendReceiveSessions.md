@@ -4,8 +4,7 @@ This sample demonstrates how to send and receive session messages from a session
 
 ### Receiving from next available session
 
-Receiving from sessions is performed using the `ServiceBusSessionReceiver`. This
-type derives from `ServiceBusReceiver` and exposes session-related functionality.
+Receiving from sessions is performed using the `ServiceBusSessionReceiver`. This type derives from `ServiceBusReceiver` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusSendAndReceiveSessionMessage
 string connectionString = "<connection_string>";
