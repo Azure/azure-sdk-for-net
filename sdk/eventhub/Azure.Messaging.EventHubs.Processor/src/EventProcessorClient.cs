@@ -59,7 +59,10 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
-        ///   The event to be raised just before event processing starts for a given partition.
+        ///    Performs the tasks to initialize a partition, and its associated context, for event processing.
+        ///
+        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -93,7 +96,11 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event to be raised once event processing stops for a given partition.
+        ///   Performs the tasks needed when processing for a partition is being stopped.  This commonly occurs when the partition is claimed by another event processor instance or when
+        ///   the current event processor instance is shutting down.
+        ///
+        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -127,8 +134,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
-        ///   is mandatory.
+        ///  Performs the tasks needed to process a batch of events for a given partition as they are read from the Event Hubs service. Implementation is mandatory.
+        ///
+        ///  <para>Should an exception occur within the code for this handler, the <see cref="EventProcessorClient" /> will allow it to bubble and will not surface to the error handler or attempt to handle
+        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account, including the need to retry processing, and guard against them using try/catch blocks and other means,
+        ///   as appropriate.</para>
+        ///
+        ///  <para>It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -162,8 +175,23 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory.
+        ///   Performs the tasks needed when an unexpected exception occurs within the operation of the event processor infrastructure.  Implementation is mandatory.
+        ///
+        ///   <para>This error handler is invoked when there is an exception observed within the <see cref="EventProcessorClient" /> itself; it is not invoked for exceptions in
+        ///   code that has been implemented to process events or other event handlers and extension points that execute developer code.  The <see cref="EventProcessorClient" /> will
+        ///   make every effort to recover from exceptions and continue processing.  Should an exception that cannot be recovered from be encountered, the processor will attempt to forfeit
+        ///   ownership of all partitions that it was processing so that work may be redistributed.</para>
+        ///
+        ///   <para>The exceptions surfaced to this method may be fatal or non-fatal; because the processor may not be able to accurately predict whether an
+        ///   exception was fatal or whether its state was corrupted, this method has responsibility for making the determination as to whether processing
+        ///   should be terminated or restarted.  The method may do so by calling Stop on the processor instance and then, if desired, calling Start on the processor.</para>
+        ///
+        ///   <para>It is recommended that, for production scenarios, the decision be made by considering observations made by this error handler, the method invoked
+        ///   when initializing processing for a partition, and the method invoked when processing for a partition is stopped.  Many developers will also include
+        ///   data from their monitoring platforms in this decision as well.</para>
+        ///
+        ///   <para>As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
+        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]

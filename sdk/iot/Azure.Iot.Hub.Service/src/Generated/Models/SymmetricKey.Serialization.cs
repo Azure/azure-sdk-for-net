@@ -15,12 +15,12 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey");
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey");
                 writer.WriteStringValue(SecondaryKey);
@@ -30,30 +30,22 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static SymmetricKey DeserializeSymmetricKey(JsonElement element)
         {
-            string primaryKey = default;
-            string secondaryKey = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryKey = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
             }
-            return new SymmetricKey(primaryKey, secondaryKey);
+            return new SymmetricKey(primaryKey.Value, secondaryKey.Value);
         }
     }
 }

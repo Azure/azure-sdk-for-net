@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <AssemblyTitle>Microsoft Azure.Storage.Files client library samples</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

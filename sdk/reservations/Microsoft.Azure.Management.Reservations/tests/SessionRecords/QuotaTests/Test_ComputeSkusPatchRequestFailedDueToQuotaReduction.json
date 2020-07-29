@@ -1,0 +1,209 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzL3N0YW5kYXJkRlN2MkZhbWlseT9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"standardFSv2Family\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "174597cb-2542-461d-b341-ab497bd59d9f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "104"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:47:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "a9b7400c-f96e-4450-b216-0b9fc6558cd9"
+        ],
+        "x-ms-correlation-request-id": [
+          "a9b7400c-f96e-4450-b216-0b9fc6558cd9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084708Z:a9b7400c-f96e-4450-b216-0b9fc6558cd9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "558"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"requestSubmitTime\": \"0001-01-01T00:00:00\",\r\n    \"Message\": null,\r\n    \"provisioningState\": \"InProgress\",\r\n    \"currentValue\": 0,\r\n    \"unit\": null,\r\n    \"quotaPeriod\": null,\r\n    \"properties\": null,\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"standardFSv2Family\",\r\n      \"localizedValue\": null\r\n    },\r\n    \"resourceType\": null\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"name\": \"ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzL2VhNTU3YWE5LTJlNmEtNDUxOS1iY2U1LTU2MTIyNjBmYWNkOT9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:47:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "57196dc5-5a5b-4f48-b14b-a3bc11df0284"
+        ],
+        "x-ms-correlation-request-id": [
+          "57196dc5-5a5b-4f48-b14b-a3bc11df0284"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084738Z:57196dc5-5a5b-4f48-b14b-a3bc11df0284"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"Name\": \"ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"status\": \"InProgress\",\r\n  \"StartTime\": \"2020-07-16T08:47:07.7003661Z\",\r\n  \"error\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzL2VhNTU3YWE5LTJlNmEtNDUxOS1iY2U1LTU2MTIyNjBmYWNkOT9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:48:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/ea557aa9-2e6a-4519-bce5-5612260facd9?api-version=2019-07-19-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "6de58b33-ebb1-4dcb-a4b6-81a17cc9f0ee"
+        ],
+        "x-ms-correlation-request-id": [
+          "6de58b33-ebb1-4dcb-a4b6-81a17cc9f0ee"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084808Z:6de58b33-ebb1-4dcb-a4b6-81a17cc9f0ee"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "395"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"Name\": \"ea557aa9-2e6a-4519-bce5-5612260facd9\",\r\n  \"status\": \"Failed\",\r\n  \"StartTime\": \"2020-07-16T08:47:07.7003661Z\",\r\n  \"error\": {\r\n    \"code\": \"QuotaReductionNotSupported\",\r\n    \"message\": \"Quota reduction is not supported.\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

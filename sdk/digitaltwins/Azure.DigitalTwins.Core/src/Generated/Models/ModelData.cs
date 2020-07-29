@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A model definition and metadata for that model. </summary>
     public partial class ModelData

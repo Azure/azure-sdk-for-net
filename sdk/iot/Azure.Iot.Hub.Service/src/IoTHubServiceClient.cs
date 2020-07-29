@@ -16,9 +16,10 @@ namespace Azure.Iot.Hub.Service
         private readonly HttpPipeline _httpPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-        private readonly RegistryManagerRestClient _registryManagerRestClient;
-        private readonly TwinRestClient _twinRestClient;
-        private readonly DeviceMethodRestClient _deviceMethodRestClient;
+        private readonly DevicesRestClient _devicesRestClient;
+        private readonly ModulesRestClient _modulesRestClient;
+        private readonly QueryRestClient _queryRestClient;
+        private readonly StatisticsRestClient _statisticsRestClient;
 
         /// <summary>
         /// place holder for Devices.
@@ -94,14 +95,15 @@ namespace Azure.Iot.Hub.Service
             options.AddPolicy(new SasTokenAuthenticationPolicy(sasProvider), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
-            _registryManagerRestClient = new RegistryManagerRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _deviceMethodRestClient = new DeviceMethodRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
-            Devices = new DevicesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
-            Modules = new ModulesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
+            Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
+            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
 
-            Statistics = new StatisticsClient();
+            Statistics = new StatisticsClient(_statisticsRestClient);
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
             Jobs = new JobsClient();
@@ -143,14 +145,15 @@ namespace Azure.Iot.Hub.Service
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes(_endpoint)), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
-            _registryManagerRestClient = new RegistryManagerRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _deviceMethodRestClient = new DeviceMethodRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
+            _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
-            Devices = new DevicesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
-            Modules = new ModulesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
+            Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
+            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
 
-            Statistics = new StatisticsClient();
+            Statistics = new StatisticsClient(_statisticsRestClient);
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
             Jobs = new JobsClient();

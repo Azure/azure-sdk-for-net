@@ -2,12 +2,19 @@
 
 ## 4.1.0-preview.2 (Unreleased)
 
-
 ## 4.1.0-preview.1 (2020-03-09)
 
 ### Added
 
 - Add `RecoverableDays` property to `CertificateProperties`.
+
+## 4.0.3 (2020-07-09)
+
+### Fixed
+
+- Fixed an issue where the issuer name was always null ([#10908](https://github.com/Azure/azure-sdk-for-net/issues/10908))
+- Fixed an issue where GetIssuerAsync would throw for issuers with contact information populated ([#10905](https://github.com/Azure/azure-sdk-for-net/issues/10905))
+- Fixed an issue where some Certificate policy properties were not serialized properly ([#11669](https://github.com/azure/azure-sdk-for-net/issues/11669))
 
 ## 4.0.2 (2020-03-18)
 

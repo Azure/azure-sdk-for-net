@@ -10,10 +10,11 @@ using System;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The result returned from a database check name availability request. </summary>
-    public partial class CheckNameRequest
+    internal partial class CheckNameRequest
     {
         /// <summary> Initializes a new instance of CheckNameRequest. </summary>
         /// <param name="name"> Resource name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameRequest(string name)
         {
             if (name == null)
@@ -23,15 +24,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
             Name = name;
             Type = "Microsoft.DigitalTwins/digitalTwinsInstances";
-        }
-
-        /// <summary> Initializes a new instance of CheckNameRequest. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
-        internal CheckNameRequest(string name, string type)
-        {
-            Name = name;
-            Type = type;
         }
 
         /// <summary> Resource name. </summary>

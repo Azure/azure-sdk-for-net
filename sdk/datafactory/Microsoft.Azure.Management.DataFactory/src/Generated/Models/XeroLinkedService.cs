@@ -35,8 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the XeroLinkedService class.
         /// </summary>
-        /// <param name="host">The endpoint of the Xero server. (i.e.
-        /// api.xero.com)</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -44,6 +42,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="connectionProperties">Properties used to connect to
+        /// Xero. It is mutually exclusive with any other properties in the
+        /// linked service. Type: object.</param>
+        /// <param name="host">The endpoint of the Xero server. (i.e.
+        /// api.xero.com)</param>
         /// <param name="consumerKey">The consumer key associated with the Xero
         /// application.</param>
         /// <param name="privateKey">The private key from the .pem file that
@@ -63,9 +66,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public XeroLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase consumerKey = default(SecretBase), SecretBase privateKey = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
+        public XeroLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionProperties = default(object), object host = default(object), SecretBase consumerKey = default(SecretBase), SecretBase privateKey = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionProperties = connectionProperties;
             Host = host;
             ConsumerKey = consumerKey;
             PrivateKey = privateKey;
@@ -80,6 +84,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets properties used to connect to Xero. It is mutually
+        /// exclusive with any other properties in the linked service. Type:
+        /// object.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionProperties")]
+        public object ConnectionProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint of the Xero server. (i.e. api.xero.com)
@@ -141,10 +153,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Host == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Host");
-            }
         }
     }
 }

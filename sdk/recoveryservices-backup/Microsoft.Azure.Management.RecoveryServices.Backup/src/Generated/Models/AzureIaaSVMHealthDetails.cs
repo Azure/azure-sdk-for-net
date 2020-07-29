@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure IaaS VM workload-specific Health Details.
     /// </summary>
-    public partial class AzureIaaSVMHealthDetails : HealthDetails
+    public partial class AzureIaaSVMHealthDetails : ResourceHealthDetails
     {
         /// <summary>
         /// Initializes a new instance of the AzureIaaSVMHealthDetails class.

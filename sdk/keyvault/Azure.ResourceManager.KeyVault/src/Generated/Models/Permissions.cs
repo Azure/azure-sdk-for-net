@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of Permissions. </summary>
         public Permissions()
         {
+            Keys = new ChangeTrackingList<KeyPermissions>();
+            Secrets = new ChangeTrackingList<SecretPermissions>();
+            Certificates = new ChangeTrackingList<CertificatePermissions>();
+            Storage = new ChangeTrackingList<StoragePermissions>();
         }
 
         /// <summary> Initializes a new instance of Permissions. </summary>
@@ -31,12 +36,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Permissions to keys. </summary>
-        public IList<KeyPermissions> Keys { get; set; }
+        public IList<KeyPermissions> Keys { get; }
         /// <summary> Permissions to secrets. </summary>
-        public IList<SecretPermissions> Secrets { get; set; }
+        public IList<SecretPermissions> Secrets { get; }
         /// <summary> Permissions to certificates. </summary>
-        public IList<CertificatePermissions> Certificates { get; set; }
+        public IList<CertificatePermissions> Certificates { get; }
         /// <summary> Permissions to storage accounts. </summary>
-        public IList<StoragePermissions> Storage { get; set; }
+        public IList<StoragePermissions> Storage { get; }
     }
 }

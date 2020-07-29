@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "128",
+        "Content-Length": "105",
         "Content-Type": "application/json",
-        "traceparent": "00-71c8ea55d8daf242b563cb289fe59a50-bc4998ffa4e1cf4e-00",
+        "traceparent": "00-b7c48f9f58d16649a921372ab55393de-b4f35c3ac74bf942-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b6098f300a3dfc7c11745ebcade6cf5d",
         "x-ms-return-client-request-id": "true"
@@ -21,7 +21,6 @@
           "rooms/baseRate,values:5|8|10",
           "lastRenovationDate,values:2000-01-01T00:00:00Z"
         ],
-        "scoringParameters": [],
         "search": "*"
       },
       "StatusCode": 200,
@@ -30,8 +29,8 @@
         "client-request-id": "b6098f30-0a3d-fc7c-1174-5ebcade6cf5d",
         "Content-Length": "7345",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 26 Jun 2020 06:36:24 GMT",
-        "elapsed-time": "141",
+        "Date": "Fri, 17 Jul 2020 20:28:12 GMT",
+        "elapsed-time": "73",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -45,8 +44,8 @@
   ],
   "Variables": {
     "RandomSeed": "16759243",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "aypqybvw",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
   }
 }

@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full backup of the Key Vault.
         /// </summary>
-        /// <param name="blobStorageUri">The Uri for the blob storage resource.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full backup of the Key Vault.
         /// </summary>
-        /// <param name="blobStorageUri">The Uri for the blob storage resource.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
@@ -126,14 +126,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full restore of the Key Vault.
         /// </summary>
-        /// <param name="blobStorageUri">The Uri for the blob storage resource.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
-        /// <param name="folderName">The nameof the container containing the backup data to restore</param>
+        /// <param name="folderName">The name of the container containing the backup data to restore.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<RestoreOperation> StartRestoreAsync(Uri blobStorageUri, string sasToken, string folderName, CancellationToken cancellationToken = default)
+        public virtual async Task<RestoreOperation> StartRestoreAsync(Uri blobStorageUri, string sasToken, string folderName = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
@@ -158,14 +158,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full Restore of the Key Vault.
         /// </summary>
-        /// <param name="blobStorageUri">The Uri for the blob storage resource.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
-        /// <param name="folderName">The nameof the container containing the backup data to restore</param>
+        /// <param name="folderName">The name of the container containing the backup data to restore.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual RestoreOperation StartRestore(Uri blobStorageUri, string sasToken, string folderName, CancellationToken cancellationToken = default)
+        public virtual RestoreOperation StartRestore(Uri blobStorageUri, string sasToken, string folderName = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
@@ -186,19 +186,61 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of full restore operation.
+        /// Initiates a selective restore of the Key Vault.
         /// </summary>
-        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="folderName">The name of the container containing the backup data to restore.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        internal virtual async Task<Response<FullRestoreDetailsInternal>> GetRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
+        public virtual async Task<RestoreOperation> StartSelectiveRestoreAsync(string keyName, Uri blobStorageUri, string sasToken, string folderName = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
             scope.Start();
             try
             {
-                return await _restClient.FullRestoreStatusAsync(VaultUri.AbsoluteUri, jobId, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.SelectiveKeyRestoreOperationAsync(
+                    VaultUri.AbsoluteUri,
+                    keyName,
+                    new SelectiveKeyRestoreOperationParameters(new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken), folderName),
+                    cancellationToken).ConfigureAwait(false);
+
+                return new RestoreOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a selective Restore of the Key Vault.
+        /// </summary>
+        /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="folderName">The name of the container containing the backup data to restore.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
+        public virtual RestoreOperation StartSelectiveRestore(string keyName, Uri blobStorageUri, string sasToken, string folderName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.SelectiveKeyRestoreOperation(
+                    VaultUri.AbsoluteUri,
+                    keyName,
+                    new SelectiveKeyRestoreOperationParameters(new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken), folderName),
+                    cancellationToken);
+
+                return new RestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -214,13 +256,35 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        internal virtual Response<FullRestoreDetailsInternal> GetRestoreDetails(string jobId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<RestoreDetailsInternal>> GetRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
             scope.Start();
             try
             {
-                return _restClient.FullRestoreStatus(VaultUri.AbsoluteUri, jobId, cancellationToken);
+                return await _restClient.RestoreStatusAsync(VaultUri.AbsoluteUri, jobId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the details of full restore operation.
+        /// </summary>
+        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        internal virtual Response<RestoreDetailsInternal> GetRestoreDetails(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            scope.Start();
+            try
+            {
+                return _restClient.RestoreStatus(VaultUri.AbsoluteUri, jobId, cancellationToken);
             }
             catch (Exception ex)
             {

@@ -122,7 +122,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "invalidPrefix" };
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("2014", ex.ErrorCode);
         }
 
         [Test]
@@ -133,7 +134,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var containerUrl = new Uri("https://someUrl");
 
             TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("2001", ex.ErrorCode);
 
             Assert.False(operation.HasValue);
             Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
@@ -204,7 +206,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await client.DeleteModelAsync(trainedModel.ModelId);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
+            Assert.AreEqual("1022", ex.ErrorCode);
         }
 
         [Test]
@@ -213,7 +216,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormTrainingClient();
             var fakeModelId = "00000000-0000-0000-0000-000000000000";
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
+            Assert.AreEqual("1022", ex.ErrorCode);
         }
 
         [Test]
@@ -268,7 +272,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
         }
 
         [Test]

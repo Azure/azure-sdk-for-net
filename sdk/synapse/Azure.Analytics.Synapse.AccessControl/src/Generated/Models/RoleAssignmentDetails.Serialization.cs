@@ -14,40 +14,28 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     {
         internal static RoleAssignmentDetails DeserializeRoleAssignmentDetails(JsonElement element)
         {
-            string id = default;
-            string roleId = default;
-            string principalId = default;
+            Optional<string> id = default;
+            Optional<string> roleId = default;
+            Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("roleId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     roleId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
             }
-            return new RoleAssignmentDetails(id, roleId, principalId);
+            return new RoleAssignmentDetails(id.Value, roleId.Value, principalId.Value);
         }
     }
 }

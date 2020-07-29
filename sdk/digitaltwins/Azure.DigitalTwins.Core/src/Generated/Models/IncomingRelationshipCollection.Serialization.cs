@@ -9,48 +9,33 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     internal partial class IncomingRelationshipCollection
     {
         internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element)
         {
-            IReadOnlyList<IncomingRelationship> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<IncomingRelationship>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IncomingRelationship> array = new List<IncomingRelationship>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IncomingRelationship.DeserializeIncomingRelationship(item));
-                        }
+                        array.Add(IncomingRelationship.DeserializeIncomingRelationship(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new IncomingRelationshipCollection(value, nextLink);
+            return new IncomingRelationshipCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }

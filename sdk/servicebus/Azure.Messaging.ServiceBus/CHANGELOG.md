@@ -1,5 +1,8 @@
 # Release History
 
+## 7.0.0-preview.5 (Unreleased)
+
+
 ## 7.0.0-preview.4 (2020-07-07)
 ### Acknowledgements
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
@@ -17,6 +20,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Rename CreateBatchOptions to CreateMessageBatchOptions
 - Rename ServiceBusMessageBatch.TryAdd to ServiceBusMessageBatch.TryAddMessage
 - Change output list type from IList<ServiceBusReceivedMessage> to IReadOnlyList<ServiceBusReceivedMessage>
+- Removed ServiceBusException.FailureReason.ClientClosed in favor of throwing ObjectDisposedException
 
 
 ## 7.0.0-preview.3 (2020-06-08)

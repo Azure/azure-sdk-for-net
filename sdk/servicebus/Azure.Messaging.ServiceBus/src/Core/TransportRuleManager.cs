@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public abstract Task AddRuleAsync(
-            RuleDescription description,
+            RuleProperties description,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public abstract Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken);
+        public abstract Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Closes the connection to the transport rule manager instance.

@@ -15,6 +15,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of SignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
         public SignedIdentifier(string id, AccessPolicy accessPolicy)
         {
             if (id == null)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/>, or <paramref name="connectVia"/> is null. </exception>
         public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base(name)
         {
             if (name == null)
@@ -34,6 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             PackageLocation = packageLocation;
             ConnectVia = connectVia;
+            ProjectParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
+            PackageParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
+            ProjectConnectionManagers = new ChangeTrackingDictionary<string, object>();
+            PackageConnectionManagers = new ChangeTrackingDictionary<string, object>();
+            PropertyOverrides = new ChangeTrackingDictionary<string, SsisPropertyOverride>();
             Type = "ExecuteSSISPackage";
         }
 
@@ -88,15 +95,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
         /// <summary> The project level parameters to execute the SSIS package. </summary>
-        public IDictionary<string, SsisExecutionParameter> ProjectParameters { get; set; }
+        public IDictionary<string, SsisExecutionParameter> ProjectParameters { get; }
         /// <summary> The package level parameters to execute the SSIS package. </summary>
-        public IDictionary<string, SsisExecutionParameter> PackageParameters { get; set; }
+        public IDictionary<string, SsisExecutionParameter> PackageParameters { get; }
         /// <summary> The project level connection managers to execute the SSIS package. </summary>
-        public IDictionary<string, object> ProjectConnectionManagers { get; set; }
+        public IDictionary<string, object> ProjectConnectionManagers { get; }
         /// <summary> The package level connection managers to execute the SSIS package. </summary>
-        public IDictionary<string, object> PackageConnectionManagers { get; set; }
+        public IDictionary<string, object> PackageConnectionManagers { get; }
         /// <summary> The property overrides to execute the SSIS package. </summary>
-        public IDictionary<string, SsisPropertyOverride> PropertyOverrides { get; set; }
+        public IDictionary<string, SsisPropertyOverride> PropertyOverrides { get; }
         /// <summary> SSIS package execution log location. </summary>
         public SsisLogLocation LogLocation { get; set; }
     }
