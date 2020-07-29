@@ -132,16 +132,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 });
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityPath,
-                    identifier,
-                    timeout,
-                    CancellationToken.None),
+                timeout => OpenManagementLinkAsync(timeout),
                 link =>
                 {
                     link.Session?.SafeClose();
                     link.SafeClose();
                 });
+        }
+
+        private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
+            TimeSpan timeout)
+        {
+            RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
+                _entityPath,
+                _identifier,
+                timeout,
+                CancellationToken.None).ConfigureAwait(false);
+            link.Closed += OnManagementLinkClosed;
+            return link;
         }
 
         /// <summary>
@@ -357,6 +365,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw;
             }
         }
+
+        private void OnSenderLinkClosed(object sender, EventArgs e) =>
+            ServiceBusEventSource.Log.SendLinkClosed(
+                _identifier,
+                sender);
+
+        private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
+            ServiceBusEventSource.Log.ManagementLinkClosed(
+                _identifier,
+                managementLink);
 
         /// <summary>
         ///
@@ -595,6 +613,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     MaxMessageSize = (long)link.Settings.MaxMessageSize;
                 }
                 ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                link.Closed += OnSenderLinkClosed;
                 return link;
             }
             catch (Exception ex)

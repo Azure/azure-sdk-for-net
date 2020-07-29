@@ -48,7 +48,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry.</param>
         /// <param name="dataEndpointEnabled">Enable a single data endpoint per
         /// region for serving data.</param>
-        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), IdentityProperties identity = default(IdentityProperties), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?))
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for the container registry. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), IdentityProperties identity = default(IdentityProperties), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), string publicNetworkAccess = default(string))
         {
             Tags = tags;
             Sku = sku;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Policies = policies;
             Encryption = encryption;
             DataEndpointEnabled = dataEndpointEnabled;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -115,6 +119,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataEndpointEnabled")]
         public bool? DataEndpointEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// the container registry. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

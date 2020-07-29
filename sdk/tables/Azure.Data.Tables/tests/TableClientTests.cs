@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Tables.Tests
@@ -40,19 +38,19 @@ namespace Azure.Tables.Tests
 
             Assert.That(async () => await client_Instrumented.CreateEntityAsync<MinEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync<MinEntity>(null, UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync<MinEntity>(null, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new MinEntity { PartitionKey = null, RowKey = "row" }, UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new MinEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new MinEntity { PartitionKey = "partition", RowKey = null }, UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new MinEntity { PartitionKey = "partition", RowKey = null }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(null, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(null, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, new ETag(""), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, new ETag(""), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]

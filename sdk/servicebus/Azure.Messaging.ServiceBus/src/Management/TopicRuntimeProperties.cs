@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the topic.
+    /// This provides runtime properties of the topic.
     /// </summary>
     public class TopicRuntimeProperties
     {

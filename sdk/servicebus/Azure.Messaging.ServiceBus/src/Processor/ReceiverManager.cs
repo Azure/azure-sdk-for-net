@@ -69,8 +69,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -143,11 +142,11 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="processorCancellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         private async Task ProcessOneMessage(
             ServiceBusReceivedMessage message,
-            CancellationToken processorCancellationToken)
+            CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             CancellationTokenSource renewLockCancellationTokenSource = null;
@@ -159,7 +158,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
+                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
@@ -167,7 +166,7 @@ namespace Azure.Messaging.ServiceBus
 
                 errorSource = ServiceBusErrorSource.UserCallback;
 
-                await OnMessageHandler(message, processorCancellationToken).ConfigureAwait(false);
+                await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
 
                 if (Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     _processorOptions.AutoComplete &&
@@ -185,7 +184,11 @@ namespace Azure.Messaging.ServiceBus
 
                 await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
-            catch (Exception ex) when (!(ex is TaskCanceledException))
+            catch (Exception ex)
+            // This prevents exceptions relating to processing a message from bubbling up all
+            // the way to the main thread when calling StopProcessingAsync, which we don't want
+            // as it isn't actionable.
+            when (!(ex is TaskCanceledException) || !cancellationToken.IsCancellationRequested)
             {
                 ThrowIfSessionLockLost(ex, errorSource);
                 await RaiseExceptionReceived(
