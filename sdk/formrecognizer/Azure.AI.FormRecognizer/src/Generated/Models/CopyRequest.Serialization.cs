@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class CopyRequest : IUtf8JsonSerializable
     {
