@@ -6,11 +6,10 @@
     <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core.Experimental"/>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

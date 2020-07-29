@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
             IList<ServiceBusMessage> messageList = messages.ToList();
             if (messageList.Count == 0)
             {
@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
             options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
@@ -343,7 +343,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(messages, nameof(messages));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
             await ApplyPlugins(messageList).ConfigureAwait(false);
@@ -483,7 +483,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumberList = sequenceNumbers.ToArray();
             Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);

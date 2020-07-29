@@ -235,8 +235,6 @@ namespace Azure.Messaging.ServiceBus
 
         internal Guid LockTokenGuid { get; set; }
 
-        internal object BodyObject { get; set;}
-
         /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
         /// <value>The message expiration time in UTC. This property is read-only.</value>
         /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>

@@ -19,7 +19,9 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            #region Snippet:FormRecognizerSample5TrainModelWithFormsAndLabels
+            #region Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
+            // For this sample, you can use the training forms found in the `trainingFiles` folder.
+            // Upload the forms to your storage container and then generate a container SAS URL.
             // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
@@ -51,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             // Delete the model on completion to clean environment.
-            client.DeleteModel(model.ModelId);
+            await client.DeleteModelAsync(model.ModelId);
         }
     }
 }

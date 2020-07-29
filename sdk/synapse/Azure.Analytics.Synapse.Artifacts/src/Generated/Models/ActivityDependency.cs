@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,6 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
         public ActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
             if (activity == null)
@@ -31,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
@@ -41,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, object> additionalProperties)
         {
             Activity = activity;
-            DependencyConditions = dependencyConditions ?? new List<DependencyCondition>();
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            DependencyConditions = dependencyConditions;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Activity name. </summary>

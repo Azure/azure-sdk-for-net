@@ -13,7 +13,7 @@
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-preview.4</Version>
   </PropertyGroup>
 
   <ItemGroup>

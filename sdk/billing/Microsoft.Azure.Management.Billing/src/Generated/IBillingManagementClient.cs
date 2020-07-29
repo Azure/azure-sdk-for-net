@@ -42,15 +42,14 @@ namespace Microsoft.Azure.Management.Billing
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The version of the API to be used with the client request. The
-        /// current version is 2020-05-01.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID that uniquely identifies an Azure subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Azure Subscription ID.
+        /// </summary>
+        string SubscriptionId1 { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -160,6 +159,16 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAgreementsOperations.
         /// </summary>
         IAgreementsOperations Agreements { get; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsOperations.
+        /// </summary>
+        IEnrollmentAccountsOperations EnrollmentAccounts { get; }
+
+        /// <summary>
+        /// Gets the IBillingPeriodsOperations.
+        /// </summary>
+        IBillingPeriodsOperations BillingPeriods { get; }
 
     }
 }

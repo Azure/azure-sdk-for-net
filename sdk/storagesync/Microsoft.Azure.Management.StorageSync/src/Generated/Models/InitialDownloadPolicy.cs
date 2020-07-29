@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for InitialDownloadPolicy.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum InitialDownloadPolicy
+    public static class InitialDownloadPolicy
     {
-        [EnumMember(Value = "NamespaceOnly")]
-        NamespaceOnly,
-        [EnumMember(Value = "NamespaceThenModifiedFiles")]
-        NamespaceThenModifiedFiles,
-        [EnumMember(Value = "AvoidTieredFiles")]
-        AvoidTieredFiles
-    }
-    internal static class InitialDownloadPolicyEnumExtension
-    {
-        internal static string ToSerializedValue(this InitialDownloadPolicy? value)
-        {
-            return value == null ? null : ((InitialDownloadPolicy)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this InitialDownloadPolicy value)
-        {
-            switch( value )
-            {
-                case InitialDownloadPolicy.NamespaceOnly:
-                    return "NamespaceOnly";
-                case InitialDownloadPolicy.NamespaceThenModifiedFiles:
-                    return "NamespaceThenModifiedFiles";
-                case InitialDownloadPolicy.AvoidTieredFiles:
-                    return "AvoidTieredFiles";
-            }
-            return null;
-        }
-
-        internal static InitialDownloadPolicy? ParseInitialDownloadPolicy(this string value)
-        {
-            switch( value )
-            {
-                case "NamespaceOnly":
-                    return InitialDownloadPolicy.NamespaceOnly;
-                case "NamespaceThenModifiedFiles":
-                    return InitialDownloadPolicy.NamespaceThenModifiedFiles;
-                case "AvoidTieredFiles":
-                    return InitialDownloadPolicy.AvoidTieredFiles;
-            }
-            return null;
-        }
+        public const string NamespaceOnly = "NamespaceOnly";
+        public const string NamespaceThenModifiedFiles = "NamespaceThenModifiedFiles";
+        public const string AvoidTieredFiles = "AvoidTieredFiles";
     }
 }

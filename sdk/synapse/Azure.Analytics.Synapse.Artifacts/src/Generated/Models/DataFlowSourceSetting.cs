@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,18 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
         public DataFlowSourceSetting()
         {
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
-        /// <param name="sourceName"> The data flow source name. </param>
-        /// <param name="rowLimit"> Defines the row limit of data flow source in debug. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal DataFlowSourceSetting(string sourceName, int? rowLimit, IDictionary<string, object> additionalProperties)
-        {
-            SourceName = sourceName;
-            RowLimit = rowLimit;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The data flow source name. </summary>

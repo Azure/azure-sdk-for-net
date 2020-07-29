@@ -40,5 +40,7 @@ extends:
       safeName: AzureStorageFilesDataLake
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
+    - name: Azure.Storage.Blobs.ChangeFeed
+      safeName: AzureStorageBlobsChangeFeed
     - name: Azure.ResourceManager.Storage
       safeName: AzureResourceManagerStorage

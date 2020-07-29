@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code");
                 writer.WriteStringValue(Code);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind.Value.ToString());

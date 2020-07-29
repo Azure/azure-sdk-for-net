@@ -16,8 +16,13 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
+    [ClientTestFixture(
+        DataLakeClientOptions.ServiceVersion.V2019_02_02,
+        DataLakeClientOptions.ServiceVersion.V2019_07_07,
+        DataLakeClientOptions.ServiceVersion.V2019_12_12)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
+        protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
@@ -30,11 +35,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
-        public DataLakeTestBase(bool async) : this(async, null) { }
-
-        public DataLakeTestBase(bool async, RecordedTestMode? mode = null)
+        public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);

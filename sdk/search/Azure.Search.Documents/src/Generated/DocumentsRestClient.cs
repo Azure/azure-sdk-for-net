@@ -33,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, or <paramref name="apiVersion"/> is null. </exception>
         public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
@@ -146,6 +146,7 @@ namespace Azure.Search.Documents
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
         public async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
@@ -161,14 +162,7 @@ namespace Azure.Search.Documents
                     {
                         SearchDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
-                        }
+                        value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,6 +173,7 @@ namespace Azure.Search.Documents
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
         public Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
@@ -194,14 +189,7 @@ namespace Azure.Search.Documents
                     {
                         SearchDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
-                        }
+                        value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -240,6 +228,7 @@ namespace Azure.Search.Documents
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
@@ -255,26 +244,12 @@ namespace Azure.Search.Documents
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,6 +261,7 @@ namespace Azure.Search.Documents
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
@@ -301,26 +277,12 @@ namespace Azure.Search.Documents
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -356,6 +318,7 @@ namespace Azure.Search.Documents
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
         public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
@@ -371,14 +334,7 @@ namespace Azure.Search.Documents
                     {
                         SuggestDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
-                        }
+                        value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -389,6 +345,7 @@ namespace Azure.Search.Documents
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
         public Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
@@ -404,14 +361,7 @@ namespace Azure.Search.Documents
                     {
                         SuggestDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
-                        }
+                        value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -447,6 +397,7 @@ namespace Azure.Search.Documents
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batch"/> is null. </exception>
         public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
@@ -463,14 +414,7 @@ namespace Azure.Search.Documents
                     {
                         IndexDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-                        }
+                        value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -481,6 +425,7 @@ namespace Azure.Search.Documents
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="batch"/> is null. </exception>
         public Response<IndexDocumentsResult> Index(IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
@@ -497,14 +442,7 @@ namespace Azure.Search.Documents
                     {
                         IndexDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-                        }
+                        value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -540,6 +478,7 @@ namespace Azure.Search.Documents
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
         public async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
@@ -555,14 +494,7 @@ namespace Azure.Search.Documents
                     {
                         AutocompleteResults value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
-                        }
+                        value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,6 +505,7 @@ namespace Azure.Search.Documents
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
         public Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
@@ -588,14 +521,7 @@ namespace Azure.Search.Documents
                     {
                         AutocompleteResults value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
-                        }
+                        value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

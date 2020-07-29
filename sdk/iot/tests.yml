@@ -1,0 +1,10 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: iot
+    Location: westcentralus
+    EnvVars:
+      # Runs live tests.
+      AZURE_IOT_TEST_MODE: Live

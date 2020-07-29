@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string sessionId,
             bool isSessionReceiver)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpReceiver
             (
@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpRuleManager
             (

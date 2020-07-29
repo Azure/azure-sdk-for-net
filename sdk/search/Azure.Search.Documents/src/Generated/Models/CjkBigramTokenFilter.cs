@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CjkBigramTokenFilter(string name) : base(name)
         {
             if (name == null)
@@ -22,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            IgnoreScripts = new List<CjkBigramTokenFilterScripts>();
+            IgnoreScripts = new ChangeTrackingList<CjkBigramTokenFilterScripts>();
             ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
@@ -33,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputUnigrams"> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </param>
         internal CjkBigramTokenFilter(string oDataType, string name, IList<CjkBigramTokenFilterScripts> ignoreScripts, bool? outputUnigrams) : base(oDataType, name)
         {
-            IgnoreScripts = ignoreScripts ?? new List<CjkBigramTokenFilterScripts>();
+            IgnoreScripts = ignoreScripts;
             OutputUnigrams = outputUnigrams;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }

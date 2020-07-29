@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlConnection. </summary>
         /// <param name="type"> The type of the connection. </param>
         /// <param name="name"> The identifier of the connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlConnection(SqlConnectionType type, string name)
         {
             if (name == null)
@@ -26,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             Name = name;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlConnection. </summary>
@@ -37,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = type;
             Name = name;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The type of the connection. </summary>

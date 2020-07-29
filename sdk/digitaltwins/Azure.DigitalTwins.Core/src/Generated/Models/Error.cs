@@ -6,8 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error definition. </summary>
     internal partial class Error
@@ -15,6 +16,7 @@ namespace Azure.DigitalTwins.Core.Models
         /// <summary> Initializes a new instance of Error. </summary>
         internal Error()
         {
+            Details = new ChangeTrackingList<Error>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>

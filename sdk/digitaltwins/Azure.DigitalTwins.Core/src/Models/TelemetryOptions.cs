@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// The additional information to be used when processing a telemetry request.

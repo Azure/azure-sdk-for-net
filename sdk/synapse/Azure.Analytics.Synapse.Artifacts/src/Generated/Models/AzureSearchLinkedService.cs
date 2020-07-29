@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
         /// <param name="url"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public AzureSearchLinkedService(object url)
         {
             if (url == null)

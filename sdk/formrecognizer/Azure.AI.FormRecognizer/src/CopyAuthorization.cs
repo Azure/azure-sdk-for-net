@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -50,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Converts the CopyAuthorization object to its equivalent json representation.
+        /// Converts the CopyAuthorization object to its equivalent JSON representation.
         /// </summary>
         public string ToJson()
         {

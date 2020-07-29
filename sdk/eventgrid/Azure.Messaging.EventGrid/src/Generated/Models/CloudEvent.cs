@@ -17,6 +17,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
         /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/>, or <paramref name="specversion"/> is null. </exception>
         public CloudEvent(string id, string source, string type, string specversion)
         {
             if (id == null)
@@ -40,29 +41,6 @@ namespace Azure.Messaging.EventGrid.Models
             Source = source;
             Type = type;
             Specversion = specversion;
-        }
-
-        /// <summary> Initializes a new instance of CloudEvent. </summary>
-        /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. </param>
-        /// <param name="time"> The time (in UTC) the event was generated, in RFC3339 format. </param>
-        /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
-        /// <param name="dataschema"> Identifies the schema that data adheres to. </param>
-        /// <param name="datacontenttype"> Content type of data value. </param>
-        /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
-        internal CloudEvent(string id, string source, object data, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject)
-        {
-            Id = id;
-            Source = source;
-            Data = data;
-            Type = type;
-            Time = time;
-            Specversion = specversion;
-            Dataschema = dataschema;
-            Datacontenttype = datacontenttype;
-            Subject = subject;
         }
 
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>

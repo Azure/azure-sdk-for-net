@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
         internal static DigitalTwinsSkuInfo DeserializeDigitalTwinsSkuInfo(JsonElement element)
         {
-            string name = default;
+            DigitalTwinsSku name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString();
+                    name = new DigitalTwinsSku(property.Value.GetString());
                     continue;
                 }
             }

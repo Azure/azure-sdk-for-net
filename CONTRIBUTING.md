@@ -151,6 +151,65 @@ Running the script for a project in `sdk\tables` would look like this:
 eng\scripts\Export-API.ps1 tables
 ```
 
+## Updating Sample Snippets
+If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
+Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
+
+Running the script for a project, for example in `sdk\keyvault`, would look like this: 
+```
+eng\scripts\Update-Snippets.ps1 keyvault
+```
+
+When run, the code regions in the format below (where `<snippetName>` is the name of the snippet):
+```c#
+#region Snippet:<snippetName>
+//some sample code
+string snippet = "some snippet code";
+
+// Lines prefixed with the below comment format will be ignored by the snippet updater.
+/*@@*/ string ignored = "this code will not appear in the snippet markdown";
+
+// Lines prefixed with the below comment format will appear in the snippet markdown, but will remain comments in the C#` code.
+// Note: these comments should only be used for non-critical code as it will not be compiled or refactored as the code changes.
+//@@ snippet = "value that would never pass a test but looks good in a sample!";
+
+#endregion
+```
+ will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match: 
+
+**\`\`\`C# Snippet:\<snippetName>**
+
+**\`\`\`**
+
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+Note that snippet names need to be globally unique under a given service directory.
+
+Snippets also can be integrated into XML doc comments. For example:
+```c#
+/// <summary>
+/// Some Property.
+/// </summary>
+/// <example>
+/// This is an example of using a snippet in XML docs.
+/// <code snippet="Snippet:<snippetName>">
+/// // some sample code.
+/// string snippet = "some snippet code";
+/// </code>
+public string SomeProperty { get; set; }
+```
+
+For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples)
+
+## Updating Source on Build
+You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
+1. The property `UpdateSourceOnBuild` 
+2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
+
+e.g.
+```
+dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuild=true
+```
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
@@ -165,7 +224,7 @@ The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced i
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## Dev Feed
-We publish nightly built packages to a dev feed which can be consumed by adding the dev feed as a package source in Visual Studio. 
+We publish daily built packages to a [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) which can be consumed by adding the dev feed as a package source in Visual Studio. 
 
 Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
 

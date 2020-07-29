@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,6 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
         /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="cells"/> is null. </exception>
         public Notebook(NotebookMetadata metadata, int nbformat, int nbformatMinor, IEnumerable<NotebookCell> cells)
         {
             if (metadata == null)
@@ -35,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
             Cells = cells.ToList();
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>
@@ -55,8 +57,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells ?? new List<NotebookCell>();
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            Cells = cells;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the notebook. </summary>

@@ -110,10 +110,14 @@
         /// <param name='assignmentName'>
         /// The name of the assignment.
         /// </param>
-        public static Assignment DeleteInManagementGroup(this IAssignmentsOperations operations, string managementGroupName, string assignmentName)
+        /// <param name='assignmentDeleteBehavior'>
+        /// If set to <see cref='AssignmentDeleteBehavior.All' />, this will delete all of the resources created by the assignment.
+        /// The default is to preserve resources with <see cref="AssignmentDeleteBehavior.None" />.
+        /// </param>
+        public static Assignment DeleteInManagementGroup(this IAssignmentsOperations operations, string managementGroupName, string assignmentName, string assignmentDeleteBehavior = default(string))
         {
             var resourceScope = string.Format(Constants.ResourceScopes.ManagementGroupScope, managementGroupName);
-            return operations.DeleteAsync(resourceScope, assignmentName).GetAwaiter().GetResult();
+            return operations.DeleteAsync(resourceScope, assignmentName, assignmentDeleteBehavior).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -128,13 +132,17 @@
         /// <param name='assignmentName'>
         /// The name of the assignment.
         /// </param>
+        /// <param name='assignmentDeleteBehavior'>
+        /// If set to <see cref='AssignmentDeleteBehavior.All' />, this will delete all of the resources created by the assignment.
+        /// This functionality is disabled by default.
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<Assignment> DeleteInManagementGroupAsync(this IAssignmentsOperations operations, string managementGroupName, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Assignment> DeleteInManagementGroupAsync(this IAssignmentsOperations operations, string managementGroupName, string assignmentName, string assignmentDeleteBehavior = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var resourceScope = string.Format(Constants.ResourceScopes.ManagementGroupScope, managementGroupName);
-            using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceScope, assignmentName, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceScope, assignmentName, assignmentDeleteBehavior, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

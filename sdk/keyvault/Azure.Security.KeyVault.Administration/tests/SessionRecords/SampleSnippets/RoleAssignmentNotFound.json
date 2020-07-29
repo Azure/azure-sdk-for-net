@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200709.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "49758797444ae0e1e8248cd8114f5855",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "f9706092-bb2d-11ea-851d-0242ac120006"
+      },
+      "ResponseBody": "OK"
+    },
+    {
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200709.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "49758797444ae0e1e8248cd8114f5855",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "143",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "f9706092-bb2d-11ea-851d-0242ac120006"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "RoleAssignmentNotFound",
+          "message": "Requested role assignment not found (Activity ID: f9706092-bb2d-11ea-851d-0242ac120006)"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+    "RandomSeed": "1834870442"
+  }
+}

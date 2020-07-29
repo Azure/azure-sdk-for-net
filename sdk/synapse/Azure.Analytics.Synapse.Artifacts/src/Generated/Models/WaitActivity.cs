@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WaitActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public WaitActivity(string name, int waitTimeInSeconds) : base(name)
         {
             if (name == null)

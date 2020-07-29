@@ -105,9 +105,7 @@
             },
             "kind": "CognitiveServices",
             "properties": {
-                "apiProperties": {
-                    "statisticsEnabled": false
-                },
+                "apiProperties": { },
                 "publicNetworkAccess": "Enabled"
             }
         }

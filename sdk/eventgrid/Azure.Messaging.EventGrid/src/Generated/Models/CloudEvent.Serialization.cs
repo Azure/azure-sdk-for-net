@@ -19,31 +19,31 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("source");
             writer.WriteStringValue(Source);
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
                 writer.WriteObjectValue(Data);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time");
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("specversion");
             writer.WriteStringValue(Specversion);
-            if (Dataschema != null)
+            if (Optional.IsDefined(Dataschema))
             {
                 writer.WritePropertyName("dataschema");
                 writer.WriteStringValue(Dataschema);
             }
-            if (Datacontenttype != null)
+            if (Optional.IsDefined(Datacontenttype))
             {
                 writer.WritePropertyName("datacontenttype");
                 writer.WriteStringValue(Datacontenttype);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject");
                 writer.WriteStringValue(Subject);

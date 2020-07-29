@@ -7,7 +7,9 @@ using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -95,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ReceiveDeferredMessageExceptionEvent = 36;
 
         internal const int LinkStateLostEvent = 37;
-        internal const int SessionReceiverLinkClosedEvent = 38;
+        internal const int ReceiveLinkClosedEvent = 38;
         internal const int AmqpLinkRefreshStartEvent = 39;
         internal const int AmqpLinkRefreshCompleteEvent = 40;
         internal const int AmqpLinkRefreshExceptionEvent = 41;
@@ -175,6 +177,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int PluginStartEvent = 96;
         internal const int PluginCompleteEvent = 97;
         internal const int PluginExceptionEvent = 98;
+
+        internal const int MaxMessagesExceedsPrefetchEvent = 99;
+        internal const int SendLinkClosedEvent = 100;
+        internal const int ManagementLinkClosedEvent = 101;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -832,12 +838,32 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(SessionReceiverLinkClosedEvent, Level = EventLevel.Informational, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
-        public virtual void SessionReceiverLinkClosed(string identifier, string sessionId, string linkException)
+        [NonEvent]
+        public virtual void ReceiveLinkClosed(
+            string identifier,
+            string sessionId,
+            object receiver)
         {
             if (IsEnabled())
             {
-                WriteEvent(SessionReceiverLinkClosedEvent, identifier, sessionId, linkException);
+                var link = (ReceivingAmqpLink)receiver;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    ReceiveLinkClosedCore(
+                        identifier,
+                        sessionId,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(ReceiveLinkClosedEvent, Level = EventLevel.Informational, Message = "Receive Link Closed. Identifier: {0}, SessionId: {1}, linkException: {2}.")]
+        public virtual void ReceiveLinkClosedCore(string identifier, string sessionId, string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiveLinkClosedEvent, identifier, sessionId, linkException);
             }
         }
 
@@ -928,6 +954,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [NonEvent]
+        public virtual void SendLinkClosed(
+            string identifier,
+            object sender)
+        {
+            if (IsEnabled())
+            {
+                var link = (SendingAmqpLink)sender;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    SendLinkClosedCore(
+                        identifier,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(SendLinkClosedEvent, Level = EventLevel.Informational, Message = "Send Link Closed. Identifier: {0}, linkException: {1}.")]
+        public virtual void SendLinkClosedCore(
+            string identifier,
+            string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(SendLinkClosedEvent, identifier, linkException);
+            }
+        }
+
         [Event(CreateReceiveLinkStartEvent, Level = EventLevel.Informational, Message = "Creating receive link for Identifier: {0}.")]
         public virtual void CreateReceiveLinkStart(string identifier)
         {
@@ -979,6 +1034,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateManagementLinkExceptionEvent, identifier, exception);
+            }
+        }
+
+        [NonEvent]
+        public virtual void ManagementLinkClosed(
+            string identifier,
+            object managementLink)
+        {
+            if (IsEnabled())
+            {
+                var link = (RequestResponseAmqpLink)managementLink;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    ManagementLinkClosedCore(
+                        identifier,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(ManagementLinkClosedEvent, Level = EventLevel.Informational, Message = "Management Link Closed. Identifier: {0}, linkException: {1}.")]
+        public virtual void ManagementLinkClosedCore(
+            string identifier,
+            string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ManagementLinkClosedEvent, identifier, linkException);
             }
         }
         #endregion
@@ -1309,6 +1393,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ManagementSerializedExceptionEvent, objectName, details);
+            }
+        }
+
+        [Event(MaxMessagesExceedsPrefetchEvent, Level = EventLevel.Warning, Message = "Prefetch count for receiver with Identifier {0} is less than the max messages requested. When using prefetch, it isn't possible to receive more than the prefetch count in any single Receive call: PrefetchCount: {1}; MaxMessages: {2}")]
+        public virtual void MaxMessagesExceedsPrefetch(string identifier, int prefetchCount, int maxMessages)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
             }
         }
         #endregion

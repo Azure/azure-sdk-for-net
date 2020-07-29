@@ -12,12 +12,12 @@ namespace Azure.Identity.Tests
 {
     public class AuthenticationRecordTests
     {
-        private const int TestBufferSize = 256;
+        private const int TestBufferSize = 512;
 
         [Test]
         public void SerializeDeserializeInputChecks()
         {
-            var record = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var record = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             Assert.Throws<ArgumentNullException>(() => record.Serialize(null));
             Assert.ThrowsAsync<ArgumentNullException>(async () => await record.SerializeAsync(null));
@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task SerializeDeserializeAsync()
         {
-            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             byte[] buff = new byte[TestBufferSize];
 
@@ -44,12 +44,13 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expRecord.Authority, actRecord.Authority);
             Assert.AreEqual(expRecord.HomeAccountId, actRecord.HomeAccountId);
             Assert.AreEqual(expRecord.TenantId, actRecord.TenantId);
+            Assert.AreEqual(expRecord.ClientId, actRecord.ClientId);
         }
 
         [Test]
         public void SerializeDeserialize()
         {
-            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             byte[] buff = new byte[TestBufferSize];
 
@@ -65,6 +66,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expRecord.Authority, actRecord.Authority);
             Assert.AreEqual(expRecord.HomeAccountId, actRecord.HomeAccountId);
             Assert.AreEqual(expRecord.TenantId, actRecord.TenantId);
+            Assert.AreEqual(expRecord.ClientId, actRecord.ClientId);
         }
 
         [Test]
@@ -74,7 +76,7 @@ namespace Azure.Identity.Tests
 
             cts.Cancel();
 
-            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             var stream = new MemoryStream(TestBufferSize);
 
