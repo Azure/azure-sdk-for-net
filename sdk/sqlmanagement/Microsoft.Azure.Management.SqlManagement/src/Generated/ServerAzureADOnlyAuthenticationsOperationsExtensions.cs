@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ServerAzureADAdministratorsOperations.
+    /// Extension methods for ServerAzureADOnlyAuthenticationsOperations.
     /// </summary>
-    public static partial class ServerAzureADAdministratorsOperationsExtensions
+    public static partial class ServerAzureADOnlyAuthenticationsOperationsExtensions
     {
             /// <summary>
-            /// Gets a Azure Active Directory administrator.
+            /// Gets a specific Azure Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static ServerAzureADAdministrator Get(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            public static ServerAzureADOnlyAuthentication Get(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.GetAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a Azure Active Directory administrator.
+            /// Gets a specific Azure Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerAzureADAdministrator> GetAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> GetAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates an existing Azure Active Directory administrator.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,15 +78,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The requested Azure Active Directory administrator Resource state.
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
-            public static ServerAzureADAdministrator CreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
+            public static ServerAzureADOnlyAuthentication CreateOrUpdate(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates an existing Azure Active Directory administrator.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,12 +101,13 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The requested Azure Active Directory administrator Resource state.
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerAzureADAdministrator> CreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> CreateOrUpdateAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -112,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the Azure Active Directory administrator with the given name.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,13 +128,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void Delete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            public static void Delete(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
                 operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the Azure Active Directory administrator with the given name.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,13 +149,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Gets a list of Azure Active Directory administrators in a server.
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,13 +167,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<ServerAzureADAdministrator> ListByServer(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            public static IPage<ServerAzureADOnlyAuthentication> ListByServer(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of Azure Active Directory administrators in a server.
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -184,7 +188,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerAzureADAdministrator>> ListByServerAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServerAzureADOnlyAuthentication>> ListByServerAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -193,7 +197,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates an existing Azure Active Directory administrator.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -206,15 +211,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The requested Azure Active Directory administrator Resource state.
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
-            public static ServerAzureADAdministrator BeginCreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
+            public static ServerAzureADOnlyAuthentication BeginCreateOrUpdate(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates an existing Azure Active Directory administrator.
+            /// Sets Server Active Directory only authentication property or updates an
+            /// existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,12 +234,13 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='parameters'>
-            /// The requested Azure Active Directory administrator Resource state.
+            /// The required parameters for creating or updating an Active Directory only
+            /// authentication property.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerAzureADAdministrator> BeginCreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADOnlyAuthentication> BeginCreateOrUpdateAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -241,7 +249,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the Azure Active Directory administrator with the given name.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,13 +261,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void BeginDelete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            public static void BeginDelete(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName)
             {
                 operations.BeginDeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the Azure Active Directory administrator with the given name.
+            /// Deletes an existing server Active Directory only authentication property.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -274,13 +282,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Gets a list of Azure Active Directory administrators in a server.
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -288,13 +296,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ServerAzureADAdministrator> ListByServerNext(this IServerAzureADAdministratorsOperations operations, string nextPageLink)
+            public static IPage<ServerAzureADOnlyAuthentication> ListByServerNext(this IServerAzureADOnlyAuthenticationsOperations operations, string nextPageLink)
             {
                 return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of Azure Active Directory administrators in a server.
+            /// Gets a list of server Azure Active Directory only authentications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -305,7 +313,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerAzureADAdministrator>> ListByServerNextAsync(this IServerAzureADAdministratorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServerAzureADOnlyAuthentication>> ListByServerNextAsync(this IServerAzureADOnlyAuthenticationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
