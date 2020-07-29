@@ -2169,8 +2169,6 @@ namespace Azure.Storage.Files.Shares.Test
             await file.CreateAsync(maxSize: fileSize);
 
             var data = GetRandomBuffer(dataSize);
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
             var timesFaulted = 0;
 
             // Act
@@ -2183,18 +2181,13 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     range: new HttpRange(offset, dataSize),
-                    content: stream,
-                    progressHandler: progressHandler);
+                    content: stream);
 
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.GetRawResponse().Headers.Date);
                 Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
                 result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                 Assert.IsNotNull(version);
-
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
             }
 
             // Assert
