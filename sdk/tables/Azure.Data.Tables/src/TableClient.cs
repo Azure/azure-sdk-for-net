@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -157,130 +158,6 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<DynamicTableEntity>> CreateEntityAsync(DynamicTableEntity entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
-            scope.Start();
-            try
-            {
-                var response = await _tableOperations.InsertEntityAsync(_table,
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-                dict.CastAndRemoveAnnotations();
-
-                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a Table Entity into the Table.
-        /// </summary>
-        /// <param name="entity">The entity to create.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<DynamicTableEntity> CreateEntity(DynamicTableEntity entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
-            scope.Start();
-            try
-            {
-                var response = _tableOperations.InsertEntity(_table,
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken);
-
-                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-                dict.CastAndRemoveAnnotations();
-
-                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a Table Entity into the Table.
-        /// </summary>
-        /// <param name="entity">The entity to create.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
-            scope.Start();
-            try
-            {
-                var response = await _tableOperations.InsertEntityAsync(_table,
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-                dict.CastAndRemoveAnnotations();
-
-                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a Table Entity into the Table.
-        /// </summary>
-        /// <param name="entity">The entity to create.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
-            scope.Start();
-            try
-            {
-                var response = _tableOperations.InsertEntity(_table,
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken);
-
-                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-                dict.CastAndRemoveAnnotations();
-
-                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a Table Entity into the Table.
-        /// </summary>
-        /// <param name="entity">The entity to create.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -403,188 +280,6 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets the specified table entity.
-        /// </summary>
-        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
-        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual Response<IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull("message", nameof(partitionKey));
-            Argument.AssertNotNull("message", nameof(rowKey));
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
-            scope.Start();
-            try
-            {
-                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
-                    _table,
-                    partitionKey,
-                    rowKey,
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken);
-
-                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
-                entity.CastAndRemoveAnnotations();
-                return Response.FromValue(entity, response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the specified table entity.
-        /// </summary>
-        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
-        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<IDictionary<string, object>>> GetEntityAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull("message", nameof(partitionKey));
-            Argument.AssertNotNull("message", nameof(rowKey));
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
-            scope.Start();
-            try
-            {
-                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
-                    _table,
-                    partitionKey,
-                    rowKey,
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
-                entity.CastAndRemoveAnnotations();
-                return Response.FromValue(entity, response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
-            scope.Start();
-            try
-            {
-                if (mode == UpdateMode.Replace)
-                {
-                    return await _tableOperations.UpdateEntityAsync(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else if (mode == UpdateMode.Merge)
-                {
-                    return await _tableOperations.MergeEntityAsync(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
-            scope.Start();
-            try
-            {
-                if (mode == UpdateMode.Replace)
-                {
-                    return _tableOperations.UpdateEntity(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
-                        cancellationToken: cancellationToken);
-                }
-                else if (mode == UpdateMode.Merge)
-                {
-                    return _tableOperations.MergeEntity(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
-                        cancellationToken: cancellationToken);
-                }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
@@ -682,22 +377,10 @@ namespace Azure.Data.Tables
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
-            Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
+            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -705,20 +388,20 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        entity.PartitionKey,
+                        entity.RowKey,
                         ifMatch: eTag,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else if (mode == UpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        entity.PartitionKey,
+                        entity.RowKey,
                         ifMatch: eTag,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -742,22 +425,10 @@ namespace Azure.Data.Tables
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual Response UpdateEntity<T>(T entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
-            Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
+            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -765,20 +436,20 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        entity.PartitionKey,
+                        entity.RowKey,
                         ifMatch: eTag,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
                 else if (mode == UpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(_table,
-                        partitionKey as string,
-                        rowKey as string,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        entity.PartitionKey,
+                        entity.RowKey,
                         ifMatch: eTag,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -786,158 +457,6 @@ namespace Azure.Data.Tables
                 {
                     throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Queries entities in the table.
-        /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                response.Value.Value.CastAndRemoveAnnotations();
-
-                return Page.FromValues(response.Value.Value,
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
-            }, async (continuationToken, _) =>
-            {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
-
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                response.Value.Value.CastAndRemoveAnnotations();
-
-                return Page.FromValues(response.Value.Value,
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
-            });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Queries entities in the table.
-        /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
-        {
-
-            return PageableHelpers.CreateEnumerable(_ =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                        cancellationToken: cancellationToken);
-
-                    response.Value.Value.CastAndRemoveAnnotations();
-
-                    return Page.FromValues(
-                        response.Value.Value,
-                        CreateContinuationTokenFromHeaders(response.Headers),
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (continuationToken, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
-
-                    var response = _tableOperations.QueryEntities(
-                        _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                        nextPartitionKey: NextPartitionKey,
-                        nextRowKey: NextRowKey,
-                        cancellationToken: cancellationToken);
-
-                    response.Value.Value.CastAndRemoveAnnotations();
-
-                    return Page.FromValues(response.Value.Value,
-                                           CreateContinuationTokenFromHeaders(response.Headers),
-                                           response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
-
-        }
-
-        /// <summary>
-        /// Queries entities in the table.
-        /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return QueryAsync(Bind(filter), maxPerPage, select, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return Query(Bind(filter), maxPerPage, select, cancellationToken);
             }
             catch (Exception ex)
             {

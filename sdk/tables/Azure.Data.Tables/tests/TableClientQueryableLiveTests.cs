@@ -34,7 +34,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var results = await client.QueryAsync(x => (string)x[TableConstants.PropertyNames.PartitionKey] == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<TableEntity>(x => (string)x[TableConstants.PropertyNames.PartitionKey] == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (var entity in results)
             {
@@ -228,7 +228,7 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
-        public async Task TableQueryableDynamicTableEntityQuery()
+        public async Task TableQueryableDictionaryTableEntityQuery()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
 
@@ -414,83 +414,83 @@ namespace Azure.Data.Tables.Tests
             }
 
             // 1. Filter on String
-            var results = await client.QueryAsync(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<TableEntity>(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
             // 2. Filter on Guid
-            results = await client.QueryAsync(ent => (Guid)ent["Guid"] == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Guid)ent["Guid"] == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 
 
             // 3. Filter on Long
-            results = await client.QueryAsync(ent => (Int64)ent["Int64"] >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Int64)ent["Int64"] >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (long)ent["LongPrimitive"] >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (long)ent["LongPrimitive"] >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (long?)ent["LongPrimitiveN"] >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (long?)ent["LongPrimitiveN"] >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 4. Filter on Double
-            results = await client.QueryAsync(ent => (double)ent["Double"] >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (double)ent["Double"] >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (double)ent["DoublePrimitive"] >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (double)ent["DoublePrimitive"] >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 5. Filter on Integer
-            results = await client.QueryAsync(ent => (Int32)ent["Int32"] >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Int32)ent["Int32"] >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (Int32?)ent["Int32N"] >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Int32?)ent["Int32N"] >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 6. Filter on Date
-            results = await client.QueryAsync(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (DateTimeOffset)ent["DateTimeOffset"] < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 7. Filter on Boolean
-            results = await client.QueryAsync(ent => (Boolean)ent["Bool"] == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Boolean)ent["Bool"] == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (bool)ent["BoolPrimitive"] == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (bool)ent["BoolPrimitive"] == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 8. Filter on Binary
-            results = await client.QueryAsync(ent => (Byte[])ent["Binary"] == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (Byte[])ent["Binary"] == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 
-            results = await client.QueryAsync(ent => (byte[])ent["BinaryPrimitive"] == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (byte[])ent["BinaryPrimitive"] == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 
 
             // 10. Complex Filter on Binary GTE
 
-            results = await client.QueryAsync(ent => (string)ent["PartitionKey"] == thirdEntity.PartitionKey &&
+            results = await client.QueryAsync<TableEntity>(ent => (string)ent["PartitionKey"] == thirdEntity.PartitionKey &&
                      (ent["String"] as string).CompareTo(thirdEntity.String) >= 0 &&
                      (Int64)ent["Int64"] >= thirdEntity.Int64 &&
                      (long)ent["LongPrimitive"] >= thirdEntity.LongPrimitive &&

@@ -23,14 +23,14 @@ namespace Azure.Data.Tables.Queryable
         static ReflectionUtil()
         {
             DictionaryGetItemMethodInfo = typeof(IDictionary<string, object>).GetMethod("get_Item");
-            DynamicDictionaryGetBinaryMethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetBinary));
-            DynamicDictionaryGetBooleanMethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetBoolean));
-            DynamicDictionaryGetDateTimeMethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetDateTime));
-            DynamicDictionaryGetDoubleMethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetDouble));
-            DynamicDictionaryGetGuidMethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetGuid));
-            DynamicDictionaryGetInt32MethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetInt32));
-            DynamicDictionaryGetInt64MethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetInt64));
-            DynamicDictionaryGetString64MethodInfo = typeof(DynamicTableEntity).GetMethod(nameof(DynamicTableEntity.GetString));
+            DynamicDictionaryGetBinaryMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetBinary));
+            DynamicDictionaryGetBooleanMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetBoolean));
+            DynamicDictionaryGetDateTimeMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetDateTime));
+            DynamicDictionaryGetDoubleMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetDouble));
+            DynamicDictionaryGetGuidMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetGuid));
+            DynamicDictionaryGetInt32MethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetInt32));
+            DynamicDictionaryGetInt64MethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetInt64));
+            DynamicDictionaryGetString64MethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetString));
 
             s_dictionaryMethodInfosHash.Add(DictionaryGetItemMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetBinaryMethodInfo);

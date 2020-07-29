@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample2CreateEntity
                 // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
-                var entity = new Dictionary<string, object>
+                var entity = new TableEntity
                 {
                     {"PartitionKey", partitionKey },
                     {"RowKey", rowKey },

@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Samples
             {
                 var client = serviceClient.GetTableClient(tableName);
 
-                var entity = new Dictionary<string, object>
+                var entity = new TableEntity
                 {
                     {"PartitionKey", partitionKey },
                     {"RowKey", rowKey },
@@ -44,7 +44,7 @@ namespace Azure.Data.Tables.Samples
                 };
                 client.CreateEntity(entity);
 
-                var entity2 = new Dictionary<string, object>
+                var entity2 = new TableEntity
                 {
                     {"PartitionKey", "another" },
                     {"RowKey", rowKey2 },
@@ -55,10 +55,10 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample4QueryEntities
                 // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
-                Pageable<IDictionary<string, object>> queryResults = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+                Pageable<TableEntity> queryResults = client.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
                 // Iterate the <see cref="Pageable"> in order to access individual queried entities.
-                foreach (IDictionary<string, object> qEntity in queryResults)
+                foreach (TableEntity qEntity in queryResults)
                 {
                     Console.WriteLine(qEntity["Product"]);
                 }

@@ -12,7 +12,7 @@ namespace Azure.Data.Tables
     /// <summary>
     /// A <see cref="ITableEntity"/> type which allows callers direct access to the property map of the entity.
     /// </summary>
-    public partial class DynamicTableEntity : ITableEntity
+    public partial class TableEntity : ITableEntity
     {
         private readonly IDictionary<string, object> _properties;
 
@@ -61,17 +61,17 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Constructs an instance of a <see cref="ITableEntity" />.
         /// </summary>
-        public DynamicTableEntity()
+        public TableEntity()
             : this(null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DynamicTableEntity"/> class with the specified partition key and row key.
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with the specified partition key and row key.
         /// </summary>
-        /// <param name="partitionKey">A string containing the partition key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
-        /// <param name="rowKey">A string containing the row key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
-        public DynamicTableEntity(string partitionKey, string rowKey)
+        /// <param name="partitionKey">A string containing the partition key of the <see cref="TableEntity"/> to be initialized.</param>
+        /// <param name="rowKey">A string containing the row key of the <see cref="TableEntity"/> to be initialized.</param>
+        public TableEntity(string partitionKey, string rowKey)
             : this(null)
         {
             PartitionKey = partitionKey;
@@ -79,10 +79,10 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DynamicTableEntity"/> class with properties in the <see cref="IDictionary"/>.
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties in the <see cref="IDictionary"/>.
         /// </summary>
         /// <param name="values">A <see cref="IDictionary"/> containing the initial values of the entity.</param>
-        public DynamicTableEntity(IDictionary<string, object> values)
+        public TableEntity(IDictionary<string, object> values)
         {
             _properties = values != null ?
                 new Dictionary<string, object>(values) :
@@ -90,7 +90,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="String"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -100,7 +100,7 @@ namespace Azure.Data.Tables
         public string GetString(string key) => GetValue<string>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="byte"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.Data.Tables
         public byte[] GetBinary(string key) => GetValue<byte[]>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="String"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.Data.Tables
         public bool GetBoolean(string key) => GetValue<bool>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="DateTime"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -130,7 +130,7 @@ namespace Azure.Data.Tables
         public DateTime GetDateTime(string key) => GetValue<DateTime>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="Double"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Azure.Data.Tables
         public double GetDouble(string key) => GetValue<double>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="Guid"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.Data.Tables
         public Guid GetGuid(string key) => GetValue<Guid>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="Int32"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -160,7 +160,7 @@ namespace Azure.Data.Tables
         public int GetInt32(string key) => GetValue<int>(key);
 
         /// <summary>
-        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="Int64"/> property called
         /// <paramref name="key"/>.
         /// </summary>

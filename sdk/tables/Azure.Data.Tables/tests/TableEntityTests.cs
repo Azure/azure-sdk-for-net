@@ -17,8 +17,8 @@ namespace Azure.Tables.Tests
         public TableEntityTests(bool isAsync) : base(isAsync)
         { }
 
-        private DynamicTableEntity entityWithoutPK = new DynamicTableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
-        private DynamicTableEntity entityWithAllTypes = new DynamicTableEntity {
+        private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
+        private TableEntity entityWithAllTypes = new TableEntity {
             { TableConstants.PropertyNames.PartitionKey, "partition" },
             { TableConstants.PropertyNames.RowKey, "row" },
             { "binary", new byte[] { 1, 2 }},
@@ -80,7 +80,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void ValidateDynamicEntitySetType()
         {
-            var entity = new DynamicTableEntity("partition", "row") { { "exampleBool", true } };
+            var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
 
             // Test setting an existing property with the same type works.
             entity["exampleInt"] = false;
@@ -93,7 +93,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void DynamicEntitySetWrongTypeThrows()
         {
-            var entity = new DynamicTableEntity("partition", "row") { { "exampleBool", true } };
+            var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
 
             Assert.That(() => entity["exampleBool"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a value with mismatched types should throw an exception.");
         }
@@ -104,7 +104,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void DynamicEntitySetNullProperties()
         {
-            var entity = new DynamicTableEntity("partition", "row");
+            var entity = new TableEntity("partition", "row");
 
             // Test setting new property works.
             string stringKey = "key :D";

@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Samples
                 var client = serviceClient.GetTableClient(tableName);
 
                 // Make an entity.
-                var entity = new Dictionary<string, object>
+                var entity = new TableEntity
                 {
                     {"PartitionKey", partitionKey },
                     {"RowKey", rowKey },
@@ -57,9 +57,9 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample5UpdateEntity
                 // Query for entities to update.
-                Pageable<IDictionary<string, object>> queryResultsBefore = client.Query();
+                Pageable<TableEntity> queryResultsBefore = client.Query<TableEntity>();
 
-                foreach (IDictionary<string, object> qEntity in queryResultsBefore)
+                foreach (TableEntity qEntity in queryResultsBefore)
                 {
                     // Changing property of entity.
                     qEntity["Price"] = 7.00;
@@ -73,8 +73,8 @@ namespace Azure.Data.Tables.Samples
                 }
                 #endregion
 
-                Pageable<IDictionary<string, object>> queryResultsAfter = client.Query();
-                foreach (IDictionary<string, object> qEntity in queryResultsAfter)
+                Pageable<TableEntity> queryResultsAfter = client.Query<TableEntity>();
+                foreach (TableEntity qEntity in queryResultsAfter)
                 {
                     Console.WriteLine($"'Price' before updating: ${entity["Price"]}");
                     Console.WriteLine($"'Price' after updating: ${qEntity["Price"]}");

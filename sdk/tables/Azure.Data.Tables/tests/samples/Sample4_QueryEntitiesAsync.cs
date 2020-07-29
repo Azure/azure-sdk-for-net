@@ -37,7 +37,7 @@ namespace Azure.Data.Tables.Samples
 
                 var client = serviceClient.GetTableClient(tableName);
 
-                var entity = new Dictionary<string, object>
+                var entity = new TableEntity
                 {
                     {"PartitionKey", partitionKey },
                     {"RowKey", rowKey },
@@ -46,7 +46,7 @@ namespace Azure.Data.Tables.Samples
                 };
                 await client.CreateEntityAsync(entity);
 
-                var entity2 = new Dictionary<string, object>
+                var entity2 = new TableEntity
                 {
                     {"PartitionKey", "another" },
                     {"RowKey", rowKey2 },
@@ -57,11 +57,11 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample4QueryEntitiesAsync
                 // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
-                AsyncPageable<IDictionary<string, object>> queryResults = client.QueryAsync(filter: $"PartitionKey eq '{partitionKey}'");
+                AsyncPageable<TableEntity> queryResults = client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
                 int count = 0;
 
                 // Iterate the list in order to access individual queried entities.
-                await foreach (IDictionary<string, object> qEntity in queryResults)
+                await foreach (TableEntity qEntity in queryResults)
                 {
                     Console.WriteLine(qEntity["Product"]);
                     count++;
