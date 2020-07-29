@@ -809,7 +809,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
@@ -862,7 +862,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
@@ -926,7 +926,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
@@ -964,7 +964,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -987,7 +987,29 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -1031,35 +1053,13 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary>
-        /// Queries entities in the table.
-        /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
 
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity proerties to return in the result set.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()

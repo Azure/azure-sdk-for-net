@@ -8,7 +8,7 @@ namespace Azure.Data.Tables
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
-    public static class TablestModelFactory
+    public static class TablesModelFactory
     {
         /// <summary> Initializes a new instance of TableItem. </summary>
         /// <param name="tableName"> The name of the table. </param>
