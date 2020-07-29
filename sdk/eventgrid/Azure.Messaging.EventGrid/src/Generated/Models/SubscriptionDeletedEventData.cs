@@ -15,13 +15,6 @@ namespace Azure.Messaging.EventGrid.Models
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
-        /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
-        internal SubscriptionDeletedEventData(string eventSubscriptionId)
-        {
-            EventSubscriptionId = eventSubscriptionId;
-        }
-
         /// <summary> The Azure resource ID of the deleted event subscription. </summary>
         public string EventSubscriptionId { get; }
     }

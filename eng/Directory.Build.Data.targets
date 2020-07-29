@@ -176,7 +176,7 @@
       Properties="TargetPackageName=$(PackageId);
                   TargetPackageVersion=$(ApiCompatVersion);
                   TargetOutputPath=$(IntermediateOutputPath);
-                  BaseIntermediateOutputPath=$(BaseIntermediateOutputPath)\ApiCompat\"
+                  BaseIntermediateOutputPath=$(IntermediateOutputPath)\ApiCompat\"
       Targets="ApiCompatVerification"
      />
   </Target>

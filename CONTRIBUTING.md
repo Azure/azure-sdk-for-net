@@ -200,6 +200,16 @@ public string SomeProperty { get; set; }
 
 For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples)
 
+## Updating Source on Build
+You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
+1. The property `UpdateSourceOnBuild` 
+2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
+
+e.g.
+```
+dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuild=true
+```
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
@@ -214,7 +224,7 @@ The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced i
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## Dev Feed
-We publish nightly built packages to a dev feed which can be consumed by adding the dev feed as a package source in Visual Studio. 
+We publish daily built packages to a [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) which can be consumed by adding the dev feed as a package source in Visual Studio. 
 
 Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
 

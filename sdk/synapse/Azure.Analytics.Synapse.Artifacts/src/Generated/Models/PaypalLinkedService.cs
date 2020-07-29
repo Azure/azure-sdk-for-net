@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PaypalLinkedService. </summary>
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         public PaypalLinkedService(object host, object clientId)
         {
             if (host == null)

@@ -1330,8 +1330,8 @@ namespace Azure.Storage.Blobs.Test
                 await operation.WaitForCompletionAsync();
             }
 
-            Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
-            AssertDictionaryEquality(tags, response.Value);
+            Response<GetBlobTagResult> response = await destBlob.GetTagsAsync();
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -1691,7 +1691,7 @@ namespace Azure.Storage.Blobs.Test
             await srcBlob.CreateAsync();
             BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {
-                IsSealed = true
+                ShouldSealDestination = true
             };
 
             // Act
@@ -2040,8 +2040,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
 
             // Assert
-            Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
-            AssertDictionaryEquality(tags, response.Value);
+            Response<GetBlobTagResult> response = await destBlob.GetTagsAsync();
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -5028,10 +5028,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5051,10 +5051,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await sasBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await sasBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5106,10 +5106,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await identitySasBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await identitySasBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5161,10 +5161,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await sasBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await sasBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5215,10 +5215,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await identitySasBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await identitySasBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5268,10 +5268,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await sasBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getTagsResponse = await sasBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5299,11 +5299,11 @@ namespace Azure.Storage.Blobs.Test
             await blob.SetTagsAsync(
                 tags,
                 conditions: conditions);
-            Response<IDictionary<string, string>> getTagsResponse = await blob.GetTagsAsync(
+            Response<GetBlobTagResult> getTagsResponse = await blob.GetTagsAsync(
                 conditions: conditions);
 
             // Assert
-            AssertDictionaryEquality(tags, getTagsResponse.Value);
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
         }
 
         [Test]
@@ -5363,10 +5363,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await versionBlob.SetTagsAsync(tags);
-            Response<IDictionary<string, string>> getVersionTagsResponse = await versionBlob.GetTagsAsync();
+            Response<GetBlobTagResult> getVersionTagsResponse = await versionBlob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, getVersionTagsResponse.Value);
+            AssertDictionaryEquality(tags, getVersionTagsResponse.Value.Tags);
         }
 
         [Test]

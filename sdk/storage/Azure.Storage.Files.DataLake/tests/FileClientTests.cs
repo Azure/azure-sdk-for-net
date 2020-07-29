@@ -3151,7 +3151,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
 
-            DataLakeQueryCsvTextConfiguration csvTextConfiguration = new DataLakeQueryCsvTextConfiguration
+            DataLakeQueryCsvTextOptions csvTextConfiguration = new DataLakeQueryCsvTextOptions
             {
                 ColumnSeparator = ",",
                 QuotationCharacter = '"',
@@ -3160,7 +3160,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 HasHeaders = false
             };
 
-            DataLakeQueryJsonTextConfiguration jsonTextConfiguration = new DataLakeQueryJsonTextConfiguration
+            DataLakeQueryJsonTextOptions jsonTextConfiguration = new DataLakeQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };
@@ -3234,7 +3234,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Stream stream = CreateDataStream(Constants.KB);
             await file.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage;";
-            DataLakeQueryJsonTextConfiguration jsonTextConfiguration = new DataLakeQueryJsonTextConfiguration
+            DataLakeQueryJsonTextOptions jsonTextConfiguration = new DataLakeQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };

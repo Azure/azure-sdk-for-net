@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
         /// <param name="name"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SparkSessionOptions(string name)
         {
             if (name == null)

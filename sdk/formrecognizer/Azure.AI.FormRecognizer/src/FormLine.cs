@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormLine : FormElement
     {
-        internal FormLine(TextLine_internal textLine, int pageNumber)
+        internal FormLine(TextLine textLine, int pageNumber)
             : base(new BoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
             Words = ConvertWords(textLine.Words, pageNumber);
@@ -21,11 +21,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<FormWord> Words { get; }
 
-        private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
+        private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord> textWords, int pageNumber)
         {
             List<FormWord> rawWords = new List<FormWord>();
 
-            foreach (TextWord_internal textWord in textWords)
+            foreach (TextWord textWord in textWords)
             {
                 rawWords.Add(new FormWord(textWord, pageNumber));
             }

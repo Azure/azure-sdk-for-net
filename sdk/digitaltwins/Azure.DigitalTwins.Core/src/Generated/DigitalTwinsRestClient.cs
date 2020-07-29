@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
@@ -85,6 +85,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="ifMatch"> Only perform the operation if the entity&apos;s etag matches one of the etags provided or * is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -113,6 +114,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="ifMatch"> Only perform the operation if the entity&apos;s etag matches one of the etags provided or * is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Delete(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -228,6 +230,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
         /// <param name="ifMatch"> Only perform the operation if the entity&apos;s etag matches one of the etags provided or * is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
         public async Task<Response> DeleteRelationshipAsync(string id, string relationshipId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -260,6 +263,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
         /// <param name="ifMatch"> Only perform the operation if the entity&apos;s etag matches one of the etags provided or * is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
         public Response DeleteRelationship(string id, string relationshipId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -343,6 +347,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<RelationshipCollection>> ListRelationshipsAsync(string id, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -376,6 +381,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<RelationshipCollection> ListRelationships(string id, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -423,6 +429,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -455,6 +462,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<IncomingRelationshipCollection> ListIncomingRelationships(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -599,6 +607,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<RelationshipCollection>> ListRelationshipsNextPageAsync(string nextLink, string id, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -637,6 +646,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
         public Response<RelationshipCollection> ListRelationshipsNextPage(string nextLink, string id, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -686,6 +696,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<IncomingRelationshipCollection>> ListIncomingRelationshipsNextPageAsync(string nextLink, string id, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -723,6 +734,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
         public Response<IncomingRelationshipCollection> ListIncomingRelationshipsNextPage(string nextLink, string id, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
