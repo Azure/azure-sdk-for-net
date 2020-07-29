@@ -185,7 +185,10 @@ namespace Azure.Messaging.ServiceBus
                 await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
             catch (Exception ex)
-            when (!cancellationToken.IsCancellationRequested)
+            // This prevents exceptions relating to processing a message from bubbling up all
+            // the way to the main thread when calling StopProcessingAsync, which we don't want
+            // as it isn't actionable.
+            when (!(ex is TaskCanceledException) || !cancellationToken.IsCancellationRequested)
             {
                 ThrowIfSessionLockLost(ex, errorSource);
                 await RaiseExceptionReceived(

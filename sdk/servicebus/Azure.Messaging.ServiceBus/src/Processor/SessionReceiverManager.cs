@@ -84,11 +84,11 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return false;
                 }
-                _threadCount++;
                 if (_receiver == null)
                 {
                     await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
                 }
+                _threadCount++;
                 return true;
             }
             finally
@@ -272,11 +272,12 @@ namespace Azure.Messaging.ServiceBus
                 }
             }
             catch (Exception ex)
-            when (!_sessionCancellationSource.IsCancellationRequested &&
+            when (!(ex is TaskCanceledException) ||
+            (!_sessionCancellationSource.IsCancellationRequested &&
             // Even though the _sessionCancellationSource is linked to processorCancellationToken,
             // we need to check both here in case the processor token gets cancelled before the
             // session token is linked.
-            !processorCancellationToken.IsCancellationRequested)
+            !processorCancellationToken.IsCancellationRequested))
             {
                 if (ex is ServiceBusException sbException && sbException.ProcessorErrorSource.HasValue)
                 {
