@@ -1,4 +1,4 @@
-{
+﻿{
   "swagger": "2.0",
   "info": {
     "version": "2020-03-13",
@@ -1452,6 +1452,25 @@
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
+          }
+        }
+      }
+    },
+    "/messages/deviceBound": {
+      "post": {
+        "operationId": "SendDeviceCommand",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/api-version"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         }
       }
