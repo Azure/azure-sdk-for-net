@@ -8457,6 +8457,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -8478,6 +8479,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "BlobClient.Query",
@@ -8503,6 +8505,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
+                        ifTags,
                         requestId))
                     {
                         // Avoid buffering if stream is going to be returned to the caller
@@ -8551,6 +8554,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.QueryAsync Message.</returns>
             internal static Azure.Core.HttpMessage QueryAsync_CreateMessage(
@@ -8568,6 +8572,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default)
             {
                 // Validation
@@ -8601,6 +8606,7 @@ namespace Azure.Storage.Blobs
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
@@ -9870,6 +9876,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -9895,6 +9902,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "PageBlobClient.ClearPages",
@@ -9924,6 +9932,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
+                        ifTags,
                         requestId))
                     {
                         if (async)
@@ -9974,6 +9983,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ClearPagesAsync Message.</returns>
             internal static Azure.Core.HttpMessage ClearPagesAsync_CreateMessage(
@@ -9995,6 +10005,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default)
             {
                 // Validation
@@ -10034,6 +10045,7 @@ namespace Azure.Storage.Blobs
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;
@@ -10884,6 +10896,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -10905,6 +10918,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "PageBlobClient.Resize",
@@ -10930,6 +10944,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
+                        ifTags,
                         requestId))
                     {
                         if (async)
@@ -10976,6 +10991,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ResizeAsync Message.</returns>
             internal static Azure.Core.HttpMessage ResizeAsync_CreateMessage(
@@ -10993,6 +11009,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default)
             {
                 // Validation
@@ -11027,6 +11044,7 @@ namespace Azure.Storage.Blobs
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;
@@ -11095,6 +11113,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -11113,6 +11132,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
@@ -11135,6 +11155,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
+                        ifTags,
                         blobSequenceNumber,
                         requestId))
                     {
@@ -11178,6 +11199,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Message.</returns>
@@ -11192,6 +11214,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 long? blobSequenceNumber = default,
                 string requestId = default)
             {
@@ -11223,6 +11246,7 @@ namespace Azure.Storage.Blobs
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
                 if (blobSequenceNumber != null) { _request.Headers.SetValue("x-ms-blob-sequence-number", blobSequenceNumber.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
@@ -11291,6 +11315,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -11307,6 +11332,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "PageBlobClient.CopyIncremental",
@@ -11327,6 +11353,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
+                        ifTags,
                         requestId))
                     {
                         if (async)
@@ -11368,6 +11395,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Message.</returns>
             internal static Azure.Core.HttpMessage CopyIncrementalAsync_CreateMessage(
@@ -11380,6 +11408,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
+                string ifTags = default,
                 string requestId = default)
             {
                 // Validation
@@ -11413,6 +11442,7 @@ namespace Azure.Storage.Blobs
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;
