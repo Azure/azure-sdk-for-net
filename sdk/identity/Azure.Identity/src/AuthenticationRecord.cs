@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Account information relating to an authentication request.
     /// </summary>
-    public class AuthenticationRecord
+    internal class AuthenticationRecord
     {
         private const string UsernamePropertyName = "username";
         private const string AuthorityPropertyName = "authority";

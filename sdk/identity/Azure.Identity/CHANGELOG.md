@@ -1,6 +1,18 @@
 # Release History
 
 ## 1.2.0-preview.7 (Unreleased)
+- Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
+  - Removed class `AuthenticationRecord`
+  - Removed class `AuthenticationRequiredException`
+  - Removed class `ClientCertificateCredentialOptions` and `ClientCertificateCredential` constructor overloads accepting this type
+  - Removed class `ClientSecretCredentialOptions` and `ClientSecretCredential` constructor overloads accepting this type
+  - Removed class `DeviceCodeCredentialOptions` and `DeviceCodeCredential` constructor overloads accepting this type
+  - Removed class `InteractiveBrowserCredentialOptions` and `InteractiveBrowserCredential` constructor overloads accepting this type
+  - Removed class `UsernamePasswordCredentialOptions` and `UsernamePasswordCredential` constructor overloads accepting this type
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `InteractiveBrowserCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `UsernamePasswordCredential`
+  - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
 
 
 ## 1.2.0-preview.6 (2020-07-22)
