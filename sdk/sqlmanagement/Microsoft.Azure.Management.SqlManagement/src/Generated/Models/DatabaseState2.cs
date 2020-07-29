@@ -10,98 +10,14 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseState2.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DatabaseState2Converter))]
-    public struct DatabaseState2 : System.IEquatable<DatabaseState2>
+    public static class DatabaseState2
     {
-        private DatabaseState2(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly DatabaseState2 All = "All";
-
-        public static readonly DatabaseState2 Live = "Live";
-
-        public static readonly DatabaseState2 Deleted = "Deleted";
-
-
-        /// <summary>
-        /// Underlying value of enum DatabaseState2
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DatabaseState2
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type DatabaseState2
-        /// </summary>
-        public bool Equals(DatabaseState2 e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to DatabaseState2
-        /// </summary>
-        public static implicit operator DatabaseState2(string value)
-        {
-            return new DatabaseState2(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert DatabaseState2 to string
-        /// </summary>
-        public static implicit operator string(DatabaseState2 e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DatabaseState2
-        /// </summary>
-        public static bool operator == (DatabaseState2 e1, DatabaseState2 e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DatabaseState2
-        /// </summary>
-        public static bool operator != (DatabaseState2 e1, DatabaseState2 e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DatabaseState2
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DatabaseState2 && Equals((DatabaseState2)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DatabaseState2
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string All = "All";
+        public const string Live = "Live";
+        public const string Deleted = "Deleted";
     }
 }

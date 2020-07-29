@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for LogSizeUnit.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(LogSizeUnitConverter))]
-    public struct LogSizeUnit : System.IEquatable<LogSizeUnit>
+    public static class LogSizeUnit
     {
-        private LogSizeUnit(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly LogSizeUnit Megabytes = "Megabytes";
-
-        public static readonly LogSizeUnit Gigabytes = "Gigabytes";
-
-        public static readonly LogSizeUnit Terabytes = "Terabytes";
-
-        public static readonly LogSizeUnit Petabytes = "Petabytes";
-
-        public static readonly LogSizeUnit Percent = "Percent";
-
-
-        /// <summary>
-        /// Underlying value of enum LogSizeUnit
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for LogSizeUnit
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type LogSizeUnit
-        /// </summary>
-        public bool Equals(LogSizeUnit e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to LogSizeUnit
-        /// </summary>
-        public static implicit operator LogSizeUnit(string value)
-        {
-            return new LogSizeUnit(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert LogSizeUnit to string
-        /// </summary>
-        public static implicit operator string(LogSizeUnit e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum LogSizeUnit
-        /// </summary>
-        public static bool operator == (LogSizeUnit e1, LogSizeUnit e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum LogSizeUnit
-        /// </summary>
-        public static bool operator != (LogSizeUnit e1, LogSizeUnit e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for LogSizeUnit
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is LogSizeUnit && Equals((LogSizeUnit)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode LogSizeUnit
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Megabytes = "Megabytes";
+        public const string Gigabytes = "Gigabytes";
+        public const string Terabytes = "Terabytes";
+        public const string Petabytes = "Petabytes";
+        public const string Percent = "Percent";
     }
 }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="replicationState">The replication state for the
         /// replication link. Possible values include: 'PENDING', 'SEEDING',
         /// 'CATCH_UP', 'SUSPENDED'</param>
-        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? isTerminationAllowed = default(bool?), string replicationMode = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), ReplicationState? replicationState = default(ReplicationState?))
+        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? isTerminationAllowed = default(bool?), string replicationMode = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'PENDING', 'SEEDING', 'CATCH_UP', 'SUSPENDED'
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationState")]
-        public ReplicationState? ReplicationState { get; private set; }
+        public string ReplicationState { get; private set; }
 
     }
 }

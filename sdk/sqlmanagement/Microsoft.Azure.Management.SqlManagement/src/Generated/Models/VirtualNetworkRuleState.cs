@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for VirtualNetworkRuleState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(VirtualNetworkRuleStateConverter))]
-    public struct VirtualNetworkRuleState : System.IEquatable<VirtualNetworkRuleState>
+    public static class VirtualNetworkRuleState
     {
-        private VirtualNetworkRuleState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly VirtualNetworkRuleState Initializing = "Initializing";
-
-        public static readonly VirtualNetworkRuleState InProgress = "InProgress";
-
-        public static readonly VirtualNetworkRuleState Ready = "Ready";
-
-        public static readonly VirtualNetworkRuleState Deleting = "Deleting";
-
-        public static readonly VirtualNetworkRuleState Unknown = "Unknown";
-
-
-        /// <summary>
-        /// Underlying value of enum VirtualNetworkRuleState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for VirtualNetworkRuleState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type VirtualNetworkRuleState
-        /// </summary>
-        public bool Equals(VirtualNetworkRuleState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to VirtualNetworkRuleState
-        /// </summary>
-        public static implicit operator VirtualNetworkRuleState(string value)
-        {
-            return new VirtualNetworkRuleState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert VirtualNetworkRuleState to string
-        /// </summary>
-        public static implicit operator string(VirtualNetworkRuleState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum VirtualNetworkRuleState
-        /// </summary>
-        public static bool operator == (VirtualNetworkRuleState e1, VirtualNetworkRuleState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum VirtualNetworkRuleState
-        /// </summary>
-        public static bool operator != (VirtualNetworkRuleState e1, VirtualNetworkRuleState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for VirtualNetworkRuleState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is VirtualNetworkRuleState && Equals((VirtualNetworkRuleState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode VirtualNetworkRuleState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Initializing = "Initializing";
+        public const string InProgress = "InProgress";
+        public const string Ready = "Ready";
+        public const string Deleting = "Deleting";
+        public const string Unknown = "Unknown";
     }
 }

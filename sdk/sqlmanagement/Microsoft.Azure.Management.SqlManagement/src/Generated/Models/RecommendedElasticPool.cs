@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Expanded property</param>
         /// <param name="metrics">The list of databases housed in the server.
         /// Expanded property</param>
-        public RecommendedElasticPool(string id = default(string), string name = default(string), string type = default(string), ElasticPoolEdition? databaseEdition = default(ElasticPoolEdition?), double? dtu = default(double?), double? databaseDtuMin = default(double?), double? databaseDtuMax = default(double?), double? storageMB = default(double?), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? maxObservedDtu = default(double?), double? maxObservedStorageMB = default(double?), IList<TrackedResource> databases = default(IList<TrackedResource>), IList<RecommendedElasticPoolMetric> metrics = default(IList<RecommendedElasticPoolMetric>))
+        public RecommendedElasticPool(string id = default(string), string name = default(string), string type = default(string), string databaseEdition = default(string), double? dtu = default(double?), double? databaseDtuMin = default(double?), double? databaseDtuMax = default(double?), double? storageMB = default(double?), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? maxObservedDtu = default(double?), double? maxObservedStorageMB = default(double?), IList<TrackedResource> databases = default(IList<TrackedResource>), IList<RecommendedElasticPoolMetric> metrics = default(IList<RecommendedElasticPoolMetric>))
             : base(id, name, type)
         {
             DatabaseEdition = databaseEdition;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'GeneralPurpose', 'BusinessCritical'
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseEdition")]
-        public ElasticPoolEdition? DatabaseEdition { get; private set; }
+        public string DatabaseEdition { get; private set; }
 
         /// <summary>
         /// Gets or sets the DTU for the recommended elastic pool.

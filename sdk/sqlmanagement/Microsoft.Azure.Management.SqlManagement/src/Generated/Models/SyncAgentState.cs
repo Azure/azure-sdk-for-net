@@ -10,98 +10,14 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncAgentState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(SyncAgentStateConverter))]
-    public struct SyncAgentState : System.IEquatable<SyncAgentState>
+    public static class SyncAgentState
     {
-        private SyncAgentState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly SyncAgentState Online = "Online";
-
-        public static readonly SyncAgentState Offline = "Offline";
-
-        public static readonly SyncAgentState NeverConnected = "NeverConnected";
-
-
-        /// <summary>
-        /// Underlying value of enum SyncAgentState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for SyncAgentState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type SyncAgentState
-        /// </summary>
-        public bool Equals(SyncAgentState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to SyncAgentState
-        /// </summary>
-        public static implicit operator SyncAgentState(string value)
-        {
-            return new SyncAgentState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert SyncAgentState to string
-        /// </summary>
-        public static implicit operator string(SyncAgentState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum SyncAgentState
-        /// </summary>
-        public static bool operator == (SyncAgentState e1, SyncAgentState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum SyncAgentState
-        /// </summary>
-        public static bool operator != (SyncAgentState e1, SyncAgentState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for SyncAgentState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is SyncAgentState && Equals((SyncAgentState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode SyncAgentState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Online = "Online";
+        public const string Offline = "Offline";
+        public const string NeverConnected = "NeverConnected";
     }
 }

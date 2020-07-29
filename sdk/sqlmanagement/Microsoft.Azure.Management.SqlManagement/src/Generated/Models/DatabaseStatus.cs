@@ -10,134 +10,32 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseStatus.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DatabaseStatusConverter))]
-    public struct DatabaseStatus : System.IEquatable<DatabaseStatus>
+    public static class DatabaseStatus
     {
-        private DatabaseStatus(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly DatabaseStatus Online = "Online";
-
-        public static readonly DatabaseStatus Restoring = "Restoring";
-
-        public static readonly DatabaseStatus RecoveryPending = "RecoveryPending";
-
-        public static readonly DatabaseStatus Recovering = "Recovering";
-
-        public static readonly DatabaseStatus Suspect = "Suspect";
-
-        public static readonly DatabaseStatus Offline = "Offline";
-
-        public static readonly DatabaseStatus Standby = "Standby";
-
-        public static readonly DatabaseStatus Shutdown = "Shutdown";
-
-        public static readonly DatabaseStatus EmergencyMode = "EmergencyMode";
-
-        public static readonly DatabaseStatus AutoClosed = "AutoClosed";
-
-        public static readonly DatabaseStatus Copying = "Copying";
-
-        public static readonly DatabaseStatus Creating = "Creating";
-
-        public static readonly DatabaseStatus Inaccessible = "Inaccessible";
-
-        public static readonly DatabaseStatus OfflineSecondary = "OfflineSecondary";
-
-        public static readonly DatabaseStatus Pausing = "Pausing";
-
-        public static readonly DatabaseStatus Paused = "Paused";
-
-        public static readonly DatabaseStatus Resuming = "Resuming";
-
-        public static readonly DatabaseStatus Scaling = "Scaling";
-
-        public static readonly DatabaseStatus OfflineChangingDwPerformanceTiers = "OfflineChangingDwPerformanceTiers";
-
-        public static readonly DatabaseStatus OnlineChangingDwPerformanceTiers = "OnlineChangingDwPerformanceTiers";
-
-        public static readonly DatabaseStatus Disabled = "Disabled";
-
-
-        /// <summary>
-        /// Underlying value of enum DatabaseStatus
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DatabaseStatus
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type DatabaseStatus
-        /// </summary>
-        public bool Equals(DatabaseStatus e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to DatabaseStatus
-        /// </summary>
-        public static implicit operator DatabaseStatus(string value)
-        {
-            return new DatabaseStatus(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert DatabaseStatus to string
-        /// </summary>
-        public static implicit operator string(DatabaseStatus e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DatabaseStatus
-        /// </summary>
-        public static bool operator == (DatabaseStatus e1, DatabaseStatus e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DatabaseStatus
-        /// </summary>
-        public static bool operator != (DatabaseStatus e1, DatabaseStatus e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DatabaseStatus
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DatabaseStatus && Equals((DatabaseStatus)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DatabaseStatus
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Online = "Online";
+        public const string Restoring = "Restoring";
+        public const string RecoveryPending = "RecoveryPending";
+        public const string Recovering = "Recovering";
+        public const string Suspect = "Suspect";
+        public const string Offline = "Offline";
+        public const string Standby = "Standby";
+        public const string Shutdown = "Shutdown";
+        public const string EmergencyMode = "EmergencyMode";
+        public const string AutoClosed = "AutoClosed";
+        public const string Copying = "Copying";
+        public const string Creating = "Creating";
+        public const string Inaccessible = "Inaccessible";
+        public const string OfflineSecondary = "OfflineSecondary";
+        public const string Pausing = "Pausing";
+        public const string Paused = "Paused";
+        public const string Resuming = "Resuming";
+        public const string Scaling = "Scaling";
+        public const string OfflineChangingDwPerformanceTiers = "OfflineChangingDwPerformanceTiers";
+        public const string OnlineChangingDwPerformanceTiers = "OnlineChangingDwPerformanceTiers";
+        public const string Disabled = "Disabled";
     }
 }

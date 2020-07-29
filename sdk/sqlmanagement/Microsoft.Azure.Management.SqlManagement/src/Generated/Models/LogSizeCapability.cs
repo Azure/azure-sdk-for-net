@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="unit">The units that the limit is expressed in.
         /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
         /// 'Petabytes', 'Percent'</param>
-        public LogSizeCapability(int? limit = default(int?), LogSizeUnit? unit = default(LogSizeUnit?))
+        public LogSizeCapability(int? limit = default(int?), string unit = default(string))
         {
             Limit = limit;
             Unit = unit;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Percent'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public LogSizeUnit? Unit { get; private set; }
+        public string Unit { get; private set; }
 
     }
 }

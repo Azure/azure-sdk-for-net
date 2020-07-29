@@ -10,98 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ReadOnlyEndpointFailoverPolicy.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ReadOnlyEndpointFailoverPolicyConverter))]
-    public struct ReadOnlyEndpointFailoverPolicy : System.IEquatable<ReadOnlyEndpointFailoverPolicy>
+    public static class ReadOnlyEndpointFailoverPolicy
     {
-        private ReadOnlyEndpointFailoverPolicy(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ReadOnlyEndpointFailoverPolicy Disabled = "Disabled";
-
-        public static readonly ReadOnlyEndpointFailoverPolicy Enabled = "Enabled";
-
-
-        /// <summary>
-        /// Underlying value of enum ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public bool Equals(ReadOnlyEndpointFailoverPolicy e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public static implicit operator ReadOnlyEndpointFailoverPolicy(string value)
-        {
-            return new ReadOnlyEndpointFailoverPolicy(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ReadOnlyEndpointFailoverPolicy to
-        /// string
-        /// </summary>
-        public static implicit operator string(ReadOnlyEndpointFailoverPolicy e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public static bool operator == (ReadOnlyEndpointFailoverPolicy e1, ReadOnlyEndpointFailoverPolicy e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public static bool operator != (ReadOnlyEndpointFailoverPolicy e1, ReadOnlyEndpointFailoverPolicy e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ReadOnlyEndpointFailoverPolicy && Equals((ReadOnlyEndpointFailoverPolicy)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ReadOnlyEndpointFailoverPolicy
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

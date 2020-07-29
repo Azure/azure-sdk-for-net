@@ -10,100 +10,15 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ReplicationState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ReplicationStateConverter))]
-    public struct ReplicationState : System.IEquatable<ReplicationState>
+    public static class ReplicationState
     {
-        private ReplicationState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ReplicationState PENDING = "PENDING";
-
-        public static readonly ReplicationState SEEDING = "SEEDING";
-
-        public static readonly ReplicationState CATCHUP = "CATCH_UP";
-
-        public static readonly ReplicationState SUSPENDED = "SUSPENDED";
-
-
-        /// <summary>
-        /// Underlying value of enum ReplicationState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ReplicationState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ReplicationState
-        /// </summary>
-        public bool Equals(ReplicationState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ReplicationState
-        /// </summary>
-        public static implicit operator ReplicationState(string value)
-        {
-            return new ReplicationState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ReplicationState to string
-        /// </summary>
-        public static implicit operator string(ReplicationState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ReplicationState
-        /// </summary>
-        public static bool operator == (ReplicationState e1, ReplicationState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ReplicationState
-        /// </summary>
-        public static bool operator != (ReplicationState e1, ReplicationState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ReplicationState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ReplicationState && Equals((ReplicationState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ReplicationState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string PENDING = "PENDING";
+        public const string SEEDING = "SEEDING";
+        public const string CATCHUP = "CATCH_UP";
+        public const string SUSPENDED = "SUSPENDED";
     }
 }

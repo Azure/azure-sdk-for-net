@@ -10,104 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for PrivateEndpointProvisioningState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(PrivateEndpointProvisioningStateConverter))]
-    public struct PrivateEndpointProvisioningState : System.IEquatable<PrivateEndpointProvisioningState>
+    public static class PrivateEndpointProvisioningState
     {
-        private PrivateEndpointProvisioningState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly PrivateEndpointProvisioningState Approving = "Approving";
-
-        public static readonly PrivateEndpointProvisioningState Ready = "Ready";
-
-        public static readonly PrivateEndpointProvisioningState Dropping = "Dropping";
-
-        public static readonly PrivateEndpointProvisioningState Failed = "Failed";
-
-        public static readonly PrivateEndpointProvisioningState Rejecting = "Rejecting";
-
-
-        /// <summary>
-        /// Underlying value of enum PrivateEndpointProvisioningState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for PrivateEndpointProvisioningState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type PrivateEndpointProvisioningState
-        /// </summary>
-        public bool Equals(PrivateEndpointProvisioningState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// PrivateEndpointProvisioningState
-        /// </summary>
-        public static implicit operator PrivateEndpointProvisioningState(string value)
-        {
-            return new PrivateEndpointProvisioningState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert PrivateEndpointProvisioningState to
-        /// string
-        /// </summary>
-        public static implicit operator string(PrivateEndpointProvisioningState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum PrivateEndpointProvisioningState
-        /// </summary>
-        public static bool operator == (PrivateEndpointProvisioningState e1, PrivateEndpointProvisioningState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum PrivateEndpointProvisioningState
-        /// </summary>
-        public static bool operator != (PrivateEndpointProvisioningState e1, PrivateEndpointProvisioningState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for PrivateEndpointProvisioningState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is PrivateEndpointProvisioningState && Equals((PrivateEndpointProvisioningState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode PrivateEndpointProvisioningState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Approving = "Approving";
+        public const string Ready = "Ready";
+        public const string Dropping = "Dropping";
+        public const string Failed = "Failed";
+        public const string Rejecting = "Rejecting";
     }
 }

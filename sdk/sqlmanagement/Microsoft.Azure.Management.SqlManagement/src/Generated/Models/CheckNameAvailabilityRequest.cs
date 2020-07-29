@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the CheckNameAvailabilityRequest
         /// class.
         /// </summary>
+        /// <param name="name">The name whose availability is to be
+        /// checked.</param>
         public CheckNameAvailabilityRequest(string name)
         {
             Name = name;
@@ -52,11 +54,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the name whose availability is to be checked.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// The type of resource that is used as the scope of the availability
+        /// check.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

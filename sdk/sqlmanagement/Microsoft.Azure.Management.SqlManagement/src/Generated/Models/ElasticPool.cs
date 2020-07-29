@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="licenseType">The license type to apply for this
         /// elastic pool. Possible values include: 'LicenseIncluded',
         /// 'BasePrice'</param>
-        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), ElasticPoolState? state = default(ElasticPoolState?), System.DateTime? creationDate = default(System.DateTime?), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), ElasticPoolLicenseType? licenseType = default(ElasticPoolLicenseType?))
+        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string state = default(string), System.DateTime? creationDate = default(System.DateTime?), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Creating', 'Ready', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public ElasticPoolState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets the creation date of the elastic pool (ISO8601 format).
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public ElasticPoolLicenseType? LicenseType { get; set; }
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -419,7 +419,7 @@ namespace Sql.Tests
                             TableName = "tbl",
                             SubscriptionId = new Guid(),
                             Credential = credential.Id,
-                            Type = JobStepOutputType.SqlDatabase
+                            Type = JobTargetType.SqlDatabase
                         }
                     });
 

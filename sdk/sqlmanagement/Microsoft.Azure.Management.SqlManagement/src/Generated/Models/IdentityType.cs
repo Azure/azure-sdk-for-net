@@ -10,94 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for IdentityType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(IdentityTypeConverter))]
-    public struct IdentityType : System.IEquatable<IdentityType>
+    public static class IdentityType
     {
-        private IdentityType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly IdentityType SystemAssigned = "SystemAssigned";
-
-
-        /// <summary>
-        /// Underlying value of enum IdentityType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for IdentityType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type IdentityType
-        /// </summary>
-        public bool Equals(IdentityType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to IdentityType
-        /// </summary>
-        public static implicit operator IdentityType(string value)
-        {
-            return new IdentityType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert IdentityType to string
-        /// </summary>
-        public static implicit operator string(IdentityType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum IdentityType
-        /// </summary>
-        public static bool operator == (IdentityType e1, IdentityType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum IdentityType
-        /// </summary>
-        public static bool operator != (IdentityType e1, IdentityType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for IdentityType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is IdentityType && Equals((IdentityType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode IdentityType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string SystemAssigned = "SystemAssigned";
     }
 }

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// for SLO usage metric.</param>
         /// <param name="inRangeTimeRatio">Gets or sets inRangeTimeRatio for
         /// SLO usage metric.</param>
-        public SloUsageMetric(ServiceObjectiveName? serviceLevelObjective = default(ServiceObjectiveName?), System.Guid serviceLevelObjectiveId = default(System.Guid), double inRangeTimeRatio = default(double))
+        public SloUsageMetric(string serviceLevelObjective = default(string), System.Guid serviceLevelObjectiveId = default(System.Guid), double inRangeTimeRatio = default(double))
         {
             ServiceLevelObjective = serviceLevelObjective;
             ServiceLevelObjectiveId = serviceLevelObjectiveId;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'DS1500', 'DS2000', 'ElasticPool'
         /// </summary>
         [JsonProperty(PropertyName = "serviceLevelObjective")]
-        public ServiceObjectiveName? ServiceLevelObjective { get; private set; }
+        public string ServiceLevelObjective { get; private set; }
 
         /// <summary>
         /// Gets the serviceLevelObjectiveId for SLO usage metric.

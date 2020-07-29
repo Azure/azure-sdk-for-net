@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByDatabaseWithHttpMessagesAsync(string locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState1? databaseState = default(DatabaseState1?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByDatabaseWithHttpMessagesAsync(string locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (locationName == null)
             {
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {
@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByInstanceWithHttpMessagesAsync(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState2? databaseState = default(DatabaseState2?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByInstanceWithHttpMessagesAsync(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (locationName == null)
             {
@@ -590,7 +590,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByLocationWithHttpMessagesAsync(string locationName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState3? databaseState = default(DatabaseState3?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByLocationWithHttpMessagesAsync(string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (locationName == null)
             {
@@ -793,7 +793,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {
@@ -1222,7 +1222,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupDatabaseWithHttpMessagesAsync(string resourceGroupName, string locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState4? databaseState = default(DatabaseState4?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupDatabaseWithHttpMessagesAsync(string resourceGroupName, string locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1277,7 +1277,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {
@@ -1449,7 +1449,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupInstanceWithHttpMessagesAsync(string resourceGroupName, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState5? databaseState = default(DatabaseState5?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupInstanceWithHttpMessagesAsync(string resourceGroupName, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1498,7 +1498,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {
@@ -1668,7 +1668,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupLocationWithHttpMessagesAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState6? databaseState = default(DatabaseState6?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagedInstanceLongTermRetentionBackup>>> ListByResourceGroupLocationWithHttpMessagesAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1711,7 +1711,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (databaseState != null)
             {
-                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(databaseState, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("databaseState={0}", System.Uri.EscapeDataString(databaseState)));
             }
             if (apiVersion != null)
             {

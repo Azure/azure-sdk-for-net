@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database.</param>
         /// <param name="userName">User name of the sync agent linked
         /// database.</param>
-        public SyncAgentLinkedDatabase(string id = default(string), string name = default(string), string type = default(string), SyncMemberDbType? databaseType = default(SyncMemberDbType?), string databaseId = default(string), string description = default(string), string serverName = default(string), string databaseName = default(string), string userName = default(string))
+        public SyncAgentLinkedDatabase(string id = default(string), string name = default(string), string type = default(string), string databaseType = default(string), string databaseId = default(string), string description = default(string), string serverName = default(string), string databaseName = default(string), string userName = default(string))
             : base(id, name, type)
         {
             DatabaseType = databaseType;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'AzureSqlDatabase', 'SqlServerDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseType")]
-        public SyncMemberDbType? DatabaseType { get; private set; }
+        public string DatabaseType { get; private set; }
 
         /// <summary>
         /// Gets id of the sync agent linked database.

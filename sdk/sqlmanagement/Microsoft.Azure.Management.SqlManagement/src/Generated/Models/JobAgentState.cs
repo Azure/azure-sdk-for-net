@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobAgentState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobAgentStateConverter))]
-    public struct JobAgentState : System.IEquatable<JobAgentState>
+    public static class JobAgentState
     {
-        private JobAgentState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly JobAgentState Creating = "Creating";
-
-        public static readonly JobAgentState Ready = "Ready";
-
-        public static readonly JobAgentState Updating = "Updating";
-
-        public static readonly JobAgentState Deleting = "Deleting";
-
-        public static readonly JobAgentState Disabled = "Disabled";
-
-
-        /// <summary>
-        /// Underlying value of enum JobAgentState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobAgentState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobAgentState
-        /// </summary>
-        public bool Equals(JobAgentState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobAgentState
-        /// </summary>
-        public static implicit operator JobAgentState(string value)
-        {
-            return new JobAgentState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobAgentState to string
-        /// </summary>
-        public static implicit operator string(JobAgentState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobAgentState
-        /// </summary>
-        public static bool operator == (JobAgentState e1, JobAgentState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobAgentState
-        /// </summary>
-        public static bool operator != (JobAgentState e1, JobAgentState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobAgentState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobAgentState && Equals((JobAgentState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobAgentState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Creating = "Creating";
+        public const string Ready = "Ready";
+        public const string Updating = "Updating";
+        public const string Deleting = "Deleting";
+        public const string Disabled = "Disabled";
     }
 }

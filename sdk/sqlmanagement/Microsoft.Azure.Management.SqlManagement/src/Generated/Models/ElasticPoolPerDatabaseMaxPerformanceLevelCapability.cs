@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit = default(double?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), IList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = default(IList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit = default(double?), string unit = default(string), IList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = default(IList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Limit = limit;
             Unit = unit;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DTU', 'VCores'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public PerformanceLevelUnit? Unit { get; private set; }
+        public string Unit { get; private set; }
 
         /// <summary>
         /// Gets the list of supported min database performance levels.
