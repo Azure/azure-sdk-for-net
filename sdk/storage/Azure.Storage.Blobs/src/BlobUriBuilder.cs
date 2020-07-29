@@ -27,12 +27,6 @@ namespace Azure.Storage.Blobs
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
-        /// </summary>
-        private readonly bool _isIPStyleUri;
-
-        /// <summary>
         /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
         private readonly bool _isPathStyleUri;
@@ -185,8 +179,7 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                _isIPStyleUri = uri.IsHostIPEndPointStyle();
-                _isPathStyleUri = _isIPStyleUri || PathStylePorts.Contains(uri.Port);
+                _isPathStyleUri = uri.IsHostIPEndPointStyle() || PathStylePorts.Contains(uri.Port);
                 if (_isPathStyleUri)
                 {
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
