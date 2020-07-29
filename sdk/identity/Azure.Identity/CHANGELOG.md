@@ -1,6 +1,8 @@
 # Release History
 
 ## 1.2.0-preview.7 (Unreleased)
+
+### Breaking Changes
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
   - Removed class `AuthenticationRecord`
   - Removed class `AuthenticationRequiredException`
