@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Samples
