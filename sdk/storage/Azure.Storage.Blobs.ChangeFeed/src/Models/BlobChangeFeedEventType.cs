@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedEventType.

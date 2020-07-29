@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob info from a FindBlobsByTags.
     /// </summary>
-    public class BlobTagItem
+    public class TaggedBlobItem
     {
         /// <summary>
         /// Blob Name.
@@ -26,6 +26,6 @@ namespace Azure.Storage.Blobs.Models
         /// Prevent direct instantiation of FilterBlobItem instances.
         /// You can use BlobsModelFactory.FilterBlobItem instead.
         /// </summary>
-        internal BlobTagItem() { }
+        internal TaggedBlobItem() { }
     }
 }

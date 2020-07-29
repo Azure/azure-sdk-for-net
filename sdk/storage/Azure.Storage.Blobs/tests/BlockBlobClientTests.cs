@@ -836,10 +836,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CommitBlockListAsync(commitList, options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -1664,10 +1664,10 @@ namespace Azure.Storage.Blobs.Test
                     options: options);
             }
 
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [LiveOnly]

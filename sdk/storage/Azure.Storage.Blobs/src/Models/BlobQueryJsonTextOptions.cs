@@ -8,13 +8,9 @@ using System.Text;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Blob Query Text Configuration.
+    /// JSON text configuration.
     /// </summary>
-    public abstract class BlobQueryTextConfiguration
+    public class BlobQueryJsonTextOptions : BlobQueryTextOptions
     {
-        /// <summary>
-        /// Record Separator.
-        /// </summary>
-        public string RecordSeparator { get; set; }
     }
 }

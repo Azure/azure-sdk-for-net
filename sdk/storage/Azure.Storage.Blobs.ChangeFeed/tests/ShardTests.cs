@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
