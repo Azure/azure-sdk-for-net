@@ -1,9 +1,13 @@
 # Release History
 
-## 12.3.0-preview.2 (Unreleased)
+## 12.3.0-preview.3 (Unreleased)
+
+
+## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
 - Updated ShareSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 - Added ShareFileClient.OpenRead().
+- Fixed bug where in ShareFileClient.Upload(), all exceptions except for LeaseNotPresentWithFileOperation were not being thrown.
 
 ## 12.3.0-preview.1 (2020-07-03)
 - Added support for service version 2019-12-12.

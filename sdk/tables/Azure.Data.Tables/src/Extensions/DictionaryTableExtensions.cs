@@ -154,7 +154,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
             PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
             {
@@ -176,7 +176,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : class, ITableEntity, new()
         {
             properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
             {

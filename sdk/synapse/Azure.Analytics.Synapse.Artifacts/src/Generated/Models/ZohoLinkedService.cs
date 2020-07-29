@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
         /// <param name="endpoint"> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ZohoLinkedService(object endpoint)
         {
             if (endpoint == null)

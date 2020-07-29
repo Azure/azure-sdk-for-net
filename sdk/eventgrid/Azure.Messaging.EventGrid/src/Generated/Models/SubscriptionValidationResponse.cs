@@ -15,13 +15,6 @@ namespace Azure.Messaging.EventGrid.Models
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionValidationResponse. </summary>
-        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        internal SubscriptionValidationResponse(string validationResponse)
-        {
-            ValidationResponse = validationResponse;
-        }
-
         /// <summary> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </summary>
         public string ValidationResponse { get; }
     }

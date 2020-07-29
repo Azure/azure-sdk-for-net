@@ -6660,5 +6660,77 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySqlToRest = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Rest"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted""
+                    },
+                    sink:
+                    {
+                        type: ""RestSink"",
+                        requestMethod: ""POST"",
+                        requestInterval: ""00:01:40"",
+                        httpRequestTimeout: ""00:01:40"",
+                        additionalHeaders:{
+                            ""Key"":""Value""
+                        },
+                        writeBatchSize: 1000,
+                        writeBatchTimeout: ""01:00:00"",
+                        compressionType: ""gzip"",
+                        wrapRequestJsonInAnObject: true,
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputRestDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
     }
 }

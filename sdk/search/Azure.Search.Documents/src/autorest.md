@@ -77,7 +77,6 @@ directive:
   transform: $["x-ms-enum"].name = "SuggesterMode";
 ```
 
-
 ### Add nullable annotations
 
 ``` yaml
@@ -174,6 +173,14 @@ directive:
   where: $.definitions.FieldMapping
   transform: >
     $.properties.mappingFunction["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexerExecutionResult
+  transform: >
+    $.properties.endTime["x-nullable"] = true;
 ```
 
 ## C# Customizations

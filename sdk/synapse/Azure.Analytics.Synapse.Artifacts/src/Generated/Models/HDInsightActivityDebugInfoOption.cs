@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOption"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightActivityDebugInfoOption(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -54,7 +54,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object, segmentFactory.Object);
 
             // Act
-            Queue<string> years = await changeFeedFactory.GetYearPaths(IsAsync).ConfigureAwait(false);
+            Queue<string> years = await changeFeedFactory.GetYearPathsInternal(
+                IsAsync,
+                default).ConfigureAwait(false);
 
             // Assert
             Queue<string> expectedYears = new Queue<string>();

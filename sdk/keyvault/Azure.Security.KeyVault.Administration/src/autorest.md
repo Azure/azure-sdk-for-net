@@ -13,3 +13,77 @@ input-file:
 namespace: Azure.Security.KeyVault.Administration
 include-csproj: disable
 ```
+
+## Swagger hacks
+These should eventually be fixed in the swagger files. See Azure/azure-rest-api-specs#10262
+
+### Add "x-nullable": true to FullBackupOperation.endTime
+``` yaml
+directive:
+- from: backuprestore.json
+  where: $.definitions["FullBackupOperation"]["properties"].endTime
+  transform: >
+    return {
+        "type": "integer",
+        "format": "unixtime",
+        "description": "The end time of the backup operation in UTC",
+        "x-nullable": true
+    };
+```
+
+### Add "x-nullable": true to RestoreOperation.endTime
+``` yaml
+directive:
+- from: backuprestore.json
+  where: $.definitions["RestoreOperation"]["properties"].endTime
+  transform: >
+    return {
+        "type": "integer",
+        "format": "unixtime",
+        "description": "The end time of the restore operation in UTC",
+        "x-nullable": true
+    };
+```
+
+### Add "x-nullable": true to SelectiveKeyRestoreOperation.endTime
+``` yaml
+directive:
+- from: backuprestore.json
+  where: $.definitions["SelectiveKeyRestoreOperation"]["properties"].endTime
+  transform: >
+    return {
+        "type": "integer",
+        "format": "unixtime",
+        "description": "The end time of the restore operation in UTC",
+        "x-nullable": true
+    };
+```
+
+### Add "x-nullable": true to the Error property
+``` yaml
+directive:
+- from: common.json
+  where: $.definitions["Error"]
+  transform: >
+    return {
+        "properties": {
+        "code": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The error code."
+        },
+        "message": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The error message."
+        },
+        "innererror": {
+          "x-ms-client-name": "innerError",
+          "readOnly": true,
+          "$ref": "#/definitions/Error"
+        }
+      },
+      "description": "The key vault server error.",
+      "x-nullable": true
+    };
+```

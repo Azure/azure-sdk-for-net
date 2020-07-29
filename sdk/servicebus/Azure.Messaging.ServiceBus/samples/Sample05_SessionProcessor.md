@@ -42,7 +42,7 @@ var options = new ServiceBusSessionProcessorOptions
     // I can also allow for processing multiple sessions
     MaxConcurrentSessions = 5,
 
-    // By default, there will be a single concurrent call per session. I can 
+    // By default, there will be a single concurrent call per session. I can
     // increase that here to enable parallel processing within each session.
     MaxConcurrentCallsPerSession = 2
 };

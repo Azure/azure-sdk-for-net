@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
         public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey)
         {
             if (mlEndpoint == null)

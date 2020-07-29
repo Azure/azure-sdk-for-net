@@ -8,20 +8,40 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpPipelineFunctionalTests
+
+    [TestFixture(typeof(HttpClientTransport), true)]
+    [TestFixture(typeof(HttpClientTransport), false)]
+#if NETFRAMEWORK
+    [TestFixture(typeof(HttpWebRequestTransport), true)]
+    [TestFixture(typeof(HttpWebRequestTransport), false)]
+#endif
+    public class HttpPipelineFunctionalTests: PipelineTestBase
     {
+        private readonly Type _transportType;
+
+        public HttpPipelineFunctionalTests(Type transportType, bool isAsync): base(isAsync)
+        {
+            _transportType = transportType;
+        }
+
+        private TestOptions GetOptions()
+        {
+            var options = new TestOptions();
+            options.Transport = (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+            return options;
+        }
+
         [Test]
         public async Task SendRequestBuffersResponse()
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -37,7 +57,7 @@ namespace Azure.Core.Tests
                 using Request request = httpPipeline.CreateRequest();
                 request.Uri.Reset(testServer.Address);
 
-                using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
+                using Response response = await ExecuteRequest(request, httpPipeline);
 
                 Assert.AreEqual(response.ContentStream.Length, 1000);
             }
@@ -48,7 +68,7 @@ namespace Azure.Core.Tests
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -68,7 +88,7 @@ namespace Azure.Core.Tests
                     message.Request.Uri.Reset(testServer.Address);
                     message.BufferResponse = false;
 
-                    await httpPipeline.SendAsync(message, CancellationToken.None);
+                    await ExecuteRequest(message, httpPipeline);
 
                     Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
 
@@ -88,14 +108,11 @@ namespace Azure.Core.Tests
         {
             byte[] buffer = { 0 };
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions()
-            {
-                Retry =
-                {
-                    Delay = TimeSpan.FromMilliseconds(2),
-                    NetworkTimeout = TimeSpan.FromSeconds(5)
-                },
-            });
+            var clientOptions = new TestOptions();
+            clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(2);
+            clientOptions.Retry.NetworkTimeout = TimeSpan.FromSeconds(5);
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(clientOptions);
 
             int bodySize = 1000;
             int reqNum = 0;
@@ -125,7 +142,7 @@ namespace Azure.Core.Tests
                     message.Request.Uri.Reset(testServer.Address);
                     message.BufferResponse = false;
 
-                    await httpPipeline.SendAsync(message, CancellationToken.None);
+                    await ExecuteRequest(message, httpPipeline);
 
                     Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
 
@@ -145,7 +162,7 @@ namespace Azure.Core.Tests
         public async Task RetriesTransportFailures()
         {
             int i = 0;
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
 
             using TestServer testServer = new TestServer(
                 context =>
@@ -165,7 +182,7 @@ namespace Azure.Core.Tests
             message.Request.Uri.Reset(testServer.Address);
             message.BufferResponse = false;
 
-            await httpPipeline.SendAsync(message, CancellationToken.None);
+            await ExecuteRequest(message, httpPipeline);
 
             Assert.AreEqual(message.Response.Status, 201);
             Assert.AreEqual(2, i);
@@ -201,7 +218,7 @@ namespace Azure.Core.Tests
             message.Request.Uri.Reset(testServer.Address);
             message.BufferResponse = false;
 
-            await httpPipeline.SendAsync(message, CancellationToken.None);
+            await ExecuteRequest(message, httpPipeline);
 
             Assert.AreEqual(message.Response.Status, 201);
             Assert.AreEqual(2, i);
@@ -214,7 +231,7 @@ namespace Azure.Core.Tests
         {
             var testDoneTcs = new CancellationTokenSource();
             int i = 0;
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using TestServer testServer = new TestServer(
@@ -230,14 +247,14 @@ namespace Azure.Core.Tests
             message.Request.Uri.Reset(testServer.Address);
             message.BufferResponse = false;
 
-            var task = httpPipeline.SendAsync(message, cts.Token);
+            var task = Task.Run(() => ExecuteRequest(message, httpPipeline, cts.Token));
 
             // Wait for server to receive a request
             await tcs.Task;
 
             cts.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await task);
             Assert.AreEqual(1, i);
 
             testDoneTcs.Cancel();
@@ -279,7 +296,7 @@ namespace Azure.Core.Tests
             message.Request.Uri.Reset(testServer.Address);
             message.BufferResponse = true;
 
-            await httpPipeline.SendAsync(message, CancellationToken.None);
+            await ExecuteRequest(message, httpPipeline);
 
             Assert.AreEqual(message.Response.Status, 201);
             Assert.AreEqual("Hello world!", await new StreamReader(message.Response.ContentStream).ReadToEndAsync());
@@ -316,7 +333,8 @@ namespace Azure.Core.Tests
             using HttpMessage message = httpPipeline.CreateMessage();
             message.Request.Uri.Reset(testServer.Address);
             message.BufferResponse = false;
-            await httpPipeline.SendAsync(message, CancellationToken.None);
+
+            await ExecuteRequest(message, httpPipeline);
 
             Assert.AreEqual(message.Response.Status, 200);
             var responseContentStream = message.Response.ContentStream;
@@ -332,7 +350,7 @@ namespace Azure.Core.Tests
         {
             IFormCollection formCollection = null;
 
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
             using TestServer testServer = new TestServer(
                 context =>
                 {
@@ -357,7 +375,7 @@ namespace Azure.Core.Tests
 
             request.Content = content;
 
-            using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
+            using Response response = await ExecuteRequest(request, httpPipeline);
             Assert.AreEqual(response.Status, 200);
             Assert.AreEqual(formCollection.Files.Count, 2);
 

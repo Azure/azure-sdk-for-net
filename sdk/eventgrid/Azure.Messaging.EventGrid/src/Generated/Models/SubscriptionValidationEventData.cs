@@ -15,15 +15,6 @@ namespace Azure.Messaging.EventGrid.Models
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionValidationEventData. </summary>
-        /// <param name="validationCode"> The validation code sent by Azure Event Grid to validate an event subscription. To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
-        /// <param name="validationUrl"> The validation URL sent by Azure Event Grid (available starting version 2018-05-01-preview). To complete the validation handshake, the subscriber must either respond with the validationCode as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
-        internal SubscriptionValidationEventData(string validationCode, string validationUrl)
-        {
-            ValidationCode = validationCode;
-            ValidationUrl = validationUrl;
-        }
-
         /// <summary> The validation code sent by Azure Event Grid to validate an event subscription. To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </summary>
         public string ValidationCode { get; }
         /// <summary> The validation URL sent by Azure Event Grid (available starting version 2018-05-01-preview). To complete the validation handshake, the subscriber must either respond with the validationCode as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </summary>

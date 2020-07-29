@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of RerunTriggerResource. </summary>
         /// <param name="properties"> Properties of the rerun trigger. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RerunTriggerResource(RerunTumblingWindowTrigger properties)
         {
             if (properties == null)

@@ -803,7 +803,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(form.Fields);
             var name = "PurchaseOrderNumber";
             Assert.IsNotNull(form.Fields[name]);
-            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.Type);
+            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.ValueType);
             Assert.AreEqual("948284", form.Fields[name].ValueData.Text);
         }
 
@@ -1020,7 +1020,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "field-0";
             Assert.IsNotNull(form.Fields[name]);
             Assert.IsNotNull(form.Fields[name].LabelData.Text);
-            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.Type);
+            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.ValueType);
             Assert.AreEqual("Hero Limited", form.Fields[name].LabelData.Text);
         }
 

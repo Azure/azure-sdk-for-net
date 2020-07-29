@@ -113,7 +113,6 @@ namespace Azure.Storage.Blobs
             remainingBytes = 0;
 
             // We've caught up to the end of the _avroStream, but it isn't necessarly the end of the stream.
-            // TODO what to do in this case?  If we return 0, we are indicating the end of stream
             if (!_avroReader.HasNext())
             {
                 return 0;
@@ -130,6 +129,12 @@ namespace Azure.Storage.Blobs
                     // Data Record
                     case Constants.QuickQuery.DataRecordName:
                         record.TryGetValue(Constants.QuickQuery.Data, out object byteObject);
+
+                        if (byteObject == null)
+                        {
+                            throw new InvalidOperationException($"Avro data record is missing {Constants.QuickQuery.Data} property");
+                        }
+
                         byte[] bytes = (byte[])byteObject;
 
                         // Return the buffer if it is not null and not big enough.
@@ -162,6 +167,12 @@ namespace Azure.Storage.Blobs
                         if (_progressHandler != default)
                         {
                             record.TryGetValue(Constants.QuickQuery.BytesScanned, out object progress);
+
+                            if (progress == null)
+                            {
+                                throw new InvalidOperationException($"Avro progress record is mssing {Constants.QuickQuery.BytesScanned} property");
+                            }
+
                             _progressHandler.Report((long)progress);
                         }
                         break;
@@ -176,6 +187,12 @@ namespace Azure.Storage.Blobs
                         if (_progressHandler != default)
                         {
                             record.TryGetValue(Constants.QuickQuery.TotalBytes, out object progress);
+
+                            if (progress == null)
+                            {
+                                throw new InvalidOperationException($"Avro end record is missing {Constants.QuickQuery.TotalBytes} property");
+                            }
+
                             _progressHandler.Report((long)progress);
                         }
                         return 0;
@@ -225,6 +242,26 @@ namespace Azure.Storage.Blobs
             record.TryGetValue(Constants.QuickQuery.Description, out object description);
             record.TryGetValue(Constants.QuickQuery.Position, out object position);
 
+            if (fatal == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(fatal)} property");
+            }
+
+            if (name == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(name)} property");
+            }
+
+            if (description == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(description)} property");
+            }
+
+            if (position == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(position)} property");
+            }
+
             if (_errorHandler != null)
             {
                 BlobQueryError blobQueryError = new BlobQueryError
@@ -272,6 +309,13 @@ namespace Azure.Storage.Blobs
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            // Return the buffer to the pool if we're called from Dispose or a finalizer
+            if (_buffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                _buffer = null;
+            }
+
             _avroStream.Dispose();
             if (_buffer != null)
             {

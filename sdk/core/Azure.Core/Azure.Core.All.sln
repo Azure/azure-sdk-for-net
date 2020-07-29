@@ -195,6 +195,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Adm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Experimental.Performance", "..\Azure.Core.Experimental\tests\perf\Azure.Core.Experimental.Performance.csproj", "{83FE5FDD-D0B7-49B6-9498-6591A3A34CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Internal.Avro", "..\..\storage\Azure.Storage.Internal.Avro\src\Azure.Storage.Internal.Avro.csproj", "{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.ChangeFeed", "..\..\storage\Azure.Storage.Blobs.ChangeFeed\src\Azure.Storage.Blobs.ChangeFeed.csproj", "{70FE7A7E-83FF-409F-8E68-916DA106C16B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{359ffa3a-4f5d-411c-8978-28e58f50eea3}*SharedItemsImports = 5
@@ -1365,6 +1369,30 @@ Global
 		{83FE5FDD-D0B7-49B6-9498-6591A3A34CAD}.Release|x64.Build.0 = Release|Any CPU
 		{83FE5FDD-D0B7-49B6-9498-6591A3A34CAD}.Release|x86.ActiveCfg = Release|Any CPU
 		{83FE5FDD-D0B7-49B6-9498-6591A3A34CAD}.Release|x86.Build.0 = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|x64.Build.0 = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Debug|x86.Build.0 = Debug|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|x64.ActiveCfg = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|x64.Build.0 = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|x86.ActiveCfg = Release|Any CPU
+		{C046B0E0-D304-4D3D-9FFE-ABD3C4057CDA}.Release|x86.Build.0 = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|x64.Build.0 = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Debug|x86.Build.0 = Debug|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|x64.ActiveCfg = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|x64.Build.0 = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|x86.ActiveCfg = Release|Any CPU
+		{70FE7A7E-83FF-409F-8E68-916DA106C16B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

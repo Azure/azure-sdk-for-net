@@ -21,6 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
         /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="cells"/> is null. </exception>
         public Notebook(NotebookMetadata metadata, int nbformat, int nbformatMinor, IEnumerable<NotebookCell> cells)
         {
             if (metadata == null)

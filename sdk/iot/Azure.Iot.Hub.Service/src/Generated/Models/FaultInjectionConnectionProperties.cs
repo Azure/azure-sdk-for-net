@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of FaultInjectionConnectionProperties. </summary>
-        /// <param name="action"> . </param>
+        /// <param name="action"> The action to perform. </param>
         /// <param name="blockDurationInMinutes"> . </param>
         internal FaultInjectionConnectionProperties(FaultInjectionConnectionPropertiesAction? action, int? blockDurationInMinutes)
         {
@@ -24,6 +24,7 @@ namespace Azure.Iot.Hub.Service.Models
             BlockDurationInMinutes = blockDurationInMinutes;
         }
 
+        /// <summary> The action to perform. </summary>
         public FaultInjectionConnectionPropertiesAction? Action { get; set; }
         public int? BlockDurationInMinutes { get; set; }
     }

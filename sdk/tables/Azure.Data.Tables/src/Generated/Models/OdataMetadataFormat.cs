@@ -16,6 +16,7 @@ namespace Azure.Data.Tables.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="OdataMetadataFormat"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OdataMetadataFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
