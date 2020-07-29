@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cellType"/>, <paramref name="metadata"/>, or <paramref name="source"/> is null. </exception>
         public NotebookCell(string cellType, object metadata, IEnumerable<string> source)
         {
             if (cellType == null)
@@ -36,8 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             CellType = cellType;
             Metadata = metadata;
-            Source = source.ToArray();
-            AdditionalProperties = new Dictionary<string, object>();
+            Source = source.ToList();
+            Outputs = new ChangeTrackingList<NotebookCellOutputItem>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookCell. </summary>
@@ -54,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Source = source;
             Attachments = attachments;
             Outputs = outputs;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> String identifying the type of cell. </summary>
@@ -62,11 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Cell-level metadata. </summary>
         public object Metadata { get; set; }
         /// <summary> Contents of the cell, represented as an array of lines. </summary>
-        public IList<string> Source { get; set; }
+        public IList<string> Source { get; }
         /// <summary> Attachments associated with the cell. </summary>
         public object Attachments { get; set; }
         /// <summary> Cell-level output items. </summary>
-        public IList<NotebookCellOutputItem> Outputs { get; set; }
+        public IList<NotebookCellOutputItem> Outputs { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

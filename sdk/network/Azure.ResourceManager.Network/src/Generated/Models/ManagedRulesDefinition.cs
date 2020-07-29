@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(managedRuleSets));
             }
 
-            ManagedRuleSets = managedRuleSets.ToArray();
+            ManagedRuleSets = managedRuleSets.ToList();
         }
 
         /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Network.Models
         internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets)
         {
             Exclusions = exclusions;
-            ManagedRuleSets = managedRuleSets;
+            ManagedRuleSets = managedRuleSets ?? new List<ManagedRuleSet>();
         }
 
         /// <summary> The Exclusions that are applied on the policy. </summary>
         public IList<OwaspCrsExclusionEntry> Exclusions { get; set; }
         /// <summary> The managed rule sets that are associated with the policy. </summary>
-        public IList<ManagedRuleSet> ManagedRuleSets { get; set; }
+        public IList<ManagedRuleSet> ManagedRuleSets { get; }
     }
 }

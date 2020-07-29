@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
         internal DiskList(IReadOnlyList<Disk> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<Disk>();
             NextLink = nextLink;
         }
 

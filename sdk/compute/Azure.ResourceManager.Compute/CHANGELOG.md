@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+
+
 ## 1.0.0-preview.1
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
@@ -160,10 +163,10 @@ using Azure.ResourceManager.Network.Models;
 var computeClient = new ComputeManagementClient(subscriptionId, new DefaultAzureCredential());
 var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
 
-var availabilitySetsClient = computeClient.GetAvailabilitySetsClient();
-var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
-var networkInterfaceClient = networkClient.GetNetworkInterfacesClient();
-var virtualMachinesClient = computeClient.GetVirtualMachinesClient();
+var availabilitySetsClient = computeClient.AvailabilitySets;
+var virtualNetworksClient = networkClient.VirtualNetworks;
+var networkInterfaceClient = networkClient.NetworkInterfaces;
+var virtualMachinesClient = computeClient.VirtualMachines;
 
 var location = "westus";
 // Create AvailabilitySet

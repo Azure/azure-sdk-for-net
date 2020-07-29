@@ -53,6 +53,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// cannot be changed once VM is provisioned.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
         /// the virtual machine.</param>
+        /// <param name="securityProfile">Specifies the Security related
+        /// profile settings for the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
         /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2015-06-15.</param>
@@ -91,9 +93,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
         /// Azure Spot virtual machine and Azure Spot scale set.
-        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
-        /// supported value is 'Deallocate' and the minimum api-version is
-        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
+        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
         /// 'Deallocate' and 'Delete' are supported and the minimum api-version
         /// is 2017-10-30-preview. Possible values include: 'Deallocate',
         /// 'Delete'</param>
@@ -103,6 +105,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="host">Specifies information about the dedicated host
         /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2018-10-01.</param>
+        /// <param name="hostGroup">Specifies information about the dedicated
+        /// host group that the virtual machine resides in.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01.
+        /// &lt;br&gt;&lt;br&gt;NOTE: User cannot specify both host and
+        /// hostGroup properties.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine instance
@@ -121,10 +128,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vmId">Specifies the VM unique ID which is a 128-bits
         /// identifier that is encoded and stored in all Azure IaaS VMs SMBIOS
         /// and can be read using platform BIOS commands.</param>
+        /// <param name="extensionsTimeBudget">Specifies the time alloted for
+        /// all extensions to start. The time duration should be between 15
+        /// minutes and 120 minutes (inclusive) and should be specified in ISO
+        /// 8601 format. The default value is 90 minutes (PT1H30M).
+        /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -133,6 +145,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             VirtualMachineScaleSet = virtualMachineScaleSet;
@@ -141,10 +154,12 @@ namespace Microsoft.Azure.Management.Compute.Models
             EvictionPolicy = evictionPolicy;
             BillingProfile = billingProfile;
             Host = host;
+            HostGroup = hostGroup;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             LicenseType = licenseType;
             VmId = vmId;
+            ExtensionsTimeBudget = extensionsTimeBudget;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -202,6 +217,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Security related profile settings for
+        /// the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the boot diagnostic settings state.
@@ -268,11 +290,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the eviction policy for the Azure Spot
         /// virtual machine and Azure Spot scale set.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
-        /// machines, the only supported value is 'Deallocate' and the minimum
-        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
-        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
-        /// and the minimum api-version is 2017-10-30-preview. Possible values
-        /// include: 'Deallocate', 'Delete'
+        /// machines, both 'Deallocate' and 'Delete' are supported and the
+        /// minimum api-version is 2019-03-01.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
@@ -293,6 +316,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.host")]
         public SubResource Host { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the dedicated host group
+        /// that the virtual machine resides in.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2020-06-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;NOTE: User cannot
+        /// specify both host and hostGroup properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostGroup")]
+        public SubResource HostGroup { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
@@ -331,6 +364,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmId")]
         public string VmId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the time alloted for all extensions to
+        /// start. The time duration should be between 15 minutes and 120
+        /// minutes (inclusive) and should be specified in ISO 8601 format. The
+        /// default value is 90 minutes (PT1H30M).
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
+        /// 2020-06-01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extensionsTimeBudget")]
+        public string ExtensionsTimeBudget { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine, if configured.

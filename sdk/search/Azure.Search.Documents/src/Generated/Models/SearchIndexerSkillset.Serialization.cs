@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,27 +18,24 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Skills != null && Skills.Any())
+            writer.WritePropertyName("skills");
+            writer.WriteStartArray();
+            foreach (var item in Skills)
             {
-                writer.WritePropertyName("skills");
-                writer.WriteStartArray();
-                foreach (var item in Skills)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
-            if (CognitiveServicesAccount != null)
+            writer.WriteEndArray();
+            if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices");
                 writer.WriteObjectValue(CognitiveServicesAccount);
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
                 writer.WriteStringValue(_etag);
@@ -50,10 +46,10 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element)
         {
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
-            CognitiveServicesAccount cognitiveServices = default;
-            string odataEtag = default;
+            Optional<CognitiveServicesAccount> cognitiveServices = default;
+            Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -63,54 +59,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skills"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchIndexerSkill.DeserializeSearchIndexerSkill(item));
-                        }
+                        array.Add(SearchIndexerSkill.DeserializeSearchIndexerSkill(item));
                     }
                     skills = array;
                     continue;
                 }
                 if (property.NameEquals("cognitiveServices"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndexerSkillset(name, description, skills, cognitiveServices, odataEtag);
+            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, odataEtag.Value);
         }
     }
 }

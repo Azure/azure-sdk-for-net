@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of gallery Image Versions. Call ListNext() with this to fetch the next page of gallery Image Versions. </param>
         internal GalleryImageVersionList(IReadOnlyList<GalleryImageVersion> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<GalleryImageVersion>();
             NextLink = nextLink;
         }
 

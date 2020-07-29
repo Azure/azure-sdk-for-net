@@ -408,6 +408,68 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get artifact content from blob storage, based on artifact relative path in
+            /// the blob.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='path'>
+            /// The relative path for artifact.
+            /// </param>
+            public static Stream GetArtifact(this ICustomVisionTrainingClient operations, System.Guid projectId, string path)
+            {
+                return operations.GetArtifactAsync(projectId, path).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get artifact content from blob storage, based on artifact relative path in
+            /// the blob.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='path'>
+            /// The relative path for artifact.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> GetArtifactAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, string path, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.GetArtifactWithHttpMessagesAsync(projectId, path, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Get artifact content from blob storage, based on artifact relative path in
+            /// the blob.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='path'>
+            /// The relative path for artifact.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Stream> GetArtifactWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, string path, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetArtifactWithHttpMessagesAsync(projectId, path, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Exports a project.
             /// </summary>
             /// <param name='operations'>
@@ -459,12 +521,177 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get images for a given project iteration or workspace.
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0.
+            /// </param>
+            public static IList<Image> GetImages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string taggingStatus = default(string), string filter = default(string), string orderBy = default(string), int? take = 50, int? skip = 0)
+            {
+                return operations.GetImagesAsync(projectId, iterationId, tagIds, taggingStatus, filter, orderBy, take, skip).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get images for a given project iteration or workspace.
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<Image>> GetImagesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string taggingStatus = default(string), string filter = default(string), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, taggingStatus, filter, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get images for a given project iteration or workspace.
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Image>> GetImagesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string taggingStatus = default(string), string filter = default(string), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, taggingStatus, filter, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided images to the set of training images.
             /// </summary>
             /// <remarks>
             /// This API accepts body content as multipart/form-data and
             /// application/octet-stream. When using multipart
-            /// multiple image files can be sent at once, with a maximum of 64 files
+            /// multiple image files can be sent at once, with a maximum of 64 files.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -490,7 +717,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts body content as multipart/form-data and
             /// application/octet-stream. When using multipart
-            /// multiple image files can be sent at once, with a maximum of 64 files
+            /// multiple image files can be sent at once, with a maximum of 64 files.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -522,7 +752,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts body content as multipart/form-data and
             /// application/octet-stream. When using multipart
-            /// multiple image files can be sent at once, with a maximum of 64 files
+            /// multiple image files can be sent at once, with a maximum of 64 files.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -708,11 +941,134 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get the number of images.
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            public static int? GetImageCount(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string taggingStatus = default(string), string filter = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>))
+            {
+                return operations.GetImageCountAsync(projectId, iterationId, taggingStatus, filter, tagIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the number of images.
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<int?> GetImageCountAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string taggingStatus = default(string), string filter = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImageCountWithHttpMessagesAsync(projectId, iterationId, taggingStatus, filter, tagIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the number of images.
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace.
+            /// </param>
+            /// <param name='taggingStatus'>
+            /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+            /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+            /// </param>
+            /// <param name='filter'>
+            /// An expression to filter the images against image metadata. Only images
+            /// where the expression evaluates to true are included in the response.
+            /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+            /// (Logical or) operators.
+            /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<int?> GetImageCountWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string taggingStatus = default(string), string filter = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImageCountWithHttpMessagesAsync(projectId, iterationId, taggingStatus, filter, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided batch of images to the set of training images.
             /// </summary>
             /// <remarks>
             /// This API accepts a batch of files, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -735,6 +1091,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts a batch of files, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -763,6 +1122,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts a batch of files, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -867,11 +1229,101 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Update metadata of images.
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image Ids, and metadata, to update images.
+            /// There is a limit of 64 images.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to update. Limited to 64.
+            /// </param>
+            /// <param name='metadata'>
+            /// The metadata to be updated to the specified images. Limited to 50 key-value
+            /// pairs per image. The length of key is limited to 256. The length of value
+            /// is limited to 512.
+            /// </param>
+            public static ImageMetadataUpdateSummary UpdateImageMetadata(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IDictionary<string, string> metadata)
+            {
+                return operations.UpdateImageMetadataAsync(projectId, imageIds, metadata).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update metadata of images.
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image Ids, and metadata, to update images.
+            /// There is a limit of 64 images.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to update. Limited to 64.
+            /// </param>
+            /// <param name='metadata'>
+            /// The metadata to be updated to the specified images. Limited to 50 key-value
+            /// pairs per image. The length of key is limited to 256. The length of value
+            /// is limited to 512.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImageMetadataUpdateSummary> UpdateImageMetadataAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IDictionary<string, string> metadata, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateImageMetadataWithHttpMessagesAsync(projectId, imageIds, metadata, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update metadata of images.
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image Ids, and metadata, to update images.
+            /// There is a limit of 64 images.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to update. Limited to 64.
+            /// </param>
+            /// <param name='metadata'>
+            /// The metadata to be updated to the specified images. Limited to 50 key-value
+            /// pairs per image. The length of key is limited to 256. The length of value
+            /// is limited to 512.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageMetadataUpdateSummary> UpdateImageMetadataWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IDictionary<string, string> metadata, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UpdateImageMetadataWithHttpMessagesAsync(projectId, imageIds, metadata, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the specified predicted images to the set of training images.
             /// </summary>
             /// <remarks>
             /// This API creates a batch of images from predicted images specified. There
             /// is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -880,7 +1332,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image, tag ids, and metadata. Limited to 64 images and 20 tags per batch.
             /// </param>
             public static ImageCreateSummary CreateImagesFromPredictions(this ICustomVisionTrainingClient operations, System.Guid projectId, ImageIdCreateBatch batch)
             {
@@ -893,6 +1345,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API creates a batch of images from predicted images specified. There
             /// is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -901,7 +1356,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image, tag ids, and metadata. Limited to 64 images and 20 tags per batch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -920,6 +1375,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API creates a batch of images from predicted images specified. There
             /// is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -928,7 +1386,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image, tag ids, and metadata. Limited to 64 images and 20 tags per batch.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -945,6 +1403,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// This API accepts a batch of image regions, and optionally tags, to update
             /// existing images with region information.
             /// There is a limit of 64 entries in the batch.
+            /// If all regions are successful created, 200(OK) status code will be
+            /// returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each region will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -967,6 +1429,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// This API accepts a batch of image regions, and optionally tags, to update
             /// existing images with region information.
             /// There is a limit of 64 entries in the batch.
+            /// If all regions are successful created, 200(OK) status code will be
+            /// returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each region will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -995,6 +1461,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// This API accepts a batch of image regions, and optionally tags, to update
             /// existing images with region information.
             /// There is a limit of 64 entries in the batch.
+            /// If all regions are successful created, 200(OK) status code will be
+            /// returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each region will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1772,6 +2242,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts a batch of urls, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1780,7 +2253,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image urls and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image urls, tag ids, and metadata. Limited to 64 images and 20 tags per
+            /// batch.
             /// </param>
             public static ImageCreateSummary CreateImagesFromUrls(this ICustomVisionTrainingClient operations, System.Guid projectId, ImageUrlCreateBatch batch)
             {
@@ -1793,6 +2267,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts a batch of urls, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1801,7 +2278,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image urls and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image urls, tag ids, and metadata. Limited to 64 images and 20 tags per
+            /// batch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1820,6 +2298,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <remarks>
             /// This API accepts a batch of urls, and optionally tags, to create images.
             /// There is a limit of 64 images and 20 tags.
+            /// If all images are successful created, 200(OK) status code will be returned.
+            /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+            /// status for each image will be listed in the response payload.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1828,7 +2309,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image urls and tag ids. Limited to 64 images and 20 tags per batch.
+            /// Image urls, tag ids, and metadata. Limited to 64 images and 20 tags per
+            /// batch.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -2540,9 +3022,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='predictionId'>
             /// The id of the prediction resource to publish to.
             /// </param>
-            public static bool? PublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId)
+            /// <param name='overwrite'>
+            /// Whether to overwrite the published model with the given name (default:
+            /// false).
+            /// </param>
+            public static bool? PublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, bool? overwrite = default(bool?))
             {
-                return operations.PublishIterationAsync(projectId, iterationId, publishName, predictionId).GetAwaiter().GetResult();
+                return operations.PublishIterationAsync(projectId, iterationId, publishName, predictionId, overwrite).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2563,12 +3049,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='predictionId'>
             /// The id of the prediction resource to publish to.
             /// </param>
+            /// <param name='overwrite'>
+            /// Whether to overwrite the published model with the given name (default:
+            /// false).
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool?> PublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool?> PublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, bool? overwrite = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, overwrite, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2592,12 +3082,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='predictionId'>
             /// The id of the prediction resource to publish to.
             /// </param>
+            /// <param name='overwrite'>
+            /// Whether to overwrite the published model with the given name (default:
+            /// false).
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<bool?> PublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<bool?> PublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, overwrite, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3021,7 +3515,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Optional description for the tag.
             /// </param>
             /// <param name='type'>
-            /// Optional type for the tag. Possible values include: 'Regular', 'Negative'
+            /// Optional type for the tag. Possible values include: 'Regular', 'Negative',
+            /// 'GeneralProduct'
             /// </param>
             public static Tag CreateTag(this ICustomVisionTrainingClient operations, System.Guid projectId, string name, string description = default(string), string type = default(string))
             {
@@ -3044,7 +3539,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Optional description for the tag.
             /// </param>
             /// <param name='type'>
-            /// Optional type for the tag. Possible values include: 'Regular', 'Negative'
+            /// Optional type for the tag. Possible values include: 'Regular', 'Negative',
+            /// 'GeneralProduct'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -3073,7 +3569,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Optional description for the tag.
             /// </param>
             /// <param name='type'>
-            /// Optional type for the tag. Possible values include: 'Regular', 'Negative'
+            /// Optional type for the tag. Possible values include: 'Regular', 'Negative',
+            /// 'GeneralProduct'
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -3491,9 +3988,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='token'>
             /// Token generated from the export project call.
             /// </param>
-            public static Project ImportProject(this ICustomVisionTrainingClient operations, string token)
+            /// <param name='name'>
+            /// Optional, name of the project to use instead of auto-generated name.
+            /// </param>
+            public static Project ImportProject(this ICustomVisionTrainingClient operations, string token, string name = default(string))
             {
-                return operations.ImportProjectAsync(token).GetAwaiter().GetResult();
+                return operations.ImportProjectAsync(token, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3505,12 +4005,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='token'>
             /// Token generated from the export project call.
             /// </param>
+            /// <param name='name'>
+            /// Optional, name of the project to use instead of auto-generated name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Project> ImportProjectAsync(this ICustomVisionTrainingClient operations, string token, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Project> ImportProjectAsync(this ICustomVisionTrainingClient operations, string token, string name = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ImportProjectWithHttpMessagesAsync(token, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ImportProjectWithHttpMessagesAsync(token, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3525,12 +4028,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='token'>
             /// Token generated from the export project call.
             /// </param>
+            /// <param name='name'>
+            /// Optional, name of the project to use instead of auto-generated name.
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<Project> ImportProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string token, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<Project> ImportProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string token, string name = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.ImportProjectWithHttpMessagesAsync(token, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.ImportProjectWithHttpMessagesAsync(token, name, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

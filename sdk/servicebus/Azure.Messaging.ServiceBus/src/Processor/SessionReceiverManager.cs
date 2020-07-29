@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -28,6 +29,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
+        private readonly int _maxCallsPerSession;
         private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
         private ServiceBusSessionReceiver _receiver;
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
@@ -48,14 +50,17 @@ namespace Azure.Messaging.ServiceBus
             Func<ProcessSessionMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            IList<ServiceBusPlugin> plugins,
+            int maxCallsPerSession)
             : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
-                  scopeFactory)
+                  scopeFactory, plugins)
         {
             _sessionInitHandler = sessionInitHandler;
             _sessionCloseHandler = sessionCloseHandler;
             _messageHandler = messageHandler;
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
+            _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
                 ReceiveMode = _processorOptions.ReceiveMode,
@@ -64,19 +69,23 @@ namespace Azure.Messaging.ServiceBus
             };
         }
 
-        private async Task EnsureReceiverCreated(CancellationToken cancellationToken)
+        private async Task<bool> EnsureCanProcess(CancellationToken cancellationToken)
         {
             bool releaseSemaphore = false;
             try
             {
                 await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
-                _threadCount++;
-                if (_receiver != null)
+                if (_threadCount >= _maxCallsPerSession)
                 {
-                    return;
+                    return false;
                 }
-                await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
+                _threadCount++;
+                if (_receiver == null)
+                {
+                    await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
+                }
+                return true;
             }
             finally
             {
@@ -104,11 +113,7 @@ namespace Azure.Messaging.ServiceBus
         private async Task CreateAndInitializeSessionReceiver(
             CancellationToken cancellationToken)
         {
-            _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                entityPath: _entityPath,
-                connection: _connection,
-                options: _sessionReceiverOptions,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            await CreateReceiver(cancellationToken).ConfigureAwait(false);
 
             if (AutoRenewLock)
             {
@@ -119,6 +124,36 @@ namespace Azure.Messaging.ServiceBus
             {
                 var args = new ProcessSessionEventArgs(_receiver, cancellationToken);
                 await _sessionInitHandler(args).ConfigureAwait(false);
+            }
+        }
+
+        private async Task CreateReceiver(CancellationToken cancellationToken)
+        {
+            bool releaseSemaphore = false;
+            try
+            {
+                await _concurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                // only attempt to release semaphore if WaitAsync is successful,
+                // otherwise SemaphoreFullException can occur.
+                releaseSemaphore = true;
+                _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                    entityPath: _entityPath,
+                    connection: _connection,
+                    plugins: _plugins,
+                    options: _sessionReceiverOptions,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // propagate as TCE so it will be handled by the outer catch block
+                throw new TaskCanceledException();
+            }
+            finally
+            {
+                if (releaseSemaphore)
+                {
+                    _concurrentAcceptSessionsSemaphore.Release();
+                }
             }
         }
 
@@ -185,54 +220,33 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task ReceiveAndProcessMessagesAsync(
-            CancellationToken cancellationToken)
+        public override async Task ReceiveAndProcessMessagesAsync(CancellationToken cancellationToken)
         {
-            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptMessageSession;
+            bool canProcess = false;
             try
             {
-                errorSource = ServiceBusErrorSource.AcceptMessageSession;
-                bool releaseSemaphore = false;
                 try
                 {
-                    try
+                    canProcess = await EnsureCanProcess(cancellationToken).ConfigureAwait(false);
+                    if (!canProcess)
                     {
-                        await _concurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                        // only attempt to release semaphore if WaitAsync is successful,
-                        // otherwise SemaphoreFullException can occur.
-                        releaseSemaphore = true;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // propagate as TCE so it will be handled by the outer catch block
-                        throw new TaskCanceledException();
-                    }
-                    try
-                    {
-                        await EnsureReceiverCreated(cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (ServiceBusException ex)
-                    when (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
-                    {
-                        // these exceptions are expected when no messages are available
-                        // so simply return and allow this to be tried again on next thread
                         return;
                     }
                 }
-                finally
+                catch (ServiceBusException ex)
+                when (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
                 {
-                    if (releaseSemaphore)
-                    {
-                        _concurrentAcceptSessionsSemaphore.Release();
-                    }
+                    // these exceptions are expected when no messages are available
+                    // so simply return and allow this to be tried again on next thread
+                    return;
                 }
 
                 // loop within the context of this thread
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await _receiver.ReceiveAsync(
+                    ServiceBusReceivedMessage message = await _receiver.ReceiveMessageAsync(
                         _maxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
@@ -263,7 +277,10 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                await CloseReceiverIfNeeded(cancellationToken).ConfigureAwait(false);
+                if (canProcess)
+                {
+                    await CloseReceiverIfNeeded(cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 

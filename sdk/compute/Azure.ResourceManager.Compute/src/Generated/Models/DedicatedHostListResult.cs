@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of dedicated hosts. Call ListNext() with this URI to fetch the next page of dedicated hosts. </param>
         internal DedicatedHostListResult(IReadOnlyList<DedicatedHost> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<DedicatedHost>();
             NextLink = nextLink;
         }
 

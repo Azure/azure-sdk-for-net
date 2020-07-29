@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </param>
         internal GalleryApplicationList(IReadOnlyList<GalleryApplication> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<GalleryApplication>();
             NextLink = nextLink;
         }
 

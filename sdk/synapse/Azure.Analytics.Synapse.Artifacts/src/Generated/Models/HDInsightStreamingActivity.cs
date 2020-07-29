@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,6 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/>, or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, object mapper, object reducer, object input, object output, IEnumerable<object> filePaths) : base(name)
         {
             if (name == null)
@@ -48,11 +50,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(filePaths));
             }
 
+            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            Arguments = new ChangeTrackingList<object>();
             Mapper = mapper;
             Reducer = reducer;
             Input = input;
             Output = output;
-            FilePaths = filePaths.ToArray();
+            FilePaths = filePaths.ToList();
+            CommandEnvironment = new ChangeTrackingList<object>();
+            Defines = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightStreaming";
         }
 
@@ -95,9 +101,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; set; }
+        public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>
-        public IList<object> Arguments { get; set; }
+        public IList<object> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
@@ -109,14 +115,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
         public object Output { get; set; }
         /// <summary> Paths to streaming job files. Can be directories. </summary>
-        public IList<object> FilePaths { get; set; }
+        public IList<object> FilePaths { get; }
         /// <summary> Linked service reference where the files are located. </summary>
         public LinkedServiceReference FileLinkedService { get; set; }
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
         public object Combiner { get; set; }
         /// <summary> Command line environment values. </summary>
-        public IList<object> CommandEnvironment { get; set; }
+        public IList<object> CommandEnvironment { get; }
         /// <summary> Allows user to specify defines for streaming job request. </summary>
-        public IDictionary<string, object> Defines { get; set; }
+        public IDictionary<string, object> Defines { get; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of VaultAccessPolicyProperties. </summary>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public VaultAccessPolicyProperties(IEnumerable<AccessPolicyEntry> accessPolicies)
         {
             if (accessPolicies == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new ArgumentNullException(nameof(accessPolicies));
             }
 
-            AccessPolicies = accessPolicies.ToArray();
+            AccessPolicies = accessPolicies.ToList();
         }
 
         /// <summary> Initializes a new instance of VaultAccessPolicyProperties. </summary>
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
-        public IList<AccessPolicyEntry> AccessPolicies { get; set; }
+        public IList<AccessPolicyEntry> AccessPolicies { get; }
     }
 }

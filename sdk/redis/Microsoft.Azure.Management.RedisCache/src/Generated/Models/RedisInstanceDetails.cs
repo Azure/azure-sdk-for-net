@@ -36,12 +36,15 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// availability zone where this instance is located.</param>
         /// <param name="shardId">If clustering is enabled, the Shard ID of
         /// Redis Instance</param>
-        public RedisInstanceDetails(int? sslPort = default(int?), int? nonSslPort = default(int?), string zone = default(string), int? shardId = default(int?))
+        /// <param name="isMaster">Specifies whether the instance is a master
+        /// node.</param>
+        public RedisInstanceDetails(int? sslPort = default(int?), int? nonSslPort = default(int?), string zone = default(string), int? shardId = default(int?), bool? isMaster = default(bool?))
         {
             SslPort = sslPort;
             NonSslPort = nonSslPort;
             Zone = zone;
             ShardId = shardId;
+            IsMaster = isMaster;
             CustomInit();
         }
 
@@ -75,6 +78,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "shardId")]
         public int? ShardId { get; private set; }
+
+        /// <summary>
+        /// Gets specifies whether the instance is a master node.
+        /// </summary>
+        [JsonProperty(PropertyName = "isMaster")]
+        public bool? IsMaster { get; private set; }
 
     }
 }

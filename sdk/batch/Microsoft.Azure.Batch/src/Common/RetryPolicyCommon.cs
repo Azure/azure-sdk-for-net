@@ -36,12 +36,12 @@
                 }
                 else
                 {
-                    //Note that we use a blacklist here in order to have the most robust retry policy --
+                    //Note that we use a disallow list here in order to have the most robust retry policy --
                     //attempting to guess all the possible exception types thrown by the network stack to craft a
                     //white list is error prone and so we avoid it.
                     if (exception is Microsoft.Rest.ValidationException)
                     {
-                        //TODO: Consider blacklisting SystemException, but SystemException includes TimeoutException which it seems we probably want to retry on
+                        //TODO: Consider adding SystemException to disallow list, but SystemException includes TimeoutException which it seems we probably want to retry on
                         shouldRetry = false;
                     }
                     else

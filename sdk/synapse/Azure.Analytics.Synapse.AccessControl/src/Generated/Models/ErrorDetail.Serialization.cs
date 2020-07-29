@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         {
             string code = default;
             string message = default;
-            string target = default;
+            Optional<string> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -31,15 +31,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target);
+            return new ErrorDetail(code, message, target.Value);
         }
     }
 }

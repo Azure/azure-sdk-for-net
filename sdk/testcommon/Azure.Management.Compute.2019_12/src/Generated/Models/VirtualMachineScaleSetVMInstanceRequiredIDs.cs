@@ -23,14 +23,14 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(instanceIds));
             }
 
-            InstanceIds = instanceIds.ToArray();
+            InstanceIds = instanceIds.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceRequiredIDs. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
         internal VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
         {
-            InstanceIds = instanceIds;
+            InstanceIds = instanceIds ?? new List<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. </summary>

@@ -20,6 +20,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="pageCount"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documentName"/> or <paramref name="errors"/> is null. </exception>
         internal TrainingDocumentInfo(string documentName, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
         {
             if (documentName == null)
@@ -33,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             DocumentName = documentName;
             PageCount = pageCount;
-            Errors = errors.ToArray();
+            Errors = errors.ToList();
             Status = status;
         }
 

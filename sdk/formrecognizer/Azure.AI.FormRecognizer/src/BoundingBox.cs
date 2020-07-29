@@ -18,16 +18,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
-            // TODO: improve perf here?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10358
-            float[] bbPoints = boundingBox.ToArray();
+            if (boundingBox.Count == 0)
+            {
+                Points = null;
+                return;
+            }
 
-            int count = bbPoints.Length / 2;
+            int count = boundingBox.Count / 2;
 
             Points = new PointF[count];
             for (int i = 0; i < count; i++)
             {
-                Points[i] = new PointF(bbPoints[2 * i], bbPoints[(2 * i) + 1]);
+                Points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
             }
         }
 
@@ -43,5 +45,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="index">The 0-based index of the point to be retrieved.</param>
         /// <returns>A <see cref="PointF"/> corresponding to the specified <paramref name="index"/>.</returns>
         public PointF this[int index] => Points[index];
+
+        /// <summary>
+        /// Returns string representation for <see cref="BoundingBox"/>.
+        /// </summary>
+        public override string ToString() => string.Join(",", Points.Select(p => p.ToString()).ToArray());
     }
 }

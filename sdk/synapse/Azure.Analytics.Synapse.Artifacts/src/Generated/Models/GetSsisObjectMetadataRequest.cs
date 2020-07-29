@@ -15,14 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataRequest. </summary>
-        /// <param name="metadataPath"> Metadata path. </param>
-        internal GetSsisObjectMetadataRequest(string metadataPath)
-        {
-            MetadataPath = metadataPath;
-        }
-
         /// <summary> Metadata path. </summary>
-        public string MetadataPath { get; set; }
+        public string MetadataPath { get; }
     }
 }

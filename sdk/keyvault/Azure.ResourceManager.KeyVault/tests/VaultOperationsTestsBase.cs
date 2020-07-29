@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultProperties VaultProperties { get; internal set; }
 
 
-        public VaultsClient VaultsClient { get; set; }
-        public ResourcesClient ResourcesClient { get; set; }
-        public ResourceGroupsClient ResourceGroupsClient { get; set; }
-        public ProvidersClient ResourceProvidersClient { get; set; }
+        public VaultsOperations VaultsClient { get; set; }
+        public ResourcesOperations ResourcesClient { get; set; }
+        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
+        public ProvidersOperations ResourceProvidersClient { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = resourceManagementClient.GetResourcesClient();
-            ResourceGroupsClient = resourceManagementClient.GetResourceGroupsClient();
-            ResourceProvidersClient = resourceManagementClient.GetProvidersClient();
+            ResourcesClient = resourceManagementClient.Resources;
+            ResourceGroupsClient = resourceManagementClient.ResourceGroups;
+            ResourceProvidersClient = resourceManagementClient.Providers;
 
             var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = keyVaultManagementClient.GetVaultsClient();
+            VaultsClient = keyVaultManagementClient.Vaults;
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
+                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
                 var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
                 await foreach (var servicePrincipal in servicePrincipalList)
                 {
@@ -87,27 +87,30 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             var permissions = new Permissions
             {
-                Keys = new KeyPermissions[] { new KeyPermissions("all") },
-                Secrets = new SecretPermissions[] { new SecretPermissions("all") },
-                Certificates = new CertificatePermissions[] { new CertificatePermissions("all") },
-                Storage = new StoragePermissions[] { new StoragePermissions("all") },
+                Keys = { new KeyPermissions("all") },
+                Secrets = { new SecretPermissions("all") },
+                Certificates = { new CertificatePermissions("all") },
+                Storage = { new StoragePermissions("all") },
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            IList<IPRule> ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule("1.2.3.4/32"));
-            ipRules.Add(new IPRule("1.0.0.0/25"));
-
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard));
-
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.VaultUri = "";
-            VaultProperties.NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null };
-            VaultProperties.AccessPolicies = new[] { AccessPolicy };
+            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+                Bypass = "AzureServices",
+                DefaultAction = "Allow",
+                IpRules =
+                {
+                    new IPRule("1.2.3.4/32"),
+                    new IPRule("1.0.0.0/25")
+                }
+            };
+            VaultProperties.AccessPolicies.Add(AccessPolicy);
         }
 
         internal KeyVaultManagementClient GetKeyVaultManagementClient()

@@ -5,13 +5,16 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
-		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
+		<Description>
+			Provides resource group and resource management capabilities for Microsoft Azure.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.7.2-preview</Version>
+		<Version>3.9.0-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        Resolve bugs in 3.4.0-preview. This is a public release of the Azure Resource Manager SDK. This release introduces tags to Put Deployment and Get Deployment of 2019-10-01 api-version and Get Subscription of 2020-01-01 api-version.
+        This is a public release of the Azure Resource Manager SDK. This release includes Resources API version 2020-06-01. Added support for tenant and management group level What-If in DeploymentOperations.
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

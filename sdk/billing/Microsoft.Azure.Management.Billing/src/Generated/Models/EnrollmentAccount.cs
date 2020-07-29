@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// An account resource.
+    /// An enrollment account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class EnrollmentAccount : Resource
@@ -35,12 +35,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="accountName">The account name.</param>
-        /// <param name="costCenter">The cost center name.</param>
-        /// <param name="accountOwner">The account owner</param>
-        /// <param name="status">The status for account.</param>
-        /// <param name="startDate">Account Start Date</param>
-        /// <param name="endDate">Account End Date</param>
+        /// <param name="accountName">The name of the enrollment
+        /// account.</param>
+        /// <param name="costCenter">The cost center associated with the
+        /// enrollment account.</param>
+        /// <param name="accountOwner">The owner of the enrollment
+        /// account.</param>
+        /// <param name="status">The status of the enrollment account.</param>
+        /// <param name="startDate">The start date of the enrollment
+        /// account.</param>
+        /// <param name="endDate">The end date of the enrollment
+        /// account.</param>
         /// <param name="department">Associated department. By default this is
         /// not populated, unless it's specified in $expand.</param>
         public EnrollmentAccount(string id = default(string), string name = default(string), string type = default(string), string accountName = default(string), string costCenter = default(string), string accountOwner = default(string), string status = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), Department department = default(Department))
@@ -62,37 +67,38 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the account name.
+        /// Gets or sets the name of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountName")]
         public string AccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets the cost center name.
+        /// Gets or sets the cost center associated with the enrollment
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.costCenter")]
         public string CostCenter { get; set; }
 
         /// <summary>
-        /// Gets or sets the account owner
+        /// Gets or sets the owner of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountOwner")]
         public string AccountOwner { get; set; }
 
         /// <summary>
-        /// Gets or sets the status for account.
+        /// Gets or sets the status of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets account Start Date
+        /// Gets or sets the start date of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startDate")]
         public System.DateTime? StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets account End Date
+        /// Gets or sets the end date of the enrollment account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endDate")]
         public System.DateTime? EndDate { get; set; }

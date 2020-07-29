@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
@@ -388,6 +388,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
             try
@@ -433,6 +436,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
             try
@@ -501,11 +507,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response DeleteIndex(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteIndex(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
+            return DeleteIndex(
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -522,12 +534,18 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response> DeleteIndexAsync(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteIndexAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
+            return await DeleteIndexAsync(
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteIndex(
             string indexName,
@@ -909,6 +927,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
             try
@@ -947,6 +968,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
             try
@@ -1014,11 +1038,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response DeleteSynonymMap(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteSynonymMap(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
+            return DeleteSynonymMap(
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a synonym map.
@@ -1035,12 +1065,18 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response> DeleteSynonymMapAsync(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
+            return await DeleteSynonymMapAsync(
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteSynonymMap(
             string synonymMapName,

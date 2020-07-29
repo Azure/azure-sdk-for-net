@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The attributes associated with legacy enrollment
+    /// The policies for Enterprise Agreement enrollments.
     /// </summary>
     public partial class EnrollmentPolicies
     {
@@ -29,14 +29,15 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the EnrollmentPolicies class.
         /// </summary>
-        /// <param name="accountOwnerViewCharges">The accountOwnerViewCharges
-        /// flag for Enrollment</param>
-        /// <param name="departmentAdminViewCharges">The
-        /// departmentAdminViewCharges flag for Enrollment</param>
-        /// <param name="marketplacesEnabled">The marketplaces flag for
-        /// Enrollment</param>
-        /// <param name="reservedInstancesEnabled">The reserved instances flag
-        /// for Enrollment</param>
+        /// <param name="accountOwnerViewCharges">The policy that controls
+        /// whether Account Owners can view charges.</param>
+        /// <param name="departmentAdminViewCharges">The policy that controls
+        /// whether Department Administrators can view charges.</param>
+        /// <param name="marketplacesEnabled">The policy that controls whether
+        /// Azure marketplace purchases are allowed in the enrollment.</param>
+        /// <param name="reservedInstancesEnabled">The policy that controls
+        /// whether Azure reservation purchases are allowed in the
+        /// enrollment.</param>
         public EnrollmentPolicies(bool? accountOwnerViewCharges = default(bool?), bool? departmentAdminViewCharges = default(bool?), bool? marketplacesEnabled = default(bool?), bool? reservedInstancesEnabled = default(bool?))
         {
             AccountOwnerViewCharges = accountOwnerViewCharges;
@@ -52,25 +53,29 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the accountOwnerViewCharges flag for Enrollment
+        /// Gets the policy that controls whether Account Owners can view
+        /// charges.
         /// </summary>
         [JsonProperty(PropertyName = "accountOwnerViewCharges")]
         public bool? AccountOwnerViewCharges { get; private set; }
 
         /// <summary>
-        /// Gets the departmentAdminViewCharges flag for Enrollment
+        /// Gets the policy that controls whether Department Administrators can
+        /// view charges.
         /// </summary>
         [JsonProperty(PropertyName = "departmentAdminViewCharges")]
         public bool? DepartmentAdminViewCharges { get; private set; }
 
         /// <summary>
-        /// Gets the marketplaces flag for Enrollment
+        /// Gets the policy that controls whether Azure marketplace purchases
+        /// are allowed in the enrollment.
         /// </summary>
         [JsonProperty(PropertyName = "marketplacesEnabled")]
         public bool? MarketplacesEnabled { get; private set; }
 
         /// <summary>
-        /// Gets the reserved instances flag for Enrollment
+        /// Gets the policy that controls whether Azure reservation purchases
+        /// are allowed in the enrollment.
         /// </summary>
         [JsonProperty(PropertyName = "reservedInstancesEnabled")]
         public bool? ReservedInstancesEnabled { get; private set; }

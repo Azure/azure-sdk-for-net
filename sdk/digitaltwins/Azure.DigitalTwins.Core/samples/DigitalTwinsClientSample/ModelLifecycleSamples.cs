@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
-using Azure.DigitalTwins.Core.Models;
 using Azure.DigitalTwins.Core.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
@@ -26,15 +24,15 @@ namespace Azure.DigitalTwins.Samples
             // For the purpose of this example we will create temporary models using random model Ids and then decommission a model.
             // We have to make sure these model Ids are unique within the DT instance.
 
-            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
+            string componentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
             string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, client);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
-                .Replace(SamplesConstants.ComponentId, newComponentModelId);
+                .Replace(SamplesConstants.ComponentId, componentModelId);
 
             string newModelPayload = SamplesConstants.TemporaryModelWithComponentPayload
                 .Replace(SamplesConstants.ModelId, sampleModelId)
-                .Replace(SamplesConstants.ComponentId, newComponentModelId);
+                .Replace(SamplesConstants.ComponentId, componentModelId);
 
             // Then we create the model
 
@@ -42,8 +40,8 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleCreateModels
 
-                Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
-                Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
+                await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
+                Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.");
 
                 #endregion Snippet:DigitalTwinsSampleCreateModels
             }
@@ -61,11 +59,10 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetModel
 
-                Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
+                Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+                Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 
                 #endregion Snippet:DigitalTwinsSampleGetModel
-
-                Console.WriteLine($"{sampleModel.Value.Id} has decommission status of {sampleModel.Value.Decommissioned}");
             }
             catch (Exception ex)
             {
@@ -79,11 +76,11 @@ namespace Azure.DigitalTwins.Samples
             try
             {
                 await client.DecommissionModelAsync(sampleModelId);
-                Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
+                Console.WriteLine($"Decommissioned model '{sampleModelId}'.");
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to decommision model '{sampleModelId}' due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDecommisionModel
@@ -95,12 +92,11 @@ namespace Azure.DigitalTwins.Samples
             try
             {
                 await client.DeleteModelAsync(sampleModelId);
-
-                Console.WriteLine($"Deleted model {sampleModelId}");
+                Console.WriteLine($"Deleted model '{sampleModelId}'.");
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to delete model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to delete model '{sampleModelId}' due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDeleteModel

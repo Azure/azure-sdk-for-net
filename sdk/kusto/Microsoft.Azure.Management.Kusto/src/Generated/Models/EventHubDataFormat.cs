@@ -30,5 +30,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string TSVE = "TSVE";
         public const string PARQUET = "PARQUET";
         public const string ORC = "ORC";
+        public const string APACHEAVRO = "APACHEAVRO";
+        public const string W3CLOGFILE = "W3CLOGFILE";
     }
 }

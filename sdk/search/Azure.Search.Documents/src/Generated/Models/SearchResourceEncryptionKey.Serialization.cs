@@ -15,22 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyName != null)
-            {
-                writer.WritePropertyName("keyVaultKeyName");
-                writer.WriteStringValue(KeyName);
-            }
-            if (KeyVersion != null)
-            {
-                writer.WritePropertyName("keyVaultKeyVersion");
-                writer.WriteStringValue(KeyVersion);
-            }
-            if (_vaultUri != null)
-            {
-                writer.WritePropertyName("keyVaultUri");
-                writer.WriteStringValue(_vaultUri);
-            }
-            if (AccessCredentialsInternal != null)
+            writer.WritePropertyName("keyVaultKeyName");
+            writer.WriteStringValue(KeyName);
+            writer.WritePropertyName("keyVaultKeyVersion");
+            writer.WriteStringValue(KeyVersion);
+            writer.WritePropertyName("keyVaultUri");
+            writer.WriteStringValue(_vaultUri);
+            if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials");
                 writer.WriteObjectValue(AccessCredentialsInternal);
@@ -43,47 +34,31 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVaultKeyName = default;
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;
-            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
+            Optional<AzureActiveDirectoryApplicationCredentials> accessCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultKeyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultKeyVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultKeyVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accessCredentials"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
                     continue;
                 }
             }
-            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials);
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials.Value);
         }
     }
 }

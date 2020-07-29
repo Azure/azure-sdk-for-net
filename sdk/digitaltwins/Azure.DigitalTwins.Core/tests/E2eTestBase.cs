@@ -25,11 +25,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-        }
-
-        public E2eTestBase(bool isAsync, RecordedTestMode testMode)
-           : base(isAsync, testMode)
-        {
+            Sanitizer = new TestUrlSanitizer();
         }
 
         [SetUp]

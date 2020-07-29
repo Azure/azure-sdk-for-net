@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();

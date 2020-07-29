@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     {
         /// <summary> Initializes a new instance of RolesListResponse. </summary>
         /// <param name="value"> List of Synapse roles. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RolesListResponse(IEnumerable<SynapseRole> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RolesListResponse. </summary>

@@ -11,4 +11,4 @@ description: Samples for the Azure.Storage.Common client library
 
 # Azure.Storage.Common Samples
 
-- [Configure Retries](Sample01a_HelloWorld.cs)
+- [Configure Retries](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/samples/Sample01a_HelloWorld.cs)

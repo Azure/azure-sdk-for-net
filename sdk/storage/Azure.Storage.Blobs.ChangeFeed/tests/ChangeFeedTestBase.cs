@@ -1,0 +1,173 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Test.Shared;
+
+namespace Azure.Storage.Blobs.ChangeFeed.Tests
+{
+    public class ChangeFeedTestBase : StorageTestBase
+    {
+
+        public ChangeFeedTestBase(bool async) : this(async, null) { }
+
+        public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
+            : base(async, mode)
+        {
+        }
+
+        public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
+        public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
+
+        public BlobServiceClient GetServiceClient_SharedKey()
+            => InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+        public BlobClientOptions GetOptions()
+        {
+            var options = new BlobClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                },
+                Transport = GetTransport()
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
+
+        public async Task<DisposingContainer> GetTestContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
+        {
+
+            containerName ??= GetNewContainerName();
+            service ??= GetServiceClient_SharedKey();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+            }
+
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return new DisposingContainer(container);
+        }
+
+        public class DisposingContainer : IAsyncDisposable
+        {
+            public BlobContainerClient Container;
+
+            public DisposingContainer(BlobContainerClient client)
+            {
+                Container = client;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                if (Container != null)
+                {
+                    try
+                    {
+                        await Container.DeleteAsync();
+                        Container = null;
+                    }
+                    catch
+                    {
+                        // swallow the exception to avoid hiding another test failure
+                    }
+                }
+            }
+        }
+
+        public static Task<Page<BlobHierarchyItem>> GetYearsPathFuncAsync(string continuation, int? pageSizeHint)
+            => Task.FromResult(GetYearPathFunc(continuation, pageSizeHint));
+
+        public static Page<BlobHierarchyItem> GetYearPathFunc(
+            string continuation,
+            int? pageSizeHint)
+            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/1601/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2019/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2020/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2022/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2023/", null),
+            });
+
+        public static Task<Page<BlobHierarchyItem>> GetSegmentsInYearFuncAsync(
+            string continuation,
+            int? pageSizeHint)
+            => Task.FromResult(GetSegmentsInYearFunc(continuation, pageSizeHint));
+
+        public static Page<BlobHierarchyItem> GetSegmentsInYearFunc(
+            string continuation,
+            int? pageSizeHint)
+            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/01/16/2300/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/02/2300/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/0000/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/1800/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2000/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2200/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/05/1700/meta.json", false, null)),
+            });
+
+        public class BlobHierarchyItemPage : Page<BlobHierarchyItem>
+        {
+            private List<BlobHierarchyItem> _items;
+
+            public BlobHierarchyItemPage(List<BlobHierarchyItem> items)
+            {
+                _items = items;
+            }
+
+            public override IReadOnlyList<BlobHierarchyItem> Values => _items;
+
+            public override string ContinuationToken => null;
+
+            public override Response GetRawResponse()
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+}

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to create or update. Search
-        /// service names must only contain lowercase letters, digits or
+        /// The name of the Azure Cognitive Search service to create or update.
+        /// Search service names must only contain lowercase letters, digits or
         /// dashes, cannot use dash as the first two or last one characters,
         /// cannot contain consecutive dashes, and must be between 2 and 60
         /// characters in length. Search service names must be globally unique
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to update.
+        /// The name of the Azure Cognitive Search service to update.
         /// </param>
         /// <param name='service'>
         /// The definition of the Search service to update.
@@ -111,8 +111,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<SearchService>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SearchService>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of all Search services in the given subscription.
         /// <see href="https://aka.ms/search-manage" />
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<SearchService>>> ListBySubscriptionWithHttpMessagesAsync(SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SearchService>>> ListBySubscriptionWithHttpMessagesAsync(SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks whether or not the given Search service name is available
         /// for use. Search service names must be globally unique since they
@@ -258,8 +258,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to create or update. Search
-        /// service names must only contain lowercase letters, digits or
+        /// The name of the Azure Cognitive Search service to create or update.
+        /// Search service names must only contain lowercase letters, digits or
         /// dashes, cannot use dash as the first two or last one characters,
         /// cannot contain consecutive dashes, and must be between 2 and 60
         /// characters in length. Search service names must be globally unique
@@ -289,5 +289,57 @@ namespace Microsoft.Azure.Management.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SearchService>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of all Search services in the given resource group.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SearchService>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of all Search services in the given subscription.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SearchService>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

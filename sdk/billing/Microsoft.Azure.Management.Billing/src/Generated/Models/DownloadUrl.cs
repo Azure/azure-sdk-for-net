@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the DownloadUrl class.
         /// </summary>
-        /// <param name="expiryTime">The time in UTC at which this download URL
-        /// will expire.</param>
+        /// <param name="expiryTime">The time in UTC when the download URL will
+        /// expire.</param>
         /// <param name="url">The URL to the PDF file.</param>
         public DownloadUrl(System.DateTime? expiryTime = default(System.DateTime?), string url = default(string))
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the time in UTC at which this download URL will expire.
+        /// Gets the time in UTC when the download URL will expire.
         /// </summary>
         [JsonProperty(PropertyName = "expiryTime")]
         public System.DateTime? ExpiryTime { get; private set; }

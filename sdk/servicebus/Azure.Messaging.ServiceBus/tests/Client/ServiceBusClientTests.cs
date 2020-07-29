@@ -251,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             public ServiceBusClientOptions Options =>
                typeof(ServiceBusClient)
-                  .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
+                  .GetField("_options", BindingFlags.Instance | BindingFlags.NonPublic)
                   .GetValue(this) as ServiceBusClientOptions;
 
             public ReadableOptionsMock(string connectionString,
