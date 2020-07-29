@@ -24,9 +24,9 @@ namespace CdnSignedUrlSignatureComputationSample
         /// <param name="expiresParamValue">Expires parameter value.</param>
         /// <param name="keyParamName">Key parameter name.</param>
         /// <param name="keyParamValue">Key parameter value.</param>
-        /// <param name="privateKey">Key to use to compute hash.</param>
+        /// <param name="secret">Key to use to compute hash.</param>
         /// <returns>Signature.</returns>
-        public string GetSignature(string resourcePath, string expiresParamName, string expiresParamValue, string keyParamName, string keyParamValue, string privateKey)
+        public string GetSignature(string resourcePath, string expiresParamName, string expiresParamValue, string keyParamName, string keyParamValue, string secret)
         {
             if (string.IsNullOrEmpty(resourcePath))
             {
@@ -53,16 +53,16 @@ namespace CdnSignedUrlSignatureComputationSample
                 throw new ArgumentException("Input parameter 'keyParamValue' cannot be null or empty");
             }
 
-            if (string.IsNullOrEmpty(privateKey))
+            if (string.IsNullOrEmpty(secret))
             {
-                throw new ArgumentException("Input parameter 'privateKey' cannot be null or empty");
+                throw new ArgumentException("Input parameter 'secret' cannot be null or empty");
             }
 
             // Create the string to hash
             string data = resourcePath + "?" + expiresParamName + "=" + expiresParamValue + "&" + keyParamName + "=" + keyParamValue;
 
             byte[] signature;
-            using (HMACSHA256 hmac = new HMACSHA256(Encoding.ASCII.GetBytes(privateKey)))
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.ASCII.GetBytes(secret)))
             {
                 signature = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
             }

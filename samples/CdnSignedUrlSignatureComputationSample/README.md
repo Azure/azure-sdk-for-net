@@ -13,11 +13,11 @@ StringToHash = ResourcePath +
                keyIdValue
 
 // ConvertToUrlSafeBase64String  will replace + with - and / with _. 
-ComputedHash = ConvertToUrlSafeBase64String((new HMACSHA256(Encoding.ASCII.GetBytes(encryptionKey))).ComputeHash(Encoding.UTF8.GetBytes(StringToHash)));
+ComputedHash = ConvertToUrlSafeBase64String((new HMACSHA256(Encoding.ASCII.GetBytes(secret))).ComputeHash(Encoding.UTF8.GetBytes(StringToHash)));
 
 How to use?
 Provide the parameters used to compute the signature in the below order:
 
-./SignatureComputationApp <ResourcePath> <ExpiresParamName> <ExpiresParamValue> <KeyIdParamName> <KeyIdParamValue> <EncryptionKey>
+./SignatureComputationApp <ResourcePath> <ExpiresParamName> <ExpiresParamValue> <KeyIdParamName> <KeyIdParamValue> <Secret>
 
 The computed signature is written to the console.

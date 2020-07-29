@@ -18,7 +18,7 @@ namespace CdnSignedUrlSignatureComputationSample
             if (args.Length < 6)
             {
                 Console.WriteLine("Error in the application usage.");
-                Console.WriteLine("Usage: ./SignatureComputationApp <ResourcePath> <ExpiresParamName> <ExpiresParamValue> <KeyIdParamName> <KeyIdParamValue> <EncryptionKey>");
+                Console.WriteLine("Usage: ./SignatureComputationApp <ResourcePath> <ExpiresParamName> <ExpiresParamValue> <KeyIdParamName> <KeyIdParamValue> <Secret>");
                 Environment.Exit(1);
             }
 
