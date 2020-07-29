@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Security
     public partial interface IAdaptiveApplicationControlsOperations
     {
         /// <summary>
-        /// Gets a list of application control VM/server groups for the
+        /// Gets a list of application control machine groups for the
         /// subscription.
         /// </summary>
         /// <param name='includePathRecommendations'>
@@ -48,12 +48,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppWhitelistingGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AdaptiveApplicationControlGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets an application control VM/server group.
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,12 +70,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppWhitelistingGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an application control VM/server group
+        /// Update an application control machine group
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -94,12 +94,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an application control VM/server group
+        /// Delete an application control machine group
         /// </summary>
         /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// Name of an application control machine group
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
