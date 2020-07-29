@@ -58,7 +58,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DevicesStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeviceStatisticsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -66,9 +66,9 @@ namespace Azure.Iot.Hub.Service
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        DevicesStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -78,7 +78,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
+        public Response<DevicesStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeviceStatisticsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -86,9 +86,9 @@ namespace Azure.Iot.Hub.Service
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        DevicesStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

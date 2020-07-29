@@ -27,6 +27,28 @@ namespace Azure.Data.Tables.Tests
         { }
 
         [Test]
+        public async Task ValidateCreateDeleteTable()
+        {
+            // Get the TableClient of a table that hasn't been created yet.
+            var validTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            var tableClient = service.GetTableClient(validTableName);
+
+            // Create the table using the TableClient method.
+            await tableClient.CreateAsync().ConfigureAwait(false);
+
+            // Check that the table was created.
+            var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            Assert.That(() => tableResponses, Is.Not.Empty);
+
+            // Delete the table using the TableClient method.
+            await tableClient.DeleteAsync().ConfigureAwait(false);
+
+            // Check that the table was deleted.
+            tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            Assert.That(() => tableResponses, Is.Empty);
+        }
+
+        [Test]
         public void ValidateSasCredentials()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -385,7 +407,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to delete unconditionally.
 
-            await client.DeleteAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -403,11 +425,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.DeleteAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.DeleteAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -739,7 +761,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to delete unconditionally.
 
-            await client.DeleteAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -757,11 +779,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.DeleteAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.DeleteAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 

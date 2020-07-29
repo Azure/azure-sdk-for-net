@@ -10,9 +10,9 @@ using Azure.Core;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// A <see cref="TableEntity"/> type which allows callers direct access to the property map of the entity.
+    /// A <see cref="ITableEntity"/> type which allows callers direct access to the property map of the entity.
     /// </summary>
-    public partial class DynamicTableEntity : TableEntity
+    public partial class DynamicTableEntity : ITableEntity
     {
         private readonly IDictionary<string, object> _properties;
 
@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
         /// The partition key is a unique identifier for the partition within a given table and forms the first part of an entity's primary key.
         /// </summary>
         /// <value>A string containing the partition key for the entity.</value>
-        public override string PartitionKey
+        public string PartitionKey
         {
             get { return GetString(TableConstants.PropertyNames.PartitionKey); }
             set { _properties[TableConstants.PropertyNames.PartitionKey] = value; }
@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
         /// The row key is a unique identifier for an entity within a given partition. Together the <see cref="PartitionKey" /> and RowKey uniquely identify every entity within a table.
         /// </summary>
         /// <value>A string containing the row key for the entity.</value>
-        public override string RowKey
+        public string RowKey
         {
             get { return GetString(TableConstants.PropertyNames.RowKey); }
             set { _properties[TableConstants.PropertyNames.RowKey] = value; }
@@ -42,23 +42,24 @@ namespace Azure.Data.Tables
         /// meaning that each time the entity is modified, the value of Timestamp increases for that entity. This property should not be set on insert or update operations (the value will be ignored).
         /// </summary>
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
-        public override DateTimeOffset? Timestamp
+        public DateTimeOffset? Timestamp
         {
             get { return GetDateTime(TableConstants.PropertyNames.TimeStamp); }
+            set { _properties[TableConstants.PropertyNames.TimeStamp] = value; }
         }
 
         /// <summary>
         /// Gets or sets the entity's ETag. Set this value to '*' in order to force an overwrite to an entity as part of an update operation.
         /// </summary>
         /// <value>A string containing the ETag value for the entity.</value>
-        public override string ETag
+        public string ETag
         {
             get { return GetString(TableConstants.PropertyNames.Etag); }
             set { _properties[TableConstants.PropertyNames.Etag] = value; }
         }
 
         /// <summary>
-        /// Constructs an instance of a <see cref="TableEntity" />.
+        /// Constructs an instance of a <see cref="ITableEntity" />.
         /// </summary>
         public DynamicTableEntity()
             : this(null)
