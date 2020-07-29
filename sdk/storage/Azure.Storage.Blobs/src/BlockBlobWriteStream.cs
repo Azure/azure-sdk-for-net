@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                string blockId = GenerateBlockId(_position + _buffer.Length);
+                string blockId = StorageExtensions.GenerateBlockId(_position + _buffer.Length);
 
                 if (async)
                 {
@@ -71,21 +71,16 @@ namespace Azure.Storage.Blobs
         {
             await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
-            if (async)
-            {
-                await _blockBlobClient.CommitBlockListAsync(
-                    base64BlockIds: _blockIds,
-                    conditions: _conditions,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                _blockBlobClient.CommitBlockList(
-                    base64BlockIds: _blockIds,
-                    conditions: _conditions,
-                    cancellationToken: cancellationToken);
-            }
+            await _blockBlobClient.CommitBlockListInternal(
+                base64BlockIds: _blockIds,
+                blobHttpHeaders: default,
+                metadata: default,
+                tags: default,
+                conditions: _conditions,
+                accessTier: default,
+                async: async,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         protected override void ValidateBufferSize(long bufferSize)
@@ -99,17 +94,6 @@ namespace Azure.Storage.Blobs
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.Blob.Block.MaxStageBytes}");
             }
-        }
-
-        private static string GenerateBlockId(long offset)
-        {
-            // TODO #8162 - Add in a random GUID so multiple simultaneous
-            // uploads won't stomp on each other and the first to commit wins.
-            // This will require some changes to our test framework's
-            // RecordedClientRequestIdPolicy.
-            byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
-            BitConverter.GetBytes(offset).CopyTo(id, 0);
-            return Convert.ToBase64String(id);
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -2145,17 +2146,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         internal static PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
         {
-            static string GenerateBlockId(long offset)
-            {
-                // TODO #8162 - Add in a random GUID so multiple simultaneous
-                // uploads won't stomp on each other and the first to commit wins.
-                // This will require some changes to our test framework's
-                // RecordedClientRequestIdPolicy.
-                byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
-                BitConverter.GetBytes(offset).CopyTo(id, 0);
-                return Convert.ToBase64String(id);
-            }
-
             return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
@@ -2172,7 +2162,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.StageBlockInternal(
-                        GenerateBlockId(offset),
+                        StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
                         args.Conditions,
@@ -2181,7 +2171,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
                         args.HttpHeaders,
                         args.Metadata,
                         args.Tags,
