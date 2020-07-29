@@ -6,7 +6,7 @@ namespace Azure.Data.Tables
         public DynamicTableEntity(System.Collections.Generic.IDictionary<string, object> values) { }
         public DynamicTableEntity(string partitionKey, string rowKey) { }
         public int Count { get { throw null; } }
-        public string ETag { get { throw null; } set { } }
+        public Azure.ETag ETag { get { throw null; } set { } }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
         public string PartitionKey { get { throw null; } set { } }
@@ -36,7 +36,7 @@ namespace Azure.Data.Tables
     }
     public partial interface ITableEntity
     {
-        string ETag { get; set; }
+        Azure.ETag ETag { get; set; }
         string PartitionKey { get; set; }
         string RowKey { get; set; }
         System.DateTimeOffset? Timestamp { get; set; }
@@ -55,8 +55,8 @@ namespace Azure.Data.Tables
         public static string CreateFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>> GetAccessPolicy(int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -75,8 +75,8 @@ namespace Azure.Data.Tables
         public virtual Azure.Pageable<T> Query<T>(string filter = null, int? maxPerPage = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl = null, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateEntity(System.Collections.Generic.IDictionary<string, object> entity, string eTag, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEntityAsync(System.Collections.Generic.IDictionary<string, object> entity, string eTag, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateEntity(System.Collections.Generic.IDictionary<string, object> entity, Azure.ETag ifMatch, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEntityAsync(System.Collections.Generic.IDictionary<string, object> entity, Azure.ETag ifMatch, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpsertEntity(System.Collections.Generic.IDictionary<string, object> entity, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertEntityAsync(System.Collections.Generic.IDictionary<string, object> entity, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertEntityAsync<T>(T entity, Azure.Data.Tables.UpdateMode mode = Azure.Data.Tables.UpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }

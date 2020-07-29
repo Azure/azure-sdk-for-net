@@ -14,6 +14,10 @@ namespace Azure.Core.Tests
             var s = "tag";
             var eTag = new ETag(s);
             Assert.AreSame(s, eTag.ToString());
+
+            var w = "W/\"weakETag\"";
+            var weakEtag = new ETag(w);
+            Assert.AreSame(w, weakEtag.ToString());
         }
 
         [Test]
@@ -83,16 +87,11 @@ namespace Azure.Core.Tests
             Assert.Throws<ArgumentException>(() => ETag.Parse("lalala"));
         }
 
-        [Test]
-        public void ThrowsForParseWeakEtag()
-        {
-            Assert.Throws<NotSupportedException>(() => ETag.Parse("W/\"lalala\""));
-        }
-
         [Theory]
         [TestCase("*", "*")]
         [TestCase("\"A\"", "A")]
         [TestCase("\"\"", "")]
+        [TestCase("W/\"weakETag\"", "W/\"weakETag\"")]
         public void ParsesEtag(string value, string expectedValue)
         {
             ETag tag = ETag.Parse(value);

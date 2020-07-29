@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Samples
                     qEntity["Price"] = 7.00;
 
                     // Extract ETag from the entity.
-                    string eTag = qEntity["odata.etag"] as string;
+                    ETag eTag = new ETag(qEntity["odata.etag"] as string);
 
                     // Updating to changed entity using its generated eTag.
                     // Since no UpdateMode was passed, the request will default to Merge.

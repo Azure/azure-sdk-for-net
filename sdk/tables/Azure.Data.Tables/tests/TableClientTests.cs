@@ -46,13 +46,13 @@ namespace Azure.Tables.Tests
 
             Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new MinEntity { PartitionKey = "partition", RowKey = null }, UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(null, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(null, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, null, UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, new ETag(""), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
     }
 }

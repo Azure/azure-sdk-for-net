@@ -319,7 +319,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class SimpleTestEntity : ITableEntity
@@ -328,7 +328,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class ComplexEntity : ITableEntity
@@ -457,7 +457,7 @@ namespace Azure.Data.Tables.Tests
 
             public DateTimeOffset? Timestamp { get; set; }
 
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {

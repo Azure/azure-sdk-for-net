@@ -678,14 +678,14 @@ namespace Azure.Data.Tables
         /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, ETag ifMatch, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+            Argument.AssertNotNullOrWhiteSpace(ifMatch.ToString(), nameof(ifMatch));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -708,7 +708,7 @@ namespace Azure.Data.Tables
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -718,7 +718,7 @@ namespace Azure.Data.Tables
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -738,14 +738,14 @@ namespace Azure.Data.Tables
         /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual Response UpdateEntity(IDictionary<string, object> entity, ETag ifMatch, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+            Argument.AssertNotNullOrWhiteSpace(ifMatch.ToString(), nameof(ifMatch));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -768,7 +768,7 @@ namespace Azure.Data.Tables
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -778,7 +778,7 @@ namespace Azure.Data.Tables
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -1102,10 +1102,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -1116,7 +1116,7 @@ namespace Azure.Data.Tables
                 return await _tableOperations.DeleteEntityAsync(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: eTag,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -1132,10 +1132,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
+        /// <param name="ifMatch">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response DeleteEntity(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -1146,7 +1146,7 @@ namespace Azure.Data.Tables
                 return _tableOperations.DeleteEntity(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: eTag,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
             }
