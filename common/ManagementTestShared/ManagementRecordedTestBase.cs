@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 #if RESOURCES_RP
 using Azure.ResourceManager.Resources;
 #else
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 #endif
 using System;
 using System.Linq;

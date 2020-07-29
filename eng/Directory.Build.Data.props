@@ -86,6 +86,7 @@
   </PropertyGroup>
 
   <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
+  <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
