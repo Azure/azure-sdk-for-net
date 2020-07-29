@@ -13,7 +13,7 @@
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # Extensions
-/sdk/extensions/                                @parkym
+/sdk/extensions/                                @pakrym
 
 # Service teams
 # PRLabel: %AzConfig
