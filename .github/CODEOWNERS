@@ -68,7 +68,7 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @isra-fel @erich-wang
+/**/*Management*/                               @isra-fel @erich-wang @allenjzhang
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
@@ -80,6 +80,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @isra-fel @erich-wang
+/eng/mgmt/      @isra-fel @erich-wang @allenjzhang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
