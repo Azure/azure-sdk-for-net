@@ -11,7 +11,7 @@ namespace Azure.Data.Tables.Sas
     /// <summary>
     /// Extension methods for Sas.
     /// </summary>
-    internal static partial class SasExtensions
+    internal static partial class TableSasExtensions
     {
         private const string NoneName = null;
         private const string HttpsName = "https";
@@ -21,15 +21,15 @@ namespace Azure.Data.Tables.Sas
         /// Gets a string representation of the protocol.
         /// </summary>
         /// <returns>A string representation of the protocol.</returns>
-        internal static string ToProtocolString(this SasProtocol protocol)
+        internal static string ToProtocolString(this TableSasProtocol protocol)
         {
             switch (protocol)
             {
-                case SasProtocol.Https:
+                case TableSasProtocol.Https:
                     return HttpsName;
-                case SasProtocol.HttpsAndHttp:
+                case TableSasProtocol.HttpsAndHttp:
                     return HttpsAndHttpName;
-                case SasProtocol.None:
+                case TableSasProtocol.None:
                 default:
                     return null;
             }
@@ -39,20 +39,20 @@ namespace Azure.Data.Tables.Sas
         /// Parse a string representation of a protocol.
         /// </summary>
         /// <param name="s">A string representation of a protocol.</param>
-        /// <returns>A <see cref="SasProtocol"/>.</returns>
-        public static SasProtocol ParseProtocol(string s)
+        /// <returns>A <see cref="TableSasProtocol"/>.</returns>
+        public static TableSasProtocol ParseProtocol(string s)
         {
             switch (s)
             {
                 case NoneName:
                 case "":
-                    return SasProtocol.None;
+                    return TableSasProtocol.None;
                 case HttpsName:
-                    return SasProtocol.Https;
+                    return TableSasProtocol.Https;
                 case HttpsAndHttpName:
-                    return SasProtocol.HttpsAndHttp;
+                    return TableSasProtocol.HttpsAndHttp;
                 default:
-                    throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
+                    throw Errors.InvalidSasProtocol(nameof(s), nameof(TableSasProtocol));
             }
         }
 

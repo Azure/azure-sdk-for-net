@@ -10,16 +10,16 @@ using System;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
-    public partial class LoggingSettings
+    public partial class TableAnalyticsLoggingSettings
     {
-        /// <summary> Initializes a new instance of LoggingSettings. </summary>
+        /// <summary> Initializes a new instance of TableAnalyticsLoggingSettings. </summary>
         /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
         /// <param name="read"> Indicates whether all read requests should be logged. </param>
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public LoggingSettings(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
+        public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
         {
             if (version == null)
             {

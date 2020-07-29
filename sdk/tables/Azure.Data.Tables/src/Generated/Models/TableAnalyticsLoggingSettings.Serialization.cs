@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class LoggingSettings : IXmlSerializable
+    public partial class TableAnalyticsLoggingSettings : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -32,7 +32,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static LoggingSettings DeserializeLoggingSettings(XElement element)
+        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element)
         {
             string version = default;
             bool delete = default;
@@ -59,7 +59,7 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new LoggingSettings(version, delete, read, write, retentionPolicy);
+            return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The OdataMetadataFormat. </summary>
-    public readonly partial struct OdataMetadataFormat : IEquatable<OdataMetadataFormat>
+    internal readonly partial struct OdataMetadataFormat : IEquatable<OdataMetadataFormat>
     {
         private readonly string _value;
 
