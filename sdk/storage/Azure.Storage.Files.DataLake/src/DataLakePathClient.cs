@@ -548,12 +548,13 @@ namespace Azure.Storage.Files.DataLake
 
                 return CreateInternal(
                     resourceType,
+                    blobType: default,
                     httpHeaders,
                     metadata,
                     permissions,
                     umask,
                     conditions,
-                    false, // async
+                    async: false,
                     cancellationToken)
                     .EnsureCompleted();
             }
@@ -633,12 +634,13 @@ namespace Azure.Storage.Files.DataLake
 
                 return await CreateInternal(
                     resourceType,
+                    blobType: default,
                     httpHeaders,
                     metadata,
                     permissions,
                     umask,
                     conditions,
-                    true, // async
+                    async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -660,6 +662,9 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="blobType">
+        /// The type of the backing blob.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -704,6 +709,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
+            BlobType? blobType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
             string permissions,
@@ -731,6 +737,7 @@ namespace Azure.Storage.Files.DataLake
                         resourceUri: _dfsUri,
                         version: Version.ToVersionString(),
                         resource: resourceType,
+                        blobType: blobType,
                         cacheControl: httpHeaders?.CacheControl,
                         contentEncoding: httpHeaders?.ContentEncoding,
                         contentDisposition: httpHeaders?.ContentDisposition,
@@ -822,6 +829,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => CreateIfNotExistsInternal(
                     resourceType,
+                    blobType: default,
                     httpHeaders,
                     metadata,
                     permissions,
@@ -883,23 +891,27 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => await CreateIfNotExistsInternal(
                 resourceType,
+                blobType: default,
                 httpHeaders,
                 metadata,
                 permissions,
                 umask,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, BlobType?, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="blobType">
+        /// The type of blob to create.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -938,8 +950,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> CreateIfNotExistsInternal(
+        internal async Task<Response<PathInfo>> CreateIfNotExistsInternal(
             PathResourceType resourceType,
+            BlobType? blobType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
             string permissions,
@@ -955,6 +968,7 @@ namespace Azure.Storage.Files.DataLake
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 response = await CreateInternal(
                     resourceType,
+                    blobType,
                     httpHeaders,
                     metadata,
                     permissions,

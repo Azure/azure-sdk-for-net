@@ -284,4 +284,23 @@ directive:
     $.PathExpiryOptions["x-az-public"] = false;
 ```
 
+### Make BlobType internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobType["x-az-public"] = false;
+```
+
+### Make PathConcurrentAppendResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?comp=concurrentAppend"]
+  transform: >
+    $.patch.responses["202"]["x-az-public"] = false;
+    $.patch.responses["202"]["x-az-response-name"] = "PathConcurrentAppendInternal";
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)
