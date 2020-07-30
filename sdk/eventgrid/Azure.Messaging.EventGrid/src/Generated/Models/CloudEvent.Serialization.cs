@@ -24,6 +24,11 @@ namespace Azure.Messaging.EventGrid.Models
                 writer.WritePropertyName("data");
                 writer.WriteObjectValue(Data);
             }
+            if (Optional.IsDefined(DataBase64))
+            {
+                writer.WritePropertyName("data_base64");
+                writer.WriteStringValue(DataBase64);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Time))
@@ -47,6 +52,11 @@ namespace Azure.Messaging.EventGrid.Models
             {
                 writer.WritePropertyName("subject");
                 writer.WriteStringValue(Subject);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
         }
