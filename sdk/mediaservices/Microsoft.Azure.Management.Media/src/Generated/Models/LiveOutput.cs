@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="archiveWindowLength">ISO 8601 timespan duration of the
         /// archive window length. This is duration that customer want to
         /// retain the recorded content.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="description">The description of the Live
         /// Output.</param>
         /// <param name="manifestName">The manifest file name.  If not

@@ -14,25 +14,26 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The API error.
+    /// The service specification property.
     /// </summary>
-    public partial class ApiError
+    public partial class Properties
     {
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the Properties class.
         /// </summary>
-        public ApiError()
+        public Properties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the Properties class.
         /// </summary>
-        /// <param name="error">The error properties.</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="serviceSpecification">The service
+        /// specifications.</param>
+        public Properties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
-            Error = error;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -42,10 +43,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error properties.
+        /// Gets the service specifications.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ODataError Error { get; set; }
+        [JsonProperty(PropertyName = "serviceSpecification")]
+        public ServiceSpecification ServiceSpecification { get; private set; }
 
     }
 }

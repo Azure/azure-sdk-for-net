@@ -38,9 +38,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Input.</param>
         /// <param name="keyFrameIntervalDuration">ISO 8601 timespan duration
         /// of the key frame interval duration.</param>
-        /// <param name="accessToken">A unique identifier for a stream.  This
-        /// can be specified at creation time but cannot be updated.  If
-        /// omitted, the service will generate a unique value.</param>
+        /// <param name="accessToken">A UUID in string form to uniquely
+        /// identify the stream. This can be specified at creation time but
+        /// cannot be updated.  If omitted, the service will generate a unique
+        /// value.</param>
         /// <param name="endpoints">The input endpoints for the Live
         /// Event.</param>
         public LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl = default(LiveEventInputAccessControl), string keyFrameIntervalDuration = default(string), string accessToken = default(string), IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>))
@@ -80,9 +81,9 @@ namespace Microsoft.Azure.Management.Media.Models
         public string KeyFrameIntervalDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique identifier for a stream.  This can be
-        /// specified at creation time but cannot be updated.  If omitted, the
-        /// service will generate a unique value.
+        /// Gets or sets a UUID in string form to uniquely identify the stream.
+        /// This can be specified at creation time but cannot be updated.  If
+        /// omitted, the service will generate a unique value.
         /// </summary>
         [JsonProperty(PropertyName = "accessToken")]
         public string AccessToken { get; set; }

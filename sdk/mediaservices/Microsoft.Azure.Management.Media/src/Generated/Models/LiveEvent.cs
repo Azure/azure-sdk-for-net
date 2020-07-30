@@ -34,13 +34,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEvent class.
         /// </summary>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="input">The Live Event input.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region of the resource.</param>
         /// <param name="description">The Live Event description.</param>
         /// <param name="preview">The Live Event preview.</param>
         /// <param name="encoding">The Live Event encoding.</param>
@@ -51,18 +54,19 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Stopping', 'Deleting'</param>
         /// <param name="crossSiteAccessPolicies">The Live Event access
         /// policies.</param>
-        /// <param name="vanityUrl">Specifies whether to use a vanity url with
-        /// the Live Event.  This value is specified at creation time and
-        /// cannot be updated.</param>
+        /// <param name="useStaticHostname">Specifies whether to use a vanity
+        /// url with the Live Event.  This value is specified at creation time
+        /// and cannot be updated.</param>
         /// <param name="streamOptions">The options to use for the LiveEvent.
-        /// This value is specified at creation time and cannot be
-        /// updated.</param>
+        /// This value is specified at creation time and cannot be updated. The
+        /// valid values for the array entry values are 'Default' and
+        /// 'LowLatency'.</param>
         /// <param name="created">The exact time the Live Event was
         /// created.</param>
         /// <param name="lastModified">The exact time the Live Event was last
         /// modified.</param>
-        public LiveEvent(LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
-            : base(id, name, type, tags, location)
+        public LiveEvent(string location, LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? useStaticHostname = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+            : base(location, id, name, type, tags)
         {
             Description = description;
             Input = input;
@@ -71,7 +75,7 @@ namespace Microsoft.Azure.Management.Media.Models
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             CrossSiteAccessPolicies = crossSiteAccessPolicies;
-            VanityUrl = vanityUrl;
+            UseStaticHostname = useStaticHostname;
             StreamOptions = streamOptions;
             Created = created;
             LastModified = lastModified;
@@ -131,12 +135,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Event.  This value is specified at creation time and cannot be
         /// updated.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vanityUrl")]
-        public bool? VanityUrl { get; set; }
+        [JsonProperty(PropertyName = "properties.useStaticHostname")]
+        public bool? UseStaticHostname { get; set; }
 
         /// <summary>
         /// Gets or sets the options to use for the LiveEvent.  This value is
-        /// specified at creation time and cannot be updated.
+        /// specified at creation time and cannot be updated. The valid values
+        /// for the array entry values are 'Default' and 'LowLatency'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamOptions")]
         public IList<StreamOptionsFlag?> StreamOptions { get; set; }
@@ -159,8 +164,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Input");

@@ -11,28 +11,33 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The API error.
+    /// List of private endpoint connection associated with the specified
+    /// storage account
     /// </summary>
-    public partial class ApiError
+    public partial class PrivateEndpointConnectionListResult
     {
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the
+        /// PrivateEndpointConnectionListResult class.
         /// </summary>
-        public ApiError()
+        public PrivateEndpointConnectionListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the
+        /// PrivateEndpointConnectionListResult class.
         /// </summary>
-        /// <param name="error">The error properties.</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="value">Array of private endpoint connections</param>
+        public PrivateEndpointConnectionListResult(IList<PrivateEndpointConnection> value = default(IList<PrivateEndpointConnection>))
         {
-            Error = error;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +47,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error properties.
+        /// Gets or sets array of private endpoint connections
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ODataError Error { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateEndpointConnection> Value { get; set; }
 
     }
 }

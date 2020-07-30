@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.Media
         public virtual IMediaservicesOperations Mediaservices { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
@@ -385,6 +395,8 @@ namespace Microsoft.Azure.Management.Media
             AccountFilters = new AccountFiltersOperations(this);
             Operations = new Operations(this);
             Mediaservices = new MediaservicesOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Locations = new LocationsOperations(this);
             Assets = new AssetsOperations(this);
             AssetFilters = new AssetFiltersOperations(this);
@@ -397,7 +409,7 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-07-01";
+            ApiVersion = "2020-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

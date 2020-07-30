@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="display">The operation display name.</param>
         /// <param name="origin">Origin of the operation.</param>
         /// <param name="properties">Operation properties format.</param>
-        public Operation(string name, OperationDisplay display = default(OperationDisplay), string origin = default(string), MetricProperties properties = default(MetricProperties))
+        public Operation(string name, OperationDisplay display = default(OperationDisplay), string origin = default(string), Properties properties = default(Properties))
         {
             Name = name;
             Display = display;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets operation properties format.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public MetricProperties Properties { get; set; }
+        public Properties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -34,14 +34,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StreamingEndpoint class.
         /// </summary>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="scaleUnits">The number of scale units.  Use the Scale
         /// operation to adjust this value.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region of the resource.</param>
         /// <param name="description">The StreamingEndpoint
         /// description.</param>
         /// <param name="availabilitySetName">The name of the AvailabilitySet
@@ -69,8 +72,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// created.</param>
         /// <param name="lastModified">The exact time the StreamingEndpoint was
         /// last modified.</param>
-        public StreamingEndpoint(int scaleUnits, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
-            : base(id, name, type, tags, location)
+        public StreamingEndpoint(string location, int scaleUnits, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+            : base(location, id, name, type, tags)
         {
             Description = description;
             ScaleUnits = scaleUnits;
@@ -204,8 +207,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
         }
     }
 }
