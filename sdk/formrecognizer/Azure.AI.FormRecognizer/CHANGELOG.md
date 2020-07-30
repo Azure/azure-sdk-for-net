@@ -10,6 +10,7 @@
 - Renamed the `FormRecognizerClient.StartRecognizeCustomForms` parameter `formFileStream` to `form`.
 - Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
 - Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
+- Renamed `FormValueType.Integer` to `FormValueType.Int64`.
 
 ### Fixes
 
