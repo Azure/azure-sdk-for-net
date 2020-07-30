@@ -19,22 +19,72 @@ namespace Microsoft.Azure.Management.BotService
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BotsOperations operations.
+    /// BotConnectionOperations operations.
     /// </summary>
-    public partial interface IBotsOperations
+    public partial interface IBotConnectionOperations
     {
         /// <summary>
-        /// Creates a Bot Service. Bot Service is a resource group wide
-        /// resource type.
+        /// Lists the available Service Providers for creating Connection
+        /// Settings
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ServiceProviderResponseList>> ListServiceProvidersWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get a Connection Setting registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConnectionSetting>> ListWithSecretsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Register a new Auth Connection for a Bot Service
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to provide for the created bot.
+        /// The parameters to provide for creating the Connection Setting.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,9 +101,9 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Bot>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Bot parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConnectionSetting>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, ConnectionSetting parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a Bot Service
+        /// Updates a Connection Setting registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Bot resource group in the user subscription.
@@ -61,137 +111,11 @@ namespace Microsoft.Azure.Management.BotService
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
-        /// <param name='location'>
-        /// Specifies the location of the resource.
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
         /// </param>
-        /// <param name='tags'>
-        /// Contains resource tags defined as key/value pairs.
-        /// </param>
-        /// <param name='sku'>
-        /// Gets or sets the SKU of the resource.
-        /// </param>
-        /// <param name='kind'>
-        /// Required. Gets or sets the Kind of the resource. Possible values
-        /// include: 'sdk', 'designer', 'bot', 'function'
-        /// </param>
-        /// <param name='etag'>
-        /// Entity Tag
-        /// </param>
-        /// <param name='properties'>
-        /// The set of properties specific to bot resource
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Bot>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), BotProperties properties = default(BotProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a Bot Service from the resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Bot resource group in the user subscription.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the Bot resource.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns a BotService specified by the parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Bot resource group in the user subscription.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the Bot resource.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Bot>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a
-        /// resource group
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Bot resource group in the user subscription.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Bot>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a
-        /// subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Bot>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Check whether a bot name is available.
-        /// </summary>
         /// <param name='parameters'>
-        /// The request body parameters to provide for the check name
-        /// availability request
+        /// The parameters to provide for updating the Connection Setting.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -208,10 +132,89 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResponseBody>> GetCheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequestBody parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConnectionSetting>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, ConnectionSetting parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns all the resources of a particular type belonging to a
-        /// resource group
+        /// Get a Connection Setting registration for a Bot Service
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConnectionSetting>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a Connection Setting registration for a Bot Service
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='connectionName'>
+        /// The name of the Bot Service Connection Setting resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string connectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns all the Connection Settings registered to a particular
+        /// BotService resource
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ConnectionSetting>>> ListByBotServiceWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns all the Connection Settings registered to a particular
+        /// BotService resource
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -231,29 +234,6 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Bot>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a
-        /// subscription.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Bot>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ConnectionSetting>>> ListByBotServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
