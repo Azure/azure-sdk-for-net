@@ -4,16 +4,16 @@
 
 ### Breaking changes
 
-- Property `Type` renamed to `ValueType` on `FieldValue`.
-- Property `DocumentName` renamed  to `Name` on `TrainingDocumentInfo`.
-- Property `IncludeSubFolders` renamed to `IncludeSubfolders` on `TrainingFileFilter`.
-- Parameter `formFileStream` renamed to `form` on `FormRecognizerClient.StartRecognizeCustomForms`.
-- Parameter `formFileUri` renamed to `formUri` on `FormRecognizerClient.StartRecognizeCustomFormsFromUri`.
-- `CustomFormModelStatus.Training` renamed to `CustomFormModelStatus.Creating`.
+- Renamed the `FieldValue` property `Type` to `ValueType`.
+- Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
+- Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomForms` parameter `formFileStream` to `form`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
+- Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
 
 ### Fixes
 
-- Constructor in `TrainingFileFilter` made public.
+- Made the `TrainingFileFilter` constructor public.
 - Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
 
 ### New Features
