@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.Advisor.Models
 {
 
     /// <summary>
-    /// Defines values for Category.
+    /// Defines values for DigestConfigState.
     /// </summary>
-    public static class Category
+    public static class DigestConfigState
     {
-        public const string HighAvailability = "HighAvailability";
-        public const string Security = "Security";
-        public const string Performance = "Performance";
-        public const string Cost = "Cost";
-        public const string OperationalExcellence = "OperationalExcellence";
+        public const string Active = "Active";
+        public const string Disabled = "Disabled";
     }
 }
