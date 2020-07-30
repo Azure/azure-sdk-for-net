@@ -1,5 +1,11 @@
 # Release History
 
+## 4.1.0-preview.2 (Unreleased)
+
+### Changed
+
+- Default service version is now 7.1.
+
 ## 4.0.3 (2020-07-09)
 
 ### Fixed
@@ -13,6 +19,12 @@
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add `RecoverableDays` property to `CertificateProperties`.
 
 ## 4.0.1 (2020-03-03)
 
