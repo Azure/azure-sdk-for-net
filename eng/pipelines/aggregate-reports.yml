@@ -16,7 +16,7 @@ jobs:
         inputs:
           version: '$(DotNetCoreSDKVersion)'
 
-      - template: ../common/pipelines/templates/steps/verify-links.yml
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: ""
 
