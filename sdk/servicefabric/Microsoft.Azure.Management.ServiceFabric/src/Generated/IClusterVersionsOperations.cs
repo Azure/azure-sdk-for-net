@@ -149,37 +149,5 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ClusterCodeVersionsListResult>> ListByEnvironmentWithHttpMessagesAsync(string location, string environment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the list of Service Fabric cluster code versions available for
-        /// the specified OS type.
-        /// </summary>
-        /// <remarks>
-        /// Gets all available code versions for Service Fabric cluster
-        /// resources by OS type.
-        /// </remarks>
-        /// <param name='location'>
-        /// The location for the cluster code versions. This is different from
-        /// cluster location.
-        /// </param>
-        /// <param name='osType'>
-        /// The operating system of the cluster. Possible values include:
-        /// 'Windows', 'Ubuntu', 'RedHat', 'Ubuntu18_04'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorModelException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IList<ManagedClusterVersionDetails>>> ListByOSWithHttpMessagesAsync(string location, string osType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

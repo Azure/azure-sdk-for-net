@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.ServiceFabric
         public virtual IManagedClustersOperations ManagedClusters { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedClusterVersionsOperations.
+        /// </summary>
+        public virtual IManagedClusterVersionsOperations ManagedClusterVersions { get; private set; }
+
+        /// <summary>
         /// Gets the INodeTypesOperations.
         /// </summary>
         public virtual INodeTypesOperations NodeTypes { get; private set; }
@@ -363,6 +368,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             Applications = new ApplicationsOperations(this);
             Services = new ServicesOperations(this);
             ManagedClusters = new ManagedClustersOperations(this);
+            ManagedClusterVersions = new ManagedClusterVersionsOperations(this);
             NodeTypes = new NodeTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

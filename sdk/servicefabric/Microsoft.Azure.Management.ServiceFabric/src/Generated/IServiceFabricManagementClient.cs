@@ -105,6 +105,11 @@ namespace Microsoft.Azure.Management.ServiceFabric
         IManagedClustersOperations ManagedClusters { get; }
 
         /// <summary>
+        /// Gets the IManagedClusterVersionsOperations.
+        /// </summary>
+        IManagedClusterVersionsOperations ManagedClusterVersions { get; }
+
+        /// <summary>
         /// Gets the INodeTypesOperations.
         /// </summary>
         INodeTypesOperations NodeTypes { get; }

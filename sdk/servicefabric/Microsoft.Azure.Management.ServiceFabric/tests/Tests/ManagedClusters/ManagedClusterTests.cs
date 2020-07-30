@@ -39,7 +39,7 @@ namespace ServiceFabric.Tests.Managed
                     Assert.True(e.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
                 }
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName);
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName, sku: "Basic");
                 Assert.NotNull(cluster);
                 Assert.Equal("Succeeded", cluster.ProvisioningState);
                 Assert.Equal("WaitingForNodes", cluster.ClusterState);
@@ -47,17 +47,36 @@ namespace ServiceFabric.Tests.Managed
                 var clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
                 Assert.Single(clusters);
 
-                var updateParams = new ManagedClusterUpdateParameters()
+                clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
+                Assert.Single(clusters);
+
+                cluster.ClientConnectionPort = 50000;
+                cluster.FabricSettings = new List<SettingsSectionDescription>()
                 {
-                    ClientConnectionPort = 5000
+                    new SettingsSectionDescription()
+                    {
+                        Name = "NamingService",
+                        Parameters = new List<SettingsParameterDescription>()
+                        {
+                            new SettingsParameterDescription()
+                            {
+                                Name = "MaxOperationTimeout",
+                                Value = "10001"
+                            }
+                        }
+                    }
                 };
 
-                serviceFabricClient.ManagedClusters.Update(resourceGroupName, clusterName, updateParams);
+                serviceFabricClient.ManagedClusters.CreateOrUpdate(resourceGroupName, clusterName, cluster);
                 cluster = serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName);
                 Assert.Equal("Succeeded", cluster.ProvisioningState);
                 Assert.Equal(50000, cluster.ClientConnectionPort);
+                Assert.NotNull(cluster.FabricSettings);
+                Assert.Single(cluster.FabricSettings);
 
                 serviceFabricClient.ManagedClusters.Delete(resourceGroupName, clusterName);
+                Assert.Throws<ErrorModelException>(() => serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName));
+
                 clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
                 Assert.True(!clusters.IsAny());
             }
@@ -72,8 +91,8 @@ namespace ServiceFabric.Tests.Managed
                 var resourceClient = GetResourceManagementClient(context);
                 var resourceGroupName = TestUtilities.GenerateName(ResourceGroupPrefix);
                 var clusterName = TestUtilities.GenerateName(ClusterNamePrefix);
-                var nodeTypeName1 = TestUtilities.GenerateName();
-                var nodeTypeName2 = TestUtilities.GenerateName();
+                var nodeTypeName1 = TestUtilities.GenerateName("pnt");
+                var nodeTypeName2 = TestUtilities.GenerateName("snt");
 
                 try
                 {
@@ -86,49 +105,35 @@ namespace ServiceFabric.Tests.Managed
                     Assert.True(e.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
                 }
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName);
-                cluster = serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName);
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName, sku: "Standard");
                 Assert.NotNull(cluster);
                 Assert.Equal("Succeeded", cluster.ProvisioningState);
                 Assert.Equal("WaitingForNodes", cluster.ClusterState);
 
-                var clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
-                Assert.Single(clusters);
-
                 // add primary node type
-                var primaryNodeType = this.CreateNodeType(resourceClient, serviceFabricClient, resourceGroupName, clusterName, nodeTypeName1, isPrimary: true, vmInstanceCount: 3);
+                var primaryNodeType = this.CreateNodeType(serviceFabricClient, resourceGroupName, clusterName, nodeTypeName1, isPrimary: true, vmInstanceCount: 5);
                 Assert.NotNull(primaryNodeType);
-                
-
-                // update node count on primary node type
-                var updateParams = new NodeTypeUpdateParameters()
-                {
-                    VmInstanceCount = 5
-                };
-
-                serviceFabricClient.NodeTypes.Update(resourceGroupName, clusterName, nodeTypeName1, updateParams);
-                primaryNodeType = serviceFabricClient.NodeTypes.Get(resourceGroupName, clusterName, nodeTypeName1);
-                Assert.NotNull(primaryNodeType);
-                Assert.Equal(5, primaryNodeType.VmInstanceCount);
-
-                // add secondary node type
-                var secondaryNodeType = this.CreateNodeType(resourceClient, serviceFabricClient, resourceGroupName, clusterName, nodeTypeName2, isPrimary: false, vmInstanceCount: 5);
-                Assert.NotNull(secondaryNodeType);
-                secondaryNodeType = serviceFabricClient.NodeTypes.Get(resourceGroupName, clusterName, nodeTypeName2);
-                Assert.NotNull(secondaryNodeType);
+                Assert.Equal("Succeeded", primaryNodeType.ProvisioningState);
 
                 var nodeTypes = serviceFabricClient.NodeTypes.ListByManagedClusters(resourceGroupName, clusterName);
-                Assert.Equal(2, nodeTypes.Count());
-
-                // delete secondary node type
-                serviceFabricClient.NodeTypes.Delete(resourceGroupName, clusterName, nodeTypeName2);
-
-                nodeTypes = serviceFabricClient.NodeTypes.ListByManagedClusters(resourceGroupName, clusterName);
                 Assert.Single(nodeTypes);
 
+                // update node count on primary node type
+                primaryNodeType.VmInstanceCount = 6;
+
+                serviceFabricClient.NodeTypes.CreateOrUpdate(resourceGroupName, clusterName, nodeTypeName1, primaryNodeType);
+                primaryNodeType = serviceFabricClient.NodeTypes.Get(resourceGroupName, clusterName, nodeTypeName1);
+                Assert.Equal(6, primaryNodeType.VmInstanceCount);
+
+                // add secondary node type
+                var secondaryNodeType = this.CreateNodeType(serviceFabricClient, resourceGroupName, clusterName, nodeTypeName2, isPrimary: false, vmInstanceCount: 5);
+                Assert.False(secondaryNodeType.IsPrimary);
+
+                nodeTypes = serviceFabricClient.NodeTypes.ListByManagedClusters(resourceGroupName, clusterName);
+                Assert.Equal(2, nodeTypes.Count());
+
                 serviceFabricClient.ManagedClusters.Delete(resourceGroupName, clusterName);
-                clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
-                Assert.True(!clusters.IsAny());
+                Assert.Throws<ErrorModelException>(() => serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName));
             }
         }
 
@@ -141,7 +146,7 @@ namespace ServiceFabric.Tests.Managed
                 var resourceClient = GetResourceManagementClient(context);
                 var resourceGroupName = TestUtilities.GenerateName(ResourceGroupPrefix);
                 var clusterName = TestUtilities.GenerateName(ClusterNamePrefix);
-                var nodeTypeName = TestUtilities.GenerateName();
+                var nodeTypeName = TestUtilities.GenerateName("nt");
 
                 try
                 {
@@ -154,24 +159,36 @@ namespace ServiceFabric.Tests.Managed
                     Assert.True(e.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
                 }
 
-                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName);
+                var cluster = this.CreateManagedCluster(resourceClient, serviceFabricClient, resourceGroupName, Location, clusterName, sku: "Basic");
                 cluster = serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName);
                 Assert.NotNull(cluster);
                 Assert.Equal("Succeeded", cluster.ProvisioningState);
                 Assert.Equal("WaitingForNodes", cluster.ClusterState);
 
-                var clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
-                Assert.Single(clusters);
-
                 // add primary node type
-                var primaryNodeType = this.CreateNodeType(resourceClient, serviceFabricClient, resourceGroupName, clusterName, nodeTypeName, isPrimary: true, vmInstanceCount: 5);
-                Assert.NotNull(primaryNodeType);
+                var primaryNodeType = this.CreateNodeType(serviceFabricClient, resourceGroupName, clusterName, nodeTypeName, isPrimary: true, vmInstanceCount: 7);
 
-                serviceFabricClient.n
+                var postParams = new NodeTypeActionParameters()
+                {
+                    Nodes = new List<string>()
+                    {
+                        $"{nodeTypeName}_3",
+                        $"{nodeTypeName}_4"
+                    }
+                };
+
+                // Restart nodes
+                serviceFabricClient.NodeTypes.Restart(resourceGroupName, clusterName, nodeTypeName, postParams);
+                primaryNodeType = serviceFabricClient.NodeTypes.Get(resourceGroupName, clusterName, nodeTypeName);
+                Assert.Equal(7, primaryNodeType.VmInstanceCount);
+
+                // Delete nodes
+                serviceFabricClient.NodeTypes.DeleteNode(resourceGroupName, clusterName, nodeTypeName, postParams);
+                primaryNodeType = serviceFabricClient.NodeTypes.Get(resourceGroupName, clusterName, nodeTypeName);
+                Assert.True(primaryNodeType.IsPrimary);
 
                 serviceFabricClient.ManagedClusters.Delete(resourceGroupName, clusterName);
-                clusters = serviceFabricClient.ManagedClusters.ListByResourceGroup(resourceGroupName);
-                Assert.True(!clusters.IsAny());
+                Assert.Throws<ErrorModelException>(() => serviceFabricClient.ManagedClusters.Get(resourceGroupName, clusterName));
             }
         }
     }

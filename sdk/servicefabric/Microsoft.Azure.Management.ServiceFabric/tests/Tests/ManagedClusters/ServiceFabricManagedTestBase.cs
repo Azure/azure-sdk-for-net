@@ -38,32 +38,19 @@ namespace ServiceFabric.Tests.Managed
             });
         }
 
-        protected IPage<GenericResource> GetAllServiceFabricManagedClusterResources(
-            MockContext context,
-            ResourceGroup rg)
-        {
-            var resouceClient = GetResourceManagementClient(context);
-
-            var query = new Microsoft.Rest.Azure.OData.ODataQuery<
-                GenericResourceFilter>();
-            query.SetFilter(
-                f => f.ResourceType == "Microsoft.ServiceFabric/managedClusters");
-
-            return resouceClient.ResourceGroups.ListResources(rg.Name, query);
-        }
-
         protected ManagedCluster CreateManagedCluster(
             ResourceManagementClient resouceClient,
             ServiceFabricManagementClient serviceFabricClient,
             string rg,
             string rgLocation,
-            string clusterName)
+            string clusterName,
+            string sku)
         {
             var newCluster = new ManagedCluster(
                   location: rgLocation,
                   sku: new Sku()
                   {
-                      Name = "Basic"
+                      Name = sku
                   },
                   dnsName: clusterName,
                   adminPassword: "Password123!@#",
@@ -85,14 +72,10 @@ namespace ServiceFabric.Tests.Managed
 
             var cluster = serviceFabricClient.ManagedClusters.CreateOrUpdate(rg, clusterName, newCluster);
             Assert.NotNull(cluster);
-
-            cluster = serviceFabricClient.ManagedClusters.Get(rg, clusterName);
-            Assert.NotNull(cluster);
             return cluster;
         }
 
         protected NodeType CreateNodeType(
-            ResourceManagementClient resouceClient,
             ServiceFabricManagementClient serviceFabricClient,
             string rg,
             string clusterName,
@@ -103,7 +86,7 @@ namespace ServiceFabric.Tests.Managed
             var newNodeType = new NodeType(
                 isPrimary: isPrimary,
                 vmInstanceCount: vmInstanceCount,
-                diskSizeInGB: 100,
+                dataDiskSizeGB: 100,
                 vmSize: "Standard_D2",
                 vmImagePublisher: "MicrosoftWindowsServer",
                 vmImageOffer: "WindowsServer",
@@ -112,9 +95,6 @@ namespace ServiceFabric.Tests.Managed
                 );
 
             var nodeType = serviceFabricClient.NodeTypes.CreateOrUpdate(rg, clusterName, nodeTypeName, newNodeType);
-            Assert.NotNull(nodeType);
-
-            nodeType = serviceFabricClient.NodeTypes.Get(rg, clusterName, nodeTypeName);
             Assert.NotNull(nodeType);
             return nodeType;
         }

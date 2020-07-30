@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="vmInstanceCount">The number of nodes in the node type.
         /// This count should match the capacity property in the corresponding
         /// VirtualMachineScaleSet resource.</param>
-        /// <param name="diskSizeInGB">Disk size for each vm in the node type
+        /// <param name="dataDiskSizeGB">Disk size for each vm in the node type
         /// in GBs.</param>
         /// <param name="id">Azure resource identifier.</param>
         /// <param name="name">Azure resource name.</param>
@@ -79,12 +79,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// managed cluster resource. Possible values include: 'None',
         /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
         /// 'Canceled', 'Deleting', 'Deleted', 'Other'</param>
-        public NodeType(bool isPrimary, int vmInstanceCount, int diskSizeInGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), string provisioningState = default(string))
+        public NodeType(bool isPrimary, int vmInstanceCount, int dataDiskSizeGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), string provisioningState = default(string))
             : base(id, name, type, tags)
         {
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
-            DiskSizeInGB = diskSizeInGB;
+            DataDiskSizeGB = dataDiskSizeGB;
             PlacementProperties = placementProperties;
             Capacities = capacities;
             ApplicationPorts = applicationPorts;
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets disk size for each vm in the node type in GBs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.diskSizeInGB")]
-        public int DiskSizeInGB { get; set; }
+        [JsonProperty(PropertyName = "properties.dataDiskSizeGB")]
+        public int DataDiskSizeGB { get; set; }
 
         /// <summary>
         /// Gets or sets the placement tags applied to nodes in the node type,

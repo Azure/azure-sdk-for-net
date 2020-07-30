@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -228,60 +226,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
             public static async Task<ClusterCodeVersionsListResult> ListByEnvironmentAsync(this IClusterVersionsOperations operations, string location, string environment, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByEnvironmentWithHttpMessagesAsync(location, environment, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of Service Fabric cluster code versions available for the
-            /// specified OS type.
-            /// </summary>
-            /// <remarks>
-            /// Gets all available code versions for Service Fabric cluster resources by OS
-            /// type.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location for the cluster code versions. This is different from cluster
-            /// location.
-            /// </param>
-            /// <param name='osType'>
-            /// The operating system of the cluster. Possible values include: 'Windows',
-            /// 'Ubuntu', 'RedHat', 'Ubuntu18_04'
-            /// </param>
-            public static IList<ManagedClusterVersionDetails> ListByOS(this IClusterVersionsOperations operations, string location, string osType)
-            {
-                return operations.ListByOSAsync(location, osType).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of Service Fabric cluster code versions available for the
-            /// specified OS type.
-            /// </summary>
-            /// <remarks>
-            /// Gets all available code versions for Service Fabric cluster resources by OS
-            /// type.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location for the cluster code versions. This is different from cluster
-            /// location.
-            /// </param>
-            /// <param name='osType'>
-            /// The operating system of the cluster. Possible values include: 'Windows',
-            /// 'Ubuntu', 'RedHat', 'Ubuntu18_04'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<ManagedClusterVersionDetails>> ListByOSAsync(this IClusterVersionsOperations operations, string location, string osType, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByOSWithHttpMessagesAsync(location, osType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

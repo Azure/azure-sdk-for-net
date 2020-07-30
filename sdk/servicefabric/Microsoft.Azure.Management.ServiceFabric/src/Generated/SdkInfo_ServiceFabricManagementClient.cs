@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 new Tuple<string, string, string>("ServiceFabric", "ApplicationTypeVersions", "2020-03-01"),
                 new Tuple<string, string, string>("ServiceFabric", "ApplicationTypes", "2020-03-01"),
                 new Tuple<string, string, string>("ServiceFabric", "Applications", "2020-03-01"),
-                new Tuple<string, string, string>("ServiceFabric", "ClusterVersions", "2020-01-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "ClusterVersions", "2020-03-01"),
                 new Tuple<string, string, string>("ServiceFabric", "Clusters", "2020-03-01"),
+                new Tuple<string, string, string>("ServiceFabric", "ManagedClusterVersions", "2020-01-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "ManagedClusters", "2020-01-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "NodeTypes", "2020-01-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "Operations", "2020-01-01-preview"),
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/servicefabric/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9a54501ec38eda0daa0bf1d9af106473cc0536d4";
+      public static readonly String GithubCommidId = "4873ee82eef44772dec2b6c26d9b5a094c393b21";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
