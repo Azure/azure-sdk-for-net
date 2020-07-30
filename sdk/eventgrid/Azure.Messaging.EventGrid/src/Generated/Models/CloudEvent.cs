@@ -6,11 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema. </summary>
-    public partial class CloudEvent
+    public partial class CloudEvent : IDictionary<string, object>
     {
         /// <summary> Initializes a new instance of CloudEvent. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
@@ -41,6 +44,7 @@ namespace Azure.Messaging.EventGrid.Models
             Source = source;
             Type = type;
             Specversion = specversion;
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
@@ -49,6 +53,8 @@ namespace Azure.Messaging.EventGrid.Models
         public string Source { get; }
         /// <summary> Event data specific to the event type. </summary>
         public object Data { get; set; }
+        /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
+        public string DataBase64 { get; set; }
         /// <summary> Type of event related to the originating occurrence. </summary>
         public string Type { get; }
         /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
@@ -61,5 +67,42 @@ namespace Azure.Messaging.EventGrid.Models
         public string Datacontenttype { get; set; }
         /// <summary> This describes the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
+        internal IDictionary<string, object> AdditionalProperties { get; }
+        /// <inheritdoc />
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
+        /// <inheritdoc />
+        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
+        /// <inheritdoc />
+        public ICollection<string> Keys => AdditionalProperties.Keys;
+        /// <inheritdoc />
+        public ICollection<object> Values => AdditionalProperties.Values;
+        /// <inheritdoc />
+        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        /// <inheritdoc />
+        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
+        /// <inheritdoc />
+        public bool Remove(string key) => AdditionalProperties.Remove(key);
+        /// <inheritdoc />
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
+        /// <inheritdoc />
+        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
+        /// <inheritdoc />
+        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
+        /// <inheritdoc />
+        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
+        /// <inheritdoc />
+        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
+        /// <inheritdoc />
+        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
+        /// <inheritdoc />
+        public object this[string key]
+        {
+            get => AdditionalProperties[key];
+            set => AdditionalProperties[key] = value;
+        }
     }
 }
