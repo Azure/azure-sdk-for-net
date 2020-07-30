@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Training
             if (model.TrainResult != null)
             {
                 TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
-                Errors = ConvertToFormRecognizerError(model.TrainResult);
+                Errors = model.TrainResult.Errors;
             }
             else
             {
@@ -133,16 +133,6 @@ namespace Azure.AI.FormRecognizer.Training
                         docs.Status));
             }
             return trainingDocs;
-        }
-
-        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult trainResult)
-        {
-            var errors = new List<FormRecognizerError>();
-            foreach (var error in trainResult.Errors)
-            {
-                errors.Add(new FormRecognizerError(error.ErrorCode, error.Message));
-            }
-            return errors;
         }
     }
 }
