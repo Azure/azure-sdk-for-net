@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "subfolder" };
+            var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "subfolder" };
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
 
             await operation.WaitForCompletionAsync(PollingInterval);
@@ -119,7 +119,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "invalidPrefix" };
+            var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "invalidPrefix" };
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
