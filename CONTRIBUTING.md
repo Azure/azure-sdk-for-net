@@ -245,7 +245,7 @@ In `sdk\<ServiceName>`, you will find projects for services that have already be
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
 2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://azure.github.io/azure-sdk/policies_repostructure.html)
    - Client library packages are in a folder name like **_`Azure.<GroupName>.<ServiceName>`_**
-   - Management library packages are in a folder named like **_`Azure.Management.<ResourceProviderName>`_**
+   - Management library packages are in a folder named like **_`Azure.ResourceManager.<ResourceProviderName>`_**
    - More details on package and namespace names can be found [in the guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#general-azure-sdk-library-design)
 3. For *management libraries*, each shipping package contains a project for their **generated** and/or **Customization** code
    - The folder **'Generated'** contains the generated code
@@ -283,13 +283,13 @@ sdk\<service name>\<package name>\*samples*
 e.g.
 
 ```
-sdk\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj
-sdk\eventgrid\Azure.Messaging.EventGrid\tests\Azure.Messaging.EventGrid.Tests.csproj
-sdk\eventgrid\Azure.Management.EventGrid\src\Azure.Management.EventGrid.csproj
-sdk\eventgrid\Azure.Management.EventGrid\tests\Azure.Management.EventGrid.Tests.csproj
+sdk\appconfiguration\Azure.Data.AppConfiguration\src\Azure.Data.AppConfiguration.csproj
+sdk\appconfiguration\Azure.Data.AppConfiguration\tests\Azure.Data.AppConfiguration.Tests.csproj
+sdk\appconfiguration\Azure.ResourceManager.AppConfiguration\src\Azure.ResourceManager.AppConfiguration.csproj
+sdk\appconfiguration\Azure.ResourceManager.AppConfiguration\tests\Azure.ResourceManager.AppConfiguration.Tests.csproj
 ```
 
-> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) repo, that your csproj files starts with **Azure**, that test files end with **.Tests** and that management plane project files contain **.Management.**
+> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) repo, that your csproj files starts with **Azure**, that test files end with **.Tests** and that management plane project files contain **.ResourceManager.**
 If you are adding a new service directory, ensure that it is mapped to a friendly name at [ServiceMapping](https://github.com/Azure/azure-sdk-for-net/blob/8c1f53e9099bd5a674f9e77be7e4b1541cd6ab08/doc/ApiDocGeneration/Generate-DocIndex.ps1#L9-L64)
 
 7. Copy .csproj from any other .csproj and update the following information in the new .csproj
@@ -310,7 +310,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 # On-boarding New generated code library
 
-1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g. `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
+1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.ResourceManager.*` for management libraries or `Azure.*` (e.g. `sdk/storage/Azure.ResourceManager.Storage` or `sdk/storage/Azure.Storage.Blobs`)
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
 ``` yaml
@@ -324,7 +324,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.ResourceManager.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 5. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
