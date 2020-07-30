@@ -576,11 +576,6 @@ namespace Microsoft.Azure.Management.Network
         IHubRouteTablesOperations HubRouteTables { get; }
 
         /// <summary>
-        /// Gets the IWebApplicationFirewallPoliciesOperations.
-        /// </summary>
-        IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
-
-        /// <summary>
         /// Creates a Bastion Shareable Links for all the VMs specified in the
         /// request.
         /// </summary>
