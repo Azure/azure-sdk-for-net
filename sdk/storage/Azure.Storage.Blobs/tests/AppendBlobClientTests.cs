@@ -795,8 +795,6 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateAsync();
 
             var data = GetRandomBuffer(blobSize);
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
             var timesFaulted = 0;
 
             // Act
@@ -807,14 +805,9 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                // Changing from Assert.AreEqual because these don't always update fast enough
-                if (progressList.Count > 0)
-                {
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
-                }
+                await blobFaulty.AppendBlockAsync(stream);
+
+                Assert.AreEqual(stream.Length, stream.Position);
             }
 
             // Assert

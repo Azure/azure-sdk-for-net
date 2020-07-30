@@ -53,7 +53,7 @@ namespace Azure.Data.Tables.Samples
 
                 // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode (which defaults to Merge if not given).
                 // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-                await client.UpsertEntityAsync(entity, UpdateMode.Replace);
+                await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
                 #endregion
 
 

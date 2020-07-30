@@ -119,7 +119,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void TestPOCOFilterExpressions(string expectedFilter, Expression<Func<ComplexEntity, bool>> expression)
         {
-            var filter = TableClient.CreateFilter(expression);
+            var filter = TableClient.CreateQueryFilter(expression);
 
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }
@@ -128,7 +128,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void TestDictionaryTableEntityFilterExpressions(string expectedFilter, Expression<Func<TableEntity, bool>> expression)
         {
-            var filter = TableClient.CreateFilter(expression);
+            var filter = TableClient.CreateQueryFilter(expression);
 
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }

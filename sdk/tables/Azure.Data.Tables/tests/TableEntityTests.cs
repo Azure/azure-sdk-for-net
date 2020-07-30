@@ -33,7 +33,7 @@ namespace Azure.Tables.Tests
         /// Validates the typed getters.
         /// </summary>
         [Test]
-        public void ValidateDynamicEntityGetTypes()
+        public void ValidateDictionaryTableEntityGetTypes()
         {
             Assert.That(entityWithAllTypes.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
             Assert.That(entityWithAllTypes.GetBoolean("boolean"), Is.InstanceOf(typeof(bool)));
@@ -48,7 +48,7 @@ namespace Azure.Tables.Tests
         /// Validates the typed getters throws InvalidOperationException when the retrieved value doesn't match the type.
         /// </summary>
         [Test]
-        public void DynamicEntityGetWrongTypesThrows()
+        public void DictionaryEntityGetWrongTypesThrows()
         {
             Assert.That(() => entityWithAllTypes.GetBinary("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a Binary.");
             Assert.That(() => entityWithAllTypes.GetBoolean("datetime"), Throws.InstanceOf<InvalidOperationException>(), "GetBoolean should validate that the value for the inputted key is a Boolean.");
@@ -60,13 +60,26 @@ namespace Azure.Tables.Tests
         }
 
         /// <summary>
+        /// Validates getters for non-nullable types involving null. (ex. DateTime, int)
+        /// </summary>
+        [Test]
+        public void ValidateDictionaryTableEntityGetNonNullType()
+        {
+            var dummyKey = "I'm a little dumb";
+            Assert.That(entityWithAllTypes.GetBoolean(dummyKey), Is.Null);
+            Assert.That(entityWithAllTypes.GetDateTime(dummyKey), Is.Null);
+            Assert.That(entityWithAllTypes.GetDouble(dummyKey), Is.Null);
+            Assert.That(entityWithAllTypes.GetInt32(dummyKey), Is.Null);
+            Assert.That(entityWithAllTypes.GetInt64(dummyKey), Is.Null);
+        }
+
+        /// <summary>
         /// Validates getting properties involving null.
         /// </summary>
         [Test]
-        public void DynamicEntityGetNullOrNonexistentProperties()
+        public void DictionaryEntityGetNullOrNonexistentProperties()
         {
-            // Test getting new property works.
-            Assert.That(entityWithoutPK.TryGetValue(TableConstants.PropertyNames.PartitionKey, out _), Is.False);
+            // Test getting nonexistent property works.
             Assert.That(entityWithoutPK.PartitionKey, Is.Null);
 
             // Test getting a property that was set to null.
@@ -78,7 +91,7 @@ namespace Azure.Tables.Tests
         /// Validates setting values makes correct changes.
         /// </summary>
         [Test]
-        public void ValidateDynamicEntitySetType()
+        public void ValidateDictionaryEntitySetType()
         {
             var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
 
@@ -91,7 +104,7 @@ namespace Azure.Tables.Tests
         /// Validates setting values to a different type throws InvalidOperationException.
         /// </summary>
         [Test]
-        public void DynamicEntitySetWrongTypeThrows()
+        public void DictionaryEntitySetWrongTypeThrows()
         {
             var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
 
@@ -102,7 +115,7 @@ namespace Azure.Tables.Tests
         /// Validates setting required and additional properties involving null.
         /// </summary>
         [Test]
-        public void DynamicEntitySetNullProperties()
+        public void DictionaryEntitySetNullProperties()
         {
             var entity = new TableEntity("partition", "row");
 
