@@ -15,7 +15,9 @@ namespace Azure.Storage.Blobs
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, container, or blob.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata">
+    /// Naming and Referencing Containers, Blobs, and Metadata</see>.
     /// </summary>
     public class BlobUriBuilder
     {

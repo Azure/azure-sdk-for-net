@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
         public NotebookMetadata()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Kernelspec = kernelspec;
             LanguageInfo = languageInfo;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Kernel information. </summary>

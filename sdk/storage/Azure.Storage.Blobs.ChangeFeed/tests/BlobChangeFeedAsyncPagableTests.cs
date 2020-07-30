@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
@@ -20,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        [Ignore("")]
+        [Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -35,7 +34,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        [Ignore("")]
+        [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
         {
             int pageSize = 100;
@@ -57,7 +56,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        [Ignore("")]
+        [Ignore("For debugging larger Change Feeds locally")]
         public async Task CursorTest()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

@@ -138,7 +138,7 @@ An Azure Cognitive Search service contains one or more indexes that provide
 persistent storage of searchable data in the form of JSON documents.  _(If
 you're brand new to search, you can make a very rough analogy between
 indexes and database tables.)_  The Azure.Search.Documents client library
-exposes operations on these resources through two main client types.
+exposes operations on these resources through three main client types.
 
 * `SearchClient` helps with:
   * [Searching](https://docs.microsoft.com/azure/search/search-lucene-query-architecture)
@@ -155,10 +155,9 @@ exposes operations on these resources through two main client types.
 * `SearchIndexClient` allows you to:
   * [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
   * [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
-  * Most of the `SearchServiceClient` functionality is not yet available in our current preview
 
 * `SearchIndexerClient` allows you to:
-  * [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
+  * [Create indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
   * [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
 
 _The `Azure.Search.Documents` client library (v11) is a brand new offering for

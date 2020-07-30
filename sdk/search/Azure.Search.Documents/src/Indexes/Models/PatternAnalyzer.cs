@@ -35,7 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets a list of stopwords.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<string> Stopwords { get; }
     }
 }

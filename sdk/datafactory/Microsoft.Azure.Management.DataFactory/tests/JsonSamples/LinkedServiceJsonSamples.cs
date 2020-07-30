@@ -2473,6 +2473,7 @@ namespace DataFactory.Tests.JsonSamples
             newClusterNumOfWorker: ""1"",
             newClusterNodeType: ""Standard_DS3_v2"",
             newClusterDriverNodeType: ""Standard_DS3_v2"",
+            newClusterLogDestination: ""dbfs:/test"",
             newClusterInitScripts: [
                 ""someScript""
             ],
@@ -2637,6 +2638,27 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
             ""server"": ""fakeserver"",
             ""systemNumber"": ""00"",
+            ""clientId"": ""800"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SapOpenHubWithMessageServerLinkedService = @"
+{
+    ""name"": ""SapBwOpenHubLinkedService"",
+    ""properties"": {
+        ""type"": ""SapOpenHub"",
+        ""typeProperties"": {
+            ""messageServer"": ""fakeserver"",
+            ""messageServerService"": ""00"",
+            ""systemId"": ""ecc"",
+            ""logonGroup"": ""fakegp"",
             ""clientId"": ""800"",
             ""userName"": ""fakeusr"",
             ""password"": {

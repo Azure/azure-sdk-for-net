@@ -19,6 +19,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventType"> The type of the event that occurred. </param>
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> is null. </exception>
         public EventGridEvent(string id, string subject, object data, string eventType, DateTimeOffset eventTime, string dataVersion)
         {
             if (id == null)
@@ -47,27 +48,6 @@ namespace Azure.Messaging.EventGrid.Models
             Data = data;
             EventType = eventType;
             EventTime = eventTime;
-            DataVersion = dataVersion;
-        }
-
-        /// <summary> Initializes a new instance of EventGridEvent. </summary>
-        /// <param name="id"> An unique identifier for the event. </param>
-        /// <param name="topic"> The resource path of the event source. </param>
-        /// <param name="subject"> A resource path relative to the topic path. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="eventType"> The type of the event that occurred. </param>
-        /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
-        /// <param name="metadataVersion"> The schema version of the event metadata. </param>
-        /// <param name="dataVersion"> The schema version of the data object. </param>
-        internal EventGridEvent(string id, string topic, string subject, object data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
-        {
-            Id = id;
-            Topic = topic;
-            Subject = subject;
-            Data = data;
-            EventType = eventType;
-            EventTime = eventTime;
-            MetadataVersion = metadataVersion;
             DataVersion = dataVersion;
         }
 

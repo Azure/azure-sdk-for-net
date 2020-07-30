@@ -11,6 +11,7 @@ namespace Azure.Core.TestFramework
 {
     public class MockTransport : HttpPipelineTransport
     {
+        private readonly object _syncObj = new object();
         private readonly Func<MockRequest, MockResponse> _responseFactory;
 
         public AsyncGate<MockRequest, MockResponse> RequestGate { get; }
@@ -27,7 +28,13 @@ namespace Azure.Core.TestFramework
         public MockTransport(params MockResponse[] responses)
         {
             var requestIndex = 0;
-            _responseFactory = req => responses[requestIndex++];
+            _responseFactory = req =>
+            {
+                lock (_syncObj)
+                {
+                    return responses[requestIndex++];
+                }
+            };
         }
 
         public MockTransport(Func<MockRequest, MockResponse> responseFactory)
@@ -63,7 +70,10 @@ namespace Azure.Core.TestFramework
             if (!(message.Request is MockRequest request))
                 throw new InvalidOperationException("the request is not compatible with the transport");
 
-            Requests.Add(request);
+            lock (_syncObj)
+            {
+                Requests.Add(request);
+            }
 
             if (RequestGate != null)
             {
@@ -82,6 +92,15 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public MockRequest SingleRequest => Requests.Single();
+        public MockRequest SingleRequest
+        {
+            get
+            {
+                lock (_syncObj)
+                {
+                    return Requests.Single();
+                }
+            }
+        }
     }
 }

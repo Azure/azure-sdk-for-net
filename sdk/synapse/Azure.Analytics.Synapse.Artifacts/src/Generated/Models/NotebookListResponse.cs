@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of NotebookListResponse. </summary>
         /// <param name="value"> List of Notebooks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NotebookListResponse(IEnumerable<NotebookResource> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of NotebookListResponse. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal NotebookListResponse(IReadOnlyList<NotebookResource> value, string nextLink)
         {
-            Value = value ?? new List<NotebookResource>();
+            Value = value;
             NextLink = nextLink;
         }
 

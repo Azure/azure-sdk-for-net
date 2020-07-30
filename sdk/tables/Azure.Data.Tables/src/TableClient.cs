@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,9 +70,10 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table in the storage account.
+        /// Creates the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
         public virtual Response<TableItem> Create(CancellationToken cancellationToken = default)
         {
@@ -79,7 +81,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -90,9 +92,10 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table in the storage account.
+        /// Creates the current table.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
         public virtual async Task<Response<TableItem>> CreateAsync(CancellationToken cancellationToken = default)
         {
@@ -100,8 +103,48 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the current table.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.Delete(table: _table, null, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the current table.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.DeleteAsync(table: _table, null, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -116,7 +159,69 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<DynamicTableEntity>> CreateEntityAsync(DynamicTableEntity entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.InsertEntityAsync(_table,
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
+
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The created Table entity.</returns>
+        public virtual Response<DynamicTableEntity> CreateEntity(DynamicTableEntity entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.InsertEntity(_table,
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
+
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The created Table entity.</returns>
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -146,8 +251,8 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The created Table entity.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -177,9 +282,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
@@ -208,7 +314,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
@@ -231,13 +337,156 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual Response<IDictionary<string, object>> GetEntity(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
+        public virtual async Task<Response<IDictionary<string, object>>> GetEntityAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull("message", nameof(partitionKey));
+            Argument.AssertNotNull("message", nameof(rowKey));
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetEntity)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                    _table,
+                    partitionKey,
+                    rowKey,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                IDictionary<string, object> entity = (IDictionary<string, object>)response.Value;
+                entity.CastAndRemoveAnnotations();
+                return Response.FromValue(entity, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpsertEntityAsync(IDictionary<string, object> entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -255,7 +504,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
                         partitionKey as string,
@@ -264,7 +513,7 @@ namespace Azure.Data.Tables
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(_table,
                         partitionKey as string,
@@ -291,8 +540,9 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual Response UpsertEntity(IDictionary<string, object> entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -310,7 +560,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
                         partitionKey as string,
@@ -319,7 +569,7 @@ namespace Azure.Data.Tables
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(_table,
                         partitionKey as string,
@@ -346,8 +596,9 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync<T>(T entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response> UpsertEntityAsync<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
@@ -355,7 +606,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
                         entity.PartitionKey,
@@ -364,7 +615,7 @@ namespace Azure.Data.Tables
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(_table,
                         entity.PartitionKey,
@@ -391,8 +642,9 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity<T>(T entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
@@ -400,7 +652,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
                         entity.PartitionKey,
@@ -409,7 +661,7 @@ namespace Azure.Data.Tables
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(_table,
                         entity.PartitionKey,
@@ -434,14 +686,15 @@ namespace Azure.Data.Tables
         /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -458,23 +711,23 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch,
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(_table,
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch,
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -494,14 +747,15 @@ namespace Azure.Data.Tables
         /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
+        public virtual Response UpdateEntity(IDictionary<string, object> entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -518,23 +772,23 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == UpdateMode.Replace)
+                if (mode == TableUpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch,
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == UpdateMode.Merge)
+                else if (mode == TableUpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(_table,
                         partitionKey as string,
                         rowKey as string,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: eTag,
+                        ifMatch: ifMatch,
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -555,20 +809,22 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
+                string selectArg = select == null ? null : string.Join(",", select);
                 return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 response.Value.Value.CastAndRemoveAnnotations();
@@ -582,7 +838,7 @@ namespace Azure.Data.Tables
 
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                     nextPartitionKey: NextPartitionKey,
                     nextRowKey: NextRowKey,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -606,11 +862,12 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
+            string selectArg = select == null ? null : string.Join(",", select);
 
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -619,7 +876,7 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                         cancellationToken: cancellationToken);
 
                     response.Value.Value.CastAndRemoveAnnotations();
@@ -644,7 +901,7 @@ namespace Azure.Data.Tables
 
                     var response = _tableOperations.QueryEntities(
                         _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                         nextPartitionKey: NextPartitionKey,
                         nextRowKey: NextRowKey,
                         cancellationToken: cancellationToken);
@@ -669,10 +926,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -687,7 +944,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -707,10 +964,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -730,57 +987,9 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
-        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            }, async (continuationToken, _) =>
-            {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
-
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Queries entities in the table.
-        /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -800,11 +1009,62 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
         /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            string selectArg = select == null ? null : string.Join(",", select);
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _tableOperations.QueryEntitiesAsync(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
+            }, async (continuationToken, _) =>
+            {
+                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                var response = await _tableOperations.QueryEntitiesAsync(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
+                    nextPartitionKey: NextPartitionKey,
+                    nextRowKey: NextRowKey,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
+            });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
+            string selectArg = select == null ? null : string.Join(",", select);
 
             return PageableHelpers.CreateEnumerable((int? _) =>
             {
@@ -813,7 +1073,7 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                         cancellationToken: cancellationToken);
 
                     return Page.FromValues(
@@ -836,7 +1096,7 @@ namespace Azure.Data.Tables
 
                     var response = _tableOperations.QueryEntities(
                         _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
                         nextPartitionKey: NextPartitionKey,
                         nextRowKey: NextRowKey,
                         cancellationToken: cancellationToken);
@@ -858,21 +1118,22 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(DeleteEntity)}");
             scope.Start();
             try
             {
                 return await _tableOperations.DeleteEntityAsync(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: eTag,
+                    ifMatch: ifMatch,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -888,21 +1149,22 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
+        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Delete(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        public virtual Response DeleteEntity(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(DeleteEntity)}");
             scope.Start();
             try
             {
                 return _tableOperations.DeleteEntity(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: eTag,
+                    ifMatch: ifMatch,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
             }
@@ -914,16 +1176,15 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
             scope.Start();
             try
             {
-                var response = await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.GetAccessPolicyAsync(_table, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -934,16 +1195,15 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
             scope.Start();
             try
             {
-                var response = _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
+                var response = _tableOperations.GetAccessPolicy(_table, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -955,16 +1215,15 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
             scope.Start();
             try
             {
-                return await _tableOperations.SetAccessPolicyAsync(_table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.SetAccessPolicyAsync(_table, tableAcl: tableAcl, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -975,16 +1234,15 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
             scope.Start();
             try
             {
-                return _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
+                return _tableOperations.SetAccessPolicy(_table, tableAcl: tableAcl, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -993,20 +1251,15 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal ExpressionParser GetExpressionParser()
-        {
-            if (_isPremiumEndpoint)
-            {
-                //TODO: Port TableExtensionExpressionParser
-                throw new NotImplementedException();
-            }
-            else
-            {
-                return new ExpressionParser();
-            }
-        }
+        /// <summary>
+        /// Creates an Odata filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expresssion.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
-        internal string Bind(Expression expression)
+        internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
@@ -1019,7 +1272,7 @@ namespace Azure.Data.Tables
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
             // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
-            ExpressionParser parser = GetExpressionParser();
+            ExpressionParser parser = new ExpressionParser();
             parser.Translate(normalizedExpression);
 
             // Return the FilterString.

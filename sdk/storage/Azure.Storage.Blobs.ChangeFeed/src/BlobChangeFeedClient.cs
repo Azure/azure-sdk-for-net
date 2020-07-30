@@ -7,12 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedClient.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed?tabs=azure-portal">
+    /// Change Feed</see>.
     /// </summary>
     public class BlobChangeFeedClient
     {
@@ -37,7 +40,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         public BlobChangeFeedClient(string connectionString)
         {
@@ -53,7 +58,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -61,7 +68,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// every request.
         /// </param>
         public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
-
         {
             _blobServiceClient = new BlobServiceClient(connectionString, options);
         }

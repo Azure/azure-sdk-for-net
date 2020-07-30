@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
         {
             if (apiVersion == null)
@@ -66,6 +66,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public async Task<Response> PublishEventsAsync(string topicHostname, IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
@@ -92,6 +93,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public Response PublishEvents(string topicHostname, IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
@@ -141,6 +143,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public async Task<Response> PublishCloudEventEventsAsync(string topicHostname, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
@@ -167,6 +170,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public Response PublishCloudEventEvents(string topicHostname, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
@@ -216,6 +220,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public async Task<Response> PublishCustomEventEventsAsync(string topicHostname, IEnumerable<object> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
@@ -242,6 +247,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicHostname"> The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net. </param>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
         public Response PublishCustomEventEvents(string topicHostname, IEnumerable<object> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)

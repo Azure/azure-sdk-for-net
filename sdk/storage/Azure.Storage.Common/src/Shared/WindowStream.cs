@@ -16,7 +16,7 @@ namespace Azure.Storage.Shared
     /// Exposes a predetermined slice of a larger stream using the same Stream interface.
     /// There should not be access to the base stream while this facade is in use.
     /// </summary>
-    internal abstract class WindowStream : StreamSlice
+    internal abstract class WindowStream : SlicedStream
     {
         private Stream InnerStream { get; }
 

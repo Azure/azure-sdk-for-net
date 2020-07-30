@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Keys != null)
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Secrets != null)
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Certificates != null)
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates");
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Storage != null)
+            if (Optional.IsCollectionDefined(Storage))
             {
                 writer.WritePropertyName("storage");
                 writer.WriteStartArray();
@@ -61,18 +61,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static Permissions DeserializePermissions(JsonElement element)
         {
-            IList<KeyPermissions> keys = default;
-            IList<SecretPermissions> secrets = default;
-            IList<CertificatePermissions> certificates = default;
-            IList<StoragePermissions> storage = default;
+            Optional<IList<KeyPermissions>> keys = default;
+            Optional<IList<SecretPermissions>> secrets = default;
+            Optional<IList<CertificatePermissions>> certificates = default;
+            Optional<IList<StoragePermissions>> storage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<KeyPermissions> array = new List<KeyPermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -83,10 +79,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("secrets"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecretPermissions> array = new List<SecretPermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -97,10 +89,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("certificates"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<CertificatePermissions> array = new List<CertificatePermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,10 +99,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("storage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<StoragePermissions> array = new List<StoragePermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new Permissions(keys, secrets, certificates, storage);
+            return new Permissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
         /// </summary>
         ///
-        private readonly Dictionary<string, List<EventProcessorPartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<EventProcessorPartitionOwnership>>();
+        private readonly Dictionary<string, List<EventProcessorPartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<EventProcessorPartitionOwnership>>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
@@ -195,6 +195,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             // by others.  The expiration time defaults to 30 seconds, but it may be overridden by a derived class.
 
             var utcNow = DateTimeOffset.UtcNow;
+            var activeOwnership = default(EventProcessorPartitionOwnership);
 
             ActiveOwnershipWithDistribution.Clear();
             ActiveOwnershipWithDistribution[OwnerIdentifier] = new List<EventProcessorPartitionOwnership>();
@@ -203,16 +204,38 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (utcNow.Subtract(ownership.LastModifiedTime) < OwnershipExpiration && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                 {
-                    if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
+                    activeOwnership = ownership;
+
+                    // If a processor crashes and restarts, then it is possible for it to own partitions that it is not currently
+                    // tracking as owned.  Test for this case and ensure that ownership is tracked and extended.
+
+                    if ((string.Equals(ownership.OwnerIdentifier, OwnerIdentifier, StringComparison.OrdinalIgnoreCase)) && (!InstanceOwnership.ContainsKey(ownership.PartitionId)))
                     {
-                        ActiveOwnershipWithDistribution[ownership.OwnerIdentifier].Add(ownership);
+                        (_, activeOwnership) = await ClaimOwnershipAsync(ownership.PartitionId, new[] { ownership }, cancellationToken).ConfigureAwait(false);
+
+                        // If the claim failed, then the ownership period was not extended.  Since the original ownership had not
+                        // yet expired prior to the claim attempt, consider the original to be the active ownership for this cycle.
+
+                        if (activeOwnership == default)
+                        {
+                            activeOwnership = ownership;
+                        }
+
+                        InstanceOwnership[activeOwnership.PartitionId] = activeOwnership;
+                    }
+
+                    // Update active ownership and trim the unclaimed partitions.
+
+                    if (ActiveOwnershipWithDistribution.ContainsKey(activeOwnership.OwnerIdentifier))
+                    {
+                        ActiveOwnershipWithDistribution[activeOwnership.OwnerIdentifier].Add(activeOwnership);
                     }
                     else
                     {
-                        ActiveOwnershipWithDistribution[ownership.OwnerIdentifier] = new List<EventProcessorPartitionOwnership> { ownership };
+                        ActiveOwnershipWithDistribution[activeOwnership.OwnerIdentifier] = new List<EventProcessorPartitionOwnership> { activeOwnership };
                     }
 
-                    unclaimedPartitions.Remove(ownership.PartitionId);
+                    unclaimedPartitions.Remove(activeOwnership.PartitionId);
                 }
             }
 
@@ -289,16 +312,16 @@ namespace Azure.Messaging.EventHubs.Primitives
             var ownedPartitionsCount = ActiveOwnershipWithDistribution[OwnerIdentifier].Count;
             Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier);
 
-            // There are two possible situations in which we may need to claim a partition ownership.
+            // There are two possible situations in which we may need to claim a partition ownership:
             //
-            // The first one is when we are below the minimum amount of owned partitions.  There's nothing more to check, as we need to claim more
-            // partitions to enforce balancing.
+            //   - The first one is when we are below the minimum amount of owned partitions.  There's nothing more to check, as we need to claim more
+            //     partitions to enforce balancing.
             //
-            // The second case is a bit tricky.  Sometimes the claim must be performed by an event processor that already has reached the minimum
-            // amount of ownership.  This may happen, for instance, when we have 13 partitions and 3 processors, each of them owning 4 partitions.
-            // The minimum amount of partitions per processor is, in fact, 4, but in this example we still have 1 orphan partition to claim.  To
-            // avoid overlooking this kind of situation, we may want to claim an ownership when we have exactly the minimum amount of ownership,
-            // but we are making sure there are no better candidates among the other event processors.
+            //   - The second case is a bit tricky.  Sometimes the claim must be performed by an event processor that already has reached the minimum
+            //     amount of ownership.  This may happen, for instance, when we have 13 partitions and 3 processors, each of them owning 4 partitions.
+            //     The minimum amount of partitions per processor is, in fact, 4, but in this example we still have 1 orphan partition to claim.  To
+            //     avoid overlooking this kind of situation, we may want to claim an ownership when we have exactly the minimum amount of ownership,
+            //     but we are making sure there are no better candidates among the other event processors.
 
             if (ownedPartitionsCount < minimumOwnedPartitionsCount
                 || (ownedPartitionsCount == minimumOwnedPartitionsCount && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
@@ -332,7 +355,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     var ownedPartitions = ActiveOwnershipWithDistribution[key];
 
-                    if (ownedPartitions.Count < maximumOwnedPartitionsCount || key == OwnerIdentifier)
+                    if (ownedPartitions.Count < maximumOwnedPartitionsCount || string.Equals(key, OwnerIdentifier, StringComparison.OrdinalIgnoreCase))
                     {
                         // Skip if the common case is true.
 

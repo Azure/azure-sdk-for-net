@@ -30,7 +30,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
@@ -88,6 +88,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillset"/> is null. </exception>
         public async Task<Response<SearchIndexerSkillset>> CreateOrUpdateAsync(string skillsetName, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -108,14 +109,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +123,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillset"/> is null. </exception>
         public Response<SearchIndexerSkillset> CreateOrUpdate(string skillsetName, SearchIndexerSkillset skillset, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -149,14 +144,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,6 +185,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string skillsetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -221,6 +210,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
         public Response Delete(string skillsetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -263,6 +253,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
         public async Task<Response<SearchIndexerSkillset>> GetAsync(string skillsetName, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -278,14 +269,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -296,6 +280,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
         public Response<SearchIndexerSkillset> Get(string skillsetName, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
@@ -311,14 +296,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,14 +339,7 @@ namespace Azure.Search.Documents
                     {
                         ListSkillsetsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
-                        }
+                        value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -389,14 +360,7 @@ namespace Azure.Search.Documents
                     {
                         ListSkillsetsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
-                        }
+                        value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -429,6 +393,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
         public async Task<Response<SearchIndexerSkillset>> CreateAsync(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
@@ -444,14 +409,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,6 +420,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillset"/> is null. </exception>
         public Response<SearchIndexerSkillset> Create(SearchIndexerSkillset skillset, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
@@ -477,14 +436,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

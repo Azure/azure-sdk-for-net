@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public MagentoLinkedService(object host)
         {
             if (host == null)

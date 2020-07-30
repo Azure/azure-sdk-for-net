@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="description">The operation description.</param>
         /// <param name="isCancellable">Whether the operation can be
         /// cancelled.</param>
-        public ManagedInstanceOperation(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?))
+        /// <param name="operationParameters">The operation parameters.</param>
+        /// <param name="operationSteps">The operation steps.</param>
+        public ManagedInstanceOperation(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?), ManagedInstanceOperationParametersPair operationParameters = default(ManagedInstanceOperationParametersPair), ManagedInstanceOperationSteps operationSteps = default(ManagedInstanceOperationSteps))
             : base(id, name, type)
         {
             ManagedInstanceName = managedInstanceName;
@@ -73,6 +75,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             EstimatedCompletionTime = estimatedCompletionTime;
             Description = description;
             IsCancellable = isCancellable;
+            OperationParameters = operationParameters;
+            OperationSteps = operationSteps;
             CustomInit();
         }
 
@@ -161,6 +165,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCancellable")]
         public bool? IsCancellable { get; private set; }
+
+        /// <summary>
+        /// Gets the operation parameters.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationParameters")]
+        public ManagedInstanceOperationParametersPair OperationParameters { get; private set; }
+
+        /// <summary>
+        /// Gets the operation steps.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationSteps")]
+        public ManagedInstanceOperationSteps OperationSteps { get; private set; }
 
     }
 }

@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -353,8 +351,6 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
             var data = GetRandomBuffer(blobSize);
 
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
             var timesFaulted = 0;
             // Act
             using (var stream = new FaultyStream(
@@ -364,12 +360,9 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
+                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null);
 
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                Assert.AreEqual(stream.Length, stream.Position);
             }
 
             // Assert
@@ -838,10 +831,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CommitBlockListAsync(commitList, options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -1666,10 +1659,10 @@ namespace Azure.Storage.Blobs.Test
                     options: options);
             }
 
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [LiveOnly]
@@ -1977,8 +1970,6 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
             var data = GetRandomBuffer(blobSize);
 
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
             var timesFaulted = 0;
 
             // Act
@@ -1989,12 +1980,9 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
+                await blobFaulty.UploadAsync(stream, null, metadata, null);
 
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressList.LastOrDefault(), "Final progress has unexpected value");
+                Assert.AreEqual(stream.Length, stream.Position);
             }
 
             // Assert

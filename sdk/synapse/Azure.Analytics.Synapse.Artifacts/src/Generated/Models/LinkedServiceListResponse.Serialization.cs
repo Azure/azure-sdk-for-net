@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
         {
             IReadOnlyList<LinkedServiceResource> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkedServiceResource> array = new List<LinkedServiceResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
-                        }
+                        array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LinkedServiceListResponse(value, nextLink);
+            return new LinkedServiceListResponse(value, nextLink.Value);
         }
     }
 }

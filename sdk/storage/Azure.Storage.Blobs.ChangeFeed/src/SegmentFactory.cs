@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -38,7 +37,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             // Models we need for later
             List<Shard> shards = new List<Shard>();
-            DateTimeOffset dateTime = manifestPath.ToDateTimeOffset().Value;
+            DateTimeOffset dateTime = BlobChangeFeedExtensions.ToDateTimeOffset(manifestPath).Value;
             int shardIndex = cursor?.ShardIndex ?? 0;
 
             // Download segment manifest

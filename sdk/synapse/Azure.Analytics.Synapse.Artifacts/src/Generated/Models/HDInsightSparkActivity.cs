@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="rootPath"> The root path in &apos;sparkJobLinkedService&apos; for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/>, or <paramref name="entryFilePath"/> is null. </exception>
         public HDInsightSparkActivity(string name, object rootPath, object entryFilePath) : base(name)
         {
             if (name == null)
@@ -34,6 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
+            Arguments = new ChangeTrackingList<object>();
+            SparkConfig = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightSpark";
         }
 
@@ -72,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
         public object EntryFilePath { get; set; }
         /// <summary> The user-specified arguments to HDInsightSparkActivity. </summary>
-        public IList<object> Arguments { get; set; }
+        public IList<object> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
@@ -82,6 +86,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
         public object ProxyUser { get; set; }
         /// <summary> Spark configuration property. </summary>
-        public IDictionary<string, object> SparkConfig { get; set; }
+        public IDictionary<string, object> SparkConfig { get; }
     }
 }
