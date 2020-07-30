@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Samples

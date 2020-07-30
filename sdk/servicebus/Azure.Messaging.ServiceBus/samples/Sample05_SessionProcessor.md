@@ -4,8 +4,7 @@ This sample demonstrates how to use the session processor. The session processor
 
 ### Processing messages from a session-enabled queue
 
-Processing session messages is performed with a `ServiceBusSessionProcessor`. This type
-derives from `ServiceBusProcessor` and exposes session-related functionality.
+Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusProcessSessionMessages
 string connectionString = "<connection_string>";

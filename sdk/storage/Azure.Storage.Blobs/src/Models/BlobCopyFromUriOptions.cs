@@ -53,6 +53,6 @@ namespace Azure.Storage.Blobs.Models
         ///
         /// This parameter is not valid for synchronous copies.
         /// </summary>
-        public bool? IsSealed { get; set; }
+        public bool? ShouldSealDestination { get; set; }
     }
 }

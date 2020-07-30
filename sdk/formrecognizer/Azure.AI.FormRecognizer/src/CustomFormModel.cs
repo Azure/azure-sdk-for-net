@@ -19,8 +19,14 @@ namespace Azure.AI.FormRecognizer.Training
             TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
             TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
             Submodels = ConvertToSubmodels(model);
-            TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
-            Errors = ConvertToFormRecognizerError(model.TrainResult);
+
+            // TrainResult can be null if model is not ready yet.
+
+            TrainingDocuments = model.TrainResult != null
+                ? ConvertToTrainingDocuments(model.TrainResult)
+                : new List<TrainingDocumentInfo>();
+
+            Errors = model.TrainResult?.Errors ?? new List<FormRecognizerError>();
         }
 
         /// <summary>
@@ -112,29 +118,16 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
-            if (trainResult?.TrainingDocuments != null)
+            foreach (var docs in trainResult.TrainingDocuments)
             {
-                foreach (var docs in trainResult?.TrainingDocuments)
-                {
-                    trainingDocs.Add(
-                        new TrainingDocumentInfo(
-                            docs.Name,
-                            docs.PageCount,
-                            docs.Errors ?? new List<FormRecognizerError>(),
-                            docs.Status));
-                }
+                trainingDocs.Add(
+                    new TrainingDocumentInfo(
+                        docs.Name,
+                        docs.PageCount,
+                        docs.Errors ?? new List<FormRecognizerError>(),
+                        docs.Status));
             }
             return trainingDocs;
-        }
-
-        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult trainResult)
-        {
-            var errors = new List<FormRecognizerError>();
-            foreach (var error in trainResult?.Errors)
-            {
-                errors.Add(new FormRecognizerError(error.ErrorCode, error.Message));
-            }
-            return errors;
         }
     }
 }

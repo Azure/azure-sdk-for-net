@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Models
         Float,
 
         /// <summary>
-        /// Used for <see cref="int"/> type.
+        /// Used for <see cref="long"/> type.
         /// </summary>
         Integer,
 

@@ -225,12 +225,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
             CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
@@ -264,31 +264,31 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, wrongRegion);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
 
             var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
+            Assert.AreEqual("AuthorizationError", ex.ErrorCode);
         }
 
         [Test]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             Assert.IsNotNull(targetAuth.ModelId);
             Assert.IsNotNull(targetAuth.AccessToken);
             Assert.IsNotNull(targetAuth.ExpiresOn);
-            Assert.AreEqual(resourceID, targetAuth.ResourceId);
+            Assert.AreEqual(resourceId, targetAuth.ResourceId);
             Assert.AreEqual(region, targetAuth.Region);
         }
 
@@ -296,10 +296,10 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
             var targetClient = CreateFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             string jsonTargetAuth = targetAuth.ToJson();
 
