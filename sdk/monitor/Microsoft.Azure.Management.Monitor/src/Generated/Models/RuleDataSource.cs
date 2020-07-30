@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The resource from which the rule collects its data.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RuleDataSource")]
     public partial class RuleDataSource
     {
         /// <summary>
