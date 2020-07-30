@@ -29,6 +29,83 @@ namespace Azure.Data.Tables
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        public TableClient(string tableName, Uri endpoint, TableClientOptions options = null)
+            : this(tableName, endpoint, default(TableSharedKeyPipelinePolicy), options)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
+        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential)
+            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// </param>
+        /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
+        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        internal TableClient(string tableName, Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new TableClientOptions();
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
+            _version = options.VersionString;
+            _table = tableName;
+            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
+            ;
+        }
+
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
         {
             _tableOperations = tableOperations;
