@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var results = await client.QueryAsync<TableEntity>(x => (int)x[IntTypePropertyName] == 1, select: default).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<TableEntity>(x => (string)x[TableConstants.PropertyNames.PartitionKey] == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (var entity in results)
             {
