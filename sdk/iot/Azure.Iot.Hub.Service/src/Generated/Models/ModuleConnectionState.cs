@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The ModuleConnectionState. </summary>
+    /// <summary> The connection state of the device. </summary>
     public readonly partial struct ModuleConnectionState : IEquatable<ModuleConnectionState>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ModuleConnectionState"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ModuleConnectionState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

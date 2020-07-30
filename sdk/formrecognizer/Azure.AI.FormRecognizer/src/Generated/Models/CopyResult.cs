@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Custom model copy result. </summary>
     internal partial class CopyResult

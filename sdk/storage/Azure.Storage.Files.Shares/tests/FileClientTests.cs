@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,7 @@ using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using BenchmarkDotNet.Toolchains.Roslyn;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Test
@@ -1993,6 +1995,45 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
+        [Test]
+        public async Task UploadAsync_ReadOnlyError()
+        {
+            // Arrange
+            const int size = 10 * Constants.KB;
+            var data = this.GetRandomBuffer(size);
+            string shareName = GetNewShareName();
+
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            await fileClient.CreateAsync(size);
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                ShareName = shareName,
+                Resource = "f",
+                FilePath = fileClient.Path,
+                ExpiresOn = Recording.UtcNow.AddHours(+1)
+            };
+            sasBuilder.SetPermissions(ShareFileSasPermissions.Read);
+            UriBuilder sasUri = new UriBuilder(fileClient.Uri)
+            {
+                Query = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey)).ToString()
+            };
+
+            ShareFileClient readOnlyClient = InstrumentClient(
+                new ShareFileClient(new Uri(sasUri.ToString()), GetOptions()));
+
+            using (var stream = new MemoryStream(data))
+            {
+                // Throws AuthorizationMismatchPermissions or AuthorizationFailed
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    readOnlyClient.UploadAsync(stream),
+                    e => Assert.IsNotNull(e.ErrorCode));
+            }
+        }
+
         public async Task ClearRangeAsync()
         {
             await using DisposingFile test = await GetTestFileAsync();
@@ -2128,8 +2169,6 @@ namespace Azure.Storage.Files.Shares.Test
             await file.CreateAsync(maxSize: fileSize);
 
             var data = GetRandomBuffer(dataSize);
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
             var timesFaulted = 0;
 
             // Act
@@ -2142,18 +2181,13 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     range: new HttpRange(offset, dataSize),
-                    content: stream,
-                    progressHandler: progressHandler);
+                    content: stream);
 
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.GetRawResponse().Headers.Date);
                 Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
                 result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                 Assert.IsNotNull(version);
-
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
             }
 
             // Assert

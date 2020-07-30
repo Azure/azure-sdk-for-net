@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         public virtual AsyncPageable<DigitalTwinsEndpointResource> ListAsync(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupName"> The name of the resource group that contains the DigitalTwinsInstance. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         public virtual Pageable<DigitalTwinsEndpointResource> List(string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -180,6 +182,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="properties"> DigitalTwinsInstance endpoint resource properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<DigitalTwinsEndpointCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -215,6 +218,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="properties"> DigitalTwinsInstance endpoint resource properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="endpointName"/> is null. </exception>
         public virtual DigitalTwinsEndpointCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -249,6 +253,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<DigitalTwinsEndpointDeleteOperation> StartDeleteAsync(string resourceGroupName, string resourceName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -283,6 +288,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, or <paramref name="endpointName"/> is null. </exception>
         public virtual DigitalTwinsEndpointDeleteOperation StartDelete(string resourceGroupName, string resourceName, string endpointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

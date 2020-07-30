@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class FaultInjectionConnectionProperties : IUtf8JsonSerializable
+    internal partial class FaultInjectionConnectionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public DataFlowRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -73,6 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlow"> Data flow resource definition. </param>
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
         public async Task<Response<DataFlowResource>> CreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -105,6 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlow"> Data flow resource definition. </param>
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
         public Response<DataFlowResource> CreateOrUpdateDataFlow(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -154,6 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         public async Task<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -181,6 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         public Response<DataFlowResource> GetDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -221,6 +225,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         public async Task<Response> DeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -243,6 +248,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         public Response DeleteDataFlow(string dataFlowName, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
@@ -330,6 +336,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists data flows. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DataFlowListResponse>> GetDataFlowsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -356,6 +363,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists data flows. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DataFlowListResponse> GetDataFlowsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

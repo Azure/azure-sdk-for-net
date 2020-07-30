@@ -361,7 +361,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         /// <summary>
@@ -374,7 +375,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
         /// <summary>
@@ -735,7 +737,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsAsync(stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsAsync(stream));
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
         }
 
         /// <summary>
@@ -748,7 +751,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
         /// <summary>
@@ -1181,7 +1185,12 @@ namespace Azure.AI.FormRecognizer.Tests
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
             var operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            string expectedErrorCode = useTrainingLabels ? "3014" : "2005";
+            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
+
+            Assert.True(operation.HasCompleted);
+            Assert.False(operation.HasValue);
         }
 
         /// <summary>
@@ -1199,25 +1208,13 @@ namespace Azure.AI.FormRecognizer.Tests
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
 
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
-            RequestFailedException capturedException = default;
 
-            try
-            {
-                await operation.WaitForCompletionAsync(PollingInterval);
-            }
-            catch (RequestFailedException ex)
-            {
-                capturedException = ex;
-            }
-
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             string expectedErrorCode = useTrainingLabels ? "3003" : "2003";
-
-            Assert.NotNull(capturedException);
-            Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
+            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
 
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
-            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         private void ValidateFormPage(FormPage formPage, bool includeFieldElements, int expectedPageNumber)

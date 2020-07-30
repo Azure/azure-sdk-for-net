@@ -34,12 +34,12 @@ namespace Azure.Iot.Hub.Service.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected IoTHubServiceClient GetClient()
+        protected IotHubServiceClient GetClient()
         {
             return InstrumentClient(
-                new IoTHubServiceClient(
+                new IotHubServiceClient(
                     TestEnvironment.IotHubConnectionString,
-                    Recording.InstrumentClientOptions(new IoTHubServiceClientOptions())));
+                    Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
         protected string GetRandom()

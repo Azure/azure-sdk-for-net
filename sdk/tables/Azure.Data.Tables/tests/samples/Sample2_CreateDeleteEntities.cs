@@ -27,13 +27,14 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            serviceClient.CreateTable(tableName);
-
             try
             {
                 #region Snippet:TablesSample2GetTableClient
-                // Get a reference to the <see cref="TableClient" /> of the table.
-                var client = serviceClient.GetTableClient(tableName);
+                // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
+                var client = new TableClient(
+                    tableName,
+                    new Uri(storageUri),
+                    new TableSharedKeyCredential(accountName, storageAccountKey));
                 #endregion
 
                 #region Snippet:TablesSample2CreateEntity
@@ -66,7 +67,7 @@ namespace Azure.Data.Tables.Samples
 
                 #region Snippet:TablesSample2DeleteEntity
                 // Delete the entity given the partition and row key.
-                client.Delete(partitionKey, rowKey);
+                client.DeleteEntity(partitionKey, rowKey);
                 #endregion
 
             }
@@ -78,10 +79,14 @@ namespace Azure.Data.Tables.Samples
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
         // Define a strongly typed entity by extending the <see cref="TableEntity"> class.
-        public class OfficeSupplyEntity : TableEntity
+        public class OfficeSupplyEntity : ITableEntity
         {
             public string Product { get; set; }
             public double Price { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public string ETag { get; set; }
         }
         #endregion
     }
