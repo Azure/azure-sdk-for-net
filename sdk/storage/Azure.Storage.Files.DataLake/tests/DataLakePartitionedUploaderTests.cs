@@ -279,6 +279,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             clientMock.Setup(
                 c => c.CreateInternal(
                     IsAny<PathResourceType>(),
+                    IsAny<BlobType?>(),
                     s_pathHttpHeaders,
                     default,
                     s_permissions,
@@ -286,7 +287,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     s_conditions,
                     _async,
                     s_cancellationToken
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns<PathResourceType, BlobType?, PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
 
             clientMock.Setup(
                 c => c.AppendInternal(
@@ -334,6 +335,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             public async Task<Response<PathInfo>> CreateInternal(
                 PathResourceType type,
+                BlobType? blobType,
                 PathHttpHeaders httpHeaders,
                 IDictionary<string, string> metadata,
                 string permissions,

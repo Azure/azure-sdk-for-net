@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -19,6 +20,191 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     public class DataLakeAppendFileClient : DataLakeFileClient
     {
+        //TODO possible need to check that DataLakeFileClientOptions.ServiceVersion >= 2020-02-10.
+        #region ctors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/>
+        /// class for mocking.
+        /// </summary>
+        protected DataLakeAppendFileClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri)
+            : this(fileUri, (HttpPipelinePolicy)null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri, DataLakeClientOptions options)
+            : this(fileUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri, StorageSharedKeyCredential credential)
+            : this(fileUri, credential.AsPolicy(), null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
+            : this(fileUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri, TokenCredential credential)
+            : this(fileUri, credential.AsPolicy(), null)
+        {
+            Errors.VerifyHttpsTokenAuth(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public DataLakeAppendFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
+            : this(fileUri, credential.AsPolicy(), options)
+        {
+            Errors.VerifyHttpsTokenAuth(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal DataLakeAppendFileClient(Uri fileUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+            : base(fileUri, authentication, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the file.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeAppendFileClient(
+            Uri fileUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
+        {
+        }
+
+        internal DataLakeAppendFileClient(
+            Uri fileSystemUri,
+            string filePath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileSystemUri,
+                  filePath,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
+        {
+        }
+        #endregion
+
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a file.
@@ -73,7 +259,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Create)}");
 
             try
             {
@@ -155,7 +341,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Create)}");
 
             try
             {
@@ -233,7 +419,7 @@ namespace Azure.Storage.Files.DataLake
             string umask = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(CreateIfNotExists)}");
 
             try
             {
@@ -308,7 +494,7 @@ namespace Azure.Storage.Files.DataLake
             string umask = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(CreateIfNotExists)}");
 
             try
             {
@@ -351,6 +537,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
+        /// <param name="createIfNotExists">
+        /// Specifies if the file should be created if it doesn't already exist.
+        /// </param>
         /// <param name="contentHash">
         /// This hash is used to verify the integrity of the request content during transport. When this header is specified,
         /// the storage service compares the hash of the content that has arrived with this header value. If the two hashes do not match,
@@ -375,11 +564,12 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response ConcurrentAppend(
             Stream content,
+            bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(ConcurrentAppend)}");
 
             try
             {
@@ -387,6 +577,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return ConcurrentAppendInternal(
                     content,
+                    createIfNotExists,
                     contentHash,
                     progressHandler,
                     async: false,
@@ -416,6 +607,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
+        /// <param name="createIfNotExists">
+        /// Specifies if the file should be created if it doesn't already exist.
+        /// </param>
         /// <param name="contentHash">
         /// This hash is used to verify the integrity of the request content during transport. When this header is specified,
         /// the storage service compares the hash of the content that has arrived with this header value. If the two hashes do not match,
@@ -440,11 +634,12 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response> ConcurrentAppendAsync(
             Stream content,
+            bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(ConcurrentAppend)}");
 
             try
             {
@@ -452,6 +647,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return await ConcurrentAppendInternal(
                     content,
+                    createIfNotExists,
                     contentHash,
                     progressHandler,
                     async: true,
@@ -480,6 +676,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
+        /// <param name="createIfNotExists">
+        /// Specifies if the file should be created if it doesn't already exist.
+        /// </param>
         /// <param name="contentHash">
         /// This hash is used to verify the integrity of the request content during transport. When this header is specified,
         /// the storage service compares the hash of the content that has arrived with this header value. If the two hashes do not match,
@@ -507,6 +706,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal virtual async Task<Response> ConcurrentAppendInternal(
             Stream content,
+            bool createIfNotExists,
             byte[] contentHash,
             IProgress<long> progressHandler,
             bool async,
@@ -527,6 +727,7 @@ namespace Azure.Storage.Files.DataLake
                         resourceUri: DfsUri,
                         version: Version.ToVersionString(),
                         body: content,
+                        appendMode: createIfNotExists == true ? AppendMode.AutoCreate : default(AppendMode?),
                         contentLength: content?.Length ?? 0,
                         transactionalContentHash: contentHash,
                         async: async,

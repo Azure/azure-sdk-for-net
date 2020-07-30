@@ -3882,6 +3882,7 @@ namespace Azure.Storage.Files.DataLake
                 InitializeDestination = async (args, async, cancellationToken)
                     => await client.CreateInternal(
                         PathResourceType.File,
+                        blobType: default,
                         args.HttpHeaders,
                         args.Metadata,
                         args.Permissions,
