@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.Test
             var offset = 0 * Constants.KB;
             var data = GetRandomBuffer(blobSize);
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act

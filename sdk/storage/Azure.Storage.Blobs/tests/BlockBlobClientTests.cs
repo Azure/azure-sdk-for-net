@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
             // Act
             using (var stream = new FaultyStream(
@@ -1976,7 +1976,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act
