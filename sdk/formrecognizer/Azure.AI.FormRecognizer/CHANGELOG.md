@@ -5,6 +5,11 @@
 ### Breaking changes
 
 - Property `Type` renamed to `ValueType` on `FieldValue`.
+- Property `DocumentName` renamed  to `Name` on `TrainingDocumentInfo`.
+- Property `IncludeSubFolders` renamed to `IncludeSubfolders` on `TrainingFileFilter`.
+- Parameter `formFileStream` renamed to `form` on `FormRecognizerClient.StartRecognizeCustomForms`.
+- Parameter `formFileUri` renamed to `formUri` on `FormRecognizerClient.StartRecognizeCustomFormsFromUri`.
+- `CustomFormModelStatus.Training` renamed to `CustomFormModelStatus.Creating`.
 
 ### Fixes
 
