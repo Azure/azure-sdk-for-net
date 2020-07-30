@@ -17,31 +17,27 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the named partition scheme of the service.
+    /// Parameters for Node type action.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Named")]
-    public partial class NamedPartitionSchemeDescription : PartitionSchemeDescription
+    public partial class NodeTypeActionParameters
     {
         /// <summary>
-        /// Initializes a new instance of the NamedPartitionSchemeDescription
-        /// class.
+        /// Initializes a new instance of the NodeTypeActionParameters class.
         /// </summary>
-        public NamedPartitionSchemeDescription()
+        public NodeTypeActionParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NamedPartitionSchemeDescription
-        /// class.
+        /// Initializes a new instance of the NodeTypeActionParameters class.
         /// </summary>
-        /// <param name="count">The number of partitions.</param>
-        /// <param name="names">Array of size specified by the ‘count’
-        /// parameter, for the names of the partitions.</param>
-        public NamedPartitionSchemeDescription(int count, IList<string> names)
+        /// <param name="nodes">List of node names from the node type.</param>
+        /// <param name="force">Force the action to go through.</param>
+        public NodeTypeActionParameters(IList<string> nodes, bool? force = default(bool?))
         {
-            Count = count;
-            Names = names;
+            Nodes = nodes;
+            Force = force;
             CustomInit();
         }
 
@@ -51,17 +47,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of partitions.
+        /// Gets or sets list of node names from the node type.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
-        public int Count { get; set; }
+        [JsonProperty(PropertyName = "nodes")]
+        public IList<string> Nodes { get; set; }
 
         /// <summary>
-        /// Gets or sets array of size specified by the ‘count’ parameter, for
-        /// the names of the partitions.
+        /// Gets or sets force the action to go through.
         /// </summary>
-        [JsonProperty(PropertyName = "names")]
-        public IList<string> Names { get; set; }
+        [JsonProperty(PropertyName = "force")]
+        public bool? Force { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -71,9 +66,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Names == null)
+            if (Nodes == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Names");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Nodes");
             }
         }
     }
