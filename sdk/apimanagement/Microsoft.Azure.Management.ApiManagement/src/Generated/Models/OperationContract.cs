@@ -152,6 +152,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     }
                 }
             }
+            if (Description != null)
+            {
+                if (Description.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 1000);
+                }
+            }
             if (Responses != null)
             {
                 foreach (var element1 in Responses)
@@ -160,6 +167,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     {
                         element1.Validate();
                     }
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 300);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+            if (UrlTemplate != null)
+            {
+                if (UrlTemplate.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UrlTemplate", 1000);
+                }
+                if (UrlTemplate.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "UrlTemplate", 1);
                 }
             }
         }

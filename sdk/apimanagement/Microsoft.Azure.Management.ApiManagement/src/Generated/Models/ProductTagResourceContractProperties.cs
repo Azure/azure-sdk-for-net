@@ -53,12 +53,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// immediately after subscribing. If true, administrators must
         /// manually approve the subscription before the developer can any of
         /// the product’s APIs. Can be present only if subscriptionRequired
-        /// property is present and has a value of false.</param>
+        /// property is present and has a value of true.</param>
         /// <param name="subscriptionsLimit">Whether the number of
         /// subscriptions a user can have to this product at the same time. Set
         /// to null or omit to allow unlimited per user subscriptions. Can be
         /// present only if subscriptionRequired property is present and has a
-        /// value of false.</param>
+        /// value of true.</param>
         /// <param name="state">whether product is published or not. Published
         /// products are discoverable by users of developer portal. Non
         /// published products are visible only to administrators. Default
@@ -98,11 +98,23 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 300);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
             }
         }
     }
