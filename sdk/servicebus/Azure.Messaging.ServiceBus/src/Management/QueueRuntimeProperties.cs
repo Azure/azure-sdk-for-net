@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the runtime information of the queue.
+    /// Represents the runtime properties of the queue.
     /// </summary>
     public class QueueRuntimeProperties
     {
