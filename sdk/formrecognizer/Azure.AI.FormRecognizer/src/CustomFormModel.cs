@@ -118,7 +118,7 @@ namespace Azure.AI.FormRecognizer.Training
                 {
                     trainingDocs.Add(
                         new TrainingDocumentInfo(
-                            docs.DocumentName,
+                            docs.Name,
                             docs.PageCount,
                             docs.Errors ?? new List<FormRecognizerError>(),
                             docs.Status));

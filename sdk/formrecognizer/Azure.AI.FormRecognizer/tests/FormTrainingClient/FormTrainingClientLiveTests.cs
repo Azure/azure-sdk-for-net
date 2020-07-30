@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             foreach (TrainingDocumentInfo doc in model.TrainingDocuments)
             {
-                Assert.IsNotNull(doc.DocumentName);
+                Assert.IsNotNull(doc.Name);
                 Assert.IsNotNull(doc.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
                 Assert.IsNotNull(doc.Errors);
@@ -171,7 +171,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var tm = trainedModel.TrainingDocuments[i];
                 var rm = resultModel.TrainingDocuments[i];
 
-                Assert.AreEqual(tm.DocumentName, rm.DocumentName);
+                Assert.AreEqual(tm.Name, rm.Name);
                 Assert.AreEqual(tm.PageCount, rm.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, rm.Status);
                 Assert.AreEqual(tm.Status, rm.Status);
