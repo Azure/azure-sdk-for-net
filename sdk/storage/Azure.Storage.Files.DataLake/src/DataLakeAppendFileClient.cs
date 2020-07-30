@@ -267,12 +267,12 @@ namespace Azure.Storage.Files.DataLake
 
                 return base.CreateInternal(
                     resourceType: PathResourceType.File,
+                    blobType: BlobType.Appendblob,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
                     permissions: permissions,
                     umask: umask,
                     conditions: conditions,
-                    blobType: BlobType.Appendblob,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -349,12 +349,12 @@ namespace Azure.Storage.Files.DataLake
 
                 return await base.CreateInternal(
                     resourceType: PathResourceType.File,
+                    blobType: BlobType.Appendblob,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
                     permissions: permissions,
                     umask: umask,
                     conditions: conditions,
-                    blobType: BlobType.Appendblob,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
