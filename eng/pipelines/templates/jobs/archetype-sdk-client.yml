@@ -35,8 +35,8 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
-          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          dotnet pack eng/service.proj -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
+          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion) /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
