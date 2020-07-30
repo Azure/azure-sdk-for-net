@@ -66,6 +66,9 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
+      - template: ../../../common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)

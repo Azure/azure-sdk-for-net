@@ -16,6 +16,10 @@ jobs:
         inputs:
           version: '$(DotNetCoreSDKVersion)'
 
+      - template: ../common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: ""
+
       - pwsh: mkdir '$(System.ArtifactsDirectory)/BuildArtifacts'
         displayName: Create Artifact Directory
 
