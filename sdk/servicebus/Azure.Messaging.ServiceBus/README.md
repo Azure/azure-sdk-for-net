@@ -336,7 +336,7 @@ try
     // Receive messages using the receiver client
 }
 catch (ServiceBusExceptions ex) where 
-    (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+    (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
 {
     // Take action based on a service timeout
 }

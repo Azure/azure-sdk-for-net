@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetQueueAsync(queueName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
 
 
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetSubscriptionAsync(topicName, subscriptionName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             #region Snippet:DeleteTopic
             await client.DeleteTopicAsync(topicName);
@@ -178,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetTopicAsync(topicName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
     }
 }
