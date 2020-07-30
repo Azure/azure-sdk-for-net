@@ -72,9 +72,9 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task GetCustomModelDoesNotNeedTrainResult()
         {
-            // When a model is not Ready, the "trainResult" property is not returned.
-            // We're mimicking this behavior here to make sure that we can parse the
-            // response even without the "trainResult" property.
+            // When a model is still being created, the "trainResult" property is
+            // not returned. We're mimicking this behavior here to make sure that
+            // we can parse the response even without the "trainResult" property.
 
             // Ideally this test should be live, but the service behavior is
             // non-deterministic. Any delay in sending the request could give the
