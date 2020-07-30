@@ -27,13 +27,14 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            serviceClient.CreateTable(tableName);
-
             try
             {
                 #region Snippet:TablesSample2GetTableClient
-                // Get a reference to the <see cref="TableClient" /> of the table.
-                var client = serviceClient.GetTableClient(tableName);
+                // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
+                var client = new TableClient(
+                    tableName,
+                    new Uri(storageUri),
+                    new TableSharedKeyCredential(accountName, storageAccountKey));
                 #endregion
 
                 #region Snippet:TablesSample2CreateEntity

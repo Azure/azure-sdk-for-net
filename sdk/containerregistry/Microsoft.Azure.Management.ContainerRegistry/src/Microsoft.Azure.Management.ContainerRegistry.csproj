@@ -6,14 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>5.0.0-preview.4</Version>
+		<Version>5.0.0-preview.5</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Add support for Image transfer (Preview)
-        2) Add support for Enable/Disable Public Network Access
-        3) Add support for Enable/Disable replicate
+        1) Add Location property to ExportPipeline and ImportPipeline
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

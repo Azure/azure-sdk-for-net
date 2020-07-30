@@ -209,10 +209,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -234,10 +234,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]

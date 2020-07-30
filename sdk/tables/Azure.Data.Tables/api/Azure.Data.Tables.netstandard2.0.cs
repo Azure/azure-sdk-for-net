@@ -10,6 +10,9 @@ namespace Azure.Data.Tables
     public partial class TableClient
     {
         protected TableClient() { }
+        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
+        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> Create(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> CreateEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
