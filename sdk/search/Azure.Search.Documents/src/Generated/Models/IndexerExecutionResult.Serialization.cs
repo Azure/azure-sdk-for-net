@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexerExecutionStatus status = default;
             Optional<string> errorMessage = default;
             Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             IReadOnlyList<SearchIndexerError> errors = default;
             IReadOnlyList<SearchIndexerWarning> warnings = default;
             int itemsProcessed = default;
@@ -45,6 +45,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

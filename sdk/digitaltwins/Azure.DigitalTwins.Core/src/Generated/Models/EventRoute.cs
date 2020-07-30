@@ -14,6 +14,7 @@ namespace Azure.DigitalTwins.Core
     {
         /// <summary> Initializes a new instance of EventRoute. </summary>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public EventRoute(string endpointName)
         {
             if (endpointName == null)

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -69,7 +68,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// every request.
         /// </param>
         public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
-
         {
             _blobServiceClient = new BlobServiceClient(connectionString, options);
         }

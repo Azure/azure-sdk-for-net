@@ -2,6 +2,17 @@
 
 ## 1.4.0-preview.1 (Unreleased)
 
+### Added
+- HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
+
+```xml
+ <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
+  </ItemGroup>
+```
+
+When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
+
 ### Fixed
 - Connection leak for retried non-buffered requests on .NET Framework.
 

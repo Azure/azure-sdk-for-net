@@ -28,6 +28,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
+        private readonly AuthenticationRecord _record;
         private readonly Lazy<Task<IAccount>> _account;
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
@@ -67,6 +68,8 @@ namespace Azure.Identity
             _tenantId = tenantId;
 
             _username = username;
+
+            _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
@@ -126,6 +129,11 @@ namespace Azure.Identity
 
         private async Task<IAccount> GetAccountAsync()
         {
+            if (_record != null)
+            {
+                return new AuthenticationAccount(_record);
+            }
+
             List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
             // filter the accounts to those matching the specified user and tenant

@@ -12,12 +12,15 @@ namespace Azure.Iot.Hub.Service.Authentication
     {
         internal const int MaxKeyNameLength = 256;
         internal const int MaxKeyLength = 256;
-        internal const string SharedAccessSignature = "SharedAccessSignature";
+        internal const string SharedAccessSignatureIdentifier = "SharedAccessSignature";
+        internal const string HostNameIdentifier = "HostName";
+        internal const string SharedAccessKeyIdentifier = "SharedAccessKey";
+        internal const string SharedAccessPolicyIdentifier = "SharedAccessKeyName";
         internal const string AudienceFieldName = "sr";
         internal const string SignatureFieldName = "sig";
         internal const string KeyNameFieldName = "skn";
         internal const string ExpiryFieldName = "se";
-        internal const string SignedResourceFullFieldName = SharedAccessSignature + " " + AudienceFieldName;
+        internal const string SignedResourceFullFieldName = SharedAccessSignatureIdentifier + " " + AudienceFieldName;
         internal const string KeyValueSeparator = "=";
         internal const string PairSeparator = "&";
         internal static readonly DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);

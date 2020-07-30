@@ -111,11 +111,11 @@ namespace Azure.AI.FormRecognizer.Tests
             // making the test fail.
 
             var client = CreateFormTrainingClient(skipInstrumenting: true);
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(resourceId, region);
 
             var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
@@ -62,11 +61,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -155,8 +154,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Act
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
-                IsAsync,
-                continuation: JsonSerializer.Serialize<ChangeFeedCursor>(expectedCursor));
+                startTime: default,
+                endTime: default,
+                continuation: JsonSerializer.Serialize<ChangeFeedCursor>(expectedCursor),
+                async: IsAsync,
+                cancellationToken: default);
 
             ChangeFeedCursor actualCursor = changeFeed.GetCursor();
 
@@ -188,11 +190,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadAsync(default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.Download(default));
             }
 
             if (IsAsync)
@@ -295,11 +297,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -469,7 +471,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
-                IsAsync);
+                startTime: default,
+                endTime: default,
+                continuation: default,
+                async: IsAsync,
+                cancellationToken: default);
 
             // Act
             Page<BlobChangeFeedEvent> page0 = await changeFeed.GetPage(IsAsync, 3);
@@ -506,11 +512,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadAsync(default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.Download(default));
             }
 
             if (IsAsync)
@@ -639,11 +645,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -674,8 +680,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
-                IsAsync,
-                startTime: new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
+                startTime: new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                endTime: default,
+                continuation: default,
+                async: IsAsync,
+                cancellationToken: default);
 
             // Act
             bool hasNext = changeFeed.HasNext();
@@ -696,11 +705,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadAsync(default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.Download(default));
             }
 
             if (IsAsync)
@@ -765,11 +774,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -881,8 +890,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object,
                 segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
-                IsAsync,
-                startTime: new DateTimeOffset(2019, 6, 1, 0, 0, 0, TimeSpan.Zero));
+                startTime: new DateTimeOffset(2019, 6, 1, 0, 0, 0, TimeSpan.Zero),
+                endTime: default,
+                continuation: default,
+                async: IsAsync,
+                cancellationToken: default);
 
             // Act
             Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync);
@@ -907,11 +919,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadAsync(default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.Download(default));
             }
 
             if (IsAsync)

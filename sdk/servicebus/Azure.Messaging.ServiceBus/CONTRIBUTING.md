@@ -31,20 +31,20 @@ Tests in the Service Bus client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`SERVICE_BUS_RESOURCEGROUP`  
- The name of the Azure resource group that contains the Service Bus namespace
+`SERVICE_BUS_RESOURCEGROUP`\
+The name of the Azure resource group that contains the Service Bus namespace
 
-`SERVICE_BUS_SUBSCRIPTION`  
- The identifier (GUID) of the Azure subscription to which the service principal belongs
+`SERVICE_BUS_SUBSCRIPTION`\
+The identifier (GUID) of the Azure subscription to which the service principal belongs
 
-`SERVICE_BUS_TENANT`  
- The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
+`SERVICE_BUS_TENANT`\
+The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`SERVICE_BUS_CLIENT`  
- The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
+`SERVICE_BUS_CLIENT`\
+The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
 
-`SERVICE_BUS_SECRET`  
- The client secret (password) of the Azure Active Directory application that is associated with the service principal
+`SERVICE_BUS_SECRET`\
+The client secret (password) of the Azure Active Directory application that is associated with the service principal
 
 ### Samples
 

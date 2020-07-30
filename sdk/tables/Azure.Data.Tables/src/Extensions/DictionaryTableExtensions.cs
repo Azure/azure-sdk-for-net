@@ -23,6 +23,47 @@ namespace Azure.Data.Tables
         /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
         /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
         /// </summary>
+        internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this DynamicTableEntity tableEntityProperties)
+        {
+            var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
+
+            foreach (var item in tableEntityProperties)
+            {
+                annotatedDictionary[item.Key] = item.Value;
+
+                switch (item.Value)
+                {
+                    case byte[] _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
+                        break;
+                    case long _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
+                        // Int64 / long should be serialized as string.
+                        annotatedDictionary[item.Key] = item.Value.ToString();
+                        break;
+                    case double _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDouble;
+                        break;
+                    case Guid _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmGuid;
+                        break;
+                    case DateTimeOffset _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
+                        break;
+                    case DateTime _:
+                        annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
+                        break;
+                }
+            }
+
+            return annotatedDictionary;
+        }
+
+        /// <summary>
+        /// Returns a new Dictionary with the appropriate Odata type annotation for a given propertyName value pair.
+        /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
+        /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
+        /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
@@ -113,7 +154,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
             PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
             {
@@ -135,7 +176,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : class, ITableEntity, new()
         {
             properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
             {
