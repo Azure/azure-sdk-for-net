@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Files.DataLake.Models
+namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// CSV text configuration.
     /// </summary>
-    public class DataLakeQueryCsvTextConfiguration : DataLakeQueryTextConfiguration
+    public class BlobQueryCsvTextOptions : BlobQueryTextOptions
     {
         /// <summary>
         /// Column separator.

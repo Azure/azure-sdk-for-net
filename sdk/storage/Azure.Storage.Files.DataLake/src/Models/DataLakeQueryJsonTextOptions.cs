@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// JSON text configuration.
     /// </summary>
-    public class BlobQueryJsonTextConfiguration : BlobQueryTextConfiguration
+    public class DataLakeQueryJsonTextOptions : DataLakeQueryTextOptions
     {
     }
 }
