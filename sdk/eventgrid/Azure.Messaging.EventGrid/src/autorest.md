@@ -7,8 +7,8 @@ directive:
   from: swagger-document
   where: $.definitions.*
   transform: >
-    $["x-csharp-usage"] = "model,output"
-    $["x-csharp-formats"] = "json"
+    $["x-csharp-usage"] = "model,output";
+    $["x-csharp-formats"] = "json";
 
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
