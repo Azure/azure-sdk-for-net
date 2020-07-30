@@ -33,12 +33,13 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
         public TableClient(string tableName, Uri endpoint, TableClientOptions options = null)
             : this(tableName, endpoint, default(TableSharedKeyPipelinePolicy), options)
         {
@@ -55,10 +56,11 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential)
             : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), null)
         {
@@ -71,13 +73,14 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), options)
         {
@@ -91,20 +94,14 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
-            var endpointString = endpoint.ToString();
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
             _version = options.VersionString;
-
-            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
-            _isPremiumEndpoint = (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
-                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
-
             _table = tableName;
             _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
-            _isPremiumEndpoint = _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
+            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             ;
         }
 

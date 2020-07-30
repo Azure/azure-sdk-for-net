@@ -26,7 +26,7 @@ namespace Azure.Data.Tables
         /// Initializes a new instance of the <see cref="TableServiceClient"/>.
         /// </summary>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         public TableServiceClient(Uri endpoint)
@@ -37,7 +37,7 @@ namespace Azure.Data.Tables
         /// Initializes a new instance of the <see cref="TableServiceClient"/>.
         /// </summary>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="options">
@@ -56,7 +56,7 @@ namespace Azure.Data.Tables
         /// Initializes a new instance of the <see cref="TableServiceClient"/>.
         /// </summary>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
@@ -70,7 +70,7 @@ namespace Azure.Data.Tables
         /// Initializes a new instance of the <see cref="TableServiceClient"/>.
         /// </summary>
         /// <param name="endpoint">
-        /// A <see cref="Uri"/> referencing the table service.
+        /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
