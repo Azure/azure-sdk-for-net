@@ -202,7 +202,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
 
-            BlobQueryCsvTextConfiguration csvTextConfiguration = new BlobQueryCsvTextConfiguration
+            BlobQueryCsvTextOptions csvTextConfiguration = new BlobQueryCsvTextOptions
             {
                 ColumnSeparator = ",",
                 QuotationCharacter = '"',
@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.Test
                 HasHeaders = false
             };
 
-            BlobQueryJsonTextConfiguration jsonTextConfiguration = new BlobQueryJsonTextConfiguration
+            BlobQueryJsonTextOptions jsonTextConfiguration = new BlobQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };
@@ -285,7 +285,7 @@ namespace Azure.Storage.Blobs.Test
             Stream stream = CreateDataStream(Constants.KB);
             await blockBlobClient.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage;";
-            BlobQueryJsonTextConfiguration jsonTextConfiguration = new BlobQueryJsonTextConfiguration
+            BlobQueryJsonTextOptions jsonTextConfiguration = new BlobQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };
