@@ -15,10 +15,11 @@ using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    public class BlobTriggerExecutorTests
+    public class BlobTriggerExecutorTests : IClassFixture<AzuriteFixture>
     {
         // Note: The tests that return true consume the notification.
         // The tests that return false reset the notification (to be provided again later).
@@ -26,9 +27,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
+        private readonly AzuriteFixture azuriteFixture;
 
-        public BlobTriggerExecutorTests()
+        public BlobTriggerExecutorTests(AzuriteFixture azuriteFixture)
         {
+            this.azuriteFixture = azuriteFixture;
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
@@ -436,14 +439,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        private static FakeStorageAccount CreateAccount()
+        private StorageAccount CreateAccount()
         {
             //StorageClientFactory clientFactory = new StorageClientFactory();
             //return new StorageAccount(CloudStorageAccount.DevelopmentStorageAccount, clientFactory);
-            return new FakeStorageAccount();
+            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
-        private static BlobTriggerExecutorContext CreateExecutorContext()
+        private BlobTriggerExecutorContext CreateExecutorContext()
         {
             return new BlobTriggerExecutorContext
             {
@@ -453,7 +456,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             };
         }
 
-        private static BlobTriggerExecutorContext CreateExecutorContext(string containerName, string blobName)
+        private BlobTriggerExecutorContext CreateExecutorContext(string containerName, string blobName)
         {
             return new BlobTriggerExecutorContext
             {
@@ -463,7 +466,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             };
         }
 
-        private static CloudBlockBlob CreateBlobReference(string containerName, string blobName)
+        private CloudBlockBlob CreateBlobReference(string containerName, string blobName)
         {
             var account = CreateAccount();
             var client = account.CreateCloudBlobClient();
@@ -476,7 +479,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return new FixedBlobPathSource(blob.ToBlobPath());
         }
 
-        private static IBlobReceiptManager CreateCompletedReceiptManager()
+        private IBlobReceiptManager CreateCompletedReceiptManager()
         {
             Mock<IBlobReceiptManager> mock = CreateReceiptManagerReferenceMock();
             mock.Setup(m => m.TryReadAsync(It.IsAny<CloudBlockBlob>(), It.IsAny<CancellationToken>()))
@@ -533,7 +536,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return new BlobTriggerExecutor(String.Empty, descriptor, input, eTagReader, receiptManager, queueWriter, _logger);
         }
 
-        private static Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
+        private Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
         {
             CloudBlockBlob receiptBlob = CreateAccount().CreateCloudBlobClient()
                 .GetContainerReference("receipts").GetBlockBlobReference("item");

@@ -14,13 +14,20 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueTests
+    public class QueueTests : IClassFixture<AzuriteFixture>
     {
         private const string TriggerQueueName = "input";
         private const string QueueName = "output";
+        private readonly AzuriteFixture azuriteFixture;
+
+        public QueueTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         // Test binding to generics.
         public class GenericProgram<T>
@@ -105,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                {
-                   builder.UseFakeStorage();
+                   builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                })
                .ConfigureServices(services =>
                {
@@ -138,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramWithVariableQueueName>(builder =>
                 {
-                    builder.UseFakeStorage();
+                    builder.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                 })
                 .ConfigureServices(services =>
                 {
@@ -415,7 +422,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<GenericProgram<T>>(b =>
                 {
-                    b.UseFakeStorage();
+                    b.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
                 })
                 .Build();
 
@@ -467,9 +474,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, message.AsString);
         }
 
-        private static StorageAccount CreateFakeStorageAccount()
+        private StorageAccount CreateFakeStorageAccount()
         {
-            return new FakeStorageAccount();
+            var account = azuriteFixture.GetAccount();
+            return StorageAccount.NewFromConnectionString(account.ConnectionString);
         }
 
         private static async Task<CloudQueue> CreateQueue(CloudQueueClient client, string queueName)

@@ -9,21 +9,30 @@ using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTests
+    public class BlobTests : IClassFixture<AzuriteFixture>
     {
         private const string TriggerQueueName = "input";
         private const string ContainerName = "container";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
 
+        private readonly AzuriteFixture azuriteFixture;
+
+        public BlobTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
+
         [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
-            var account = new FakeStorageAccount();
+            var azuriteAccount = azuriteFixture.GetAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
 
             var prog = new BindToCloudBlockBlobProgram();
             IHost host = new HostBuilder()
@@ -55,7 +64,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedContent = "message";
-            var account = CreateFakeStorageAccount();
+            var azuriteAccount = azuriteFixture.GetAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
             CloudQueue triggerQueue = CreateQueue(account, TriggerQueueName);
             await triggerQueue.AddMessageAsync(new CloudQueueMessage(expectedContent));
 
@@ -69,11 +79,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(await blob.ExistsAsync());
             string content = blob.DownloadText();
             Assert.Equal(expectedContent, content);
-        }
-
-        private static StorageAccount CreateFakeStorageAccount()
-        {
-            return new FakeStorageAccount();
         }
 
         private static CloudQueue CreateQueue(StorageAccount account, string queueName)

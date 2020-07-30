@@ -3,9 +3,10 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using FakeStorage;
+using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.Blobs;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
@@ -27,12 +29,19 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
+        private readonly Mock<CloudBlobClient> blobClientMock = new Mock<CloudBlobClient>(
+            new Uri("https://fakeaccount.blob.core.windows.net"), null);
+        private readonly Mock<CloudBlobContainer> blobContainerMock = new Mock<CloudBlobContainer>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"));
 
         public BlobQueueTriggerExecutorTests()
         {
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
+
+            blobClientMock.Setup(x => x.GetContainerReference(TestContainerName)).Returns(blobContainerMock.Object);
+            blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(It.IsAny<string>()))
+                .ThrowsAsync(StorageExceptionFactory.Create(404));
         }
 
         [Fact]
@@ -106,7 +115,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         public void ExecuteAsync_IfBlobHasBeenDeleted_ReturnsSuccessResult()
         {
             // Arrange
-            var account = new FakeAccount();
             string functionId = "FunctionId";
 
             // by default, Blob doesn't exist in the fake account, so it's as if it were deleted.
@@ -114,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = account.CreateCloudBlobClient(),
+                BlobClient = blobClientMock.Object,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -140,11 +148,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         [Fact]
         public void ExecuteAsync_IfBlobHasChanged_NotifiesWatcherAndReturnsSuccessResult()
         {
-            var account = new FakeAccount();
-
             // Arrange
             string functionId = "FunctionId";
-            SetEtag(account, TestContainerName, TestBlobName, "NewETag");
+            SetEtag(TestContainerName, TestBlobName, "NewETag");
             Mock<IBlobWrittenWatcher> mock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
             mock.Setup(w => w.Notify(It.IsAny<ICloudBlob>()))
                 .Verifiable();
@@ -154,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = account.CreateCloudBlobClient(),
+                BlobClient = blobClientMock.Object,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -174,13 +180,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         public async Task ExecuteAsync_IfBlobIsUnchanged_CallsInnerExecutor()
         {
             // Arrange
-            var account = new FakeAccount();
             string functionId = "FunctionId";
             string matchingETag = "ETag";
             Guid expectedParentId = Guid.NewGuid();
             var message = CreateMessage(functionId, matchingETag);
 
-            SetEtag(account, TestContainerName, TestBlobName, matchingETag);
+            SetEtag(TestContainerName, TestBlobName, matchingETag);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader(expectedParentId);
 
@@ -203,7 +208,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = account.CreateCloudBlobClient(),
+                BlobClient = blobClientMock.Object,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -220,12 +225,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         public void ExecuteAsync_IfInnerExecutorSucceeds_ReturnsSuccessResult()
         {
             // Arrange
-            var account = new FakeAccount();
-
             string functionId = "FunctionId";
             string matchingETag = "ETag";
 
-            SetEtag(account, TestContainerName, TestBlobName, matchingETag);
+            SetEtag(TestContainerName, TestBlobName, matchingETag);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader();
 
@@ -241,7 +244,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = account.CreateCloudBlobClient(),
+                BlobClient = blobClientMock.Object,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -259,12 +262,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         public void ExecuteAsync_IfInnerExecutorFails_ReturnsFailureResult()
         {
             // Arrange
-            var account = new FakeAccount();
-
             string functionId = "FunctionId";
             string matchingETag = "ETag";
 
-            SetEtag(account, TestContainerName, TestBlobName, matchingETag);
+            SetEtag(TestContainerName, TestBlobName, matchingETag);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader();
 
@@ -280,7 +281,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = account.CreateCloudBlobClient(),
+                BlobClient = blobClientMock.Object,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -395,13 +396,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         }
 
         // Set the etag on the specified blob
-        private static void SetEtag(FakeAccount account, string containerName, string blobName, string etag)
+        private void SetEtag(string containerName, string blobName, string etag)
         {
             Mock<ICloudBlob> mockBlob = new Mock<ICloudBlob>(MockBehavior.Strict);
             mockBlob.SetupGet(b => b.Properties).Returns(new BlobProperties().SetEtag(etag));
             mockBlob.SetupGet(b => b.Name).Returns(blobName);
 
-            account.SetBlob(containerName, blobName, mockBlob.Object);
+            blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(blobName)).ReturnsAsync(mockBlob.Object);
         }
     }
 }

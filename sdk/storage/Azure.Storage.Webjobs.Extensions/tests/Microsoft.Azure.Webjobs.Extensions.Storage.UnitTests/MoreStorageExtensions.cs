@@ -29,12 +29,6 @@ namespace Microsoft.Azure.WebJobs
             return queue;
         }
 
-        // $$$ Rationalize with AddFakeStorageAccountProvider in FunctionTests.
-        public static IWebJobsBuilder UseFakeStorage(this IWebJobsBuilder builder)
-        {
-            return builder.UseStorage(new FakeStorageAccount());
-        }
-
         public static IWebJobsBuilder UseStorage(this IWebJobsBuilder builder, StorageAccount account)
         {
             builder.AddAzureStorage();

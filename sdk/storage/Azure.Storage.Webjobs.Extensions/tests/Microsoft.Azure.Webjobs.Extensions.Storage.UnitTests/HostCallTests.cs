@@ -20,13 +20,14 @@ using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
     // $$$ - this should be split up into blob/table/queue
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
-    public class HostCallTests
+    public class HostCallTests : IClassFixture<AzuriteFixture>
     {
         private const string ContainerName = "container";
         private const string BlobName = "blob";
@@ -40,6 +41,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string RowKey = "RK";
         private const int TestValue = Int32.MinValue;
         private const string TestQueueMessage = "ignore";
+        private readonly AzuriteFixture azuriteFixture;
+
+        public HostCallTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         [Theory]
         [InlineData("FuncWithString")]
@@ -472,7 +479,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             var queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: int.MaxValue);
+            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
             CloudQueueMessage[] sortedMessages = messages.OrderBy((m) => m.AsString).ToArray();
@@ -492,7 +499,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: int.MaxValue);
+            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
             CloudQueueMessage[] sortedMessages = messages.OrderBy((m) => m.AsString).ToArray();
@@ -517,7 +524,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("Primitive types are not supported.", ex.InnerException.Message);
         }
 
-        private static async Task TestEnqueueMultiplePocoMessages(string methodName)
+        private async Task TestEnqueueMultiplePocoMessages(string methodName)
         {
             StorageAccount account = CreateFakeStorageAccount();
 
@@ -526,7 +533,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: int.MaxValue);
+            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
             IEnumerable<CloudQueueMessage> sortedMessages = messages.OrderBy((m) => m.AsString);
@@ -809,9 +816,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return await FunctionalTest.CallFailureAsync(account, programType, programType.GetMethod(methodName), null);
         }
 
-        private static StorageAccount CreateFakeStorageAccount()
+        private StorageAccount CreateFakeStorageAccount()
         {
-            return new FakeStorageAccount();
+            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
         private struct CustomDataValue

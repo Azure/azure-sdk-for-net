@@ -6,20 +6,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FakeStorage;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class QueueTriggerTests
+    public class QueueTriggerTests : IClassFixture<AzuriteFixture>
     {
         private const string QueueName = "input";
+        private readonly AzuriteFixture azuriteFixture;
 
+        public QueueTriggerTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         private async Task SetupAsync(StorageAccount account, object contents)
         {
@@ -74,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToString(string.Empty);
         }
 
-        private static async Task TestBindToString(string expectedContent)
+        private async Task TestBindToString(string expectedContent)
         {
             // Arrange
             var account = CreateFakeStorageAccount();
@@ -134,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToByteArray(expectedContent);
         }
 
-        private static async Task TestBindToByteArray(byte[] expectedContent)
+        private async Task TestBindToByteArray(byte[] expectedContent)
         {
             // Arrange
             var account = CreateFakeStorageAccount();
@@ -164,7 +168,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToPoco(expectedContent);
         }
 
-        private static async Task TestBindToPoco(Poco expectedContent)
+        private async Task TestBindToPoco(Poco expectedContent)
         {
             // Arrange
             var account = CreateFakeStorageAccount();
@@ -721,10 +725,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return await FunctionalTest.RunTriggerFailureAsync<TResult>(account, programType, setTaskSource);
         }
 
-        private static async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
+        private async Task<TResult> CallQueueTriggerAsync<TResult>(object message, Type programType,
             Action<TaskCompletionSource<TResult>> setTaskSource)
         {
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
             var method = programType.GetMethod("Run");
             Assert.NotNull(method);
 
@@ -736,9 +740,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return result;
         }
 
-        private static StorageAccount CreateFakeStorageAccount()
+        private StorageAccount CreateFakeStorageAccount()
         {
-            return new FakeStorageAccount();
+            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
         private static async Task<CloudQueue> CreateQueue(StorageAccount account, string queueName)

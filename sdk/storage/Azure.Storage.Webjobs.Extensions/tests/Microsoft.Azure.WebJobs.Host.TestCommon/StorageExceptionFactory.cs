@@ -7,9 +7,9 @@ using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Azure.Storage;
 
-namespace FakeStorage
+namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
-    internal static class StorageExceptionFactory
+    public static class StorageExceptionFactory
     {
         public static StorageException Create(int httpStatusCode)
         {
@@ -25,7 +25,7 @@ namespace FakeStorage
         {
             // Unfortunately, the RequestResult properties are all internal-only settable. ReadXml is the only way to
             // create a populated RequestResult instance.
-           
+
             XElement requestResultElement = new XElement("RequestResult",
                 new XElement("HTTPStatusCode", httpStatusCode),
                 new XElement("HttpStatusMessage"),
@@ -40,10 +40,12 @@ namespace FakeStorage
                 new XElement("EndTime", DateTime.Now),
                 extendedErrorElement);
 
-            RequestResult result = new RequestResult();            
-            
-            using (var stringReader = new StringReader(requestResultElement.ToString())) 
-            using (var reader = XmlReader.Create(stringReader, new XmlReaderSettings { Async = true }))            
+            RequestResult result = new RequestResult();
+
+            using (var stringReader = new StringReader(requestResultElement.ToString()))
+#pragma warning disable CA3075 // Insecure DTD processing in XML
+            using (var reader = XmlReader.Create(stringReader, new XmlReaderSettings { Async = true }))
+#pragma warning restore CA3075 // Insecure DTD processing in XML
             {
                 result.ReadXmlAsync(reader).Wait();
             }

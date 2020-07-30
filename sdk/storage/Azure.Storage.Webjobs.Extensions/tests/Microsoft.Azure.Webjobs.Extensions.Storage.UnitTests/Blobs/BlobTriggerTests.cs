@@ -9,14 +9,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Blob;
 using Xunit;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    public class BlobTriggerTests
+    public class BlobTriggerTests : IClassFixture<AzuriteFixture>
     {
         private const string ContainerName = "container";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
+        private readonly AzuriteFixture azuriteFixture;
+
+        public BlobTriggerTests(AzuriteFixture azuriteFixture)
+        {
+            this.azuriteFixture = azuriteFixture;
+        }
 
         [Fact]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
@@ -96,9 +103,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return container;
         }
 
-        private static StorageAccount CreateFakeStorageAccount()
+        private StorageAccount CreateFakeStorageAccount()
         {
-            var account = new FakeStorageAccount();
+            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
 
             // make sure our system containers are present
             var container = CreateContainer(account, "azure-webjobs-hosts");
