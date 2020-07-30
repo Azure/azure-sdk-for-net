@@ -147,7 +147,7 @@ namespace Azure.Data.Tables
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="Guid" />.</exception>
-        public Guid GetGuid(string key) => GetValue<Guid>(key);
+        public Guid? GetGuid(string key) => GetValue<Guid?>(key);
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
@@ -205,7 +205,7 @@ namespace Azure.Data.Tables
         private protected object GetValue(string key, Type type = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            if (!_properties.TryGetValue(key, out object value))
+            if (!_properties.TryGetValue(key, out object value) || value == null)
             {
                 return null;
             }
@@ -224,8 +224,7 @@ namespace Azure.Data.Tables
         /// </summary>
         private static void EnforceType(Type requestedType, Type givenType)
         {
-            requestedType.IsAssignableFrom(givenType);
-            if (givenType != requestedType)
+            if (!requestedType.IsAssignableFrom(givenType))
             {
                 throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,

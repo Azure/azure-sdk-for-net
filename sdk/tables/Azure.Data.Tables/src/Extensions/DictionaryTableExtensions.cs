@@ -137,16 +137,10 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : class, ITableEntity, new()
         {
-            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
-            {
-                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            });
-
             var result = new T();
 
-            if (result is IDictionary<string, object>)
+            if (result is IDictionary<string, object> castResult)
             {
-                var castResult = (IDictionary<string, object>)result;
                 entity.CastAndRemoveAnnotations();
 
                 foreach (var entProperty in entity.Keys)
@@ -156,6 +150,11 @@ namespace Azure.Data.Tables
 
                 return result;
             }
+
+            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
 
             // Iterate through each property of the entity and set them as the correct type.
             foreach (var property in properties)

@@ -12,22 +12,21 @@ using NUnit.Framework;
 
 namespace Azure.Tables.Tests
 {
-    public class TableEntityTests : ClientTestBase
+    public class TableEntityTests
     {
-        public TableEntityTests(bool isAsync) : base(isAsync)
-        { }
-
-        private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
-        private TableEntity entityWithAllTypes = new TableEntity {
-            { TableConstants.PropertyNames.PartitionKey, "partition" },
-            { TableConstants.PropertyNames.RowKey, "row" },
+        private TableEntity emptyEntity = new TableEntity { { "My value was nulled!", null } };
+        private TableEntity fullEntity = new TableEntity("partition", "row") {
             { "binary", new byte[] { 1, 2 }},
             { "boolean", true },
             { "datetime", new DateTime() },
             { "double", (double)2.0 },
             { "guid", new Guid() },
             { "int32", int.MaxValue },
-            { "int64", long.MaxValue }};
+            { "int64", long.MaxValue },
+            { "string", "hello!" }};
+
+        private string nulledPropertyKey = "My value was nulled!";
+        private string nonexistentKey = "My value was never set!";
 
         /// <summary>
         /// Validates the typed getters.
@@ -35,13 +34,14 @@ namespace Azure.Tables.Tests
         [Test]
         public void ValidateDictionaryTableEntityGetTypes()
         {
-            Assert.That(entityWithAllTypes.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
-            Assert.That(entityWithAllTypes.GetBoolean("boolean"), Is.InstanceOf(typeof(bool)));
-            Assert.That(entityWithAllTypes.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime)));
-            Assert.That(entityWithAllTypes.GetDouble("double"), Is.InstanceOf(typeof(double)));
-            Assert.That(entityWithAllTypes.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
-            Assert.That(entityWithAllTypes.GetInt32("int32"), Is.InstanceOf(typeof(int)));
-            Assert.That(entityWithAllTypes.GetInt64("int64"), Is.InstanceOf(typeof(long)));
+            Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
+            Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
+            Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity.GetDouble("double"), Is.InstanceOf(typeof(double?)));
+            Assert.That(fullEntity.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
+            Assert.That(fullEntity.GetInt32("int32"), Is.InstanceOf(typeof(int?)));
+            Assert.That(fullEntity.GetInt64("int64"), Is.InstanceOf(typeof(long?)));
+            Assert.That(fullEntity.GetString("string"), Is.InstanceOf(typeof(string)));
         }
 
         /// <summary>
@@ -50,41 +50,61 @@ namespace Azure.Tables.Tests
         [Test]
         public void DictionaryEntityGetWrongTypesThrows()
         {
-            Assert.That(() => entityWithAllTypes.GetBinary("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a Binary.");
-            Assert.That(() => entityWithAllTypes.GetBoolean("datetime"), Throws.InstanceOf<InvalidOperationException>(), "GetBoolean should validate that the value for the inputted key is a Boolean.");
-            Assert.That(() => entityWithAllTypes.GetDateTime("double"), Throws.InstanceOf<InvalidOperationException>(), "GetDateTime should validate that the value for the inputted key is a DateTime.");
-            Assert.That(() => entityWithAllTypes.GetDouble("guid"), Throws.InstanceOf<InvalidOperationException>(), "GetDouble should validate that the value for the inputted key is an Double.");
-            Assert.That(() => entityWithAllTypes.GetGuid("int32"), Throws.InstanceOf<InvalidOperationException>(), "GetGuid should validate that the value for the inputted key is an Guid.");
-            Assert.That(() => entityWithAllTypes.GetInt32("int64"), Throws.InstanceOf<InvalidOperationException>(), "GetInt32 should validate that the value for the inputted key is a Int32.");
-            Assert.That(() => entityWithAllTypes.GetInt64("binary"), Throws.InstanceOf<InvalidOperationException>(), "GetInt64 should validate that the value for the inputted key is a Int64.");
+            Assert.That(() => fullEntity.GetBinary("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a Binary.");
+            Assert.That(() => fullEntity.GetBoolean("datetime"), Throws.InstanceOf<InvalidOperationException>(), "GetBoolean should validate that the value for the inputted key is a Boolean.");
+            Assert.That(() => fullEntity.GetDateTime("double"), Throws.InstanceOf<InvalidOperationException>(), "GetDateTime should validate that the value for the inputted key is a DateTime.");
+            Assert.That(() => fullEntity.GetDouble("guid"), Throws.InstanceOf<InvalidOperationException>(), "GetDouble should validate that the value for the inputted key is an Double.");
+            Assert.That(() => fullEntity.GetGuid("int32"), Throws.InstanceOf<InvalidOperationException>(), "GetGuid should validate that the value for the inputted key is an Guid.");
+            Assert.That(() => fullEntity.GetInt32("int64"), Throws.InstanceOf<InvalidOperationException>(), "GetInt32 should validate that the value for the inputted key is a Int32.");
+            Assert.That(() => fullEntity.GetInt64("binary"), Throws.InstanceOf<InvalidOperationException>(), "GetInt64 should validate that the value for the inputted key is a Int64.");
+            Assert.That(() => fullEntity.GetString("binary"), Throws.InstanceOf<InvalidOperationException>(), "GetString should validate that the value for the inputted key is a string.");
         }
 
         /// <summary>
-        /// Validates getters for non-nullable types involving null. (ex. DateTime, int)
+        /// Validates typed getters for nonexistent properties.
         /// </summary>
         [Test]
-        public void ValidateDictionaryTableEntityGetNonNullType()
+        public void ValidateDictionaryEntityGetTypeForNonexistentProperties()
         {
-            var dummyKey = "I'm a little dumb";
-            Assert.That(entityWithAllTypes.GetBoolean(dummyKey), Is.Null);
-            Assert.That(entityWithAllTypes.GetDateTime(dummyKey), Is.Null);
-            Assert.That(entityWithAllTypes.GetDouble(dummyKey), Is.Null);
-            Assert.That(entityWithAllTypes.GetInt32(dummyKey), Is.Null);
-            Assert.That(entityWithAllTypes.GetInt64(dummyKey), Is.Null);
+            Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetDouble(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetGuid(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetInt32(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetInt64(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetString(nonexistentKey), Is.Null);
         }
 
         /// <summary>
-        /// Validates getting properties involving null.
+        /// Validates typed getters for nulled properties.
         /// </summary>
         [Test]
-        public void DictionaryEntityGetNullOrNonexistentProperties()
+        public void ValidateDictionaryEntityGetTypeForNulledProperties()
         {
+            Assert.That(emptyEntity.GetBinary(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetBoolean(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetDateTime(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetDouble(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetGuid(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetInt64(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetString(nulledPropertyKey), Is.Null);
+        }
+
+        /// <summary>
+        /// Validates getting properties with the indexer that either don't exist or were set to null.
+        /// </summary>
+        [Test]
+        public void DictionaryEntityGetNullOrNonexistentPropertiesWithIndexer()
+        {
+            var nonexistentKey = "I was never set!";
+
             // Test getting nonexistent property works.
-            Assert.That(entityWithoutPK.PartitionKey, Is.Null);
+            Assert.That(emptyEntity[nonexistentKey], Is.Null);
 
             // Test getting a property that was set to null.
-            entityWithAllTypes[TableConstants.PropertyNames.PartitionKey] = null;
-            Assert.That(entityWithAllTypes[TableConstants.PropertyNames.PartitionKey], Is.Null);
+            Assert.That(emptyEntity[nulledPropertyKey], Is.Null);
         }
 
         /// <summary>
@@ -96,8 +116,8 @@ namespace Azure.Tables.Tests
             var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
 
             // Test setting an existing property with the same type works.
-            entity["exampleInt"] = false;
-            Assert.That(entity.GetBoolean("exampleInt"), Is.False);
+            entity["exampleBool"] = false;
+            Assert.That(entity.GetBoolean("exampleBool").Value, Is.False);
         }
 
         /// <summary>
