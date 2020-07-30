@@ -9,6 +9,7 @@
 ### Fixes
 
 - Constructor in `TrainingFileFilter` made public.
+- Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
 
 ### New Features
 
