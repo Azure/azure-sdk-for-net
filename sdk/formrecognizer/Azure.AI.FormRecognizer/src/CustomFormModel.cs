@@ -22,16 +22,11 @@ namespace Azure.AI.FormRecognizer.Training
 
             // TrainResult can be null if model is not ready yet.
 
-            if (model.TrainResult != null)
-            {
-                TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
-                Errors = model.TrainResult.Errors;
-            }
-            else
-            {
-                TrainingDocuments = new List<TrainingDocumentInfo>();
-                Errors = new List<FormRecognizerError>();
-            }
+            TrainingDocuments = model.TrainResult != null
+                ? ConvertToTrainingDocuments(model.TrainResult)
+                : new List<TrainingDocumentInfo>();
+
+            Errors = model.TrainResult?.Errors ?? new List<FormRecognizerError>();
         }
 
         /// <summary>
