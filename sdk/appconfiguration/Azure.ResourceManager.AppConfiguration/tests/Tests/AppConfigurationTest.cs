@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Network.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 using NUnit.Framework;
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task AppConfigurationListKeyValues()
         {
             var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
+            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName,
@@ -84,22 +85,28 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 Location = "eastus",
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = { "10.0.0.0/16", }
+                    AddressPrefixes = new List<string> { "10.0.0.0/16" }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = new List<string> { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
+                Subnets = new List<Subnet> { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
             };
             var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
             var setPrivateEndpointResponse = await WaitForCompletionAsync(await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
-                new Management.Network.Models.PrivateEndpoint()
+                new ResourceManager.Network.Models.PrivateEndpoint()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
-                                                                       configurationCreateResult.Value.Id,new List<string>{"configurationStores"},"Please approve my connection",null)},
+                    PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> {
+                        new PrivateLinkServiceConnection(){
+                            Name = "myconnection",
+                            PrivateLinkServiceId = configurationCreateResult.Value.Id,
+                            GroupIds = new List<string>{"configurationStores"},
+                            RequestMessage = "Please approve my connection"
+                        }
+                    },
                     Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 }));
             //get Configuration

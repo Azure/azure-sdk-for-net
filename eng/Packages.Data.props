@@ -166,5 +166,11 @@
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
 	
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
+
+    <!-- Mgmt sdk packages-->
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.1" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.1" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.1" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.1" />
   </ItemGroup>
 </Project>
