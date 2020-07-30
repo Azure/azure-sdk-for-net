@@ -11,9 +11,9 @@
 		<PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management;</PackageTags>
 		<PackageReleaseNotes>
  			<![CDATA[
-         This release of the Azure Service Fabric SDK introduces support for the latest version of the REST API (2020-03-01),
-		 and support for managed clusters with api veresion of the REST API (2020-01-01-preview).
-       ]]>
+				This release of the Azure Service Fabric SDK introduces support for the latest version of the REST API (2020-03-01).
+				Also, introduces support for managed clusters with the version of the REST API (2020-01-01-preview).
+			]]>
  		</PackageReleaseNotes>
 	</PropertyGroup>
 
