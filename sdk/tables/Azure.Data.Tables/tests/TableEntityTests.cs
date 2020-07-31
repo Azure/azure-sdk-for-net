@@ -16,6 +16,7 @@ namespace Azure.Tables.Tests
     {
         private TableEntity emptyEntity = new TableEntity { { "My value was nulled!", null } };
         private TableEntity fullEntity = new TableEntity("partition", "row") {
+            { TableConstants.PropertyNames.TimeStamp, default(DateTimeOffset) },
             { "binary", new byte[] { 1, 2 }},
             { "boolean", true },
             { "datetime", new DateTime() },
@@ -32,7 +33,7 @@ namespace Azure.Tables.Tests
         /// Validates the typed getters.
         /// </summary>
         [Test]
-        public void ValidateDictionaryTableEntityGetTypes()
+        public void ValidateDictionaryEntityGetTypes()
         {
             Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
             Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
@@ -90,6 +91,25 @@ namespace Azure.Tables.Tests
             Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetInt64(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetString(nulledPropertyKey), Is.Null);
+        }
+
+        /// <summary>
+        /// Validates the typed getters.
+        /// </summary>
+        [Test]
+        public void ValidateDictionaryEntityGetPropertiesWithIndexer()
+        {
+            Assert.That(fullEntity["binary"], Is.InstanceOf(typeof(byte[])));
+            Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
+            Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
+            Assert.That(fullEntity["guid"], Is.InstanceOf(typeof(Guid)));
+            Assert.That(fullEntity["int32"], Is.InstanceOf(typeof(int?)));
+            Assert.That(fullEntity["int64"], Is.InstanceOf(typeof(long?)));
+            Assert.That(fullEntity["string"], Is.InstanceOf(typeof(string)));
+
+            // Timestamp property returned as object casted as DateTimeOffset?
+            Assert.That(fullEntity.Timestamp, Is.InstanceOf(typeof(DateTimeOffset?)));
         }
 
         /// <summary>

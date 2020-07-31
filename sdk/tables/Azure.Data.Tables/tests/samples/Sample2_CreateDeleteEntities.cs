@@ -23,58 +23,51 @@ namespace Azure.Data.Tables.Samples
             string rowKey = "A1";
             string rowKeyStrong = "B1";
 
-            var serviceClient = new TableServiceClient(
+            #region Snippet:TablesSample2CreateTableWithTableClient
+            // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
+            var client = new TableClient(
+                tableName,
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            try
+            // Create the table in the service.
+            client.Create();
+            #endregion
+
+            #region Snippet:TablesSample2CreateEntity
+            // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
+            var entity = new TableEntity(partitionKey, rowKey)
             {
-                #region Snippet:TablesSample2GetTableClient
-                // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-                var client = new TableClient(
-                    tableName,
-                    new Uri(storageUri),
-                    new TableSharedKeyCredential(accountName, storageAccountKey));
-                #endregion
+                {"Product", "Markers" },
+                {"Price", 5.00 },
+            };
 
-                #region Snippet:TablesSample2CreateEntity
-                // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
-                var entity = new TableEntity
-                {
-                    {"PartitionKey", partitionKey },
-                    {"RowKey", rowKey },
-                    {"Product", "Markers" },
-                    {"Price", 5.00 },
-                };
+            // Insert the newly created entity.
+            client.CreateEntity(entity);
+            #endregion
 
-                // Insert the newly created entity.
-                client.CreateEntity(entity);
-                #endregion
-
-                #region Snippet:TablesSample2CreateStronglyTypedEntity
-                // Make a strongly typed entity by defining a custom class that extends <see cref="TableEntity">.
-                var strongEntity = new OfficeSupplyEntity
-                {
-                    PartitionKey = partitionKey,
-                    RowKey = rowKeyStrong,
-                    Product = "Notebook",
-                    Price = 3.00
-                };
-
-                // Insert the newly created entity.
-                client.CreateEntity(strongEntity);
-                #endregion
-
-                #region Snippet:TablesSample2DeleteEntity
-                // Delete the entity given the partition and row key.
-                client.DeleteEntity(partitionKey, rowKey);
-                #endregion
-
-            }
-            finally
+            #region Snippet:TablesSample2CreateStronglyTypedEntity
+            // Make a strongly typed entity by defining a custom class that extends <see cref="TableEntity">.
+            var strongEntity = new OfficeSupplyEntity
             {
-                serviceClient.DeleteTable(tableName);
-            }
+                PartitionKey = partitionKey,
+                RowKey = rowKeyStrong,
+                Product = "Notebook",
+                Price = 3.00
+            };
+
+            // Insert the newly created entity.
+            client.CreateEntity(strongEntity);
+            #endregion
+
+            #region Snippet:TablesSample2DeleteEntity
+            // Delete the entity given the partition and row key.
+            client.DeleteEntity(partitionKey, rowKey);
+            #endregion
+
+            #region Snippet:TablesSample2DeleteTableWithTableClient
+            client.Delete();
+            #endregion
         }
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
