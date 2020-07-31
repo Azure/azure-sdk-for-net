@@ -2,6 +2,10 @@
 
 ## Version 4.11.0
 ###  Feature Additions
+- Added source/sink level staging support in dataflow
+
+## Version 4.11.0
+###  Feature Additions
 - Added support for Trigger Run Cancel API
 - Added column delimiter for SAP Table/open hub
 - Added azureCloudType for Aad Auth
