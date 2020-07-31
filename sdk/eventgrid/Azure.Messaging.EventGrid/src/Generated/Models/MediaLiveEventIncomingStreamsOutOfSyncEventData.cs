@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Incoming streams out of sync event data. </summary>
     public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData

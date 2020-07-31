@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     internal static class MediaJobStateExtensions
     {

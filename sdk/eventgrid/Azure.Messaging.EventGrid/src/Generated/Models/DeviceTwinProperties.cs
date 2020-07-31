@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
     public partial class DeviceTwinProperties

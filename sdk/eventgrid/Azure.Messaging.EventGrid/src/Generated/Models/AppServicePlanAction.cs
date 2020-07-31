@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action on the app service plan. </summary>
     public readonly partial struct AppServicePlanAction : IEquatable<AppServicePlanAction>
