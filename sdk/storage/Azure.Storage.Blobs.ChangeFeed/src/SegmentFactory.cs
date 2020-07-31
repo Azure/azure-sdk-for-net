@@ -66,10 +66,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
             }
 
-            // Initalized Finalized field
-            string statusString = jsonManifest.RootElement.GetProperty("status").GetString();
-            bool finalized = statusString == "Finalized";
-
             int i = 0;
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
@@ -87,8 +83,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new Segment(
                 shards,
                 shardIndex,
-                dateTime,
-                finalized);
+                dateTime);
         }
     }
 }

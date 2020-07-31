@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// If this Shard has a next event.
         /// </summary>
         public virtual bool HasNext()
-            => _chunks.Count > 0 || _currentChunk.HasNext();
+            => _chunks.Count > 0 || (_currentChunk != null && _currentChunk.HasNext());
 
         /// <summary>
         /// Gets the next <see cref="BlobChangeFeedEvent"/>.

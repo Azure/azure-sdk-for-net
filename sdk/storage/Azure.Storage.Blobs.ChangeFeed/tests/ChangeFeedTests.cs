@@ -145,7 +145,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             DateTimeOffset endDateTime = new DateTimeOffset(2020, 5, 6, 18, 0, 0, TimeSpan.Zero);
             ChangeFeedCursor expectedCursor = new ChangeFeedCursor(
-                urlHash: containerUri.ToString().GetHashCode(),
+                urlHash: BlobChangeFeedExtensions.ComputeMD5(containerUri.ToString()),
                 endDateTime: endDateTime,
                 currentSegmentCursor: segmentCursor);
 
@@ -433,12 +433,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     events[7]
                 }));
 
-            for (int i = 0; i < segments.Count; i++)
-            {
-                segments[i].Setup(r => r.Finalized)
-                    .Returns(true);
-            }
-
             long chunkIndex = 1;
             long blockOffset = 2;
             long eventIndex = 3;
@@ -457,7 +451,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 },
                 shardIndex);
             ChangeFeedCursor changeFeedCursor = new ChangeFeedCursor(
-                containerUri.ToString().GetHashCode(),
+                BlobChangeFeedExtensions.ComputeMD5(containerUri.ToString()),
                 null,
                 segmentCursor);
 
@@ -605,11 +599,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segments[1].Verify(r => r.GetCursor());
             segments[3].Verify(r => r.GetCursor());
-
-            segments[0].Verify(r => r.Finalized, Times.Exactly(3));
-            segments[1].Verify(r => r.Finalized, Times.Exactly(4));
-            segments[2].Verify(r => r.Finalized, Times.Exactly(1));
-            segments[3].Verify(r => r.Finalized, Times.Exactly(2));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
         }
@@ -880,12 +869,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segments[1].Setup(r => r.GetCursor())
                 .Returns(new SegmentCursor());
-
-            for (int i = 0; i < segments.Count; i++)
-            {
-                segments[i].Setup(r => r.Finalized)
-                    .Returns(true);
-            }
 
             ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
                 containerClient.Object,

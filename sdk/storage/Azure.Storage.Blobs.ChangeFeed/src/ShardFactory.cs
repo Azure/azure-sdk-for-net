@@ -63,24 +63,27 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    //Chunk chunk = new Chunk(_containerClient, blobHierarchyItem.Blob.Name);
                     chunks.Enqueue(blobHierarchyItem.Blob.Name);
                 }
             }
 
-            // Fast forward to current Chunk
-            if (chunkIndex > 0)
+            Chunk currentChunk = null;
+            if (chunks.Count > 0) // Chunks can be empty right after hour flips.
             {
-                for (int i = 0; i < chunkIndex; i++)
+                // Fast forward to current Chunk
+                if (chunkIndex > 0)
                 {
-                    chunks.Dequeue();
+                    for (int i = 0; i < chunkIndex; i++)
+                    {
+                        chunks.Dequeue();
+                    }
                 }
-            }
 
-            Chunk currentChunk = _chunkFactory.BuildChunk(
-                chunks.Dequeue(),
-                blockOffset,
-                eventIndex);
+                currentChunk = _chunkFactory.BuildChunk(
+                    chunks.Dequeue(),
+                    blockOffset,
+                    eventIndex);
+            }
 
             return new Shard(
                 _containerClient,
