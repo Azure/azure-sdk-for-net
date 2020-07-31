@@ -400,7 +400,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedPropertyTypes(Type modelType, string invalidPropertyName)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.Build(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => new FieldBuilder().Build(modelType));
 
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
@@ -424,7 +424,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase(typeof(ICollection<decimal>))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => FieldBuilder.Build(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => new FieldBuilder().Build(modelType));
 
             string expectedErrorMessage =
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
@@ -441,7 +441,7 @@ namespace Azure.Search.Documents.Tests
             from tuple in testData
             select (type, tuple.dataType, tuple.fieldName);
 
-        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.Build(modelType);
+        private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
 
         private enum Direction
         {

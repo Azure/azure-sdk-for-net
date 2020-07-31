@@ -27,10 +27,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            _fields = new ChangeTrackingList<SearchField>();
-
             Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
             CharFilters = new ChangeTrackingList<CharFilter>();
+            Fields = new List<SearchField>();
             ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
@@ -51,11 +50,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            // Allow the underlying list to be mutated.
-            _fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)fields.ToList());
-
             Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
             CharFilters = new ChangeTrackingList<CharFilter>();
+            Fields = fields.ToList();
             ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
@@ -81,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets or sets the fields in the index.
         /// Use <see cref="FieldBuilder"/> to define fields based on a model class,
-        /// or <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> for help defining valid indexes.
+        /// or <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> to manually define fields.
         /// Index fields have many constraints that are not validated with <see cref="SearchField"/> until the index is created on the server.
         /// </summary>
         /// <example>
@@ -133,13 +130,7 @@ namespace Azure.Search.Documents.Indexes.Models
             get => _fields;
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
-                }
-
-                // Allow the underlying list to be mutated.
-                _fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)value.ToList());
+                _fields = value ?? throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
             }
         }
 

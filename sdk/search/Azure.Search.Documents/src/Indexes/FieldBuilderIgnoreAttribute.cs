@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes
     /// An example of a scenario where this is useful is when mapping between a string field in Azure Cognitive Search and an enum
     /// property.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class FieldBuilderIgnoreAttribute : Attribute
     {
     }

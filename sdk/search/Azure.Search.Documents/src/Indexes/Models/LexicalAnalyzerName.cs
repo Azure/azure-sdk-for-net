@@ -7,10 +7,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <summary>
-        /// The names of all lexical analyzer as string constants.
+        /// The values of all declared <see cref="LexicalAnalyzerName"/> properties as string constants.
         /// These can be used in <see cref="SearchableFieldAttribute"/> and anywhere else constants are required.
         /// </summary>
-        public static class AsString
+        public static class Values
         {
             /// <summary> Microsoft analyzer for Arabic. </summary>
             public const string ArMicrosoft = LexicalAnalyzerName.ArMicrosoftValue;

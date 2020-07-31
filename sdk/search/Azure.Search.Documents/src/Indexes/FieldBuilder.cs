@@ -21,18 +21,7 @@ namespace Azure.Search.Documents.Indexes
     /// <summary>
     /// Builds field definitions for a search index by reflecting over a user-defined model type.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This <see cref="FieldBuilder"/> was ported from the Microsoft.Azure.Search.Service package
-    /// to make migrating from using Microsoft.Azure.Search to Azure.Search.Documents easier.
-    /// It also uses System.Text.Json instead of Newtonsoft.Json (JSON.NET).
-    /// </para>
-    /// <para>
-    /// This is only a sample you can include in your code and future implementations may change
-    /// to follow modern guidelines and design principles.
-    /// </para>
-    /// </remarks>
-    public static class FieldBuilder
+    public class FieldBuilder
     {
         private static readonly IReadOnlyDictionary<Type, SearchFieldDataType> s_primitiveTypeMap =
             new ReadOnlyDictionary<Type, SearchFieldDataType>(
@@ -59,20 +48,29 @@ namespace Azure.Search.Documents.Indexes
             };
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldBuilder"/> class.
+        /// </summary>
+        public FieldBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ObjectSerializer"/> to use to generate field names that match JSON property names.
+        /// You should use hte same value as <see cref="SearchClientOptions.Serializer"/>.
+        /// <see cref="JsonObjectSerializer"/> will be used if no value is provided.
+        /// </summary>
+        public ObjectSerializer Serializer { get; set; }
+
+        /// <summary>
         /// Creates a list of <see cref="SearchField"/> objects corresponding to
         /// the properties of the type supplied.
         /// </summary>
         /// <param name="modelType">
         /// The type for which fields will be created, based on its properties.
         /// </param>
-        /// <param name="serializer">
-        /// The <see cref="ObjectSerializer"/> to use to generate field names that match JSON property names.
-        /// You should use the same value as <see cref="SearchClientOptions.Serializer"/>.
-        /// <see cref="JsonObjectSerializer"/> will be used if no value is provided.
-        /// </param>
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
-        public static IList<SearchField> Build(Type modelType, ObjectSerializer serializer = null)
+        public IList<SearchField> Build(Type modelType)
         {
             Argument.AssertNotNull(modelType, nameof(modelType));
 
@@ -85,8 +83,8 @@ namespace Azure.Search.Documents.Indexes
                 throw new ArgumentException(errorMessage, nameof(modelType));
             }
 
-            serializer ??= new JsonObjectSerializer();
-            IMemberNameConverter nameProvider = serializer as IMemberNameConverter ?? DefaultSerializedNameProvider.Shared;
+            Serializer ??= new JsonObjectSerializer();
+            IMemberNameConverter nameProvider = Serializer as IMemberNameConverter ?? DefaultSerializedNameProvider.Shared;
 
             if (ObjectInfo.TryGet(modelType, nameProvider, out ObjectInfo info))
             {

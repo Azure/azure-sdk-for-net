@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Tests
 
     public struct ReflectableComplexStruct
     {
-        [SearchableField(AnalyzerName = LexicalAnalyzerName.AsString.EnMicrosoft)]
+        [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
         public string Name { get; set; }
 
         [SimpleField(IsFilterable = true)]
@@ -42,9 +42,9 @@ namespace Azure.Search.Documents.Tests
             IsSortable = true,
             IsFacetable = true,
             IsHidden = true,
-            AnalyzerName = LexicalAnalyzerName.AsString.ZhHantLucene,
-            SearchAnalyzerName = LexicalAnalyzerName.AsString.ZhHantLucene,
-            IndexAnalyzerName = LexicalAnalyzerName.AsString.ZhHantLucene,
+            AnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
+            SearchAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
+            IndexAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
             SynonymMapNames = new[] { "myMap" })]
         public ReflectableAddressStruct Address { get; set; }
     }
@@ -87,13 +87,13 @@ namespace Azure.Search.Documents.Tests
         [SimpleField(IsHidden = false)]
         public string ExplicitlyRetrievableText { get; set; }
 
-        [SearchableField(AnalyzerName = LexicalAnalyzerName.AsString.EnMicrosoft)]
+        [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
         public string TextWithAnalyzer { get; set; }
 
-        [SearchableField(SearchAnalyzerName = LexicalAnalyzerName.AsString.EsLucene)]
+        [SearchableField(SearchAnalyzerName = LexicalAnalyzerName.Values.EsLucene)]
         public string TextWithSearchAnalyzer { get; set; }
 
-        [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.AsString.Whitespace)]
+        [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.Values.Whitespace)]
         public string TextWithIndexAnalyzer { get; set; }
 
         public string[] StringArray { get; set; }

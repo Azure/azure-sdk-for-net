@@ -4,7 +4,8 @@
 
 ### Added
 
-- Add `FieldBuilder` to easily create `SearchIndex` fields from a model type.
+- Added `SearchClientOptions.Serializer` to set which `ObjectSerializer` to use for serialization.
+- Added `FieldBuilder` to easily create `SearchIndex` fields from a model type.
 
 ## 11.0.0 (2020-07-07)
 

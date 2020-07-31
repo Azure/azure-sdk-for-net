@@ -208,7 +208,7 @@ namespace Azure.Search.Documents.Tests.Samples
             //@@SearchIndex index = new SearchIndex("hotels")
             /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
             {
-                Fields = FieldBuilder.Build(typeof(Hotel)),
+                Fields = new FieldBuilder().Build(typeof(Hotel)),
                 Suggesters =
                 {
                     // Suggest query terms from the hotelName field.

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes
         /// Gets or sets the name of the language analyzer. This property cannot be set when either <see cref="SearchAnalyzerName"/> or <see cref="IndexAnalyzerName"/> are set.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        /// <value>String values from <see cref="LexicalAnalyzerName.AsString">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
+        /// <value>String values from <see cref="LexicalAnalyzerName.Values">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
         public string AnalyzerName { get; set; }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes
         /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        /// <value>String values from <see cref="LexicalAnalyzerName.AsString">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
+        /// <value>String values from <see cref="LexicalAnalyzerName.Values">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
         public string SearchAnalyzerName { get; set; }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes
         /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        /// <value>String values from <see cref="LexicalAnalyzerName.AsString">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
+        /// <value>String values from <see cref="LexicalAnalyzerName.Values">LexicalAnalyzerName</see>, or the name of a custom analyzer previously uploaded.</value>
         public string IndexAnalyzerName { get; set; }
 
         /// <summary>
