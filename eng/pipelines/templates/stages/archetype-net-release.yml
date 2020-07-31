@@ -102,13 +102,13 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
-                      - task: NuGetCommand@2
-                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-                        inputs:
-                          command: push
-                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
-                          nuGetFeedType: external
-                          publishFeedCredentials: Nuget.org
+                      # - task: NuGetCommand@2
+                      #   displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                      #   inputs:
+                      #     command: push
+                      #     packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                      #     nuGetFeedType: external
+                      #     publishFeedCredentials: Nuget.org
                       - task: NuGetCommand@2
                         displayName: 'Publish to DevOps Feed'
                         inputs:
