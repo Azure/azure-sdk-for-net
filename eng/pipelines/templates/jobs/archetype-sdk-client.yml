@@ -6,6 +6,10 @@ jobs:
       vmImage: windows-2019
     steps:
       - pwsh: |
+          Write-Host "Pull Request Source Branch: $(System.PullRequest.SourceBranch)"
+          Write-Host "Pull Request ID: $(System.PullRequest.PullRequestId)"
+          Write-Host "Pull Request Number: $(System.PullRequest.PullRequestNumber)"
+      - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
