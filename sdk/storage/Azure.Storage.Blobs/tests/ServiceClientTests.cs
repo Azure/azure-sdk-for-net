@@ -275,7 +275,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ListContainersSegmentAsync_Deleted()
         {
             // Arrange
@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync()
         {
             // Arrange
@@ -670,7 +670,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync_Error()
         {
             // Arrange
