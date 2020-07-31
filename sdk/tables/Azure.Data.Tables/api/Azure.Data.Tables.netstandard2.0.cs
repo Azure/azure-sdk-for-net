@@ -69,7 +69,7 @@ namespace Azure.Data.Tables
         public System.DateTime? GetDateTime(string key) { throw null; }
         public double? GetDouble(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        public System.Guid GetGuid(string key) { throw null; }
+        public System.Guid? GetGuid(string key) { throw null; }
         public int? GetInt32(string key) { throw null; }
         public long? GetInt64(string key) { throw null; }
         public string GetString(string key) { throw null; }
