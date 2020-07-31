@@ -250,15 +250,15 @@ namespace Azure.Core
         PerCall = 0,
         PerRetry = 1,
     }
-    public partial interface ISerializedNameProvider
+    public partial interface IMemberNameConverter
     {
-        string? GetSerializedName(System.Reflection.MemberInfo memberInfo);
+        string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
-    public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer, Azure.Core.ISerializedNameProvider
+    public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer, Azure.Core.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
         public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
-        string? Azure.Core.ISerializedNameProvider.GetSerializedName(System.Reflection.MemberInfo memberInfo) { throw null; }
+        string? Azure.Core.IMemberNameConverter.ConvertMemberName(System.Reflection.MemberInfo member) { throw null; }
         public override object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
