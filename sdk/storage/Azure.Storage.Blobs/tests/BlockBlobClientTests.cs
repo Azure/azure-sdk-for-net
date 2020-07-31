@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
             // Act
             using (var stream = new FaultyStream(
@@ -836,10 +836,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CommitBlockListAsync(commitList, options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -1664,10 +1664,10 @@ namespace Azure.Storage.Blobs.Test
                     options: options);
             }
 
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [LiveOnly]
@@ -1976,7 +1976,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act

@@ -136,10 +136,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(Constants.KB, options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.Test
             var offset = 0 * Constants.KB;
             var data = GetRandomBuffer(blobSize);
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act
@@ -850,6 +850,54 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual("InvalidPageRange", e.ErrorCode);
                     Assert.AreEqual("The page range specified is invalid.", e.Message.Split('\n')[0]);
                 });
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ClearPagesAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<PageInfo> response = await blob.ClearPagesAsync(
+                range: new HttpRange(0, Constants.KB),
+                conditions: conditions);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ClearPagesAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.ClearPagesAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    conditions: conditions),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
         [Test]
@@ -1740,6 +1788,56 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ResizeAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            long newSize = 8 * Constants.KB;
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<PageBlobInfo> response = await blob.ResizeAsync(
+                size: newSize,
+                conditions: conditions);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ResizeAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            long newSize = 8 * Constants.KB;
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.ResizeAsync(
+                    size: newSize,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task UpdateSequenceNumberAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1820,6 +1918,60 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateSequenceNumberAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            long sequenceNumber = 5;
+
+            // Act
+            Response<PageBlobInfo> response = await blob.UpdateSequenceNumberAsync(
+                action: SequenceNumberAction.Update,
+                sequenceNumber: sequenceNumber,
+                conditions: conditions);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateSequenceNumberAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            long sequenceNumber = 5;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.UpdateSequenceNumberAsync(
+                    action: SequenceNumberAction.Update,
+                    sequenceNumber: sequenceNumber,
+                    conditions: conditions),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
         public async Task UpdateSequenceNumberAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1841,7 +1993,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Explicit("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1882,9 +2034,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-
             Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
-
             Assert.AreEqual(CopyStatus.Success, properties.Value.CopyStatus);
         }
 
@@ -1911,7 +2061,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Explicit("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync_AccessConditions()
         {
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
@@ -2028,6 +2178,120 @@ namespace Azure.Storage.Blobs.Test
                     e => Assert.IsTrue(true));
 
             }
+        }
+
+        [Test]
+        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyIncrementalAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Create Page Blob
+            PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Update data to firstPageBlob
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+            stream.Position = 0;
+
+            // Create Snapshot
+            Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot0 = snapshotResponse.Value.Snapshot;
+
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Associate the blobs via incremental copy
+            await destinationBlob.StartCopyIncrementalAsync(
+                sourceUri: sourceBlob.Uri,
+                snapshot: snapshot0);
+
+            // Need to wait for 1st copy to complete.
+            await Delay(5000);
+
+            // Update destination tags
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destinationBlob.SetTagsAsync(tags);
+
+            // Update source blob
+            await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+
+            // Create new snapshot
+            snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot1 = snapshotResponse.Value.Snapshot;
+
+            // Act
+            await destinationBlob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    snapshot: snapshot1,
+                    conditions: conditions);
+        }
+
+        [Test]
+        [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyIncrementalAsync_IfTags_Failed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Create Page Blob
+            PageBlobClient sourceBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Update data to firstPageBlob
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+            stream.Position = 0;
+
+            // Create Snapshot
+            Response<BlobSnapshotInfo> snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot0 = snapshotResponse.Value.Snapshot;
+
+            PageBlobClient destinationBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Associate the blobs via incremental copy
+            await destinationBlob.StartCopyIncrementalAsync(
+                sourceUri: sourceBlob.Uri,
+                snapshot: snapshot0);
+
+            // Update source blob
+            await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+
+            // Create new snapshot
+            snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+            string snapshot1 = snapshotResponse.Value.Snapshot;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destinationBlob.StartCopyIncrementalAsync(
+                    sourceUri: sourceBlob.Uri,
+                    snapshot: snapshot1,
+                    conditions: conditions),
+                    e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
         [Test]

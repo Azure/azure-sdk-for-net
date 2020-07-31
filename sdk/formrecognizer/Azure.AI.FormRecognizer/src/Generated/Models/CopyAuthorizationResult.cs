@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter that contains authorization claims for copy operation. </summary>
     internal partial class CopyAuthorizationResult

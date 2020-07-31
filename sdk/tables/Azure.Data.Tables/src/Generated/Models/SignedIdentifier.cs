@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public SignedIdentifier(string id, AccessPolicy accessPolicy)
+        public SignedIdentifier(string id, TableAccessPolicy accessPolicy)
         {
             if (id == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.Data.Tables.Models
         /// <summary> A unique id. </summary>
         public string Id { get; set; }
         /// <summary> The access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public TableAccessPolicy AccessPolicy { get; set; }
     }
 }

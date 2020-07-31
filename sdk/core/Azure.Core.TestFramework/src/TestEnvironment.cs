@@ -102,6 +102,26 @@ namespace Azure.Core.TestFramework
         public string TenantId => GetRecordedVariable("TENANT_ID");
 
         /// <summary>
+        ///   The URL of the Azure Resource Manager to be used for management plane operations. Recorded.
+        /// </summary>
+        public string ResourceManagerUrl => GetRecordedOptionalVariable("RESOURCE_MANAGER_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Service Management endpoint to be used for management plane authentication. Recorded.
+        /// </summary>
+        public string ServiceManagementUrl => GetRecordedOptionalVariable("SERVICE_MANAGEMENT_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Authority host to be used for authentication. Recorded.
+        /// </summary>
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+
+        /// <summary>
+        ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedOptionalVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
         public string ClientId => GetRecordedVariable("CLIENT_ID");
