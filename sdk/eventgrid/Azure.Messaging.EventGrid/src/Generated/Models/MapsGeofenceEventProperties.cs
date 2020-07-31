@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Geofence event (GeofenceEntered, GeofenceExited, GeofenceResult). </summary>
-    internal partial class MapsGeofenceEventProperties
+    public partial class MapsGeofenceEventProperties
     {
         /// <summary> Initializes a new instance of MapsGeofenceEventProperties. </summary>
         internal MapsGeofenceEventProperties()
@@ -19,6 +19,19 @@ namespace Azure.Messaging.EventGrid.Models
             ExpiredGeofenceGeometryId = new ChangeTrackingList<string>();
             Geometries = new ChangeTrackingList<MapsGeofenceGeometry>();
             InvalidPeriodGeofenceGeometryId = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of MapsGeofenceEventProperties. </summary>
+        /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
+        /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
+        /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
+        /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
+        internal MapsGeofenceEventProperties(IReadOnlyList<string> expiredGeofenceGeometryId, IReadOnlyList<MapsGeofenceGeometry> geometries, IReadOnlyList<string> invalidPeriodGeofenceGeometryId, bool? isEventPublished)
+        {
+            ExpiredGeofenceGeometryId = expiredGeofenceGeometryId;
+            Geometries = geometries;
+            InvalidPeriodGeofenceGeometryId = invalidPeriodGeofenceGeometryId;
+            IsEventPublished = isEventPublished;
         }
 
         /// <summary> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </summary>

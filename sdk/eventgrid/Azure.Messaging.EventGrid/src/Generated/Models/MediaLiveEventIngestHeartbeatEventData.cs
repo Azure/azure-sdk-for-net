@@ -5,14 +5,43 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Ingest fragment dropped event data. </summary>
-    internal partial class MediaLiveEventIngestHeartbeatEventData
+    public partial class MediaLiveEventIngestHeartbeatEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
         internal MediaLiveEventIngestHeartbeatEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        {
+            TrackType = trackType;
+            TrackName = trackName;
+            Bitrate = bitrate;
+            IncomingBitrate = incomingBitrate;
+            LastTimestamp = lastTimestamp;
+            Timescale = timescale;
+            OverlapCount = overlapCount;
+            DiscontinuityCount = discontinuityCount;
+            NonincreasingCount = nonincreasingCount;
+            UnexpectedBitrate = unexpectedBitrate;
+            State = state;
+            Healthy = healthy;
         }
 
         /// <summary> Gets the type of the track (Audio / Video). </summary>

@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
-    internal partial class ContainerRegistryEventSource
+    public partial class ContainerRegistryEventSource
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventSource. </summary>
         internal ContainerRegistryEventSource()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryEventSource. </summary>
+        /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
+        /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
+        internal ContainerRegistryEventSource(string addr, string instanceID)
+        {
+            Addr = addr;
+            InstanceID = instanceID;
         }
 
         /// <summary> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </summary>

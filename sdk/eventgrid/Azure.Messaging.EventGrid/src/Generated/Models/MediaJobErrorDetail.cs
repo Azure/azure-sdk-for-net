@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Details of JobOutput errors. </summary>
-    internal partial class MediaJobErrorDetail
+    public partial class MediaJobErrorDetail
     {
         /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
         internal MediaJobErrorDetail()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <param name="code"> Code describing the error detail. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        internal MediaJobErrorDetail(string code, string message)
+        {
+            Code = code;
+            Message = message;
         }
 
         /// <summary> Code describing the error detail. </summary>

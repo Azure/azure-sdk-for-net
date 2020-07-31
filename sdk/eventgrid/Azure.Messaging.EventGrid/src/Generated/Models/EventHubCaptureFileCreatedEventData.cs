@@ -7,14 +7,37 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.EventHub.CaptureFileCreated event. </summary>
-    internal partial class EventHubCaptureFileCreatedEventData
+    public partial class EventHubCaptureFileCreatedEventData
     {
         /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
         internal EventHubCaptureFileCreatedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
+        /// <param name="fileurl"> The path to the capture file. </param>
+        /// <param name="fileType"> The file type of the capture file. </param>
+        /// <param name="partitionId"> The shard ID. </param>
+        /// <param name="sizeInBytes"> The file size. </param>
+        /// <param name="eventCount"> The number of events in the file. </param>
+        /// <param name="firstSequenceNumber"> The smallest sequence number from the queue. </param>
+        /// <param name="lastSequenceNumber"> The last sequence number from the queue. </param>
+        /// <param name="firstEnqueueTime"> The first time from the queue. </param>
+        /// <param name="lastEnqueueTime"> The last time from the queue. </param>
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime)
+        {
+            Fileurl = fileurl;
+            FileType = fileType;
+            PartitionId = partitionId;
+            SizeInBytes = sizeInBytes;
+            EventCount = eventCount;
+            FirstSequenceNumber = firstSequenceNumber;
+            LastSequenceNumber = lastSequenceNumber;
+            FirstEnqueueTime = firstEnqueueTime;
+            LastEnqueueTime = lastEnqueueTime;
         }
 
         /// <summary> The path to the capture file. </summary>

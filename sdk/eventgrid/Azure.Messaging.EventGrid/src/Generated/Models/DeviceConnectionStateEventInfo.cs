@@ -5,14 +5,21 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Information about the device connection state event. </summary>
-    internal partial class DeviceConnectionStateEventInfo
+    public partial class DeviceConnectionStateEventInfo
     {
         /// <summary> Initializes a new instance of DeviceConnectionStateEventInfo. </summary>
         internal DeviceConnectionStateEventInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of DeviceConnectionStateEventInfo. </summary>
+        /// <param name="sequenceNumber"> Sequence number is string representation of a hexadecimal number. string compare can be used to identify the larger number because both in ASCII and HEX numbers come after alphabets. If you are converting the string to hex, then the number is a 256 bit number. </param>
+        internal DeviceConnectionStateEventInfo(string sequenceNumber)
+        {
+            SequenceNumber = sequenceNumber;
         }
 
         /// <summary> Sequence number is string representation of a hexadecimal number. string compare can be used to identify the larger number because both in ASCII and HEX numbers come after alphabets. If you are converting the string to hex, then the number is a 256 bit number. </summary>

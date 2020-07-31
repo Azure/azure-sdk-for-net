@@ -5,14 +5,33 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
-    internal partial class MachineLearningServicesRunStatusChangedEventData
+    public partial class MachineLearningServicesRunStatusChangedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
         internal MachineLearningServicesRunStatusChangedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
+        /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
+        /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
+        /// <param name="runId"> The ID of the Machine Learning Run. </param>
+        /// <param name="runType"> The Run Type of the Machine Learning Run. </param>
+        /// <param name="runTags"> The tags of the Machine Learning Run. </param>
+        /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
+        /// <param name="runStatus"> The status of the Machine Learning Run. </param>
+        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, string runStatus)
+        {
+            ExperimentId = experimentId;
+            ExperimentName = experimentName;
+            RunId = runId;
+            RunType = runType;
+            RunTags = runTags;
+            RunProperties = runProperties;
+            RunStatus = runStatus;
         }
 
         /// <summary> The ID of the experiment that the Machine Learning Run belongs to. </summary>

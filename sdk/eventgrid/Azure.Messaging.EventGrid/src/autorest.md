@@ -4,11 +4,31 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 directive:
-  from: swagger-document
-  where: $.definitions.*
+- from: swagger-document
+  where: $.definitions
   transform: >
-    $["x-csharp-usage"] = "model,output";
-    $["x-csharp-formats"] = "json";
+    for (var path in $)
+    {
+      if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
+      {
+        $[path]["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+      }
+      console.log('hello world');
+      $[path]["x-csharp-usage"] = "model,output";
+      $[path]["x-csharp-formats"] = "json";
+    }
+- from: swagger-document
+  where: $.definitions.WebAppServicePlanUpdatedEventData
+  transform: >
+    $.properties.sku["x-csharp-usage"] = "model,output";
+    $.properties.sku["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.DeviceTwinInfo
+  transform: >
+    $.properties.properties["x-csharp-usage"] = "model,output";
+    $.properties.properties["x-csharp-formats"] = "json";
+    $.properties.x509Thumbprint["x-csharp-usage"] = "model,output";
+    $.properties.x509Thumbprint["x-csharp-formats"] = "json";
 
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json

@@ -5,14 +5,29 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Encoder disconnected event data. </summary>
-    internal partial class MediaLiveEventEncoderDisconnectedEventData
+    public partial class MediaLiveEventEncoderDisconnectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>
         internal MediaLiveEventEncoderDisconnectedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="streamId"> Gets the stream Id. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <param name="resultCode"> Gets the result code. </param>
+        internal MediaLiveEventEncoderDisconnectedEventData(string ingestUrl, string streamId, string encoderIp, string encoderPort, string resultCode)
+        {
+            IngestUrl = ingestUrl;
+            StreamId = streamId;
+            EncoderIp = encoderIp;
+            EncoderPort = encoderPort;
+            ResultCode = resultCode;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

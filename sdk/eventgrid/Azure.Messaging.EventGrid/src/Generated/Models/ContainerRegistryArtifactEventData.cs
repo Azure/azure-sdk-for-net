@@ -7,14 +7,27 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The content of the event request message. </summary>
-    internal partial class ContainerRegistryArtifactEventData
+    public partial class ContainerRegistryArtifactEventData
     {
         /// <summary> Initializes a new instance of ContainerRegistryArtifactEventData. </summary>
         internal ContainerRegistryArtifactEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventData. </summary>
+        /// <param name="id"> The event ID. </param>
+        /// <param name="timestamp"> The time at which the event occurred. </param>
+        /// <param name="action"> The action that encompasses the provided event. </param>
+        /// <param name="target"> The target of the event. </param>
+        internal ContainerRegistryArtifactEventData(string id, DateTimeOffset? timestamp, string action, ContainerRegistryArtifactEventTarget target)
+        {
+            Id = id;
+            Timestamp = timestamp;
+            Action = action;
+            Target = target;
         }
 
         /// <summary> The event ID. </summary>

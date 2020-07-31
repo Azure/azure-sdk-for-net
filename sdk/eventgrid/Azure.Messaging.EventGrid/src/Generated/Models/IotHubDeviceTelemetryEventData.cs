@@ -5,13 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+using System.Collections.Generic;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
-    internal partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
+    public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
     {
         /// <summary> Initializes a new instance of IotHubDeviceTelemetryEventData. </summary>
         internal IotHubDeviceTelemetryEventData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of IotHubDeviceTelemetryEventData. </summary>
+        /// <param name="body"> The content of the message from the device. </param>
+        /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
+        /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
+        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
         {
         }
     }

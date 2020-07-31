@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+using Azure.Messaging.EventGrid.Models;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Detail of action on the app. </summary>
-    internal partial class AppEventTypeDetail
+    public partial class AppEventTypeDetail
     {
         /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
         internal AppEventTypeDetail()
         {
+        }
+
+        /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
+        /// <param name="action"> Type of action of the operation. </param>
+        internal AppEventTypeDetail(AppAction? action)
+        {
+            Action = action;
         }
 
         /// <summary> Type of action of the operation. </summary>

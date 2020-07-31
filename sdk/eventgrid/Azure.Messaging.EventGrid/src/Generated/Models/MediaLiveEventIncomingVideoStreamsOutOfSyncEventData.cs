@@ -5,14 +5,29 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Incoming video stream out of synch event data. </summary>
-    internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
+    public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
         internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
+        /// <param name="firstTimestamp"> Gets the first timestamp received for one of the quality levels. </param>
+        /// <param name="firstDuration"> Gets the duration of the data chunk with first timestamp. </param>
+        /// <param name="secondTimestamp"> Gets the timestamp received for some other quality levels. </param>
+        /// <param name="secondDuration"> Gets the duration of the data chunk with second timestamp. </param>
+        /// <param name="timescale"> Gets the timescale in which both the timestamps and durations are represented. </param>
+        internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(string firstTimestamp, string firstDuration, string secondTimestamp, string secondDuration, string timescale)
+        {
+            FirstTimestamp = firstTimestamp;
+            FirstDuration = firstDuration;
+            SecondTimestamp = secondTimestamp;
+            SecondDuration = secondDuration;
+            Timescale = timescale;
         }
 
         /// <summary> Gets the first timestamp received for one of the quality levels. </summary>

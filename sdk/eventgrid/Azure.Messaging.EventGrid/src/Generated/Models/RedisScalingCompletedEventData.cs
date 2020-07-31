@@ -7,14 +7,25 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ScalingCompleted event. </summary>
-    internal partial class RedisScalingCompletedEventData
+    public partial class RedisScalingCompletedEventData
     {
         /// <summary> Initializes a new instance of RedisScalingCompletedEventData. </summary>
         internal RedisScalingCompletedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of RedisScalingCompletedEventData. </summary>
+        /// <param name="timestamp"> The time at which the event occurred. </param>
+        /// <param name="name"> The name of this event. </param>
+        /// <param name="status"> The status of this event. Failed or  succeeded. </param>
+        internal RedisScalingCompletedEventData(DateTimeOffset? timestamp, string name, string status)
+        {
+            Timestamp = timestamp;
+            Name = name;
+            Status = status;
         }
 
         /// <summary> The time at which the event occurred. </summary>

@@ -8,15 +8,26 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Job Output Progress Event Data. </summary>
-    internal partial class MediaJobOutputProgressEventData
+    public partial class MediaJobOutputProgressEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputProgressEventData. </summary>
         internal MediaJobOutputProgressEventData()
         {
             JobCorrelationData = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of MediaJobOutputProgressEventData. </summary>
+        /// <param name="label"> Gets the Job output label. </param>
+        /// <param name="progress"> Gets the Job output progress. </param>
+        /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
+        internal MediaJobOutputProgressEventData(string label, long? progress, IReadOnlyDictionary<string, string> jobCorrelationData)
+        {
+            Label = label;
+            Progress = progress;
+            JobCorrelationData = jobCorrelationData;
         }
 
         /// <summary> Gets the Job output label. </summary>

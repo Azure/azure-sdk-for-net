@@ -8,16 +8,27 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a device telemetry event (DeviceTelemetry). </summary>
-    internal partial class DeviceTelemetryEventProperties
+    public partial class DeviceTelemetryEventProperties
     {
         /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
         internal DeviceTelemetryEventProperties()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
             SystemProperties = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
+        /// <param name="body"> The content of the message from the device. </param>
+        /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
+        /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
+        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties)
+        {
+            Body = body;
+            Properties = properties;
+            SystemProperties = systemProperties;
         }
 
         /// <summary> The content of the message from the device. </summary>

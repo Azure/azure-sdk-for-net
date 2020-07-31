@@ -47,20 +47,47 @@ namespace Azure.Messaging.EventGrid.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
+        /// <summary> Initializes a new instance of CloudEvent. </summary>
+        /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
+        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
+        /// <param name="data"> Event data specific to the event type. </param>
+        /// <param name="dataBase64"> Event data specific to the event type, encoded as a base64 string. </param>
+        /// <param name="type"> Type of event related to the originating occurrence. </param>
+        /// <param name="time"> The time (in UTC) the event was generated, in RFC3339 format. </param>
+        /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
+        /// <param name="dataschema"> Identifies the schema that data adheres to. </param>
+        /// <param name="datacontenttype"> Content type of data value. </param>
+        /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
+        /// <param name="additionalProperties"> . </param>
+        internal CloudEvent(string id, string source, object data, string dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
+        {
+            Id = id;
+            Source = source;
+            Data = data;
+            DataBase64 = dataBase64;
+            Type = type;
+            Time = time;
+            Specversion = specversion;
+            Dataschema = dataschema;
+            Datacontenttype = datacontenttype;
+            Subject = subject;
+            AdditionalProperties = additionalProperties;
+        }
+
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
         /// <summary> Event data specific to the event type. </summary>
         public object Data { get; set; }
         /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
         public string DataBase64 { get; set; }
         /// <summary> Type of event related to the originating occurrence. </summary>
-        public string Type { get; }
+        public string Type { get; set; }
         /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
         public DateTimeOffset? Time { get; set; }
         /// <summary> The version of the CloudEvents specification which the event uses. </summary>
-        public string Specversion { get; }
+        public string Specversion { get; set; }
         /// <summary> Identifies the schema that data adheres to. </summary>
         public string Dataschema { get; set; }
         /// <summary> Content type of data value. </summary>
