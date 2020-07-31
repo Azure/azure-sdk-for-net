@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.Models;
-
 namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.AppServicePlanUpdated event. </summary>

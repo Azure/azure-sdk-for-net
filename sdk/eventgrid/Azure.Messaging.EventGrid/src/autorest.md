@@ -20,15 +20,28 @@ directive:
 - from: swagger-document
   where: $.definitions.WebAppServicePlanUpdatedEventData
   transform: >
+    $.properties.sku["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.sku["x-csharp-usage"] = "model,output";
     $.properties.sku["x-csharp-formats"] = "json";
 - from: swagger-document
   where: $.definitions.DeviceTwinInfo
   transform: >
+    $.properties.properties["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.properties["x-csharp-usage"] = "model,output";
     $.properties.properties["x-csharp-formats"] = "json";
+    $.properties.x509Thumbprint["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.x509Thumbprint["x-csharp-usage"] = "model,output";
     $.properties.x509Thumbprint["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.MediaJobError
+  transform: >
+    $.properties.code["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+    $.properties.category["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+    $.properties.retry["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+- from: swagger-document
+  where: $.definitions.MediaJobOutputStateChangeEventData
+  transform: >
+    $.properties.previousState["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
 
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
