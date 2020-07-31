@@ -79,7 +79,7 @@ namespace Azure.Storage.Internal.Avro
             else
             {
                 _dataStream = new StreamWithPosition(dataStream);
-                _headerStream = dataStream;
+                _headerStream = _dataStream;
             }
 
             _metadata = new Dictionary<string, string>();
