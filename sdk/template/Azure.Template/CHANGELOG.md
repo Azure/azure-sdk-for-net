@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.2-preview.19 (Unreleased)
+
+
 ## 1.0.2-preview.18 (2020-07-31)
 - Test release pipeline
 
