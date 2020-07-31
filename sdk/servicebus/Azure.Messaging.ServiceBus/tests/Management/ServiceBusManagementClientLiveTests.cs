@@ -405,7 +405,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Assert.AreEqual(1, runtimeInfo.ActiveMessageCount);
             Assert.AreEqual(1, runtimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(0, runtimeInfo.ScheduledMessageCount);
             Assert.AreEqual(2, runtimeInfo.TotalMessageCount);
 
             SubscriptionRuntimeProperties singleRuntimeInfo = await client.GetSubscriptionRuntimePropertiesAsync(topicName, subscriptionName);
@@ -417,8 +416,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(runtimeInfo.TotalMessageCount, singleRuntimeInfo.TotalMessageCount);
             Assert.AreEqual(runtimeInfo.ActiveMessageCount, singleRuntimeInfo.ActiveMessageCount);
             Assert.AreEqual(runtimeInfo.DeadLetterMessageCount, singleRuntimeInfo.DeadLetterMessageCount);
-            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleRuntimeInfo.ScheduledMessageCount);
             Assert.AreEqual(runtimeInfo.TopicName, singleRuntimeInfo.TopicName);
+
+            List<TopicRuntimeProperties> topicRuntimePropertiesList = new List<TopicRuntimeProperties>();
+            await foreach (TopicRuntimeProperties topicRuntime in client.GetTopicsRuntimePropertiesAsync())
+            {
+                topicRuntimePropertiesList.Add(topicRuntime);
+            }
+            topicRuntimePropertiesList = topicRuntimePropertiesList.Where(e => e.Name.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
+            Assert.True(topicRuntimePropertiesList.Count == 1, $"Expected 1 subscription but {topicRuntimePropertiesList.Count} subscriptions returned");
+            TopicRuntimeProperties topicRuntimeProperties = topicRuntimePropertiesList.First();
+            Assert.NotNull(topicRuntimeProperties);
+
+            Assert.AreEqual(topicName, topicRuntimeProperties.Name);
+            Assert.True(topicRuntimeProperties.CreatedAt < topicRuntimeProperties.UpdatedAt);
+            Assert.True(topicRuntimeProperties.UpdatedAt < topicRuntimeProperties.AccessedAt);
+
+            Assert.AreEqual(1, topicRuntimeProperties.ScheduledMessageCount);
+
+            TopicRuntimeProperties singleTopicRuntimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
+
+            Assert.AreEqual(topicRuntimeProperties.CreatedAt, singleTopicRuntimeProperties.CreatedAt);
+            Assert.AreEqual(topicRuntimeProperties.AccessedAt, singleTopicRuntimeProperties.AccessedAt);
+            Assert.AreEqual(topicRuntimeProperties.UpdatedAt, singleTopicRuntimeProperties.UpdatedAt);
+            Assert.AreEqual(topicRuntimeProperties.ScheduledMessageCount, singleTopicRuntimeProperties.ScheduledMessageCount);
+            Assert.AreEqual(topicRuntimeProperties.Name, singleTopicRuntimeProperties.Name);
 
             await client.DeleteTopicAsync(topicName);
         }
@@ -462,6 +484,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(runtimeInfo.UpdatedAt, singleTopicRI.UpdatedAt);
             Assert.AreEqual(runtimeInfo.SizeInBytes, singleTopicRI.SizeInBytes);
             Assert.AreEqual(runtimeInfo.SubscriptionCount, singleTopicRI.SubscriptionCount);
+            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleTopicRI.ScheduledMessageCount);
 
             await client.DeleteTopicAsync(topicName);
         }

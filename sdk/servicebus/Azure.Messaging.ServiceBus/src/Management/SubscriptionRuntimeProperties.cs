@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the subscription.
+    /// This provides runtime properties of the subscription.
     /// </summary>
     public class SubscriptionRuntimeProperties
     {
@@ -40,11 +40,6 @@ namespace Azure.Messaging.ServiceBus.Management
         /// The number of dead-lettered messages in the entity.
         /// </summary>
         public long DeadLetterMessageCount { get; internal set; }
-
-        /// <summary>
-        /// The number of messages which are yet to be scheduled.
-        /// </summary>
-        public long ScheduledMessageCount { get; internal set; }
 
         /// <summary>
         /// The number of messages which are yet to be transferred/forwarded to destination entity.
