@@ -95,5 +95,11 @@ namespace Azure.Core.GeoJson
 
             return $"[{Longitude:G17}, {Latitude:G17}, {Altitude.Value:G17}]";
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public double this[int index] => 1.0;
     }
 }

@@ -82,5 +82,11 @@ namespace Azure.Core.GeoJson
         {
             return HashCodeBuilder.Combine(West, South, East, North, MinAltitude, MaxAltitude);
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public double this[int index] => 1.0;
     }
 }

@@ -14,6 +14,14 @@ namespace Azure.Core.GeoJson
         /// <summary>
         /// Initializes new instance of <see cref="GeoPolygon"/>.
         /// </summary>
+        /// <param name="positions">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
+        public GeoPolygon(IEnumerable<GeoPosition> positions): this(new[] { new GeoLine(positions) }, null, DefaultProperties)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoPolygon"/>.
+        /// </summary>
         /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
         public GeoPolygon(IEnumerable<GeoLine> rings): this(rings, null, DefaultProperties)
         {
@@ -36,5 +44,11 @@ namespace Azure.Core.GeoJson
         /// Gets a set of rings that form the polygon.
         /// </summary>
         public IReadOnlyList<GeoLine> Rings { get; }
+
+        /// <summary>
+        /// Gets a
+        /// </summary>
+        /// <param name="ringIndex"></param>
+        public GeoLine this[int ringIndex] => Rings[ringIndex];
     }
 }
