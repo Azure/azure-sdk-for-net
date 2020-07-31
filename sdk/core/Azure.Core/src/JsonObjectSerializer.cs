@@ -15,7 +15,7 @@ namespace Azure.Core
     /// <summary>
     /// A <see cref="JsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
     /// </summary>
-    public class JsonObjectSerializer : ObjectSerializer, ISerializedNameProvider
+    public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         private readonly JsonSerializerOptions _options;
@@ -68,11 +68,11 @@ namespace Azure.Core
         }
 
         /// <inheritdoc/>
-        string? ISerializedNameProvider.GetSerializedName(MemberInfo memberInfo)
+        string? IMemberNameConverter.ConvertMemberName(MemberInfo member)
         {
-            Argument.AssertNotNull(memberInfo, nameof(memberInfo));
+            Argument.AssertNotNull(member, nameof(member));
 
-            return _cache.GetOrAdd(memberInfo, m =>
+            return _cache.GetOrAdd(member, m =>
             {
                 // Mimics property enumeration based on:
                 // * https://github.com/dotnet/corefx/blob/v3.1.0/src/System.Text.Json/src/System/Text/Json/Serialization/JsonClassInfo.cs#L130-L191

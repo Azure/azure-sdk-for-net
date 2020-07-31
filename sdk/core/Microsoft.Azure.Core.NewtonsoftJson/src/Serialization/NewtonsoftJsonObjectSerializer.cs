@@ -16,7 +16,7 @@ namespace Azure.Core
     /// <summary>
     /// A <see cref="NewtonsoftJsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
     /// </summary>
-    public class NewtonsoftJsonObjectSerializer : ObjectSerializer, ISerializedNameProvider
+    public class NewtonsoftJsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private const int DefaultBufferSize = 1024;
 
@@ -82,11 +82,11 @@ namespace Azure.Core
         }
 
         /// <inheritdoc/>
-        string? ISerializedNameProvider.GetSerializedName(MemberInfo memberInfo)
+        string? IMemberNameConverter.ConvertMemberName(MemberInfo member)
         {
-            Argument.AssertNotNull(memberInfo, nameof(memberInfo));
+            Argument.AssertNotNull(member, nameof(member));
 
-            return _cache.GetOrAdd(memberInfo, m =>
+            return _cache.GetOrAdd(member, m =>
             {
                 if (_serializer.ContractResolver.ResolveContract(m.ReflectedType) is JsonObjectContract contract)
                 {

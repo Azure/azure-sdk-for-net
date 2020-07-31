@@ -150,17 +150,17 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void GetSerializedMemberName()
+        public void ConvertMemberName()
         {
             IEnumerable<MemberInfo> members = typeof(ExtendedModel)
                 .GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .Where(member => (member.MemberType & (MemberTypes.Property | MemberTypes.Field)) != 0);
 
-            ISerializedNameProvider provider = _jsonObjectSerializer;
+            IMemberNameConverter converter = _jsonObjectSerializer;
 
             foreach (MemberInfo member in members)
             {
-                string propertyName = provider.GetSerializedName(member);
+                string propertyName = converter.ConvertMemberName(member);
 
                 // The following should be null for any property that does not serialized (compare to assertions above).
                 switch (member.Name)
