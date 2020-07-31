@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Maintenance
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IPublicMaintenanceConfigurationsOperations.
+        /// </summary>
+        public virtual IPublicMaintenanceConfigurationsOperations PublicMaintenanceConfigurations { get; private set; }
+
+        /// <summary>
         /// Gets the IApplyUpdatesOperations.
         /// </summary>
         public virtual IApplyUpdatesOperations ApplyUpdates { get; private set; }
@@ -342,6 +347,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// </summary>
         private void Initialize()
         {
+            PublicMaintenanceConfigurations = new PublicMaintenanceConfigurationsOperations(this);
             ApplyUpdates = new ApplyUpdatesOperations(this);
             ConfigurationAssignments = new ConfigurationAssignmentsOperations(this);
             MaintenanceConfigurations = new MaintenanceConfigurationsOperations(this);
