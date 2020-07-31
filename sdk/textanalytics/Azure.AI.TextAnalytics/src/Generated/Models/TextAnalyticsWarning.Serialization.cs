@@ -8,34 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class TextAnalyticsWarning
+    public partial struct TextAnalyticsWarning
     {
-        internal static TextAnalyticsWarning DeserializeTextAnalyticsWarning(JsonElement element)
-        {
-            WarningCodeValue code = default;
-            string message = default;
-            Optional<string> targetRef = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("code"))
-                {
-                    code = property.Value.GetString().ToWarningCodeValue();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetRef"))
-                {
-                    targetRef = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new TextAnalyticsWarning(code, message, targetRef.Value);
-        }
     }
 }

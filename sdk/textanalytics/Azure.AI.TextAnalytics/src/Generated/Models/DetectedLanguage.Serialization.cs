@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class DetectedLanguage
+    public partial struct DetectedLanguage
     {
         internal static DetectedLanguage DeserializeDetectedLanguage(JsonElement element)
         {

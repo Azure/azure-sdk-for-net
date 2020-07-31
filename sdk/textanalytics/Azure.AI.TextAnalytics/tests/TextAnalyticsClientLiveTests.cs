@@ -12,13 +12,13 @@ using NUnit.Framework;
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ClientTestFixture(
-        TextAnalyticsClientOptions.ServiceVersion.V3_0,
+        /*TextAnalyticsClientOptions.ServiceVersion.V3_0,*/
         TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_1)]
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
 
-        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion) : base(isAsync, RecordedTestMode.Live)
         {
             _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();

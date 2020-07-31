@@ -7,47 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class DocumentLanguage
     {
-        internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
-        {
-            string id = default;
-            DetectedLanguage detectedLanguage = default;
-            IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("detectedLanguage"))
-                {
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("warnings"))
-                {
-                    List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
-                    }
-                    warnings = array;
-                    continue;
-                }
-                if (property.NameEquals("statistics"))
-                {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
-                    continue;
-                }
-            }
-            return new DocumentLanguage(id, detectedLanguage, warnings, statistics.Value);
-        }
     }
 }

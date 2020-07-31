@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
@@ -18,6 +19,7 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
+        private readonly ServiceRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
@@ -97,11 +99,16 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _baseUri = endpoint;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
+            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _options = options;
+
+            /*_baseUri = endpoint;
             _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
             _clientDiagnostics = new ClientDiagnostics(options);
-            _options = options;
+            _options = options;*/
         }
 
         #region Detect Language
@@ -131,6 +138,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
+            countryHint ??= _options.DefaultCountryHint;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -138,25 +146,19 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                DetectLanguageInput[] documents = new DetectLanguageInput[] { ConvertToDetectLanguageInput(document, countryHint) };
-                using Request request = CreateDetectLanguageRequest(documents, new TextAnalyticsRequestOptions());
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
 
-                switch (response.Status)
+                Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(new LanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = result.GetRawResponse();
+
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = result[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
-                        }
-                        return Response.FromValue(result[0].PrimaryLanguage, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = result.Value.Errors[0].Error;
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code.ToString()/*, CreateAdditionalInformation(error)*/);
                 }
+
+                return Response.FromValue(result.Value.Documents[0].DetectedLanguage, response);
             }
             catch (Exception e)
             {
@@ -190,6 +192,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
+            countryHint ??= _options.DefaultCountryHint;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -197,25 +200,18 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                List<DetectLanguageInput> documents = ConvertToDetectLanguageInputs(new string[] { document }, countryHint);
-                using Request request = CreateDetectLanguageRequest(documents, new TextAnalyticsRequestOptions());
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                Response<LanguageResult> result = _serviceRestClient.Languages(new LanguageBatchInput(documents), cancellationToken: cancellationToken);
+                var response = result.GetRawResponse();
 
-                switch (response.Status)
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection result = CreateDetectLanguageResponse(response, map);
-                        if (result[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = result[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
-                        }
-                        return Response.FromValue(result[0].PrimaryLanguage, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = result.Value.Errors[0].Error;
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code.ToString()/*, CreateAdditionalInformation(error)*/);
                 }
+
+                return Response.FromValue(result.Value.Documents[0].DetectedLanguage, response);
             }
             catch (Exception e)
             {
@@ -1641,6 +1637,9 @@ namespace Azure.AI.TextAnalytics
 
         private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> documents, string language)
             => documents.Select((document, i) => ConvertToDocumentInput(document, language, i)).ToList();
+
+        private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
         private DetectLanguageInput ConvertToDetectLanguageInput(string document, string countryHint, int id = 0)
             => new DetectLanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };

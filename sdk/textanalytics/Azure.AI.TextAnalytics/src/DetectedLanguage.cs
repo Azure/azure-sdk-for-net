@@ -1,22 +1,53 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// A prediction of the language in which a document is written in.
     /// </summary>
-    public readonly struct DetectedLanguage
+    [CodeGenModel("DetectedLanguage")]
+    public readonly partial struct DetectedLanguage
     {
         internal DetectedLanguage(string name, string iso6391Name, double score, IList<TextAnalyticsWarning> warnings)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (iso6391Name == null)
+            {
+                throw new ArgumentNullException(nameof(iso6391Name));
+            }
+
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = score;
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
+        }
+
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (iso6391Name == null)
+            {
+                throw new ArgumentNullException(nameof(iso6391Name));
+            }
+
+            Name = name;
+            Iso6391Name = iso6391Name;
+            ConfidenceScore = confidenceScore;
+            Warnings = new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
