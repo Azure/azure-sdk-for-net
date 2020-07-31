@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryArtifactEventTarget

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Job Output Progress Event Data. </summary>
     public partial class MediaJobOutputProgressEventData

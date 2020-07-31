@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Ingest track discontinuity detected event data. </summary>
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData

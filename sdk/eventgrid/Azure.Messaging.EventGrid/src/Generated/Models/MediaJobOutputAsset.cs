@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+using Azure.Messaging.EventGrid.SystemEvents;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The event data for a Job output asset. </summary>
     public partial class MediaJobOutputAsset : MediaJobOutput

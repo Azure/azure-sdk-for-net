@@ -11,25 +11,24 @@ directive:
     {
       if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
       {
-        $[path]["x-namespace"] = "Azure.Messaging.EventGrid.SystemEvents";
+        $[path]["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
       }
-      console.log('hello world');
       $[path]["x-csharp-usage"] = "model,output";
       $[path]["x-csharp-formats"] = "json";
     }
 - from: swagger-document
   where: $.definitions.WebAppServicePlanUpdatedEventData
   transform: >
-    $.properties.sku["x-namespace"] = "Azure.Messaging.EventGrid.SystemEvents";
+    $.properties.sku["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.sku["x-csharp-usage"] = "model,output";
     $.properties.sku["x-csharp-formats"] = "json";
 - from: swagger-document
   where: $.definitions.DeviceTwinInfo
   transform: >
-    $.properties.properties["x-namespace"] = "Azure.Messaging.EventGrid.SystemEvents";
+    $.properties.properties["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.properties["x-csharp-usage"] = "model,output";
     $.properties.properties["x-csharp-formats"] = "json";
-    $.properties.x509Thumbprint["x-namespace"] = "Azure.Messaging.EventGrid.SystemEvents";
+    $.properties.x509Thumbprint["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
     $.properties.x509Thumbprint["x-csharp-usage"] = "model,output";
     $.properties.x509Thumbprint["x-csharp-formats"] = "json";
 

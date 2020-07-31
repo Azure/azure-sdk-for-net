@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Encoder connect event data. </summary>
     public partial class MediaLiveEventIncomingStreamReceivedEventData

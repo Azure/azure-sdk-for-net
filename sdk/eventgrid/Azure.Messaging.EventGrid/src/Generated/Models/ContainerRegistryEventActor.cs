@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
     public partial class ContainerRegistryEventActor

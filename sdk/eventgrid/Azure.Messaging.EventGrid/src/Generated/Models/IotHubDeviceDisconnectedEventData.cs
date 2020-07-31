@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDisconnected event. </summary>
     public partial class IotHubDeviceDisconnectedEventData : DeviceConnectionStateEventProperties

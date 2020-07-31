@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceCreated event. </summary>
     public partial class IotHubDeviceCreatedEventData : DeviceLifeCycleEventProperties
