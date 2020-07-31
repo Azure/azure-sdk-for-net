@@ -100,10 +100,9 @@ stages:
               displayName: Upload Symbols to Symbols Server
               condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
               environment: nuget
-              dependsOn: PublishPackage                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
-
+              dependsOn: PublishPackage                         
+              pool:
                 vmImage: windows-2019
-
               strategy:
                 runOnce:
                   deploy:
