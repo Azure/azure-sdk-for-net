@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentEntities(string id, IEnumerable<Entity> entities, IEnumerable<TextAnalyticsWarning> warnings)
+        internal DocumentEntities(string id, IEnumerable<Entity> entities, IEnumerable<TextAnalyticsWarning_internal> warnings)
         {
             if (id == null)
             {
@@ -44,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning_internal> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             Entities = entities;
@@ -57,8 +58,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Recognized entities in the document. </summary>
         public IReadOnlyList<Entity> Entities { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
+        public IReadOnlyList<TextAnalyticsWarning_internal> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
     }
 }

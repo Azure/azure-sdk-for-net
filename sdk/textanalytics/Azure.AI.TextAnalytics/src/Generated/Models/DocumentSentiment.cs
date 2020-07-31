@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="confidenceScores"/>, <paramref name="sentences"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, SentimentConfidenceScorePerLabel confidenceScores, IEnumerable<SentenceSentiment> sentences, IEnumerable<TextAnalyticsWarning> warnings)
+        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, SentimentConfidenceScorePerLabel confidenceScores, IEnumerable<SentenceSentiment> sentences, IEnumerable<TextAnalyticsWarning_internal> warnings)
         {
             if (id == null)
             {
@@ -54,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, DocumentStatistics statistics, SentimentConfidenceScorePerLabel confidenceScores, IReadOnlyList<SentenceSentiment> sentences, IReadOnlyList<TextAnalyticsWarning> warnings)
+        internal DocumentSentiment(string id, DocumentSentimentValue sentiment, TextDocumentStatistics? statistics, SentimentConfidenceScorePerLabel confidenceScores, IReadOnlyList<SentenceSentiment> sentences, IReadOnlyList<TextAnalyticsWarning_internal> warnings)
         {
             Id = id;
             Sentiment = sentiment;
@@ -69,12 +70,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </summary>
         public DocumentSentimentValue Sentiment { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
         /// <summary> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </summary>
         public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
         /// <summary> Sentence level sentiment analysis. </summary>
         public IReadOnlyList<SentenceSentiment> Sentences { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
+        public IReadOnlyList<TextAnalyticsWarning_internal> Warnings { get; }
     }
 }

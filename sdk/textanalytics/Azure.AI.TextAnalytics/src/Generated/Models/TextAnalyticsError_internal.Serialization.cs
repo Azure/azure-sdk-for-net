@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TextAnalyticsError
+    internal partial class TextAnalyticsError_internal
     {
-        internal static TextAnalyticsError DeserializeTextAnalyticsError(JsonElement element)
+        internal static TextAnalyticsError_internal DeserializeTextAnalyticsError_internal(JsonElement element)
         {
-            ErrorCodeValue code = default;
+            string code = default;
             string message = default;
             Optional<string> target = default;
             Optional<InnerError> innererror = default;
-            Optional<IReadOnlyList<TextAnalyticsError>> details = default;
+            Optional<IReadOnlyList<TextAnalyticsError_internal>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    code = property.Value.GetString().ToErrorCodeValue();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -44,16 +44,16 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    List<TextAnalyticsError> array = new List<TextAnalyticsError>();
+                    List<TextAnalyticsError_internal> array = new List<TextAnalyticsError_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTextAnalyticsError(item));
+                        array.Add(DeserializeTextAnalyticsError_internal(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details));
+            return new TextAnalyticsError_internal(code, message, target.Value, innererror.Value, Optional.ToList(details));
         }
     }
 }

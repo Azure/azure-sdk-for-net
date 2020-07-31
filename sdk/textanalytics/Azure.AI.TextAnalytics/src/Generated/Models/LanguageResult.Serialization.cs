@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -17,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             IReadOnlyList<DocumentLanguage> documents = default;
             IReadOnlyList<DocumentError> errors = default;
-            Optional<RequestStatistics> statistics = default;
+            Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
+                    statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"))

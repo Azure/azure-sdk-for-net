@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DetectedLanguage
+    internal partial struct DetectedLanguage_internal
     {
-        internal static DetectedLanguage DeserializeDetectedLanguage(JsonElement element)
+        internal static DetectedLanguage_internal DeserializeDetectedLanguage_internal(JsonElement element)
         {
             string name = default;
             string iso6391Name = default;
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DetectedLanguage(name, iso6391Name, confidenceScore);
+            return new DetectedLanguage_internal(name, iso6391Name, confidenceScore);
         }
     }
 }

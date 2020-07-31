@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TextAnalyticsWarning
+    internal partial class TextAnalyticsWarning_internal
     {
-        internal static TextAnalyticsWarning DeserializeTextAnalyticsWarning(JsonElement element)
+        internal static TextAnalyticsWarning_internal DeserializeTextAnalyticsWarning_internal(JsonElement element)
         {
-            WarningCodeValue code = default;
+            string code = default;
             string message = default;
             Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    code = property.Value.GetString().ToWarningCodeValue();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TextAnalyticsWarning(code, message, targetRef.Value);
+            return new TextAnalyticsWarning_internal(code, message, targetRef.Value);
         }
     }
 }

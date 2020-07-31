@@ -17,9 +17,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of InnerError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal InnerError(InnerErrorCodeValue code, string message)
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
+        internal InnerError(string code, string message)
         {
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
@@ -36,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> Inner error contains more specific information. </param>
-        internal InnerError(InnerErrorCodeValue code, string message, IReadOnlyDictionary<string, string> details, string target, InnerError innererror)
+        internal InnerError(string code, string message, IReadOnlyDictionary<string, string> details, string target, InnerError innererror)
         {
             Code = code;
             Message = message;
@@ -44,9 +48,6 @@ namespace Azure.AI.TextAnalytics.Models
             Target = target;
             Innererror = innererror;
         }
-
-        /// <summary> Error code. </summary>
-        public InnerErrorCodeValue Code { get; }
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Error details. </summary>

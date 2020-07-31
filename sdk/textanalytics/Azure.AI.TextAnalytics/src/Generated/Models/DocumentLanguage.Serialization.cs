@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -16,9 +17,9 @@ namespace Azure.AI.TextAnalytics.Models
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
             string id = default;
-            DetectedLanguage detectedLanguage = default;
-            IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            DetectedLanguage_internal detectedLanguage = default;
+            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
+            Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -28,26 +29,26 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("detectedLanguage"))
                 {
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = DetectedLanguage_internal.DeserializeDetectedLanguage_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
+                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
+                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
                     }
                     warnings = array;
                     continue;
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new DocumentLanguage(id, detectedLanguage, warnings, statistics.Value);
+            return new DocumentLanguage(id, detectedLanguage, warnings, Optional.ToNullable(statistics));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -17,10 +18,10 @@ namespace Azure.AI.TextAnalytics.Models
         {
             string id = default;
             DocumentSentimentValue sentiment = default;
-            Optional<DocumentStatistics> statistics = default;
+            Optional<TextDocumentStatistics> statistics = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
-            IReadOnlyList<TextAnalyticsWarning> warnings = default;
+            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -35,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))
@@ -55,16 +56,16 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
+                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
+                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
                     }
                     warnings = array;
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings);
+            return new DocumentSentiment(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
         }
     }
 }

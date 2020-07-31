@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,16 +19,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="detectedLanguage"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IEnumerable<TextAnalyticsWarning> warnings)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="warnings"/> is null. </exception>
+        internal DocumentLanguage(string id, DetectedLanguage_internal detectedLanguage, IEnumerable<TextAnalyticsWarning_internal> warnings)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
-            }
-            if (detectedLanguage == null)
-            {
-                throw new ArgumentNullException(nameof(detectedLanguage));
             }
             if (warnings == null)
             {
@@ -44,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="detectedLanguage"> Detected Language. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        internal DocumentLanguage(string id, DetectedLanguage_internal detectedLanguage, IReadOnlyList<TextAnalyticsWarning_internal> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             DetectedLanguage = detectedLanguage;
@@ -55,10 +52,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Detected Language. </summary>
-        public DetectedLanguage DetectedLanguage { get; }
+        public DetectedLanguage_internal DetectedLanguage { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
+        public IReadOnlyList<TextAnalyticsWarning_internal> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
     }
 }

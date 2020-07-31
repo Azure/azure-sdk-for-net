@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
-            InnerErrorCodeValue code = default;
+            string code = default;
             string message = default;
             Optional<IReadOnlyDictionary<string, string>> details = default;
             Optional<string> target = default;
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("code"))
                 {
-                    code = property.Value.GetString().ToInnerErrorCodeValue();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))

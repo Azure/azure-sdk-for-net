@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class DocumentStatistics
+    public partial struct TextDocumentStatistics
     {
-        internal static DocumentStatistics DeserializeDocumentStatistics(JsonElement element)
+        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element)
         {
             int charactersCount = default;
             int transactionsCount = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentStatistics(charactersCount, transactionsCount);
+            return new TextDocumentStatistics(charactersCount, transactionsCount);
         }
     }
 }

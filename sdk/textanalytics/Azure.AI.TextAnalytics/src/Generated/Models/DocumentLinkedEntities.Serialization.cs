@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -17,8 +18,8 @@ namespace Azure.AI.TextAnalytics.Models
         {
             string id = default;
             IReadOnlyList<LinkedEntity> entities = default;
-            IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
+            Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -38,21 +39,21 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
+                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
+                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
                     }
                     warnings = array;
                     continue;
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new DocumentLinkedEntities(id, entities, warnings, statistics.Value);
+            return new DocumentLinkedEntities(id, entities, warnings, Optional.ToNullable(statistics));
         }
     }
 }
