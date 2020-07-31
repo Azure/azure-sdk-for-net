@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.Models;
-
 namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Detail of action on the app. </summary>

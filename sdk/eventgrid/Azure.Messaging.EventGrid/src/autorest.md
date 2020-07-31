@@ -42,6 +42,15 @@ directive:
   where: $.definitions.MediaJobOutputStateChangeEventData
   transform: >
     $.properties.previousState["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+- from: swagger-document
+  where: $.definitions.AppServicePlanEventTypeDetail
+  transform: >
+    $.properties.stampKind["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+    $.properties.action["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+- from: swagger-document
+  where: $.definitions.AppEventTypeDetail
+  transform: >
+    $.properties.action["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
 
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
