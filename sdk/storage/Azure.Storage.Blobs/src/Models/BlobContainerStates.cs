@@ -3,8 +3,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -21,10 +19,9 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         None = 0,
 
-        // TODO re-add when feature is re-enabled.
-        ///// <summary>
-        ///// Flag specifying that deleted containers should be included.
-        ///// </summary>
-        //Deleted = 1,
+        /// <summary>
+        /// Flag specifying that deleted containers should be included.
+        /// </summary>
+        Deleted = 1,
     }
 }
