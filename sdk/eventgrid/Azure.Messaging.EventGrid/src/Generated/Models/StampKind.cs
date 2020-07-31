@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Kind of environment where app service plan is. </summary>
     public readonly partial struct StampKind : IEquatable<StampKind>
