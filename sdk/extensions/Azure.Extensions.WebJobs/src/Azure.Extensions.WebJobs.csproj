@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Description></Description>
+    <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>
+    <Version>1.0.0-preview.1</Version>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <NoWarn>$(NoWarn);AZC0001;CA1812</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\azure-webjobs-sdk\src\Microsoft.Azure.WebJobs.Host\WebJobs.Host.csproj" />
+    <ProjectReference Include="..\..\..\core\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
+  </ItemGroup>
+
+</Project>

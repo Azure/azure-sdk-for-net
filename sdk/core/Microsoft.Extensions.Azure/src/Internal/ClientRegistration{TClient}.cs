@@ -7,13 +7,13 @@ using Azure.Core;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal class ClientRegistration<TClient, TOptions>
+    internal class ClientRegistration<TClient>
     {
         public string Name { get; set; }
         public object Version { get; set; }
         public bool RequiresTokenCredential { get; set; }
 
-        private readonly Func<TOptions, TokenCredential, TClient> _factory;
+        private readonly Func<object, TokenCredential, TClient> _factory;
 
         private readonly object _cacheLock = new object();
 
@@ -21,13 +21,13 @@ namespace Microsoft.Extensions.Azure
 
         private ExceptionDispatchInfo _cachedException;
 
-        public ClientRegistration(string name, Func<TOptions, TokenCredential, TClient> factory)
+        public ClientRegistration(string name, Func<object, TokenCredential, TClient> factory)
         {
             Name = name;
             _factory = factory;
         }
 
-        public TClient GetClient(TOptions options, TokenCredential tokenCredential)
+        public TClient GetClient(object options, TokenCredential tokenCredential)
         {
             _cachedException?.Throw();
 

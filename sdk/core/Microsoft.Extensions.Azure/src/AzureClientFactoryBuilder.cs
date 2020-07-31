@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Concurrent;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -25,6 +26,7 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection = serviceCollection;
             _serviceCollection.AddOptions();
             _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
+            _serviceCollection.TryAddSingleton( typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
@@ -91,7 +93,7 @@ namespace Microsoft.Extensions.Azure
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential)
         {
-            var clientRegistration = new ClientRegistration<TClient, TOptions>(DefaultClientName, clientFactory);
+            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, (options, credential) => clientFactory((TOptions)options, credential));
             clientRegistration.RequiresTokenCredential = requiresCredential;
 
             _serviceCollection.AddSingleton(clientRegistration);
@@ -128,5 +130,18 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.CredentialFactory = tokenCredentialFactory);
             return this;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public AzureClientFactoryBuilder SetConfigurationRoot(IConfiguration configuration)
+        {
+            _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRoot = configuration);
+
+            return this;
+        }
+
     }
 }

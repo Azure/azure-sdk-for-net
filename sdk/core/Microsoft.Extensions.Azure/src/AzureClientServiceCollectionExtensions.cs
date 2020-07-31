@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -19,6 +20,16 @@ namespace Microsoft.Extensions.Azure
         public static void AddAzureClients(this IServiceCollection collection, Action<AzureClientFactoryBuilder> configureClients)
         {
             configureClients(new AzureClientFactoryBuilder(collection));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="configuration"></param>
+        public static void AddAzureClients(this IServiceCollection collection, IConfiguration configuration)
+        {
+            new AzureClientFactoryBuilder(collection).SetConfigurationRoot(configuration);
         }
     }
 }
