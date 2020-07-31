@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the metadata description of the queue.
+    /// Represents the static properties of the queue.
     /// </summary>
     public class QueueProperties : IEquatable<QueueProperties>
     {
