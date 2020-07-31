@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// belongs.</param>
         /// <param name="firewallPolicy">The firewallPolicy associated with
         /// this azure firewall.</param>
-        /// <param name="hubIpAddresses">IP addresses associated with
+        /// <param name="hubIPAddresses">IP addresses associated with
         /// AzureFirewall.</param>
         /// <param name="ipGroups">IpGroups associated with
         /// AzureFirewall.</param>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource needs to come from.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), AzureFirewallIPConfiguration managementIpConfiguration = default(AzureFirewallIPConfiguration), string provisioningState = default(string), string threatIntelMode = default(string), SubResource virtualHub = default(SubResource), SubResource firewallPolicy = default(SubResource), HubIPAddresses hubIpAddresses = default(HubIPAddresses), IList<AzureFirewallIpGroups> ipGroups = default(IList<AzureFirewallIpGroups>), AzureFirewallSku sku = default(AzureFirewallSku), IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), string etag = default(string))
+        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), AzureFirewallIPConfiguration managementIpConfiguration = default(AzureFirewallIPConfiguration), string provisioningState = default(string), string threatIntelMode = default(string), SubResource virtualHub = default(SubResource), SubResource firewallPolicy = default(SubResource), HubIPAddresses hubIPAddresses = default(HubIPAddresses), IList<AzureFirewallIpGroups> ipGroups = default(IList<AzureFirewallIpGroups>), AzureFirewallSku sku = default(AzureFirewallSku), IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ApplicationRuleCollections = applicationRuleCollections;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ThreatIntelMode = threatIntelMode;
             VirtualHub = virtualHub;
             FirewallPolicy = firewallPolicy;
-            HubIpAddresses = hubIpAddresses;
+            HubIPAddresses = hubIPAddresses;
             IpGroups = ipGroups;
             Sku = sku;
             AdditionalProperties = additionalProperties;
@@ -159,10 +159,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource FirewallPolicy { get; set; }
 
         /// <summary>
-        /// Gets IP addresses associated with AzureFirewall.
+        /// Gets or sets IP addresses associated with AzureFirewall.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.hubIpAddresses")]
-        public HubIPAddresses HubIpAddresses { get; private set; }
+        [JsonProperty(PropertyName = "properties.hubIPAddresses")]
+        public HubIPAddresses HubIPAddresses { get; set; }
 
         /// <summary>
         /// Gets ipGroups associated with AzureFirewall.

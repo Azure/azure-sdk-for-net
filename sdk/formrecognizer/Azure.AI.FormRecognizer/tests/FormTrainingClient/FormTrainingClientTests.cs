@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -30,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         private FormTrainingClient CreateInstrumentedClient()
         {
-            var fakeEndpoint = new Uri("http://localhost");
+            var fakeEndpoint = new Uri("http://notreal.azure.com/");
             var fakeCredential = new AzureKeyCredential("fakeKey");
             var client = new FormTrainingClient(fakeEndpoint, fakeCredential);
 
@@ -91,12 +93,28 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                await client.GetAccountPropertiesAsync();
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
+        }
+
+        [Test]
         public void StartTrainingArgumentValidation()
         {
             FormTrainingClient client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty)));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null));
+            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null, useTrainingLabels: false));
         }
 
         [Test]

@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Filters;
+using Azure.Messaging.ServiceBus.Management;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable. AmqpRuleManager does not own connection scope.
     internal class AmqpRuleManager : TransportRuleManager
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>
         /// The path of the Service Bus subscription to which the rule manager is bound.
@@ -56,10 +58,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         static AmqpRuleManager()
         {
-            AmqpCodec.RegisterKnownTypes(AmqpTrueFilterCodec.Name, AmqpTrueFilterCodec.Code, () => new AmqpTrueFilterCodec());
-            AmqpCodec.RegisterKnownTypes(AmqpFalseFilterCodec.Name, AmqpFalseFilterCodec.Code, () => new AmqpFalseFilterCodec());
-            AmqpCodec.RegisterKnownTypes(AmqpCorrelationFilterCodec.Name, AmqpCorrelationFilterCodec.Code, () => new AmqpCorrelationFilterCodec());
-            AmqpCodec.RegisterKnownTypes(AmqpSqlFilterCodec.Name, AmqpSqlFilterCodec.Code, () => new AmqpSqlFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpTrueRuleFilterCodec.Name, AmqpTrueRuleFilterCodec.Code, () => new AmqpTrueRuleFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpFalseRuleFilterCodec.Name, AmqpFalseRuleFilterCodec.Code, () => new AmqpFalseRuleFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpCorrelationRuleFilterCodec.Name, AmqpCorrelationRuleFilterCodec.Code, () => new AmqpCorrelationRuleFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpSqlRuleFilterCodec.Name, AmqpSqlRuleFilterCodec.Code, () => new AmqpSqlRuleFilterCodec());
             AmqpCodec.RegisterKnownTypes(AmqpEmptyRuleActionCodec.Name, AmqpEmptyRuleActionCodec.Code, () => new AmqpEmptyRuleActionCodec());
             AmqpCodec.RegisterKnownTypes(AmqpSqlRuleActionCodec.Name, AmqpSqlRuleActionCodec.Code, () => new AmqpSqlRuleActionCodec());
             AmqpCodec.RegisterKnownTypes(AmqpRuleDescriptionCodec.Name, AmqpRuleDescriptionCodec.Code, () => new AmqpRuleDescriptionCodec());
@@ -119,14 +121,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public override async Task AddRuleAsync(
-            RuleDescription description,
+            RuleProperties description,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
                 async (timeout) =>
@@ -145,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         private async Task AddRuleInternalAsync(
-            RuleDescription description,
+            RuleProperties description,
             TimeSpan timeout)
         {
             // Create an AmqpRequest Message to add rule
@@ -225,9 +227,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public override async Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
+        public override async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
-            IList<RuleDescription> rulesDescription = null;
+            IList<RuleProperties> rulesDescription = null;
 
             await _retryPolicy.RunOperation(
                 async (timeout) =>
@@ -245,7 +247,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        private async Task<IList<RuleDescription>> GetRulesInternalAsync(TimeSpan timeout)
+        private async Task<IList<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.EnumerateRulesOperation,
@@ -259,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
-            var ruleDescriptions = new List<RuleDescription>();
+            var ruleDescriptions = new List<RuleProperties>();
             if (response.StatusCode == AmqpResponseStatusCode.OK)
             {
                 var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);

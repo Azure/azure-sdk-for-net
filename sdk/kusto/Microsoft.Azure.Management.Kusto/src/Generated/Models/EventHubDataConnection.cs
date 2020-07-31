@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET',
-        /// 'ORC'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'</param>
         /// <param name="eventSystemProperties">System properties of the event
         /// hub</param>
         /// <param name="compression">The event hub messages compression type.
@@ -109,7 +109,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }

@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase != null)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (UseQueryMode != null)
+            if (Optional.IsDefined(UseQueryMode))
             {
                 writer.WritePropertyName("queryMode");
                 writer.WriteBooleanValue(UseQueryMode.Value);
@@ -43,8 +43,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static CommonGramTokenFilter DeserializeCommonGramTokenFilter(JsonElement element)
         {
             IList<string> commonWords = default;
-            bool? ignoreCase = default;
-            bool? queryMode = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> queryMode = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -54,33 +54,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     commonWords = array;
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("queryMode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     queryMode = property.Value.GetBoolean();
                     continue;
                 }
@@ -95,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CommonGramTokenFilter(odataType, name, commonWords, ignoreCase, queryMode);
+            return new CommonGramTokenFilter(odataType, name, commonWords, Optional.ToNullable(ignoreCase), Optional.ToNullable(queryMode));
         }
     }
 }

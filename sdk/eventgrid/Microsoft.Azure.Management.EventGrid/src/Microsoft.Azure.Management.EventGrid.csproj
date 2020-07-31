@@ -6,10 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
     <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-    <Version>5.3.2-preview</Version>
+    <Version>6.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-    <PackageReleaseNotes>This release corresponds to the 2020-04-01-Preview API version which includes the following new functionalities: Support for IP Filtering when publishing events to Domains and Topics, Partner Topics, System Topics, SKU, MSI and private link support.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release (version 6.0.0) corresponds to 2020-06-01 API version which includes the following new functionalities: Event delivery schema, Input mapping, Custom input schema event delivery schema, Cloud event V10 schema, Service bus topic as destination, Azure function as destination, Webhook batching, Secure webhook (AAD support),  ImmutableId support, IpFiltering, and Private Link.
+Please note that release version 5.3.2-preview still corresponds to latest preview API version 2020-04-01-preview and it includes all the GA'ed features in version 6.0.0 as well additional features that are still in preview. These preview features include: Partner topic, Tracked system topic, Sku, and MSI support.
+
+For a complete list of changes for all various release versions, please refer to: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Microsoft.Azure.Management.EventGrid/CHANGELOG.md
+  </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

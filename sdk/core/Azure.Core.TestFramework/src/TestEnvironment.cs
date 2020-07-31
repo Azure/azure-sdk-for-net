@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Azure.Core.TestFramework
 {
@@ -32,6 +33,12 @@ namespace Azure.Core.TestFramework
             if (RepositoryRoot == null)
             {
                 throw new InvalidOperationException("Unexpected error, repository root not found");
+            }
+
+            var sdkDirectory = Path.Combine(RepositoryRoot, "sdk", serviceName);
+            if (!Directory.Exists(sdkDirectory))
+            {
+                throw new InvalidOperationException($"SDK directory {sdkDirectory} not found");
             }
 
             var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
@@ -95,6 +102,26 @@ namespace Azure.Core.TestFramework
         public string TenantId => GetRecordedVariable("TENANT_ID");
 
         /// <summary>
+        ///   The URL of the Azure Resource Manager to be used for management plane operations. Recorded.
+        /// </summary>
+        public string ResourceManagerUrl => GetRecordedOptionalVariable("RESOURCE_MANAGER_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Service Management endpoint to be used for management plane authentication. Recorded.
+        /// </summary>
+        public string ServiceManagementUrl => GetRecordedOptionalVariable("SERVICE_MANAGEMENT_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Authority host to be used for authentication. Recorded.
+        /// </summary>
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+
+        /// <summary>
+        ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedOptionalVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
         public string ClientId => GetRecordedVariable("CLIENT_ID");
@@ -119,15 +146,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    // Don't take a hard dependency on Azure.Identity
-                    var type = Type.GetType("Azure.Identity.ClientSecretCredential, Azure.Identity");
-                    if (type == null)
-                    {
-                        throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");
-                    }
-
-                    _credential = (TokenCredential) Activator.CreateInstance(
-                        type,
+                    _credential = new ClientSecretCredential(
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
                         GetVariable("CLIENT_SECRET")
@@ -167,8 +186,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Returns an environment variable value.
-        /// Throws when variable is not found.
+        /// Returns an environment variable value or null when variable is not found.
         /// </summary>
         protected string GetOptionalVariable(string name)
         {

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class AccountProperties
     {
-        internal AccountProperties(ModelsSummary_internal summary)
+        internal AccountProperties(ModelsSummary summary)
         {
             CustomModelCount = summary.Count;
             CustomModelLimit = summary.Limit;
@@ -20,11 +20,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The current count of trained custom models.
         /// </summary>
-        public int CustomModelCount { get; internal set; }
+        public int CustomModelCount { get; }
 
         /// <summary>
         /// The maximum number of models that can be trained for this subscription.
         /// </summary>
-        public int CustomModelLimit { get; internal set; }
+        public int CustomModelLimit { get; }
     }
 }

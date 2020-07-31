@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
@@ -126,6 +128,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [SyncOnly]
         public void CreateIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -155,6 +158,20 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(expectedIndex.Suggesters[0].Name, actualIndex.Suggesters[0].Name);
             Assert.AreEqual(expectedIndex.ScoringProfiles.Count, actualIndex.ScoringProfiles.Count);
             Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void UpdateIndexParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateIndex(null));
+            Assert.AreEqual("index", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexAsync(null));
+            Assert.AreEqual("index", ex.ParamName);
         }
 
         [Test]
@@ -211,6 +228,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [SyncOnly]
         public void GetIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -269,6 +287,88 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [SyncOnly]
+        public void DeleteIndexParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((SearchIndex)null));
+            Assert.AreEqual("index", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((SearchIndex)null));
+            Assert.AreEqual("index", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateSynonymMapParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateSynonymMap(null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateSynonymMapAsync(null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void UpdateSynonymMapParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateSynonymMap(null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateSynonymMapAsync(null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetSynonymMapParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSynonymMap(null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSynonymMapAsync(null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void DeleteSynonymMapParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((SynonymMap)null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((SynonymMap)null));
+            Assert.AreEqual("synonymMap", ex.ParamName);
+        }
+
+        [Test]
         public async Task CrudSynonymMaps()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -312,6 +412,21 @@ namespace Azure.Search.Documents.Tests
             }
 
             await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
+        }
+
+        [Test]
+        public async Task AnalyzeText()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            AnalyzeTextOptions request = new AnalyzeTextOptions("The quick brown fox jumped over the lazy dog.", LexicalTokenizerName.Whitespace);
+
+            Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
+            IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
+
+            Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
         }
     }
 }

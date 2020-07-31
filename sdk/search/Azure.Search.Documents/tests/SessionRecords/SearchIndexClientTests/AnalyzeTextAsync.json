@@ -1,0 +1,106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/search.analyze?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "traceparent": "00-c9126f3051ebde47ac0d0b80fee2173c-cfb1b22a9adb4c4d-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "768227d217ad9009492ef7abdef00368",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "text": "The quick brown fox jumped over the lazy dog.",
+        "tokenizer": "whitespace"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "768227d2-17ad-9009-492e-f7abdef00368",
+        "Content-Length": "693",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 26 Jun 2020 06:26:32 GMT",
+        "elapsed-time": "5",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "768227d2-17ad-9009-492e-f7abdef00368",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "768227d2-17ad-9009-492e-f7abdef00368"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.AnalyzeResult",
+        "tokens": [
+          {
+            "token": "The",
+            "startOffset": 0,
+            "endOffset": 3,
+            "position": 0
+          },
+          {
+            "token": "quick",
+            "startOffset": 4,
+            "endOffset": 9,
+            "position": 1
+          },
+          {
+            "token": "brown",
+            "startOffset": 10,
+            "endOffset": 15,
+            "position": 2
+          },
+          {
+            "token": "fox",
+            "startOffset": 16,
+            "endOffset": 19,
+            "position": 3
+          },
+          {
+            "token": "jumped",
+            "startOffset": 20,
+            "endOffset": 26,
+            "position": 4
+          },
+          {
+            "token": "over",
+            "startOffset": 27,
+            "endOffset": 31,
+            "position": 5
+          },
+          {
+            "token": "the",
+            "startOffset": 32,
+            "endOffset": 35,
+            "position": 6
+          },
+          {
+            "token": "lazy",
+            "startOffset": 36,
+            "endOffset": 40,
+            "position": 7
+          },
+          {
+            "token": "dog.",
+            "startOffset": 41,
+            "endOffset": 45,
+            "position": 8
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "197061334",
+    "SearchIndexName": "josgoidr",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+  }
+}

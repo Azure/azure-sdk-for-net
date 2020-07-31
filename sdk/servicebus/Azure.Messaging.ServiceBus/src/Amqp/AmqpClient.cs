@@ -2,19 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -127,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
@@ -163,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string sessionId,
             bool isSessionReceiver)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpReceiver
             (
@@ -193,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpRuleManager
             (

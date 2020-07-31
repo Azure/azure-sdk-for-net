@@ -26,7 +26,19 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         [EnumMember(Value = "StateChange")]
         StateChange,
         [EnumMember(Value = "MonitorConditionChange")]
-        MonitorConditionChange
+        MonitorConditionChange,
+        [EnumMember(Value = "SeverityChange")]
+        SeverityChange,
+        [EnumMember(Value = "ActionRuleTriggered")]
+        ActionRuleTriggered,
+        [EnumMember(Value = "ActionRuleSuppressed")]
+        ActionRuleSuppressed,
+        [EnumMember(Value = "ActionsTriggered")]
+        ActionsTriggered,
+        [EnumMember(Value = "ActionsSuppressed")]
+        ActionsSuppressed,
+        [EnumMember(Value = "ActionsFailed")]
+        ActionsFailed
     }
     internal static class AlertModificationEventEnumExtension
     {
@@ -45,6 +57,18 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
                     return "StateChange";
                 case AlertModificationEvent.MonitorConditionChange:
                     return "MonitorConditionChange";
+                case AlertModificationEvent.SeverityChange:
+                    return "SeverityChange";
+                case AlertModificationEvent.ActionRuleTriggered:
+                    return "ActionRuleTriggered";
+                case AlertModificationEvent.ActionRuleSuppressed:
+                    return "ActionRuleSuppressed";
+                case AlertModificationEvent.ActionsTriggered:
+                    return "ActionsTriggered";
+                case AlertModificationEvent.ActionsSuppressed:
+                    return "ActionsSuppressed";
+                case AlertModificationEvent.ActionsFailed:
+                    return "ActionsFailed";
             }
             return null;
         }
@@ -59,6 +83,18 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
                     return AlertModificationEvent.StateChange;
                 case "MonitorConditionChange":
                     return AlertModificationEvent.MonitorConditionChange;
+                case "SeverityChange":
+                    return AlertModificationEvent.SeverityChange;
+                case "ActionRuleTriggered":
+                    return AlertModificationEvent.ActionRuleTriggered;
+                case "ActionRuleSuppressed":
+                    return AlertModificationEvent.ActionRuleSuppressed;
+                case "ActionsTriggered":
+                    return AlertModificationEvent.ActionsTriggered;
+                case "ActionsSuppressed":
+                    return AlertModificationEvent.ActionsSuppressed;
+                case "ActionsFailed":
+                    return AlertModificationEvent.ActionsFailed;
             }
             return null;
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -20,10 +21,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => processor.ProcessErrorAsync += null, Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void MustSetMessageHandler()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void MustSetErrorHandler()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
         }
 
         [Test]
@@ -33,6 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -49,6 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -72,6 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -156,22 +189,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.AbandonAsync(msg);
+            await args.AbandonMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
-            await args.CompleteAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
-
-            msg.IsSettled = false;
-            await args.DeadLetterAsync(msg);
+            await args.CompleteMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.DeadLetterAsync(msg, "reason");
+            await args.DeadLetterMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.DeferAsync(msg);
+            await args.DeadLetterMessageAsync(msg, "reason");
+            Assert.IsTrue(msg.IsSettled);
+
+            msg.IsSettled = false;
+            await args.DeferMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
         }
 
@@ -182,34 +215,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockReceiver = new Mock<ServiceBusReceiver>();
 
             mockReceiver
-                .Setup(receiver => receiver.AbandonAsync(
+                .Setup(receiver => receiver.AbandonMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeferAsync(
+                .Setup(receiver => receiver.DeferMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.CompleteAsync(
+                .Setup(receiver => receiver.CompleteMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -224,26 +257,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.AbandonAsync(msg),
+            Assert.That(async () => await args.AbandonMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
-            Assert.That(async () => await args.CompleteAsync(msg),
-                Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
-
-            msg.IsSettled = false;
-            Assert.That(async () => await args.DeadLetterAsync(msg),
+            Assert.That(async () => await args.CompleteMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.DeadLetterAsync(msg, "reason"),
+            Assert.That(async () => await args.DeadLetterMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.DeferAsync(msg),
+            Assert.That(async () => await args.DeadLetterMessageAsync(msg, "reason"),
+                Throws.InstanceOf<Exception>());
+            Assert.IsFalse(msg.IsSettled);
+
+            msg.IsSettled = false;
+            Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
         }

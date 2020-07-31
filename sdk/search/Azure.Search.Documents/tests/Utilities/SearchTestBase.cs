@@ -2,13 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#endif
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -18,7 +23,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
@@ -138,21 +143,99 @@ namespace Azure.Search.Documents.Tests
         /// Dynamic documents will ignore any extra fields on the actual
         /// document that weren't present on the expected document.
         /// </summary>
-        /// <typeparam name="T">The type of documents.</typeparam>
         /// <param name="expected">The expected document.</param>
         /// <param name="actual">The actual document.</param>
-        public static void AssertApproximate<T>(T expected, T actual)
+        /// <param name="path">Optional expression path.</param>
+        public static void AssertApproximate(object expected, object actual, string path = null)
         {
             if (expected is SearchDocument e && actual is SearchDocument a)
             {
                 foreach (string key in e.Keys)
                 {
-                    Assert.AreEqual(e[key], a[key]);
+                    object eValue = e[key];
+                    object aValue =
+                        (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
+                        (eValue is double) ? a.GetDouble(key) :
+                        a[key];
+                    AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
                 }
             }
+#if EXPERIMENTAL_SPATIAL
+            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            {
+                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+            }
+#endif
             else
             {
-                Assert.AreEqual(expected, actual);
+                AssertEqual(expected, actual, path);
+            }
+
+            static void AssertEqual(object e, object a, string path)
+            {
+                string location = path != null ? " at path " + path : "";
+                Assert.AreEqual(e, a, $"Expected value `{e}`{location}, not `{a}`.");
+            }
+        }
+
+        /// <summary>
+        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="SearchIndexerClient"/> to use for requests.</param>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 10 minutes.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForIndexingAsync(
+            SearchIndexerClient client,
+            string indexerName,
+            TimeSpan? timeout = null)
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            TimeSpan maxDelay = TimeSpan.FromMinutes(1);
+
+            timeout ??= TimeSpan.FromMinutes(10);
+
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
+
+            while (true)
+            {
+                await DelayAsync(delay, cancellationToken: cts.Token);
+
+                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
+                    indexerName,
+                    cancellationToken: cts.Token);
+
+                if (status.Status == IndexerStatus.Running)
+                {
+                    if (status.LastResult?.Status == IndexerExecutionStatus.Success)
+                    {
+                        return;
+                    }
+                    else if (status.LastResult?.Status == IndexerExecutionStatus.TransientFailure &&
+                        status.LastResult is IndexerExecutionResult lastResult)
+                    {
+                        TestContext.WriteLine($"Transient error: {lastResult.ErrorMessage}");
+                    }
+                }
+                else if (status.Status == IndexerStatus.Error &&
+                    status.LastResult is IndexerExecutionResult lastResult)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Error: {lastResult.ErrorMessage}");
+
+                    if (lastResult.Errors?.Count > 0)
+                    {
+                        foreach (SearchIndexerError error in lastResult.Errors)
+                        {
+                            sb.AppendLine($" ---> {error.ErrorMessage}");
+                        }
+                    }
+
+                    Assert.Fail(sb.ToString());
+                }
+
+                // Exponentially increase the delay to mitigate server throttling.
+                delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
             }
         }
     }

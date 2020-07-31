@@ -16,17 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of SearchIndexerSkillset. </summary>
         /// <param name="name"> The name of the skillset. </param>
-        /// <param name="description"> The description of the skillset. </param>
         /// <param name="skills"> A list of skills in the skillset. </param>
-        public SearchIndexerSkillset(string name, string description, IEnumerable<SearchIndexerSkill> skills)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
+        public SearchIndexerSkillset(string name, IEnumerable<SearchIndexerSkill> skills)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
             }
             if (skills == null)
             {
@@ -34,8 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
-            Description = description;
-            Skills = skills.ToArray();
+            Skills = skills.ToList();
         }
 
         /// <summary> Initializes a new instance of SearchIndexerSkillset. </summary>
@@ -57,8 +52,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
         /// <summary> The description of the skillset. </summary>
         public string Description { get; set; }
-        /// <summary> A list of skills in the skillset. </summary>
-        public IList<SearchIndexerSkill> Skills { get; set; }
         /// <summary> Details about cognitive services to be used when running skills. </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }
     }

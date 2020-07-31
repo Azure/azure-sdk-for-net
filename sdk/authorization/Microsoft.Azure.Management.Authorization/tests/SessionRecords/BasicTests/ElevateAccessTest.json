@@ -7,15 +7,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3dfefd4d-e5cb-4836-b479-cc5a15364556"
+          "c1072bfb-4aed-4303-8549-a0d3d59e1e05"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28928.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.11.0.0"
         ]
       },
@@ -23,20 +23,11 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Mon, 24 Jun 2019 17:11:16 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=Production; path=/; secure; HttpOnly"
-        ],
-        "x-ms-request-charge": [
-          "1"
-        ],
         "x-ms-request-id": [
-          "6da45a74-91c2-4b3c-930e-030a044ebdc0"
+          "888c9484-dd51-4408-9ecf-728ec7798dd7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -44,20 +35,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=Production; path=/; SameSite=None; secure; HttpOnly"
+        ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "5f56ec27-ce8e-4a11-b30a-43a01ce6146a"
+          "59464e3e-8bb5-4eb6-bbb4-fdc4878222f4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190624T171117Z:5f56ec27-ce8e-4a11-b30a-43a01ce6146a"
+          "WESTUS2:20200626T172213Z:59464e3e-8bb5-4eb6-bbb4-fdc4878222f4"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Fri, 26 Jun 2020 17:22:13 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",

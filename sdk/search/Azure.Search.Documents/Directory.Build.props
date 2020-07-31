@@ -1,4 +1,38 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Azure.Core.Experimental feature flags -->
+  <PropertyGroup>
+    <!-- Enable everything by default -->
+    <UseAzureCoreExperimental Condition="'$(UseAzureCoreExperimental)' == ''">false</UseAzureCoreExperimental>
+
+    <!-- Use Azure.Core.Experimental's Spatial features -->
+    <!-- (Note: a number of tests will need re-recording if you disable) -->
+    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSpatial>
+    <DefineConstants Condition="'$(UseAzureCoreExperimentalSpatial)' == 'true'">EXPERIMENTAL_SPATIAL;$(DefineConstants)</DefineConstants>
+
+    <!-- Use Azure.Core.Experimental's ObjectSerializer features -->
+    <UseAzureCoreExperimentalSerializer Condition="'$(UseAzureCoreExperimentalSerializer)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSerializer>
+    <DefineConstants Condition="'$(UseAzureCoreExperimentalSerializer)' == 'true'">EXPERIMENTAL_SERIALIZER;$(DefineConstants)</DefineConstants>
+
+    <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
+    <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
+    <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
+
+    <!-- Use a Package or Project reference to Azure.Core.Experimental -->
+    <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalSerializer)' == 'true') OR ('$(UseAzureCoreExperimentalSerializer)' == 'true')">true</AddExperimentalReference>
+    <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">$(UseProjectReferenceToAzureClients)</UseExperimentalProjectReference>
+  </PropertyGroup>
+
+  <!-- Add a reference to Azure.Core.Experimental -->
+  <ItemGroup Condition="'$(AddExperimentalReference)' == 'true' AND '$(IsTestProject)' != 'true'">
+    <ProjectReference
+      Condition="'$(UseExperimentalProjectReference)' == 'true'"
+      Include="$(MSBuildThisFileDirectory)..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <PackageReference
+      Condition="'$(UseExperimentalProjectReference)' != 'true'"
+      Include="Azure.Core.Experimental" />
+  </ItemGroup>
+
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
   -->

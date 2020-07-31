@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "id": "eventroute-001",
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "eventroute-001",
+        "endpointName": "endpoint-001",
+        "filter": "type = 'Microsoft.DigitalTwins.Twin.Create'"
+      }
+    }
+  }
+}

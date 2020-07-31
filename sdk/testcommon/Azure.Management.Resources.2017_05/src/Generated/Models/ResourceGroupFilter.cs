@@ -25,8 +25,8 @@ namespace Azure.Management.Resources.Models
         }
 
         /// <summary> The tag name. </summary>
-        public string TagName { get; set; }
+        public string TagName { get; }
         /// <summary> The tag value. </summary>
-        public string TagValue { get; set; }
+        public string TagValue { get; }
     }
 }

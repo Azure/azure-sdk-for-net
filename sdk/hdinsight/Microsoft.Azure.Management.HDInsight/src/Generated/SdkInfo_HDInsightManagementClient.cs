@@ -27,16 +27,17 @@ namespace Microsoft.Azure.Management.HDInsight
                 new Tuple<string, string, string>("HDInsight", "Operations", "2018-06-01-preview"),
                 new Tuple<string, string, string>("HDInsight", "ScriptActions", "2018-06-01-preview"),
                 new Tuple<string, string, string>("HDInsight", "ScriptExecutionHistory", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "VirtualMachines", "2018-06-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=F:\\source\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\source\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3ee786a44139e0be0613cb705f78d66b5166fc78";
+      public static readonly String GithubCommidId = "5268047891427110a671893d1eb076e10d463802";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

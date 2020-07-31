@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Reservations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// This API describe Azure Reservation
     /// </summary>
     public partial interface IAzureReservationAPIClient : System.IDisposable
     {
@@ -45,11 +44,6 @@ namespace Microsoft.Azure.Management.Reservations
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Supported version for this document is 2019-04-01
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -67,6 +61,21 @@ namespace Microsoft.Azure.Management.Reservations
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IQuotaOperations.
+        /// </summary>
+        IQuotaOperations Quota { get; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestStatusOperations.
+        /// </summary>
+        IQuotaRequestStatusOperations QuotaRequestStatus { get; }
+
+        /// <summary>
+        /// Gets the IAutoQuotaIncreaseOperations.
+        /// </summary>
+        IAutoQuotaIncreaseOperations AutoQuotaIncrease { get; }
 
         /// <summary>
         /// Gets the IReservationOperations.

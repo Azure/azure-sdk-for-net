@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
 {
@@ -20,29 +21,42 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// The versions of Azure Queue Storage supported by this client
-        /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// library.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
+            /// Version 2019-02-02</see>.
             /// </summary>
             V2019_02_02 = 1,
 
             /// <summary>
-            /// The 2019-07-07 service version.
+            /// The 2019-07-07 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-07-07">
+            /// Version 2019-07-07</see>.
             /// </summary>
             V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -56,8 +70,8 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClientOptions(ServiceVersion version = LatestVersion)
         {
-            if (version == ServiceVersion.V2019_07_07
-                || version == ServiceVersion.V2019_02_02)
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= LatestVersion)
             {
                 Version = version;
             }
@@ -81,6 +95,10 @@ namespace Azure.Storage.Queues
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        #region Advanced Options
+        internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        #endregion
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

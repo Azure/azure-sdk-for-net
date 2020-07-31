@@ -10,55 +10,51 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// The type of the value of a <see cref="FormField"/>.
     /// </summary>
-    [CodeGenModel("FieldValueType")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1720:Identifier contains type name")]
     public enum FieldValueType
     {
         /// <summary>
         /// Used for <see cref="string"/> type.
         /// </summary>
-        [CodeGenMember("String")]
-        StringType,
+        String,
 
         /// <summary>
         /// Used for <see cref="DateTime"/> type.
         /// </summary>
-        [CodeGenMember("Date")]
-        DateType,
+        Date,
 
         /// <summary>
         /// Used for <see cref="TimeSpan"/> type.
         /// </summary>
-        [CodeGenMember("Time")]
-        TimeType,
+        Time,
 
         /// <summary>
         /// Used for <see cref="string"/> type with a phone number format.
         /// </summary>
-        [CodeGenMember("PhoneNumber")]
-        PhoneNumberType,
+        PhoneNumber,
 
         /// <summary>
         /// Used for <see cref="float"/> type.
         /// </summary>
         [CodeGenMember("Number")]
-        FloatType,
+        Float,
 
         /// <summary>
-        /// Used for <see cref="int"/> type.
+        /// Used for <see cref="long"/> type.
         /// </summary>
         [CodeGenMember("Integer")]
-        IntegerType,
+        Int64,
 
         /// <summary>
         /// Used for <see cref="List{T}"/> type.
         /// </summary>
         [CodeGenMember("Array")]
-        ListType,
+        List,
 
         /// <summary>
         /// Used for <see cref="Dictionary{TKey, TValue}"/> type.
         /// </summary>
         [CodeGenMember("Object")]
-        DictionaryType
+        Dictionary
     }
 }

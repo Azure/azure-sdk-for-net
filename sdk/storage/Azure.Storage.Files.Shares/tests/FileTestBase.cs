@@ -17,7 +17,8 @@ namespace Azure.Storage.Files.Shares.Tests
 {
     [ClientTestFixture(
         ShareClientOptions.ServiceVersion.V2019_02_02,
-        ShareClientOptions.ServiceVersion.V2019_07_07)]
+        ShareClientOptions.ServiceVersion.V2019_07_07,
+        ShareClientOptions.ServiceVersion.V2019_12_12)]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -32,8 +33,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
         public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiDirectoryName() => $"test-dire¢t Ø®ϒ%3A-{Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
-        public string GetNewNonAsciiFileName() => $"test-ƒ¡£€‽-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiFileName() => $"test-ƒ¡£€‽%3A-{Recording.Random.NewGuid()}";
 
         public ShareClientOptions GetOptions()
         {
@@ -110,6 +112,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigPremiumBlob.AccountName,
                         TestConfigPremiumBlob.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_SoftDelete()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigSoftDelete.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigSoftDelete.AccountName,
+                        TestConfigSoftDelete.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)

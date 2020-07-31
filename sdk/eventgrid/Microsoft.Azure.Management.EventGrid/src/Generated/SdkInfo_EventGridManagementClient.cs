@@ -19,32 +19,24 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventChannels", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "ExtensionTopics", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerNamespaces", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerRegistrations", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopicEventSubscriptions", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopics", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopicEventSubscriptions", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopics", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2020-04-01-preview"),
+                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Domains", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Operations", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2020-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Topics", "2020-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\build2020\\sdk1\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\build2020\\net1\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "2bf9a22121443b6538e42bda724f3aa372798833";
+      public static readonly String GithubCommidId = "e3e0fff3be9befda4fd2cc18ee355b88b024fac7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

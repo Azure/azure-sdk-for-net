@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
         /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/>, or <paramref name="targetIndexName"/> is null. </exception>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
             if (name == null)
@@ -35,6 +37,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
+            FieldMappings = new ChangeTrackingList<FieldMapping>();
+            OutputFieldMappings = new ChangeTrackingList<FieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -78,10 +82,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexingSchedule Schedule { get; set; }
         /// <summary> Parameters for indexer execution. </summary>
         public IndexingParameters Parameters { get; set; }
-        /// <summary> Defines mappings between fields in the data source and corresponding target fields in the index. </summary>
-        public IList<FieldMapping> FieldMappings { get; set; }
-        /// <summary> Output field mappings are applied after enrichment and immediately before indexing. </summary>
-        public IList<FieldMapping> OutputFieldMappings { get; set; }
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
         public bool? IsDisabled { get; set; }
     }

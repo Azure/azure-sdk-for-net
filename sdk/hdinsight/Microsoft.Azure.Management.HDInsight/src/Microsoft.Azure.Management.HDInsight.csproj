@@ -7,12 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.3.0</Version>
+		<Version>5.5.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release adds a new feature:
-Added support for creating cluster with minSupportedTlsVersion
+This release supports three features:
+- Support to create cluster with private link feature.
+- Support to create cluster with encryption in transit feature.
+- Support customer to update autoscale configuration
       ]]>
 		</PackageReleaseNotes>
     

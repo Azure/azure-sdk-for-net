@@ -11,6 +11,8 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public class SearchableField : SimpleField
     {
+        private readonly List<string> _synonymMapNames;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchableField"/> class.
         /// </summary>
@@ -21,6 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchableField(string name, bool collection = false) : base(name, collection ? SearchFieldDataType.Collection(SearchFieldDataType.String) : SearchFieldDataType.String)
         {
             // NOTE: Types other than string may be searchable one day. Could add an overload in the future.
+            _synonymMapNames = new List<string>();
         }
 
         /// <summary>
@@ -51,7 +54,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map.
         /// This attribute can be changed on existing fields.
         /// </remarks>
-        public IList<string> SynonymMapNames { get; } = new List<string>();
+        public IList<string> SynonymMapNames
+        {
+            get => _synonymMapNames;
+            internal set
+            {
+                _synonymMapNames.Clear();
+
+                if (value != null)
+                {
+                    _synonymMapNames.AddRange(value);
+                }
+            }
+        }
 
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
@@ -65,7 +80,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
             if (SynonymMapNames.Count > 0)
             {
-                field.SynonymMapNames = SynonymMapNames;
+                IList<string> fields = field.SynonymMapNames;
+                foreach (string name in SynonymMapNames)
+                {
+                    fields.Add(name);
+                }
             }
         }
     }

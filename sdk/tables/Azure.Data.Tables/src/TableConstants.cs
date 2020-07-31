@@ -5,12 +5,23 @@ namespace Azure.Data.Tables
 {
     internal static class TableConstants
     {
+        internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
+        internal const string CosmosTableDomain = ".table.cosmos.";
+
         internal static class HeaderNames
         {
             public const string Date = "x-ms-date";
             public const string SharedKey = "SharedKeyLite";
             public const string Authorization = "Authorization";
             public const string IfMatch = "If-Match";
+            public const string Accept = "Accept";
+            public const string Content = "Content-Type";
+        }
+
+        internal static class MimeType
+        {
+            internal const string ApplicationJson = "application/json";
+            internal const string ApplicationXml = "application/xml";
         }
 
         internal static class QueryParameterNames
@@ -39,6 +50,12 @@ namespace Azure.Data.Tables
             internal const string EdmInt32 = "Edm.Int32";
             internal const string EdmInt64 = "Edm.Int64";
             internal const string EdmString = "Edm.String";
+        }
+
+        internal static class ExceptionMessages
+        {
+            internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
+            internal const string MissingRowKey = "The entity must contain a RowKey value";
         }
 
         /// <summary>
@@ -77,6 +94,10 @@ namespace Azure.Data.Tables
                 public const string EndRowKey = "endrk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
+                public const string Services = "ss";
+                public const string ServicesUpper = "SS";
+                public const string ResourceTypes = "srt";
+                public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
                 public const string ProtocolUpper = "SPR";
                 public const string StartTime = "st";
@@ -93,6 +114,18 @@ namespace Azure.Data.Tables
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
+            }
+
+            internal static class TableAccountResources
+            {
+                public const char Service = 's';
+                public const char Container = 'c';
+                public const char Object = 'o';
+            }
+
+            internal static class TableAccountServices
+            {
+                public const string Table = "t";
             }
         }
     }

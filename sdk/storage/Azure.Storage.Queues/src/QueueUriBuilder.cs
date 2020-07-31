@@ -14,7 +14,9 @@ namespace Azure.Storage.Queues
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, queue, or message.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/addressing-queue-service-resources">
+    /// Addressing Queue Service Resources</see>.
     /// </summary>
     public class QueueUriBuilder
     {

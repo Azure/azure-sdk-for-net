@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/1f434626-12ea-5b95-6758-0c4b6432b3ae:d0f4c360-b456-4844-b6e2-040c0d6b0cd7_2019-05-31/billingProfiles/DRWP-ID5F-BG7-TGB?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvMWY0MzQ2MjYtMTJlYS01Yjk1LTY3NTgtMGM0YjY0MzJiM2FlJTNBZDBmNGMzNjAtYjQ1Ni00ODQ0LWI2ZTItMDQwYzBkNmIwY2Q3XzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0RSV1AtSUQ1Ri1CRzctVEdCP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18db3e56-353b-4771-ab0e-d7795250a169"
+          "41b53f1f-860b-4a84-9f3c-c360bf19877f"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 Jun 2020 02:09:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.6.1249.547"
         ],
         "api-supported-versions": [
-          "2018-11-01-preview, 2019-10-01-preview"
+          "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
         "x-ms-request-id": [
-          "6dc82c4a-b334-43f5-8c50-42038d2f4fc8"
+          "42f66659-dd90-40ad-9917-46f97bcc82fb"
         ],
         "x-ms-correlation-request-id": [
-          "6dc82c4a-b334-43f5-8c50-42038d2f4fc8"
+          "42f66659-dd90-40ad-9917-46f97bcc82fb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191118T234144Z:6dc82c4a-b334-43f5-8c50-42038d2f4fc8"
+          "NORTHEUROPE:20200604T020917Z:42f66659-dd90-40ad-9917-46f97bcc82fb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Mon, 18 Nov 2019 23:41:44 GMT"
-        ],
         "Content-Length": [
-          "554"
+          "794"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB\",\r\n  \"name\": \"H6RI-TXWC-BG7-PGB\",\r\n  \"properties\": {\r\n    \"address\": {\r\n      \"addressLine1\": \"390 8th Ave\",\r\n      \"city\": \"New York\",\r\n      \"companyName\": \"Canary Test EA Transition 2\",\r\n      \"country\": \"US\",\r\n      \"postalCode\": \"10001\",\r\n      \"region\": \"New York\"\r\n    },\r\n    \"currency\": \"USD\",\r\n    \"displayName\": \"Canary Test EA Transition 2\",\r\n    \"hasReadAccess\": true,\r\n    \"invoiceDay\": 5,\r\n    \"invoiceEmailOptIn\": true\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/1f434626-12ea-5b95-6758-0c4b6432b3ae:d0f4c360-b456-4844-b6e2-040c0d6b0cd7_2019-05-31/billingProfiles/DRWP-ID5F-BG7-TGB\",\r\n  \"name\": \"DRWP-ID5F-BG7-TGB\",\r\n  \"properties\": {\r\n    \"billTo\": {\r\n      \"addressLine1\": \"1 Microsoft Way\",\r\n      \"city\": \"Redmond\",\r\n      \"companyName\": \"Test_Test_v-xiaokm_737a8ee286\",\r\n      \"country\": \"US\",\r\n      \"email\": \"v-xiaokm@microsoft.com\",\r\n      \"postalCode\": \"98052\",\r\n      \"region\": \"WA\"\r\n    },\r\n    \"currency\": \"USD\",\r\n    \"displayName\": \"billing group\",\r\n    \"enabledAzurePlans\": [\r\n      {\r\n        \"skuId\": \"0001\",\r\n        \"skuDescription\": \"Microsoft Azure Plan\"\r\n      }\r\n    ],\r\n    \"hasReadAccess\": true,\r\n    \"invoiceDay\": 1,\r\n    \"invoiceEmailOptIn\": false,\r\n    \"invoiceSections\": {\r\n      \"hasMoreResults\": false\r\n    },\r\n    \"poNumber\": \"testOrderNumber\",\r\n    \"spendingLimit\": \"Off\",\r\n    \"status\": \"Active\",\r\n    \"systemId\": \"DRWP-ID5F-BG7-TGB\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "c9386abf-21f8-4937-85df-c14daa258948"
   }
 }

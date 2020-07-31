@@ -28,8 +28,6 @@ param(
     [string] $PushArgs = ""
 )
 
-Write-Host "> $PSCommandPath $args"
-
 # This is necessay because of the janky git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
@@ -118,11 +116,19 @@ do
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to apply diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
+                exit $LASTEXITCODE
+            }
+
+            Write-Host "git add -A"
+            git add -A
+            if ($LASTEXITCODE -ne 0)
+            {
+                Write-Error "Unable to git add LASTEXITCODE=$($LASTEXITCODE), see command output above."
                 continue
             }
 
-            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
+            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -m `"$($CommitMsg)`""
+            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -m "$($CommitMsg)"
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to commit LASTEXITCODE=$($LASTEXITCODE), see command output above."

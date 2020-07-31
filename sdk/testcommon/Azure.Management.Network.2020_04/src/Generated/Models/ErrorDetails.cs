@@ -8,7 +8,7 @@
 namespace Azure.Management.Network.Models
 {
     /// <summary> Common error details representation. </summary>
-    public partial class ErrorDetails
+    internal partial class ErrorDetails
     {
         /// <summary> Initializes a new instance of ErrorDetails. </summary>
         internal ErrorDetails()

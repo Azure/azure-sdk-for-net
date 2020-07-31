@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingRoleAssignments/40000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCL2JpbGxpbmdSb2xlQXNzaWdubWVudHMvNDAwMDAwMDAtYWFhYS1iYmJiLWNjY2MtMTAwMDAwMDAwMDAwXzVjNGZhZDUzLTljZmItNGUyMi05NjM1LWU3ZjQyMGFiM2NhNz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingRoleAssignments/40000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNjkyYTFlZjYtNTk1YS01NTc4LTg3NzYtZGUxMGM5ZDY0ODYxJTNBNTg2OWVhMTAtYTIxZS00MjNmLTkyMTMtMmNhMGQxOTM4OTA4XzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0RTTkgtV1VaRS1CRzctVEdCL2JpbGxpbmdSb2xlQXNzaWdubWVudHMvNDAwMDAwMDAtYWFhYS1iYmJiLWNjY2MtMTAwMDAwMDAwMDAwXzlhZTA3NjVmLWZlNTgtNDBkMC05NjU3LTU1YmQwYzQyMTUyMz9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b8935c4-f893-4c21-ac47-0ff06150fc67"
+          "96f0b6c6-792a-4171-8f0c-2e175c0ebfcf"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Wed, 03 Jun 2020 19:42:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.6.1249.547"
         ],
         "api-supported-versions": [
-          "2019-10-01-preview"
+          "2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
         "x-ms-request-id": [
-          "b4fbc981-4b49-47ae-93df-7fda31da38fd"
+          "c6149fcf-69bd-4497-84c6-74cb0eb4cb73"
         ],
         "x-ms-correlation-request-id": [
-          "b4fbc981-4b49-47ae-93df-7fda31da38fd"
+          "c6149fcf-69bd-4497-84c6-74cb0eb4cb73"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20191118T234124Z:b4fbc981-4b49-47ae-93df-7fda31da38fd"
+          "NORTHEUROPE:20200603T194233Z:c6149fcf-69bd-4497-84c6-74cb0eb4cb73"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Mon, 18 Nov 2019 23:41:23 GMT"
-        ],
         "Content-Length": [
-          "1050"
+          "1118"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingRoleAssignments/40000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n  \"name\": \"40000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n  \"properties\": {\r\n    \"createdOn\": \"2019-10-16T11:04:21-07:00\",\r\n    \"createdByPrincipalId\": \"5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n    \"principalId\": \"5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n    \"principalTenantId\": \"98deed94-8d1b-4075-bf56-eaa3d9f5c852\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000\",\r\n    \"scope\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingRoleAssignments/40000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n  \"name\": \"40000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n  \"properties\": {\r\n    \"createdOn\": \"2020-04-23T22:11:07-07:00\",\r\n    \"createdByPrincipalTenantId\": \"\",\r\n    \"createdByPrincipalId\": \"\",\r\n    \"modifiedOn\": \"0001-01-01T00:00:00-08:00\",\r\n    \"notificationFrequency\": \"None\",\r\n    \"principalId\": \"9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n    \"principalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000\",\r\n    \"scope\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "0195fcc8-69cd-4440-852b-237bdae4e36c"
   }
 }

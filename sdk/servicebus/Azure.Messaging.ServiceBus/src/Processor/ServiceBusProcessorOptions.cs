@@ -4,12 +4,11 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver"/> or <see cref="ServiceBusProcessor" />
+    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessor" />
     /// to configure its behavior.
     /// </summary>
     public class ServiceBusProcessorOptions
@@ -38,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
+        /// <summary>Gets or sets a value that indicates whether the processor should call
         /// Receiver.CompleteAsync() on messages after the callback has completed processing.
         /// The default value is true.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
@@ -66,9 +65,13 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        ///   The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
-        /// <remarks>When using a <see cref="ServiceBusSessionProcessor"/>, if no message is returned for a call to Receive, a new session will be requested by the processor. Hence, if this value is set to be too low, it could cause new sessions to be requested more often than necessary.</remarks>
+        /// <remarks>When using a <see cref="ServiceBusSessionProcessor"/>, if no message is returned for a call
+        /// to Receive, a new session will be requested by the processor.
+        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
+        /// more often than necessary.</remarks>
         public TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -85,7 +88,8 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan? _maxReceiveWaitTime;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate. The default value when used with a session processor is 8. For a non-session processor, the default is 1.</summary>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the processor should initiate.
+        /// The default is 1.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
@@ -97,7 +101,7 @@ namespace Azure.Messaging.ServiceBus
                 _maxConcurrentCalls = value;
             }
         }
-        private int _maxConcurrentCalls;
+        private int _maxConcurrentCalls = 1;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -134,19 +138,15 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
         internal ServiceBusProcessorOptions Clone()
         {
-            var clone = new ServiceBusProcessorOptions
+            return new ServiceBusProcessorOptions
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
                 AutoComplete = AutoComplete,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
+                MaxReceiveWaitTime = MaxReceiveWaitTime,
+                MaxConcurrentCalls = MaxConcurrentCalls
             };
-            if (MaxConcurrentCalls > 0)
-            {
-                clone.MaxConcurrentCalls = MaxConcurrentCalls;
-            }
-            return clone;
         }
     }
 }

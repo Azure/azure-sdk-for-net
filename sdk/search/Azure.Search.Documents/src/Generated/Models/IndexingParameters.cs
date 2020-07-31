@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
         public IndexingParameters()
         {
+            Configuration = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
@@ -36,7 +38,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MaxFailedItems { get; set; }
         /// <summary> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </summary>
         public int? MaxFailedItemsPerBatch { get; set; }
-        /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-        public IDictionary<string, object> Configuration { get; set; }
     }
 }

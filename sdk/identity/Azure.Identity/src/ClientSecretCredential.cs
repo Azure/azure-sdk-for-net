@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +17,7 @@ namespace Azure.Identity
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
-        private readonly AadIdentityClient _client;
+        private readonly MsalConfidentialClient _client;
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -47,7 +49,19 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret)
-            : this(tenantId, clientId, clientSecret, (TokenCredentialOptions)null)
+            : this(tenantId, clientId, clientSecret, null, null, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
+            : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }
 
@@ -59,16 +73,11 @@ namespace Azure.Identity
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
-            : this (tenantId, clientId, clientSecret, CredentialPipeline.GetInstance(options))
+            : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }
 
-        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, CredentialPipeline pipeline)
-            : this(tenantId, clientId, clientSecret, pipeline, new AadIdentityClient(pipeline))
-        {
-        }
-
-        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, CredentialPipeline pipeline, AadIdentityClient client)
+        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
@@ -76,10 +85,11 @@ namespace Azure.Identity
 
             ClientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
 
-            _pipeline = pipeline;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client;
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
+
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
@@ -93,7 +103,9 @@ namespace Azure.Identity
 
             try
             {
-                return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
+                AuthenticationResult result = await _client.AcquireTokenForClientAsync(requestContext.Scopes, true, cancellationToken).ConfigureAwait(false);
+
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
             {
@@ -113,7 +125,9 @@ namespace Azure.Identity
 
             try
             {
-                return scope.Succeeded(_client.Authenticate(TenantId, ClientId, ClientSecret, requestContext.Scopes, cancellationToken));
+                AuthenticationResult result = _client.AcquireTokenForClientAsync(requestContext.Scopes, false, cancellationToken).EnsureCompleted();
+
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
             {

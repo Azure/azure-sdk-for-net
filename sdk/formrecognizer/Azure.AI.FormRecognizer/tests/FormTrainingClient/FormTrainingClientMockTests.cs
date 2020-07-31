@@ -55,8 +55,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartTrainingAsync(new Uri(encodedUriString));
-            await client.StartTrainingAsync(new Uri(decodedUriString));
+            await client.StartTrainingAsync(new Uri(encodedUriString), useTrainingLabels: false);
+            await client.StartTrainingAsync(new Uri(decodedUriString), useTrainingLabels: false);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 
@@ -67,6 +67,41 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.True(requestBody.Contains(encodedUriString));
                 Assert.False(requestBody.Contains(decodedUriString));
             }
+        }
+
+        [Test]
+        public async Task GetCustomModelDoesNotNeedTrainResult()
+        {
+            // When a model is still being created, the "trainResult" property is
+            // not returned. We're mimicking this behavior here to make sure that
+            // we can parse the response even without the "trainResult" property.
+
+            // Ideally this test should be live, but the service behavior is
+            // non-deterministic. Any delay in sending the request could give the
+            // model enough time to change its status to Ready.
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""modelInfo"": {
+                        ""modelId"": ""00000000-0000-0000-0000-000000000000"",
+                        ""status"": ""creating"",
+                        ""createdDateTime"": ""1975-04-04T00:00:00Z"",
+                        ""lastUpdatedTime"": ""1975-04-04T00:00:00Z""
+                    }
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var response = await client.GetCustomModelAsync("00000000-0000-0000-0000-000000000000");
+            var model = response.Value;
+
+            Assert.IsEmpty(model.TrainingDocuments);
+            Assert.IsEmpty(model.Errors);
         }
 
         private static string GetString(RequestContent content)

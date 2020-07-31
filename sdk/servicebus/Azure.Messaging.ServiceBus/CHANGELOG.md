@@ -1,7 +1,44 @@
 # Release History
 
-## 7.0.0-preview.3 (Unreleased)
+## 7.0.0-preview.5 (Unreleased)
 
+## 7.0.0-preview.4 (2020-07-07)
+
+### Acknowledgements
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
+
+### Added
+- Add IAsyncEnumerable Receive overload
+- Add batch schedule/cancel schedule messages
+  
+### Breaking Changes
+- Remove use of "Batch" in Peek/Receive methods.
+- Add Message/Messages suffix to Peek/Send/Receive/Abandon/Defer/Complete/DeadLetter methods.
+- Rename ServiceBusSender.CreateBatch to ServiceBusSender.CreateMessageBatch
+- Rename CreateBatchOptions to CreateMessageBatchOptions
+- Rename ServiceBusMessageBatch.TryAdd to ServiceBusMessageBatch.TryAddMessage
+- Change output list type from IList<ServiceBusReceivedMessage> to IReadOnlyList<ServiceBusReceivedMessage>
+- Removed ServiceBusException.FailureReason.ClientClosed in favor of throwing ObjectDisposedException
+
+## 7.0.0-preview.3 (2020-06-08)
+
+### Acknowledgements
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
+
+### Added
+- Add the ServiceBusManagementClient for CRUD operations on a namespace
+- Add constructor for ServiceBusMessage taking a string
+- Use the BinaryData type for ServiceBusMessage.Body
+- Add diagnostic tracing
+  
+### Breaking Changes
+- Introduce ServiceBusSessionReceiverOptions/ServiceBusSessionProcessorOptions for creating
+  ServiceBusSessionReceiver/ServiceBusSessionProcessor
+- Make ServiceBusReceivedMessage.Properties IReadOnlyDictionary rather than IDictionary
 
 ## 7.0.0-preview.2 (2020-05-04)
 

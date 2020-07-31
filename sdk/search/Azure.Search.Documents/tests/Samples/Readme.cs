@@ -12,6 +12,7 @@ using NUnit.Framework;
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 
 namespace Azure.Search.Documents.Tests.Samples
@@ -35,13 +36,15 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+            string indexName = "nycjobs";
+
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -63,7 +66,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
-            SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 // Print out the title and job description (we'll see below how to
@@ -75,7 +78,9 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
         }
 
+#if EXPERIMENTAL_DYNAMIC
         [Test]
+#endif
         [SyncOnly]
         public async Task CreateAndQuery()
         {
@@ -97,7 +102,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
-            SearchResults<SearchDocument> response = client.Search("luxury");
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
@@ -108,8 +113,8 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-            //@@ SearchResults<SearchDocument> response = client.Search("luxury");
-            /*@@*/ response = client.Search("luxury");
+            //@@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+            /*@@*/ response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -172,7 +177,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Filter to only ratings greater than or equal our preference
                 Filter = SearchFilter.Create($"rating ge {stars}"),
                 Size = 5, // Take only 5 results
-                OrderBy = new[] { "rating desc" } // Sort by rating from high to low
+                OrderBy = { "rating desc" } // Sort by rating from high to low
             };
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
@@ -231,6 +236,19 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        public async Task GetDocument()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resources.GetQueryClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_GetDocument
+            Hotel doc = client.GetDocument<Hotel>("1");
+            Console.WriteLine($"{doc.Id}: {doc.Name}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
         public async Task Index()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
@@ -239,8 +257,8 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_Readme_Index
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-                IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-                IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+                    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+                    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
 
                 IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
                 client.IndexDocuments(batch, options);

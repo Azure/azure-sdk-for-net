@@ -30,8 +30,8 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2019-05-06-Preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
             {
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
@@ -74,7 +74,8 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateAsync(SearchIndex index, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
+        public async Task<Response<SearchIndex>> CreateAsync(SearchIndex index, CancellationToken cancellationToken = default)
         {
             if (index == null)
             {
@@ -89,14 +90,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,6 +101,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
         public Response<SearchIndex> Create(SearchIndex index, CancellationToken cancellationToken = default)
         {
             if (index == null)
@@ -122,14 +117,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,7 +150,7 @@ namespace Azure.Search.Documents
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListIndexesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListIndexesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -172,14 +160,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
-                        }
+                        value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,14 +181,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
-                        }
+                        value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,7 +220,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
@@ -259,7 +233,8 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="index"/> is null. </exception>
+        public async Task<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -279,14 +254,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,6 +269,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="index"/> is null. </exception>
         public Response<SearchIndex> CreateOrUpdate(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
@@ -321,14 +290,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,7 +331,8 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -393,6 +356,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
         public Response Delete(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
@@ -435,7 +399,8 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> GetAsync(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        public async Task<Response<SearchIndex>> GetAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -450,14 +415,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,6 +426,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
         public Response<SearchIndex> Get(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
@@ -483,14 +442,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndex value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
-                        }
+                        value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,7 +473,8 @@ namespace Azure.Search.Documents
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        public async Task<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -536,14 +489,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
-                        }
+                        value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -554,6 +500,7 @@ namespace Azure.Search.Documents
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
         public Response<SearchIndexStatistics> GetStatistics(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
@@ -569,14 +516,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
-                        }
+                        value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -584,7 +524,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeRequest request)
+        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeTextOptions request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -602,7 +542,7 @@ namespace Azure.Search.Documents
             }
             request0.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request0.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -612,7 +552,8 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeTextOptions request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -631,14 +572,7 @@ namespace Azure.Search.Documents
                     {
                         AnalyzeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
-                        }
+                        value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -650,7 +584,8 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="request"/> is null. </exception>
+        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeTextOptions request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -669,14 +604,7 @@ namespace Azure.Search.Documents
                     {
                         AnalyzeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
-                        }
+                        value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -18,11 +18,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (SearchMode != null)
-            {
-                writer.WritePropertyName("searchMode");
-                writer.WriteStringValue(SearchMode);
-            }
+            writer.WritePropertyName("searchMode");
+            writer.WriteStringValue(SearchMode);
             writer.WritePropertyName("sourceFields");
             writer.WriteStartArray();
             foreach (var item in SourceFields)
@@ -47,10 +44,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("searchMode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     searchMode = property.Value.GetString();
                     continue;
                 }
@@ -59,14 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourceFields = array;
                     continue;

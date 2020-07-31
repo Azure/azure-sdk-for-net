@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Azure Cognitive Search client that can be used to manage and query
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexerClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexerClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
@@ -125,26 +125,29 @@ namespace Azure.Search.Documents
 
         #region Data Sources operations
         /// <summary>
-        /// Creates a new data source.
+        /// Creates a new data source connection.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSource> CreateDataSource(
-            SearchIndexerDataSource dataSource,
+        public virtual Response<SearchIndexerDataSourceConnection> CreateDataSourceConnection(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
             try
             {
                 return DataSourcesClient.Create(
-                    dataSource,
+                    dataSourceConnection,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -155,26 +158,29 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Creates a new data source.
+        /// Creates a new data source connection.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSource>> CreateDataSourceAsync(
-            SearchIndexerDataSource dataSource,
+        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateDataSourceConnectionAsync(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
             try
             {
                 return await DataSourcesClient.CreateAsync(
-                    dataSource,
+                    dataSourceConnection,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -186,33 +192,36 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Creates a new data source or updates an existing data source.
+        /// Creates a new data source or updates an existing data source connection.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create or update.</param>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
         /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSource> CreateOrUpdateDataSource(
-            SearchIndexerDataSource dataSource,
+        public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
             try
             {
                 return DataSourcesClient.CreateOrUpdate(
-                    dataSource?.Name,
-                    dataSource,
-                    onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
+                    dataSourceConnection?.Name,
+                    dataSourceConnection,
+                    onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
             }
@@ -224,33 +233,36 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Creates a new data source or updates an existing data source.
+        /// Creates a new data source or updates an existing data source connection.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create or update.</param>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
         /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSource>> CreateOrUpdateDataSourceAsync(
-            SearchIndexerDataSource dataSource,
+        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
             try
             {
                 return await DataSourcesClient.CreateOrUpdateAsync(
-                    dataSource?.Name,
-                    dataSource,
-                    onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
+                    dataSourceConnection?.Name,
+                    dataSourceConnection,
+                    onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -263,93 +275,117 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Deletes a data source.
+        /// Deletes a data source connection.
         /// </summary>
-        /// <param name="dataSourceName">The name of the <see cref="SearchIndexerDataSource"/> to delete.</param>
+        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteDataSource(
-            string dataSourceName,
-            CancellationToken cancellationToken = default) => DeleteDataSource(
-                dataSourceName,
+        public virtual Response DeleteDataSourceConnection(
+            string dataSourceConnectionName,
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return DeleteDataSourceConnection(
+                dataSourceConnectionName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
-        /// Deletes a data source.
+        /// Deletes a data source connection.
         /// </summary>
-        /// <param name="dataSourceName">The name of the <see cref="SearchIndexerDataSource"/> to delete.</param>
+        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteDataSourceAsync(
-            string dataSourceName,
-            CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
-                dataSourceName,
+        public virtual async Task<Response> DeleteDataSourceConnectionAsync(
+            string dataSourceConnectionName,
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return await DeleteDataSourceConnectionAsync(
+                dataSourceConnectionName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
-        /// Deletes a data source.
+        /// Deletes a data source connection.
         /// </summary>
-        /// <param name="dataSource">The <see cref="SearchIndexerDataSource"/> to delete.</param>
+        /// <param name="dataSourceConnection">The <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
         /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response DeleteDataSource(
-            SearchIndexerDataSource dataSource,
+        public virtual Response DeleteDataSourceConnection(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteDataSource(
-                dataSource?.Name,
-                dataSource?.ETag,
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            return DeleteDataSourceConnection(
+                dataSourceConnection?.Name,
+                dataSourceConnection?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
-        /// Deletes a data source.
+        /// Deletes a data source connection.
         /// </summary>
-        /// <param name="dataSource">The <see cref="SearchIndexerDataSource"/> to delete.</param>
+        /// <param name="dataSourceConnection">The <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
         /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response> DeleteDataSourceAsync(
-            SearchIndexerDataSource dataSource,
+        public virtual async Task<Response> DeleteDataSourceConnectionAsync(
+            SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
-                dataSource?.Name,
-                dataSource?.ETag,
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            return await DeleteDataSourceConnectionAsync(
+                dataSourceConnection?.Name,
+                dataSourceConnection?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
-        private Response DeleteDataSource(
-            string dataSourceName,
+        private Response DeleteDataSourceConnection(
+            string dataSourceConnectionName,
             ETag? etag,
             bool onlyIfUnchanged,
             CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSourceConnection)}");
             scope.Start();
             try
             {
                 return DataSourcesClient.Delete(
-                    dataSourceName,
+                    dataSourceConnectionName,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -361,18 +397,18 @@ namespace Azure.Search.Documents
             }
         }
 
-        private async Task<Response> DeleteDataSourceAsync(
-            string dataSourceName,
+        private async Task<Response> DeleteDataSourceConnectionAsync(
+            string dataSourceConnectionName,
             ETag? etag,
             bool onlyIfUnchanged,
             CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSourceConnection)}");
             scope.Start();
             try
             {
                 return await DataSourcesClient.DeleteAsync(
-                    dataSourceName,
+                    dataSourceConnectionName,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -386,23 +422,26 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a specific <see cref="SearchIndexerDataSource"/>.
+        /// Gets a specific <see cref="SearchIndexerDataSourceConnection"/>.
         /// </summary>
-        /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
+        /// <param name="dataSourceConnectionName">Required. The name of the <see cref="SearchIndexerDataSourceConnection"/> to get.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSourceConnection"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerDataSource> GetDataSource(
-            string dataSourceName,
+        public virtual Response<SearchIndexerDataSourceConnection> GetDataSourceConnection(
+            string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();
             try
             {
                 return DataSourcesClient.Get(
-                    dataSourceName,
+                    dataSourceConnectionName,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -413,23 +452,26 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a specific <see cref="SearchIndexerDataSource"/>.
+        /// Gets a specific <see cref="SearchIndexerDataSourceConnection"/>.
         /// </summary>
-        /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
+        /// <param name="dataSourceConnectionName">Required. The name of the <see cref="SearchIndexerDataSourceConnection"/> to get.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSourceConnection"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerDataSource>> GetDataSourceAsync(
-            string dataSourceName,
+        public virtual async Task<Response<SearchIndexerDataSourceConnection>> GetDataSourceConnectionAsync(
+            string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSource)}");
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();
             try
             {
                 return await DataSourcesClient.GetAsync(
-                    dataSourceName,
+                    dataSourceConnectionName,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -441,15 +483,15 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a list of all data sources.
+        /// Gets a list of all data source connections.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<SearchIndexerDataSource>> GetDataSources(
+        public virtual Response<IReadOnlyList<SearchIndexerDataSourceConnection>> GetDataSourceConnections(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSources)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnections)}");
             scope.Start();
             try
             {
@@ -467,15 +509,15 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a list of all data sources.
+        /// Gets a list of all data source connections.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSource>>> GetDataSourcesAsync(
+        public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSources)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnections)}");
             scope.Start();
             try
             {
@@ -494,15 +536,15 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a list of all data source names.
+        /// Gets a list of all data source connection names.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<IReadOnlyList<string>> GetDataSourceNames(
+        public virtual Response<IReadOnlyList<string>> GetDataSourceConnectionNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceNames)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnectionNames)}");
             scope.Start();
             try
             {
@@ -521,15 +563,15 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Gets a list of all data source names.
+        /// Gets a list of all data source connection names.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceNamesAsync(
+        public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceNames)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnectionNames)}");
             scope.Start();
             try
             {
@@ -631,6 +673,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
             try
@@ -669,6 +714,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
             try
@@ -698,11 +746,17 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteIndexer(
             string indexerName,
-            CancellationToken cancellationToken = default) => DeleteIndexer(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return DeleteIndexer(
                 indexerName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -714,12 +768,18 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return await DeleteIndexerAsync(
                 indexerName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -736,11 +796,17 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteIndexer(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return DeleteIndexer(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -757,12 +823,18 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return await DeleteIndexerAsync(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteIndexer(
             string indexerName,
@@ -1222,6 +1294,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
             try
@@ -1260,6 +1335,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
             try
@@ -1289,11 +1367,17 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteSkillset(
             string skillsetName,
-            CancellationToken cancellationToken = default) => DeleteSkillset(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return DeleteSkillset(
                 skillsetName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1305,12 +1389,18 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return await DeleteSkillsetAsync(
                 skillsetName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1327,11 +1417,17 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteSkillset(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return DeleteSkillset(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1348,12 +1444,18 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return await DeleteSkillsetAsync(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteSkillset(
             string skillsetName,

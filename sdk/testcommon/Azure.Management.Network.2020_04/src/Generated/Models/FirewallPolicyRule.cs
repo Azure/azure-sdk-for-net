@@ -13,7 +13,6 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
         public FirewallPolicyRule()
         {
-            RuleType = null;
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>

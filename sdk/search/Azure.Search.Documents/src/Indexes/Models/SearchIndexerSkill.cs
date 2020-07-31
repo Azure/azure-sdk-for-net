@@ -19,8 +19,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Inputs = inputs.ToArray();
-            Outputs = outputs.ToArray();
+            Inputs = inputs.ToList();
+            Outputs = outputs.ToList();
         }
+
+        /// <summary>
+        /// The name of the skill which uniquely identifies it within the skillset.
+        /// A skill with no name defined will be given a default name of its 1-based index in the skills array prefaced with the character "#" in debug sessions and error messages.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
+        public IList<InputFieldMappingEntry> Inputs { get; }
+
+        /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
+        public IList<OutputFieldMappingEntry> Outputs { get; }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.Management.Network.Models
             }
 
             TargetResourceId = targetResourceId;
-            Profiles = profiles.ToArray();
+            Profiles = profiles.ToList();
         }
 
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticParameters. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Management.Network.Models
         {
             TargetResourceId = targetResourceId;
             VerbosityLevel = verbosityLevel;
-            Profiles = profiles;
+            Profiles = profiles ?? new List<NetworkConfigurationDiagnosticProfile>();
         }
 
         /// <summary> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </summary>

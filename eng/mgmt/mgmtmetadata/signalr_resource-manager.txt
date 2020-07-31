@@ -1,14 +1,14 @@
-﻿Installing AutoRest version: latest
+﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\workspace\github\juniwang\azure-sdk-for-net\sdk
-2019-08-19 07:46:30 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\workspace\github\juniwang\azure-sdk-for-net\sdk
+2020-05-29 05:23:38 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      59c5761efb6dae1a0cfb624bc1a054e902a855cf
+Commit:      5dd684b32ab297eb1b3a9bb00c432ede348eaddb
 AutoRest information
-Requested version: latest
+Requested version: v2
 Bootstrapper version:    autorest@1.9.1

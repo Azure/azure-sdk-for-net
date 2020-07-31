@@ -30,8 +30,8 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2019-05-06-Preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
             {
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSource dataSource, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
             request.Content = content;
             return message;
@@ -88,7 +88,8 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexerDataSource>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSource dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -106,16 +107,9 @@ namespace Azure.Search.Documents
                 case 200:
                 case 201:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +123,8 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndexerDataSource> CreateOrUpdate(string dataSourceName, SearchIndexerDataSource dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
+        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -147,16 +142,9 @@ namespace Azure.Search.Documents
                 case 200:
                 case 201:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,7 +185,8 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -221,6 +210,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public Response Delete(string dataSourceName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
@@ -263,7 +253,8 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexerDataSource>> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        public async Task<Response<SearchIndexerDataSourceConnection>> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -276,16 +267,9 @@ namespace Azure.Search.Documents
             {
                 case 200:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -296,7 +280,8 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a datasource definition. </summary>
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndexerDataSource> Get(string dataSourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        public Response<SearchIndexerDataSourceConnection> Get(string dataSourceName, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -309,16 +294,9 @@ namespace Azure.Search.Documents
             {
                 case 200:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -351,7 +329,7 @@ namespace Azure.Search.Documents
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListDataSourcesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListDataSourcesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -361,14 +339,7 @@ namespace Azure.Search.Documents
                     {
                         ListDataSourcesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
-                        }
+                        value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -389,14 +360,7 @@ namespace Azure.Search.Documents
                     {
                         ListDataSourcesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
-                        }
+                        value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,7 +368,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SearchIndexerDataSource dataSource)
+        internal HttpMessage CreateCreateRequest(SearchIndexerDataSourceConnection dataSource)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -420,7 +384,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
             request.Content = content;
             return message;
@@ -429,7 +393,8 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexerDataSource>> CreateAsync(SearchIndexerDataSource dataSource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateAsync(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
@@ -442,16 +407,9 @@ namespace Azure.Search.Documents
             {
                 case 201:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,7 +420,8 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new datasource. </summary>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndexerDataSource> Create(SearchIndexerDataSource dataSource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
+        public Response<SearchIndexerDataSourceConnection> Create(SearchIndexerDataSourceConnection dataSource, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
@@ -475,16 +434,9 @@ namespace Azure.Search.Documents
             {
                 case 201:
                     {
-                        SearchIndexerDataSource value = default;
+                        SearchIndexerDataSourceConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
-                        }
+                        value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

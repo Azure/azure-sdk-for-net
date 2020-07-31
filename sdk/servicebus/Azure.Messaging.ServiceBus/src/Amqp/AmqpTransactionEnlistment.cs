@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Azure.Amqp;
-using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Transaction;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -61,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         void IPromotableSinglePhaseNotification.SinglePhaseCommit(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             _transactionManager.RemoveEnlistment(_transactionId);
-            TaskExtensionHelper.Schedule(() => SinglePhaseCommitAsync(singlePhaseEnlistment));
+            _ = SinglePhaseCommitAsync(singlePhaseEnlistment);
         }
 
         private async Task SinglePhaseCommitAsync(SinglePhaseEnlistment singlePhaseEnlistment)
@@ -94,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         void IPromotableSinglePhaseNotification.Rollback(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             _transactionManager.RemoveEnlistment(_transactionId);
-            TaskExtensionHelper.Schedule(() => RollbackAsync(singlePhaseEnlistment));
+            _ = RollbackAsync(singlePhaseEnlistment);
         }
 
         private async Task RollbackAsync(SinglePhaseEnlistment singlePhaseEnlistment)

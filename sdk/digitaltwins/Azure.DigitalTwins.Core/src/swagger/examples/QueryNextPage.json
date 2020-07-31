@@ -1,0 +1,43 @@
+{
+  "parameters": {
+    "querySpecification": {
+      "continuationToken": "<continuationToken from previous query>"
+    },
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "items": [
+          {
+            "$dtId": "Twin-04",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample04",
+            "temp": 79,
+            "comfortIndex": 50
+          },
+          {
+            "$dtId": "Twin-05",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample05",
+            "temp": 79,
+            "comfortIndex": 50
+          },
+          {
+            "$dtId": "Twin-06",
+            "$metadata": {
+              "$model": "dtmi:com:example:Sample;1"
+            },
+            "name": "Sample06",
+            "temp": 79,
+            "comfortIndex": 50
+          }
+        ]
+      }
+    }
+  }
+}

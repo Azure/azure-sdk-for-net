@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -33,14 +34,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
 
                 // send the message
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
 
                 // create a session receiver that we can use to receive the message. Since we don't specify a
                 // particular session, we will get the next available session from the service.
                 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Console.WriteLine(receivedMessage.SessionId);
 
                 // we can also set arbitrary session state using this receiver
@@ -51,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 byte[] state = await receiver.GetSessionStateAsync();
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.Bytes.ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
                 Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state);
             }
@@ -71,33 +72,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
-                ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-                messageBatch.TryAdd(
+                ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+                messageBatch.TryAddMessage(
                     new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
                     {
                         SessionId = "Session1"
                     });
-                messageBatch.TryAdd(
+                messageBatch.TryAddMessage(
                     new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
                     {
                         SessionId = "Session2"
                     });
 
                 // send the message batch
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // create a receiver specifying a particular session
                 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
                     queueName,
-                    sessionId: "Session2");
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = "Session2"
+                    });
 
                 // the received message is a different type as it contains some service set properties
-                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Console.WriteLine(receivedMessage.SessionId);
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.Bytes.ToArray());
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }

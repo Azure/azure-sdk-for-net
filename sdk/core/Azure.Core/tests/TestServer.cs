@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -19,6 +20,10 @@ namespace Azure.Core.Tests
         private readonly IWebHost _host;
 
         public Uri Address => new Uri(_host.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First());
+
+        public TestServer(Action<HttpContext> app) : this(context => { app(context); return Task.CompletedTask;})
+        {
+        }
 
         public TestServer(RequestDelegate app)
         {
