@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests

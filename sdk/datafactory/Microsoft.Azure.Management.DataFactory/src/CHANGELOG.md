@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.11.0
+###  Feature Additions
+- Added support for Trigger Run Cancel API
+- Added column delimiter for SAP Table/open hub
+- Added azureCloudType for Aad Auth
+- Added snapshot to Azure File Storage linked service
+
 ## Version 4.10.0
 ###  Feature Additions
 - Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service

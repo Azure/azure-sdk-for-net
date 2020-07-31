@@ -1978,6 +1978,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
                         ifMatch: options?.Conditions?.IfMatch,
                         ifNoneMatch: options?.Conditions?.IfNoneMatch,
+                        ifTags: options?.Conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
                         cancellationToken: cancellationToken)

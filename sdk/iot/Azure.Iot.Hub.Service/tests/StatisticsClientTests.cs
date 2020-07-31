@@ -24,7 +24,7 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task StatisticsClient_Device_SuccessfulResponse()
         {
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             Response<DevicesStatistics> stat = await client.Statistics.GetDevicesStatisticsAsync();
 
@@ -37,7 +37,7 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task StatisticsClient_Service_SuccessfulResponse()
         {
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             Response<ServiceStatistics> stat = await client.Statistics.GetServiceStatisticsAsync();
 

@@ -283,7 +283,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, UpdateMode updateMode) where T : class, ITableEntity, new()
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity, new()
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -291,7 +291,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task UpsertTestEntities(List<Dictionary<string, object>> entitiesToCreate, UpdateMode updateMode)
+        protected async Task UpsertTestEntities(List<Dictionary<string, object>> entitiesToCreate, TableUpdateMode updateMode)
         {
             foreach (var entity in entitiesToCreate)
             {

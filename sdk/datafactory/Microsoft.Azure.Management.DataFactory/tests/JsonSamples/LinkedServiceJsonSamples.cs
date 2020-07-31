@@ -12,6 +12,27 @@ namespace DataFactory.Tests.JsonSamples
     public class LinkedServiceJsonSamples : JsonSampleCollection<LinkedServiceJsonSamples>
     {
         [JsonSample]
+        public const string AzureBlobFSLinkedService = @"
+{
+    name: ""Test-Windows-Azure-storage-account-linkedService"",
+    properties:
+    {
+        type: ""AzureBlobFS"",
+        typeProperties:
+        {
+          url: ""https://testblobfs.dfs.core.windows.net"",
+          servicePrincipalId: ""9c8b1ab1-a894-4639-8fb9-75f98a36e9ab"",
+          servicePrincipalKey: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
+          tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
+          azureCloudType: ""AzurePublic""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureStorageLinkedService = @"
 {
     name: ""Test-Windows-Azure-storage-account-linkedService"",
@@ -133,9 +154,10 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
-    }
+}
 }";
 
         [JsonSample]
@@ -156,7 +178,8 @@ namespace DataFactory.Tests.JsonSamples
                 value: ""fakeSPKey"",
                 type: ""SecureString""
             },
-            tenant: ""fakeTenant""
+            tenant: ""fakeTenant"",
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -198,7 +221,8 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -776,7 +800,8 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 value : ""fakepassword"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -2682,7 +2707,8 @@ namespace DataFactory.Tests.JsonSamples
             ""password"": {
                 ""type"": ""SecureString"",
                 ""value"": ""fakepsw""
-            }
+            },
+            ""azureCloudType"": ""AzurePublic""
         }
     }
 }";
@@ -2760,6 +2786,25 @@ namespace DataFactory.Tests.JsonSamples
             },
         }
     }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionStringWithAccountKey = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionString"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            fileShare: ""myFileShareName"",
+            snapshot: ""2020-06-18T02:35.43""
+        }
+}
 }";
 
         [JsonSample]

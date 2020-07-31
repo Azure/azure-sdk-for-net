@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
