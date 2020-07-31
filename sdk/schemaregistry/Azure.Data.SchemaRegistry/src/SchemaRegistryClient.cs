@@ -14,7 +14,7 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal ServiceRestClient RestClient { get; }
+        internal SchemaRestClient RestClient { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
@@ -45,7 +45,7 @@ namespace Azure.Data.SchemaRegistry
         ///// <param name="apiVersion"> Api Version. </param>
         internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl)//, string apiVersion = "7.0")
         {
-            RestClient = new ServiceRestClient(clientDiagnostics, pipeline, new Uri(vaultBaseUrl));
+            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, new Uri(vaultBaseUrl));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

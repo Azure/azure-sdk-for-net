@@ -7,7 +7,7 @@
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> The SchemaId. </summary>
+    /// <summary> The id of a Schema Registry schema. </summary>
     public partial class SchemaId
     {
         /// <summary> Initializes a new instance of SchemaId. </summary>
