@@ -5,14 +5,41 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds. </summary>
-    internal partial class ResourceDeleteSuccessData
+    public partial class ResourceDeleteSuccessData
     {
         /// <summary> Initializes a new instance of ResourceDeleteSuccessData. </summary>
         internal ResourceDeleteSuccessData()
         {
+        }
+
+        /// <summary> Initializes a new instance of ResourceDeleteSuccessData. </summary>
+        /// <param name="tenantId"> The tenant ID of the resource. </param>
+        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
+        /// <param name="resourceGroup"> The resource group of the resource. </param>
+        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
+        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
+        /// <param name="operationName"> The operation that was performed. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="authorization"> The requested authorization for the operation. </param>
+        /// <param name="claims"> The properties of the claims. </param>
+        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
+        /// <param name="httpRequest"> The details of the operation. </param>
+        internal ResourceDeleteSuccessData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, string authorization, string claims, string correlationId, string httpRequest)
+        {
+            TenantId = tenantId;
+            SubscriptionId = subscriptionId;
+            ResourceGroup = resourceGroup;
+            ResourceProvider = resourceProvider;
+            ResourceUri = resourceUri;
+            OperationName = operationName;
+            Status = status;
+            Authorization = authorization;
+            Claims = claims;
+            CorrelationId = correlationId;
+            HttpRequest = httpRequest;
         }
 
         /// <summary> The tenant ID of the resource. </summary>

@@ -8,11 +8,26 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> sku of app service plan. </summary>
-    internal partial class WebAppServicePlanUpdatedEventDataSku
+    public partial class WebAppServicePlanUpdatedEventDataSku
     {
         /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventDataSku. </summary>
         internal WebAppServicePlanUpdatedEventDataSku()
         {
+        }
+
+        /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventDataSku. </summary>
+        /// <param name="name"> name of app service plan sku. </param>
+        /// <param name="tier"> tier of app service plan sku. </param>
+        /// <param name="size"> size of app service plan sku. </param>
+        /// <param name="family"> family of app service plan sku. </param>
+        /// <param name="capacity"> capacity of app service plan sku. </param>
+        internal WebAppServicePlanUpdatedEventDataSku(string name, string tier, string size, string family, string capacity)
+        {
+            Name = name;
+            Tier = tier;
+            Size = size;
+            Family = family;
+            Capacity = capacity;
         }
 
         /// <summary> name of app service plan sku. </summary>

@@ -5,14 +5,31 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.RunCompleted event. </summary>
-    internal partial class MachineLearningServicesRunCompletedEventData
+    public partial class MachineLearningServicesRunCompletedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesRunCompletedEventData. </summary>
         internal MachineLearningServicesRunCompletedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningServicesRunCompletedEventData. </summary>
+        /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
+        /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
+        /// <param name="runId"> The ID of the Run that was completed. </param>
+        /// <param name="runType"> The Run Type of the completed Run. </param>
+        /// <param name="runTags"> The tags of the completed Run. </param>
+        /// <param name="runProperties"> The properties of the completed Run. </param>
+        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties)
+        {
+            ExperimentId = experimentId;
+            ExperimentName = experimentName;
+            RunId = runId;
+            RunType = runType;
+            RunTags = runTags;
+            RunProperties = runProperties;
         }
 
         /// <summary> The ID of the experiment that the run belongs to. </summary>

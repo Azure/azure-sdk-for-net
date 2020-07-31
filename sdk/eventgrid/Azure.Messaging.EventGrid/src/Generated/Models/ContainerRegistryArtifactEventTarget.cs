@@ -5,14 +5,33 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The target of the event. </summary>
-    internal partial class ContainerRegistryArtifactEventTarget
+    public partial class ContainerRegistryArtifactEventTarget
     {
         /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
         internal ContainerRegistryArtifactEventTarget()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
+        /// <param name="mediaType"> The MIME type of the artifact. </param>
+        /// <param name="size"> The size in bytes of the artifact. </param>
+        /// <param name="digest"> The digest of the artifact. </param>
+        /// <param name="repository"> The repository name of the artifact. </param>
+        /// <param name="tag"> The tag of the artifact. </param>
+        /// <param name="name"> The name of the artifact. </param>
+        /// <param name="version"> The version of the artifact. </param>
+        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version)
+        {
+            MediaType = mediaType;
+            Size = size;
+            Digest = digest;
+            Repository = repository;
+            Tag = tag;
+            Name = name;
+            Version = version;
         }
 
         /// <summary> The MIME type of the artifact. </summary>

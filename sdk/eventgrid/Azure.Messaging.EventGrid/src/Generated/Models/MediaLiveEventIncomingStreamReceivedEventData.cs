@@ -5,14 +5,37 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Encoder connect event data. </summary>
-    internal partial class MediaLiveEventIncomingStreamReceivedEventData
+    public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
         internal MediaLiveEventIncomingStreamReceivedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
+        /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="encoderIp"> Gets the remote IP. </param>
+        /// <param name="encoderPort"> Gets the remote port. </param>
+        /// <param name="timestamp"> Gets the first timestamp of the data chunk received. </param>
+        /// <param name="duration"> Gets the duration of the first data chunk. </param>
+        /// <param name="timescale"> Gets the timescale in which timestamp is represented. </param>
+        internal MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl, string trackType, string trackName, long? bitrate, string encoderIp, string encoderPort, string timestamp, string duration, string timescale)
+        {
+            IngestUrl = ingestUrl;
+            TrackType = trackType;
+            TrackName = trackName;
+            Bitrate = bitrate;
+            EncoderIp = encoderIp;
+            EncoderPort = encoderPort;
+            Timestamp = timestamp;
+            Duration = duration;
+            Timescale = timescale;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

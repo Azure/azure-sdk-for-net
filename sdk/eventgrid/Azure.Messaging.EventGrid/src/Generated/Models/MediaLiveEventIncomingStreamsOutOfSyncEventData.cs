@@ -5,14 +5,31 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Incoming streams out of sync event data. </summary>
-    internal partial class MediaLiveEventIncomingStreamsOutOfSyncEventData
+    public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamsOutOfSyncEventData. </summary>
         internal MediaLiveEventIncomingStreamsOutOfSyncEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamsOutOfSyncEventData. </summary>
+        /// <param name="minLastTimestamp"> Gets the minimum last timestamp received. </param>
+        /// <param name="typeOfStreamWithMinLastTimestamp"> Gets the type of stream with minimum last timestamp. </param>
+        /// <param name="maxLastTimestamp"> Gets the maximum timestamp among all the tracks (audio or video). </param>
+        /// <param name="typeOfStreamWithMaxLastTimestamp"> Gets the type of stream with maximum last timestamp. </param>
+        /// <param name="timescaleOfMinLastTimestamp"> Gets the timescale in which &quot;MinLastTimestamp&quot; is represented. </param>
+        /// <param name="timescaleOfMaxLastTimestamp"> Gets the timescale in which &quot;MaxLastTimestamp&quot; is represented. </param>
+        internal MediaLiveEventIncomingStreamsOutOfSyncEventData(string minLastTimestamp, string typeOfStreamWithMinLastTimestamp, string maxLastTimestamp, string typeOfStreamWithMaxLastTimestamp, string timescaleOfMinLastTimestamp, string timescaleOfMaxLastTimestamp)
+        {
+            MinLastTimestamp = minLastTimestamp;
+            TypeOfStreamWithMinLastTimestamp = typeOfStreamWithMinLastTimestamp;
+            MaxLastTimestamp = maxLastTimestamp;
+            TypeOfStreamWithMaxLastTimestamp = typeOfStreamWithMaxLastTimestamp;
+            TimescaleOfMinLastTimestamp = timescaleOfMinLastTimestamp;
+            TimescaleOfMaxLastTimestamp = timescaleOfMaxLastTimestamp;
         }
 
         /// <summary> Gets the minimum last timestamp received. </summary>

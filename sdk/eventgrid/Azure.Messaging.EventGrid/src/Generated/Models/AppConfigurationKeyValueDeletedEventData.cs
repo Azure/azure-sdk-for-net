@@ -5,14 +5,25 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.AppConfiguration.KeyValueDeleted event. </summary>
-    internal partial class AppConfigurationKeyValueDeletedEventData
+    public partial class AppConfigurationKeyValueDeletedEventData
     {
         /// <summary> Initializes a new instance of AppConfigurationKeyValueDeletedEventData. </summary>
         internal AppConfigurationKeyValueDeletedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of AppConfigurationKeyValueDeletedEventData. </summary>
+        /// <param name="key"> The key used to identify the key-value that was deleted. </param>
+        /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
+        /// <param name="etag"> The etag representing the key-value that was deleted. </param>
+        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag)
+        {
+            Key = key;
+            Label = label;
+            Etag = etag;
         }
 
         /// <summary> The key used to identify the key-value that was deleted. </summary>

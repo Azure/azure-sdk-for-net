@@ -5,13 +5,24 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+using System.Collections.Generic;
+using Azure.Messaging.EventGrid.Models;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Job scheduled event data. </summary>
-    internal partial class MediaJobScheduledEventData : MediaJobStateChangeEventData
+    public partial class MediaJobScheduledEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobScheduledEventData. </summary>
         internal MediaJobScheduledEventData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of MediaJobScheduledEventData. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        internal MediaJobScheduledEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData) : base(previousState, state, correlationData)
         {
         }
     }

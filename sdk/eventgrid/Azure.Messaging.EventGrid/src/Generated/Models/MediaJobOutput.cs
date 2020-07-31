@@ -5,16 +5,33 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+using Azure.Messaging.EventGrid.Models;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The event data for a Job output. </summary>
-    internal partial class MediaJobOutput
+    public partial class MediaJobOutput
     {
         /// <summary> Initializes a new instance of MediaJobOutput. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
         internal MediaJobOutput(long progress, MediaJobState state)
         {
+            Progress = progress;
+            State = state;
+        }
+
+        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="error"> Gets the Job output error. </param>
+        /// <param name="label"> Gets the Job output label. </param>
+        /// <param name="progress"> Gets the Job output progress. </param>
+        /// <param name="state"> Gets the Job output state. </param>
+        internal MediaJobOutput(string odataType, MediaJobError error, string label, long progress, MediaJobState state)
+        {
+            OdataType = odataType;
+            Error = error;
+            Label = label;
             Progress = progress;
             State = state;
         }

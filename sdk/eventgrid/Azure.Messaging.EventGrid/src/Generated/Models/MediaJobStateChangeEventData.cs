@@ -7,16 +7,28 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Messaging.EventGrid.Models;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobStateChange event. </summary>
-    internal partial class MediaJobStateChangeEventData
+    public partial class MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobStateChangeEventData. </summary>
         internal MediaJobStateChangeEventData()
         {
             CorrelationData = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of MediaJobStateChangeEventData. </summary>
+        /// <param name="previousState"> The previous state of the Job. </param>
+        /// <param name="state"> The new state of the Job. </param>
+        /// <param name="correlationData"> Gets the Job correlation data. </param>
+        internal MediaJobStateChangeEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData)
+        {
+            PreviousState = previousState;
+            State = state;
+            CorrelationData = correlationData;
         }
 
         /// <summary> The previous state of the Job. </summary>

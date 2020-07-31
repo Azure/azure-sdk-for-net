@@ -5,14 +5,27 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+using Azure.Messaging.EventGrid.Models;
+
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Detail of action on the app service plan. </summary>
-    internal partial class AppServicePlanEventTypeDetail
+    public partial class AppServicePlanEventTypeDetail
     {
         /// <summary> Initializes a new instance of AppServicePlanEventTypeDetail. </summary>
         internal AppServicePlanEventTypeDetail()
         {
+        }
+
+        /// <summary> Initializes a new instance of AppServicePlanEventTypeDetail. </summary>
+        /// <param name="stampKind"> Kind of environment where app service plan is. </param>
+        /// <param name="action"> Type of action on the app service plan. </param>
+        /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>
+        internal AppServicePlanEventTypeDetail(StampKind? stampKind, AppServicePlanAction? action, AsyncStatus? status)
+        {
+            StampKind = stampKind;
+            Action = action;
+            Status = status;
         }
 
         /// <summary> Kind of environment where app service plan is. </summary>

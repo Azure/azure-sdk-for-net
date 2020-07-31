@@ -5,14 +5,21 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
-    internal partial class ContainerRegistryEventActor
+    public partial class ContainerRegistryEventActor
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
         internal ContainerRegistryEventActor()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
+        /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
+        internal ContainerRegistryEventActor(string name)
+        {
+            Name = name;
         }
 
         /// <summary> The subject or username associated with the request context that generated the event. </summary>

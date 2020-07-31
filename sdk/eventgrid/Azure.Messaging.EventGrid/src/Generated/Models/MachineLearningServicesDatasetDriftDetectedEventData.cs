@@ -7,14 +7,35 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.DatasetDriftDetected event. </summary>
-    internal partial class MachineLearningServicesDatasetDriftDetectedEventData
+    public partial class MachineLearningServicesDatasetDriftDetectedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesDatasetDriftDetectedEventData. </summary>
         internal MachineLearningServicesDatasetDriftDetectedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningServicesDatasetDriftDetectedEventData. </summary>
+        /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
+        /// <param name="dataDriftName"> The name of the data drift monitor that triggered the event. </param>
+        /// <param name="runId"> The ID of the Run that detected data drift. </param>
+        /// <param name="baseDatasetId"> The ID of the base Dataset used to detect drift. </param>
+        /// <param name="targetDatasetId"> The ID of the target Dataset used to detect drift. </param>
+        /// <param name="driftCoefficient"> The coefficient result that triggered the event. </param>
+        /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
+        /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        {
+            DataDriftId = dataDriftId;
+            DataDriftName = dataDriftName;
+            RunId = runId;
+            BaseDatasetId = baseDatasetId;
+            TargetDatasetId = targetDatasetId;
+            DriftCoefficient = driftCoefficient;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
         /// <summary> The ID of the data drift monitor that triggered the event. </summary>

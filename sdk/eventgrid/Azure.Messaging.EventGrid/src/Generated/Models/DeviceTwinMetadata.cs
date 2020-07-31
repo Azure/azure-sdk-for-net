@@ -5,14 +5,21 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Metadata information for the properties JSON document. </summary>
-    internal partial class DeviceTwinMetadata
+    public partial class DeviceTwinMetadata
     {
         /// <summary> Initializes a new instance of DeviceTwinMetadata. </summary>
         internal DeviceTwinMetadata()
         {
+        }
+
+        /// <summary> Initializes a new instance of DeviceTwinMetadata. </summary>
+        /// <param name="lastUpdated"> The ISO8601 timestamp of the last time the properties were updated. </param>
+        internal DeviceTwinMetadata(string lastUpdated)
+        {
+            LastUpdated = lastUpdated;
         }
 
         /// <summary> The ISO8601 timestamp of the last time the properties were updated. </summary>

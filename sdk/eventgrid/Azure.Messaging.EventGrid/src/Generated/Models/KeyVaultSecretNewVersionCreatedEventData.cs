@@ -5,14 +5,33 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an SecretNewVersionCreated event. </summary>
-    internal partial class KeyVaultSecretNewVersionCreatedEventData
+    public partial class KeyVaultSecretNewVersionCreatedEventData
     {
         /// <summary> Initializes a new instance of KeyVaultSecretNewVersionCreatedEventData. </summary>
         internal KeyVaultSecretNewVersionCreatedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultSecretNewVersionCreatedEventData. </summary>
+        /// <param name="id"> The id of the object that triggered this event. </param>
+        /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
+        /// <param name="objectType"> The type of the object that triggered this event. </param>
+        /// <param name="objectName"> The name of the object that triggered this event. </param>
+        /// <param name="version"> The version of the object that triggered this event. </param>
+        /// <param name="nbf"> Not before date of the object that triggered this event. </param>
+        /// <param name="exp"> The expiration date of the object that triggered this event. </param>
+        internal KeyVaultSecretNewVersionCreatedEventData(string id, string vaultName, string objectType, string objectName, string version, float? nbf, float? exp)
+        {
+            Id = id;
+            VaultName = vaultName;
+            ObjectType = objectType;
+            ObjectName = objectName;
+            Version = version;
+            Nbf = nbf;
+            Exp = exp;
         }
 
         /// <summary> The id of the object that triggered this event. </summary>

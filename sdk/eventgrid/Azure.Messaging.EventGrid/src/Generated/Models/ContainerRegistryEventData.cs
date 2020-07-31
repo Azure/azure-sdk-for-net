@@ -7,14 +7,33 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> The content of the event request message. </summary>
-    internal partial class ContainerRegistryEventData
+    public partial class ContainerRegistryEventData
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventData. </summary>
         internal ContainerRegistryEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryEventData. </summary>
+        /// <param name="id"> The event ID. </param>
+        /// <param name="timestamp"> The time at which the event occurred. </param>
+        /// <param name="action"> The action that encompasses the provided event. </param>
+        /// <param name="target"> The target of the event. </param>
+        /// <param name="request"> The request that generated the event. </param>
+        /// <param name="actor"> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </param>
+        /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
+        internal ContainerRegistryEventData(string id, DateTimeOffset? timestamp, string action, ContainerRegistryEventTarget target, ContainerRegistryEventRequest request, ContainerRegistryEventActor actor, ContainerRegistryEventSource source)
+        {
+            Id = id;
+            Timestamp = timestamp;
+            Action = action;
+            Target = target;
+            Request = request;
+            Actor = actor;
+            Source = source;
         }
 
         /// <summary> The event ID. </summary>

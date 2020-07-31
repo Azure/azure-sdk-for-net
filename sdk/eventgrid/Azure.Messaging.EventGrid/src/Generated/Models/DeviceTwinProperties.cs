@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
-    internal partial class DeviceTwinProperties
+    public partial class DeviceTwinProperties
     {
         /// <summary> Initializes a new instance of DeviceTwinProperties. </summary>
         internal DeviceTwinProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of DeviceTwinProperties. </summary>
+        /// <param name="metadata"> Metadata information for the properties JSON document. </param>
+        /// <param name="version"> Version of device twin properties. </param>
+        internal DeviceTwinProperties(DeviceTwinMetadata metadata, float? version)
+        {
+            Metadata = metadata;
+            Version = version;
         }
 
         /// <summary> Metadata information for the properties JSON document. </summary>

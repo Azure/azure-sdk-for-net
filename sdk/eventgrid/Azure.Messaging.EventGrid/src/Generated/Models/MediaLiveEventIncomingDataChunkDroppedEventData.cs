@@ -5,14 +5,31 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.Models.SystemEvents
 {
     /// <summary> Ingest fragment dropped event data. </summary>
-    internal partial class MediaLiveEventIncomingDataChunkDroppedEventData
+    public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
         internal MediaLiveEventIncomingDataChunkDroppedEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
+        /// <param name="timestamp"> Gets the timestamp of the data chunk dropped. </param>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="timescale"> Gets the timescale of the Timestamp. </param>
+        /// <param name="resultCode"> Gets the result code for fragment drop operation. </param>
+        /// <param name="trackName"> Gets the name of the track for which fragment is dropped. </param>
+        internal MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp, string trackType, long? bitrate, string timescale, string resultCode, string trackName)
+        {
+            Timestamp = timestamp;
+            TrackType = trackType;
+            Bitrate = bitrate;
+            Timescale = timescale;
+            ResultCode = resultCode;
+            TrackName = trackName;
         }
 
         /// <summary> Gets the timestamp of the data chunk dropped. </summary>
