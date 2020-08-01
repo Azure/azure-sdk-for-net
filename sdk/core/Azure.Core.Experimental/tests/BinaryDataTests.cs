@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,10 @@ namespace Azure.Core.Tests
         {
             byte[] payload = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromMemory(payload);
-            Assert.AreEqual(payload, data.Bytes.ToArray());
+            Assert.AreEqual(payload, data.ToBytes().ToArray());
 
             MemoryMarshal.TryGetArray<byte>(payload, out var array);
             Assert.AreSame(payload, array.Array);
-
-            // using implicit conversion
-            ReadOnlyMemory<byte> bytes = data;
-            Assert.AreEqual(payload, bytes.ToArray());
         }
 
         [Test]
@@ -35,14 +32,10 @@ namespace Azure.Core.Tests
             byte[] payload = Encoding.UTF8.GetBytes("some data");
             BinaryData data = new BinaryData(payload);
 
-            Assert.AreNotSame(payload, data.Bytes);
-            Assert.AreNotEqual(payload, data.Bytes);
+            Assert.AreNotSame(payload, data.ToBytes());
+            Assert.AreNotEqual(payload, data.ToBytes());
 
-            Assert.AreEqual(payload, data.Bytes.ToArray());
-
-            // using implicit conversion
-            ReadOnlyMemory<byte> bytes = data;
-            Assert.AreEqual(payload, bytes.ToArray());
+            Assert.AreEqual(payload, data.ToBytes().ToArray());
         }
 
         [Test]
@@ -82,13 +75,44 @@ namespace Azure.Core.Tests
             var buffer = Encoding.UTF8.GetBytes("some data");
             var payload = new MemoryStream(buffer);
             var data = BinaryData.FromStream(payload);
-            Assert.AreEqual(buffer, data.Bytes.ToArray());
+            Assert.AreEqual(buffer, data.ToBytes().ToArray());
             Assert.AreEqual(payload, data.ToStream());
 
             payload.Position = 0;
             data = await BinaryData.FromStreamAsync(payload);
-            Assert.AreEqual(buffer, data.Bytes.ToArray());
+            Assert.AreEqual(buffer, data.ToBytes().ToArray());
             Assert.AreEqual(payload, data.ToStream());
+        }
+
+        [Test]
+        public async Task CanWrapStream()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var payload = new MemoryStream(buffer);
+            var data = new BinaryData(payload);
+            Assert.AreEqual(buffer, data.ToBytes().ToArray());
+            Assert.AreEqual(payload, data.ToStream());
+            Assert.AreEqual("some data", data.ToString());
+
+            // the bytes are lazily evaluated - verify
+            // that we get the same values when checking again.
+            Assert.AreEqual(buffer, data.ToBytes().ToArray());
+            Assert.AreEqual(payload, data.ToStream());
+            Assert.AreEqual("some data", data.ToString());
+
+            // Verify that it is thread-safe
+            buffer = Encoding.UTF8.GetBytes("some data");
+            payload = new MemoryStream(buffer);
+            data = new BinaryData(payload);
+            List<Task> tasks = Enumerable.Repeat(ToBytes(), 10).ToList();
+            await Task.WhenAll(tasks);
+            Task ToBytes()
+            {
+                Assert.AreEqual(buffer, data.ToBytes().ToArray());
+                Assert.AreEqual(payload, data.ToStream());
+                Assert.AreEqual("some data", data.ToString());
+                return Task.CompletedTask;
+            }
         }
 
         [Test]
@@ -189,7 +213,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void EqualsRespectsReferenceEquality()
+        public void EqualsRespectsReferenceEqualityMemory()
         {
             var payload = Encoding.UTF8.GetBytes("some data");
             var a = BinaryData.FromMemory(payload);
@@ -203,7 +227,34 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void GetHashCodeWorks()
+        public void EqualsRespectsReferenceEqualityWrappedStream()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var payload = new MemoryStream(buffer);
+            var a = new BinaryData(payload);
+            // Force computation of the underlying bytes -
+            // this illustrates why it is not a good idea to have two
+            // instances wrapping the same stream.
+            a.ToBytes();
+            payload.Position = 0;
+            var b = new BinaryData(payload);
+            // even though we wrap the same stream, each instance will
+            // have its own copy of the bytes
+            Assert.AreNotEqual(a, b);
+            Assert.AreEqual(a.ToBytes().ToArray(), b.ToBytes().ToArray());
+
+            var c = BinaryData.FromMemory(Encoding.UTF8.GetBytes("some data"));
+            Assert.AreNotEqual(a, c);
+            Assert.AreNotEqual(a, "string data");
+            payload.Position = 0;
+            var d = BinaryData.FromStream(payload);
+
+            // FromStream copies the stream so it will be a different reference
+            Assert.AreNotEqual(a, d);
+        }
+
+        [Test]
+        public void GetHashCodeWorksMemory()
         {
             var payload = Encoding.UTF8.GetBytes("some data");
             var a = BinaryData.FromMemory(payload);
@@ -220,6 +271,33 @@ namespace Azure.Core.Tests
             Assert.IsFalse(set.Contains(c));
             set.Add(c);
             Assert.IsTrue(set.Contains(c));
+        }
+
+        [Test]
+        public void GetHashCodeWorksWrappedStream()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var payload = new MemoryStream(buffer);
+            var a = new BinaryData(payload);
+            var b = new BinaryData(payload);
+            var set = new HashSet<BinaryData>
+            {
+                a
+            };
+            // hashcodes of a and b won't match since instances will
+            // have separate copies of the bytes
+            Assert.IsFalse(set.Contains(b));
+
+            var c = BinaryData.FromMemory(Encoding.UTF8.GetBytes("some data"));
+            // c should have a different hash code
+            Assert.IsFalse(set.Contains(c));
+            set.Add(c);
+            Assert.IsTrue(set.Contains(c));
+
+            var d = BinaryData.FromStream(payload);
+            Assert.IsFalse(set.Contains(d));
+            set.Add(d);
+            Assert.IsTrue(set.Contains(d));
         }
 
         private class TestModel

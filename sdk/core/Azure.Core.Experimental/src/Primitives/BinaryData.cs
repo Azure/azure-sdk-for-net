@@ -36,10 +36,9 @@ namespace Azure.Core
 
         private static readonly UTF8Encoding s_encoding = new UTF8Encoding(false);
 
-        /// <summary>
-        /// The backing store for the <see cref="BinaryData"/> instance.
-        /// </summary>
-        public ReadOnlyMemory<byte> Bytes { get; }
+        private readonly Stream? _originalStream;
+
+        private readonly Lazy<ReadOnlyMemory<byte>> _bytes;
 
         /// <summary>
         /// Creates a binary data instance by making a copy
@@ -48,7 +47,10 @@ namespace Azure.Core
         /// <param name="data">Byte data.</param>
         public BinaryData(ReadOnlySpan<byte> data)
         {
-            Bytes = data.ToArray();
+            var bytes = data.ToArray();
+            _bytes = new Lazy<ReadOnlyMemory<byte>>(
+                () => bytes);
+            _originalStream = default;
         }
 
         /// <summary>
@@ -58,8 +60,11 @@ namespace Azure.Core
         /// <param name="data">Byte data.</param>
         private BinaryData(ReadOnlyMemory<byte> data)
         {
-            Bytes = data;
+            _bytes = new Lazy<ReadOnlyMemory<byte>>(
+                () => data);
+            _originalStream = default;
         }
+
         /// <summary>
         /// Creates a binary data instance from a string by converting
         /// the string to bytes using UTF-8 encoding.
@@ -69,7 +74,22 @@ namespace Azure.Core
         /// <remarks>The byte order mark is not included as part of the encoding process.</remarks>
         public BinaryData(string data)
         {
-            Bytes = s_encoding.GetBytes(data);
+            _bytes = new Lazy<ReadOnlyMemory<byte>>(
+                () => s_encoding.GetBytes(data));
+            _originalStream = default;
+        }
+
+        /// <summary>
+        /// Creates a binary data instance by wrapping the passed in stream.
+        /// This will allow lazy access to the underlying bytes.
+        /// </summary>
+        /// <param name="stream">The stream to wrap.</param>
+        public BinaryData(Stream stream)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
+            _originalStream = stream;
+            _bytes = new Lazy<ReadOnlyMemory<byte>>(
+                () => FromStream(stream).ToBytes());
         }
 
         /// <summary>
@@ -123,7 +143,7 @@ namespace Azure.Core
                 {
                     stream.CopyTo(memoryStream);
                 }
-                return new BinaryData((ReadOnlyMemory<byte>) memoryStream.ToArray());
+                return new BinaryData((ReadOnlyMemory<byte>)memoryStream.ToArray());
             }
         }
 
@@ -201,7 +221,7 @@ namespace Azure.Core
             {
                 serializer.Serialize(memoryStream, data, typeof(T), cancellationToken);
             }
-            return new BinaryData((ReadOnlyMemory<byte>) memoryStream.ToArray());
+            return new BinaryData((ReadOnlyMemory<byte>)memoryStream.ToArray());
         }
 
         /// <summary>
@@ -211,12 +231,12 @@ namespace Azure.Core
         public override string ToString()
         {
             if (MemoryMarshal.TryGetArray(
-                Bytes,
+                _bytes.Value,
                 out ArraySegment<byte> data))
             {
                 return s_encoding.GetString(data.Array, data.Offset, data.Count);
             }
-            return s_encoding.GetString(Bytes.ToArray());
+            return s_encoding.GetString(_bytes.Value.ToArray());
         }
 
         /// <summary>
@@ -225,14 +245,24 @@ namespace Azure.Core
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream()
         {
+            if (_originalStream != null)
+            {
+                return _originalStream;
+            }
             if (MemoryMarshal.TryGetArray(
-                Bytes,
+                _bytes!.Value,
                 out ArraySegment<byte> data))
             {
                 return new MemoryStream(data.Array, data.Offset, data.Count);
             }
-            return new MemoryStream(Bytes.ToArray());
+            return new MemoryStream(_bytes.Value.ToArray());
         }
+
+        /// <summary>
+        /// Gets the underlying bytes for the instance of BinaryData.
+        /// </summary>
+        /// <returns>The underlying bytes.</returns>
+        public ReadOnlyMemory<byte> ToBytes() => _bytes.Value;
 
         /// <summary>
         /// Converts the BinaryData to the specified type using
@@ -307,14 +337,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Implicit conversion to bytes.
-        /// </summary>
-        /// <param name="data"></param>
-        public static implicit operator ReadOnlyMemory<byte>(
-            BinaryData data) =>
-            data.Bytes;
-
-        /// <summary>
         /// Two BinaryData objects are equal if the memory regions point to the same array and have the same length.
         /// The method does not check to see if the contents are equal.
         /// </summary>
@@ -325,13 +347,13 @@ namespace Azure.Core
         {
             if (obj is BinaryData data)
             {
-                return data.Bytes.Equals(Bytes);
+                return data._bytes.Value.Equals(_bytes.Value);
             }
             return false;
         }
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            Bytes.GetHashCode();
+            _bytes.Value.GetHashCode();
     }
 }
