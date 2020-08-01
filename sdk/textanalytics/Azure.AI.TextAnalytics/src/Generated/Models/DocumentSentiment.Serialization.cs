@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             string id = default;
             DocumentSentimentValue sentiment = default;
-            Optional<DocumentStatistics> statistics = default;
+            Optional<TextDocumentStatistics> statistics = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings);
+            return new DocumentSentiment(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
         }
     }
 }

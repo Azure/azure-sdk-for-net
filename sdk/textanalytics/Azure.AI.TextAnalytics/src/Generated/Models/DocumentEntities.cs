@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             Entities = entities;
@@ -60,6 +60,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
     }
 }

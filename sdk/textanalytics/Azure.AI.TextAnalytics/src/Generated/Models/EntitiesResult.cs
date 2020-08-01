@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal EntitiesResult(IReadOnlyList<DocumentEntities> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
+        internal EntitiesResult(IReadOnlyList<DocumentEntities> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
         {
             Documents = documents;
             Errors = errors;
@@ -57,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Errors by document id. </summary>
         public IReadOnlyList<DocumentError> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
+        public TextDocumentBatchStatistics Statistics { get; }
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }
     }

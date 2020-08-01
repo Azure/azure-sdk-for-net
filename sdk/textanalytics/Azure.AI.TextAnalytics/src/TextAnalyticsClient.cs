@@ -248,7 +248,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
@@ -310,36 +310,10 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents);
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDetectLanguageRequest(documents, options);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection results = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && results[0].Id.Length == 0)
-                        {
-                            // InvalidDocumentBatch.
-                            ThrowExceptionWhenErrorInBatch(results[0].Error);
-                        }
-                        return Response.FromValue(results, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -365,20 +339,58 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents);
 
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(LanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(documents, options);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
+                var response = result.GetRawResponse();
 
                 switch (response.Status)
                 {
                     case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection results = CreateDetectLanguageResponse(response, map);
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        DetectLanguageResultCollection results = Transforms.ConvertLanguageResult(result.Value, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<DetectLanguageResultCollection> DetectLanguageBatch(LanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
+            scope.Start();
+
+            try
+            {
+                Response<LanguageResult> result = _serviceRestClient.Languages(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
+                var response = result.GetRawResponse();
+
+                switch (response.Status)
+                {
+                    case 200:
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        DetectLanguageResultCollection results = Transforms.ConvertLanguageResult(result.Value, map);
                         if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
@@ -398,32 +410,32 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Recognize Entities
+            #region Recognize Entities
 
-        /// <summary>
-        /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in document, and categorize those entities into types
-        /// such as person, location, or organization.  For more information on
-        /// available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// in the document, as well as a score indicating the confidence
-        /// that the entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
+            /// <summary>
+            /// Runs a predictive model to identify a collection of named entities
+            /// in the passed-in document, and categorize those entities into types
+            /// such as person, location, or organization.  For more information on
+            /// available categories, see
+            /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+            /// For a list of languages supported by this operation, see
+            /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+            /// For document length limits, maximum batch size, and supported text encoding, see
+            /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+            /// </summary>
+            /// <param name="document">The document to analyze.</param>
+            /// <param name="language">The language that the document is written in.
+            /// If unspecified, this value will be set to the default language in
+            /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+            /// service.  If set to an empty string, the service will apply a model
+            /// where the language is explicitly set to "None".</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+            /// controlling the request lifetime.</param>
+            /// <returns>A result containing the collection of entities identified
+            /// in the document, as well as a score indicating the confidence
+            /// that the entity correctly matches the identified substring.</returns>
+            /// <exception cref="RequestFailedException">Service returned a non-success
+            /// status code.</exception>
         public virtual async Task<Response<CategorizedEntityCollection>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
@@ -1623,6 +1635,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     TextDocumentInput tdi => tdi.Id,
                     DetectLanguageInput dli => dli.Id,
+                    LanguageInput ldi => ldi.Id,
                     _ => throw new NotSupportedException(),
                 };
 
@@ -1640,6 +1653,12 @@ namespace Azure.AI.TextAnalytics
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+
+        private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
+            => new LanguageBatchInput(documents.Select((document, i) => ConvertToLanguageInput(document, countryHint, i)).ToList());
+
+        private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
+            => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint }).ToList());
 
         private DetectLanguageInput ConvertToDetectLanguageInput(string document, string countryHint, int id = 0)
             => new DetectLanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };

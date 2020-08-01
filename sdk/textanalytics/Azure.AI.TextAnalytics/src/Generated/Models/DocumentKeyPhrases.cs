@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentKeyPhrases(string id, IReadOnlyList<string> keyPhrases, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        internal DocumentKeyPhrases(string id, IReadOnlyList<string> keyPhrases, IReadOnlyList<TextAnalyticsWarning> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             KeyPhrases = keyPhrases;
@@ -60,6 +60,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
     }
 }

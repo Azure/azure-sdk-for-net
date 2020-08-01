@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
             string id = default;
             DetectedLanguage tempDetectedLanguage = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }

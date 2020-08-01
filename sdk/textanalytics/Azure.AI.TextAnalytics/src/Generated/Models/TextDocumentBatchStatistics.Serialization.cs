@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class RequestStatistics
+    public partial class TextDocumentBatchStatistics
     {
-        internal static RequestStatistics DeserializeRequestStatistics(JsonElement element)
+        internal static TextDocumentBatchStatistics DeserializeTextDocumentBatchStatistics(JsonElement element)
         {
             int documentsCount = default;
             int validDocumentsCount = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
+            return new TextDocumentBatchStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
         }
     }
 }

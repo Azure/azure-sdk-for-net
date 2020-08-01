@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             string id = default;
             IReadOnlyList<Entity> entities = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -49,11 +49,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new DocumentEntities(id, entities, warnings, statistics.Value);
+            return new DocumentEntities(id, entities, warnings, Optional.ToNullable(statistics));
         }
     }
 }

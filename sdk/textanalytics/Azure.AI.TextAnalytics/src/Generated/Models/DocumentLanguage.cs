@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="detectedLanguage"> Detected Language. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IReadOnlyList<TextAnalyticsWarning> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             DetectedLanguage = detectedLanguage;
@@ -56,6 +56,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
+        public TextDocumentStatistics? Statistics { get; }
     }
 }
