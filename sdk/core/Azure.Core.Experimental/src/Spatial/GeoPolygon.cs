@@ -48,7 +48,7 @@ namespace Azure.Core.GeoJson
         /// <summary>
         /// Gets a
         /// </summary>
-        /// <param name="ringIndex"></param>
-        public GeoLine this[int ringIndex] => Rings[ringIndex];
+        /// <param name="ring"></param>
+        public GeoLine this[int ring] => Rings[ring];
     }
 }

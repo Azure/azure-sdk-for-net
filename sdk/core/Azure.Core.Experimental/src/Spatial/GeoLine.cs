@@ -34,5 +34,11 @@ namespace Azure.Core.GeoJson
         /// Gets the list of <see cref="GeoPosition"/> that compose this line.
         /// </summary>
         public IReadOnlyList<GeoPosition> Positions { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public GeoPosition this[int index] => Positions[index];
     }
 }

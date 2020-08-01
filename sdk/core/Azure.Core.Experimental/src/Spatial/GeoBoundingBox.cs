@@ -87,6 +87,6 @@ namespace Azure.Core.GeoJson
         ///
         /// </summary>
         /// <param name="index"></param>
-        public double this[int index] => 1.0;
+        public double this[int index] => West;
     }
 }

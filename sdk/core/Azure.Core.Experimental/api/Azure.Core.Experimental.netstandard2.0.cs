@@ -91,6 +91,7 @@ namespace Azure.Core.GeoJson
         public GeoBoundingBox(double west, double south, double east, double north) { }
         public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude) { }
         public double East { get { throw null; } }
+        public double this[int index] { get { throw null; } }
         public double? MaxAltitude { get { throw null; } }
         public double? MinAltitude { get { throw null; } }
         public double North { get { throw null; } }
@@ -120,6 +121,7 @@ namespace Azure.Core.GeoJson
     {
         public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public GeoLine(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public Azure.Core.GeoJson.GeoPosition this[int index] { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPosition> Positions { get { throw null; } }
     }
     public sealed partial class GeoLineCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoLine>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoLine>, System.Collections.IEnumerable
@@ -136,6 +138,7 @@ namespace Azure.Core.GeoJson
         protected GeoObject(Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object?> AdditionalProperties { get { throw null; } }
         public Azure.Core.GeoJson.GeoBoundingBox? BoundingBox { get { throw null; } }
+        public virtual string Type { get { throw null; } }
         public static Azure.Core.GeoJson.GeoObject Parse(string json) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -160,6 +163,8 @@ namespace Azure.Core.GeoJson
     {
         public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoLine> rings, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> positions) : base (default(Azure.Core.GeoJson.GeoBoundingBox), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public Azure.Core.GeoJson.GeoLine this[int ring] { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoLine> Rings { get { throw null; } }
     }
     public sealed partial class GeoPolygonCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPolygon>, System.Collections.IEnumerable
@@ -178,6 +183,7 @@ namespace Azure.Core.GeoJson
         public GeoPosition(double longitude, double latitude) { throw null; }
         public GeoPosition(double longitude, double latitude, double? altitude) { throw null; }
         public double? Altitude { get { throw null; } }
+        public double this[int index] { get { throw null; } }
         public double Latitude { get { throw null; } }
         public double Longitude { get { throw null; } }
         public bool Equals(Azure.Core.GeoJson.GeoPosition other) { throw null; }
