@@ -25,16 +25,7 @@ namespace CdnSignedUrlSignatureComputationSample
             // Get the signed url signature based on the parameters passed.
             SignedUrlSignature signedUrlSignature = new SignedUrlSignature();
 
-            string signature = null;
-            try
-            {
-                signature = signedUrlSignature.GetSignature(args[0], args[1], args[2], args[3], args[4], args[5]);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Encountered exception in GetSignature: {0}", e.Message);
-                Environment.Exit(1);
-            }
+            string signature = signedUrlSignature.GetSignature(args[0], args[1], args[2], args[3], args[4], args[5]);
 
             Console.WriteLine(signature);
         }

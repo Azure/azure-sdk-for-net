@@ -17,12 +17,13 @@ namespace CdnSignedUrlSignatureComputationSample
         }
 
         /// <summary>
-        /// Function to compute signature.
+        /// Function to compute signature for Signed Urls.
+        ///  
         /// </summary>
-        /// <param name="resourcePath">Resource Path.</param>
-        /// <param name="expiresParamName">Expires parameter name.</param>
+        /// <param name="resourcePath">Resource Path to allow only requests that match the specified asset or path.</param>
+        /// <param name="expiresParamName">Expires parameter name. Expires is an epoch date and time to ensure that a link remains valid only for a limited time.</param>
         /// <param name="expiresParamValue">Expires parameter value.</param>
-        /// <param name="keyParamName">Key parameter name.</param>
+        /// <param name="keyParamName">Key parameter name. KeyId is the ID of the key (secret) which is used to compute signature.</param>
         /// <param name="keyParamValue">Key parameter value.</param>
         /// <param name="secret">Key to use to compute hash.</param>
         /// <returns>Signature.</returns>
