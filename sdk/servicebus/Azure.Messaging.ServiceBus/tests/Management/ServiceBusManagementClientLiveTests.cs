@@ -24,11 +24,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
 
+        private string GetConnectionString() =>
+            Mode == RecordedTestMode.Playback ?
+                TestEnvironment.ServiceBusOverrideConnectionString :
+                TestEnvironment.ServiceBusConnectionString;
+
         private ServiceBusManagementClient GetClient() =>
-            InstrumentClient(new ServiceBusManagementClient(TestEnvironment.ServiceBusOverrideConnectionString, Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
+            InstrumentClient(
+                new ServiceBusManagementClient(
+                    GetConnectionString(),
+                    Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
 
         private ServiceBusManagementClient GetAADClient() =>
-            InstrumentClient(new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential(), Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
+            InstrumentClient(
+                new ServiceBusManagementClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    GetTokenCredential(),
+                    Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
 
         [Test]
         public async Task BasicQueueCrudOperations()
