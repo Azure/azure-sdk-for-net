@@ -155,7 +155,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = result.Value.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code.ToString()/*, CreateAdditionalInformation(error)*/);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(result.Value.Documents[0].DetectedLanguage, response);
@@ -208,7 +208,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = result.Value.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code.ToString()/*, CreateAdditionalInformation(error)*/);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(result.Value.Documents[0].DetectedLanguage, response);

@@ -7,53 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class TextAnalyticsError
+    public partial struct TextAnalyticsError
     {
-        internal static TextAnalyticsError DeserializeTextAnalyticsError(JsonElement element)
-        {
-            ErrorCodeValue code = default;
-            string message = default;
-            Optional<string> target = default;
-            Optional<InnerError> innererror = default;
-            Optional<IReadOnlyList<TextAnalyticsError>> details = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("code"))
-                {
-                    code = property.Value.GetString().ToErrorCodeValue();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("innererror"))
-                {
-                    innererror = InnerError.DeserializeInnerError(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("details"))
-                {
-                    List<TextAnalyticsError> array = new List<TextAnalyticsError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DeserializeTextAnalyticsError(item));
-                    }
-                    details = array;
-                    continue;
-                }
-            }
-            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details));
-        }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -15,16 +16,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of DocumentError. </summary>
         /// <param name="id"> Document Id. </param>
         /// <param name="error"> Document Error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal DocumentError(string id, TextAnalyticsError error)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
-            }
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
             }
 
             Id = id;
