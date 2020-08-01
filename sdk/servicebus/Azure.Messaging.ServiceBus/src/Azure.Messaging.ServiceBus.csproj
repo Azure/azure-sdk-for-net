@@ -29,7 +29,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" Link="SharedSource\Azure.Core\ValueStopwatch.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="SharedSource\Azure.Core\PageResponseEnumerator.cs" />
-
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="SharedSource\Azure.Core\AzureResourceProviderNamespaceAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Azure.Core project reference is required to use Azure.Core.Experimental -->

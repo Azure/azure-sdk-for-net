@@ -273,7 +273,6 @@ namespace Azure.Messaging.ServiceBus.Management
                 var token = await GetToken(request.Uri.ToUri()).ConfigureAwait(false);
                 request.Headers.Add("Authorization", token);
             }
-            request.Headers.Add("UserAgent", $"SERVICEBUS/{ManagementClientConstants.ApiVersion}(api-origin={ClientInfo.Framework};os={ClientInfo.Platform};version={ClientInfo.Version};product={ClientInfo.Product})");
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
