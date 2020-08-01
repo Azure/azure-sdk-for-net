@@ -129,11 +129,15 @@ namespace Azure.Search.Documents.Tests.Samples
         public class Hotel
         {
             [JsonPropertyName("hotelId")]
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+#endif
             public string Id { get; set; }
 
             [JsonPropertyName("hotelName")]
+#if EXPERIMENTAL_FIELDBUILDER
             [SearchableField(IsFilterable = true, IsSortable = true)]
+#endif
             public string Name { get; set; }
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
@@ -186,6 +190,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }
 
+#if EXPERIMENTAL_FIELDBUILDER // This won't condition the README.md file, which will require manual effort.
         [Test]
         [SyncOnly]
         public async Task CreateIndex()
@@ -222,6 +227,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             resources.IndexName = index.Name;
         }
+#endif
 
         [Test]
         [SyncOnly]

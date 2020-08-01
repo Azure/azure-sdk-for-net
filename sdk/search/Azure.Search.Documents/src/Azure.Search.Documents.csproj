@@ -11,14 +11,19 @@
     </Description>
     <PackageTags>Azure Cognitive Search;Azure Search Documents;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>
-      $(DefineConstants);
-      EXPERIMENTAL_SERIALIZER;
-    </DefineConstants>
 
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
   </PropertyGroup>
+
+  <!-- Conditionally compile FieldBuilder and related source -->
+  <ItemGroup Condition="'$(UseFieldBuilder)' != 'true'">
+    <Compile Remove="Indexes\FieldBuilder.cs" />
+    <Compile Remove="Indexes\FieldBuilderIgnoreAttribute.cs" />
+    <Compile Remove="Indexes\ISearchFieldAttribute.cs" />
+    <Compile Remove="Indexes\SearchableFieldAttribute.cs" />
+    <Compile Remove="Indexes\SimpleFieldAttribute.cs" />
+  </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
@@ -38,15 +43,7 @@
   </ItemGroup>
 
   <!-- Project and Package references -->
-  <!-- TODO: Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" / -->
-  <ItemGroup>
-    <!-- TODO: Remove the ProjectReference once ObjectSerializer and IMemberNameConverter are moved into Azure.Core. -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-
-    <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->
-    <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
   </ItemGroup>
 </Project>

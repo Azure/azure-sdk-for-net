@@ -21,22 +21,31 @@ namespace Azure.Search.Documents.Tests
 {
     public class ReflectableAddress
     {
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField]
+#endif
         public string City { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true, IsFacetable = true)]
+#endif
         public string Country { get; set; }
     }
 
     public class ReflectableComplexObject
     {
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
+#endif
         public string Name { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
+#endif
         public int Rating { get; set; }
 
         // Ensure that leaf-field-specific attributes are ignored by FieldBuilder on complex fields.
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(
             IsFilterable = true,
             IsSortable = true,
@@ -46,6 +55,7 @@ namespace Azure.Search.Documents.Tests
             SearchAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
             IndexAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
             SynonymMapNames = new[] { "myMap" })]
+#endif
         public ReflectableAddress Address { get; set; }
     }
 
@@ -64,36 +74,56 @@ namespace Azure.Search.Documents.Tests
 
         public DateTime TimeWithoutOffset { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(SynonymMapNames = new[] { "myMap" })]
+#endif
         public string Text { get; set; }
 
         public string UnsearchableText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField]
+#endif
         public string MoreText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
         public string FilterableText { get; set; }
+#endif
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsSortable = true)]
+#endif
         public string SortableText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFacetable = true)]
+#endif
         public string FacetableText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = true)]
+#endif
         public string IrretrievableText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = false)]
+#endif
         public string ExplicitlyRetrievableText { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
+#endif
         public string TextWithAnalyzer { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(SearchAnalyzerName = LexicalAnalyzerName.Values.EsLucene)]
+#endif
         public string TextWithSearchAnalyzer { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.Values.Whitespace)]
+#endif
         public string TextWithIndexAnalyzer { get; set; }
 
         public string[] StringArray { get; set; }
@@ -209,7 +239,9 @@ namespace Azure.Search.Documents.Tests
         public ICollection<ReflectableComplexObject> ComplexICollection { get; set; }
 
         [JsonIgnore]
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = true)]
+#endif
 #pragma warning disable IDE1006 // Naming Styles
         public RecordEnum recordEnum { get; set; }
 #pragma warning restore IDE1006 // Naming Styles

@@ -11,7 +11,9 @@ namespace Azure.Search.Documents.Tests
 {
     public class RecursiveModel
     {
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
+#endif
         public int Data { get; set; }
 
         // This is to test that FieldBuilder gracefully fails on recursive models.
@@ -20,7 +22,9 @@ namespace Azure.Search.Documents.Tests
 
     public class OtherRecursiveModel
     {
+#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true, IsFacetable = true)]
+#endif
         public double Data { get; set; }
 
         public RecursiveModel RecursiveReference { get; set; }

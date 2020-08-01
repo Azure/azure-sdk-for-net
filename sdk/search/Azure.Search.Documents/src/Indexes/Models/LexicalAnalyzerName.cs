@@ -5,6 +5,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public readonly partial struct LexicalAnalyzerName
     {
+#if EXPERIMENTAL_FIELDBUILDER
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <summary>
         /// The values of all declared <see cref="LexicalAnalyzerName"/> properties as string constants.
@@ -200,5 +201,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public const string Whitespace = LexicalAnalyzerName.WhitespaceValue;
         }
 #pragma warning restore CA1034 // Nested types should not be visible
+#endif
     }
 }
