@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public const string NamespaceConnectionStringVariableName = "SERVICE_BUS_NAMESPACE_CONNECTION_STRING";
 
         /// <summary>The environment variable value for the override connection string to indicate an existing namespace should be used, lazily evaluated.</summary>
-        private string ServiceBusOverrideConnectionString => GetRecordedOptionalVariable(NamespaceConnectionStringVariableName);
+        public string ServiceBusOverrideConnectionString => GetRecordedOptionalVariable(NamespaceConnectionStringVariableName);
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveServiceBusNamespace;

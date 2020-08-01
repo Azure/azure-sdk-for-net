@@ -19,13 +19,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         public ServiceBusManagementClientLiveTests(bool isAsync) :
-            base(true)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
 
         private ServiceBusManagementClient GetClient() =>
-            InstrumentClient(new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString, Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
+            InstrumentClient(new ServiceBusManagementClient(TestEnvironment.ServiceBusOverrideConnectionString, Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
 
         private ServiceBusManagementClient GetAADClient() =>
             InstrumentClient(new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential(), Recording.InstrumentClientOptions(new ServiceBusManagementClientOptions())));
@@ -86,6 +86,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             if (Mode == RecordedTestMode.Playback)
             {
+                // Auth rules use a randomly generated key, but we don't want to store
+                // these in our test recordings, so we skip the auth rule comparison
+                // when in playback mode.
                 var rules = updatedQueue.AuthorizationRules;
                 updatedQueue.AuthorizationRules = getQueue.AuthorizationRules.Clone();
                 Assert.AreEqual(getQueue, updatedQueue);
@@ -145,6 +148,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             TopicProperties createdTopic = await client.CreateTopicAsync(options);
             if (Mode == RecordedTestMode.Playback)
             {
+                // Auth rules use a randomly generated key, but we don't want to store
+                // these in our test recordings, so we skip the auth rule comparison
+                // when in playback mode.
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
             }
             else
@@ -568,10 +574,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 await client.UpdateSubscriptionAsync(new SubscriptionProperties("NonExistingTopic", "NonExistingPath")),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
 
-            //Assert.That(
-            //    async () =>
-            //    await client.DeleteQueueAsync("NonExistingPath"),
-            //    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+            Assert.That(
+                async () =>
+                await client.DeleteQueueAsync("NonExistingPath"),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
 
             Assert.That(
                   async () =>
