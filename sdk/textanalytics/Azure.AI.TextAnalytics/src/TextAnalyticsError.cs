@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics
         internal TextAnalyticsError(string code, string message, string target = null)
             : this()
         {
-            if (message == null)
+            if (code == null)
             {
-                throw new ArgumentNullException(nameof(message));
+                throw new ArgumentNullException(nameof(code));
             }
             if (message == null)
             {

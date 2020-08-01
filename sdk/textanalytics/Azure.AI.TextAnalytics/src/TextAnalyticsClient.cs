@@ -99,16 +99,14 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
-            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
-            _options = options;
-
-            /*_baseUri = endpoint;
+            _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
             _clientDiagnostics = new ClientDiagnostics(options);
-            _options = options;*/
+            _options = options;
+
+            // codegen
+            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, _pipeline, endpoint.AbsoluteUri);
         }
 
         #region Detect Language
