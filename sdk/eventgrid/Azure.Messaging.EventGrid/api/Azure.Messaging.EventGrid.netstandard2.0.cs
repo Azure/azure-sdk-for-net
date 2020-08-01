@@ -75,8 +75,30 @@ namespace Azure.Messaging.EventGrid.Models
         public string Topic { get { throw null; } set { } }
     }
 }
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppAction(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction ChangedAppSettings { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Completed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Failed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Restarted { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Started { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Stopped { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AppAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AppAction left, Azure.Messaging.EventGrid.SystemEvents.AppAction right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AppAction (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AppAction left, Azure.Messaging.EventGrid.SystemEvents.AppAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppConfigurationKeyValueDeletedEventData
     {
         internal AppConfigurationKeyValueDeletedEventData() { }
@@ -96,30 +118,47 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         internal AppEventTypeDetail() { }
         public Azure.Messaging.EventGrid.SystemEvents.AppAction? Action { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServicePlanAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServicePlanAction(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction Updated { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction left, Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction left, Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppServicePlanEventTypeDetail
     {
         internal AppServicePlanEventTypeDetail() { }
         public Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction? Action { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.StampKind? StampKind { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus? Status { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AsyncStatus? Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AsyncStatus : System.IEquatable<Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus>
+    public readonly partial struct AsyncStatus : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AsyncStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AsyncStatus(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus Completed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus Failed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus Started { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus other) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AsyncStatus Completed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AsyncStatus Failed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AsyncStatus Started { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus left, Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus left, Azure.Messaging.EventGrid.Models.SystemEvents.AsyncStatus right) { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus left, Azure.Messaging.EventGrid.SystemEvents.AsyncStatus right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AsyncStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus left, Azure.Messaging.EventGrid.SystemEvents.AsyncStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryArtifactEventData
@@ -127,7 +166,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         internal ContainerRegistryArtifactEventData() { }
         public string Action { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryArtifactEventTarget Target { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventTarget Target { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     public partial class ContainerRegistryArtifactEventTarget
@@ -141,11 +180,11 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string Tag { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class ContainerRegistryChartDeletedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryArtifactEventData
+    public partial class ContainerRegistryChartDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData
     {
         internal ContainerRegistryChartDeletedEventData() { }
     }
-    public partial class ContainerRegistryChartPushedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryArtifactEventData
+    public partial class ContainerRegistryChartPushedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryArtifactEventData
     {
         internal ContainerRegistryChartPushedEventData() { }
     }
@@ -158,11 +197,11 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal ContainerRegistryEventData() { }
         public string Action { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventActor Actor { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor Actor { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventRequest Request { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventSource Source { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventTarget Target { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest Request { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource Source { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget Target { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     public partial class ContainerRegistryEventRequest
@@ -191,11 +230,11 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string Tag { get { throw null; } }
         public string Url { get { throw null; } }
     }
-    public partial class ContainerRegistryImageDeletedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventData
+    public partial class ContainerRegistryImageDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData
     {
         internal ContainerRegistryImageDeletedEventData() { }
     }
-    public partial class ContainerRegistryImagePushedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.ContainerRegistryEventData
+    public partial class ContainerRegistryImagePushedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData
     {
         internal ContainerRegistryImagePushedEventData() { }
     }
@@ -207,7 +246,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     public partial class DeviceConnectionStateEventProperties
     {
         internal DeviceConnectionStateEventProperties() { }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo { get { throw null; } }
         public string DeviceId { get { throw null; } }
         public string HubName { get { throw null; } }
         public string ModuleId { get { throw null; } }
@@ -217,7 +256,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         internal DeviceLifeCycleEventProperties() { }
         public string DeviceId { get { throw null; } }
         public string HubName { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinInfo Twin { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo Twin { get { throw null; } }
     }
     public partial class DeviceTelemetryEventProperties
     {
@@ -235,17 +274,17 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string DeviceId { get { throw null; } }
         public string Etag { get { throw null; } }
         public string LastActivityTime { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinInfoProperties Properties { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoProperties Properties { get { throw null; } }
         public string Status { get { throw null; } }
         public string StatusUpdateTime { get { throw null; } }
         public float? Version { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinInfoX509Thumbprint X509Thumbprint { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoX509Thumbprint X509Thumbprint { get { throw null; } }
     }
     public partial class DeviceTwinInfoProperties
     {
         internal DeviceTwinInfoProperties() { }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinProperties Desired { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinProperties Reported { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties Desired { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties Reported { get { throw null; } }
     }
     public partial class DeviceTwinInfoX509Thumbprint
     {
@@ -261,7 +300,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     public partial class DeviceTwinProperties
     {
         internal DeviceTwinProperties() { }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTwinMetadata Metadata { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata Metadata { get { throw null; } }
         public float? Version { get { throw null; } }
     }
     public partial class EventHubCaptureFileCreatedEventData
@@ -277,23 +316,23 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string PartitionId { get { throw null; } }
         public int? SizeInBytes { get { throw null; } }
     }
-    public partial class IotHubDeviceConnectedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.DeviceConnectionStateEventProperties
+    public partial class IotHubDeviceConnectedEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties
     {
         internal IotHubDeviceConnectedEventData() { }
     }
-    public partial class IotHubDeviceCreatedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.DeviceLifeCycleEventProperties
+    public partial class IotHubDeviceCreatedEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceLifeCycleEventProperties
     {
         internal IotHubDeviceCreatedEventData() { }
     }
-    public partial class IotHubDeviceDeletedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.DeviceLifeCycleEventProperties
+    public partial class IotHubDeviceDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceLifeCycleEventProperties
     {
         internal IotHubDeviceDeletedEventData() { }
     }
-    public partial class IotHubDeviceDisconnectedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.DeviceConnectionStateEventProperties
+    public partial class IotHubDeviceDisconnectedEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties
     {
         internal IotHubDeviceDisconnectedEventData() { }
     }
-    public partial class IotHubDeviceTelemetryEventData : Azure.Messaging.EventGrid.Models.SystemEvents.DeviceTelemetryEventProperties
+    public partial class IotHubDeviceTelemetryEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceTelemetryEventProperties
     {
         internal IotHubDeviceTelemetryEventData() { }
     }
@@ -446,7 +485,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public object RunTags { get { throw null; } }
         public string RunType { get { throw null; } }
     }
-    public partial class MapsGeofenceEnteredEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MapsGeofenceEventProperties
+    public partial class MapsGeofenceEnteredEventData : Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceEventProperties
     {
         internal MapsGeofenceEnteredEventData() { }
     }
@@ -454,11 +493,11 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal MapsGeofenceEventProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> ExpiredGeofenceGeometryId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Models.SystemEvents.MapsGeofenceGeometry> Geometries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry> Geometries { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> InvalidPeriodGeofenceGeometryId { get { throw null; } }
         public bool? IsEventPublished { get { throw null; } }
     }
-    public partial class MapsGeofenceExitedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MapsGeofenceEventProperties
+    public partial class MapsGeofenceExitedEventData : Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceEventProperties
     {
         internal MapsGeofenceExitedEventData() { }
     }
@@ -472,16 +511,16 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public float? NearestLon { get { throw null; } }
         public string UdId { get { throw null; } }
     }
-    public partial class MapsGeofenceResultEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MapsGeofenceEventProperties
+    public partial class MapsGeofenceResultEventData : Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceEventProperties
     {
         internal MapsGeofenceResultEventData() { }
     }
-    public partial class MediaJobCanceledEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public partial class MediaJobCanceledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobCanceledEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
     }
-    public partial class MediaJobCancelingEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public partial class MediaJobCancelingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobCancelingEventData() { }
     }
@@ -490,9 +529,29 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         internal MediaJobError() { }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCategory? Category { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorCode? Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobErrorDetail> Details { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry? Retry { get { throw null; } }
+    }
+    public enum MediaJobErrorCategory
+    {
+        Service = 0,
+        Download = 1,
+        Upload = 2,
+        Configuration = 3,
+        Content = 4,
+    }
+    public enum MediaJobErrorCode
+    {
+        ServiceError = 0,
+        ServiceTransientError = 1,
+        DownloadNotAccessible = 2,
+        DownloadTransientError = 3,
+        UploadNotAccessible = 4,
+        UploadTransientError = 5,
+        ConfigurationUnsupported = 6,
+        ContentMalformed = 7,
+        ContentUnsupported = 8,
     }
     public partial class MediaJobErrorDetail
     {
@@ -500,46 +559,46 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
     }
-    public partial class MediaJobErroredEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public partial class MediaJobErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobErroredEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
     }
-    public partial class MediaJobFinishedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public partial class MediaJobFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobFinishedEventData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
     }
     public partial class MediaJobOutput
     {
         internal MediaJobOutput() { }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobError Error { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.MediaJobError Error { get { throw null; } }
         public string Label { get { throw null; } }
         public long Progress { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState State { get { throw null; } }
     }
-    public partial class MediaJobOutputAsset : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutput
+    public partial class MediaJobOutputAsset : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput
     {
         internal MediaJobOutputAsset() { }
         public string AssetName { get { throw null; } }
     }
-    public partial class MediaJobOutputCanceledEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputCanceledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputCanceledEventData() { }
     }
-    public partial class MediaJobOutputCancelingEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputCancelingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputCancelingEventData() { }
     }
-    public partial class MediaJobOutputErroredEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputErroredEventData() { }
     }
-    public partial class MediaJobOutputFinishedEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputFinishedEventData() { }
     }
-    public partial class MediaJobOutputProcessingEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputProcessingEventData() { }
     }
@@ -550,7 +609,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public string Label { get { throw null; } }
         public long? Progress { get { throw null; } }
     }
-    public partial class MediaJobOutputScheduledEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputScheduledEventData() { }
     }
@@ -558,16 +617,31 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal MediaJobOutputStateChangeEventData() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> JobCorrelationData { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobOutput Output { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput Output { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? PreviousState { get { throw null; } }
     }
-    public partial class MediaJobProcessingEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public partial class MediaJobProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobProcessingEventData() { }
     }
-    public partial class MediaJobScheduledEventData : Azure.Messaging.EventGrid.Models.SystemEvents.MediaJobStateChangeEventData
+    public enum MediaJobRetry
+    {
+        DoNotRetry = 0,
+        MayRetry = 1,
+    }
+    public partial class MediaJobScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobScheduledEventData() { }
+    }
+    public enum MediaJobState
+    {
+        Canceled = 0,
+        Canceling = 1,
+        Error = 2,
+        Finished = 3,
+        Processing = 4,
+        Queued = 5,
+        Scheduled = 6,
     }
     public partial class MediaJobStateChangeEventData
     {
@@ -871,6 +945,25 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StampKind : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StampKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StampKind(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StampKind AseV1 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StampKind AseV2 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StampKind Public { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StampKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StampKind left, Azure.Messaging.EventGrid.SystemEvents.StampKind right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StampKind (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StampKind left, Azure.Messaging.EventGrid.SystemEvents.StampKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class StorageBlobCreatedEventData
     {
         internal StorageBlobCreatedEventData() { }
@@ -968,12 +1061,12 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebAppServicePlanUpdatedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
         public string RequestId { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.WebAppServicePlanUpdatedEventDataSku Sku { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.WebAppServicePlanUpdatedEventDataSku Sku { get { throw null; } }
         public string Verb { get { throw null; } }
     }
     public partial class WebAppServicePlanUpdatedEventDataSku
@@ -989,7 +1082,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebAppUpdatedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1000,7 +1093,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebBackupOperationCompletedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1011,7 +1104,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebBackupOperationFailedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1022,7 +1115,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebBackupOperationStartedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1033,7 +1126,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebRestoreOperationCompletedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1044,7 +1137,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebRestoreOperationFailedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1055,7 +1148,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebRestoreOperationStartedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1066,7 +1159,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebSlotSwapCompletedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1077,7 +1170,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebSlotSwapFailedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1088,7 +1181,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebSlotSwapStartedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1099,7 +1192,7 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebSlotSwapWithPreviewCancelledEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
@@ -1110,107 +1203,11 @@ namespace Azure.Messaging.EventGrid.Models.SystemEvents
     {
         internal WebSlotSwapWithPreviewStartedEventData() { }
         public string Address { get { throw null; } }
-        public Azure.Messaging.EventGrid.Models.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string CorrelationRequestId { get { throw null; } }
         public string Name { get { throw null; } }
         public string RequestId { get { throw null; } }
         public string Verb { get { throw null; } }
-    }
-}
-namespace Azure.Messaging.EventGrid.SystemEvents
-{
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AppAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AppAction(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction ChangedAppSettings { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Completed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Failed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Restarted { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Started { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppAction Stopped { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AppAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AppAction left, Azure.Messaging.EventGrid.SystemEvents.AppAction right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AppAction (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AppAction left, Azure.Messaging.EventGrid.SystemEvents.AppAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AppServicePlanAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AppServicePlanAction(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction Updated { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction left, Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction left, Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum MediaJobErrorCategory
-    {
-        Service = 0,
-        Download = 1,
-        Upload = 2,
-        Configuration = 3,
-        Content = 4,
-    }
-    public enum MediaJobErrorCode
-    {
-        ServiceError = 0,
-        ServiceTransientError = 1,
-        DownloadNotAccessible = 2,
-        DownloadTransientError = 3,
-        UploadNotAccessible = 4,
-        UploadTransientError = 5,
-        ConfigurationUnsupported = 6,
-        ContentMalformed = 7,
-        ContentUnsupported = 8,
-    }
-    public enum MediaJobRetry
-    {
-        DoNotRetry = 0,
-        MayRetry = 1,
-    }
-    public enum MediaJobState
-    {
-        Canceled = 0,
-        Canceling = 1,
-        Error = 2,
-        Finished = 3,
-        Processing = 4,
-        Queued = 5,
-        Scheduled = 6,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StampKind : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StampKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StampKind(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StampKind AseV1 { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.StampKind AseV2 { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.StampKind Public { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StampKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StampKind left, Azure.Messaging.EventGrid.SystemEvents.StampKind right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StampKind (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StampKind left, Azure.Messaging.EventGrid.SystemEvents.StampKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

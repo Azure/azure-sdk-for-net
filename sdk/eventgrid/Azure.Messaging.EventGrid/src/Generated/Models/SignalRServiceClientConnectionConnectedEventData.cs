@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionConnected event. </summary>
     public partial class SignalRServiceClientConnectionConnectedEventData

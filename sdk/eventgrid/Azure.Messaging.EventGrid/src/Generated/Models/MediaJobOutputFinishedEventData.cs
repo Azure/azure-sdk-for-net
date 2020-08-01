@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Job output finished event data. </summary>
     public partial class MediaJobOutputFinishedEventData : MediaJobOutputStateChangeEventData

@@ -7,9 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Details of JobOutput errors. </summary>
     public partial class MediaJobError

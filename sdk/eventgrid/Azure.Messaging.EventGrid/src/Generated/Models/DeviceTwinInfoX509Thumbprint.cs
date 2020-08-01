@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </summary>
     public partial class DeviceTwinInfoX509Thumbprint

@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class RedisImportRDBCompletedEventData
     {

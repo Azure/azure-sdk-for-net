@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The content of the event request message. </summary>
     public partial class ContainerRegistryEventData

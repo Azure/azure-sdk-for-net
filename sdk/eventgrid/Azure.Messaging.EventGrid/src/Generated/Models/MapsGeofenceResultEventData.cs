@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceResult event. </summary>
     public partial class MapsGeofenceResultEventData : MapsGeofenceEventProperties

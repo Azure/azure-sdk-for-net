@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
     public partial class DeviceTwinInfo

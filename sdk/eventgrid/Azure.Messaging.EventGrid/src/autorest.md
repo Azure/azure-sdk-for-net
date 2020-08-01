@@ -7,30 +7,31 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
+    const namespace = "Azure.Messaging.EventGrid.SystemEvents";
     for (var path in $)
     {
       if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
       {
-        $[path]["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
+        $[path]["x-namespace"] = namespace;
       }
       $[path]["x-csharp-usage"] = "model,output";
       $[path]["x-csharp-formats"] = "json";
+      if (path.includes("WebAppServicePlanUpdatedEventData"))
+      {
+          $[path]["properties"]["sku"]["x-namespace"] = namespace;
+          $[path]["properties"]["sku"]["x-csharp-usage"] = "model,output";
+          $[path]["properties"]["sku"]["x-csharp-formats"] = "json";
+      }
+      if (path.includes("DeviceTwinInfo"))
+      {
+          $[path]["properties"]["properties"]["x-namespace"] = namespace;
+          $[path]["properties"]["properties"]["x-csharp-usage"] = "model,output";
+          $[path]["properties"]["properties"]["x-csharp-formats"] = "json";
+          $[path]["properties"]["x509Thumbprint"]["x-namespace"] = namespace;
+          $[path]["properties"]["x509Thumbprint"]["x-csharp-usage"] = "model,output";
+          $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
+      }
     }
-- from: swagger-document
-  where: $.definitions.WebAppServicePlanUpdatedEventData
-  transform: >
-    $.properties.sku["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
-    $.properties.sku["x-csharp-usage"] = "model,output";
-    $.properties.sku["x-csharp-formats"] = "json";
-- from: swagger-document
-  where: $.definitions.DeviceTwinInfo
-  transform: >
-    $.properties.properties["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
-    $.properties.properties["x-csharp-usage"] = "model,output";
-    $.properties.properties["x-csharp-formats"] = "json";
-    $.properties.x509Thumbprint["x-namespace"] = "Azure.Messaging.EventGrid.Models.SystemEvents";
-    $.properties.x509Thumbprint["x-csharp-usage"] = "model,output";
-    $.properties.x509Thumbprint["x-csharp-formats"] = "json";
 
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json

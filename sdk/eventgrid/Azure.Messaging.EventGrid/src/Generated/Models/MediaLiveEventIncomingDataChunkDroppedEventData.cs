@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest fragment dropped event data. </summary>
     public partial class MediaLiveEventIncomingDataChunkDroppedEventData

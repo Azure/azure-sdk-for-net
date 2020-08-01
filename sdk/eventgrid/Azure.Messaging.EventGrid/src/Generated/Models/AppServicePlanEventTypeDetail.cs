@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.SystemEvents;
-
-namespace Azure.Messaging.EventGrid.Models.SystemEvents
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Detail of action on the app service plan. </summary>
     public partial class AppServicePlanEventTypeDetail
