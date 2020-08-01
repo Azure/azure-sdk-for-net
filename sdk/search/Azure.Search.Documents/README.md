@@ -214,16 +214,20 @@ Let's explore them with a search for a "luxury" hotel.
 We can decorate our own C# types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
-public class Hotel
-{
-    [JsonPropertyName("hotelId")]
-    [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
-    public string Id { get; set; }
+        public class Hotel
+        {
+            [JsonPropertyName("hotelId")]
+#if EXPERIMENTAL_FIELDBUILDER
+            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+#endif
+            public string Id { get; set; }
 
-    [JsonPropertyName("hotelName")]
-    [SearchableField(IsFilterable = true, IsSortable = true)]
-    public string Name { get; set; }
-}
+            [JsonPropertyName("hotelName")]
+#if EXPERIMENTAL_FIELDBUILDER
+            [SearchableField(IsFilterable = true, IsSortable = true)]
+#endif
+            public string Name { get; set; }
+        }
 ```
 
 Then we use them as the type parameter when querying to return strongly-typed search results:
@@ -292,7 +296,7 @@ SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 // Create the index using FieldBuilder.
 SearchIndex index = new SearchIndex("hotels")
 {
-    Fields = FieldBuilder.Build(typeof(Hotel)),
+    Fields = new FieldBuilder().Build(typeof(Hotel)),
     Suggesters =
     {
         // Suggest query terms from the hotelName field.

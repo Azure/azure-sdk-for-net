@@ -9,8 +9,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #endif

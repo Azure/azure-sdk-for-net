@@ -56,7 +56,7 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2020_06_30) { }
-        public Azure.Core.ObjectSerializer Serializer { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -104,11 +104,13 @@ namespace Azure.Search.Documents
 }
 namespace Azure.Search.Documents.Indexes
 {
-    public static partial class FieldBuilder
+    public partial class FieldBuilder
     {
-        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type modelType, Azure.Core.ObjectSerializer serializer = null) { throw null; }
+        public FieldBuilder() { }
+        public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type modelType) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Property)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class FieldBuilderIgnoreAttribute : System.Attribute
     {
         public FieldBuilderIgnoreAttribute() { }
@@ -758,7 +760,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName left, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName right) { throw null; }
         public override string ToString() { throw null; }
-        public static partial class AsString
+        public static partial class Values
         {
             public const string ArLucene = "ar.lucene";
             public const string ArMicrosoft = "ar.microsoft";

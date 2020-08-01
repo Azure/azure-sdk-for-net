@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex">
         /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
         /// {
-        ///     Fields = FieldBuilder.Build(typeof(Hotel)),
+        ///     Fields = new FieldBuilder().Build(typeof(Hotel)),
         ///     Suggesters =
         ///     {
         ///         // Suggest query terms from the hotelName field.

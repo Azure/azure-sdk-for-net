@@ -5,6 +5,9 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
