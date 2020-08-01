@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.IotHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// CertificatesOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface ICertificatesOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Get the certificate list.
+        /// List private endpoint connections
         /// </summary>
         /// <remarks>
-        /// Returns the list of certificates.
+        /// List private endpoint connection properties
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateListDescription>> ListByIotHubWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the certificate.
+        /// Get private endpoint connection
         /// </summary>
         /// <remarks>
-        /// Returns the certificate.
+        /// Get private endpoint connection properties
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// The name of the IoT hub.
         /// </param>
-        /// <param name='certificateName'>
-        /// The name of the certificate
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,12 +81,13 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateDescription>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Upload the certificate to the IoT hub.
+        /// Update private endpoint connection
         /// </summary>
         /// <remarks>
-        /// Adds new or replaces existing certificate.
+        /// Update the status of a private endpoint connection with the
+        /// specified name
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -94,15 +95,11 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// The name of the IoT hub.
         /// </param>
-        /// <param name='certificateName'>
-        /// The name of the certificate
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
         /// </param>
-        /// <param name='certificateDescription'>
-        /// The certificate body.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Certificate. Do not specify for creating a brand new
-        /// certificate. Required to update an existing certificate.
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection with updated properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,13 +116,12 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an X509 certificate.
+        /// Delete private endpoint connection
         /// </summary>
         /// <remarks>
-        /// Deletes an existing X509 certificate or does nothing if it does not
-        /// exist.
+        /// Delete private endpoint connection with the specified name
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -133,43 +129,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// The name of the IoT hub.
         /// </param>
-        /// <param name='certificateName'>
-        /// The name of the certificate
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Certificate.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorDetailsException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Generate verification code for proof of possession flow.
-        /// </summary>
-        /// <remarks>
-        /// Generates verification code for proof of possession flow. The
-        /// verification code will be used to generate a leaf certificate.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the IoT hub.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the IoT hub.
-        /// </param>
-        /// <param name='certificateName'>
-        /// The name of the certificate
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Certificate.
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -186,13 +147,13 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateWithNonceDescription>> GenerateVerificationCodeWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verify certificate's private key possession.
+        /// Update private endpoint connection
         /// </summary>
         /// <remarks>
-        /// Verifies the certificate's private key possession by providing the
-        /// leaf cert issued by the verifying pre uploaded certificate.
+        /// Update the status of a private endpoint connection with the
+        /// specified name
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -200,14 +161,11 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='resourceName'>
         /// The name of the IoT hub.
         /// </param>
-        /// <param name='certificateName'>
-        /// The name of the certificate
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
         /// </param>
-        /// <param name='certificateVerificationBody'>
-        /// The name of the certificate
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Certificate.
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection with updated properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -224,6 +182,37 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateDescription>> VerifyWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete private endpoint connection
+        /// </summary>
+        /// <remarks>
+        /// Delete private endpoint connection with the specified name
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the IoT hub.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the IoT hub.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
