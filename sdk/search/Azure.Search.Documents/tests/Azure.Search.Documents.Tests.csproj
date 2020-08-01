@@ -38,8 +38,10 @@
   </ItemGroup>
 
   <!-- Conditionally compile FieldBuilder and related source -->
+  <ItemGroup Condition="'$(UseFieldBuilder)' == 'true'">
+    <Compile Remove="Samples/FieldBuilder/**" />
+  </ItemGroup>
   <ItemGroup Condition="'$(UseFieldBuilder)' != 'true'">
-    <Compile Remove="FieldBuilderTests.cs" />
     <Compile Remove="SearchableFieldAttributeTests.cs" />
     <Compile Remove="SimpleFieldAttributeTests.cs" />
   </ItemGroup>

@@ -6,6 +6,9 @@
 
 // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
 using Azure.Search.Documents.Indexes;
+#if !EXPERIMENTAL_FIELDBUILDER
+using Azure.Search.Documents.Samples;
+#endif
 
 namespace Azure.Search.Documents.Tests
 {
@@ -13,6 +16,8 @@ namespace Azure.Search.Documents.Tests
     {
 #if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
+#else
+        [IsFilterable]
 #endif
         public int Data { get; set; }
 
@@ -24,6 +29,8 @@ namespace Azure.Search.Documents.Tests
     {
 #if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true, IsFacetable = true)]
+#else
+        [IsFilterable, IsFacetable]
 #endif
         public double Data { get; set; }
 

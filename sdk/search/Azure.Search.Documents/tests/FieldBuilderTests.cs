@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+#if !EXPERIMENTAL_FIELDBUILDER
+using Azure.Search.Documents.Samples;
+#endif
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -362,8 +365,12 @@ namespace Azure.Search.Documents.Tests
                     {
                         new SearchField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
 
+#if EXPERIMENTAL_FIELDBUILDER
                         // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
                         new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+#else
+                        new SearchField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+#endif
                     }
                 }
             };
@@ -383,8 +390,12 @@ namespace Azure.Search.Documents.Tests
                 {
                     Fields =
                     {
+#if EXPERIMENTAL_FIELDBUILDER
                         // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
-                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true }
+                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+#else
+                        new SearchField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+#endif
                     }
                 }
             };
@@ -400,7 +411,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedPropertyTypes(Type modelType, string invalidPropertyName)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => new FieldBuilder().Build(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => BuildForType(modelType));
 
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
@@ -424,7 +435,7 @@ namespace Azure.Search.Documents.Tests
         [TestCase(typeof(ICollection<decimal>))]
         public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType)
         {
-            ArgumentException e = Assert.Throws<ArgumentException>(() => new FieldBuilder().Build(modelType));
+            ArgumentException e = Assert.Throws<ArgumentException>(() => BuildForType(modelType));
 
             string expectedErrorMessage =
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
@@ -441,7 +452,11 @@ namespace Azure.Search.Documents.Tests
             from tuple in testData
             select (type, tuple.dataType, tuple.fieldName);
 
+#if EXPERIMENTAL_FIELDBUILDER
         private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
+#else
+        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.BuildForType(modelType);
+#endif
 
         private enum Direction
         {
@@ -510,7 +525,11 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
             [SearchableField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+#else
+            [IsFilterable, IsSearchable, IsSortable, IsFacetable]
+#endif
             public Direction Direction { get; set; }
         }
 
@@ -519,7 +538,11 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
+#else
+            [IsFilterable]
+#endif
             public decimal Price { get; set; }
         }
 
@@ -528,7 +551,11 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
+#else
+            [IsFilterable]
+#endif
             public IEnumerable<byte> Buffer { get; set; }
         }
 
@@ -537,7 +564,11 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
+#else
+            [IsFilterable]
+#endif
             public ICollection<char> Buffer { get; set; }
         }
 
@@ -546,7 +577,11 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string InnerID { get; set; }
 
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
+#else
+            [IsFilterable]
+#endif
             public int OtherField { get; set; }
         }
 
@@ -560,7 +595,11 @@ namespace Azure.Search.Documents.Tests
 
         private class InnerModelWithIgnoredProperties
         {
+#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
+#else
+            [IsFilterable]
+#endif
             public int OtherField { get; set; }
 
             [JsonIgnore]
