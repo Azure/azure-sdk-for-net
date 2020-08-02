@@ -9,15 +9,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid
 {
-    internal class SharedAccessSignatureCredentialPolicy : HttpPipelineSynchronousPolicy
+    internal class EventGridSharedAccessSignatureCredentialPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly SharedAccessSignatureCredential _credential;
+        private readonly EventGridSharedAccessSignatureCredential _credential;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharedAccessSignatureCredentialPolicy"/> class.
+        /// Initializes a new instance of the <see cref="EventGridSharedAccessSignatureCredentialPolicy"/> class.
         /// </summary>
-        /// <param name="credential">The <see cref="SharedAccessSignatureCredential"/> used to authenticate requests.</param>
-        public SharedAccessSignatureCredentialPolicy(SharedAccessSignatureCredential credential)
+        /// <param name="credential">The <see cref="EventGridSharedAccessSignatureCredential"/> used to authenticate requests.</param>
+        public EventGridSharedAccessSignatureCredentialPolicy(EventGridSharedAccessSignatureCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             _credential = credential;
