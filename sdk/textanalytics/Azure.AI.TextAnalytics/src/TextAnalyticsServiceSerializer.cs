@@ -196,26 +196,29 @@ namespace Azure.AI.TextAnalytics
 
         private static TextDocumentBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
         {
-            if (documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
+            if (!documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
             {
-                int documentCount = default;
-                int validDocumentCount = default;
-                int invalidDocumentCount = default;
-                long transactionCount = default;
-
-                if (statisticsElement.TryGetProperty("documentsCount", out JsonElement documentCountValue))
-                    documentCount = documentCountValue.GetInt32();
-                if (statisticsElement.TryGetProperty("validDocumentsCount", out JsonElement validDocumentCountValue))
-                    validDocumentCount = validDocumentCountValue.GetInt32();
-                if (statisticsElement.TryGetProperty("erroneousDocumentsCount", out JsonElement erroneousDocumentCountValue))
-                    invalidDocumentCount = erroneousDocumentCountValue.GetInt32();
-                if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
-                    transactionCount = transactionCountValue.GetInt64();
-
-                return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+                return default;
             }
 
-            return default;
+            var documentDict = new Dictionary<string, long>()
+            {
+                {"documentsCount", default},
+                {"validDocumentCount", default},
+                {"invalidDocumentCount", default},
+                {"transactionCount", default}
+            };
+
+            foreach (var document in documentDict.ToList()) // ToList() purpose is to avoid error "Collection was modified"
+            {
+                if (statisticsElement.TryGetProperty(document.Key, out JsonElement countValue))
+                    documentDict[document.Key] = countValue.GetInt64();
+            }
+
+            return new TextDocumentBatchStatistics(Convert.ToInt32(documentDict["documentsCount"]),
+                                                    Convert.ToInt32(documentDict["validDocumentCount"]),
+                                                    Convert.ToInt32(documentDict["invalidDocumentCount"]),
+                                                    documentDict["transactionCount"]);
         }
 
         #endregion Deserialize Common
