@@ -77,8 +77,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public void SetStartTime(DateTime dateTime) => _activity?.SetStartTime(dateTime);
-
         public void Dispose()
         {
             if (_activity == null)
