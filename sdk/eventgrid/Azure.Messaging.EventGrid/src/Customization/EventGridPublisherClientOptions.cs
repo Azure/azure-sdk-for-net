@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventGrid
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.
     /// </summary>
-    public class EventGridClientOptions : ClientOptions
+    public class EventGridPublisherClientOptions : ClientOptions
     {
 
         /// <summary>
@@ -37,19 +37,19 @@ namespace Azure.Messaging.EventGrid
         internal ServiceVersion Version { get; }
 
         /// <summary>
-        /// Used to serialize the given events to JSON.
+        /// Used to serialize the given events to UTF-8 encoded JSON.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventGridClientOptions"/>
+        /// Initializes a new instance of the <see cref="EventGridPublisherClientOptions"/>
         /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public EventGridClientOptions(ServiceVersion version = LatestVersion)
+        public EventGridPublisherClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
         }

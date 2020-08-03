@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
+using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Tests
+namespace Azure.Messaging.EventGrid.Models
 {
-
+    [CodeGenModel("CloudEvent")]
+    internal partial class CloudEventInternal
+    {
+    }
 }

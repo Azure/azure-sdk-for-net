@@ -13,15 +13,15 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema. </summary>
-    public partial class CloudEvent : IDictionary<string, object>
+    internal partial class CloudEventInternal : IDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of CloudEvent. </summary>
+        /// <summary> Initializes a new instance of CloudEventInternal. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
         /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/>, or <paramref name="specversion"/> is null. </exception>
-        public CloudEvent(string id, string source, string type, string specversion)
+        public CloudEventInternal(string id, string source, string type, string specversion)
         {
             if (id == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CloudEvent. </summary>
+        /// <summary> Initializes a new instance of CloudEventInternal. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="data"> Event data specific to the event type. </param>
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
         /// <param name="additionalProperties"> . </param>
-        internal CloudEvent(string id, string source, object data, string dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
+        internal CloudEventInternal(string id, string source, object data, string dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
         {
             Id = id;
             Source = source;

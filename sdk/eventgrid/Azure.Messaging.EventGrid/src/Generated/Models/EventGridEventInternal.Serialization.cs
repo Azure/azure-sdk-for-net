@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    public partial class EventGridEvent : IUtf8JsonSerializable
+    internal partial class EventGridEventInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static EventGridEvent DeserializeEventGridEvent(JsonElement element)
+        internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element)
         {
             string id = default;
             Optional<string> topic = default;
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridEvent(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
         }
     }
 }

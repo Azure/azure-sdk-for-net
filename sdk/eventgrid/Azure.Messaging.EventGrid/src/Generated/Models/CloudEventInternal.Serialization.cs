@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    public partial class CloudEvent : IUtf8JsonSerializable
+    internal partial class CloudEventInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static CloudEvent DeserializeCloudEvent(JsonElement element)
+        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element)
         {
             string id = default;
             string source = default;
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventGrid.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CloudEvent(id, source, data.Value, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+            return new CloudEventInternal(id, source, data.Value, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
         }
     }
 }

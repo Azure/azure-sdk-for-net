@@ -1,13 +1,13 @@
 namespace Azure.Messaging.EventGrid
 {
-    public partial class EventGridClient
+    public partial class EventGridPublisherClient
     {
-        protected EventGridClient() { }
-        public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options) { }
-        public EventGridClient(System.Uri endpoint, Azure.Messaging.EventGrid.SharedAccessSignatureCredential credential) { }
-        public EventGridClient(System.Uri endpoint, Azure.Messaging.EventGrid.SharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options) { }
-        public string BuildSharedAccessSignature(System.DateTimeOffset expirationUtc) { throw null; }
+        protected EventGridPublisherClient() { }
+        public EventGridPublisherClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public EventGridPublisherClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
+        public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential) { }
+        public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
+        public static string BuildSharedAccessSignature(System.Uri endpoint, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key, string apiVersion = "2018-01-01") { throw null; }
         public virtual Azure.Response PublishCloudEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishCloudEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishCustomEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -15,62 +15,47 @@ namespace Azure.Messaging.EventGrid
         public virtual Azure.Response PublishEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.EventGridEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridClientOptions : Azure.Core.ClientOptions
+    public partial class EventGridPublisherClientOptions : Azure.Core.ClientOptions
     {
-        public EventGridClientOptions(Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion.V2018_01_01) { }
+        public EventGridPublisherClientOptions(Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { }
         public Azure.Core.ObjectSerializer Serializer { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
         }
     }
-    public partial class SharedAccessSignatureCredential
+    public partial class EventGridSharedAccessSignatureCredential
     {
-        public SharedAccessSignatureCredential(string signature) { }
+        public EventGridSharedAccessSignatureCredential(string signature) { }
         public string Signature { get { throw null; } }
+        public void Update(string signature) { }
     }
 }
 namespace Azure.Messaging.EventGrid.Models
 {
-    public partial class CloudEvent : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
+    public partial class CloudEvent
     {
-        public CloudEvent(string id, string source, string type, string specversion) { }
+        public CloudEvent(string source, string type) { }
         public object Data { get { throw null; } set { } }
-        public string DataBase64 { get { throw null; } set { } }
-        public string Datacontenttype { get { throw null; } set { } }
-        public string Dataschema { get { throw null; } set { } }
+        public string DataContentType { get { throw null; } set { } }
+        public string DataSchema { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public object this[string key] { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
         public string Source { get { throw null; } set { } }
-        public string Specversion { get { throw null; } set { } }
+        public string SpecVersion { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
-        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
-        public void Add(string key, object value) { }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        public bool Remove(string key) { throw null; }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> value) { }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Clear() { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] destination, int offset) { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
     }
     public partial class EventGridEvent
     {
-        public EventGridEvent(string id, string subject, object data, string eventType, System.DateTimeOffset eventTime, string dataVersion) { }
+        public EventGridEvent(string subject, object data, string eventType, string dataVersion) { }
         public object Data { get { throw null; } set { } }
         public string DataVersion { get { throw null; } set { } }
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public string MetadataVersion { get { throw null; } }
+        public string MetadataVersion { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
     }

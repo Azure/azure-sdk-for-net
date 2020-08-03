@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -18,7 +19,7 @@ namespace Azure.Messaging.EventGrid
     /// <summary>
     /// Client used to interact with the Event Grid service
     /// </summary>
-    public class EventGridClient
+    public class EventGridPublisherClient
     {
         private readonly ServiceRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -29,34 +30,34 @@ namespace Azure.Messaging.EventGrid
         private ObjectSerializer _serializer;
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
-        protected EventGridClient()
+        protected EventGridPublisherClient()
         {
         }
 
-        /// <summary>Initalizes an instance of EventGridClient</summary>
-        /// <param name="endpoint">Topic endpoint</param>
-        /// <param name="credential">Credential used to connect to Azure</param>
-        public EventGridClient(Uri endpoint, AzureKeyCredential credential)
-            : this(endpoint, credential, new EventGridClientOptions())
+        /// <summary>Initalizes an instance of EventGridClient.</summary>
+        /// <param name="endpoint">Topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">Credential used to connect to Azure.</param>
+        public EventGridPublisherClient(Uri endpoint, AzureKeyCredential credential)
+            : this(endpoint, credential, new EventGridPublisherClientOptions())
         {
         }
 
-        /// <summary>Initalizes an instance of EventGridClient</summary>
-        /// <param name="endpoint">Topic endpoint</param>
-        /// <param name="credential">Credential used to connect to Azure</param>
-        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential)
-            : this(endpoint, credential, new EventGridClientOptions())
+        /// <summary>Initalizes an instance of EventGridClient.</summary>
+        /// <param name="endpoint">Topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">Credential used to connect to Azure.</param>
+        public EventGridPublisherClient(Uri endpoint, EventGridSharedAccessSignatureCredential credential)
+            : this(endpoint, credential, new EventGridPublisherClientOptions())
         {
         }
 
-        /// <summary>Initalizes an instance of the<see cref="EventGridClient"/> class</summary>
-        /// <param name="endpoint">Topic endpoint</param>
-        /// <param name="credential">Credential used to connect to Azure</param>
-        /// <param name="options">Configuring options</param>
-        public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
+        /// <summary>Initalizes an instance of the<see cref="EventGridPublisherClient"/> class.</summary>
+        /// <param name="endpoint">Topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">Credential used to connect to Azure.</param>
+        /// <param name="options">Configuring options.</param>
+        public EventGridPublisherClient(Uri endpoint, AzureKeyCredential credential, EventGridPublisherClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridClientOptions();
+            options ??= new EventGridPublisherClientOptions();
             _serializer = options.Serializer ?? new JsonObjectSerializer();
             _apiVersion = options.GetVersionString();
             _endpoint = endpoint;
@@ -67,18 +68,18 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventGridClient"/> class.
+        /// Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Topic endpoint</param>
-        /// <param name="credential">Credential used to connect to Azure</param>
-        /// <param name="options">Configuring options</param>
-        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options)
+        /// <param name="endpoint">Topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">Credential used to connect to Azure.</param>
+        /// <param name="options">Configuring options.</param>
+        public EventGridPublisherClient(Uri endpoint, EventGridSharedAccessSignatureCredential credential, EventGridPublisherClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridClientOptions();
+            options ??= new EventGridPublisherClientOptions();
             _serializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new SharedAccessSignatureCredentialPolicy(credential));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -101,15 +102,21 @@ namespace Azure.Messaging.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async Task<Response> PublishEventsInternal(IEnumerable<EventGridEvent> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishEvents)}");
             scope.Start();
 
             try
             {
-                List<EventGridEvent> eventsWithSerializedPayloads = new List<EventGridEvent>();
+                // List of events cannot be null
+                Argument.AssertNotNull(events, nameof(events));
+
+                List<EventGridEventInternal> eventsWithSerializedPayloads = new List<EventGridEventInternal>();
                 foreach (EventGridEvent egEvent in events)
                 {
-                    EventGridEvent newEGEvent = new EventGridEvent(
+                    // Individual events cannot be null
+                    Argument.AssertNotNull(egEvent, nameof(egEvent));
+
+                    EventGridEventInternal newEGEvent = new EventGridEventInternal(
                             egEvent.Id,
                             egEvent.Subject,
                             new EventGridSerializer(
@@ -118,8 +125,10 @@ namespace Azure.Messaging.EventGrid
                                 cancellationToken),
                             egEvent.EventType,
                             egEvent.EventTime,
-                            egEvent.DataVersion);
-                    newEGEvent.Topic = egEvent.Topic;
+                            egEvent.DataVersion)
+                    {
+                        Topic = egEvent.Topic
+                    };
 
                     eventsWithSerializedPayloads.Add(newEGEvent);
                 }
@@ -164,38 +173,57 @@ namespace Azure.Messaging.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async Task<Response> PublishCloudEventsInternal(IEnumerable<CloudEvent> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCloudEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishCloudEvents)}");
             scope.Start();
 
             try
             {
-                List<CloudEvent> eventsWithSerializedPayloads = new List<CloudEvent>();
+                // List of events cannot be null
+                Argument.AssertNotNull(events, nameof(events));
+
+                List<CloudEventInternal> eventsWithSerializedPayloads = new List<CloudEventInternal>();
                 foreach (CloudEvent cloudEvent in events)
                 {
-                    // The 'Data' field is optional for the CloudEvent spec
+                    // Individual events cannot be null
+                    Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
+
+                    CloudEventInternal newCloudEvent = new CloudEventInternal(
+                        cloudEvent.Id,
+                        cloudEvent.Source,
+                        cloudEvent.Type,
+                        cloudEvent.SpecVersion)
+                    {
+                        Time = cloudEvent.Time,
+                        Datacontenttype = cloudEvent.DataContentType,
+                        Dataschema = cloudEvent.DataSchema,
+                        Subject = cloudEvent.Subject
+                    };
+
+                    foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
+                    {
+                        newCloudEvent.Add(kvp.Key, new EventGridSerializer(kvp.Value, _serializer, cancellationToken));
+                    }
+
+                    // The 'Data' property is optional for CloudEvents
                     if (cloudEvent.Data != null)
                     {
-                        eventsWithSerializedPayloads.Add(
-                            new CloudEvent(
-                                cloudEvent.Id,
-                                cloudEvent.Source,
-                                cloudEvent.Type,
-                                cloudEvent.Specversion)
-                            {
-                                Data = new EventGridSerializer(
-                                    cloudEvent.Data,
-                                    _serializer,
-                                    cancellationToken),
-                                Time = cloudEvent.Time,
-                                Datacontenttype = cloudEvent.Datacontenttype,
-                                Dataschema = cloudEvent.Dataschema,
-                                Subject = cloudEvent.Subject
-                            });
+                        if (cloudEvent.Data is IEnumerable<byte> enumerable)
+                        {
+                            newCloudEvent.DataBase64 = Convert.ToBase64String(enumerable.ToArray());
+                        }
+                        else if (cloudEvent.Data is ReadOnlyMemory<byte> memory)
+                        {
+                            newCloudEvent.DataBase64 = Convert.ToBase64String(memory.ToArray());
+                        }
+                        else
+                        {
+                            newCloudEvent.Data = new EventGridSerializer(
+                                cloudEvent.Data,
+                                _serializer,
+                                cancellationToken);
+                        }
                     }
-                    else
-                    {
-                        eventsWithSerializedPayloads.Add(cloudEvent);
-                    }
+                    eventsWithSerializedPayloads.Add(newCloudEvent);
                 }
                 if (async)
                 {
@@ -234,7 +262,7 @@ namespace Azure.Messaging.EventGrid
 
         private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCustomEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishCustomEvents)}");
             scope.Start();
 
             try
@@ -271,30 +299,28 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Creates a SAS token for use with Event Grid service
+        /// Creates a SAS token for use with Event Grid service.
         /// </summary>
-        /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication</param>
-        /// <returns>Returns the generated SAS token string</returns>
-        public string BuildSharedAccessSignature(DateTimeOffset expirationUtc)
+        /// <param name="endpoint">The path for the event grid topic to which you're sending events. For example, "https://TOPIC-NAME.REGION-NAME.eventgrid.azure.net/eventGrid/api/events".</param>
+        /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication.</param>
+        /// <param name="key">Key credential used to generate the token.</param>
+        /// <param name="apiVersion">Service version to use when handling requests made with the SAS token.</param>
+        /// <returns>Returns the generated SAS token string.</returns>
+        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, string apiVersion = "2018-01-01")
         {
             const char Resource = 'r';
             const char Expiration = 'e';
             const char Signature = 's';
 
-            if (_key == null)
-            {
-                throw new NotSupportedException("Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
-            }
-
             var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Reset(_endpoint);
-            uriBuilder.AppendQuery("api-version", _apiVersion, true);
-            string encodedResource = HttpUtility.UrlEncode(_endpoint.ToString());
+            uriBuilder.Reset(endpoint);
+            uriBuilder.AppendQuery("api-version", apiVersion, true);
+            string encodedResource = HttpUtility.UrlEncode(endpoint.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");
             var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
 
             string unsignedSas = $"{Resource}={encodedResource}&{Expiration}={encodedExpirationUtc}";
-            using (var hmac = new HMACSHA256(Convert.FromBase64String(_key.Key)))
+            using (var hmac = new HMACSHA256(Convert.FromBase64String(key.Key)))
             {
                 string signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(unsignedSas)));
                 string encodedSignature = HttpUtility.UrlEncode(signature);
