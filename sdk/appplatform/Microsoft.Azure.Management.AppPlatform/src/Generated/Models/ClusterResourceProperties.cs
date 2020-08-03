@@ -36,14 +36,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="configServerProperties">Config server git properties
         /// of the Service</param>
         /// <param name="trace">Trace properties of the Service</param>
+        /// <param name="networkProfile">Network profile of the Service</param>
         /// <param name="version">Version of the Service</param>
         /// <param name="serviceId">ServiceInstanceEntity GUID which uniquely
         /// identifies a created resource</param>
-        public ClusterResourceProperties(string provisioningState = default(string), ConfigServerProperties configServerProperties = default(ConfigServerProperties), TraceProperties trace = default(TraceProperties), int? version = default(int?), string serviceId = default(string))
+        public ClusterResourceProperties(string provisioningState = default(string), ConfigServerProperties configServerProperties = default(ConfigServerProperties), TraceProperties trace = default(TraceProperties), NetworkProfile networkProfile = default(NetworkProfile), int? version = default(int?), string serviceId = default(string))
         {
             ProvisioningState = provisioningState;
             ConfigServerProperties = configServerProperties;
             Trace = trace;
+            NetworkProfile = networkProfile;
             Version = version;
             ServiceId = serviceId;
             CustomInit();
@@ -73,6 +75,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "trace")]
         public TraceProperties Trace { get; set; }
+
+        /// <summary>
+        /// Gets or sets network profile of the Service
+        /// </summary>
+        [JsonProperty(PropertyName = "networkProfile")]
+        public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
         /// Gets version of the Service

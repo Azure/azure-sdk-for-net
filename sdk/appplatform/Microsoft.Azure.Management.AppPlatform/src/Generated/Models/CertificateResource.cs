@@ -11,40 +11,34 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Service resource
+    /// Certificate resource payload.
     /// </summary>
-    public partial class ServiceResource : TrackedResource
+    public partial class CertificateResource : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ServiceResource class.
+        /// Initializes a new instance of the CertificateResource class.
         /// </summary>
-        public ServiceResource()
+        public CertificateResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceResource class.
+        /// Initializes a new instance of the CertificateResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The GEO location of the resource.</param>
-        /// <param name="tags">Tags of the service which is a list of key value
-        /// pairs that describe the resource.</param>
-        /// <param name="properties">Properties of the Service resource</param>
-        /// <param name="sku">Sku of the Service resource</param>
-        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterResourceProperties properties = default(ClusterResourceProperties), Sku sku = default(Sku))
-            : base(id, name, type, location, tags)
+        /// <param name="properties">Properties of the certificate resource
+        /// payload.</param>
+        public CertificateResource(string id = default(string), string name = default(string), string type = default(string), CertificateProperties properties = default(CertificateProperties))
+            : base(id, name, type)
         {
             Properties = properties;
-            Sku = sku;
             CustomInit();
         }
 
@@ -54,16 +48,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the Service resource
+        /// Gets or sets properties of the certificate resource payload.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public ClusterResourceProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets sku of the Service resource
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public CertificateProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
