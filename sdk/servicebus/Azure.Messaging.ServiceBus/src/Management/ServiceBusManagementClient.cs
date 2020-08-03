@@ -1407,7 +1407,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     var result = await ReadAsString(response).ConfigureAwait(false);
                     QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
                     return Response.FromValue(false, response);
                 }
@@ -1452,7 +1452,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     var result = await ReadAsString(response).ConfigureAwait(false);
                     TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
                     return Response.FromValue(false, response);
                 }
@@ -1500,7 +1500,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     var result = await ReadAsString(response).ConfigureAwait(false);
                     SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
                     return Response.FromValue(false, response);
                 }
@@ -1550,7 +1550,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     var result = await ReadAsString(response).ConfigureAwait(false);
                     RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
                     return Response.FromValue(false, response);
                 }

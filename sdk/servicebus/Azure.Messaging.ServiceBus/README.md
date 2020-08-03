@@ -330,12 +330,12 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 
 Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
 
-```csharp
+```C# Snippet:ServiceBusExceptionFailureReasonUsage
 try
 {
     // Receive messages using the receiver client
 }
-catch (ServiceBusExceptions ex) when
+catch (ServiceBusException ex) when
     (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
 {
     // Take action based on a service timeout
