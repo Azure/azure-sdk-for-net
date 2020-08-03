@@ -132,10 +132,13 @@ namespace Azure.Identity
                     return;
                 }
 
-                var succeededScope = _childScopes.LastOrDefault(kvp => kvp.Value.Exception == default);
-                if (succeededScope.Key != default)
+                if (_childScopes != null)
                 {
-                    SucceedChildScope(succeededScope.Key, succeededScope.Value.StartDateTime);
+                    var succeededScope = _childScopes.LastOrDefault(kvp => kvp.Value.Exception == default);
+                    if (succeededScope.Key != default)
+                    {
+                        SucceedChildScope(succeededScope.Key, succeededScope.Value.StartDateTime);
+                    }
                 }
 
                 scope.Dispose();
@@ -144,6 +147,12 @@ namespace Azure.Identity
 
             public void Fail(string name, in DiagnosticScope scope, Exception exception)
             {
+                if (_childScopes == default)
+                {
+                    scope.Failed(exception);
+                    return;
+                }
+
                 if (IsGroup(name))
                 {
                     if (exception is OperationCanceledException)
@@ -158,6 +167,7 @@ namespace Azure.Identity
                             FailChildScope(childScope.Key, childScope.Value.StartDateTime, childScope.Value.Exception);
                         }
                     }
+
                     scope.Failed(exception);
                 }
                 else

@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
 
-            var factory = new TestDefaultAzureCredentialFactory(default, fileSystem, new TestProcessService(testProcess), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), default);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var process = new TestProcess { Error = "Error" };
 
-            var factory = new TestDefaultAzureCredentialFactory(default, fileSystem, new TestProcessService(process), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(process), default);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -115,7 +115,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
-            var factory = new TestDefaultAzureCredentialFactory(default, fileSystem, new TestProcessService(testProcess), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -145,7 +145,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var factory = new TestDefaultAzureCredentialFactory(default, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), default);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -174,7 +174,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var factory = new TestDefaultAzureCredentialFactory(default, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), default);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;

@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithCliCredential_AzureCliUnknownError()
         {
-            string mockResult = $"mock-result";
+            string mockResult = "mock-result";
             var testProcess = new TestProcess { Error = mockResult };
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));

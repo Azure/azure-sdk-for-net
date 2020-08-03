@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests
         {
             var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
             var token = Guid.NewGuid().ToString();
-            var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": \"{seconds}\" }}";
+            var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": {seconds} }}";
             return (token, expiresOn, json);
         }
 
