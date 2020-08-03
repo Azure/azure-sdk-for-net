@@ -290,8 +290,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new DataLakeAccessPolicy()
             {
-                StartsOn = blobAccessPolicy.StartsOn,
-                ExpiresOn = blobAccessPolicy.ExpiresOn,
+                PolicyStartsOn = blobAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = blobAccessPolicy.PolicyExpiresOn,
                 Permissions = blobAccessPolicy.Permissions
             };
         }
@@ -329,8 +329,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new BlobAccessPolicy()
             {
-                StartsOn = dataLakeAccessPolicy.StartsOn,
-                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                PolicyStartsOn = dataLakeAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = dataLakeAccessPolicy.PolicyExpiresOn,
                 Permissions = dataLakeAccessPolicy.Permissions
             };
         }
