@@ -15,6 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         /// <summary>
         /// The date-time the policy is active.
+        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public System.DateTimeOffset StartsOn
@@ -33,6 +34,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// The date-time the policy expires.
+        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public System.DateTimeOffset ExpiresOn
