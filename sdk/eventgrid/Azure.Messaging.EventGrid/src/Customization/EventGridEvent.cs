@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
-    public partial class EventGridEvent
+    public class EventGridEvent
     {
         /// <summary> Initializes a new instance of EventGridEvent. </summary>
         /// <param name="subject"> A resource path relative to the topic path. </param>
@@ -16,22 +16,10 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="dataVersion"> The schema version of the data object. </param>
         public EventGridEvent(string subject, object data, string eventType, string dataVersion)
         {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-            if (eventType == null)
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-            if (dataVersion == null)
-            {
-                throw new ArgumentNullException(nameof(dataVersion));
-            }
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(eventType, nameof(eventType));
+            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
             Subject = subject;
             Data = data;
@@ -41,18 +29,25 @@ namespace Azure.Messaging.EventGrid.Models
 
         /// <summary> An unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
+
         /// <summary> The resource path of the event source. </summary>
         public string Topic { get; set; }
+
         /// <summary> A resource path relative to the topic path. </summary>
         public string Subject { get; set; }
+
         /// <summary> Event data specific to the event type. </summary>
         public object Data { get; set; }
+
         /// <summary> The type of the event that occurred. </summary>
         public string EventType { get; set; }
+
         /// <summary> The time (in UTC) the event was generated. </summary>
         public DateTimeOffset EventTime { get; set; } = DateTimeOffset.UtcNow;
+
         /// <summary> The schema version of the event metadata. </summary>
         public string MetadataVersion { get; set; }
+
         /// <summary> The schema version of the data object. </summary>
         public string DataVersion { get; set; }
     }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -198,18 +199,21 @@ namespace Azure.Messaging.EventGrid
                         Subject = cloudEvent.Subject
                     };
 
-                    foreach (string key in cloudEvent.ExtensionAttributes.Keys)
+                    foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
                     {
-                        cloudEvent.ExtensionAttributes.TryGetValue(key, out object value);
-                        newCloudEvent.Add(key, new EventGridSerializer(value, _serializer, cancellationToken));
+                        newCloudEvent.Add(kvp.Key, new EventGridSerializer(kvp.Value, _serializer, cancellationToken));
                     }
 
                     // The 'Data' property is optional for CloudEvents
                     if (cloudEvent.Data != null)
                     {
-                        if (cloudEvent.Data.GetType() == typeof(byte[]))
+                        if (cloudEvent.Data is IEnumerable<byte> enumerable)
                         {
-                            newCloudEvent.DataBase64 = Convert.ToBase64String((byte[])cloudEvent.Data);
+                            newCloudEvent.DataBase64 = Convert.ToBase64String(enumerable.ToArray());
+                        }
+                        else if (cloudEvent.Data is ReadOnlyMemory<byte> memory)
+                        {
+                            newCloudEvent.DataBase64 = Convert.ToBase64String(memory.ToArray());
                         }
                         else
                         {
@@ -297,17 +301,21 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Creates a SAS token for use with Event Grid service.
         /// </summary>
-        /// <param name="resource">The path for the event grid topic to which you're sending events. For example, https://TOPIC-NAME.REGION-NAME.eventgrid.azure.net/eventGrid/api/events?api-version=2019-06-01.</param>
+        /// <param name="endpoint">The path for the event grid topic to which you're sending events. For example, "https://TOPIC-NAME.REGION-NAME.eventgrid.azure.net/eventGrid/api/events".</param>
         /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication.</param>
         /// <param name="key">Key credential used to generate the token.</param>
+        /// <param name="apiVersion">Service version to use when handling requests made with the SAS token.</param>
         /// <returns>Returns the generated SAS token string.</returns>
-        public static string BuildSharedAccessSignature(string resource, DateTimeOffset expirationUtc, AzureKeyCredential key)
+        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, string apiVersion = "2018-01-01")
         {
             const char Resource = 'r';
             const char Expiration = 'e';
             const char Signature = 's';
 
-            string encodedResource = HttpUtility.UrlEncode(resource);
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(endpoint);
+            uriBuilder.AppendQuery("api-version", apiVersion, true);
+            string encodedResource = HttpUtility.UrlEncode(endpoint.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");
             var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
 

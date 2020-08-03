@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid
         public EventGridPublisherClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential) { }
         public EventGridPublisherClient(System.Uri endpoint, Azure.Messaging.EventGrid.EventGridSharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridPublisherClientOptions options) { }
-        public static string BuildSharedAccessSignature(string resource, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key) { throw null; }
+        public static string BuildSharedAccessSignature(System.Uri endpoint, System.DateTimeOffset expirationUtc, Azure.AzureKeyCredential key, string apiVersion = "2018-01-01") { throw null; }
         public virtual Azure.Response PublishCloudEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishCloudEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishCustomEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -46,8 +46,6 @@ namespace Azure.Messaging.EventGrid.Models
         public string Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public void AddExtensionAttribute(string key, object value) { }
-        public bool RemoveExtensionAttribute(string key) { throw null; }
     }
     public partial class EventGridEvent
     {
