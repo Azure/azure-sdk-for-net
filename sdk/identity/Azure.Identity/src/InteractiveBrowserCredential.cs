@@ -37,7 +37,7 @@ namespace Azure.Identity
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
-        public InteractiveBrowserCredential(InteractiveBrowserCredentialOptions options)
+        internal InteractiveBrowserCredential(InteractiveBrowserCredentialOptions options)
             : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, null, null)
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
@@ -85,7 +85,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
-        public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
+        internal virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -98,7 +98,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
-        public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -112,7 +112,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        internal virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
@@ -123,7 +123,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }

@@ -34,6 +34,7 @@ QueueProperties createdQueue = await client.CreateQueueAsync(options);
 ```
 
 ### Get a queue
+
 You can retrieve an already created queue by supplying the queue name.
 
 ```C# Snippet:GetQueue
@@ -42,8 +43,7 @@ QueueProperties queue = await client.GetQueueAsync(queueName);
 
 ### Update a queue
 
-In order to update a queue, you will need to pass in the `QueueDescription` after 
-getting it from `GetQueueAsync`.
+In order to update a queue, you will need to pass in the `QueueDescription` after getting it from `GetQueueAsync`.
 
 ```C# Snippet:UpdateQueue
 queue.LockDuration = TimeSpan.FromSeconds(60);
@@ -111,8 +111,7 @@ SubscriptionProperties subscription = await client.GetSubscriptionAsync(topicNam
 
 ### Update a topic
 
-In order to update a topic, you will need to pass in the `TopicDescription` after 
-getting it from `GetTopicAsync`.
+In order to update a topic, you will need to pass in the `TopicDescription` after getting it from `GetTopicAsync`.
 
 ```C# Snippet:UpdateTopic
 topic.UserMetadata = "some metadata";
@@ -121,8 +120,7 @@ TopicProperties updatedTopic = await client.UpdateTopicAsync(topic);
 
 ### Update a subscription
 
-In order to update a subscription, you will need to pass in the 
-`SubscriptionDescription` after getting it from `GetSubscriptionAsync`.
+In order to update a subscription, you will need to pass in the `SubscriptionDescription` after getting it from `GetSubscriptionAsync`.
 
 ```C# Snippet:UpdateSubscription
 subscription.UserMetadata = "some metadata";
@@ -139,8 +137,7 @@ await client.DeleteSubscriptionAsync(topicName, subscriptionName);
 
 ### Delete a topic
 
-A topic can be deleted using the topic name. Deleting a topic will automatically delete the 
-associated subscriptions.
+A topic can be deleted using the topic name. Deleting a topic will automatically delete the associated subscriptions.
 
 ```C# Snippet:DeleteTopic
 await client.DeleteTopicAsync(topicName);

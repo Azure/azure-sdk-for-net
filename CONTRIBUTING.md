@@ -100,6 +100,20 @@ See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/te
 2. Navigate to repository root directory
 3. Invoke `dotnet build eng\service.proj`
 
+### Support for Visual Studio Code & Dev Containers
+
+This repository has been configured with support for Visual Studio Code's dev container extension to make it easier to get started working on code without needing to know about how to setup all the pre-requisites. Configuration for dev containers is contained within the ```.devcontainer``` folder off the root directory.
+
+To get started:
+
+1. Install and configure Docker for your platform.
+2. Install the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) into Visual Studio Code.
+3. Clone the repository to your local workstation.
+4. Open Visual Studio Code at the root of the reposiory.
+5. Select "Reopen in Container" when prompted.
+
+After a few moments of initial configuration Visual Studio Code will launch the container with all dependencies (.NET SDK etc) pre-installed.
+
 ## TO TEST:
 
 ### Single Service from Command Line

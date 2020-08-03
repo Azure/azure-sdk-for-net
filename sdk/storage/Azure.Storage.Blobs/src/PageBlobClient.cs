@@ -1285,6 +1285,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(ClearPages)}",
                         cancellationToken: cancellationToken)
@@ -2006,6 +2007,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(Resize)}",
                         cancellationToken: cancellationToken)
@@ -2222,6 +2224,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}",
                         async: async,
                         cancellationToken: cancellationToken)
@@ -2589,6 +2592,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}",
                         cancellationToken: cancellationToken)

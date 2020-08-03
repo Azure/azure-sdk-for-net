@@ -2170,7 +2170,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             var data = GetRandomBuffer(dataSize);
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act

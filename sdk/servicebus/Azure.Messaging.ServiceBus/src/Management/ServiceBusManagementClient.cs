@@ -21,6 +21,7 @@ namespace Azure.Messaging.ServiceBus.Management
     {
         private readonly string _fullyQualifiedNamespace;
         private readonly HttpRequestAndResponse _httpRequestAndResponse;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// Path to get the namespce properties.
@@ -103,6 +104,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 new ClientDiagnostics(options),
                 tokenCredential,
                 _fullyQualifiedNamespace);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -151,12 +153,14 @@ namespace Azure.Messaging.ServiceBus.Management
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options,
                  authenticationPolicy);
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
-                new ClientDiagnostics(options),
+                _clientDiagnostics,
                 tokenCredential,
                 _fullyQualifiedNamespace);
+
         }
 
         /// <summary>
@@ -169,16 +173,26 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <returns><see cref="NamespaceProperties"/> containing namespace information.</returns>
         public virtual async Task<Response<NamespaceProperties>> GetNamespacePropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response response = await _httpRequestAndResponse.GetEntityAsync(
-                NamespacePath,
-                null,
-                false,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            NamespaceProperties properties = NamespacePropertiesExtensions.ParseFromContent(result);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetNamespaceProperties");
+            scope.Start();
 
-            return Response.FromValue(properties, response);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(
+                    NamespacePath,
+                    null,
+                    false,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                NamespaceProperties properties = NamespacePropertiesExtensions.ParseFromContent(result);
 
+                return Response.FromValue(properties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #region DeleteEntity
@@ -197,12 +211,23 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteQueueAsync(
+        public virtual async Task<Response> DeleteQueueAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
-            return _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.DeleteQueue");
+            scope.Start();
+
+            try
+            {
+                return await _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -219,12 +244,23 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteTopicAsync(
+        public virtual async Task<Response> DeleteTopicAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
-            return _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.DeleteTopic");
+            scope.Start();
+
+            try
+            {
+                return await _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -242,15 +278,25 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteSubscriptionAsync(
+        public virtual async Task<Response> DeleteSubscriptionAsync(
             string topicName,
             string subscriptionName,
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.DeleteSubscription");
+            scope.Start();
 
-            return _httpRequestAndResponse.DeleteEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), cancellationToken);
+            try
+            {
+                return await _httpRequestAndResponse.DeleteEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -269,7 +315,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteRuleAsync(
+        public virtual async Task<Response> DeleteRuleAsync(
             string topicName,
             string subscriptionName,
             string ruleName,
@@ -278,8 +324,18 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             EntityNameFormatter.CheckValidRuleName(ruleName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.DeleteRule");
+            scope.Start();
 
-            return _httpRequestAndResponse.DeleteEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), cancellationToken);
+            try
+            {
+                return await _httpRequestAndResponse.DeleteEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -306,12 +362,21 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetQueue");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            QueueProperties properties = QueuePropertiesExtensions.ParseFromContent(result);
-
-            return Response.FromValue(properties, response);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                QueueProperties properties = QueuePropertiesExtensions.ParseFromContent(result);
+                return Response.FromValue(properties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -334,12 +399,22 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetTopic");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            TopicProperties properties = TopicPropertiesExtensions.ParseFromContent(result);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                TopicProperties properties = TopicPropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(properties, response);
+                return Response.FromValue(properties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -365,12 +440,21 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetSubscription");
+            scope.Start();
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                SubscriptionProperties properties = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            SubscriptionProperties properties = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
-
-            return Response.FromValue(properties, response);
+                return Response.FromValue(properties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -402,11 +486,22 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             EntityNameFormatter.CheckValidRuleName(ruleName);
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            RuleProperties rule = RuleDescriptionExtensions.ParseFromContent(result);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetRule");
+            scope.Start();
 
-            return Response.FromValue(rule, response);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                RuleProperties rule = RuleDescriptionExtensions.ParseFromContent(result);
+
+                return Response.FromValue(rule, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -432,12 +527,22 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetQueueRuntimeProperties");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            QueueRuntimeProperties runtimeProperties = QueueRuntimePropertiesExtensions.ParseFromContent(result);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                QueueRuntimeProperties runtimeProperties = QueueRuntimePropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(runtimeProperties, response);
+                return Response.FromValue(runtimeProperties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -459,12 +564,22 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetTopicRuntimeProperties");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            TopicRuntimeProperties runtimeProperties = TopicRuntimePropertiesExtensions.ParseFromContent(result);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                TopicRuntimeProperties runtimeProperties = TopicRuntimePropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(runtimeProperties, response);
+                return Response.FromValue(runtimeProperties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -490,12 +605,22 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetSubscriptionRuntimeProperties");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            SubscriptionRuntimeProperties runtimeProperties = SubscriptionRuntimePropertiesExtensions.ParseFromContent(topicName, result);
+            try
+            {
+                Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                SubscriptionRuntimeProperties runtimeProperties = SubscriptionRuntimePropertiesExtensions.ParseFromContent(topicName, result);
 
-            return Response.FromValue(runtimeProperties, response);
+                return Response.FromValue(runtimeProperties, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -514,12 +639,25 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<QueueProperties> GetQueuesAsync(CancellationToken cancellationToken = default) =>
-            PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                QueuesPath,
-                nextSkip,
-                rawResult => QueuePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                cancellationToken));
+        public virtual AsyncPageable<QueueProperties> GetQueuesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetQueues");
+            scope.Start();
+
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    QueuesPath,
+                    nextSkip,
+                    rawResult => QueuePropertiesExtensions.ParseCollectionFromContent(rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Retrieves the list of topics present in the namespace.
@@ -534,12 +672,25 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<TopicProperties> GetTopicsAsync(CancellationToken cancellationToken = default) =>
-            PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                TopicsPath,
-                nextSkip,
-                rawResult => TopicPropertiesExtensions.ParseCollectionFromContent(rawResult),
-                cancellationToken));
+        public virtual AsyncPageable<TopicProperties> GetTopicsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetTopic");
+            scope.Start();
+
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    TopicsPath,
+                    nextSkip,
+                    rawResult => TopicPropertiesExtensions.ParseCollectionFromContent(rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Retrieves the list of subscriptions present in the topic.
@@ -560,12 +711,21 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
-                nextSkip,
-                rawResult => SubscriptionPropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
-                cancellationToken));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetSubscription");
+            scope.Start();
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
+                    nextSkip,
+                    rawResult => SubscriptionPropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -590,12 +750,22 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetRules");
+            scope.Start();
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(CultureInfo.CurrentCulture, RulesPath, topicName, subscriptionName),
-                nextSkip,
-                rawResult => RuleDescriptionExtensions.ParseCollectionFromContent(rawResult),
-                cancellationToken));
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    string.Format(CultureInfo.CurrentCulture, RulesPath, topicName, subscriptionName),
+                    nextSkip,
+                    rawResult => RuleDescriptionExtensions.ParseCollectionFromContent(rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -614,12 +784,25 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<QueueRuntimeProperties> GetQueuesRuntimePropertiesAsync(CancellationToken cancellationToken = default) =>
-            PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                QueuesPath,
-                nextSkip,
-                rawResult => QueueRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                cancellationToken));
+        public virtual AsyncPageable<QueueRuntimeProperties> GetQueuesRuntimePropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetQueuesRuntimeProperties");
+            scope.Start();
+
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    QueuesPath,
+                    nextSkip,
+                    rawResult => QueueRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Retrieves the list of runtime properties for topics present in the namespace.
@@ -634,13 +817,24 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<TopicRuntimeProperties> GetTopicsRuntimePropertiesAsync(CancellationToken cancellationToken = default) =>
-            PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                TopicsPath,
-                nextSkip,
-                rawResult => TopicRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                cancellationToken));
-
+        public virtual AsyncPageable<TopicRuntimeProperties> GetTopicsRuntimePropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetTopicsRuntimeProperties");
+            scope.Start();
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    TopicsPath,
+                    nextSkip,
+                    rawResult => TopicRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         /// <summary>
         /// Retrieves the list of runtime properties for subscriptions present in the namespace.
         /// </summary>
@@ -660,12 +854,21 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
-
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
-                nextSkip,
-                rawResult => SubscriptionRuntimePropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
-                cancellationToken));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.GetSubscriptionsRuntimeProperties");
+            scope.Start();
+            try
+            {
+                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                    string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
+                    nextSkip,
+                    rawResult => SubscriptionRuntimePropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
+                    cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -716,20 +919,30 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
-            var queue = new QueueProperties(options);
-            queue.NormalizeDescription(_fullyQualifiedNamespace);
-            var atomRequest = queue.Serialize().ToString();
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                queue.Name,
-                atomRequest,
-                false,
-                queue.ForwardTo,
-                queue.ForwardDeadLetteredMessagesTo,
-                cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.CreateQueue");
+            scope.Start();
+            try
+            {
+                var queue = new QueueProperties(options);
+                queue.NormalizeDescription(_fullyQualifiedNamespace);
+                var atomRequest = queue.Serialize().ToString();
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    queue.Name,
+                    atomRequest,
+                    false,
+                    queue.ForwardTo,
+                    queue.ForwardDeadLetteredMessagesTo,
+                    cancellationToken).ConfigureAwait(false);
 
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
-            return Response.FromValue(description, response);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -776,22 +989,32 @@ namespace Azure.Messaging.ServiceBus.Management
             CreateTopicOptions options,
             CancellationToken cancellationToken = default)
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            var topic = new TopicProperties(options);
+            Argument.AssertNotNull(options, nameof(options));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.CreateTopic");
+            scope.Start();
 
-            var atomRequest = topic.Serialize().ToString();
+            try
+            {
+                var topic = new TopicProperties(options);
+                var atomRequest = topic.Serialize().ToString();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                topic.Name,
-                atomRequest,
-                false,
-                null,
-                null,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    topic.Name,
+                    atomRequest,
+                    false,
+                    null,
+                    null,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(description, response);
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -871,22 +1094,33 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
-            var subscription = new SubscriptionProperties(options);
-            subscription.NormalizeDescription(_fullyQualifiedNamespace);
-            subscription.Rule = new RuleProperties(rule);
-            var atomRequest = subscription.Serialize().ToString();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.CreateSubscription");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
-                atomRequest,
-                false,
-                subscription.ForwardTo,
-                subscription.ForwardDeadLetteredMessagesTo,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+            try
+            {
+                var subscription = new SubscriptionProperties(options);
+                subscription.NormalizeDescription(_fullyQualifiedNamespace);
+                subscription.Rule = new RuleProperties(rule);
+                var atomRequest = subscription.Serialize().ToString();
 
-            return Response.FromValue(description, response);
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
+                    atomRequest,
+                    false,
+                    subscription.ForwardTo,
+                    subscription.ForwardDeadLetteredMessagesTo,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -915,20 +1149,32 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             options = options ?? throw new ArgumentNullException(nameof(options));
-            var rule = new RuleProperties(options);
-            var atomRequest = rule.Serialize().ToString();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                EntityNameFormatter.FormatRulePath(topicName, subscriptionName, rule.Name),
-                atomRequest,
-                false,
-                null,
-                null,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.CreateRule");
+            scope.Start();
 
-            return Response.FromValue(description, response);
+            try
+            {
+                var rule = new RuleProperties(options);
+                var atomRequest = rule.Serialize().ToString();
+
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    EntityNameFormatter.FormatRulePath(topicName, subscriptionName, rule.Name),
+                    atomRequest,
+                    false,
+                    null,
+                    null,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion CreateEntity
@@ -955,20 +1201,31 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             queue = queue ?? throw new ArgumentNullException(nameof(queue));
 
-            queue.NormalizeDescription(_fullyQualifiedNamespace);
-            var atomRequest = queue.Serialize().ToString();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.UpdateQueue");
+            scope.Start();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                queue.Name,
-                atomRequest,
-                true,
-                queue.ForwardTo,
-                queue.ForwardDeadLetteredMessagesTo,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+            try
+            {
+                queue.NormalizeDescription(_fullyQualifiedNamespace);
+                var atomRequest = queue.Serialize().ToString();
 
-            return Response.FromValue(description, response);
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    queue.Name,
+                    atomRequest,
+                    true,
+                    queue.ForwardTo,
+                    queue.ForwardDeadLetteredMessagesTo,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -991,20 +1248,30 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             topic = topic ?? throw new ArgumentNullException(nameof(topic));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.UpdateTopic");
+            scope.Start();
 
-            var atomRequest = topic.Serialize().ToString();
+            try
+            {
+                var atomRequest = topic.Serialize().ToString();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                topic.Name,
-                atomRequest,
-                true,
-                forwardTo: null,
-                fwdDeadLetterTo: null,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    topic.Name,
+                    atomRequest,
+                    true,
+                    forwardTo: null,
+                    fwdDeadLetterTo: null,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
 
-            return Response.FromValue(description, response);
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1027,20 +1294,32 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             subscription = subscription ?? throw new ArgumentNullException(nameof(subscription));
-            subscription.NormalizeDescription(_fullyQualifiedNamespace);
-            var atomRequest = subscription.Serialize().ToString();
 
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
-                atomRequest,
-                true,
-                subscription.ForwardTo,
-                subscription.ForwardDeadLetteredMessagesTo,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.UpdateSubscription");
+            scope.Start();
 
-            return Response.FromValue(description, response);
+            try
+            {
+                subscription.NormalizeDescription(_fullyQualifiedNamespace);
+                var atomRequest = subscription.Serialize().ToString();
+
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
+                    atomRequest,
+                    true,
+                    subscription.ForwardTo,
+                    subscription.ForwardDeadLetteredMessagesTo,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1067,21 +1346,33 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             rule = rule ?? throw new ArgumentNullException(nameof(rule));
-            EntityNameFormatter.CheckValidTopicName(topicName);
-            EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
-            var atomRequest = rule.Serialize().ToString();
-            Response response = await _httpRequestAndResponse.PutEntityAsync(
-                EntityNameFormatter.FormatRulePath(topicName, subscriptionName, rule.Name),
-                atomRequest,
-                true,
-                null,
-                null,
-                cancellationToken).ConfigureAwait(false);
-            var result = await ReadAsString(response).ConfigureAwait(false);
-            RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.UpdateRule");
+            scope.Start();
 
-            return Response.FromValue(description, response);
+            try
+            {
+                EntityNameFormatter.CheckValidTopicName(topicName);
+                EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
+
+                var atomRequest = rule.Serialize().ToString();
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
+                    EntityNameFormatter.FormatRulePath(topicName, subscriptionName, rule.Name),
+                    atomRequest,
+                    true,
+                    null,
+                    null,
+                    cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+
+                return Response.FromValue(description, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion
@@ -1105,20 +1396,29 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
-            Response response = null;
-
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.QueueExists");
+            scope.Start();
             try
             {
-                response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
-            }
-            catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
-            {
-                return Response.FromValue(false, response);
-            }
+                Response response = null;
+                try
+                {
+                    response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                    var result = await ReadAsString(response).ConfigureAwait(false);
+                    QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                {
+                    return Response.FromValue(false, response);
+                }
 
-            return Response.FromValue(true, response);
+                return Response.FromValue(true, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1139,20 +1439,31 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
-            Response response = null;
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.TopicExists");
+            scope.Start();
 
             try
             {
-                response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
-            }
-            catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
-            {
-                return Response.FromValue(false, response);
-            }
+                Response response = null;
 
-            return Response.FromValue(true, response);
+                try
+                {
+                    response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                    var result = await ReadAsString(response).ConfigureAwait(false);
+                    TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                {
+                    return Response.FromValue(false, response);
+                }
+
+                return Response.FromValue(true, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1176,20 +1487,31 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
-            Response response = null;
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.SubscriptionExists");
+            scope.Start();
 
             try
             {
-                response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
-            }
-            catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
-            {
-                return Response.FromValue(false, response);
-            }
+                Response response = null;
 
-            return Response.FromValue(true, response);
+                try
+                {
+                    response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
+                    var result = await ReadAsString(response).ConfigureAwait(false);
+                    SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                {
+                    return Response.FromValue(false, response);
+                }
+
+                return Response.FromValue(true, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1215,20 +1537,31 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
-            Response response = null;
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusManagementClient)}.RuleExists");
+            scope.Start();
 
             try
             {
-                response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
-            }
-            catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
-            {
-                return Response.FromValue(false, response);
-            }
+                Response response = null;
 
-            return Response.FromValue(true, response);
+                try
+                {
+                    response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
+                    var result = await ReadAsString(response).ConfigureAwait(false);
+                    RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                {
+                    return Response.FromValue(false, response);
+                }
+
+                return Response.FromValue(true, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         #endregion

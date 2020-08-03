@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Internal.Avro;
 
 namespace Azure.Storage.Blobs.ChangeFeed
