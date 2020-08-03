@@ -262,7 +262,7 @@ namespace Azure.Data.Tables.Tests
                     {
                         throw;
                     }
-                    await Task.Delay(750);
+                    await Task.Delay(5000);
                 }
             }
         }
