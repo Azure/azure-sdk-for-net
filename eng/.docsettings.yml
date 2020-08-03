@@ -154,7 +154,7 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Queues/README.md','#11492']
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
   - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
-  - ['sdk/core/Azure.Core.TestFramework', '#5499']
+  - ['sdk/core/Azure.Core.TestFramework', '#11492']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
