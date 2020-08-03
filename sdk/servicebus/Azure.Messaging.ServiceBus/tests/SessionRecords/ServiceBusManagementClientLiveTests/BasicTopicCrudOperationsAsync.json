@@ -1,0 +1,273 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "1499",
+        "Content-Type": "application/atom\u002Bxml",
+        "traceparent": "00-177c840471b8be4086bf9dec3ccc02a2-f1a24adf53ffa440-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f857ae802fe4955d48991771f474320b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CDefaultMessageTimeToLive\u003EP2D\u003C/DefaultMessageTimeToLive\u003E\r\n",
+        "      \u003CMaxSizeInMegabytes\u003E2048\u003C/MaxSizeInMegabytes\u003E\r\n",
+        "      \u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\r\n",
+        "      \u003CDuplicateDetectionHistoryTimeWindow\u003EPT1M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\r\n",
+        "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CAuthorizationRules\u003E\r\n",
+        "        \u003CAuthorizationRule p5:type=\u0022SharedAccessAuthorizationRule\u0022 xmlns:p5=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "          \u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\r\n",
+        "          \u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\r\n",
+        "          \u003CRights\u003E\r\n",
+        "            \u003CAccessRights\u003EManage\u003C/AccessRights\u003E\r\n",
+        "            \u003CAccessRights\u003ESend\u003C/AccessRights\u003E\r\n",
+        "            \u003CAccessRights\u003EListen\u003C/AccessRights\u003E\r\n",
+        "          \u003C/Rights\u003E\r\n",
+        "          \u003CKeyName\u003EallClaims\u003C/KeyName\u003E\r\n",
+        "          \u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\r\n",
+        "          \u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\r\n",
+        "        \u003C/AuthorizationRule\u003E\r\n",
+        "      \u003C/AuthorizationRules\u003E\r\n",
+        "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
+        "      \u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\r\n",
+        "      \u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\r\n",
+        "      \u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\r\n",
+        "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "    \u003C/TopicDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:51 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ebasictopiccrudoperations1f3aa775\u003C/title\u003E\u003Cpublished\u003E2020-08-01T01:26:52Z\u003C/published\u003E\u003Cupdated\u003E2020-08-01T01:26:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP2D\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E2048\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT1M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003CAuthorizationRule i:type=\u0022SharedAccessAuthorizationRule\u0022\u003E\u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\u003CRights\u003E\u003CAccessRights\u003EManage\u003C/AccessRights\u003E\u003CAccessRights\u003ESend\u003C/AccessRights\u003E\u003CAccessRights\u003EListen\u003C/AccessRights\u003E\u003C/Rights\u003E\u003CKeyName\u003EallClaims\u003C/KeyName\u003E\u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\u003C/AuthorizationRule\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-01T01:26:52.013Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-01T01:26:52.06Z\u003C/UpdatedAt\u003E\u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3036e337a52a4e4f8785ed626e2d54f1-648ca24111967442-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "b5b4520b2950c4c333fb5ceb691caa4b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:51 GMT",
+        "ETag": "637318420120600000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ebasictopiccrudoperations1f3aa775\u003C/title\u003E\u003Cpublished\u003E2020-08-01T01:26:52Z\u003C/published\u003E\u003Cupdated\u003E2020-08-01T01:26:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP2D\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E2048\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT1M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003CAuthorizationRule i:type=\u0022SharedAccessAuthorizationRule\u0022\u003E\u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\u003CRights\u003E\u003CAccessRights\u003EManage\u003C/AccessRights\u003E\u003CAccessRights\u003ESend\u003C/AccessRights\u003E\u003CAccessRights\u003EListen\u003C/AccessRights\u003E\u003C/Rights\u003E\u003CKeyName\u003EallClaims\u003C/KeyName\u003E\u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\u003C/AuthorizationRule\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-01T01:26:52.013Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-01T01:26:52.06Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CSubscriptionCount\u003E0\u003C/SubscriptionCount\u003E\u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "1836",
+        "Content-Type": "application/atom\u002Bxml",
+        "If-Match": "*",
+        "traceparent": "00-6134da2ff182524395f5a07f59c7bdb7-e9c704313b544040-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "26a93e96f52f467049a4d75f9b4ed6cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CDefaultMessageTimeToLive\u003EP3D\u003C/DefaultMessageTimeToLive\u003E\r\n",
+        "      \u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\r\n",
+        "      \u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\r\n",
+        "      \u003CDuplicateDetectionHistoryTimeWindow\u003EPT2M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\r\n",
+        "      \u003CEnableBatchedOperations\u003Efalse\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CAuthorizationRules\u003E\r\n",
+        "        \u003CAuthorizationRule p5:type=\u0022SharedAccessAuthorizationRule\u0022 xmlns:p5=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "          \u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\r\n",
+        "          \u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\r\n",
+        "          \u003CRights\u003E\r\n",
+        "            \u003CAccessRights\u003EManage\u003C/AccessRights\u003E\r\n",
+        "            \u003CAccessRights\u003ESend\u003C/AccessRights\u003E\r\n",
+        "            \u003CAccessRights\u003EListen\u003C/AccessRights\u003E\r\n",
+        "          \u003C/Rights\u003E\r\n",
+        "          \u003CKeyName\u003EallClaims\u003C/KeyName\u003E\r\n",
+        "          \u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\r\n",
+        "          \u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\r\n",
+        "        \u003C/AuthorizationRule\u003E\r\n",
+        "      \u003C/AuthorizationRules\u003E\r\n",
+        "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
+        "      \u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\r\n",
+        "      \u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\r\n",
+        "      \u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\r\n",
+        "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "      \u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\r\n",
+        "      \u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\r\n",
+        "      \u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\r\n",
+        "      \u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\r\n",
+        "      \u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\r\n",
+        "    \u003C/TopicDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:51 GMT",
+        "ETag": "637318420120600000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ebasictopiccrudoperations1f3aa775\u003C/title\u003E\u003Cupdated\u003E2020-08-01T01:26:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP3D\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT2M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Efalse\u003C/EnableBatchedOperations\u003E\u003CAuthorizationRules\u003E\u003CAuthorizationRule i:type=\u0022SharedAccessAuthorizationRule\u0022\u003E\u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\u003CRights\u003E\u003CAccessRights\u003EManage\u003C/AccessRights\u003E\u003CAccessRights\u003ESend\u003C/AccessRights\u003E\u003CAccessRights\u003EListen\u003C/AccessRights\u003E\u003C/Rights\u003E\u003CKeyName\u003EallClaims\u003C/KeyName\u003E\u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\u003C/AuthorizationRule\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8f7d2fa3eb03a5438c8dd40dfbe3217b-3cc9e4087b2c5e4b-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "81fe85a6820356deeb93c5e8d2722b2b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:51 GMT",
+        "ETag": "637318420126270000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ebasictopiccrudoperations1f3aa775\u003C/title\u003E\u003Cpublished\u003E2020-08-01T01:26:52Z\u003C/published\u003E\u003Cupdated\u003E2020-08-01T01:26:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP3D\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT2M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Efalse\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003CAuthorizationRule i:type=\u0022SharedAccessAuthorizationRule\u0022\u003E\u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\u003CRights\u003E\u003CAccessRights\u003EManage\u003C/AccessRights\u003E\u003CAccessRights\u003ESend\u003C/AccessRights\u003E\u003CAccessRights\u003EListen\u003C/AccessRights\u003E\u003C/Rights\u003E\u003CKeyName\u003EallClaims\u003C/KeyName\u003E\u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\u003C/AuthorizationRule\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-01T01:26:52.013Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-01T01:26:52.627Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CSubscriptionCount\u003E0\u003C/SubscriptionCount\u003E\u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/$Resources/topics?api-version=2017-04\u0026enrich=False\u0026$skip=0\u0026$top=100",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "b6dacbee0bca16dce16e6cab526328e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:52 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003ETopics\u003C/title\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/$Resources/topics?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u003C/id\u003E\u003Cupdated\u003E2020-08-01T01:26:53Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/$Resources/topics?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022/\u003E\u003Centry xml:base=\u0022https://jolovservicebus.servicebus.windows.net/$Resources/topics?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ebasictopiccrudoperations1f3aa775\u003C/title\u003E\u003Cpublished\u003E2020-08-01T01:26:52Z\u003C/published\u003E\u003Cupdated\u003E2020-08-01T01:26:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022../basictopiccrudoperations1f3aa775?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP3D\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Etrue\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT2M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Efalse\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003CAuthorizationRule i:type=\u0022SharedAccessAuthorizationRule\u0022\u003E\u003CClaimType\u003ESharedAccessKey\u003C/ClaimType\u003E\u003CClaimValue\u003ENone\u003C/ClaimValue\u003E\u003CRights\u003E\u003CAccessRights\u003EManage\u003C/AccessRights\u003E\u003CAccessRights\u003ESend\u003C/AccessRights\u003E\u003CAccessRights\u003EListen\u003C/AccessRights\u003E\u003C/Rights\u003E\u003CKeyName\u003EallClaims\u003C/KeyName\u003E\u003CPrimaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/PrimaryKey\u003E\u003CSecondaryKey\u003ESanitizedSanitizedSanitizedSanitizedSanitize\u003C/SecondaryKey\u003E\u003C/AuthorizationRule\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-01T01:26:52.013Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-01T01:26:52.627Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CUserMetadata\u003EBasicTopicCrudOperations\u003C/UserMetadata\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CSubscriptionCount\u003E0\u003C/SubscriptionCount\u003E\u003CAutoDeleteOnIdle\u003EPT1H\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E\u003C/feed\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-98b42c0135287f428c1847730590880f-eeeea293f6ca4248-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "e4449024291e144860533a9c2f8873d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Sat, 01 Aug 2020 01:26:53 GMT",
+        "ETag": "637318420126270000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-18afae49f7d05f4285138a8980f1aa45-bad9de5791187546-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d070ab7820739a01a9e89f9516320387",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:53 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:bafd1bda-1b54-4a6a-b08d-d31a2cc47f6d;id=73726\u003C/id\u003E\u003Cupdated\u003E2020-08-01T01:26:54Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
+    },
+    {
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/basictopiccrudoperations1f3aa775?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a9ed3596c97aea4383a8c32ea050270a-1c6d638202841c4a-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200731.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "42c3e06a472dc50d83c65577d03fe659",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
+        "Date": "Sat, 01 Aug 2020 01:26:55 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:bafd1bda-1b54-4a6a-b08d-d31a2cc47f6d;id=73727\u003C/id\u003E\u003Cupdated\u003E2020-08-01T01:26:55Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "275336405",
+    "SERVICE_BUS_NAMESPACE_CONNECTION_STRING": "Endpoint=sb://jolovservicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
+  }
+}

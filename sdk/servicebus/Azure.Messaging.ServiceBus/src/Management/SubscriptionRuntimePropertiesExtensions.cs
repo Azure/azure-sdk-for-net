@@ -71,9 +71,6 @@ namespace Azure.Messaging.ServiceBus.Management
                                 case "DeadLetterMessageCount":
                                     subscriptionRuntimeInfo.DeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
-                                case "ScheduledMessageCount":
-                                    subscriptionRuntimeInfo.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
-                                    break;
                                 case "TransferMessageCount":
                                     subscriptionRuntimeInfo.TransferMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;

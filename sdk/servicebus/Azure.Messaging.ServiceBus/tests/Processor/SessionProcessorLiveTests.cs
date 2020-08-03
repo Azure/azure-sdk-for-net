@@ -1316,7 +1316,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             }
                         }
                         if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession ||
-                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession)
+                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession ||
+                            eventArgs.ErrorSource == ServiceBusErrorSource.Receive)
                         {
                             // add small delay to prevent race condition that can result in error handler
                             // being called twice as the processor will immediately try to accept the session again.

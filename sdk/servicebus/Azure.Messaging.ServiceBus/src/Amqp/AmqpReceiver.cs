@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    HasLinkCommunicationError(link)))
+                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached

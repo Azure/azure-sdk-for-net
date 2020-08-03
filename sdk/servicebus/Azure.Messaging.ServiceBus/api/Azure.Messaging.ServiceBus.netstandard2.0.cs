@@ -822,7 +822,6 @@ namespace Azure.Messaging.ServiceBus.Management
         public long ActiveMessageCount { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public long DeadLetterMessageCount { get { throw null; } }
-        public long ScheduledMessageCount { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public string TopicName { get { throw null; } }
         public long TotalMessageCount { get { throw null; } }
@@ -857,6 +856,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public System.DateTimeOffset AccessedAt { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Name { get { throw null; } }
+        public long ScheduledMessageCount { get { throw null; } }
         public long SizeInBytes { get { throw null; } }
         public int SubscriptionCount { get { throw null; } }
         public System.DateTimeOffset UpdatedAt { get { throw null; } }

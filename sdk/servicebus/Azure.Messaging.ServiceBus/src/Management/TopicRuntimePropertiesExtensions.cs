@@ -64,6 +64,16 @@ namespace Azure.Messaging.ServiceBus.Management
                         topicRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
+                        foreach (var countElement in element.Elements())
+                        {
+                            switch (countElement.Name.LocalName)
+                            {
+                                case "ScheduledMessageCount":
+                                    topicRuntimeInfo.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    break;
+                            }
+                        }
+
                         break;
                 }
             }
