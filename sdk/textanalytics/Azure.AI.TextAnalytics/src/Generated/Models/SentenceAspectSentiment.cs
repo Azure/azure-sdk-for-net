@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Aspect level sentiment for the aspect in the sentence. </summary>
-    public readonly partial struct SentenceAspectSentiment : IEquatable<SentenceAspectSentiment>
+    internal readonly partial struct SentenceAspectSentiment : IEquatable<SentenceAspectSentiment>
     {
         private readonly string _value;
 

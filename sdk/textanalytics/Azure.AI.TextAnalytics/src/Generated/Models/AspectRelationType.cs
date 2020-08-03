@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The type related to the aspect. </summary>
-    public readonly partial struct AspectRelationType : IEquatable<AspectRelationType>
+    internal readonly partial struct AspectRelationType : IEquatable<AspectRelationType>
     {
         private readonly string _value;
 
