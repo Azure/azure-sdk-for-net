@@ -70,6 +70,10 @@ namespace Azure.Core.Pipeline
                         message.Request.Content.WriteTo(requestStream, message.CancellationToken);
                     }
                 }
+                else
+                {
+                    request.ContentLength = 0;
+                }
 
                 WebResponse webResponse;
                 try
