@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ConcurrentAppendAsync()
+        public async Task AppendAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -245,7 +245,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
 
             // Act
-            await file.ConcurrentAppendAsync(stream);
+            await file.AppendAsync(stream);
 
             // Assert
             Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
@@ -256,7 +256,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ConcurrentAppendAsync_Error()
+        public async Task AppendAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -273,7 +273,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ConcurrentAppendAsync_ContentHash()
+        public async Task AppendAsync_ContentHash()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -290,7 +290,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ConcurrentAppendAsync_ProgressReporting()
+        public async Task AppendAsync_ProgressReporting()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -312,7 +312,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ConcurrentAppendAsync_CreateIfNotExists()
+        public async Task AppendAsync_CreateIfNotExists()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -322,7 +322,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
 
             // Act
-            await file.ConcurrentAppendAsync(stream, createIfNotExists: true);
+            await file.AppendAsync(stream, createIfNotExists: true);
 
             // Assert
             Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();

@@ -523,9 +523,9 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Create If Not Exists
 
-        #region Concurrent Append
+        #region Append
         /// <summary>
-        /// The <see cref="ConcurrentAppend"/> operation uploads data to be appended to a file.
+        /// The <see cref="Append"/> operation uploads data to be appended to a file.
         /// Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
         /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="DataLakeFileClient.Upload(Stream)"/>.
@@ -562,20 +562,20 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response ConcurrentAppend(
+        public virtual Response Append(
             Stream content,
             bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(ConcurrentAppend)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Append)}");
 
             try
             {
                 scope.Start();
 
-                return ConcurrentAppendInternal(
+                return AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
@@ -596,7 +596,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ConcurrentAppendAsync"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
+        /// The <see cref="AppendAsync"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
         /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="DataLakeFileClient.UploadAsync(Stream)"/>.
         ///
@@ -632,20 +632,20 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> ConcurrentAppendAsync(
+        public virtual async Task<Response> AppendAsync(
             Stream content,
             bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(ConcurrentAppend)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Append)}");
 
             try
             {
                 scope.Start();
 
-                return await ConcurrentAppendInternal(
+                return await AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
@@ -666,7 +666,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ConcurrentAppendInternal"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
+        /// The <see cref="AppendInternal"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
         ///
         /// For more information, see
@@ -704,7 +704,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response> ConcurrentAppendInternal(
+        internal virtual async Task<Response> AppendInternal(
             Stream content,
             bool createIfNotExists,
             byte[] contentHash,
@@ -747,6 +747,6 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
-        #endregion Concurrent Append
+        #endregion Append
     }
 }

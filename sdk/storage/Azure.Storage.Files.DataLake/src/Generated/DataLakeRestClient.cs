@@ -4119,7 +4119,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Optional.  Indicates concurrent append mode
     /// </summary>
-    public enum AppendMode
+    internal enum AppendMode
     {
         /// <summary>
         /// autoCreate

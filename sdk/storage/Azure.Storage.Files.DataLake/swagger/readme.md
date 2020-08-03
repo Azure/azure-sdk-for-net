@@ -303,4 +303,13 @@ directive:
     $.patch.responses["202"]["x-az-response-name"] = "PathConcurrentAppendInternal";
 ```
 
+### Hide PathSetAccessControlRecursiveMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.AppendMode
+  transform: >
+    $["x-az-public"] = false;
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)
