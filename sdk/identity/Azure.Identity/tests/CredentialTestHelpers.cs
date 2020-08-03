@@ -14,7 +14,7 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests
 {
-    internal class CredentialTestHelpers
+    internal static class CredentialTestHelpers
     {
         public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
 
