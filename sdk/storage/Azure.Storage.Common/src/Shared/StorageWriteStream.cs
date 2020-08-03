@@ -20,7 +20,8 @@ namespace Azure.Storage.Shared
         protected StorageWriteStream(
             long position,
             long bufferSize,
-            IProgress<long> progressHandler)
+            IProgress<long> progressHandler,
+            PooledMemoryStream buffer = null)
         {
             _position = position;
             _bufferSize = bufferSize;
@@ -30,7 +31,7 @@ namespace Azure.Storage.Shared
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
             }
 
-            _buffer = new PooledMemoryStream(
+            _buffer = buffer ?? new PooledMemoryStream(
                 arrayPool: ArrayPool<byte>.Shared,
                 absolutePosition: 0,
                 maxArraySize: (int)Math.Min(Constants.MB, bufferSize));

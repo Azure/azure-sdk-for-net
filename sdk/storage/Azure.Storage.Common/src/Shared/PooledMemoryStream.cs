@@ -62,6 +62,11 @@ namespace Azure.Storage.Shared
         }
 
         /// <summary>
+        /// Parameterless constructor for mocking.
+        /// </summary>
+        public PooledMemoryStream() { }
+
+        /// <summary>
         /// Buffers a portion of the given stream, returning the buffered stream partition.
         /// </summary>
         /// <param name="stream">
