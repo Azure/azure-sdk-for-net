@@ -1480,36 +1480,18 @@ namespace Azure.Storage.Blobs.Specialized
                 scope.Start();
 
                 long position = 0;
-                ETag eTag;
 
-                if (options?.Overwrite == true)
-                {
-                    Response<BlobContentInfo> createResponse = await CreateInternal(
-                        httpHeaders: default,
-                        metadata: default,
-                        tags: default,
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
+                    conditions: options?.Conditions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                    eTag = createResponse.Value.ETag;
-                }
-                else
-                {
-                    Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    position = blobPropertiesResponse.Value.ContentLength;
-                    eTag = blobPropertiesResponse.Value.ETag;
-                }
+                position = blobPropertiesResponse.Value.ContentLength;
 
                 AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
                 {
-                    IfMatch = eTag,
+                    IfMatch = blobPropertiesResponse.Value.ETag,
                     LeaseId = options?.Conditions?.LeaseId,
                     IfAppendPositionEqual = options?.Conditions?.IfAppendPositionEqual,
                     IfMaxSizeLessThanOrEqual = options?.Conditions?.IfMaxSizeLessThanOrEqual

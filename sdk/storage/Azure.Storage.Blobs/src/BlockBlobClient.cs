@@ -2027,8 +2027,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
-                async: false,
                 options: options,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
@@ -2056,8 +2056,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
-                async: true,
                 options: options,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2065,11 +2065,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.  If the blob exists,
         /// it will be overwritten.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2083,8 +2083,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
-            bool async,
             BlockBlobOpenWriteOptions options,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");

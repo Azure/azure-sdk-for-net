@@ -1,47 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmccprodca.blob.core.windows.net/test-container-d327f606-8dd7-6d97-fab4-57a7bfbd4eff/test-blob-1b849689-77f2-2f7c-2ff1-6d24520a268c",
-      "RequestMethod": "PUT",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-d327f606-8dd7-6d97-fab4-57a7bfbd4eff/test-blob-1b849689-77f2-2f7c-2ff1-6d24520a268c",
+      "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-f99646255ca46c43a57854b59c65b9c4-c9483692438db541-00",
+        "traceparent": "00-8b9607133564e049abdd9732dd6daf3d-33e3e2b8da5a2b4d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200727.1",
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200803.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-blob-content-length": "0",
-        "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "c3694fdb-ee15-8ed7-79f8-a3e61f731bef",
-        "x-ms-date": "Mon, 27 Jul 2020 23:03:12 GMT",
+        "x-ms-date": "Mon, 03 Aug 2020 20:20:01 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "225",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 27 Jul 2020 23:03:13 GMT",
+        "Date": "Mon, 03 Aug 2020 20:20:01 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "c3694fdb-ee15-8ed7-79f8-a3e61f731bef",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "b10f4664-201e-005b-4f6a-64a8b9000000",
+        "x-ms-request-id": "36734ef5-d01e-0008-14d3-69c0cd000000",
         "x-ms-version": "2019-12-12"
       },
-      "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:b10f4664-201e-005b-4f6a-64a8b9000000\n",
-        "Time:2020-07-27T23:03:13.2066747Z\u003C/Message\u003E\u003C/Error\u003E"
-      ]
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "611109402",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmccprodca\nU2FuaXRpemVk\nhttps://seanmccprodca.blob.core.windows.net\nhttps://seanmccprodca.file.core.windows.net\nhttps://seanmccprodca.queue.core.windows.net\nhttps://seanmccprodca.table.core.windows.net\n\n\n\n\nhttps://seanmccprodca-secondary.blob.core.windows.net\nhttps://seanmccprodca-secondary.file.core.windows.net\nhttps://seanmccprodca-secondary.queue.core.windows.net\nhttps://seanmccprodca-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmccprodca.blob.core.windows.net/;QueueEndpoint=https://seanmccprodca.queue.core.windows.net/;FileEndpoint=https://seanmccprodca.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmccprodca-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmccprodca-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmccprodca-secondary.file.core.windows.net/;AccountName=seanmccprodca;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
   }
 }

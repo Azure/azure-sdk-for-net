@@ -1440,39 +1440,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_Overwrite()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
-
-            byte[] originalData = GetRandomBuffer(Constants.KB);
-            using Stream originalStream = new MemoryStream(originalData);
-
-            await blob.AppendBlockAsync(content: originalStream);
-
-            byte[] newData = GetRandomBuffer(Constants.KB);
-            using Stream newStream = new MemoryStream(newData);
-            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-            {
-                Overwrite = true
-            };
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(options: options);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, newData.Length));
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(newData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
-        }
-
-        [Test]
         public async Task OpenWriteAsync_AppendExistingBlob()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

@@ -3838,37 +3838,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenWriteAsync_Overwrite()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-
-            byte[] originalData = GetRandomBuffer(Constants.KB);
-            using Stream originalStream = new MemoryStream(originalData);
-            await file.UploadAsync(originalStream);
-
-            byte[] newData = GetRandomBuffer(Constants.KB);
-            using Stream newStream = new MemoryStream(newData);
-            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
-            {
-                Overwrite = true
-            };
-
-            // Act
-            Stream openWriteStream = await file.OpenWriteAsync(options: options);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            Response<FileDownloadInfo> result = await file.ReadAsync();
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(newData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
-        }
-
-        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_AppendExistingFile()
         {

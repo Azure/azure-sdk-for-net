@@ -2916,9 +2916,9 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
-                async: false,
                 position: position,
                 options: options,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
@@ -2949,23 +2949,23 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
-                async: true,
                 position: position,
                 options: options,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="position">
         /// The offset within the page blob to begin writing from.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2979,9 +2979,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
-            bool async,
             long position,
             PageBlobOpenWriteOptions options,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
@@ -2990,37 +2990,15 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Start();
 
-                ETag? eTag = null;
-
-                if (options?.Overwrite == true)
-                {
-                    Response<BlobContentInfo> response = await CreateInternal(
-                        size: options.Size,
-                        sequenceNumber: default,
-                        httpHeaders: default,
-                        metadata: default,
-                        tags: default,
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    eTag = response.Value.ETag;
-                }
-                else
-                {
-                    Response<BlobProperties> response = await GetPropertiesInternal(
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    eTag = response.Value.ETag;
-                }
+                Response<BlobProperties> response = await GetPropertiesInternal(
+                    conditions: options?.Conditions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 PageBlobRequestConditions conditions = new PageBlobRequestConditions()
                 {
-                    IfMatch = eTag,
+                    IfMatch = response.Value.ETag,
                     LeaseId = options?.Conditions?.LeaseId,
                     IfSequenceNumberEqual = options?.Conditions?.IfSequenceNumberEqual,
                     IfSequenceNumberLessThan = options?.Conditions?.IfSequenceNumberLessThan,

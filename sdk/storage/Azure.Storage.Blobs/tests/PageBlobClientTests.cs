@@ -2753,40 +2753,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_Overwrite()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            long size = Constants.KB;
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, size);
-
-            byte[] originalData = GetRandomBuffer(Constants.KB);
-            using Stream originalStream = new MemoryStream(originalData);
-
-            await blob.UploadPagesAsync(originalStream, offset: 0);
-
-            byte[] newData = GetRandomBuffer(Constants.KB);
-            using Stream newStream = new MemoryStream(newData);
-
-            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
-            {
-                Overwrite = true,
-                Size = size
-            };
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options: options);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(newData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
-        }
-
-        [Test]
         public async Task OpenWriteAsync_UpdateExistingBlob()
         {
             // Arrange
@@ -2825,14 +2791,10 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
-            {
-                Overwrite = true
-            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.OpenWriteAsync(position: 0, options: options),
+                blob.OpenWriteAsync(position: 0),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 

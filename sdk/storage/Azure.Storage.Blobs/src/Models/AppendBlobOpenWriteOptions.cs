@@ -12,12 +12,6 @@ namespace Azure.Storage.Blobs.Models
     public class AppendBlobOpenWriteOptions
     {
         /// <summary>
-        /// Whether the upload should overwrite any existing blobs.
-        /// The default value is false.
-        /// </summary>
-        public bool Overwrite { get; set; }
-
-        /// <summary>
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4 MB. See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
         /// </summary>

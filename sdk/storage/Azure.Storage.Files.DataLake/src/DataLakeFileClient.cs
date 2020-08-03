@@ -3901,8 +3901,8 @@ namespace Azure.Storage.Files.DataLake
             DataLakeFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
-                async: false,
                 options: options,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
@@ -3929,19 +3929,19 @@ namespace Azure.Storage.Files.DataLake
             DataLakeFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
-                async: true,
                 options: options,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3955,8 +3955,8 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
-            bool async,
             DataLakeFileOpenWriteOptions options,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenWrite)}");
@@ -3968,37 +3968,23 @@ namespace Azure.Storage.Files.DataLake
                 long position = 0;
                 ETag? eTag = null;
 
-                if (options?.Overwrite == true)
-                {
-                    Response<PathInfo> createResponse = await CreateInternal(
-                        resourceType: PathResourceType.File,
-                        httpHeaders: default,
-                        metadata: default,
-                        permissions: default,
-                        umask: default,
-                        conditions: options?.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                Response<PathProperties> propertiesResponse;
 
-                    eTag = createResponse.Value.ETag;
+                if (async)
+                {
+                    propertiesResponse = await GetPropertiesAsync(
+                        conditions: options?.Conditions,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Response<PathProperties> propertiesResponse;
-
-                    if (async)
-                    {
-                        propertiesResponse = await GetPropertiesAsync(conditions: options?.Conditions).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        propertiesResponse = GetProperties(conditions: options?.Conditions);
-                    }
-
-                    position = propertiesResponse.Value.ContentLength;
-                    eTag = propertiesResponse.Value.ETag;
+                    propertiesResponse = GetProperties(
+                        conditions: options?.Conditions,
+                        cancellationToken: cancellationToken);
                 }
+
+                position = propertiesResponse.Value.ContentLength;
+                eTag = propertiesResponse.Value.ETag;
 
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions
                 {

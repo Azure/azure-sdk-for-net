@@ -3017,39 +3017,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_Overwrite()
-        {
-            await using DisposingDirectory test = await GetTestDirectoryAsync();
-            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-            await file.CreateAsync(Constants.KB);
-
-            byte[] originalData = GetRandomBuffer(Constants.KB);
-            using Stream originalStream = new MemoryStream(originalData);
-
-            await file.UploadAsync(originalStream);
-
-            byte[] newData = GetRandomBuffer(Constants.KB);
-            using Stream newStream = new MemoryStream(newData);
-
-            ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
-            {
-                Overwrite = true,
-                MaxSize = Constants.KB
-            };
-
-            // Act
-            Stream openWriteStream = await file.OpenWriteAsync(position: 0, options: options);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            Response<ShareFileDownloadInfo> result = await file.DownloadAsync(new HttpRange(0, newData.Length));
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(newData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(newData, dataResult.ToArray());
-        }
-
-        [Test]
         public async Task OpenWriteAsync_ModifyExistingFile()
         {
             // Arrange
@@ -3091,14 +3058,9 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
 
-            ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
-            {
-                Overwrite = true
-            };
-
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.OpenWriteAsync(position: 0, options: options),
+                file.OpenWriteAsync(position: 0),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
@@ -3181,12 +3143,8 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync(position: 0, options);
-            await stream.CopyToAsync(openWriteStream);
-
-            // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                openWriteStream.FlushAsync(),
+                 file.OpenWriteAsync(position: 0, options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 

@@ -12,12 +12,6 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakeFileOpenWriteOptions
     {
         /// <summary>
-        /// Whether the upload should overwrite any existing blobs.
-        /// The default value is false.
-        /// </summary>
-        public bool Overwrite { get; set; }
-
-        /// <summary>
         /// The size of the buffer to use.  Default is 4 MB,
         /// max is 4000 MB.  See <see cref="DataLakeFileClient.MaxUploadLongBytes"/>.
         /// </summary>

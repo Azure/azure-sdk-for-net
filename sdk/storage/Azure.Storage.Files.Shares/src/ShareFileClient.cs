@@ -4853,19 +4853,11 @@ namespace Azure.Storage.Files.Shares
             {
                 scope.Start();
 
-                if (options?.Overwrite == true)
-                {
-                    await CreateInternal(
-                        maxSize: options.MaxSize,
-                        httpHeaders: default,
-                        metadata: default,
-                        smbProperties: default,
-                        filePermission: default,
-                        conditions: options.Conditions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
+                await GetPropertiesInternal(
+                    conditions: options?.Conditions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 return new ShareFileWriteStream(
                     fileClient: this,
