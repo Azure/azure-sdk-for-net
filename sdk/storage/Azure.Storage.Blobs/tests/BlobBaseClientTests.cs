@@ -1092,7 +1092,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // "https://github.com/Azure/azure-sdk-for-net/issues/13510"
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
