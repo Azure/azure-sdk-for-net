@@ -30,6 +30,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task DefaultAzureCredential_UseVisualStudioCredential()
         {
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -145,7 +146,8 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), default);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -174,7 +176,8 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), default);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
