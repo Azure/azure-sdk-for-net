@@ -143,6 +143,7 @@ namespace Azure.Identity.Tests
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
+                ExcludeManagedIdentityCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
             });
 
