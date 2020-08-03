@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class IntertactiveBrowserCredentialLiveTests
+    public class InteractiveBrowserCredentialLiveTests
     {
         private const string SingleTenantClientId = "9985250a-c1c3-4caf-a039-9d98f2a0707a";
         private const string TenantId = "a7fc734e-9961-43ce-b4de-21b8b38403ba";

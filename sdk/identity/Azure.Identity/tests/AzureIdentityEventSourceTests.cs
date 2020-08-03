@@ -191,7 +191,7 @@ namespace Azure.Identity.Tests
         {
             var expParentRequestId = Guid.NewGuid().ToString();
 
-            var expScopes = new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            var expScopes = new[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             await credential.GetTokenAsync(new TokenRequestContext(expScopes, expParentRequestId), default);
 
@@ -217,7 +217,7 @@ namespace Azure.Identity.Tests
         {
             var expParentRequestId = Guid.NewGuid().ToString();
 
-            var expScopes = new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            var expScopes = new[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(expScopes, expParentRequestId), default));
 
