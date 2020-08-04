@@ -95,7 +95,7 @@ namespace Azure.AI.TextAnalytics
             return errors;
         }
 
-        private static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
+        internal static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
         {
             string errorCode = default;
             string message = default;

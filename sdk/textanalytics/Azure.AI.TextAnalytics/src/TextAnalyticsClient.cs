@@ -357,11 +357,6 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
                         DetectLanguageResultCollection results = Transforms.ConvertLanguageResult(result.Value, map);
-                        if (results[0].HasError && results[0].Id.Length == 0)
-                        {
-                            // InvalidDocumentBatch.
-                            ThrowExceptionWhenErrorInBatch(results[0].Error);
-                        }
                         return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
@@ -389,11 +384,6 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
                         DetectLanguageResultCollection results = Transforms.ConvertLanguageResult(result.Value, map);
-                        if (results[0].HasError && results[0].Id.Length == 0)
-                        {
-                            // InvalidDocumentBatch.
-                            ThrowExceptionWhenErrorInBatch(results[0].Error);
-                        }
                         return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
