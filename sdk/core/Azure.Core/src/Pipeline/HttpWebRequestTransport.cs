@@ -86,7 +86,7 @@ namespace Azure.Core.Pipeline
             // WebException is thrown in the case of .Abort() call
             catch (WebException) when (message.CancellationToken.IsCancellationRequested)
             {
-                message.CancellationToken.ThrowIfCancellationRequested();
+                throw new TaskCanceledException();
             }
             catch (WebException webException)
             {

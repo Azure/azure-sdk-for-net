@@ -254,7 +254,7 @@ namespace Azure.Core.Tests
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
             Assert.AreEqual(1, i);
 
             testDoneTcs.Cancel();
