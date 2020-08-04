@@ -3,13 +3,11 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Serialization;
 
-namespace Azure.Core
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// A <see cref="JsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
