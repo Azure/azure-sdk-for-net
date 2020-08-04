@@ -23,7 +23,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 Random r = new Random();
-                string managedInstanceName = "ps" + r.Next(256);
+                string managedInstanceName = "sqlcl-crudtestswithdnszone-dotnetsdk1";
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -55,7 +55,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Create second server
-                string managedInstanceName2 = managedInstanceName + r.Next(256);
+                string managedInstanceName2 = "sqlcl-crudtestswithdnszone-dotnetsdk2";
                 var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
                 {
                     AdministratorLogin = login,
