@@ -1,6 +1,6 @@
 # README.md template
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [README-EXAMPLE.md](README-EXAMPLE.md) for an example following this template.
+Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See `README-EXAMPLE.md` for an example following this template.
 
 **Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
 
@@ -58,7 +58,7 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 
 ### Create the thing
 
-Use the [create_thing](not-valid-link) method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call [Thing.save](not-valid-link).
+Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
 
 ```Python
 thing = client.create_thing(id, name)
@@ -67,7 +67,7 @@ thing.save()
 
 ### Get the thing
 
-The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
 
 ## Troubleshooting
