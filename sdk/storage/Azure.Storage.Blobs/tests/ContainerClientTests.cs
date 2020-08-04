@@ -2167,18 +2167,21 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ListBlobsHierarchySegmentAsync_LastModified()
+        public async Task ListBlobsHierarchySegmentAsync_LastAccessed()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(content: stream);
 
             // Act
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
 
             // Assert
-            Assert.AreNotEqual(DateTimeOffset.MinValue, item.Blob.Properties.LastAccessedOn);
+            Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
         }
 
         [Test]
