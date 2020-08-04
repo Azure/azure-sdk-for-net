@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await GetNoRetryClient().CreateSessionReceiverAsync(
                         scope.QueueName,
                         options),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
             }
         }
 
@@ -677,7 +677,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // to the case of reconnecting a regular non-session link and getting a MessageLockLost error.
                 Assert.That(
                     async() => await receiver.CompleteMessageAsync(firstMessage),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
                 // If another receiver accepts the session after the lock is lost, we expect a SessionCannotBeLocked error,
@@ -693,7 +693,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     await receiver.ReceiveMessageAsync();
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
                 {
                     return;
                 }
@@ -731,7 +731,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await client.CreateSessionReceiverAsync(scope.QueueName, options);
                 }
                 catch (ServiceBusException ex)
-                when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
                 {
                     return;
                 }
