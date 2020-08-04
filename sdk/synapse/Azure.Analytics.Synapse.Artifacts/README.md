@@ -70,7 +70,7 @@ Notebook notebook = new Notebook(
     nbformatMinor: 2,
     new List<NotebookCell>()
 );
-NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+var createdNotebook = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
 ```
 
 ### Retrieve a notebook
@@ -97,7 +97,7 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-notebookClient.DeleteNotebook("MyNotebook");
+notebookClient.StartDeleteNotebook("MyNotebook");
 ```
 
 ## To build
