@@ -129,7 +129,7 @@ namespace Azure.Identity
 
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            ClientCertificateProvider = certificateProvider ?? throw new ArgumentNullException(nameof(certificateProvider));
+            ClientCertificateProvider = certificateProvider;
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 

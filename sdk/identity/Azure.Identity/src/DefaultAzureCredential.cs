@@ -124,11 +124,7 @@ namespace Azure.Identity
                     ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
                     : _credential.GetToken(requestContext, cancellationToken);
             }
-            catch (CredentialUnavailableException)
-            {
-                throw;
-            }
-            catch (Exception e)
+            catch (Exception e) when (!(e is CredentialUnavailableException))
             {
                 throw new AuthenticationFailedException(UnhandledExceptionMessage, e);
             }
