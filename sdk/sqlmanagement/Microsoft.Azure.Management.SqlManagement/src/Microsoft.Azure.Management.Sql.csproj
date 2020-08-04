@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Added auto complete restore and last backup name parameters for Azure SQL Managed Database
+- Azure SQL Managed Instance create, update and drop API version 2020-02-02-preview
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
