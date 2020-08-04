@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -21,7 +22,8 @@ namespace Sql.Tests
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                string managedInstanceName = "sqlcl-crudtestswithdnszone-dotnetsdk1";
+                Random r = new Random();
+                string managedInstanceName = "ps" + r.Next(256);
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -32,10 +34,10 @@ namespace Sql.Tests
                 Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
                 sku.Name = "MIGP8G4";
                 sku.Tier = "GeneralPurpose";
-                sku.Family = "Gen4";
+                sku.Family = "Gen5";
 
-                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default";
-                string location = "westcentralus";
+                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/v-urmila/providers/Microsoft.Network/virtualNetworks/MIVirtualNetwork/subnets/ManagedInsanceSubnet";
+                string location = "westeurope";
 
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
@@ -53,7 +55,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Create second server
-                string managedInstanceName2 = "sqlcl-crudtestswithdnszone-dotnetsdk2";
+                string managedInstanceName2 = managedInstanceName + r.Next(256);
                 var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
                 {
                     AdministratorLogin = login,
@@ -62,7 +64,7 @@ namespace Sql.Tests
                     SubnetId = subnetId,
                     Tags = tags,
                     Location = location,
-                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1", resourceGroup.Name),
+                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/{1}", resourceGroup.Name, managedInstanceName),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
                     ProxyOverride = proxyOverride
                 });
@@ -93,11 +95,11 @@ namespace Sql.Tests
                     {
                         { "asdf", "zxcv" }
                     };
-                var updateMI1 = sqlClient.ManagedInstances.Update(resourceGroup.Name, managedInstanceName, new ManagedInstanceUpdate { Tags = newTags });
+                var updateMI1 = sqlClient.ManagedInstances.Update(resourceGroup.Name, managedInstanceName, new ManagedInstanceUpdate { Tags = newTags, LicenseType = "LicenseIncluded" });
                 SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName);
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName).ConfigureAwait(false);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listMI2.Count());

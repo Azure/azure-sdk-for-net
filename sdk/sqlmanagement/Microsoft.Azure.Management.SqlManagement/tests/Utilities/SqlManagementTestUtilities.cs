@@ -131,6 +131,7 @@ namespace Sql.Tests
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
             Assert.Equal(login, actual.AdministratorLogin);
+            Assert.Equal("Succeeded", actual.ProvisioningState);
             SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
 
             if (instancePoolId != null)
