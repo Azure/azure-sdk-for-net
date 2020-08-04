@@ -19,6 +19,8 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
 {
+
+
     /// <summary>
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
