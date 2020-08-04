@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.5.0-preview.7 (Unreleased)
-
+- Added support for custom local emulator hostname for blob storage endpoints.
 
 ## 12.5.0-preview.6 (2020-07-27)
 - Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.

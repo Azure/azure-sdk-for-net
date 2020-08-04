@@ -624,7 +624,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // that the message will be completed eventually.
                     var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusException.FailureReason.SessionLockLost)
+                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
                     {
                         Assert.Fail(args.Exception.ToString());
                     }
@@ -698,7 +698,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
                 {
                     var exception = (ServiceBusException)eventArgs.Exception;
-                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    if (ServiceBusFailureReason.SessionLockLost == exception.Reason)
                     {
                         Assert.AreEqual(ServiceBusErrorSource.Receive, eventArgs.ErrorSource);
                     }
@@ -723,7 +723,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
                         Assert.That(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken),
-                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         completionSources[setIndex].SetResult(true);
@@ -766,7 +766,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StopProcessingAsync();
                 Assert.That(
                     async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
             }
         }
 
@@ -839,7 +839,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Assert.That(
                         async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
-                        Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+                        Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
                 }
             }
         }
@@ -1026,7 +1026,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
                 {
                     var exception = (ServiceBusException)eventArgs.Exception;
-                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    if (ServiceBusFailureReason.SessionLockLost == exception.Reason)
                     {
                         Interlocked.Increment(ref sessionErrorEventCt);
                     }
@@ -1150,7 +1150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     try
                     {
                         var exception = (ServiceBusException)eventArgs.Exception;
-                        if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                        if (ServiceBusFailureReason.SessionLockLost == exception.Reason)
                         {
                             Interlocked.Increment(ref sessionErrorEventCt);
                         }
@@ -1293,8 +1293,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             Interlocked.Increment(ref sessionErrorEventCt);
                         }
                         else if ((eventArgs.Exception is ServiceBusException sbException) &&
-                            (sbException.Reason == ServiceBusException.FailureReason.SessionLockLost ||
-                                sbException.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked))
+                            (sbException.Reason == ServiceBusFailureReason.SessionLockLost ||
+                                sbException.Reason == ServiceBusFailureReason.SessionCannotBeLocked))
                         {
                             Interlocked.Increment(ref sessionErrorEventCt);
                             Assert.AreEqual(errorSource, eventArgs.ErrorSource);
@@ -1503,7 +1503,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // that the message will be completed eventually.
                     var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusException.FailureReason.SessionLockLost)
+                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
                     {
                         Assert.Fail(args.Exception.ToString());
                     }

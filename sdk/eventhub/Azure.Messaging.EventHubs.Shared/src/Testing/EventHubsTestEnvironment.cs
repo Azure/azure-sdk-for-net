@@ -115,6 +115,24 @@ namespace Azure.Messaging.EventHubs.Tests
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
+        ///   The Azure Authority host to be used for authentication with the active cloud environment.
+        /// </summary>
+        ///
+        public new string AuthorityHostUrl => base.AuthorityHostUrl ?? "https://login.microsoftonline.com/";
+
+        /// <summary>
+        ///   The Azure Service Management endpoint to be used for management plane authentication with the active cloud environment.
+        /// </summary>
+        ///
+        public new string ServiceManagementUrl => base.ServiceManagementUrl ?? "https://management.core.windows.net/";
+
+        /// <summary>
+        ///   The location of the resource manager for the active cloud environment.
+        /// </summary>
+        ///
+        public new string ResourceManagerUrl  => base.ResourceManagerUrl ?? "https://management.azure.com/";
+
+        /// <summary>
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.
         /// </summary>
         ///

@@ -121,29 +121,29 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusException : System.Exception
     {
         public ServiceBusException() { }
-        public ServiceBusException(bool isTransient, string message, string entityName = null, Azure.Messaging.ServiceBus.ServiceBusException.FailureReason reason = Azure.Messaging.ServiceBus.ServiceBusException.FailureReason.GeneralError, System.Exception innerException = null) { }
-        public ServiceBusException(string message, Azure.Messaging.ServiceBus.ServiceBusException.FailureReason reason, string entityPath = null, System.Exception innerException = null) { }
+        public ServiceBusException(bool isTransient, string message, string entityName = null, Azure.Messaging.ServiceBus.ServiceBusFailureReason reason = Azure.Messaging.ServiceBus.ServiceBusFailureReason.GeneralError, System.Exception innerException = null) { }
+        public ServiceBusException(string message, Azure.Messaging.ServiceBus.ServiceBusFailureReason reason, string entityPath = null, System.Exception innerException = null) { }
         public string EntityPath { get { throw null; } }
         public bool IsTransient { get { throw null; } }
         public override string Message { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusException.FailureReason Reason { get { throw null; } }
-        public enum FailureReason
-        {
-            GeneralError = 0,
-            MessagingEntityNotFound = 1,
-            MessageLockLost = 2,
-            MessageNotFound = 3,
-            MessageSizeExceeded = 4,
-            MessagingEntityDisabled = 5,
-            QuotaExceeded = 6,
-            ServiceBusy = 7,
-            ServiceTimeout = 8,
-            ServiceCommunicationProblem = 9,
-            SessionCannotBeLocked = 10,
-            SessionLockLost = 11,
-            Unauthorized = 12,
-            MessagingEntityAlreadyExists = 13,
-        }
+        public Azure.Messaging.ServiceBus.ServiceBusFailureReason Reason { get { throw null; } }
+    }
+    public enum ServiceBusFailureReason
+    {
+        GeneralError = 0,
+        MessagingEntityNotFound = 1,
+        MessageLockLost = 2,
+        MessageNotFound = 3,
+        MessageSizeExceeded = 4,
+        MessagingEntityDisabled = 5,
+        QuotaExceeded = 6,
+        ServiceBusy = 7,
+        ServiceTimeout = 8,
+        ServiceCommunicationProblem = 9,
+        SessionCannotBeLocked = 10,
+        SessionLockLost = 11,
+        Unauthorized = 12,
+        MessagingEntityAlreadyExists = 13,
     }
     public partial class ServiceBusMessage
     {
