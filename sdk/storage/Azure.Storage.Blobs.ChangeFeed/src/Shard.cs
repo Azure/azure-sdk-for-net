@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
 using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -37,11 +36,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private long _chunkIndex;
 
         /// <summary>
+        /// The index of the Chunk we are processing.
+        /// </summary>
+        public virtual string ShardPath { get; }
+
+        /// <summary>
         /// Gets the <see cref="ShardCursor"/> for this Shard.
         /// </summary>
         public virtual ShardCursor GetCursor()
-            => new ShardCursor(
-                _chunkIndex,
+            => _currentChunk == null ? null : new ShardCursor(
+                _currentChunk.ChunkPath,
                 _currentChunk.BlockOffset,
                 _currentChunk.EventIndex);
 
@@ -85,13 +89,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             ChunkFactory chunkFactory,
             Queue<string> chunks,
             Chunk currentChunk,
-            long chunkIndex)
+            long chunkIndex,
+            string shardPath)
         {
             _containerClient = containerClient;
             _chunkFactory = chunkFactory;
             _chunks = chunks;
             _currentChunk = currentChunk;
             _chunkIndex = chunkIndex;
+            ShardPath = shardPath;
         }
 
         /// <summary>

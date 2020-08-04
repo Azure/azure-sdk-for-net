@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
                 ValidateCursor(_containerClient, cursor);
-                startTime = cursor.CurrentSegmentCursor.SegmentTime;
+                startTime = BlobChangeFeedExtensions.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
             // Round start and end time if we are not using the cursor.

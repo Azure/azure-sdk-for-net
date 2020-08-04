@@ -41,20 +41,21 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shards.Add(new Mock<Shard>(MockBehavior.Strict));
             }
 
+            DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
+            string segmentPath = "idx/segments/2020/03/25/0200/meta.json";
+            string currentShardPath = "log/00/2020/03/25/0200/";
+
             List<ShardCursor> shardCursors = new List<ShardCursor>
             {
-                new ShardCursor(1, 2, 3),
-                new ShardCursor(4, 5, 6),
-                new ShardCursor(7, 8, 9)
+                new ShardCursor("log/00/2020/03/25/0200/chunk1", 2, 3),
+                new ShardCursor("log/01/2020/03/25/0200/chunk4", 5, 6),
+                new ShardCursor("log/02/2020/03/25/0200/chunk7", 8, 9)
             };
 
-            DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
-            int shardIndex = 1;
-
             SegmentCursor expectedCursor = new SegmentCursor(
-                dateTime,
+                segmentPath,
                 shardCursors,
-                shardIndex);
+                currentShardPath);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
 
@@ -83,6 +84,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             for (int i = 0; i < shardCount; i++)
             {
                 shards[i].Setup(r => r.GetCursor()).Returns(shardCursors[i]);
+                shards[i].Setup(r => r.ShardPath).Returns($"log/0{i}/2020/03/25/0200/");
             }
 
             SegmentFactory segmentFactory = new SegmentFactory(
@@ -97,15 +99,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             SegmentCursor cursor = segment.GetCursor();
 
             // Assert
-            Assert.AreEqual(expectedCursor.SegmentTime, cursor.SegmentTime);
+            Assert.AreEqual(expectedCursor.SegmentPath, cursor.SegmentPath);
             Assert.AreEqual(expectedCursor.ShardCursors.Count, cursor.ShardCursors.Count);
             for (int i = 0; i < shardCount; i++)
             {
                 Assert.AreEqual(expectedCursor.ShardCursors[i].BlockOffset, cursor.ShardCursors[i].BlockOffset);
-                Assert.AreEqual(expectedCursor.ShardCursors[i].ChunkIndex, cursor.ShardCursors[i].ChunkIndex);
+                Assert.AreEqual(expectedCursor.ShardCursors[i].CurrentChunkPath, cursor.ShardCursors[i].CurrentChunkPath);
                 Assert.AreEqual(expectedCursor.ShardCursors[i].EventIndex, cursor.ShardCursors[i].EventIndex);
             }
-            Assert.AreEqual(shardIndex, cursor.ShardIndex);
+            Assert.AreEqual(currentShardPath, cursor.CurrentShardPath);
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
 

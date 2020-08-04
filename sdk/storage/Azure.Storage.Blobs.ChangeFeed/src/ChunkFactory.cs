@@ -57,7 +57,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new Chunk(
                 avroReader,
                 blockOffset,
-                eventIndex);
+                eventIndex,
+                chunkPath);
         }
 
         /// <summary>

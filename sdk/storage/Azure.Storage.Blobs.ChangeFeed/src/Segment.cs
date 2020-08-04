@@ -17,6 +17,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public DateTimeOffset DateTime { get; private set; }
 
         /// <summary>
+        /// The path of manifest associated with this Segment.
+        /// </summary>
+        public string ManifestPath { get; private set; }
+
+        /// <summary>
         /// The Shards associated with this Segment.
         /// </summary>
         private readonly List<Shard> _shards;
@@ -34,11 +39,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public Segment(
             List<Shard> shards,
             int shardIndex,
-            DateTimeOffset dateTime)
+            DateTimeOffset dateTime,
+            string manifestPath)
         {
             _shards = shards;
             _shardIndex = shardIndex;
             DateTime = dateTime;
+            ManifestPath = manifestPath;
             _finishedShards = new HashSet<int>();
         }
 
@@ -47,12 +54,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
             List<ShardCursor> shardCursors = new List<ShardCursor>();
             foreach (Shard shard in _shards)
             {
-                shardCursors.Add(shard.GetCursor());
+                var shardCursor = shard.GetCursor();
+                if (shardCursor != null)
+                {
+                    shardCursors.Add(shard.GetCursor());
+                }
             }
             return new SegmentCursor(
-                segmentDateTime: DateTime,
+                segmentPath: ManifestPath,
                 shardCursors: shardCursors,
-                shardIndex: _shardIndex);
+                currentShardPath: _shards[_shardIndex].ShardPath);
         }
 
         public virtual async Task<List<BlobChangeFeedEvent>> GetPage(

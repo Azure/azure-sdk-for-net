@@ -234,5 +234,56 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(AllEventIds.Count, EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count);
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
+
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task CursorFormatTest()
+        {
+            // This is hardcoded for playback stability. Feel free to modify but make sure recordings match.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 7, 30, 23, 00, 00, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 7, 30, 23, 15, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Iterate over first two pages
+            var blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime,
+                    end: endTime);
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 50);
+            Page<BlobChangeFeedEvent> lastPage = null;
+            int pages = 0;
+            await foreach (Page<BlobChangeFeedEvent> page in asyncEnumerable)
+            {
+                foreach (BlobChangeFeedEvent e in page.Values)
+                {
+                    Console.WriteLine(e);
+                }
+                pages++;
+                lastPage = page;
+                if (pages > 2)
+                {
+                    break;
+                }
+            }
+
+            // Act
+            string continuation = lastPage.ContinuationToken;
+
+            // Verify
+            // You may need to update expected values when re-recording
+            var cursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor);
+            Assert.AreEqual(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero), cursor.EndTime);
+            Assert.AreEqual(1, cursor.CursorVersion);
+            Assert.AreEqual("15S8ITXExIEUwbdmq7AeZg==", cursor.UrlHash);
+            var currentSegmentCursor = cursor.CurrentSegmentCursor;
+            Assert.AreEqual("idx/segments/2020/07/30/2300/meta.json", currentSegmentCursor.SegmentPath);
+            Assert.AreEqual("log/00/2020/07/30/2300/", currentSegmentCursor.CurrentShardPath);
+            Assert.AreEqual(1, currentSegmentCursor.ShardCursors.Count);
+            var shardCursor = currentSegmentCursor.ShardCursors.First();
+            Assert.AreEqual("log/00/2020/07/30/2300/00000.avro", shardCursor.CurrentChunkPath);
+            Assert.AreEqual(96253, shardCursor.BlockOffset);
+            Assert.AreEqual(0, shardCursor.EventIndex);
+        }
     }
 }
