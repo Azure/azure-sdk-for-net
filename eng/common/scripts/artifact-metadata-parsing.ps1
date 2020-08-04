@@ -67,6 +67,7 @@ function ParseMavenPackage($pkg, $workingDirectory) {
 
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
+    GroupId        = $groupId
     PackageVersion = $pkgVersion
     Deployable     = $forceCreate -or !(IsMavenPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion -groupId $groupId.Replace(".", "/"))
     ReleaseNotes   = $releaseNotes
@@ -219,7 +220,7 @@ function IsNugetPackageVersionPublished($pkgId, $pkgVersion) {
   $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
 
   try {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -uri $nugetUri -Method "GET"
+    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
 
     return $nugetVersions.versions.Contains($pkgVersion)
   }
@@ -452,9 +453,11 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
+        GroupId        = $parsedPackage.GroupId
         Tag            = $tag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
+        IsPrerelease   = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
       }
     }
     catch {
