@@ -7,18 +7,12 @@
         "Content-Length": "95",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-<<<<<<< HEAD
-        "traceparent": "00-b4fd3e5c9212b74989cbee836df2aaa8-9a728c344fb7224b-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200801.1",
-=======
-        "traceparent": "00-1e26cf137116484fba464ffc5619c89e-377fdb7b0a4eeb4b-00",
+        "traceparent": "00-2444c4d1a594cf46b2444e6814de5f50-bde13f19d2be784b-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200804.1",
->>>>>>> fix TA tests
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "2143e99816eab4cdcac54a1b2f94e2fa",
+        "x-ms-client-request-id": "1507ae4f174d87bbe34c3242b0c40057",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,21 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-<<<<<<< HEAD
-        "apim-request-id": "0b6b96a4-17af-402b-8986-9a6e809bd02b",
+        "apim-request-id": "d33f7dd7-98c4-4e30-8d58-eb1c113e86a9",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 01 Aug 2020 22:22:51 GMT",
-=======
-        "apim-request-id": "3d11ffaf-6ed1-4818-958a-08b5bd7ed66e",
-        "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Tue, 04 Aug 2020 17:15:30 GMT",
->>>>>>> fix TA tests
+        "Date": "Tue, 04 Aug 2020 21:30:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "documents": [
@@ -66,7 +53,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2020947331",
+    "RandomSeed": "1898129415",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }

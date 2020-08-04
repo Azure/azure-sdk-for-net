@@ -7,18 +7,12 @@
         "Content-Length": "82",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-<<<<<<< HEAD
-        "traceparent": "00-60ee6eb36a1a3a4f86e9f8ae6eb708fc-bc64670b460ca545-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200801.1",
-=======
-        "traceparent": "00-8262ba8505f74145879ce89c0778dd98-f89ae2fb29cc8145-00",
+        "traceparent": "00-55f4f5c3c558f444a6ea34aa57bbf43a-ced79a0b7e4a2041-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200804.1",
->>>>>>> fix TA tests
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "a300ecef8a4a035f1a46b002cdd7fe73",
+        "x-ms-client-request-id": "d1d0502c8322f815b1082c313ab172c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,25 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-<<<<<<< HEAD
-        "apim-request-id": "a6853a33-839e-46ed-84bf-c1bf23d2d803",
+        "apim-request-id": "f14425c0-5151-4826-adb1-c70d1069056f",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 01 Aug 2020 22:22:52 GMT",
+        "Date": "Tue, 04 Aug 2020 21:29:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
-=======
-        "apim-request-id": "126ab201-bff1-4bee-9f49-3077eed74cf1",
-        "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Tue, 04 Aug 2020 17:15:31 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "14"
->>>>>>> fix TA tests
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "documents": [
@@ -70,7 +53,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "231209614",
+    "RandomSeed": "430074927",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
