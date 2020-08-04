@@ -16,9 +16,8 @@ namespace Azure.Identity
     {
         private static readonly Lazy<CredentialPipeline> s_singleton = new Lazy<CredentialPipeline>(() => new CredentialPipeline(new TokenCredentialOptions()));
 
-        private static readonly AsyncLocal<IScopeHandler> s_scopeHandler = new AsyncLocal<IScopeHandler>();
-
-        private readonly ScopeHandler _defaultScopeHandler;
+        private readonly IScopeHandler _defaultScopeHandler;
+        private IScopeHandler _groupScopeHandler;
 
         private CredentialPipeline(TokenCredentialOptions options)
         {
@@ -49,7 +48,7 @@ namespace Azure.Identity
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)
         {
-            IScopeHandler scopeHandler = s_scopeHandler.Value ?? _defaultScopeHandler;
+            IScopeHandler scopeHandler = _groupScopeHandler ?? _defaultScopeHandler;
 
             CredentialDiagnosticScope scope = new CredentialDiagnosticScope(fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
@@ -58,7 +57,7 @@ namespace Azure.Identity
 
         public CredentialDiagnosticScope StartGetTokenScopeGroup(string fullyQualifiedMethod, TokenRequestContext context)
         {
-            var scopeHandler = new ScopeGroupHandler(Diagnostics, fullyQualifiedMethod);
+            var scopeHandler = new ScopeGroupHandler(this, fullyQualifiedMethod);
 
             CredentialDiagnosticScope scope = new CredentialDiagnosticScope(fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
@@ -90,13 +89,13 @@ namespace Azure.Identity
 
         private class ScopeGroupHandler : IScopeHandler
         {
-            private readonly ClientDiagnostics _diagnostics;
+            private readonly CredentialPipeline _pipeline;
             private readonly string _groupName;
             private Dictionary<string, (DateTime StartDateTime, Exception Exception)> _childScopes;
 
-            public ScopeGroupHandler(ClientDiagnostics diagnostics, string groupName)
+            public ScopeGroupHandler(CredentialPipeline pipeline, string groupName)
             {
-                _diagnostics = diagnostics;
+                _pipeline = pipeline;
                 _groupName = groupName;
             }
 
@@ -104,8 +103,8 @@ namespace Azure.Identity
             {
                 if (IsGroup(name))
                 {
-                    s_scopeHandler.Value = this;
-                    return _diagnostics.CreateScope(name);
+                    _pipeline._groupScopeHandler = this;
+                    return _pipeline.Diagnostics.CreateScope(name);
                 }
 
                 _childScopes ??= new Dictionary<string, (DateTime startDateTime, Exception exception)>();
@@ -142,7 +141,7 @@ namespace Azure.Identity
                 }
 
                 scope.Dispose();
-                s_scopeHandler.Value = default;
+                _pipeline._groupScopeHandler = default;
             }
 
             public void Fail(string name, in DiagnosticScope scope, Exception exception)
@@ -178,14 +177,14 @@ namespace Azure.Identity
 
             private void SucceedChildScope(string name, DateTime dateTime)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope(name);
+                using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(name);
                 scope.SetStartTime(dateTime);
                 scope.Start();
             }
 
             private void FailChildScope(string name, DateTime dateTime, Exception exception)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope(name);
+                using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(name);
                 scope.SetStartTime(dateTime);
                 scope.Start();
                 scope.Failed(exception);
