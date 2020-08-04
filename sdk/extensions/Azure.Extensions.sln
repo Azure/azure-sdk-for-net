@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Host", "..\..\..\az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs", "..\..\..\azure-webjobs-sdk\src\Microsoft.Azure.WebJobs\WebJobs.csproj", "{424AD6CB-B5F8-492A-97A5-F988945713CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.WebJobs.Sample", "Azure.Extensions.WebJobs\sample\Azure.Extensions.WebJobs.Sample\Azure.Extensions.WebJobs.Sample.csproj", "{570CBB6C-2808-4B04-AE69-29084BD3C518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Extensions.WebJobs.Samples", "Azure.Extensions.WebJobs\samples\Azure.Extensions.WebJobs.Samples.csproj", "{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -192,18 +192,18 @@ Global
 		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x64.Build.0 = Release|Any CPU
 		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x86.Build.0 = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|x64.Build.0 = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Debug|x86.Build.0 = Debug|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|Any CPU.Build.0 = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|x64.ActiveCfg = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|x64.Build.0 = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|x86.ActiveCfg = Release|Any CPU
-		{570CBB6C-2808-4B04-AE69-29084BD3C518}.Release|x86.Build.0 = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|x64.Build.0 = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

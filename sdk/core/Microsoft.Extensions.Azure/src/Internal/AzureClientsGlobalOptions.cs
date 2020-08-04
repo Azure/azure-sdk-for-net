@@ -14,6 +14,6 @@ namespace Microsoft.Extensions.Azure
     {
         public Func<IServiceProvider, TokenCredential> CredentialFactory { get; set; } = _ => new DefaultAzureCredential();
         public List<Action<ClientOptions, IServiceProvider>> ConfigureOptionDelegates { get; } = new List<Action<ClientOptions, IServiceProvider>>();
-        public IConfiguration ConfigurationRoot { get; set; }
+        public Func<IServiceProvider, IConfiguration> ConfigurationRootResolver { get; set; }
     }
 }

@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\azure-webjobs-sdk\src\Microsoft.Azure.WebJobs.Host\WebJobs.Host.csproj" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <ProjectReference Include="..\..\..\core\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
   </ItemGroup>
 

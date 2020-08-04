@@ -15,15 +15,18 @@ namespace Microsoft.Extensions.Azure
     {
         private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
         private readonly IServiceProvider _serviceProvider;
+        private readonly EventSourceLogForwarder _logForwarder;
         private readonly Dictionary<string, FallbackClientRegistration<TClient>> _clientRegistrations;
         private readonly Type _clientOptionType;
 
         public FallbackAzureClientFactory(
             IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            EventSourceLogForwarder logForwarder)
         {
             _globalOptions = globalOptions;
             _serviceProvider = serviceProvider;
+            _logForwarder = logForwarder;
             _clientRegistrations = new Dictionary<string, FallbackClientRegistration<TClient>>();
 
             foreach (var constructor in typeof(TClient).GetConstructors(BindingFlags.Public | BindingFlags.Instance))
@@ -51,7 +54,7 @@ namespace Microsoft.Extensions.Azure
             {
                 if (!_clientRegistrations.TryGetValue(name, out registration))
                 {
-                    var section = globalOptions.ConfigurationRoot?.GetSection(name);
+                    var section = globalOptions.ConfigurationRootResolver?.Invoke(_serviceProvider).GetSection(name);
                     if (!section.Exists())
                     {
                         throw new InvalidOperationException($"Unable to find a configuration section with the name {name} to configure the client with or the configuration root wasn't set.");

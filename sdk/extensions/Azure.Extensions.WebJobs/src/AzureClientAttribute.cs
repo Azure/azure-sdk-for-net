@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Description;
 
 namespace Azure.Extensions.WebJobs
 {
@@ -10,8 +11,18 @@ namespace Azure.Extensions.WebJobs
     ///
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
+    [Binding]
     public class AzureClientAttribute: Attribute, IConnectionProvider
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="connection"></param>
+        public AzureClientAttribute(string connection)
+        {
+            Connection = connection;
+        }
+
         /// <inheritdoc />
         public string Connection { get; set; }
     }

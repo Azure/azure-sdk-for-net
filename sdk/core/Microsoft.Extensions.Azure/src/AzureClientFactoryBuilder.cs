@@ -134,11 +134,11 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         ///
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configurationProvider"></param>
         /// <returns></returns>
-        public AzureClientFactoryBuilder SetConfigurationRoot(IConfiguration configuration)
+        public AzureClientFactoryBuilder SetConfigurationRoot(Func<IServiceProvider, IConfiguration> configurationProvider)
         {
-            _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRoot = configuration);
+            _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRootResolver = configurationProvider);
 
             return this;
         }

@@ -21,15 +21,5 @@ namespace Microsoft.Extensions.Azure
         {
             configureClients(new AzureClientFactoryBuilder(collection));
         }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="configuration"></param>
-        public static void AddAzureClients(this IServiceCollection collection, IConfiguration configuration)
-        {
-            new AzureClientFactoryBuilder(collection).SetConfigurationRoot(configuration);
-        }
     }
 }
