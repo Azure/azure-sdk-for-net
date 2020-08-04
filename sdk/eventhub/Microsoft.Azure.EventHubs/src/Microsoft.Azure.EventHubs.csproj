@@ -6,6 +6,8 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.xml</DocumentationFile>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <FileVersion>4.2.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
