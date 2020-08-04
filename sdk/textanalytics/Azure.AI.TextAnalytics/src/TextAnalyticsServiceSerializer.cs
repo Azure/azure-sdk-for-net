@@ -225,10 +225,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -320,10 +316,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -452,10 +444,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -523,10 +511,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
