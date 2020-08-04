@@ -39,7 +39,8 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets a dictionary of tags with specific metadata about the key.
+        /// Gets a dictionary of tags with specific metadata about the key. Although this collection cannot be set, it can be modified
+        ///  or initialized with a <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/how-to-initialize-a-dictionary-with-a-collection-initializer">collection initializer</see>.
         /// </summary>
         public IDictionary<string, string> Tags { get; } = new Dictionary<string, string>();
     }

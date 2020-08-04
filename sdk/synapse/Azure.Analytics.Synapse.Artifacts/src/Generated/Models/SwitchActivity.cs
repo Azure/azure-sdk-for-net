@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SwitchActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="on"/> is null. </exception>
         public SwitchActivity(string name, Expression @on) : base(name)
         {
             if (name == null)
@@ -28,6 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             On = @on;
+            Cases = new ChangeTrackingList<SwitchCase>();
+            DefaultActivities = new ChangeTrackingList<Activity>();
             Type = "Switch";
         }
 
@@ -52,8 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </summary>
         public Expression On { get; set; }
         /// <summary> List of cases that correspond to expected values of the &apos;on&apos; property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </summary>
-        public IList<SwitchCase> Cases { get; set; }
+        public IList<SwitchCase> Cases { get; }
         /// <summary> List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action. </summary>
-        public IList<Activity> DefaultActivities { get; set; }
+        public IList<Activity> DefaultActivities { get; }
     }
 }

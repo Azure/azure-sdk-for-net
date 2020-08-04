@@ -77,6 +77,112 @@ directive:
   transform: $["x-ms-enum"].name = "SuggesterMode";
 ```
 
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SynonymMap
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchField
+  transform: >
+    $.properties.indexAnalyzer["x-nullable"] = true;
+    $.properties.searchAnalyzer["x-nullable"] = true;
+    $.properties.analyzer["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ScoringProfile
+  transform: >
+    $.properties.text["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndex
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+    $.properties.corsOptions["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.BM25Similarity
+  transform: >
+    $.properties.k1["x-nullable"] = true;
+    $.properties.b["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataChangeDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataDeletionDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexer
+  transform: >
+    $.properties.disabled["x-nullable"] = true;
+    $.properties.schedule["x-nullable"] = true;
+    $.properties.parameters["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.suggestedFrom["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexingParameters
+  transform: >
+    $.properties.batchSize["x-nullable"] = true;
+    $.properties.maxFailedItems["x-nullable"] = true;
+    $.properties.maxFailedItemsPerBatch["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.FieldMapping
+  transform: >
+    $.properties.mappingFunction["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexerExecutionResult
+  transform: >
+    $.properties.endTime["x-nullable"] = true;
+```
+
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.

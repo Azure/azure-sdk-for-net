@@ -17,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath");
             writer.WriteObjectValue(PackagePath);
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName");
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent");
             writer.WriteObjectValue(PackageContent);
-            if (PackageLastModifiedDate != null)
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate");
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -35,9 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
         {
             object packagePath = default;
-            string packageName = default;
+            Optional<string> packageName = default;
             object packageContent = default;
-            string packageLastModifiedDate = default;
+            Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"))
@@ -47,10 +47,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("packageName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     packageName = property.Value.GetString();
                     continue;
                 }
@@ -61,15 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("packageLastModifiedDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     packageLastModifiedDate = property.Value.GetString();
                     continue;
                 }
             }
-            return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate);
+            return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value);
         }
     }
 }

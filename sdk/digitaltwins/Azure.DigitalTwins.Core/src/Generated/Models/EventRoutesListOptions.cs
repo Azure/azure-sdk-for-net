@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     public partial class EventRoutesListOptions
@@ -13,13 +13,6 @@ namespace Azure.DigitalTwins.Core.Models
         /// <summary> Initializes a new instance of EventRoutesListOptions. </summary>
         public EventRoutesListOptions()
         {
-        }
-
-        /// <summary> Initializes a new instance of EventRoutesListOptions. </summary>
-        /// <param name="maxItemCount"> The maximum number of items to retrieve per request. The server may choose to return less than the requested max. </param>
-        internal EventRoutesListOptions(int? maxItemCount)
-        {
-            MaxItemCount = maxItemCount;
         }
 
         /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested max. </summary>

@@ -13,7 +13,6 @@ namespace Azure.AI.TextAnalytics
     {
         private const string TextAnalyticsRoute = "/text/analytics/";
 
-        private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
         private const string SentimentRoute = "/sentiment";
         private const string KeyPhrasesRoute = "/keyPhrases";
@@ -23,18 +22,6 @@ namespace Azure.AI.TextAnalytics
         private const string ModelVersion = "model-version";
 
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-
-        #region Detect Language
-        private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            DetectLanguageResultCollection result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<DetectLanguageResultCollection> CreateDetectLanguageResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion
 
         #region Recognize Entities
         private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)

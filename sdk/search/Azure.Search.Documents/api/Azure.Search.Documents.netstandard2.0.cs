@@ -70,7 +70,6 @@ namespace Azure.Search.Documents
     public partial class SearchOptions
     {
         public SearchOptions() { }
-        public SearchOptions(string continuationToken) { }
         public System.Collections.Generic.IList<string> Facets { get { throw null; } }
         public string Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }

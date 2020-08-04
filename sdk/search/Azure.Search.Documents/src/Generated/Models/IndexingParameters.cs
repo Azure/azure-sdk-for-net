@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
         public IndexingParameters()
         {
-            Configuration = new Dictionary<string, object>();
+            Configuration = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;
             MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
-            Configuration = configuration ?? new Dictionary<string, object>();
+            Configuration = configuration;
         }
 
         /// <summary> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </summary>

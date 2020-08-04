@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LocalCacheMode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LocalCacheMode
+    public static class LocalCacheMode
     {
-        [EnumMember(Value = "DownloadNewAndModifiedFiles")]
-        DownloadNewAndModifiedFiles,
-        [EnumMember(Value = "UpdateLocallyCachedFiles")]
-        UpdateLocallyCachedFiles
-    }
-    internal static class LocalCacheModeEnumExtension
-    {
-        internal static string ToSerializedValue(this LocalCacheMode? value)
-        {
-            return value == null ? null : ((LocalCacheMode)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this LocalCacheMode value)
-        {
-            switch( value )
-            {
-                case LocalCacheMode.DownloadNewAndModifiedFiles:
-                    return "DownloadNewAndModifiedFiles";
-                case LocalCacheMode.UpdateLocallyCachedFiles:
-                    return "UpdateLocallyCachedFiles";
-            }
-            return null;
-        }
-
-        internal static LocalCacheMode? ParseLocalCacheMode(this string value)
-        {
-            switch( value )
-            {
-                case "DownloadNewAndModifiedFiles":
-                    return LocalCacheMode.DownloadNewAndModifiedFiles;
-                case "UpdateLocallyCachedFiles":
-                    return LocalCacheMode.UpdateLocallyCachedFiles;
-            }
-            return null;
-        }
+        public const string DownloadNewAndModifiedFiles = "DownloadNewAndModifiedFiles";
+        public const string UpdateLocallyCachedFiles = "UpdateLocallyCachedFiles";
     }
 }

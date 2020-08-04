@@ -70,7 +70,7 @@ The v4 client allowed for sending a single message or a list of messages, which 
 | `QueueClient.SendAsync(Message)` or `MessageSender.SendAsync(Message)`                          | `ServiceBusSender.SendMessageAsync(ServiceBusMessage)`                               | [Send a message](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-message) |
 | `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `messageBatch = ServiceBusSender.CreateMessageBatchAsync()` `messageBatch.TryAddMessage(ServiceBusMessage)` `ServiceBusSender.SendMessagesAsync(messageBatch)` or `ServiceBusSender.SendMessagesAsync(IEnumerable<ServiceBusMessage>)`                              | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
 
-### Receiving messages 
+### Receiving messages
 
 | In v4                                          | Equivalent in v7                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
@@ -78,7 +78,7 @@ The v4 client allowed for sending a single message or a list of messages, which 
 | `MessageReceiver.ReceiveAsync()`                      | `ServiceBusReceiver.ReceiveMessagesAsync()`                               | [Receive a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
 | `QueueClient.RegisterMessageHandler()` or   `MessageReceiver.RegisterMessageHandler()`                    | `ServiceBusProcessor.ProcessMessageAsync += MessageHandler` `ServiceBusProcessor.ProcessErrorAsync += ErrorHandler` `ServiceBusProcessor.StartProcessingAsync()`                               | [Receive messages using processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
 
-### Working with sessions 
+### Working with sessions
 
 | In v4                                          | Equivalent in v7                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
@@ -157,18 +157,11 @@ Console.WriteLine(body);
 
 In v4, `QueueClient`/`MessageSender`/`MessageReceiver` would be created directly, after which user would call `SendAsync()` method via `QueueClient`/`MessageSender` to send a batch of messages and `ReceiveAsync()` method via `MessageReceiver` to receive a batch of messages.
 
-In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and 
-`CreateReceiver()` method to create a `ServiceBusReceiver`. There are two ways of sending several messages at once. 
+In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. There are two ways of sending several messages at once.
 
-The first way uses the `SendMessagesAsync`overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will 
-attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are 
-too large to fit in a single batch, the operation will throw an exception. 
+The first way uses the `SendMessagesAsync`overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
-The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, 
-which will allow you to attempt to add messages one at a time to the batch using the `TryAddMessage` method. If the message cannot 
-fit in the batch, `TryAddMessage` will return false. If the `ServiceBusMessageBatch` accepts a message, user can be confident that 
-it will not violate size constraints when calling `SendMessagesAsync()` via `ServiceBusSender`. To receive a set of messages, a
-user would call `ReceiveMessagesAsync()` method via `ServiceBusReceiver`. 
+The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAddMessage` method. If the message cannot fit in the batch, `TryAddMessage` will return false. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendMessagesAsync()` via `ServiceBusSender`. To receive a set of messages, a user would call `ReceiveMessagesAsync()` method via `ServiceBusReceiver`.
 
 In v4:
 
@@ -211,6 +204,7 @@ await receiver.CloseAsync();
 ```
 
 In v7:
+
 ```C# Snippet:ServiceBusInitializeSend
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
@@ -238,12 +232,13 @@ await sender.SendMessagesAsync(messageBatch);
 ```
 
 And to receive a batch:
+
 ```C# Snippet:ServiceBusReceiveBatch
 // create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
+IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 {

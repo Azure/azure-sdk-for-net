@@ -1,6 +1,9 @@
 # Release History
 
-## 11.0.0-preview.5 (Unreleased)
+## 11.1.0-preview.1 (Unreleased)
+
+
+## 11.0.0 (2020-07-07)
 
 ### Changed
 
@@ -10,7 +13,10 @@
 
 ### Removed
 
+- Removed `Azure.Core.Experimental` reference and features until they're moved
+  into `Azure.Core`.
 - Removed `SearchServiceCounters.SkillsetCounter`.
+- Removed `new SearchOptions(string continuationToken)` overload.
 
 ## 1.0.0-preview.4 (2020-06-09)
 

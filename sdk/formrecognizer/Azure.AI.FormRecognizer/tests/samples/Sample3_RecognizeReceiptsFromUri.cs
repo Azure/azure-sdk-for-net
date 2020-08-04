@@ -24,17 +24,17 @@ namespace Azure.AI.FormRecognizer.Samples
             Uri receiptUri = FormRecognizerTestEnvironment.CreateUri("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
+            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
-            // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+            // https://aka.ms/formrecognizer/receiptfields
 
             foreach (RecognizedForm receipt in receipts)
             {
                 FormField merchantNameField;
                 if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
                 {
-                    if (merchantNameField.Value.Type == FieldValueType.String)
+                    if (merchantNameField.Value.ValueType == FieldValueType.String)
                     {
                         string merchantName = merchantNameField.Value.AsString();
 
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 FormField transactionDateField;
                 if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
                 {
-                    if (transactionDateField.Value.Type == FieldValueType.Date)
+                    if (transactionDateField.Value.ValueType == FieldValueType.Date)
                     {
                         DateTime transactionDate = transactionDateField.Value.AsDate();
 
@@ -56,20 +56,20 @@ namespace Azure.AI.FormRecognizer.Samples
                 FormField itemsField;
                 if (receipt.Fields.TryGetValue("Items", out itemsField))
                 {
-                    if (itemsField.Value.Type == FieldValueType.List)
+                    if (itemsField.Value.ValueType == FieldValueType.List)
                     {
                         foreach (FormField itemField in itemsField.Value.AsList())
                         {
                             Console.WriteLine("Item:");
 
-                            if (itemField.Value.Type == FieldValueType.Dictionary)
+                            if (itemField.Value.ValueType == FieldValueType.Dictionary)
                             {
                                 IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
                                 FormField itemNameField;
                                 if (itemFields.TryGetValue("Name", out itemNameField))
                                 {
-                                    if (itemNameField.Value.Type == FieldValueType.String)
+                                    if (itemNameField.Value.ValueType == FieldValueType.String)
                                     {
                                         string itemName = itemNameField.Value.AsString();
 
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Samples
                                 FormField itemTotalPriceField;
                                 if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
                                 {
-                                    if (itemTotalPriceField.Value.Type == FieldValueType.Float)
+                                    if (itemTotalPriceField.Value.ValueType == FieldValueType.Float)
                                     {
                                         float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 FormField totalField;
                 if (receipt.Fields.TryGetValue("Total", out totalField))
                 {
-                    if (totalField.Value.Type == FieldValueType.Float)
+                    if (totalField.Value.ValueType == FieldValueType.Float)
                     {
                         float total = totalField.Value.AsFloat();
 

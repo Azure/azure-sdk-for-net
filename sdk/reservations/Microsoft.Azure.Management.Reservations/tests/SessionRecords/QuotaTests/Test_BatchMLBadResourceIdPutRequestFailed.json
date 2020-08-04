@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/badResId?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvc2VydmljZUxpbWl0cy9iYWRSZXNJZD9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2000,\r\n    \"name\": {\r\n      \"value\": \"badResId\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1fa043e7-8871-422a-8436-b4cc71769c95"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "133"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:44:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5b28dfc9-9e2a-4307-ba94-edf061cbdf3d"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b28dfc9-9e2a-4307-ba94-edf061cbdf3d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084423Z:5b28dfc9-9e2a-4307-ba94-edf061cbdf3d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "248"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Error\": {\r\n    \"Description\": \"Bad request\",\r\n    \"Code\": \"BadRequest\",\r\n    \"Message\": \"Please look into error Details for more details.\",\r\n    \"Details\": [\r\n      {\r\n        \"Description\": \"ResourceType: lowPriority is not valid resource type.\",\r\n        \"Code\": \"BadRequest\",\r\n        \"Message\": \"Bad request\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

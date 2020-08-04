@@ -37,7 +37,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventsCanBeReadByOneProcessorClient()
+        [TestCase(LoadBalancingStrategy.Balanced)]
+        [TestCase(LoadBalancingStrategy.Greedy)]
+        public async Task EventsCanBeReadByOneProcessorClient(LoadBalancingStrategy loadBalancingStrategy)
         {
             // Setup the environment.
 
@@ -58,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250), LoadBalancingStrategy = loadBalancingStrategy };
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();

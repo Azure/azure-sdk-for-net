@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SoftDeleteColumnName != null)
+            if (Optional.IsDefined(SoftDeleteColumnName))
             {
                 writer.WritePropertyName("softDeleteColumnName");
                 writer.WriteStringValue(SoftDeleteColumnName);
             }
-            if (SoftDeleteMarkerValue != null)
+            if (Optional.IsDefined(SoftDeleteMarkerValue))
             {
                 writer.WritePropertyName("softDeleteMarkerValue");
                 writer.WriteStringValue(SoftDeleteMarkerValue);
@@ -32,26 +32,18 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SoftDeleteColumnDeletionDetectionPolicy DeserializeSoftDeleteColumnDeletionDetectionPolicy(JsonElement element)
         {
-            string softDeleteColumnName = default;
-            string softDeleteMarkerValue = default;
+            Optional<string> softDeleteColumnName = default;
+            Optional<string> softDeleteMarkerValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteColumnName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     softDeleteColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("softDeleteMarkerValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     softDeleteMarkerValue = property.Value.GetString();
                     continue;
                 }
@@ -61,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SoftDeleteColumnDeletionDetectionPolicy(odataType, softDeleteColumnName, softDeleteMarkerValue);
+            return new SoftDeleteColumnDeletionDetectionPolicy(odataType, softDeleteColumnName.Value, softDeleteMarkerValue.Value);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableServiceProperties. </summary>
         public TableServiceProperties()
         {
+            Cors = new ChangeTrackingList<TableCorsRule>();
         }
 
         /// <summary> Initializes a new instance of TableServiceProperties. </summary>
@@ -22,7 +24,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for tables. </param>
         /// <param name="cors"> The set of CORS rules. </param>
-        internal TableServiceProperties(LoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<CorsRule> cors)
+        internal TableServiceProperties(TableAnalyticsLoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<TableCorsRule> cors)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
@@ -31,12 +33,12 @@ namespace Azure.Data.Tables.Models
         }
 
         /// <summary> Azure Analytics Logging settings. </summary>
-        public LoggingSettings Logging { get; set; }
+        public TableAnalyticsLoggingSettings Logging { get; set; }
         /// <summary> A summary of request statistics grouped by API in hourly aggregates for tables. </summary>
         public TableMetrics HourMetrics { get; set; }
         /// <summary> A summary of request statistics grouped by API in minute aggregates for tables. </summary>
         public TableMetrics MinuteMetrics { get; set; }
         /// <summary> The set of CORS rules. </summary>
-        public IList<CorsRule> Cors { get; set; }
+        public IList<TableCorsRule> Cors { get; }
     }
 }

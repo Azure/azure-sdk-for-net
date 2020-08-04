@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
@@ -19,6 +18,8 @@ namespace Azure.AI.FormRecognizer.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+
+            #region Snippet:FormRecognizerSampleManageCustomModelsAsync
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -63,6 +64,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // Delete the model from the account.
             await client.DeleteModelAsync(model.ModelId);
+
+            #endregion
         }
     }
 }
