@@ -52,7 +52,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = location,
                 });
-                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Create second server
                 string managedInstanceName2 = managedInstanceName + r.Next(256);
@@ -68,15 +68,15 @@ namespace Sql.Tests
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
                     ProxyOverride = proxyOverride
                 });
-                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Get first server
                 var getMI1 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName);
-                SqlManagementTestUtilities.ValidateManagedInstance(getMI1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateManagedInstance(getMI1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Get second server
                 var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName2);
-                SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
                 Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
@@ -99,12 +99,12 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName).ConfigureAwait(false);
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName).ConfigureAwait(true);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listMI2.Count());
 
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2);
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2).ConfigureAwait(true);
                 var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Empty(listMI3);
             }
