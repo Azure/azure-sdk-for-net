@@ -39,7 +39,7 @@ steps:
 
   - pwsh: |
       $originalValue = "$(${{ parameters.TargetVariable }})"
-      $result = $(Build.SourcesDirectory)/eng/common/scripts/get-codeowners.ps1 -TargetDirectory /sdk/${{ parameters.ServiceDirectory }}/ -RootDirectory $(Build.SourcesDirectory)
+      $result = $(Build.SourcesDirectory)/eng/common/scripts/get-codeowners.ps1 -TargetDirectory sdk/${{ parameters.ServiceDirectory }}/ -RootDirectory $(Build.SourcesDirectory)
       if ($result) {
         Write-Output "##vso[task.setvariable variable=${{ parameters.TargetVariable }}]$originalValue,$result"
       }

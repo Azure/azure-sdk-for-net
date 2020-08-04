@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         private string GetConnectionString() =>
             Mode == RecordedTestMode.Playback ?
-                TestEnvironment.ServiceBusOverrideConnectionString :
+                TestEnvironment.OverrideServiceBusConnectionString :
                 TestEnvironment.ServiceBusConnectionString;
 
         private ServiceBusManagementClient GetClient() =>
@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                    async () =>
                    await client.GetQueueAsync(queueOptions.Name),
-                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             isExists = await client.QueueExistsAsync(queueName);
             Assert.False(isExists);
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                   async () =>
                   await client.GetTopicAsync(options.Name),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             exists = await client.TopicExistsAsync(topicName);
             Assert.False(exists);
@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                   async () =>
                   await client.GetSubscriptionAsync(options.TopicName, options.SubscriptionName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             await client.DeleteTopicAsync(options.TopicName);
 
@@ -347,7 +347,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                   async () =>
                   await client.GetRuleAsync(topicName, subscriptionName, "rule1"),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             exists = await client.RuleExistsAsync(topicName, subscriptionName, rule1.Name);
             Assert.False(exists);
@@ -559,47 +559,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                 async () =>
                 await client.GetQueueAsync("NonExistingPath"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.GetQueueAsync("NonExistingTopic"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.GetSubscriptionAsync("NonExistingTopic", "NonExistingPath"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                   async () =>
                   await client.UpdateQueueAsync(new QueueProperties("NonExistingPath")),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.UpdateTopicAsync(new TopicProperties("NonExistingPath")),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.UpdateSubscriptionAsync(new SubscriptionProperties("NonExistingTopic", "NonExistingPath")),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.DeleteQueueAsync("NonExistingPath"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                   async () =>
                   await client.DeleteTopicAsync("NonExistingPath"),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.DeleteSubscriptionAsync("NonExistingTopic", "NonExistingPath"),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
 
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -611,12 +611,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                 async () =>
                 await client.GetQueueAsync(topicName),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
                 await client.GetTopicAsync(queueName),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);
@@ -637,17 +637,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.That(
                 async () =>
                 await client.CreateQueueAsync(queueName),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityAlreadyExists));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityAlreadyExists));
 
             Assert.That(
                 async () =>
                 await client.CreateTopicAsync(topicName),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityAlreadyExists));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityAlreadyExists));
 
             Assert.That(
                 async () =>
                 await client.CreateSubscriptionAsync(topicName, subscriptionName),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityAlreadyExists));
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityAlreadyExists));
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);

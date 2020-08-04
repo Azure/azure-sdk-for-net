@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ClientTestFixture(
-        TextAnalyticsClientOptions.ServiceVersion.V3_0,
+        /*TextAnalyticsClientOptions.ServiceVersion.V3_0,*/
         TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_1)]
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
@@ -112,6 +112,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
             Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+
+            Assert.AreEqual(0, results[0].Statistics.CharacterCount);
+            Assert.AreEqual(0, results[0].Statistics.TransactionCount);
+            Assert.IsNull(results.Statistics);
         }
 
         [Test]
@@ -128,9 +132,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
             Assert.AreEqual("English", results[1].PrimaryLanguage.Name);
+
+            Assert.IsNotNull(results.Statistics);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+            Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+
             Assert.IsNotNull(results[0].Statistics);
-            Assert.IsNotNull(results[0].Statistics.CharacterCount);
-            Assert.IsNotNull(results[0].Statistics.TransactionCount);
+            Assert.Greater(results[0].Statistics.CharacterCount, 0);
+            Assert.Greater(results[0].Statistics.TransactionCount, 0);
         }
 
         [Test]
