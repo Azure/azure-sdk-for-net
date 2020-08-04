@@ -50,9 +50,9 @@ exercise any new features that you've added.
 
 We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](../core/Azure.Core/tests/TestFramework) is
+[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
 copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln`
+sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
 if you make any changes here.)_
 
 We also have [common test code](./Azure.Storage.Common/tests/Shared) in our
