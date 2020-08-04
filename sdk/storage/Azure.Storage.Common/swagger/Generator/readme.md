@@ -21,7 +21,7 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 The AutoRest example at https://github.com/Azure/autorest-extension-helloworld
 walks through the following section and the docs at
 http://azure.github.io/autorest/user/literate-file-formats/configuration.html
-and https://github.com/Azure/autorest/tree/garrett/docs/developer are the
+and https://github.com/Azure/autorest/tree/master/docs are the
 closest I could find to official explanations.
 
 ``` yaml
