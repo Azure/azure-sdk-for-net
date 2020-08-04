@@ -44,17 +44,17 @@ namespace Azure.Storage.Tests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(0))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(0))
-                    .Returns(Task.FromResult(writeSize));
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask);
 
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
@@ -125,13 +125,13 @@ namespace Azure.Storage.Tests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(24))
-                    .Returns(Task.FromResult(476))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(48))
-                    .Returns(Task.FromResult(452));
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask);
 
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
@@ -197,11 +197,11 @@ namespace Azure.Storage.Tests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(bufferSize))
-                    .Returns(Task.FromResult(976))
-                    .Returns(Task.FromResult(48))
-                    .Returns(Task.FromResult(writeSize))
-                    .Returns(Task.FromResult(928));
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask)
+                    .Returns(Task.CompletedTask);
 
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
