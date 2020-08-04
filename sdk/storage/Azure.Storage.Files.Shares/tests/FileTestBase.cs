@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
         public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -122,6 +122,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigSoftDelete.AccountName,
                         TestConfigSoftDelete.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_PremiumFile()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumFile.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumFile.AccountName,
+                        TestConfigPremiumFile.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)

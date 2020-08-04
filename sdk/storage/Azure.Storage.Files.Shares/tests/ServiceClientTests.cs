@@ -108,7 +108,7 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
 
             // Act
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
