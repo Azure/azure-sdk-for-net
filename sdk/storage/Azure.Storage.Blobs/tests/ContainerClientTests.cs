@@ -1855,6 +1855,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ListBlobsFlatSegmentAsync_LastAccessed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync().AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, blobs.FirstOrDefault().Properties.LastAccessedOn);
+        }
+
+        [Test]
         public async Task ListBlobsHierarchySegmentAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2143,6 +2163,22 @@ namespace Azure.Storage.Blobs.Test
             // Since this is a PLAYBACK ONLY test. We expect all the blobs in this source container/account
             // to have OrMetadata
             Assert.IsNotNull(item.Blob.ObjectReplicationSourceProperties);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ListBlobsHierarchySegmentAsync_LastModified()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, item.Blob.Properties.LastAccessedOn);
         }
 
         [Test]

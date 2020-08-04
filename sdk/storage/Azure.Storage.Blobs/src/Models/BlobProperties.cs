@@ -255,6 +255,11 @@ namespace Azure.Storage.Blobs.Models
         public string RehydratePriority { get; internal set; }
 
         /// <summary>
+        /// Returns the date and time the blob was read or written to.
+        /// </summary>
+        public DateTimeOffset LastAccessed { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public BlobProperties()
