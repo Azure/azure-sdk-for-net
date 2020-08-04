@@ -12,11 +12,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
     internal class Segment
     {
         /// <summary>
-        /// If this Segment is finalized.
-        /// </summary>
-        public virtual bool Finalized { get; private set; }
-
-        /// <summary>
         /// The time (to the nearest hour) associated with this Segment.
         /// </summary>
         public DateTimeOffset DateTime { get; private set; }
@@ -39,13 +34,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public Segment(
             List<Shard> shards,
             int shardIndex,
-            DateTimeOffset dateTime,
-            bool finalized)
+            DateTimeOffset dateTime)
         {
             _shards = shards;
             _shardIndex = shardIndex;
             DateTime = dateTime;
-            Finalized = finalized;
             _finishedShards = new HashSet<int>();
         }
 

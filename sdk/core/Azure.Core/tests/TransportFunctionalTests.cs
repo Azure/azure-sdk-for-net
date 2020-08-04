@@ -507,6 +507,27 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ContentLength0WhenNoContent()
+        {
+            StringValues contentLengthHeader = default;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.True(context.Request.Headers.TryGetValue("Content-Length", out contentLengthHeader));
+                });
+
+            var transport = GetTransport();
+
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(testServer.Address);
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(contentLengthHeader.ToString(), "0");
+        }
+
+        [Test]
         public async Task RequestAndResponseHasRequestId()
         {
             using TestServer testServer = new TestServer(context => { });

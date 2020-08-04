@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Runtime.ExceptionServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -38,15 +38,14 @@ namespace Azure.Identity
 
         public Exception FailWrapAndThrow(Exception ex)
         {
-            if (ex is OperationCanceledException || ex is AuthenticationFailedException)
+            var wrapped = TryWrapException(ref ex);
+            RegisterFailed(ex);
+
+            if (!wrapped)
             {
-                var info = ExceptionDispatchInfo.Capture(ex);
-                RegisterFailed(ex);
-                info.Throw();
+                ExceptionDispatchInfo.Capture(ex).Throw();
             }
 
-            ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
-            RegisterFailed(ex);
             throw ex;
         }
 
@@ -54,6 +53,28 @@ namespace Azure.Identity
         {
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
             _scope.Failed(ex);
+        }
+
+        private bool TryWrapException(ref Exception exception)
+        {
+            if (exception is OperationCanceledException || exception is AuthenticationFailedException)
+            {
+                return false;
+            }
+
+            if (exception is AggregateException aex)
+            {
+                CredentialUnavailableException firstCredentialUnavailable = aex.Flatten().InnerExceptions.OfType<CredentialUnavailableException>().FirstOrDefault();
+                if (firstCredentialUnavailable != default)
+                {
+                    exception = new CredentialUnavailableException(firstCredentialUnavailable.Message, aex);
+                    return true;
+                }
+            }
+
+            exception = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}", exception);
+            return true;
+
         }
 
         public void Dispose()
