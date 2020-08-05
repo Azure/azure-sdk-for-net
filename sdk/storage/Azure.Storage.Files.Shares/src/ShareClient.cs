@@ -2091,8 +2091,8 @@ namespace Azure.Storage.Files.Shares
 
         #region SetAccessPolicy
         /// <summary>
-        /// The <see cref="SetAccessPolicy"/> operation sets the
-        /// permissions for the specified share. The permissions indicate
+        /// The <see cref="SetAccessPolicy(IEnumerable{ShareSignedIdentifier}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets the permissions for the specified share. The permissions indicate
         /// whether share data may be accessed publicly.
         ///
         /// For more information, see
@@ -2102,6 +2102,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
         /// control over share permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the access policy.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2117,16 +2121,58 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareInfo> SetAccessPolicy(
             IEnumerable<ShareSignedIdentifier> permissions,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
                 permissions,
-                false, // async
+                conditions: conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetAccessPolicyAsync"/> operation sets the
-        /// permissions for the specified share. The permissions indicate
+        /// The <see cref="SetAccessPolicyAsync(IEnumerable{ShareSignedIdentifier}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets the permissions for the specified share. The permissions indicate
+        /// whether share data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-acl">
+        /// Set Share ACL</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Stored access policies that you can use to provide fine grained
+        /// control over share permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the
+        /// updated share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
+            IEnumerable<ShareSignedIdentifier> permissions,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetAccessPolicyInternal(
+                permissions,
+                conditions: conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicy(IEnumerable{ShareSignedIdentifier}, CancellationToken)"/>
+        /// operation sets the permissions for the specified share. The permissions indicate
         /// whether share data may be accessed publicly.
         ///
         /// For more information, see
@@ -2149,12 +2195,56 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareInfo> SetAccessPolicy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             IEnumerable<ShareSignedIdentifier> permissions,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+            SetAccessPolicyInternal(
+                permissions,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicyAsync(IEnumerable{ShareSignedIdentifier}, CancellationToken)"/>
+        /// operation sets the permissions for the specified share. The permissions indicate
+        /// whether share data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-acl">
+        /// Set Share ACL</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Stored access policies that you can use to provide fine grained
+        /// control over share permissions.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the
+        /// updated share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            IEnumerable<ShareSignedIdentifier> permissions,
+            CancellationToken cancellationToken) =>
             await SetAccessPolicyInternal(
                 permissions,
-                true, // async
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2170,6 +2260,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
         /// control over share permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the access policy.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2188,6 +2282,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetAccessPolicyInternal(
             IEnumerable<ShareSignedIdentifier> permissions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2204,6 +2299,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         permissions: permissions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
