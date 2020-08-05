@@ -1466,6 +1466,10 @@ namespace Azure.Storage.Files.Shares
         /// Optional. The maximum size of the share.
         /// If unspecified, use the service's default value.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the quota.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1480,10 +1484,87 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareInfo> SetQuota(
             int quotaInGB = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetQuotaInternal(
                 quotaInGB,
-                false, // async
+                conditions: conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Sets the maximum size of the share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
+        /// Set Share Properties</see>.
+        /// </summary>
+        /// <param name="quotaInGB">
+        /// Optional. The maximum size of the share.
+        /// If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the quota.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the updated
+        /// share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
+            int quotaInGB = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetQuotaInternal(
+                quotaInGB,
+                conditions: conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets the maximum size of the share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-properties">
+        /// Set Share Properties</see>.
+        /// </summary>
+        /// <param name="quotaInGB">
+        /// Optional. The maximum size of the share.
+        /// If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the updated
+        /// share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareInfo> SetQuota(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            int quotaInGB,
+            CancellationToken cancellationToken) =>
+            SetQuotaInternal(
+                quotaInGB,
+                conditions: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1510,12 +1591,16 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
-            int quotaInGB = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            int quotaInGB,
+            CancellationToken cancellationToken) =>
             await SetQuotaInternal(
                 quotaInGB,
-                true, // async
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1533,6 +1618,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting the quota.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1547,6 +1636,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         internal virtual async Task<Response<ShareInfo>> SetQuotaInternal(
             int quotaInGB,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1565,6 +1655,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                         cancellationToken: cancellationToken)
@@ -1585,8 +1676,8 @@ namespace Azure.Storage.Files.Shares
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets user-defined
-        /// metadata for the specified share as one or more name-value pairs.
+        /// The <see cref="SetMetadata(Metadata, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets user-defined metadata for the specified share as one or more name-value pairs.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata">
@@ -1594,6 +1685,10 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this share.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting share metadata.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1609,15 +1704,55 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareInfo> SetMetadata(
             Metadata metadata,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
-                false, // async
+                conditions: conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
+        /// The <see cref="SetMetadataAsync(Metadata, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets user-defined metadata for the specified share as one or more name-value pairs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata">
+        /// Set Share Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this share.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting share metadata.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the updated
+        /// share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
+            Metadata metadata,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetMetadataInternal(
+                metadata,
+                conditions: conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified share as one or more name-value pairs.
         ///
         /// For more information, see
@@ -1639,12 +1774,53 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareInfo> SetMetadata(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Metadata metadata,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+            SetMetadataInternal(
+                metadata,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(Metadata, CancellationToken)"/> operation sets user-defined
+        /// metadata for the specified share as one or more name-value pairs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata">
+        /// Set Share Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this share.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the updated
+        /// share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
             await SetMetadataInternal(
                 metadata,
-                true, // async
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1658,6 +1834,10 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this share.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on setting share metadata.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1676,6 +1856,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareInfo>> SetMetadataInternal(
             Metadata metadata,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1692,6 +1873,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         metadata: metadata,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
@@ -2246,7 +2428,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             GetPermissionInternal(
                 filePermissionKey,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -2268,7 +2450,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await GetPermissionInternal(
                 filePermissionKey,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 

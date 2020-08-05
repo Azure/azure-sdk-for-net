@@ -659,6 +659,60 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetMetadataAsync_Lease()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+            Response<ShareFileLease> leaseResponse = await leaseClient.AcquireAsync();
+            ShareDeleteOptions options = new ShareDeleteOptions
+            {
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseResponse.Value.LeaseId
+                }
+            };
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            await shareClient.SetMetadataAsync(
+                metadata: metadata,
+                conditions: options.Conditions);
+
+            // Cleanup
+            await shareClient.DeleteAsync(options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetMetadataAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = id
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Share.SetMetadataAsync(
+                    metadata: metadata,
+                    conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+        }
+
+        [Test]
         public async Task GetAccessPolicyAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1047,6 +1101,56 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetQuotaAsync(Constants.KB),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetQuotaAsync_Lease()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+            Response<ShareFileLease> leaseResponse = await leaseClient.AcquireAsync();
+            ShareDeleteOptions options = new ShareDeleteOptions
+            {
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseResponse.Value.LeaseId
+                }
+            };
+
+            // Act
+            await shareClient.SetQuotaAsync(
+                quotaInGB: Constants.KB,
+                conditions: options.Conditions);
+
+            // Cleanup
+            await shareClient.DeleteAsync(options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task SetQuotaAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = id
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Share.SetQuotaAsync(
+                    quotaInGB: Constants.KB,
+                    conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
         }
 
         [Test]
