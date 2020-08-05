@@ -30,7 +30,7 @@
  var stream = data.ToStream();
  ```
  
- It is also used to integrate with `ObjectSerializer`. An example from a Service Bus where `BinaryData` is used to represent a message body:
+ It is also used to integrate with `ObjectSerializer`. Here is an [example](../../../../servicebus/Azure.Messaging.ServiceBus/tests/Message/MessageLiveTests.cs#L148) from Service Bus where `BinaryData` is used to represent a message body:
  
 ```c#
 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
