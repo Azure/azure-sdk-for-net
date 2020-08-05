@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (boundingBox.Count == 0)
             {
-                Points = null;
+                Points = Array.Empty<PointF>();
                 return;
             }
 
