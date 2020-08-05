@@ -696,6 +696,52 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetAccessPolicyAsync_Lease()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+            Response<ShareFileLease> leaseResponse = await leaseClient.AcquireAsync();
+            ShareDeleteOptions options = new ShareDeleteOptions
+            {
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseResponse.Value.LeaseId
+                }
+            };
+
+            // Act
+            await shareClient.GetAccessPolicyAsync(conditions: options.Conditions);
+
+            // Cleanup
+            await shareClient.DeleteAsync(options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetAccessPolicyAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = id
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Share.GetAccessPolicyAsync(conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+        }
+
+        [Test]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -900,6 +946,52 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetStatisticsAsync(),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetStatisticsAsync_Lease()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+            Response<ShareFileLease> leaseResponse = await leaseClient.AcquireAsync();
+            ShareDeleteOptions options = new ShareDeleteOptions
+            {
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseResponse.Value.LeaseId
+                }
+            };
+
+            // Act
+            await shareClient.GetStatisticsAsync(conditions: options.Conditions);
+
+            // Cleanup
+            await shareClient.DeleteAsync(options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetStatisticsAsync_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string id = Recording.Random.NewGuid().ToString();
+
+            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            {
+                LeaseId = id
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Share.GetStatisticsAsync(conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
         }
 
         [Test]
