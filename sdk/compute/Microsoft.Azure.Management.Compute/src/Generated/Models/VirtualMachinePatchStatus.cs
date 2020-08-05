@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the result of the virtual machine patch related operations.
+    /// The status of virtual machine patch operations.
     /// </summary>
     public partial class VirtualMachinePatchStatus
     {
@@ -29,18 +29,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachinePatchStatus class.
         /// </summary>
-        /// <param name="availablePatchSummary">Describes the properties of a
-        /// virtual machine instance view for available patch summary.</param>
-        /// <param name="lastPatchInstallationSummary">Describes the properties
-        /// of a virtual machine instance view for last installed patch
-        /// summary.</param>
-        /// <param name="configurationStatusSummary">Describes configuration
-        /// settings and belonging provisioning state.</param>
-        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary), ConfigurationStatusSummary configurationStatusSummary = default(ConfigurationStatusSummary))
+        /// <param name="availablePatchSummary">The available patch summary of
+        /// the latest assessment operation for the virtual machine.</param>
+        /// <param name="lastPatchInstallationSummary">The installation summary
+        /// of the latest installation operation for the virtual
+        /// machine.</param>
+        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary))
         {
             AvailablePatchSummary = availablePatchSummary;
             LastPatchInstallationSummary = lastPatchInstallationSummary;
-            ConfigurationStatusSummary = configurationStatusSummary;
             CustomInit();
         }
 
@@ -50,25 +47,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes the properties of a virtual machine instance
-        /// view for available patch summary.
+        /// Gets or sets the available patch summary of the latest assessment
+        /// operation for the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "availablePatchSummary")]
         public AvailablePatchSummary AvailablePatchSummary { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the properties of a virtual machine instance
-        /// view for last installed patch summary.
+        /// Gets or sets the installation summary of the latest installation
+        /// operation for the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "lastPatchInstallationSummary")]
         public LastPatchInstallationSummary LastPatchInstallationSummary { get; set; }
-
-        /// <summary>
-        /// Gets or sets describes configuration settings and belonging
-        /// provisioning state.
-        /// </summary>
-        [JsonProperty(PropertyName = "configurationStatusSummary")]
-        public ConfigurationStatusSummary ConfigurationStatusSummary { get; set; }
 
     }
 }

@@ -14,15 +14,20 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
     public class VMInstanceViewPatchStatusTests : VMTestBase
     {
         private const string RgName = "PatchStatusRg";
-        private const string vmName = "testVm";
+        private const string VmName = "testVm";
 
+        //How to re-record this test:
+        // 1. Manually create Resource group and VM
+        // update the constants for RgName and VmName
+        // 2. invoke CRP install patch api
+        // 3. Then run this test
         [Fact()]
         public void GetVMInstanceViewWithPatchStatus()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
-                VirtualMachineInstanceView vmInstanceView = m_CrpClient.VirtualMachines.InstanceView(RgName, vmName);
+                VirtualMachineInstanceView vmInstanceView = m_CrpClient.VirtualMachines.InstanceView(RgName, VmName);
 
                 Assert.NotNull(vmInstanceView);
                 Assert.NotNull(vmInstanceView.PatchStatus);
@@ -37,7 +42,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 Assert.Equal("Succeeded", vmInstanceView.PatchStatus.LastPatchInstallationSummary.Status);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.ExcludedPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.FailedPatchCount);
-                Assert.Equal(1, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
+                Assert.Equal(2, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
                 Assert.NotNull(vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstallationActivityId);
                 //Assert.False(vmInstanceView.PatchStatus.LastPatchInstallationSummary.MaintenanceWindowExceeded);

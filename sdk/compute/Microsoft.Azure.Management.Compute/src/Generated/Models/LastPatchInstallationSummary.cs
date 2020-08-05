@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the properties of an virtual machine instance view for last
-    /// installed patch summary.
+    /// Describes the properties of the last installed patch summary.
     /// </summary>
     public partial class LastPatchInstallationSummary
     {
@@ -43,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="maintenanceWindowExceeded">Describes whether the
         /// operation ran out of time before it completed all its intended
         /// actions</param>
-        /// <param name="rebootStatus">"The reboot status of the machine after
+        /// <param name="rebootStatus">The reboot status of the machine after
         /// the patch operation. It will be in "NotNeeded" status if reboot is
         /// not needed after the patch operation. "Required" will be the status
         /// once the patch is applied and machine is required to reboot.
@@ -61,10 +60,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="pendingPatchCount">The number of all available patches
         /// expected to be installed over the course of the patch installation
         /// operation.</param>
-        /// <param name="installedPatchCount">The number of all successfully
-        /// installed patches.</param>
-        /// <param name="failedPatchCount">The number of patches failed to
-        /// installed.</param>
+        /// <param name="installedPatchCount">The count of patches that
+        /// successfully installed.</param>
+        /// <param name="failedPatchCount">The count of patches that failed
+        /// installation.</param>
         /// <param name="startTime">The UTC timestamp when the operation
         /// began.</param>
         /// <param name="lastModifiedTime">The UTC timestamp when the operation
@@ -122,8 +121,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? MaintenanceWindowExceeded { get; private set; }
 
         /// <summary>
-        /// Gets "The reboot status of the machine after the patch operation.
-        /// It will be in "NotNeeded" status if reboot is not needed after the
+        /// Gets the reboot status of the machine after the patch operation. It
+        /// will be in "NotNeeded" status if reboot is not needed after the
         /// patch operation. "Required" will be the status once the patch is
         /// applied and machine is required to reboot. "Started" will be the
         /// reboot status when the machine has started to reboot. "Failed" will
@@ -158,13 +157,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? PendingPatchCount { get; private set; }
 
         /// <summary>
-        /// Gets the number of all successfully installed patches.
+        /// Gets the count of patches that successfully installed.
         /// </summary>
         [JsonProperty(PropertyName = "installedPatchCount")]
         public int? InstalledPatchCount { get; private set; }
 
         /// <summary>
-        /// Gets the number of patches failed to installed.
+        /// Gets the count of patches that failed installation.
         /// </summary>
         [JsonProperty(PropertyName = "failedPatchCount")]
         public int? FailedPatchCount { get; private set; }

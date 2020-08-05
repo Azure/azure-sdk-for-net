@@ -14,7 +14,9 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release is the vmHealth property added to the VMInstanceView API.
+        This is a public release of the Azure Compute SDK. Included with this release is 
+        1. The vmHealth property added to the VMInstanceView API.
+        2. The patch status is added to the VMInstanceView API.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
