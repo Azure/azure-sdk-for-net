@@ -159,6 +159,47 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BufferedResponsesReadableAfterMessageDisposed()
+        {
+            byte[] buffer = { 0 };
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+
+            int bodySize = 1000;
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    for (int i = 0; i < bodySize; i++)
+                    {
+                        await context.Response.Body.WriteAsync(buffer, 0, 1);
+                    }
+                });
+
+            // Make sure we dispose things correctly and not exhaust the connection pool
+            var requestCount = 100;
+            for (int i = 0; i < requestCount; i++)
+            {
+                Response response;
+                using (HttpMessage message = httpPipeline.CreateMessage())
+                {
+                    message.Request.Uri.Reset(testServer.Address);
+                    message.BufferResponse = false;
+
+                    await ExecuteRequest(message, httpPipeline);
+
+                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+
+                    response = message.Response;
+                }
+
+                var memoryStream = new MemoryStream();
+                await response.ContentStream.CopyToAsync(memoryStream);
+                Assert.AreEqual(memoryStream.Length, bodySize);
+            }
+        }
+
+        [Test]
         public async Task RetriesTransportFailures()
         {
             int i = 0;
