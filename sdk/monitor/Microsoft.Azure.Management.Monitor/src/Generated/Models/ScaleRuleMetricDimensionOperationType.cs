@@ -10,26 +10,13 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
-    using System.Linq;
 
     /// <summary>
-    /// Action descriptor.
+    /// Defines values for ScaleRuleMetricDimensionOperationType.
     /// </summary>
-    public partial class Action
+    public static class ScaleRuleMetricDimensionOperationType
     {
-        /// <summary>
-        /// Initializes a new instance of the Action class.
-        /// </summary>
-        public Action()
-        {
-            CustomInit();
-        }
-
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
+        public const string Equals = "Equals";
+        public const string NotEquals = "NotEquals";
     }
 }
