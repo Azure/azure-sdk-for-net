@@ -99,10 +99,10 @@ namespace Microsoft.Azure.ServiceBus
 
             set
             {
-                if (this.sessionId != null && !this.sessionId.Equals(value))
+                if (this.sessionId != null && this.sessionId != value)
                 {
                     // SessionId is set. Then partition key must be same as session id.
-                    throw new InvalidOperationException("PartitionKey:" + value + " is not same as SessionId:" + this.sessionId);
+                    throw new InvalidOperationException($"PartitionKey:{value} is not same as SessionId:{this.sessionId}");
                 }
 
                 Message.ValidatePartitionKey(nameof(this.PartitionKey), value);
