@@ -16,14 +16,14 @@ namespace Azure.Iot.Hub.Service.Samples
     /// </summary>
     internal class BulkDeviceIdentityLifecycleSamples
     {
-        public readonly IoTHubServiceClient IoTHubServiceClient;
+        public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
         // Can be 1 to 100, configures how many devices to create/update/delete per service API call
         public const int BulkCount = 20;
 
-        public BulkDeviceIdentityLifecycleSamples(IoTHubServiceClient client)
+        public BulkDeviceIdentityLifecycleSamples(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

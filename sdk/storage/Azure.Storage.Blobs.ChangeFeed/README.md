@@ -8,12 +8,17 @@ guaranteed, durable, immutable, read-only log of these changes. Client applicati
 logs at any time. The change feed enables you to build efficient and scalable solutions that
 process change events that occur in your Blob Storage account at a low cost.
 
-[Source code][source] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 
 ## Getting started
 
 ### Install the package
-- TODO after we have released.
+
+Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.Storage.Blobs.ChangeFeed
+```
 
 ### Prerequisites
 
@@ -75,27 +80,25 @@ await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChange
 }
 ```
 
-### Resume with cursor
+### Resume with continuationToken 
 ```C# Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
-IAsyncEnumerator<Page<BlobChangeFeedEvent>> enumerator = changeFeedClient
-    .GetChangesAsync()
-    .AsPages(pageSizeHint: 10)
-    .GetAsyncEnumerator();
-
-await enumerator.MoveNextAsync();
-
-foreach (BlobChangeFeedEvent changeFeedEvent in enumerator.Current.Values)
+string continuationToken = null;
+await foreach (Page<BlobChangeFeedEvent> page in changeFeedClient.GetChangesAsync().AsPages(pageSizeHint: 10))
 {
-    changeFeedEvents.Add(changeFeedEvent);
+    foreach (BlobChangeFeedEvent changeFeedEvent in page.Values)
+    {
+        changeFeedEvents.Add(changeFeedEvent);
+    }
+
+    // Get the change feed continuation token.  The continuation token is not required to get each page of events,
+    // it is intended to be saved and used to resume iterating at a later date.
+    continuationToken = page.ContinuationToken;
+    break;
 }
 
-// get the change feed cursor.  The cursor is not required to get each page of events,
-// it is intended to be saved and used to resume iterating at a later date.
-string cursor = enumerator.Current.ContinuationToken;
-
-// Resume iterating from the pervious position with the cursor.
+// Resume iterating from the pervious position with the continuation token.
 await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync(
-    continuationToken: cursor))
+    continuationToken: continuationToken))
 {
     changeFeedEvents.Add(changeFeedEvent);
 }
@@ -131,8 +134,10 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/srcs
+[package]: https://www.nuget.org/packages/Azure.Storage.Blobs.ChangeFeed/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed
 [azure_sub]: https://azure.microsoft.com/free/
+[nuget]: https://www.nuget.org/
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
 [storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli

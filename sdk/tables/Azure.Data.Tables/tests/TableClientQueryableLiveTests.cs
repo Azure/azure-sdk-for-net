@@ -119,7 +119,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var filter = client.CreateFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
+            var filter = TableClient.CreateQueryFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
             var results = await client.QueryAsync<ComplexEntity>(filter).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (ComplexEntity ent in results)

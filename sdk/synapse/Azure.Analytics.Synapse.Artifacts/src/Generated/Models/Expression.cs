@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Expression. </summary>
         /// <param name="type"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Expression(ExpressionType type, string value)
         {
             if (value == null)

@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Status is optional and defaults to enabled. </summary>
+    /// <summary> The status of the module. If disabled, the module cannot connect to the service. </summary>
     public readonly partial struct ExportImportDeviceStatus : IEquatable<ExportImportDeviceStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ExportImportDeviceStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExportImportDeviceStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

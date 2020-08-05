@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
         {
             if (apiVersion == null)
@@ -63,6 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleDefinitionListResult>> ListAsync(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -95,6 +96,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleDefinitionListResult> List(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -140,6 +142,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleDefinitionListResult>> ListNextPageAsync(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -177,6 +180,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
         public Response<RoleDefinitionListResult> ListNextPage(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

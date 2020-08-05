@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -118,15 +117,25 @@ namespace Azure.AI.FormRecognizer.Training
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        [ForwardsClientCalls]
         public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, trainingFileFilter, useTrainingLabels);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartTraining)}");
+            scope.Start();
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            try
+            {
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+
+                ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -143,15 +152,25 @@ namespace Azure.AI.FormRecognizer.Training
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        [ForwardsClientCalls]
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, trainingFileFilter, useTrainingLabels);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartTraining)}");
+            scope.Start();
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            try
+            {
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+
+                ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -165,15 +184,25 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="CustomFormModel"/> containing
         /// information about the requested model.</returns>
-        [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModel)}");
+            scope.Start();
 
-            Response<Model_internal> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
-            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+                Response<Model> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
+                return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -183,15 +212,25 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="CustomFormModel"/> containing
         /// information about the requested model.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModel)}");
+            scope.Start();
 
-            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+                Response<Model> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -200,14 +239,23 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(DeleteModel)}");
+            scope.Start();
 
-            return ServiceClient.DeleteCustomModel(guid, cancellationToken);
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                return ServiceClient.DeleteCustomModel(guid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -216,14 +264,23 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(DeleteModel)}");
+            scope.Start();
 
-            return await ServiceClient.DeleteCustomModelAsync(guid, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                return await ServiceClient.DeleteCustomModelAsync(guid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -232,19 +289,42 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
-        [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
         {
             Page<CustomFormModelInfo> FirstPageFunc(int? pageSizeHint)
             {
-                Response<Models_internal> response =  ServiceClient.ListCustomModels(cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModels)}");
+                scope.Start();
+
+                try
+                {
+                    Response<Models.Models> response = ServiceClient.ListCustomModels(cancellationToken);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+
             Page<CustomFormModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                Response<Models_internal> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModels)}");
+                scope.Start();
+
+                try
+                {
+                    Response<Models.Models> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
@@ -254,19 +334,42 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CustomFormModelInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                Response<Models_internal> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModels)}");
+                scope.Start();
+
+                try
+                {
+                    Response<Models.Models> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+
             async Task<Page<CustomFormModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                Response<Models_internal> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCustomModels)}");
+                scope.Start();
+
+                try
+                {
+                    Response<Models.Models> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
@@ -276,11 +379,21 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="AccountProperties"/> containing
         /// the account properties.</returns>
-        [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = ServiceClient.GetCustomModels(cancellationToken);
-            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetAccountProperties)}");
+            scope.Start();
+
+            try
+            {
+                Response<Models.Models> response = ServiceClient.GetCustomModels(cancellationToken);
+                return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -289,11 +402,21 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="AccountProperties"/> containing
         /// the account properties.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetAccountProperties)}");
+            scope.Start();
+
+            try
+            {
+                Response<Models.Models> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -308,21 +431,31 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        [ForwardsClientCalls]
         public virtual CopyModelOperation StartCopyModel(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target.ResourceId,
-                                          target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartCopyModel)}");
+            scope.Start();
 
-            Response response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                var request = new CopyRequest(target.ResourceId,
+                                              target.Region,
+                                              new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
 
-            return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
+                Response response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -334,21 +467,31 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<CopyModelOperation> StartCopyModelAsync(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target.ResourceId,
-                                          target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartCopyModel)}");
+            scope.Start();
 
-            Response response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            try
+            {
+                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+                var request = new CopyRequest(target.ResourceId,
+                                              target.Region,
+                                              new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
 
-            return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
+                Response response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -361,14 +504,24 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        [ForwardsClientCalls]
         public virtual Response<CopyAuthorization> GetCopyAuthorization(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(resourceRegion, nameof(resourceRegion));
 
-            Response<CopyAuthorizationResult> response = ServiceClient.GenerateModelCopyAuthorization(cancellationToken);
-            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCopyAuthorization)}");
+            scope.Start();
+
+            try
+            {
+                Response<CopyAuthorizationResult> response = ServiceClient.GenerateModelCopyAuthorization(cancellationToken);
+                return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -381,14 +534,24 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(resourceRegion, nameof(resourceRegion));
 
-            Response<CopyAuthorizationResult> response = await ServiceClient.GenerateModelCopyAuthorizationAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(GetCopyAuthorization)}");
+            scope.Start();
+
+            try
+            {
+                Response<CopyAuthorizationResult> response = await ServiceClient.GenerateModelCopyAuthorizationAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
         #endregion Copy
 

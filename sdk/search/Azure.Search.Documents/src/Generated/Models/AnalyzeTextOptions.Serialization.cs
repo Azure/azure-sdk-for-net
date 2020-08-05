@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (AnalyzerName != null)
+            if (Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer");
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (TokenizerName != null)
+            if (Optional.IsDefined(TokenizerName))
             {
                 writer.WritePropertyName("tokenizer");
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
-            if (TokenFilters != null && TokenFilters.Any())
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null && CharFilters.Any())
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();

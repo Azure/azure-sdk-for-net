@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The DeviceStatus. </summary>
+    /// <summary> The status of the device. If the status disabled, a device cannot connect to the service. </summary>
     public readonly partial struct DeviceStatus : IEquatable<DeviceStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="DeviceStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -6,17 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>5.0.0-preview.3</Version>
+		<Version>5.0.0-preview.5</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Add support for repository-scoped permission (Preview)
-        2) Add support for Azure Private Link (Preview)
-        3) Add support for encrtyption using customer-managed keys (Preview)
-        4) Add support for TaskRun (Preview)
-        5) Add support for AgentPool (Preview)
-        6) Breaking change: For Tasks related operations, exception thrown in case of failure changed from `CloudException` to `ErrorResponseException`
+        1) Add Location property to ExportPipeline and ImportPipeline
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SqlScriptsListResponse. </summary>
         /// <param name="value"> List of sql scripts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SqlScriptsListResponse(IEnumerable<SqlScriptResource> value)
         {
             if (value == null)

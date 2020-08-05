@@ -47,12 +47,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The version of the Service Fabric resource provider API. This is a required
-        /// parameter and it's value must be "2019-03-01" for this specification.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The customer subscription identifier.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -109,6 +103,21 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// Gets the IServicesOperations.
         /// </summary>
         public virtual IServicesOperations Services { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedClustersOperations.
+        /// </summary>
+        public virtual IManagedClustersOperations ManagedClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedClusterVersionsOperations.
+        /// </summary>
+        public virtual IManagedClusterVersionsOperations ManagedClusterVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the INodeTypesOperations.
+        /// </summary>
+        public virtual INodeTypesOperations NodeTypes { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ServiceFabricManagementClient class.
@@ -358,8 +367,10 @@ namespace Microsoft.Azure.Management.ServiceFabric
             ApplicationTypeVersions = new ApplicationTypeVersionsOperations(this);
             Applications = new ApplicationsOperations(this);
             Services = new ServicesOperations(this);
+            ManagedClusters = new ManagedClustersOperations(this);
+            ManagedClusterVersions = new ManagedClusterVersionsOperations(this);
+            NodeTypes = new NodeTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -391,8 +402,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartitionSchemeDescription>("partitionScheme"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartitionSchemeDescription>("partitionScheme"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServicePlacementPolicyDescription>("Type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServicePlacementPolicyDescription>("Type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServicePlacementPolicyDescription>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServicePlacementPolicyDescription>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceProperties>("serviceKind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServiceResourceProperties>("serviceKind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceUpdateProperties>("serviceKind"));

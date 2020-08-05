@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     async () =>
                     await client.CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+                    .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };
         }
 
@@ -250,7 +250,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     async () =>
                     await receiver.CompleteMessageAsync(deferredMessage), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                    .EqualTo(ServiceBusFailureReason.MessageLockLost));
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     async () =>
                     await receiver.CompleteMessageAsync(receivedMessage2), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                    .EqualTo(ServiceBusFailureReason.MessageLockLost));
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     async () =>
                     await receiver.CompleteMessageAsync(receivedMessage), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                    .EqualTo(ServiceBusFailureReason.MessageLockLost));
 
                 // Assert that send did succeed
                 receivedMessage = await receiver.ReceiveMessageAsync();

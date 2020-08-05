@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     public partial class ExternalResource
     {
         /// <summary> Initializes a new instance of ExternalResource. </summary>
-        public ExternalResource()
+        internal ExternalResource()
         {
         }
 
