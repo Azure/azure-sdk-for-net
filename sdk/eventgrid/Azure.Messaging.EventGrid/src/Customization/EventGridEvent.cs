@@ -13,18 +13,15 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="subject"> A resource path relative to the topic path. </param>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="eventType"> The type of the event that occurred. </param>
-        /// <param name="dataVersion"> The schema version of the data object. </param>
-        public EventGridEvent(string subject, object data, string eventType, string dataVersion)
+        public EventGridEvent(string subject, object data, string eventType)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
-            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
             Subject = subject;
             Data = data;
             EventType = eventType;
-            DataVersion = dataVersion;
         }
 
         /// <summary> An unique identifier for the event. </summary>
@@ -47,8 +44,5 @@ namespace Azure.Messaging.EventGrid.Models
 
         /// <summary> The schema version of the event metadata. </summary>
         public string MetadataVersion { get; set; }
-
-        /// <summary> The schema version of the data object. </summary>
-        public string DataVersion { get; set; }
     }
 }

@@ -39,9 +39,6 @@ namespace Azure.Messaging.EventGrid.Models
         /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
         public DateTimeOffset? Time { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary> The version of the CloudEvents specification which the event uses. </summary>
-        public string SpecVersion { get; set; } = "1.0";
-
         /// <summary> Identifies the schema that data adheres to. </summary>
         public string DataSchema { get; set; }
 

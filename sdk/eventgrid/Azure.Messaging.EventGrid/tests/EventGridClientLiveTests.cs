@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.TopicHost),
                     new AzureKeyCredential(TestEnvironment.TopicKey),
                     options));
-            await client.PublishEventsAsync(GetEventsList());
+            await client.SendEventsAsync(GetEventsList());
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     });
             }
 
-            await client.PublishEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(newEGEvent);
             }
 
-            await client.PublishEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     });
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -237,7 +237,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -268,7 +268,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.CustomEventTopicHost),
                     new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
                     options));
-            await client.PublishCustomEventsAsync(GetCustomEventsList());
+            await client.SendEventsAsync(GetCustomEventsList());
         }
 
         [Test]
@@ -296,7 +296,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.TopicHost),
                     new EventGridSharedAccessSignatureCredential(sasToken),
                     Recording.InstrumentClientOptions(new EventGridPublisherClientOptions())));
-            await sasTokenClient.PublishEventsAsync(GetEventsList());
+            await sasTokenClient.SendEventsAsync(GetEventsList());
         }
 
         [Test]
@@ -314,7 +314,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.CustomEventTopicHost),
                     new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
                     options));
-            await client.PublishCustomEventsAsync(GetCustomEventsList());
+            await client.SendEventsAsync(GetCustomEventsList());
         }
 
         private IList<EventGridEvent> GetEventsList()
