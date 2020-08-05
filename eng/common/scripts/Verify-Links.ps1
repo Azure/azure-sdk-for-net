@@ -144,8 +144,7 @@ function CheckLink ([System.Uri]$linkUri)
     }
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__
-      $hresult = $_.Exception.HResult
-      Write-Host "hresult = $hresult"
+
       if ($statusCode -in $errorStatusCodes) {
         LogWarning "[$statusCode] broken link $linkUri"
         $script:badLinks += $linkUri 
