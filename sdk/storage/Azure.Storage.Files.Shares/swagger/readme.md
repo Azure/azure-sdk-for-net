@@ -893,6 +893,14 @@ directive:
     $.get.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
     $.get.responses["206"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
     $.head.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+- from: swagger-document
+  where: $.definitions.LeaseDuration
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseDuration";
 ```
 
 ### LeaseState
@@ -904,6 +912,14 @@ directive:
     $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
     $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+- from: swagger-document
+  where: $.definitions.LeaseState
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseState";
 ```
 
 ### LeaseStatus
@@ -915,6 +931,14 @@ directive:
     $.get.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
     $.get.responses["206"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
     $.head.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+- from: swagger-document
+  where: $.definitions.LeaseStatus
+  transform: >
+    $["x-ms-enum"]["name"] = "ShareLeaseStatus";
 ```
 
 ### Rename ShareRestoreResult

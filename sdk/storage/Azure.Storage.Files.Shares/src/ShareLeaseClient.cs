@@ -164,7 +164,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             TimeSpan? duration = default,
             CancellationToken cancellationToken = default) =>
             AcquireInternal(
-                duration: default,
+                duration: duration,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             TimeSpan? duration = default,
             CancellationToken cancellationToken = default) =>
             await AcquireInternal(
-                duration: default,
+                duration: duration,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

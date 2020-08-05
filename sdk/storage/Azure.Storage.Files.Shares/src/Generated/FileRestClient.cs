@@ -813,15 +813,15 @@ namespace Azure.Storage.Files.Shares
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
                         {
-                            _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseDurationType(_header);
+                            _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseDuration(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
                         {
-                            _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseStateType(_header);
+                            _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseState(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
-                            _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseStatusType(_header);
+                            _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
                         }
 
                         // Create the response
@@ -9034,177 +9034,6 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class FlattenedStorageFileProperties
 
-#region enum LeaseDurationType
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
-    /// </summary>
-    public enum LeaseDurationType
-    {
-        /// <summary>
-        /// infinite
-        /// </summary>
-        Infinite,
-
-        /// <summary>
-        /// fixed
-        /// </summary>
-        Fixed
-    }
-}
-
-namespace Azure.Storage.Files.Shares
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Shares.Models.LeaseDurationType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.Shares.Models.LeaseDurationType.Infinite => "infinite",
-                    Azure.Storage.Files.Shares.Models.LeaseDurationType.Fixed => "fixed",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseDurationType value.")
-                };
-            }
-
-            public static Azure.Storage.Files.Shares.Models.LeaseDurationType ParseLeaseDurationType(string value)
-            {
-                return value switch
-                {
-                    "infinite" => Azure.Storage.Files.Shares.Models.LeaseDurationType.Infinite,
-                    "fixed" => Azure.Storage.Files.Shares.Models.LeaseDurationType.Fixed,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseDurationType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseDurationType
-
-#region enum LeaseStateType
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// Lease state of the share.
-    /// </summary>
-    public enum LeaseStateType
-    {
-        /// <summary>
-        /// available
-        /// </summary>
-        Available,
-
-        /// <summary>
-        /// leased
-        /// </summary>
-        Leased,
-
-        /// <summary>
-        /// expired
-        /// </summary>
-        Expired,
-
-        /// <summary>
-        /// breaking
-        /// </summary>
-        Breaking,
-
-        /// <summary>
-        /// broken
-        /// </summary>
-        Broken
-    }
-}
-
-namespace Azure.Storage.Files.Shares
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Shares.Models.LeaseStateType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.Shares.Models.LeaseStateType.Available => "available",
-                    Azure.Storage.Files.Shares.Models.LeaseStateType.Leased => "leased",
-                    Azure.Storage.Files.Shares.Models.LeaseStateType.Expired => "expired",
-                    Azure.Storage.Files.Shares.Models.LeaseStateType.Breaking => "breaking",
-                    Azure.Storage.Files.Shares.Models.LeaseStateType.Broken => "broken",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseStateType value.")
-                };
-            }
-
-            public static Azure.Storage.Files.Shares.Models.LeaseStateType ParseLeaseStateType(string value)
-            {
-                return value switch
-                {
-                    "available" => Azure.Storage.Files.Shares.Models.LeaseStateType.Available,
-                    "leased" => Azure.Storage.Files.Shares.Models.LeaseStateType.Leased,
-                    "expired" => Azure.Storage.Files.Shares.Models.LeaseStateType.Expired,
-                    "breaking" => Azure.Storage.Files.Shares.Models.LeaseStateType.Breaking,
-                    "broken" => Azure.Storage.Files.Shares.Models.LeaseStateType.Broken,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseStateType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStateType
-
-#region enum LeaseStatusType
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// The current lease status of the share.
-    /// </summary>
-    public enum LeaseStatusType
-    {
-        /// <summary>
-        /// locked
-        /// </summary>
-        Locked,
-
-        /// <summary>
-        /// unlocked
-        /// </summary>
-        Unlocked
-    }
-}
-
-namespace Azure.Storage.Files.Shares
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Shares.Models.LeaseStatusType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.Shares.Models.LeaseStatusType.Locked => "locked",
-                    Azure.Storage.Files.Shares.Models.LeaseStatusType.Unlocked => "unlocked",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseStatusType value.")
-                };
-            }
-
-            public static Azure.Storage.Files.Shares.Models.LeaseStatusType ParseLeaseStatusType(string value)
-            {
-                return value switch
-                {
-                    "locked" => Azure.Storage.Files.Shares.Models.LeaseStatusType.Locked,
-                    "unlocked" => Azure.Storage.Files.Shares.Models.LeaseStatusType.Unlocked,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.LeaseStatusType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStatusType
-
 #region enum ListSharesIncludeType
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -10967,7 +10796,7 @@ namespace Azure.Storage.Files.Shares.Models
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// When a file is leased, specifies whether the lease is of infinite or fixed duration.
+    /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
     /// </summary>
     public enum ShareLeaseDuration
     {
@@ -11017,7 +10846,7 @@ namespace Azure.Storage.Files.Shares
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Lease state of the file.
+    /// Lease state of the share.
     /// </summary>
     public enum ShareLeaseState
     {
@@ -11088,7 +10917,7 @@ namespace Azure.Storage.Files.Shares
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// The current lease status of the file.
+    /// The current lease status of the share.
     /// </summary>
     #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum ShareLeaseStatus
@@ -11308,17 +11137,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The current lease status of the share.
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.LeaseStatusType? LeaseStatus { get; internal set; }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseStatus? LeaseStatus { get; internal set; }
 
         /// <summary>
         /// Lease state of the share.
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.LeaseStateType? LeaseState { get; internal set; }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseState? LeaseState { get; internal set; }
 
         /// <summary>
         /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.LeaseDurationType? LeaseDuration { get; internal set; }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseDuration? LeaseDuration { get; internal set; }
 
         /// <summary>
         /// QuotaInGB
@@ -11403,17 +11232,17 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseStatusType(_child.Value);
+                _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseStateType(_child.Value);
+                _value.LeaseState = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseState(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
-                _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseLeaseDurationType(_child.Value);
+                _value.LeaseDuration = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseDuration(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
@@ -11453,9 +11282,9 @@ namespace Azure.Storage.Files.Shares.Models
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
             Azure.ETag? eTag = default,
             int? remainingRetentionDays = default,
-            Azure.Storage.Files.Shares.Models.LeaseStatusType? leaseStatus = default,
-            Azure.Storage.Files.Shares.Models.LeaseStateType? leaseState = default,
-            Azure.Storage.Files.Shares.Models.LeaseDurationType? leaseDuration = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default,
+            Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
