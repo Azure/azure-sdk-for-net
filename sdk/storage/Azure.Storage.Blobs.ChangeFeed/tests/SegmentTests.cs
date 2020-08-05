@@ -85,6 +85,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 shards[i].Setup(r => r.GetCursor()).Returns(shardCursors[i]);
                 shards[i].Setup(r => r.ShardPath).Returns($"log/0{i}/2020/03/25/0200/");
+                shards[i].Setup(r => r.HasNext()).Returns(true);
             }
 
             SegmentFactory segmentFactory = new SegmentFactory(
@@ -197,6 +198,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             shards[0].SetupSequence(r => r.HasNext())
                 .Returns(true)
+                .Returns(true)
                 .Returns(false);
 
             shards[1].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
@@ -211,6 +213,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             shards[1].SetupSequence(r => r.HasNext())
                 .Returns(true)
+                .Returns(true)
                 .Returns(false);
 
             shards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
@@ -219,7 +222,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     Id = eventIds[2]
                 }));
 
-            shards[2].Setup(r => r.HasNext())
+            shards[2].SetupSequence(r => r.HasNext())
+                .Returns(true)
                 .Returns(false);
 
             SegmentFactory segmentFactory = new SegmentFactory(

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
@@ -64,10 +65,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 It.IsAny<string>(),
                 It.IsAny<long>(),
-                It.IsAny<long>()))
-                .Returns((string path, long _, long _) => chunks[path].Object);
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()))
+                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -108,9 +111,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk2",
                 blockOffset,
-                eventIndex));
+                eventIndex,
+                It.IsAny<CancellationToken>()));
 
             chunks["chunk2"].Verify(r => r.BlockOffset);
             chunks["chunk2"].Verify(r => r.EventIndex);
@@ -162,10 +167,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 It.IsAny<string>(),
                 It.IsAny<long>(),
-                It.IsAny<long>()))
-                .Returns((string path, long _, long _) => chunks[path].Object);
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()))
+                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(false);
 
@@ -205,9 +212,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk5",
                 blockOffset,
-                eventIndex));
+                eventIndex,
+                It.IsAny<CancellationToken>()));
 
             chunks["chunk5"].Verify(r => r.HasNext());
         }
@@ -257,10 +266,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 It.IsAny<string>(),
                 It.IsAny<long>(),
-                It.IsAny<long>()))
-                .Returns((string path, long _, long _) => chunks[path].Object);
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()))
+                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -298,9 +309,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk2",
                 blockOffset,
-                eventIndex));
+                eventIndex,
+                It.IsAny<CancellationToken>()));
         }
 
         /// <summary>
@@ -348,10 +361,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 It.IsAny<string>(),
                 It.IsAny<long>(),
-                It.IsAny<long>()))
-                .Returns((string path, long _, long _) => chunks[path].Object);
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()))
+                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(true);
 
@@ -391,9 +406,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk5",
                 blockOffset,
-                eventIndex));
+                eventIndex,
+                It.IsAny<CancellationToken>()));
 
             chunks["chunk5"].Verify(r => r.HasNext());
         }
@@ -460,10 +477,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 It.IsAny<string>(),
                 It.IsAny<long>(),
-                It.IsAny<long>()))
-                .Returns((string path, long _, long _) => chunks[path].Object);
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()))
+                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk2"].SetupSequence(r => r.HasNext())
                 .Returns(true)
@@ -547,21 +566,29 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk2",
                 blockOffset,
-                eventIndex));
+                eventIndex,
+                It.IsAny<CancellationToken>()));
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk3",
                 default,
-                default));
+                default,
+                It.IsAny<CancellationToken>()));
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk4",
                 default,
-                default));
+                default,
+                It.IsAny<CancellationToken>()));
             chunkFactory.Verify(r => r.BuildChunk(
+                It.IsAny<bool>(),
                 "chunk5",
                 default,
-                default));
+                default,
+                It.IsAny<CancellationToken>()));
 
             for (int i = 0; i < chunkCount; i++)
             {

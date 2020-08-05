@@ -63,7 +63,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
             }
 
-            int i = 0;
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
@@ -73,9 +72,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     shardPath,
                     shardCursor)
                     .ConfigureAwait(false);
-
-                shards.Add(shard);
-                i++;
+                if (shard.HasNext())
+                {
+                    shards.Add(shard);
+                }
             }
 
             int shardIndex = 0;

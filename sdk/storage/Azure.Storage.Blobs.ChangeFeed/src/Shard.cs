@@ -74,8 +74,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Remove currentChunk if it doesn't have another event.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
-                _currentChunk = _chunkFactory.BuildChunk(
-                    _chunks.Dequeue());
+                _currentChunk = await _chunkFactory.BuildChunk(
+                    async,
+                    _chunks.Dequeue(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 _chunkIndex++;
             }
             return changeFeedEvent;

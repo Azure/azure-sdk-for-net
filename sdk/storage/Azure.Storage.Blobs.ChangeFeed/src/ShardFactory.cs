@@ -92,10 +92,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     }
                 }
 
-                currentChunk = _chunkFactory.BuildChunk(
+                currentChunk = await _chunkFactory.BuildChunk(
+                    async,
                     chunks.Dequeue(),
                     blockOffset,
-                    eventIndex);
+                    eventIndex).ConfigureAwait(false);
             }
 
             return new Shard(
