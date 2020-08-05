@@ -274,6 +274,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<Vault> ListByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -318,6 +319,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<Vault> ListByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -589,6 +591,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -623,6 +626,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VaultsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -656,6 +660,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
         public virtual async Task<VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
@@ -685,6 +690,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
         public virtual VaultsPurgeDeletedOperation StartPurgeDeleted(string vaultName, string location, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)

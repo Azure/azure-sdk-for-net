@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Net;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,17 +34,23 @@ namespace Azure.Iot.Hub.Service.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected IoTHubServiceClient GetClient()
+        protected IotHubServiceClient GetClient()
         {
             return InstrumentClient(
-                new IoTHubServiceClient(
+                new IotHubServiceClient(
                     TestEnvironment.IotHubConnectionString,
-                    Recording.InstrumentClientOptions(new IoTHubServiceClientOptions())));
+                    Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
         protected string GetRandom()
         {
             return Recording.GenerateId();
+        }
+
+        protected string GetHostName()
+        {
+            var iotHubConnectionString = ConnectionString.Parse(TestEnvironment.IotHubConnectionString);
+            return iotHubConnectionString.GetRequired("HostName");
         }
     }
 }

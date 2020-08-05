@@ -15,40 +15,28 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleDefinition DeserializeRoleDefinition(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string roleName = default;
-            string description = default;
-            string type0 = default;
-            IReadOnlyList<KeyVaultPermission> permissions = default;
-            IReadOnlyList<string> assignableScopes = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> roleName = default;
+            Optional<string> description = default;
+            Optional<string> type0 = default;
+            Optional<IReadOnlyList<KeyVaultPermission>> permissions = default;
+            Optional<IReadOnlyList<string>> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -58,69 +46,35 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         if (property0.NameEquals("roleName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             roleName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("description"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             description = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("type"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             type0 = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("permissions"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<KeyVaultPermission> array = new List<KeyVaultPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
-                                }
+                                array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
                             }
                             permissions = array;
                             continue;
                         }
                         if (property0.NameEquals("assignableScopes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
+                                array.Add(item.GetString());
                             }
                             assignableScopes = array;
                             continue;
@@ -129,7 +83,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RoleDefinition(id, name, type, roleName, description, type0, permissions, assignableScopes);
+            return new RoleDefinition(id.Value, name.Value, type.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
         }
     }
 }

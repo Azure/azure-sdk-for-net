@@ -16,15 +16,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content");
             writer.WriteObjectValue(Content);
@@ -38,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScript DeserializeSqlScript(JsonElement element)
         {
-            string description = default;
-            string type = default;
+            Optional<string> description = default;
+            Optional<SqlScriptType> type = default;
             SqlScriptContent content = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
@@ -47,20 +47,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = property.Value.GetString();
+                    type = new SqlScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("content"))
@@ -69,17 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
                 additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScript(description, type, content, additionalProperties);
+            return new SqlScript(description.Value, Optional.ToNullable(type), content, additionalProperties);
         }
     }
 }

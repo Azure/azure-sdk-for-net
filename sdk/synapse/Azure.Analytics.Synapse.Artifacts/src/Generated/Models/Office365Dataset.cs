@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
         public Office365Dataset(LinkedServiceReference linkedServiceName, object tableName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

@@ -13,7 +13,6 @@
       <!-- Missing XML comment for publicly visible type or member  -->
       CS1591;
     </NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
@@ -35,7 +34,7 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs"  Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

@@ -48,7 +48,7 @@ namespace Azure.Iot.Hub.Service.Authentication
             // SharedAccessSignature sr=ENCODED(dh://myiothub.azure-devices.net/a/b/c?myvalue1=a)&sig=<Signature>&se=<ExpiresOnValue>[&skn=<KeyName>]
 
             var buffer = new StringBuilder();
-            buffer.Append($"{SharedAccessSignatureConstants.SharedAccessSignature} " +
+            buffer.Append($"{SharedAccessSignatureConstants.SharedAccessSignatureIdentifier} " +
                 $"{SharedAccessSignatureConstants.AudienceFieldName}={audience}" +
                 $"&{SharedAccessSignatureConstants.SignatureFieldName}={WebUtility.UrlEncode(signature)}" +
                 $"&{SharedAccessSignatureConstants.ExpiryFieldName}={WebUtility.UrlEncode(expiresOn)}");

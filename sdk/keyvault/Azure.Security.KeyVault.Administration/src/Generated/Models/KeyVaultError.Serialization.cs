@@ -14,20 +14,21 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultError DeserializeKeyVaultError(JsonElement element)
         {
-            KeyVaultServiceError error = default;
+            Optional<KeyVaultServiceError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        error = null;
                         continue;
                     }
                     error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
             }
-            return new KeyVaultError(error);
+            return new KeyVaultError(error.Value);
         }
     }
 }

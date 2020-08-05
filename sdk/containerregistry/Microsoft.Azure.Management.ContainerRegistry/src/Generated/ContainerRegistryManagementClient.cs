@@ -67,14 +67,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IExportPipelinesOperations.
+        /// </summary>
+        public virtual IExportPipelinesOperations ExportPipelines { get; private set; }
+
+        /// <summary>
         /// Gets the IRegistriesOperations.
         /// </summary>
         public virtual IRegistriesOperations Registries { get; private set; }
 
         /// <summary>
+        /// Gets the IImportPipelinesOperations.
+        /// </summary>
+        public virtual IImportPipelinesOperations ImportPipelines { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPipelineRunsOperations.
+        /// </summary>
+        public virtual IPipelineRunsOperations PipelineRuns { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -362,8 +377,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </summary>
         private void Initialize()
         {
+            ExportPipelines = new ExportPipelinesOperations(this);
             Registries = new RegistriesOperations(this);
+            ImportPipelines = new ImportPipelinesOperations(this);
             Operations = new Operations(this);
+            PipelineRuns = new PipelineRunsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Replications = new ReplicationsOperations(this);
             Webhooks = new WebhooksOperations(this);

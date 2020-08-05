@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// status on the virtual machine.</param>
         /// <param name="disks">The virtual machine disk information.</param>
         /// <param name="extensions">The extensions information.</param>
+        /// <param name="vmHealth">The health status for the VM.</param>
         /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
         /// feature which allows you to view Console Output and Screenshot to
         /// diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2020-06-01.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -76,6 +77,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             MaintenanceRedeployStatus = maintenanceRedeployStatus;
             Disks = disks;
             Extensions = extensions;
+            VmHealth = vmHealth;
             BootDiagnostics = bootDiagnostics;
             AssignedHost = assignedHost;
             Statuses = statuses;
@@ -155,6 +157,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
         public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets the health status for the VM.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmHealth")]
+        public VirtualMachineHealthStatus VmHealth { get; private set; }
 
         /// <summary>
         /// Gets or sets boot Diagnostics is a debugging feature which allows

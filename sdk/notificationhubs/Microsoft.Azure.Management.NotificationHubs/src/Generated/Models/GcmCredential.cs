@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the GcmCredential class.
         /// </summary>
-        /// <param name="gcmEndpoint">The GCM endpoint.</param>
+        /// <param name="gcmEndpoint">The FCM legacy endpoint. Default value is
+        /// 'https://fcm.googleapis.com/fcm/send'</param>
         /// <param name="googleApiKey">The Google API key.</param>
         public GcmCredential(string gcmEndpoint = default(string), string googleApiKey = default(string))
         {
@@ -47,7 +48,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the GCM endpoint.
+        /// Gets or sets the FCM legacy endpoint. Default value is
+        /// 'https://fcm.googleapis.com/fcm/send'
         /// </summary>
         [JsonProperty(PropertyName = "properties.gcmEndpoint")]
         public string GcmEndpoint { get; set; }

@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzL3N0YW5kYXJkRlN2MkZhbWlseT9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c4f216a3-98e0-4d43-b49f-bbce68afb6b4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:47:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "b584399e-45bb-4d03-a72d-3f18acc14c9d"
+        ],
+        "x-ms-correlation-request-id": [
+          "b584399e-45bb-4d03-a72d-3f18acc14c9d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T084704Z:b584399e-45bb-4d03-a72d-3f18acc14c9d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "445"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family\",\r\n  \"Type\": \"Microsoft.Capacity/ServiceLimits\",\r\n  \"name\": \"standardFSv2Family\",\r\n  \"properties\": {\r\n    \"currentValue\": 0,\r\n    \"unit\": \"Count\",\r\n    \"quotaPeriod\": null,\r\n    \"properties\": null,\r\n    \"limit\": 103,\r\n    \"name\": {\r\n      \"value\": \"standardFSv2Family\",\r\n      \"localizedValue\": \"Standard FSv2 Family vCPUs\"\r\n    },\r\n    \"resourceType\": null\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

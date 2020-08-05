@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SapEccLinkedService. </summary>
         /// <param name="url"> The URL of SAP ECC OData API. For example, &apos;[https://hostname:port/sap/opu/odata/sap/servicename/]&apos;. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public SapEccLinkedService(string url)
         {
             if (url == null)

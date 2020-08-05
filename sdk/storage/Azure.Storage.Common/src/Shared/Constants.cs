@@ -42,6 +42,11 @@ namespace Azure.Storage
         public const int LargeUploadThreshold = 100 * Constants.MB;
 
         /// <summary>
+        /// The minimum number of bytes to download in Open Read.
+        /// </summary>
+        public const int DefaultStreamingDownloadSize = 4 * Constants.MB;
+
+        /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
         /// and it's overloads. This is the default for .NET Core to be applied everywhere for test consistency.
         /// </summary>
@@ -155,6 +160,7 @@ namespace Azure.Storage
         {
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
+            public const int QuickQueryDownloadSize = 4 * Constants.MB;
 
             internal static class Append
             {
@@ -322,6 +328,7 @@ namespace Azure.Storage
             public const string MetaSegmentsPath = "meta/segments.json";
             public const long ChunkBlockDownloadSize = MB;
             public const int DefaultPageSize = 5000;
+            public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
             internal static class Event
             {

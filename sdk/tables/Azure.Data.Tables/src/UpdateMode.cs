@@ -3,7 +3,7 @@
 
 namespace Azure.Data.Tables
 {
-    public enum UpdateMode
+    public enum TableUpdateMode
     {
         Merge = 0,
         Replace = 1

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -50,7 +49,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// If this Shard has a next event.
         /// </summary>
         public virtual bool HasNext()
-            => _chunks.Count > 0 || _currentChunk.HasNext();
+            => _chunks.Count > 0 || (_currentChunk != null && _currentChunk.HasNext());
 
         /// <summary>
         /// Gets the next <see cref="BlobChangeFeedEvent"/>.

@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 
@@ -37,11 +36,6 @@ namespace Azure.Identity
         public IConfidentialClientApplication CreateMsalConfidentialClient(string tenantId, string clientId, string clientSecret)
         {
             return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-        }
-
-        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, ITokenCacheOptions cacheOptions = default)
-        {
-            return new MsalPublicClient(HttpPipeline, AuthorityHost, clientId, tenantId, redirectUrl, cacheOptions);
         }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)

@@ -3,10 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -39,10 +38,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         public async Task<ChangeFeed> BuildChangeFeed(
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            string continuation,
             bool async,
-            DateTimeOffset? startTime = default,
-            DateTimeOffset? endTime = default,
-            string continuation = default)
+            CancellationToken cancellationToken)
         {
             DateTimeOffset lastConsumable;
             Queue<string> years = new Queue<string>();
@@ -69,11 +69,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (async)
             {
-                changeFeedContainerExists = await _containerClient.ExistsAsync().ConfigureAwait(false);
+                changeFeedContainerExists = await _containerClient.ExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                changeFeedContainerExists = _containerClient.Exists();
+                changeFeedContainerExists = _containerClient.Exists(cancellationToken: cancellationToken);
             }
 
             if (!changeFeedContainerExists)
@@ -86,17 +86,20 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobDownloadInfo blobDownloadInfo;
             if (async)
             {
-                blobDownloadInfo = await blobClient.DownloadAsync().ConfigureAwait(false);
+                blobDownloadInfo = await blobClient.DownloadAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                blobDownloadInfo = blobClient.Download();
+                blobDownloadInfo = blobClient.Download(cancellationToken: cancellationToken);
             }
 
             JsonDocument jsonMetaSegment;
             if (async)
             {
-                jsonMetaSegment = await JsonDocument.ParseAsync(blobDownloadInfo.Content).ConfigureAwait(false);
+                jsonMetaSegment = await JsonDocument.ParseAsync(
+                    blobDownloadInfo.Content,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             else
             {
@@ -106,13 +109,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
 
             // Get year paths
-            years = await GetYearPaths(async).ConfigureAwait(false);
+            years = await GetYearPathsInternal(
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             // Dequeue any years that occur before start time
             if (startTime.HasValue)
             {
                 while (years.Count > 0
-                    && years.Peek().ToDateTimeOffset() < startTime.RoundDownToNearestYear())
+                    && BlobChangeFeedExtensions.ToDateTimeOffset(years.Peek()) < startTime.RoundDownToNearestYear())
                 {
                     years.Dequeue();
                 }
@@ -127,12 +132,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             while (segments.Count == 0 && years.Count > 0)
             {
                 // Get Segments for year
-                segments = await BlobChangeFeedExtensions.GetSegmentsInYear(
-                    async: async,
+                segments = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
                     containerClient: _containerClient,
                     yearPath: years.Dequeue(),
                     startTime: startTime,
-                    endTime: BlobChangeFeedExtensions.MinDateTime(lastConsumable, endTime))
+                    endTime: BlobChangeFeedExtensions.MinDateTime(lastConsumable, endTime),
+                    async: async,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -163,14 +169,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobContainerClient containerClient,
             ChangeFeedCursor cursor)
         {
-            if (containerClient.Uri.ToString().GetHashCode() != cursor.UrlHash)
+            if (BlobChangeFeedExtensions.ComputeMD5(containerClient.Uri.AbsoluteUri) != cursor.UrlHash)
             {
                 throw new ArgumentException("Cursor URL does not match container URL");
             }
         }
 
-        internal async Task<Queue<string>> GetYearPaths(
-            bool async)
+        internal async Task<Queue<string>> GetYearPathsInternal(
+            bool async,
+            CancellationToken cancellationToken)
         {
             List<string> list = new List<string>();
 
@@ -178,7 +185,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
                     prefix: Constants.ChangeFeed.SegmentPrefix,
-                    delimiter: "/").ConfigureAwait(false))
+                    delimiter: "/",
+                    cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))
                         continue;
@@ -190,7 +198,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
                 prefix: Constants.ChangeFeed.SegmentPrefix,
-                delimiter: "/"))
+                delimiter: "/",
+                cancellationToken: cancellationToken))
                 {
                     if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))
                         continue;

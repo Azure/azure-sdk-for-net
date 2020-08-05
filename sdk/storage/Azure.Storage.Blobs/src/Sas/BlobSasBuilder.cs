@@ -14,7 +14,9 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="BlobSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage container or blob.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public class BlobSasBuilder
     {

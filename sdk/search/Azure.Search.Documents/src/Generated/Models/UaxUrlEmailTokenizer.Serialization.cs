@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
@@ -29,17 +29,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static UaxUrlEmailTokenizer DeserializeUaxUrlEmailTokenizer(JsonElement element)
         {
-            int? maxTokenLength = default;
+            Optional<int> maxTokenLength = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
@@ -54,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new UaxUrlEmailTokenizer(odataType, name, maxTokenLength);
+            return new UaxUrlEmailTokenizer(odataType, name, Optional.ToNullable(maxTokenLength));
         }
     }
 }

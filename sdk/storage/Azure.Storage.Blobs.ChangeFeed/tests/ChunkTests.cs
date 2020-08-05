@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Internal.Avro;
 using Moq;

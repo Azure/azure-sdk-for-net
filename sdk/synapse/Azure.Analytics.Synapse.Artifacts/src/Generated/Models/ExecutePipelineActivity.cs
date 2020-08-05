@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
         public ExecutePipelineActivity(string name, PipelineReference pipeline) : base(name)
         {
             if (name == null)
@@ -28,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Pipeline = pipeline;
+            Parameters = new ChangeTrackingDictionary<string, object>();
             Type = "ExecutePipeline";
         }
 
@@ -52,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Pipeline reference. </summary>
         public PipelineReference Pipeline { get; set; }
         /// <summary> Pipeline parameters. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
         /// <summary> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </summary>
         public bool? WaitOnCompletion { get; set; }
     }

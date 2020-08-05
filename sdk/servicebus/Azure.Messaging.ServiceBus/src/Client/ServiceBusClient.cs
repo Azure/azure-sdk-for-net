@@ -331,7 +331,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
         /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusException.FailureReason.ServiceTimeout"/>.
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
@@ -364,7 +364,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
         /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusException.FailureReason.ServiceTimeout"/>.
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>

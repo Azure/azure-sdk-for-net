@@ -213,7 +213,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // that the message will be completed eventually.
                     var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusException.FailureReason.MessageLockLost)
+                    sbEx.Reason != ServiceBusFailureReason.MessageLockLost)
                     {
                         Assert.Fail(args.Exception.ToString());
                     }
@@ -294,7 +294,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
                         Assert.That(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken),
-                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageLockLost));
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         completionSources[setIndex].SetResult(true);
@@ -390,14 +390,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 if (args.Exception is ServiceBusException sbException)
                 {
-                    if (sbException.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound ||
+                    if (sbException.Reason == ServiceBusFailureReason.MessagingEntityNotFound ||
                         // There is a race condition wherein the service closes the connection when getting
                         // the request for the non-existant queue. If the connection is closed by the time
                         // our exception handling kicks in, we throw it as a ServiceCommunicationProblem
                         // as we cannot be sure the error wasn't due to the connection being closed,
                         // as opposed to what we know is the true cause in this case,
                         // MessagingEntityNotFound.
-                        sbException.Reason == ServiceBusException.FailureReason.ServiceCommunicationProblem)
+                        sbException.Reason == ServiceBusFailureReason.ServiceCommunicationProblem)
                     {
                         exceptionReceivedHandlerCalled = true;
                         return Task.CompletedTask;

@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.HDInsight.Models;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -652,6 +653,93 @@ namespace Management.HDInsight.Tests
             var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
             Assert.Equal("1.2", cluster.Properties.MinSupportedTlsVersion);
             ValidateCluster(clusterName, createParams, cluster);
+        }
+
+        [Fact]
+        public void TestCreateClusterWithPrivateLink()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-privatelink");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+
+            var networkSetting = new NetworkSettings(PublicNetworkAccess.OutboundOnly, OutboundOnlyPublicNetworkAccessType.PublicLoadBalancer);
+            createParams.Properties.NetworkSettings = networkSetting;
+
+            //Create Virturl Network
+            string virtualNetworkName= TestUtilities.GenerateName("hdisdkvnet");
+            var vnet = CreateVnetForPrivateLink(createParams.Location, virtualNetworkName);
+
+            foreach (var role in createParams.Properties.ComputeProfile.Roles)
+            {
+               role.VirtualNetworkProfile = new VirtualNetworkProfile(vnet.Id, vnet.Subnets.First().Id);
+            }
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+
+            var result = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+            ValidateCluster(clusterName, createParams, result);
+        }
+
+        [Fact]
+        public void TestCreateClusterWithEncryptionInTransit()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-encryption");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+            createParams.Properties.EncryptionInTransitProperties = new EncryptionInTransitProperties
+            {
+                IsEncryptionInTransitEnabled = true
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+
+            var result = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+            ValidateCluster(clusterName, createParams, result);
+        }
+
+        [Fact]
+        public void TestUpdateAutoScaleConfiguration()
+        {
+            TestInitialize();
+
+            //create a cluster without autoscale config
+            string clusterName = TestUtilities.GenerateName("hdisdk-updateautoscale");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            var clusterWithoutAutoscale = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+            Assert.Null(cluster.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
+
+            // enable autoscale
+            AutoscaleConfigurationUpdateParameter loadBasedAutoScaleConfig = new AutoscaleConfigurationUpdateParameter
+            {
+                Autoscale = new Autoscale
+                {
+                    Capacity = new AutoscaleCapacity
+                    {
+                        MinInstanceCount = 3,
+                        MaxInstanceCount = 4
+                    }
+                }
+            };
+            HDInsightClient.Clusters.UpdateAutoScaleConfiguration(CommonData.ResourceGroupName, clusterName, loadBasedAutoScaleConfig);
+            var clusterEnabledAutoScale = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+
+            ValidateAutoScaleConfig(loadBasedAutoScaleConfig.Autoscale, clusterEnabledAutoScale.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
+
+            // disable autoscale
+            loadBasedAutoScaleConfig.Autoscale = null;
+            HDInsightClient.Clusters.UpdateAutoScaleConfiguration(CommonData.ResourceGroupName, clusterName, loadBasedAutoScaleConfig);
+            var clusterDisabledAutoScale = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+
+            Assert.Null(clusterDisabledAutoScale.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
         }
     }
 }

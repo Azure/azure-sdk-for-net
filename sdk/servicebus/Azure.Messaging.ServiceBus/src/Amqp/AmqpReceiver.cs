@@ -85,8 +85,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
-        private Exception LinkException { get; set; }
-
         /// <summary>
         /// A map of locked messages received using the management client.
         /// </summary>
@@ -134,6 +132,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _receiveMode = receiveMode;
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
+            SessionId = sessionId;
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -141,17 +140,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
-                        sessionId: sessionId,
+                        sessionId: SessionId,
                         isSessionReceiver: isSessionReceiver),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityPath,
-                    _identifier,
-                    timeout,
-                    CancellationToken.None),
+                timeout => OpenManagementLinkAsync(timeout),
                 link => CloseLink(link));
+        }
+
+        private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
+            TimeSpan timeout)
+        {
+            RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
+                _entityPath,
+                _identifier,
+                timeout,
+                CancellationToken.None).ConfigureAwait(false);
+            link.Closed += OnManagementLinkClosed;
+            return link;
         }
 
         private async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
@@ -173,7 +180,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     sessionId: sessionId,
                     isSessionReceiver: isSessionReceiver,
                     cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                if (isSessionReceiver)
+                {
+                    // Refresh the session lock value in case we have reconnected a link.
+                    // SessionId need not be refreshed here as we do not allow reconnecting
+                    // a receiver instance to a different session.
+                    SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
+                        AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks) ?
+                        new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
+                        : DateTime.MinValue;
+                }
                 ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier);
+                link.Closed += OnReceiverLinkClosed;
                 return link;
             }
             catch (Exception ex)
@@ -245,14 +263,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
-            if (_isSessionReceiver)
-            {
-                ThrowIfSessionLockLost();
-            }
-
             try
             {
-                link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                if (!_receiveLink.TryGetOpenedObject(out link))
+                {
+                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                }
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var messagesReceived = await Task.Factory.FromAsync
@@ -292,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    HasLinkCommunicationError(link)))
+                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -359,11 +375,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Outcome outcome,
             TimeSpan timeout)
         {
-            if (_isSessionReceiver)
-            {
-                ThrowIfSessionLockLost();
-            }
-
             List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
             ReceivingAmqpLink receiveLink = null;
@@ -433,11 +444,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 throw new ServiceBusException(
                     Resources.SessionLockExpiredOnMessageSession,
-                    ServiceBusException.FailureReason.SessionLockLost);
+                    ServiceBusFailureReason.SessionLockLost);
             }
             throw new ServiceBusException(
                 Resources.MessageLockLost,
-                ServiceBusException.FailureReason.MessageLockLost);
+                ServiceBusFailureReason.MessageLockLost);
         }
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -894,14 +905,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             throw amqpResponseMessage.ToMessagingContractException();
         }
 
-        private void ThrowIfSessionLockLost()
-        {
-            if (LinkException != null)
-            {
-                throw LinkException;
-            }
-        }
-
         /// <summary>
         /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
@@ -971,10 +974,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<AmqpResponseMessage> ExecuteRequest(TimeSpan timeout, AmqpRequestMessage amqpRequestMessage)
         {
-            if (_isSessionReceiver)
-            {
-                ThrowIfSessionLockLost();
-            }
             AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,
                 _managementLink,
@@ -1242,26 +1241,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         }
 
-        private void OnSessionReceiverLinkClosed(object receiver, EventArgs e)
-        {
-            var receivingAmqpLink = (ReceivingAmqpLink)receiver;
-            if (receivingAmqpLink != null)
-            {
-                Exception exception = receivingAmqpLink.GetInnerException();
-                if (((exception is ServiceBusException sbException) && sbException.Reason != ServiceBusException.FailureReason.SessionLockLost) || !(exception is ServiceBusException))
-                {
-                    exception = new ServiceBusException(
-                        Resources.SessionLockExpiredOnMessageSession, ServiceBusException.FailureReason.SessionLockLost,
-                        innerException: exception);
-                }
+        private void OnReceiverLinkClosed(object receiver, EventArgs e) =>
+            ServiceBusEventSource.Log.ReceiveLinkClosed(
+                _identifier,
+                SessionId,
+                receiver);
 
-                LinkException = exception;
-                ServiceBusEventSource.Log.SessionReceiverLinkClosed(
-                    _identifier,
-                    SessionId,
-                    LinkException.ToString());
-            }
-        }
+        private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
+            ServiceBusEventSource.Log.ManagementLinkClosed(
+                _identifier,
+                managementLink);
 
         /// <summary>
         /// Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
@@ -1307,11 +1296,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
                 }
                 SessionId = tempSessionId;
-                SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
-                ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
-                : DateTime.MinValue;
-                link.Closed += OnSessionReceiverLinkClosed;
-
             }
         }
 

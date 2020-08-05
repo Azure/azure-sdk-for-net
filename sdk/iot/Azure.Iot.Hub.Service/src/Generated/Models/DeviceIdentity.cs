@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -16,23 +17,24 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
         public DeviceIdentity()
         {
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceIdentity. </summary>
-        /// <param name="deviceId"> . </param>
-        /// <param name="generationId"> . </param>
-        /// <param name="etag"> . </param>
-        /// <param name="connectionState"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="statusReason"> . </param>
-        /// <param name="connectionStateUpdatedTime"> . </param>
-        /// <param name="statusUpdatedTime"> . </param>
-        /// <param name="lastActivityTime"> . </param>
-        /// <param name="cloudToDeviceMessageCount"> . </param>
-        /// <param name="authentication"> . </param>
-        /// <param name="capabilities"> Status of Capabilities enabled on the device. </param>
-        /// <param name="deviceScope"> . </param>
-        /// <param name="parentScopes"> . </param>
+        /// <param name="deviceId"> The unique identifier of the device. </param>
+        /// <param name="generationId"> The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created. </param>
+        /// <param name="etag"> The string representing a weak ETag for the device identity, as per RFC7232. </param>
+        /// <param name="connectionState"> The state of the device. </param>
+        /// <param name="status"> The status of the device. If the status disabled, a device cannot connect to the service. </param>
+        /// <param name="statusReason"> The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </param>
+        /// <param name="connectionStateUpdatedTime"> The date and time the connection state was last updated. </param>
+        /// <param name="statusUpdatedTime"> The date and time when the status field was last updated. </param>
+        /// <param name="lastActivityTime"> The date and last time the device last connected, received, or sent a message. </param>
+        /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-device messages currently queued to be sent to the device. </param>
+        /// <param name="authentication"> The authentication mechanism used by the device. </param>
+        /// <param name="capabilities"> The set of capabilities of the device. For example, if this device is an edge device or not. </param>
+        /// <param name="deviceScope"> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </param>
+        /// <param name="parentScopes"> The scopes of the upper level edge devices if applicable. Only available for edge devices. </param>
         internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             DeviceId = deviceId;
@@ -51,20 +53,33 @@ namespace Azure.Iot.Hub.Service.Models
             ParentScopes = parentScopes;
         }
 
+        /// <summary> The unique identifier of the device. </summary>
         public string DeviceId { get; set; }
+        /// <summary> The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created. </summary>
         public string GenerationId { get; set; }
+        /// <summary> The string representing a weak ETag for the device identity, as per RFC7232. </summary>
         public string Etag { get; set; }
+        /// <summary> The state of the device. </summary>
         public DeviceConnectionState? ConnectionState { get; set; }
+        /// <summary> The status of the device. If the status disabled, a device cannot connect to the service. </summary>
         public DeviceStatus? Status { get; set; }
+        /// <summary> The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </summary>
         public string StatusReason { get; set; }
+        /// <summary> The date and time the connection state was last updated. </summary>
         public DateTimeOffset? ConnectionStateUpdatedTime { get; set; }
+        /// <summary> The date and time when the status field was last updated. </summary>
         public DateTimeOffset? StatusUpdatedTime { get; set; }
+        /// <summary> The date and last time the device last connected, received, or sent a message. </summary>
         public DateTimeOffset? LastActivityTime { get; set; }
+        /// <summary> The number of cloud-to-device messages currently queued to be sent to the device. </summary>
         public int? CloudToDeviceMessageCount { get; set; }
+        /// <summary> The authentication mechanism used by the device. </summary>
         public AuthenticationMechanism Authentication { get; set; }
-        /// <summary> Status of Capabilities enabled on the device. </summary>
+        /// <summary> The set of capabilities of the device. For example, if this device is an edge device or not. </summary>
         public DeviceCapabilities Capabilities { get; set; }
+        /// <summary> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </summary>
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        /// <summary> The scopes of the upper level edge devices if applicable. Only available for edge devices. </summary>
+        public IList<string> ParentScopes { get; }
     }
 }
