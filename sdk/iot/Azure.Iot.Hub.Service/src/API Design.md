@@ -112,26 +112,17 @@ APIs for managing configurations for devices and modules.
 /// </summary>
 /// <param name="configurationId">The unique identifier of the configuration.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>TwinConfiguration for a automatic device/module management</returns>
+/// <returns>The retrieved twin configuration for an automatic device/module management</returns>
 public virtual async Task<Response<TwinConfiguration>> GetConfigurationAsync(string configurationId, CancellationToken cancellationToken = default)
 
 /// <summary>
-/// Creates a configuration on the IoT Hub for automatic device/module management
+/// Create or update a configuration on the IoT Hub for automatic device/module management
 /// </summary>
 /// <param name="configuration">Twin configuration to create</param>
-/// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>TwinConfiguration for a automatic device/module management</returns>
-public virtual async Task<Response<TwinConfiguration>> CreateConfigurationAsync(TwinConfiguration configuration, CancellationToken cancellationToken = default)
-
-/// <summary>
-/// Updates a configuration on the IoT Hub for automatic device/module management
-/// </summary>
-/// <param name="configurationId">The unique identifier of the configuration.</param>
-/// <param name="configuration">Twin configuration to update</param>
 /// <param name="precondition">The condition on which to perform this operation</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>TwinConfiguration for a automatic device/module management</returns>
-public virtual async Task<Response<TwinConfiguration>> UpdateConfigurationAsync(string configurationId, TwinConfiguration configuration, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+/// <returns>The created twin configuration for an automatic device/module management</returns>
+public virtual async Task<Response<TwinConfiguration>> CreateOrUpdateConfigurationAsync(TwinConfiguration configuration, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
 /// <summary>
 /// Deletes a configuration on the IoT Hub for automatic device/module management
@@ -147,7 +138,7 @@ public virtual async Task<Response> DeleteConfigurationAsync(string configuratio
 /// </summary>
 /// <param name="count">The number of configurations to retrieve. TODO: Can value be overriden if too large?.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>A list of TwinConfiguration for a automatic device/module management</returns>
+/// <returns>A list of twin configuration for an automatic device/module management</returns>
 public virtual async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? count = null, CancellationToken cancellationToken = default)
 
 /// <summary>
@@ -155,17 +146,17 @@ public virtual async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigu
 /// </summary>
 /// <param name="configuration">The configuration for target condition and custom metric queries.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>TwinConfiguration for a automatic device/module management</returns>
+/// <returns>The result of validated test queries for an automatic device/module management</returns>
 public virtual async Task<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput configuration, CancellationToken cancellationToken = default)
 
 /// <summary>
 /// Applies the provided configuration content to the specified edge device.
 /// </summary>
-/// <param name="id">The unique identifier of the edge device.  TODO <service team>: Is it just device or edge device?".</param>
+/// <param name="deviceId">The unique identifier of the edge device.  TODO <service team>: Is it just device or edge device?".</param>
 /// <param name="content">Configuration Content. TODO <service team>: Get more context</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>TODO <service team>: fix to return empty response</returns>
-public virtual async Task<Response<object>> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
+public virtual async Task<Response<object>> ApplyOnEdgeDeviceAsync(string deviceId, ConfigurationContent content, CancellationToken cancellationToken = default)
 ```
 
 </details>
