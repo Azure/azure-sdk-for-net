@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -1007,6 +1008,27 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(directoryName, shareUriBuilder.LastDirectoryOrFileName);
             Assert.AreEqual(directoryName, shareUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task AcquireLeaseAsync()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            var id = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            // Act
+            Response<ShareFileLease> response = await InstrumentClient(shareClient.GetShareLeaseClient(id)).AcquireAsync(duration: duration);
+
+            // Assert
+            Assert.AreEqual(id, response.Value.LeaseId);
+
+            // Cleanup
+            await shareClient.DeleteAsync(conditions: new ShareFileRequestConditions { LeaseId = response.Value.LeaseId });
         }
     }
 }

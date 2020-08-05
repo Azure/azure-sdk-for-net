@@ -227,7 +227,7 @@ namespace Azure.Storage
                 /// <summary>
                 /// Lease Duration is set as infinite when passed -1.
                 /// </summary>
-                public const int InfiniteLeaseDuration = -1;
+                public const long InfiniteLeaseDuration = -1;
             }
 
             internal static class Errors

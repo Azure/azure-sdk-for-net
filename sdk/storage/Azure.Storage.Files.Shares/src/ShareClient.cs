@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -738,6 +739,10 @@ namespace Azure.Storage.Files.Shares
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -751,9 +756,81 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             bool includeSnapshots = true,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 includeSnapshots,
+                conditions: default,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion, if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            bool includeSnapshots = true,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                includeSnapshots,
+                conditions: default,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion, if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<bool> DeleteIfExists(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool includeSnapshots,
+            CancellationToken cancellationToken) =>
+            DeleteIfExistsInternal(
+                includeSnapshots,
+                conditions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -779,11 +856,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            bool includeSnapshots = true,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool includeSnapshots,
+            CancellationToken cancellationToken) =>
             await DeleteIfExistsInternal(
                 includeSnapshots,
+                conditions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -797,6 +878,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeSnapshots">
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -814,6 +899,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             bool includeSnapshots,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -827,6 +913,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     Response response = await DeleteInternal(
                         includeSnapshots,
+                        conditions,
                         async,
                         cancellationToken,
                         $"{nameof(ShareClient)}.{nameof(DeleteIfExists)}")
@@ -988,6 +1075,10 @@ namespace Azure.Storage.Files.Shares
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1001,10 +1092,86 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response Delete(
             bool includeSnapshots = true,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 includeSnapshots,
-                false, // async
+                conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(
+            bool includeSnapshots = true,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DeleteInternal(
+                includeSnapshots,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response Delete(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool includeSnapshots,
+            CancellationToken cancellationToken) =>
+            DeleteInternal(
+                includeSnapshots,
+                conditions: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1031,12 +1198,16 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response> DeleteAsync(
-            bool includeSnapshots = true,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            bool includeSnapshots,
+            CancellationToken cancellationToken) =>
             await DeleteInternal(
                 includeSnapshots,
-                true, // async
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1051,6 +1222,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeSnapshots">
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on deleting the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1071,6 +1246,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         internal async Task<Response> DeleteInternal(
             bool includeSnapshots,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1089,6 +1265,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

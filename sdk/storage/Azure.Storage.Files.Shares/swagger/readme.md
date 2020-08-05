@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-02-10/file.json
+input-file: C:\Users\Sean\git\azure-rest-api-specs\specification\storage\data-plane\Microsoft.FileStorage\preview\2020-02-10\file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -776,11 +776,32 @@ directive:
     $.put.responses["201"]["x-az-response-name"] = "ShareFileLease";
 ```
 
+### /{shareName}?restype=share&comp=lease&acquire
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&acquire"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
+    $.put.responses["201"]["x-az-response-name"] = "ShareFileLease";
+```
+
 ### /{shareName}/{directory}/{fileName}?comp=lease&release
 ``` yaml
 directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&release"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"]["x-az-response-name"] = "FileLeaseReleaseInfo";
+```
+
+### /{shareName}?restype=share&comp=lease&release
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&release"]
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"]["x-az-response-name"] = "FileLeaseReleaseInfo";
@@ -797,6 +818,17 @@ directive:
     $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
 ```
 
+### /{shareName}?restype=share&comp=lease&change
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&change"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
+```
+
 ### /{shareName}/{directory}/{fileName}?comp=lease&break
 ``` yaml
 directive:
@@ -805,6 +837,42 @@ directive:
   transform: >
     $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
     $.put.responses["202"]["x-az-public"] = false;
+```
+
+### /{shareName}?restype=share&comp=lease&break
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&break"]
+  transform: >
+    $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
+    $.put.responses["202"]["x-az-public"] = false;
+```
+
+### /{shareName}?restype=share&comp=lease&renew
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=lease&renew"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
+```
+
+### Make lease duration/break period a long
+Lease Duration/Break Period are represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+- from: swagger-document
+  where: $.parameters.LeaseBreakPeriod
+  transform: >
+    $.format = "int64";
 ```
 
 ### FileCopyPermissionCopyMode
