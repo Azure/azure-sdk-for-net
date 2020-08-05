@@ -17,26 +17,28 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public readonly struct BoundingBox
     {
+        private readonly PointF[] _points;
+
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
             if (boundingBox.Count == 0)
             {
-                Points = Array.Empty<PointF>();
+                _points = Array.Empty<PointF>();
                 return;
             }
 
             int count = boundingBox.Count / 2;
 
-            Points = new PointF[count];
+            _points = new PointF[count];
             for (int i = 0; i < count; i++)
             {
-                Points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
+                _points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
             }
         }
 
         /// <summary>
         /// </summary>
-        internal PointF[] Points { get; }
+        internal PointF[] Points => _points ?? Array.Empty<PointF>();
 
         /// <summary>
         /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.
