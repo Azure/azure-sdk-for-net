@@ -249,6 +249,7 @@ namespace Azure.Data.Tables.Tests
         protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
             int retryCount = 0;
+            int delay = 500;
             while (true)
             {
                 try
@@ -258,11 +259,12 @@ namespace Azure.Data.Tables.Tests
                 // Disable retry throttling in Playback mode.
                 catch (RequestFailedException ex) when (ex.Status == 429 && Mode != RecordedTestMode.Playback)
                 {
-                    if (++retryCount > 3)
+                    if (++retryCount > 6)
                     {
                         throw;
                     }
-                    await Task.Delay(5000);
+                    await Task.Delay(delay);
+                    delay *= 2;
                 }
             }
         }

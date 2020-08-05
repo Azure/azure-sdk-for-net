@@ -139,13 +139,13 @@ namespace Azure.Data.Tables
         {
             var result = new T();
 
-            if (result is IDictionary<string, object> castResult)
+            if (result is IDictionary<string, object> dictionary)
             {
                 entity.CastAndRemoveAnnotations();
 
                 foreach (var entProperty in entity.Keys)
                 {
-                    castResult[entProperty] = entity[entProperty];
+                    dictionary[entProperty] = entity[entProperty];
                 }
 
                 return result;
