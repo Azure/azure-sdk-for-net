@@ -147,7 +147,7 @@ public virtual async Task<Response> DeleteConfigurationAsync(string configuratio
 /// </summary>
 /// <param name="count">The number of configurations to retrieve. TODO: Can value be overriden if too large?.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>Retrieved list of twin configuration for an automatic device/module management</returns>
+/// <returns>A list of twin configuration for an automatic device/module management</returns>
 public virtual async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? count = null, CancellationToken cancellationToken = default)
 
 /// <summary>
