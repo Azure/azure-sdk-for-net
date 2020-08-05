@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid
@@ -52,19 +53,6 @@ namespace Azure.Messaging.EventGrid
         public EventGridPublisherClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
-        }
-
-
-        internal string GetVersionString()
-        {
-            switch (Version)
-            {
-                case ServiceVersion.V2018_01_01:
-                    return "2018-01-01";
-
-                default:
-                    throw new ArgumentException($"Version {Version.ToString()} not supported.");
-            }
         }
     }
 }

@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,11 +61,11 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
             _serializer = options.Serializer ?? new JsonObjectSerializer();
-            _apiVersion = options.GetVersionString();
+            _apiVersion = options.Version.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -80,7 +82,7 @@ namespace Azure.Messaging.EventGrid
             _serializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -116,13 +118,15 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
+                    MemoryStream stream = new MemoryStream();
+                    _serializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
+                    stream.Position = 0;
+                    JsonDocument data = JsonDocument.Parse(stream);
+
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                             egEvent.Id,
                             egEvent.Subject,
-                            new EventGridSerializer(
-                                egEvent.Data,
-                                _serializer,
-                                cancellationToken),
+                            data.RootElement,
                             egEvent.EventType,
                             egEvent.EventTime,
                             egEvent.DataVersion)
@@ -217,10 +221,16 @@ namespace Azure.Messaging.EventGrid
                         }
                         else
                         {
-                            newCloudEvent.Data = new EventGridSerializer(
-                                cloudEvent.Data,
-                                _serializer,
-                                cancellationToken);
+                            MemoryStream stream = new MemoryStream();
+                            _serializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
+                            stream.Position = 0;
+                            JsonDocument data = JsonDocument.Parse(stream);
+                            newCloudEvent.Data = data.RootElement;
+
+                            //newCloudEvent.Data = new EventGridSerializer(
+                            //    cloudEvent.Data,
+                            //    _serializer,
+                            //    cancellationToken);
                         }
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
@@ -306,15 +316,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="key">Key credential used to generate the token.</param>
         /// <param name="apiVersion">Service version to use when handling requests made with the SAS token.</param>
         /// <returns>Returns the generated SAS token string.</returns>
-        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, string apiVersion = "2018-01-01")
+        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, EventGridPublisherClientOptions.ServiceVersion apiVersion = EventGridPublisherClientOptions.LatestVersion)
         {
             const char Resource = 'r';
             const char Expiration = 'e';
             const char Signature = 's';
 
+            // todo: validation for uri
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(endpoint);
-            uriBuilder.AppendQuery("api-version", apiVersion, true);
+            uriBuilder.AppendQuery("api-version", apiVersion.GetVersionString(), true);
             string encodedResource = HttpUtility.UrlEncode(endpoint.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");
             var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));

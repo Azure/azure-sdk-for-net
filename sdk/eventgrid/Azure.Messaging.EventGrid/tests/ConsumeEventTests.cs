@@ -2,11 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Azure.EventGrid.Tests;
@@ -41,11 +36,9 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
-
-            // Testing update
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemSentEventData));
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
 
             EventGridEvent[] events = eventGridConsumer2.DeserializeEventGridEvents(requestContent);
 
@@ -60,8 +53,9 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": [{    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553\"  }],  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData[]));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData[]));
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
 
             EventGridEvent[] events = eventGridConsumer2.DeserializeEventGridEvents(requestContent);
 
@@ -83,8 +77,9 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": true,  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(bool));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(bool));
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
 
             EventGridEvent[] events = eventGridConsumer2.DeserializeEventGridEvents(requestContent);
 
@@ -99,8 +94,9 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": \"stringdata\",  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(string));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(string));
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
 
             EventGridEvent[] events = eventGridConsumer2.DeserializeEventGridEvents(requestContent);
 
@@ -108,24 +104,6 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].Data is string);
             string eventData = (string)events[0].Data;
             Assert.AreEqual("stringdata", eventData);
-        }
-
-        [Test]
-        public void ConsumeMultipleCustomEventsInSameBatch()
-        {
-            // note: properties needed to be camel cased
-            string requestContent = "[" +
-                "{\"dataVersion\":\"1.0\",\"eventTime\":\"2020-07-09T15:10:21.7694198-07:00\",\"eventType\":\"Microsoft.MockPublisher.TestEvent\",\"id\":\"2691836e-bf44-b259-9a54-9cc8cc984d37\",\"subject\":\"Subject-0\",\"topic\":\"Topic-0\"}," +
-                "{\"dataVersion\":\"1.0\",\"eventTime\":\"2020-07-09T15:10:21.7694198-07:00\",\"eventType\":\"Microsoft.MockPublisher.TestEvent\",\"id\":\"2d99bf2a-5616-326c-13a5-00335045bc1b\",\"subject\":\"Subject-1\",\"topic\":\"Topic-1\"}," +
-                "{\"dataVersion\":\"1.0\",\"eventTime\":\"2020-07-09T15:10:21.7694198-07:00\",\"eventType\":\"Microsoft.MockPublisher.TestEvent\",\"id\":\"7953a676-fece-944b-37ec-a8f03a806faf\",\"subject\":\"Subject-2\",\"topic\":\"Topic-2\"}," +
-                "{\"dataVersion\":\"1.0\",\"eventTime\":\"2020-07-09T15:10:21.7694198-07:00\",\"eventType\":\"Microsoft.MockPublisher.TestEvent\",\"id\":\"2090f9a3-76c7-178f-165f-139fbe256155\",\"subject\":\"Subject-3\",\"topic\":\"Topic-3\"}," +
-                "{\"dataVersion\":\"1.0\",\"eventTime\":\"2020-07-09T15:10:21.7694198-07:00\",\"eventType\":\"Microsoft.MockPublisher.TestEvent\",\"id\":\"25518097-d444-2c68-7404-f629ae7bf893\",\"subject\":\"Subject-4\",\"topic\":\"Topic-4\"}]";
-
-            TestEvent[] events = _eventGridConsumer.DeserializeCustomEvents<TestEvent>(requestContent);
-            Assert.NotNull(events);
-            Assert.AreEqual(5, events.Length);
-            Assert.True(events[0] is TestEvent);
-            Assert.True(events[0].EventType is "Microsoft.MockPublisher.TestEvent");
         }
 
         [Test]
@@ -146,7 +124,8 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data_base64\": \"ZGF0YQ==\", \"type\":\"BinaryDataType\",\"specversion\":\"1.0\"}]";
 
-            _eventGridConsumer.AddOrUpdateCustomEventMapping("BinaryDataType", typeof(byte[]));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("BinaryDataType", typeof(byte[]));
             CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
             if (events[0].Data is byte[])
             {
@@ -176,17 +155,15 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void TestCustomEventMappings()
         {
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemSent", typeof(ContosoItemSentEventData));
-            eventGridConsumer2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
+            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemSent", typeof(ContosoItemSentEventData));
+            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
 
-            IReadOnlyList<KeyValuePair<string, Type>> list = eventGridConsumer2.ListAllCustomEventMappings().ToList();
-            Assert.AreEqual(2, list.Count);
-
-            Assert.True(eventGridConsumer2.TryGetCustomEventMapping("Contoso.Items.ItemSent", out Type retrievedType));
+            Assert.True(consumerOptions.CustomEventTypeMappings.TryGetValue("Contoso.Items.ItemSent", out Type retrievedType));
             Assert.AreEqual(typeof(ContosoItemSentEventData), retrievedType);
 
-            Assert.True(eventGridConsumer2.TryRemoveCustomEventMapping("Contoso.Items.ItemReceived", out retrievedType));
+            Assert.True(consumerOptions.CustomEventTypeMappings.TryGetValue("Contoso.Items.ItemReceived", out retrievedType));
             Assert.AreEqual(typeof(ContosoItemReceivedEventData), retrievedType);
         }
 

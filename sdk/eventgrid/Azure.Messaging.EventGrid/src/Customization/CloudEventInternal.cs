@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
@@ -11,5 +12,6 @@ namespace Azure.Messaging.EventGrid.Models
     [CodeGenModel("CloudEvent")]
     internal partial class CloudEventInternal
     {
+        public JsonElement Data { get; set; }
     }
 }
