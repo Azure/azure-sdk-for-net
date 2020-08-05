@@ -45,7 +45,7 @@ namespace Azure.Data.SchemaRegistry
         ///// <param name="apiVersion"> Api Version. </param>
         internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl)//, string apiVersion = "7.0")
         {
-            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, new Uri(vaultBaseUrl));
+            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, vaultBaseUrl);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

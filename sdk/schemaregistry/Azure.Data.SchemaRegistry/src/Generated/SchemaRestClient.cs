@@ -17,17 +17,21 @@ namespace Azure.Data.SchemaRegistry
 {
     internal partial class SchemaRestClient
     {
-        private Uri endpoint;
+        private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of SchemaRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="endpoint"> The Schema Registry service endpoint, for example my-namespace.servicebus.windows.net. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            endpoint ??= new Uri("");
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
@@ -40,8 +44,10 @@ namespace Azure.Data.SchemaRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/$schemagroups/getSchemaById/", false);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/$schemagroups", false);
+            uri.AppendPath("/getSchemaById/", false);
             uri.AppendPath(schemaId, true);
             request.Uri = uri;
             return message;
@@ -109,8 +115,10 @@ namespace Azure.Data.SchemaRegistry
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/$schemagroups/", false);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/$schemagroups", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/schemas/", false);
             uri.AppendPath(schemaName, true);
@@ -215,8 +223,10 @@ namespace Azure.Data.SchemaRegistry
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/$schemagroups/", false);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/$schemagroups", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/schemas/", false);
             uri.AppendPath(schemaName, true);

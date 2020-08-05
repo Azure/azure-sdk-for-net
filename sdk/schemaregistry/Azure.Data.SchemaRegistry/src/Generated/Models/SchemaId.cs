@@ -7,7 +7,7 @@
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> The id of a Schema Registry schema. </summary>
+    /// <summary> JSON Object received from the registry containing schema identifiers. </summary>
     public partial class SchemaId
     {
         /// <summary> Initializes a new instance of SchemaId. </summary>
@@ -16,13 +16,13 @@ namespace Azure.Data.SchemaRegistry.Models
         }
 
         /// <summary> Initializes a new instance of SchemaId. </summary>
-        /// <param name="id"> The id of the schema. </param>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         internal SchemaId(string id)
         {
             Id = id;
         }
 
-        /// <summary> The id of the schema. </summary>
+        /// <summary> Schema ID that uniquely identifies a schema in the registry namespace. </summary>
         public string Id { get; }
     }
 }
