@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-#if NETFRAMEWORK
+// TODO: Uncomment after release
+#if false && NETFRAMEWORK
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
