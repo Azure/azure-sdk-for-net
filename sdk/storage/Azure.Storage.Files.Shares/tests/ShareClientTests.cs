@@ -1439,6 +1439,31 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task AcquireLeaseAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+
+            // Act
+            Response<ShareFileLease> response = await leaseClient.AcquireAsync(duration);
+
+            // Assert
+            Assert.AreEqual(id, response.Value.LeaseId);
+
+            // Cleanup
+            await leaseClient.ReleaseAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
@@ -1446,6 +1471,23 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
             string id = Recording.Random.NewGuid().ToString();
             ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.AcquireAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task AcquireLeaseAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareClient snapshotShare = test.Share.WithSnapshot("2020-08-05T22:10:47.0000000Z");
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1491,6 +1533,41 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ReleaseLeaseAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync();
+
+            // Act
+            await leaseClient.ReleaseAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ReleaseLeaseAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareClient snapshotShare = test.Share.WithSnapshot("2020-08-05T22:10:47.0000000Z");
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.ReleaseAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ChangeLeaseAsync()
         {
             // Arrange
@@ -1527,6 +1604,46 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ChangeLeaseAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+            string id = Recording.Random.NewGuid().ToString();
+            string newId = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync();
+
+            // Act
+            Response<ShareFileLease> response = await leaseClient.ChangeAsync(newId);
+
+            // Cleanup
+            leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(response.Value.LeaseId));
+            await leaseClient.ReleaseAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task ChangeLeaseAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareClient snapshotShare = test.Share.WithSnapshot("2020-08-05T22:10:47.0000000Z");
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.ChangeAsync(id),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BreakLeaseAsync()
         {
             // Arrange
@@ -1555,6 +1672,41 @@ namespace Azure.Storage.Files.Shares.Test
             string id = Recording.Random.NewGuid().ToString();
             string newId = Recording.Random.NewGuid().ToString();
             ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.BreakAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task BreakLeaseAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync();
+
+            // Act
+            Response<ShareFileLease> response = await leaseClient.BreakAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task BreakLeaseAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareClient snapshotShare = test.Share.WithSnapshot("2020-08-05T22:10:47.0000000Z");
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -1599,6 +1751,44 @@ namespace Azure.Storage.Files.Shares.Test
             string id = Recording.Random.NewGuid().ToString();
             string newId = Recording.Random.NewGuid().ToString();
             ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                leaseClient.RenewAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RenewLeaseAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShare = test.Share.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
+            await leaseClient.AcquireAsync();
+
+            // Act
+            Response<ShareFileLease> response = await leaseClient.RenewAsync();
+
+            // Cleanup
+            await leaseClient.ReleaseAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RenewLeaseAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareClient snapshotShare = test.Share.WithSnapshot("2020-08-05T22:10:47.0000000Z");
+            string id = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient leaseClient = InstrumentClient(snapshotShare.GetShareLeaseClient(id));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(

@@ -2629,7 +2629,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             CreatePermissionInternal(
                 permission,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -2654,11 +2654,11 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await CreatePermissionInternal(
                 permission,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        private async Task<Response<PermissionInfo>> CreatePermissionInternal(
+        internal async Task<Response<PermissionInfo>> CreatePermissionInternal(
             string permission,
             bool async,
             CancellationToken cancellationToken)
