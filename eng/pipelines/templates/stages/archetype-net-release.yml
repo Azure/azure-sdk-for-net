@@ -152,7 +152,7 @@ stages:
               displayName: Publish to Docs.MS
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
-              # dependsOn: PublishPackage
+              dependsOn: PublishPackage
 
               variables:
                 CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
