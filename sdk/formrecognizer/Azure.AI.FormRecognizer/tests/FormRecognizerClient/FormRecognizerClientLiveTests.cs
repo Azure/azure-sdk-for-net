@@ -1339,11 +1339,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 {
                     Assert.Greater(labelData.PageNumber, 0);
 
-                    if (labelData.BoundingBox.Points != null)
+                    Assert.NotNull(labelData.BoundingBox.Points);
+
+                    if (labelData.BoundingBox.Points.Length != 0)
                     {
                         Assert.AreEqual(4, labelData.BoundingBox.Points.Length);
                     }
 
+                    Assert.NotNull(labelData.Text);
                     Assert.NotNull(labelData.FieldElements);
 
                     if (!includeFieldElements)
@@ -1354,18 +1357,22 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 var valueData = field.ValueData;
 
-                Assert.NotNull(valueData);
-
-                if (valueData.BoundingBox.Points != null)
+                if (valueData != null)
                 {
-                    Assert.AreEqual(4, valueData.BoundingBox.Points.Length);
-                }
+                    Assert.NotNull(valueData.BoundingBox.Points);
 
-                Assert.NotNull(valueData.FieldElements);
+                    if (valueData.BoundingBox.Points.Length != 0)
+                    {
+                        Assert.AreEqual(4, valueData.BoundingBox.Points.Length);
+                    }
 
-                if (!includeFieldElements)
-                {
-                    Assert.AreEqual(0, valueData.FieldElements.Count);
+                    Assert.NotNull(valueData.Text);
+                    Assert.NotNull(valueData.FieldElements);
+
+                    if (!includeFieldElements)
+                    {
+                        Assert.AreEqual(0, valueData.FieldElements.Count);
+                    }
                 }
             }
         }
