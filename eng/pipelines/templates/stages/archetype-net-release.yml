@@ -187,7 +187,7 @@ stages:
                           WorkingDirectory: $(System.DefaultWorkingDirectory)
                           TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
                           TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          PRBranchName: docs-${{artifact.name}}-$(Build.BuildId)
+                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
                           ArtifactName: ${{artifact.name}}
                           Language: '.net'
                           DocRepoDestinationPath: 'api/overview/azure/' 
