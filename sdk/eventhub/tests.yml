@@ -10,6 +10,7 @@ extends:
         TimeoutInMinutes: 120
         ScenarioName: AzureCloud
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net' }"
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
           SERVICE_MANAGEMENT_URL: https://management.core.windows.net/
@@ -22,6 +23,7 @@ extends:
         TimeoutInMinutes: 120
         ScenarioName: AzureUSGovernment
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net' }"
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
           SERVICE_MANAGEMENT_URL: https://management.core.usgovcloudapi.net/
@@ -34,6 +36,7 @@ extends:
         TimeoutInMinutes: 120
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn' }"
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
           SERVICE_MANAGEMENT_URL: https://management.core.chinacloudapi.cn/

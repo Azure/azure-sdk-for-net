@@ -42,6 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventsCanBeReadByOneProcessorClient(LoadBalancingStrategy loadBalancingStrategy)
         {
             // Setup the environment.
+
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -91,6 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventsCanBeReadByOneProcessorClientUsingAnIdentityCredential()
         {
             // Setup the environment.
+
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
