@@ -356,7 +356,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 Services = AccountSasServices.Files,
                 ResourceTypes = AccountSasResourceTypes.Service,
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = Recording.UtcNow.AddHours(1)
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
