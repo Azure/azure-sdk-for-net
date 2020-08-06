@@ -19,6 +19,7 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>

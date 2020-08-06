@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -166,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Training
                 try
                 {
                     // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
-                    Response<Model_internal> update = async
+                    Response<Model> update = async
                         ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 

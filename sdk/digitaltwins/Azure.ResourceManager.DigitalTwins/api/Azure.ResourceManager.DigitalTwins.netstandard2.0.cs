@@ -117,12 +117,6 @@ namespace Azure.ResourceManager.DigitalTwins
 }
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class CheckNameRequest
-    {
-        public CheckNameRequest(string name) { }
-        public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
     public partial class CheckNameResult
     {
         internal CheckNameResult() { }
@@ -161,11 +155,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public DigitalTwinsEndpointResourceProperties() { }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class DigitalTwinsPatchDescription
-    {
-        public DigitalTwinsPatchDescription() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DigitalTwinsResource
@@ -255,7 +244,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     }
     public partial class ExternalResource
     {
-        public ExternalResource() { }
+        internal ExternalResource() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }

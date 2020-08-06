@@ -28,7 +28,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public static StorageTestEnvironment Instance => Singleton.Value;
 
         /// <summary>The environment variable value for the storage account connection string, lazily evaluated.</summary>
-        private string StorageAccountConnectionString => GetOptionalVariable("EVENT_PROCESSOR_STORAGE_CONNECTION_STRING");
+        private string StorageAccountConnectionString => GetOptionalVariable("EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING");
+
+        /// <summary>
+        ///   The storage account endpoint suffix of the cloud to use during Live tests.
+        /// </summary>
+        public new string StorageEndpointSuffix => base.StorageEndpointSuffix ?? "core.windows.net";
 
         /// <summary>
         ///   Indicates whether or not an ephemeral storage account was created for the current test execution.

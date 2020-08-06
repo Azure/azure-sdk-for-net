@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -233,7 +233,7 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -335,7 +335,7 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -367,7 +367,7 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -388,15 +388,15 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
-        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+            Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
 
@@ -406,9 +406,9 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken);
+                Response response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, form, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
@@ -424,15 +424,15 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
-        public virtual RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+            Argument.AssertNotNull(formUri, nameof(formUri));
 
             recognizeOptions ??= new RecognizeOptions();
 
@@ -443,7 +443,7 @@ namespace Azure.AI.FormRecognizer
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -460,15 +460,15 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
-        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+            Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
 
@@ -478,9 +478,9 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, form, includeTextDetails: recognizeOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
@@ -496,15 +496,15 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes pages from one or more forms, using a model trained with custom forms.
         /// </summary>
         /// <param name="modelId">The ID of the model to use for recognizing form values.</param>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="formUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation.Value"/> upon successful
         /// completion will contain recognized pages from the input document.</returns>
-        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+            Argument.AssertNotNull(formUri, nameof(formUri));
 
             recognizeOptions ??= new RecognizeOptions();
 
@@ -515,7 +515,7 @@ namespace Azure.AI.FormRecognizer
             {
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
-                SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
+                SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 

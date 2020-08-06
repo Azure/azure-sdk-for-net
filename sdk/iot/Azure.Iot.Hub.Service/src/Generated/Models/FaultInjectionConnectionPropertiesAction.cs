@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The FaultInjectionConnectionPropertiesAction. </summary>
-    public readonly partial struct FaultInjectionConnectionPropertiesAction : IEquatable<FaultInjectionConnectionPropertiesAction>
+    /// <summary> The action to perform. </summary>
+    internal readonly partial struct FaultInjectionConnectionPropertiesAction : IEquatable<FaultInjectionConnectionPropertiesAction>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="FaultInjectionConnectionPropertiesAction"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaultInjectionConnectionPropertiesAction(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

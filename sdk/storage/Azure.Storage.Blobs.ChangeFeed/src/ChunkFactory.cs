@@ -22,19 +22,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _avroReaderFactory = avroReaderFactory;
         }
 
-        public virtual Chunk BuildChunk(
+        internal virtual Chunk BuildChunk(
             string chunkPath,
-            long? blockOffset = default,
-            long? eventIndex = default)
+            long blockOffset = 0,
+            long eventIndex = 0)
         {
             BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
-            blockOffset ??= 0;
-            eventIndex ??= 0;
             AvroReader avroReader;
 
             Stream dataStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                 blobClient,
-                offset: blockOffset.Value,
+                offset: blockOffset,
                 blockSize: Constants.ChangeFeed.ChunkBlockDownloadSize);
 
             // We aren't starting from the beginning of the Chunk
@@ -43,13 +41,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 Stream headStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                 blobClient,
                 offset: 0,
-                blockSize: 3 * Constants.KB);
+                blockSize: Constants.ChangeFeed.LazyLoadingBlobStreamBlockSize);
 
                 avroReader = _avroReaderFactory.BuildAvroReader(
                     dataStream,
                     headStream,
-                    blockOffset.Value,
-                    eventIndex.Value);
+                    blockOffset,
+                    eventIndex);
             }
             else
             {
@@ -58,8 +56,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             return new Chunk(
                 avroReader,
-                blockOffset.Value,
-                eventIndex.Value);
+                blockOffset,
+                eventIndex);
         }
 
         /// <summary>

@@ -264,6 +264,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerSubscribeTriggerToEventsOperation> StartSubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -288,6 +289,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerSubscribeTriggerToEventsOperation StartSubscribeTriggerToEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -312,6 +314,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerUnsubscribeTriggerFromEventsOperation> StartUnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -336,6 +339,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerUnsubscribeTriggerFromEventsOperation StartUnsubscribeTriggerFromEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -360,6 +364,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerStartTriggerOperation> StartStartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -384,6 +389,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerStartTriggerOperation StartStartTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -408,6 +414,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerStopTriggerOperation> StartStopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -432,6 +439,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerStopTriggerOperation StartStopTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)

@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
@@ -151,6 +151,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<ModelData>> GetByIdAsync(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -183,6 +184,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<ModelData> GetById(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -253,6 +255,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -281,6 +284,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Delete(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -326,6 +330,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PagedModelDataCollection>> ListNextPageAsync(string nextLink, IEnumerable<string> dependenciesFor = null, bool? includeModelDefinition = null, GetModelsOptions digitalTwinModelsListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -360,6 +365,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PagedModelDataCollection> ListNextPage(string nextLink, IEnumerable<string> dependenciesFor = null, bool? includeModelDefinition = null, GetModelsOptions digitalTwinModelsListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

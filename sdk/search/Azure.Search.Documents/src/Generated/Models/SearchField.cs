@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -41,8 +42,8 @@ namespace Azure.Search.Documents.Indexes.Models
             AnalyzerName = analyzerName;
             SearchAnalyzerName = searchAnalyzerName;
             IndexAnalyzerName = indexAnalyzerName;
-            SynonymMapNames = synonymMapNames ?? new List<string>();
-            Fields = fields ?? new List<SearchField>();
+            SynonymMapNames = synonymMapNames;
+            Fields = fields;
         }
     }
 }

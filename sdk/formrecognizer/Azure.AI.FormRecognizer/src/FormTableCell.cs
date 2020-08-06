@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTableCell : FormElement
     {
-        internal FormTableCell(DataTableCell_internal dataTableCell, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
+        internal FormTableCell(DataTableCell dataTableCell, IReadOnlyList<ReadResult> readResults, int pageNumber)
             : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
         {
             ColumnIndex = dataTableCell.ColumnIndex;

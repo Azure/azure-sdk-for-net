@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of EventHub. </summary>
         /// <param name="connectionStringPrimaryKey"> PrimaryConnectionString of the endpoint. Will be obfuscated during read. </param>
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint. Will be obfuscated during read. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringPrimaryKey"/> or <paramref name="connectionStringSecondaryKey"/> is null. </exception>
         public EventHub(string connectionStringPrimaryKey, string connectionStringSecondaryKey)
         {
             if (connectionStringPrimaryKey == null)

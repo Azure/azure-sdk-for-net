@@ -61,9 +61,11 @@ namespace Azure.Messaging.ServiceBus.Management
             KeyName = keyName;
         }
 
+        internal override AuthorizationRule Clone() =>
+            new SharedAccessAuthorizationRule(KeyName, PrimaryKey, SecondaryKey, Rights);
+
         /// <inheritdoc/>
         public override string ClaimType => FixedClaimType;
-
         internal override string ClaimValue => "None";
 
         /// <summary>Gets or sets the authorization rule key name.</summary>

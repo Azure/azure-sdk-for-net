@@ -29,16 +29,16 @@ namespace Microsoft.Azure.EventHubs.Tests
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> AuthorityHostInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.AuthorityHostEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => ReadOptionalEnvironmentVariable(TestConstants.AuthorityHostEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> ServiceManagementUrlInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.ServiceManagementUrlEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => ReadOptionalEnvironmentVariable(TestConstants.ServiceManagementUrlEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> ResourceManagerInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.ResourceManagerEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => ReadOptionalEnvironmentVariable(TestConstants.ResourceManagerEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> StorageEndpointSuffixInstance =
-           new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.StorageEndpointSuffixEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+           new Lazy<string>(() => ReadOptionalEnvironmentVariable(TestConstants.StorageEndpointSuffixEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveEventHubsNamespace =
             new Lazy<EventHubScope.AzureResourceProperties>(CreateNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveStorageAccount =
             new Lazy<EventHubScope.AzureResourceProperties>(CreateStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
 
-        internal static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated;
+        public static bool ShouldRemoveNamespaceAfterTestRunCompletion => (ActiveEventHubsNamespace.IsValueCreated && ActiveEventHubsNamespace.Value.ShouldRemoveAtCompletion);
 
-        internal static bool WasStorageAccountCreated => ActiveStorageAccount.IsValueCreated;
+        public static bool ShouldRemoveStorageAfterTestRunCompletion => (ActiveStorageAccount.IsValueCreated && ActiveStorageAccount.Value.ShouldRemoveAtCompletion);
 
         internal static string EventHubsConnectionString => ActiveEventHubsNamespace.Value.ConnectionString;
 
@@ -68,13 +68,13 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         internal static string EventHubsSecret => EventHubsSecretInstance.Value;
 
-        internal static string AuthorityHost => AuthorityHostInstance.Value;
+        internal static string AuthorityHost => AuthorityHostInstance.Value ?? "https://login.microsoftonline.com/";
 
-        internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value;
+        internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value ?? "https://management.core.windows.net/";
 
-        internal static string ResourceManager => ResourceManagerInstance.Value;
+        internal static Uri ResourceManager => new Uri(ResourceManagerInstance.Value ?? "https://management.azure.com/");
 
-        internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value;
+        internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value ?? "core.windows.net";
 
         internal static string GetEntityConnectionString(string entityName) =>
             new EventHubsConnectionStringBuilder(EventHubsConnectionString) { EntityPath = entityName }.ToString();
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         private static string ReadEnvironmentVariable(string variableName)
         {
-            var environmentVar = Environment.GetEnvironmentVariable(variableName);
+            var environmentVar = ReadOptionalEnvironmentVariable(variableName);
 
             if (string.IsNullOrWhiteSpace(environmentVar))
             {
@@ -150,18 +150,50 @@ namespace Microsoft.Azure.EventHubs.Tests
             return environmentVar;
         }
 
-        private static EventHubScope.AzureResourceProperties CreateNamespace() =>
-            Task
+        private static string ReadOptionalEnvironmentVariable(string variableName) => Environment.GetEnvironmentVariable(variableName);
+
+        private static EventHubScope.AzureResourceProperties CreateNamespace()
+        {
+            var environmentConnectionString = ReadOptionalEnvironmentVariable(TestConstants.EventHubsNamespaceConnectionStringEnvironmentVariable);
+
+            if (!string.IsNullOrEmpty(environmentConnectionString))
+            {
+                var parsed = new EventHubsConnectionStringBuilder(environmentConnectionString);
+
+                return new EventHubScope.AzureResourceProperties
+                (
+                    parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
+                    environmentConnectionString.Replace($";EntityPath={ parsed.EntityPath }", string.Empty),
+                    shouldRemoveAtCompletion: false
+                );
+            }
+
+            return Task
                 .Run(async () => await EventHubScope.CreateNamespaceAsync().ConfigureAwait(false))
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+        }
 
-        private static EventHubScope.AzureResourceProperties CreateStorageAccount() =>
-            Task
+        private static EventHubScope.AzureResourceProperties CreateStorageAccount()
+        {
+            var environmentConnectionString = ReadOptionalEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariable);
+
+            if (!string.IsNullOrEmpty(environmentConnectionString))
+            {
+                return new EventHubScope.AzureResourceProperties
+                (
+                    TestConstants.StorageConnectionStringEnvironmentVariable,
+                    environmentConnectionString,
+                    shouldRemoveAtCompletion: false
+                );
+            }
+
+            return Task
                 .Run(async () => await EventHubScope.CreateStorageAsync().ConfigureAwait(false))
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+        }
     }
 }

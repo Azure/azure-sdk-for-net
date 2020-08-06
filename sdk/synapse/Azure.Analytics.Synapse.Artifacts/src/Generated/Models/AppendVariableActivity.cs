@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
         {
             if (name == null)
