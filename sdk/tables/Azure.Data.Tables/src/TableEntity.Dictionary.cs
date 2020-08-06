@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Data.Tables
 {
 
-    public partial class DynamicTableEntity : IDictionary<string, object>
+    public partial class TableEntity : IDictionary<string, object>
     {
         /// <summary>
         /// Gets or sets the entity's property, given the name of the property.
