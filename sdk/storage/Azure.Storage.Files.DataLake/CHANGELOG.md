@@ -1,7 +1,20 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
+## 12.3.0-preview.3 (Unreleased)
 
+
+## 12.3.0-preview.2 (2020-07-27)
+- Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
+- Updated DataLakeSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where DataLakeFileClient.Query() failed when query response was > ~200 MB.
+- Added DataLakeFileClient.OpenRead().
+- Fixed bug where DataLakeFileClient.Query() would buffer the query response before parsing the Avro contents.
+
+## 12.3.0-preview.1 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Jumbo Files.
+- Fixed bug where DataLakeFileClient, DataLakeDirectoryClient, and DataLakePathClient.Name and .Path were sometimes URL-encoded.
+- Fixed bug where DataLakeDirectoryClient.GetSubDirectory(), GetFile(), CreateSubDirectory(), and CreateFile() were returning clients with an incorrect URI.
 
 ## 12.2.2 (2020-06)
 - This release contains bug fixes to improve quality.

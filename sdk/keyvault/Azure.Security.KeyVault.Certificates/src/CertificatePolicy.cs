@@ -269,7 +269,7 @@ namespace Azure.Security.KeyVault.Certificates
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             // Key Props
-            if (KeyType.HasValue || KeyCurveName.HasValue || KeySize.HasValue)
+            if (KeyType.HasValue || KeyCurveName.HasValue || KeySize.HasValue || ReuseKey.HasValue || Exportable.HasValue)
             {
                 json.WriteStartObject(s_keyPropsPropertyNameBytes);
 

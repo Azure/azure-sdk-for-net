@@ -100,6 +100,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 await PurgeCertificate(name).ConfigureAwait(false);
             }
+
+            while (_issuerToDelete.TryDequeue(out string name))
+            {
+                await DeleteIssuer(name);
+            }
         }
 
         protected async Task DeleteContacts()

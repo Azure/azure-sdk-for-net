@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
         /// <param name="name"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SparkSessionOptions(string name)
         {
             if (name == null)
@@ -22,59 +24,29 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;
-        }
-
-        /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="artifactId"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="file"> . </param>
-        /// <param name="className"> . </param>
-        /// <param name="arguments"> . </param>
-        /// <param name="jars"> . </param>
-        /// <param name="pythonFiles"> . </param>
-        /// <param name="files"> . </param>
-        /// <param name="archives"> . </param>
-        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="driverMemory"> . </param>
-        /// <param name="driverCores"> . </param>
-        /// <param name="executorMemory"> . </param>
-        /// <param name="executorCores"> . </param>
-        /// <param name="executorCount"> . </param>
-        internal SparkSessionOptions(IDictionary<string, string> tags, string artifactId, string name, string file, string className, IList<string> arguments, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount)
-        {
-            Tags = tags;
-            ArtifactId = artifactId;
-            Name = name;
-            File = file;
-            ClassName = className;
-            Arguments = arguments;
-            Jars = jars;
-            PythonFiles = pythonFiles;
-            Files = files;
-            Archives = archives;
-            Configuration = configuration;
-            DriverMemory = driverMemory;
-            DriverCores = driverCores;
-            ExecutorMemory = executorMemory;
-            ExecutorCores = executorCores;
-            ExecutorCount = executorCount;
+            Arguments = new ChangeTrackingList<string>();
+            Jars = new ChangeTrackingList<string>();
+            PythonFiles = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
+            Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         public string ArtifactId { get; set; }
         public string Name { get; }
         public string File { get; set; }
         public string ClassName { get; set; }
-        public IList<string> Arguments { get; set; }
-        public IList<string> Jars { get; set; }
-        public IList<string> PythonFiles { get; set; }
-        public IList<string> Files { get; set; }
-        public IList<string> Archives { get; set; }
+        public IList<string> Arguments { get; }
+        public IList<string> Jars { get; }
+        public IList<string> PythonFiles { get; }
+        public IList<string> Files { get; }
+        public IList<string> Archives { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Configuration { get; set; }
+        public IDictionary<string, string> Configuration { get; }
         public string DriverMemory { get; set; }
         public int? DriverCores { get; set; }
         public string ExecutorMemory { get; set; }

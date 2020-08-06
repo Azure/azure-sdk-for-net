@@ -6,8 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of incoming relationships which relate digital twins together. </summary>
     internal partial class IncomingRelationshipCollection
@@ -15,6 +16,7 @@ namespace Azure.DigitalTwins.Core.Models
         /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>
         internal IncomingRelationshipCollection()
         {
+            Value = new ChangeTrackingList<IncomingRelationship>();
         }
 
         /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>

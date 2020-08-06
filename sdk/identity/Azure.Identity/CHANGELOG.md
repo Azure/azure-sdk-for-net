@@ -1,9 +1,45 @@
 # Release History
 
-## 1.2.0-preview.5 (Unreleased)
+## 1.2.0-preview.7 (Unreleased)
+
+### Breaking Changes
+- Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
+  - Removed class `AuthenticationRecord`
+  - Removed class `AuthenticationRequiredException`
+  - Removed class `ClientCertificateCredentialOptions` and `ClientCertificateCredential` constructor overloads accepting this type
+  - Removed class `ClientSecretCredentialOptions` and `ClientSecretCredential` constructor overloads accepting this type
+  - Removed class `DeviceCodeCredentialOptions` and `DeviceCodeCredential` constructor overloads accepting this type
+  - Removed class `InteractiveBrowserCredentialOptions` and `InteractiveBrowserCredential` constructor overloads accepting this type
+  - Removed class `UsernamePasswordCredentialOptions` and `UsernamePasswordCredential` constructor overloads accepting this type
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `InteractiveBrowserCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `UsernamePasswordCredential`
+  - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
 
 
-## 1.2.0-preview.4
+## 1.2.0-preview.6 (2020-07-22)
+
+### New Features
+- Added the read only property `ClientId` to `AuthenticationRecord`.
+- Added the property `AllowUnencryptedCache` to the option classes `ClientCertificateCredentialOptions`, `ClientSecretCredentialOptions`, `DeviceCodeCredentialOptions`, `InteractiveBrowserCredentialOptions` and `SharedTokenCacheCredentialOptions` which when set to true allows the credential to fall back to storing tokens in an unencrypted file if no OS level user encryption is available when `EnablePersistentCache` is set to true.
+- Added the property `AuthenticationRecord` to the option class `SharedTokenCacheCredentialOptions` to support silent authentication for accounts previously authenticated with an interactive credential.
+- Added option class `UsernamePasswordCredentialOptions` which supports the options `EnablePersistentCache` and `AllowUnencryptedCache`.
+
+### Breaking Changes
+- Rename type `KnownAuthorityHosts` to `AzureAuthorityHosts`
+  - Rename property `AzureChinaCloud` to `AzureChina`
+  - Rename property `AzureGermanCloud` to `AzureGermany`
+  - Rename property `AzureUSGovernment` to `AzureGovernment`
+  - Rename property `AzureCloud` to `AzurePublicCloud`
+
+## 1.2.0-preview.5 (2020-07-08)
+
+### New Features
+- Added options classes `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions` which support the following new option
+    - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
+
+
+## 1.2.0-preview.4 (2020-06-10)
 
 ### New Features
 - Makes `AzureCliCredential`, `VisualStudioCredential` and `VisualStudioCodeCredential` public to allow direct usage.
@@ -13,7 +49,7 @@
 - Fix `SharedTokenCacheCredential` account filter to be case-insensitive (Issue [#10816](https://github.com/Azure/azure-sdk-for-net/issues/10816))
 - Update `VisualStudioCodeCredential` to properly throw `CredentialUnavailableException` when re-authentication is needed. (Issue [#11595](https://github.com/Azure/azure-sdk-for-net/issues/11595))
 
-## 1.2.0-preview.3
+## 1.2.0-preview.3 (2020-05-05)
 
 ### New Features
 - First preview of new API for authenticating users with `DeviceCodeCredential` and `InteractiveBrowserCredential`
@@ -23,13 +59,13 @@
     - `DisableAutomaticAuthentication` disables automatic user interaction causing the credential to throw an `AuthenticationRequiredException` when interactive authentication is necessary.
     - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
 
-## 1.2.0-preview.2
+## 1.2.0-preview.2 (2020-04-06)
 
 ### New Features
 - Updates `DefaultAzureCredential` to enable authenticating through Visual Studio
 - Updates `DefaultAzureCredential` to enable authentication through Visual Studio Code
 
-## 1.2.0-preview.1
+## 1.2.0-preview.1 (2020-03-10)
 
 ### New Features
 - Updating `DefaultAzureCredential` to enable authenticating through the Azure CLI
@@ -40,7 +76,7 @@
 - Fix an issue where `EnvironmentCredential` did not behave correctly when `AZURE_USERNAME` and `AZURE_PASSWORD` where set
 - Added `KnownAuthorityHosts` class to aid in sovereign cloud configuration.
 
-## 1.1.1
+## 1.1.1 (2020-02-10)
 
 ### Fixes and improvements
 - Fixed `UsernamePasswordCredential` constructor parameter mishandling
@@ -48,7 +84,7 @@
 - Fixed `ManagedIdentityCredential` to raise `CredentialUnavailableException` on 400 return from the service where no identity has been assigned
 - Updated error messaging from `DefaultAzureCredential` to more easily root cause failures
 
-## 1.1.0
+## 1.1.0 (2019-11-25)
 
 ### Fixes and improvements
 - Update `SharedTokenCacheCredential` to filter accounts by tenant id
@@ -59,7 +95,7 @@
 - Added `InteractiveBrowserTenantId` to `DefaultAzureCredentialOptions`
 - Fixed issue with `ManagedIdentityCredential` authentication with user assigned identities
 
-## 1.0.0
+## 1.0.0 (2019-10-29)
 - First stable release of Azure.Identity package.
 
 ### Breaking Changes
@@ -100,7 +136,7 @@
 - Update `ManagedIdentityCredential` IMDS availability check to handle immediate network failures
 - Added a `DefaultAzureCredential` constructor overload to enable interactive credential types by default
 
-## 1.0.0-preview.5
+## 1.0.0-preview.5 (2019-10-07)
 
 ### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.9
@@ -112,7 +148,7 @@
 ### Fixes and improvements
 - Updated `InteractiveBrowserCredential` and `DeviceCodeCredential` to optionally accept a tenantId to support non-multitenant applications
 
-## 1.0.0-preview.4
+## 1.0.0-preview.4 (2019-09-10)
 
 ### Breaking Changes
 - Modified GetToken abstraction to accept `TokenRequest` structure rather than `string[]` for forwards compatibility
@@ -125,7 +161,7 @@
 - Updated `DefaultAzureCredential`authentication flow to include the `SharedTokenCacheCredential`
 
 
-## 1.0.0-preview.3
+## 1.0.0-preview.3 (2019-08-06)
 
 ### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.7
@@ -142,13 +178,13 @@
 - Added identity client distributed tracing support
 
 
-## 1.0.0-preview.2
+## 1.0.0-preview.2 (2019-07-02)
 
 ### Fixes and improvements
 - Fix to ManagedIdentityCredential to properly parse expires_on from response
 
 
-## 1.0.0-preview.1
+## 1.0.0-preview.1 (2019-06-27)
 
 Version 1.0.0-preview.1 is the first preview of our efforts to create a user-friendly authentication API for Azure SDK client libraries. For more
 information about preview releases of other Azure SDK libraries, please visit https://aka.ms/azure-sdk-preview1-net.

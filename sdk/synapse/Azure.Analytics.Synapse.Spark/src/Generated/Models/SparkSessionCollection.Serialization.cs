@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             int @from = default;
             int total = default;
-            IReadOnlyList<SparkSession> sessions = default;
+            Optional<IReadOnlyList<SparkSession>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"))
@@ -32,27 +32,16 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("sessions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SparkSession> array = new List<SparkSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SparkSession.DeserializeSparkSession(item));
-                        }
+                        array.Add(SparkSession.DeserializeSparkSession(item));
                     }
                     sessions = array;
                     continue;
                 }
             }
-            return new SparkSessionCollection(@from, total, sessions);
+            return new SparkSessionCollection(@from, total, Optional.ToList(sessions));
         }
     }
 }

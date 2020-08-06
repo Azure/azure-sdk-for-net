@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
             byte[] data = ExtractPrivateKeyBlobFromPem(File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem")));
 
             RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
-            RSA fromPfx = (RSA) new X509Certificate2(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx"), "password").PrivateKey;
+            RSA fromPfx = (RSA) new X509Certificate2(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"), "password").PrivateKey;
 
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);

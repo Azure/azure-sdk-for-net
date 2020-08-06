@@ -7,10 +7,10 @@ To get started you'll need a Cognitive Services resource or a Form Recognizer re
 ## Copy a custom model
 There are several scenarios that require the models to be copied between Form Recognizer resources, like for example, to keep a backup of the created models.
 Copies can be made:
-- Within same Form Recognizer resource
+- Within the same Form Recognizer resource.
 - Across other Form Recognizer resources that exist in any other supported region.
 
-For this sample, you will copy a model across Form recognizer resource. It assumes you have the credentials for both the source and the target Form Recognizer resources.
+For this sample, you will copy a model across Form Recognizer resources. It assumes you have the credentials for both the source and the target Form Recognizer resources.
 
 ## Creating the source and target `FormTrainingClient`
 
@@ -20,7 +20,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ### Source client
 The source client that contains the custom model we want to copy.
 
-```C# Snippet:FormRecognizerSample6CreateCopySourceClient
+```C# Snippet:FormRecognizerSampleCreateCopySourceClient
 string endpoint = "<source_endpoint>";
 string apiKey = "<source_apiKey>";
 var sourcecredential = new AzureKeyCredential(apiKey);
@@ -30,7 +30,7 @@ var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
 ### Target client
 The target client where we want to copy the custom model to.
 
-```C# Snippet:FormRecognizerSample6CreateCopyTargetClient
+```C# Snippet:FormRecognizerSampleCreateCopyTargetClient
 string endpoint = "<target_endpoint>";
 string apiKey = "<target_apiKey>";
 var targetCredential = new AzureKeyCredential(apiKey);
@@ -39,31 +39,31 @@ var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
 
 ### Authorize the copy
 Before starting the copy, we need to get a `CopyAuthorization` from the target Form Recognizer resource that will give us permission to execute the copy.
-```C# Snippet:FormRecognizerSample6GetCopyAuthorization
+```C# Snippet:FormRecognizerSampleGetCopyAuthorization
 string resourceId = "<resourceId>";
 string resourceRegion = "<region>";
 CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, resourceRegion);
 ```
 
 `CopyAuthorization` provides the convenience method `ToJson` that will serialize the authorization properties into a json format string.
-```C# Snippet:FormRecognizerSample6ToJson
+```C# Snippet:FormRecognizerSampleToJson
 string jsonTargetAuth = targetAuth.ToJson();
 ```
 
-To deserealize a string that contains authorizaiton information, use the `FromJson` method from `CopyAuthorization`.
-```C# Snippet:FormRecognizerSample6FromJson
+To deserialize a string that contains authorization information, use the `FromJson` method from `CopyAuthorization`.
+```C# Snippet:FormRecognizerSampleFromJson
 CopyAuthorization targetCopyAuth = CopyAuthorization.FromJson(jsonTargetAuth);
 ```
 
 ### Execute the copy
 Now that we have authorization from the target Form Recognizer resource, we execute the copy from the `sourceClient` where the model to copy lives.
 
-```C# Snippet:FormRecognizerSample6CopyModel
+```C# Snippet:FormRecognizerSampleCopyModel
 string modelId = "<source_modelId>";
 CustomFormModelInfo newModel = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
 
-Console.WriteLine($"Original modelID => {modelId}");
-Console.WriteLine($"Copied modelID => {newModel.ModelId}");
+Console.WriteLine($"Original model ID => {modelId}");
+Console.WriteLine($"Copied model ID => {newModel.ModelId}");
 ```
 
 

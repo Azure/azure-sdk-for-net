@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (Activities != null)
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities");
                 writer.WriteStartArray();
@@ -36,42 +36,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SwitchCase DeserializeSwitchCase(JsonElement element)
         {
-            string value = default;
-            IList<Activity> activities = default;
+            Optional<string> value = default;
+            Optional<IList<Activity>> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("activities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Activity> array = new List<Activity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Activity.DeserializeActivity(item));
-                        }
+                        array.Add(Activity.DeserializeActivity(item));
                     }
                     activities = array;
                     continue;
                 }
             }
-            return new SwitchCase(value, activities);
+            return new SwitchCase(value.Value, Optional.ToList(activities));
         }
     }
 }

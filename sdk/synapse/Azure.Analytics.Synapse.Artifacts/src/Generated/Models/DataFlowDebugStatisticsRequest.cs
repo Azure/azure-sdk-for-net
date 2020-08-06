@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,19 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
         internal DataFlowDebugStatisticsRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
-        /// <param name="streamName"> The output stream name. </param>
-        /// <param name="columns"> List of column names. </param>
-        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IReadOnlyList<string> columns)
-        {
-            SessionId = sessionId;
-            DataFlowName = dataFlowName;
-            StreamName = streamName;
-            Columns = columns;
+            Columns = new ChangeTrackingList<string>();
         }
 
         /// <summary> The ID of data flow debug session. </summary>

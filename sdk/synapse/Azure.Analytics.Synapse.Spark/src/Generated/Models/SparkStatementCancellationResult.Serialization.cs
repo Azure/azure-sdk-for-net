@@ -14,20 +14,16 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementCancellationResult DeserializeSparkStatementCancellationResult(JsonElement element)
         {
-            string msg = default;
+            Optional<string> msg = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("msg"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     msg = property.Value.GetString();
                     continue;
                 }
             }
-            return new SparkStatementCancellationResult(msg);
+            return new SparkStatementCancellationResult(msg.Value);
         }
     }
 }

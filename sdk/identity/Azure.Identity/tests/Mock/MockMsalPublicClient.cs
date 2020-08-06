@@ -23,6 +23,8 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], AuthenticationResult> SilentAuthFactory { get; set; }
 
+        public Func<string[], IAccount, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
+
         public Func<string[], AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
         public override Task<IEnumerable<IAccount>> GetAccountsAsync()
@@ -56,6 +58,11 @@ namespace Azure.Identity.Tests.Mock
 
         public override Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
         {
+            if (ExtendedSilentAuthFactory != null)
+            {
+                return Task.FromResult(ExtendedSilentAuthFactory(scopes, account, async, cancellationToken));
+            }
+
             Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
 
             if (factory != null)

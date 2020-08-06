@@ -465,6 +465,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
         /// </param>
+        /// <param name='deleteBehavior'>
+        /// When deleteBehavior=all, the resources that were created by the blueprint
+        /// assignment will be deleted. Possible values include: 'none', 'all'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -486,7 +490,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string resourceScope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string resourceScope, string assignmentName, string deleteBehavior = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -509,6 +513,7 @@ namespace Microsoft.Azure.Management.Blueprint
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceScope", resourceScope);
                 tracingParameters.Add("assignmentName", assignmentName);
+                tracingParameters.Add("deleteBehavior", deleteBehavior);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -521,6 +526,10 @@ namespace Microsoft.Azure.Management.Blueprint
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (deleteBehavior != null)
+            {
+                _queryParameters.Add(string.Format("deleteBehavior={0}", System.Uri.EscapeDataString(deleteBehavior)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EntityRecognitionSkill
     {
         /// <summary> A list of entity categories that should be extracted. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<EntityCategory> Categories { get; }
     }
 }

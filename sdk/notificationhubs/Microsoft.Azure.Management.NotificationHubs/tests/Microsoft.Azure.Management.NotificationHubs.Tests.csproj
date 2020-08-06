@@ -5,7 +5,7 @@
     <Description>NotificationHubs.Tests Class Library</Description>
     <AssemblyName>NotificationHubs.Tests</AssemblyName>
     <Version>1.0.0</Version>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

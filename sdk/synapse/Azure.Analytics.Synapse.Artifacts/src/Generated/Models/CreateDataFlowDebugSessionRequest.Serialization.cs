@@ -15,32 +15,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DataFlowName != null)
+            if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName");
                 writer.WriteStringValue(DataFlowName);
             }
-            if (ExistingClusterId != null)
+            if (Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId");
                 writer.WriteStringValue(ExistingClusterId);
             }
-            if (ClusterTimeout != null)
+            if (Optional.IsDefined(ClusterTimeout))
             {
                 writer.WritePropertyName("clusterTimeout");
                 writer.WriteNumberValue(ClusterTimeout.Value);
             }
-            if (NewClusterName != null)
+            if (Optional.IsDefined(NewClusterName))
             {
                 writer.WritePropertyName("newClusterName");
                 writer.WriteStringValue(NewClusterName);
             }
-            if (NewClusterNodeType != null)
+            if (Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType");
                 writer.WriteStringValue(NewClusterNodeType);
             }
-            if (DataBricksLinkedService != null)
+            if (Optional.IsDefined(DataBricksLinkedService))
             {
                 writer.WritePropertyName("dataBricksLinkedService");
                 writer.WriteObjectValue(DataBricksLinkedService);

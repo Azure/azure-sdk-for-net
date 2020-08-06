@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,32 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Workspace. </summary>
         internal Workspace()
         {
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of Workspace. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="identity"> Managed service identity of the workspace. </param>
-        /// <param name="provisioningState"> Workspace provisioning state, example Succeeded. </param>
-        /// <param name="createTime"> Time the workspace was created in ISO8601 format. </param>
-        /// <param name="version"> Version of the workspace. </param>
-        /// <param name="defaultStorage"> Linked service reference. </param>
-        /// <param name="defaultSqlServer"> Linked service reference. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal Workspace(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, string eTag, WorkspaceIdentity identity, string provisioningState, DateTimeOffset? createTime, string version, LinkedServiceReference defaultStorage, LinkedServiceReference defaultSqlServer, IReadOnlyDictionary<string, object> additionalProperties) : base(id, name, type, location, tags, eTag)
-        {
-            Identity = identity;
-            ProvisioningState = provisioningState;
-            CreateTime = createTime;
-            Version = version;
-            DefaultStorage = defaultStorage;
-            DefaultSqlServer = defaultSqlServer;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Managed service identity of the workspace. </summary>

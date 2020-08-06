@@ -8,5 +8,6 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);AZC0008;AZC0001</NoWarn>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
   </PropertyGroup>
 </Project>

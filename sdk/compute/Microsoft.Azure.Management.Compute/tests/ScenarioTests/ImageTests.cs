@@ -24,7 +24,7 @@ namespace Compute.Tests
             {
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
 
                     string diskEncryptionSetId = getDefaultDiskEncryptionSetId();

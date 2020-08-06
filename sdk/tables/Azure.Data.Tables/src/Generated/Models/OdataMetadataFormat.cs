@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The OdataMetadataFormat. </summary>
-    public readonly partial struct OdataMetadataFormat : IEquatable<OdataMetadataFormat>
+    internal readonly partial struct OdataMetadataFormat : IEquatable<OdataMetadataFormat>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="OdataMetadataFormat"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OdataMetadataFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

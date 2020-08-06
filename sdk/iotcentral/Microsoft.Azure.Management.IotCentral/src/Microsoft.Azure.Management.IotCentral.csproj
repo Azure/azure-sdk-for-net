@@ -8,11 +8,11 @@
     <Description>Provides management capabilities for Microsoft Azure IotCentral.</Description>
     <AssemblyTitle>Microsoft Azure IotCentral Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.IotCentral</AssemblyName>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <PackageTags>Microsoft Azure IotCentral;IotCentral management;IotCentral;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This release change error to be CloudException, and remove regex check for IOTC app.
+        This release allows application patch API to update the application sku.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

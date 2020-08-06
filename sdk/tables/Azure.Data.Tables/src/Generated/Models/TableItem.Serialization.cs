@@ -14,50 +14,34 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableItem DeserializeTableItem(JsonElement element)
         {
-            string tableName = default;
-            string odataType = default;
-            string odataId = default;
-            string odataEditLink = default;
+            Optional<string> tableName = default;
+            Optional<string> odataType = default;
+            Optional<string> odataId = default;
+            Optional<string> odataEditLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TableName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tableName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("odata.type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("odata.id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("odata.editLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataEditLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new TableItem(tableName, odataType, odataId, odataEditLink);
+            return new TableItem(tableName.Value, odataType.Value, odataId.Value, odataEditLink.Value);
         }
     }
 }

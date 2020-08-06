@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
         /// <param name="project"> The default BigQuery project to query against. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
         public GoogleBigQueryLinkedService(object project, GoogleBigQueryAuthenticationType authenticationType)
         {
             if (project == null)

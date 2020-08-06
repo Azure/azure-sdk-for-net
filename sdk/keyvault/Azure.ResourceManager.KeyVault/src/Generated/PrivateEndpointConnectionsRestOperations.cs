@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateEndpointConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-09-01")
         {
             if (subscriptionId == null)
@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnection>> GetAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -98,14 +99,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,6 +112,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response<PrivateEndpointConnection> Get(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -141,14 +136,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,6 +174,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="properties"/> is null. </exception>
         public async Task<ResponseWithHeaders<PrivateEndpointConnection, PrivateEndpointConnectionsPutHeaders>> PutAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -214,14 +203,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -235,6 +217,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="properties"/> is null. </exception>
         public ResponseWithHeaders<PrivateEndpointConnection, PrivateEndpointConnectionsPutHeaders> Put(string resourceGroupName, string vaultName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -263,14 +246,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -303,6 +279,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<ResponseWithHeaders<PrivateEndpointConnectionsDeleteHeaders>> DeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -337,6 +314,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public ResponseWithHeaders<PrivateEndpointConnectionsDeleteHeaders> Delete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

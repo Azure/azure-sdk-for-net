@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
         /// <param name="clientId"> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public SalesforceMarketingCloudLinkedService(object clientId)
         {
             if (clientId == null)

@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
-using Azure.DigitalTwins.Core.Models;
 using Azure.DigitalTwins.Core.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;

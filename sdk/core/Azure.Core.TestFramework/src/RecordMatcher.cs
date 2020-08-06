@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace Azure.Core.TestFramework
 {
@@ -57,6 +59,16 @@ namespace Azure.Core.TestFramework
             "x-ms-request-id",
             "x-ms-correlation-request-id"
         };
+
+        /// <summary>
+        /// Query parameters whose values can change between recording and playback without causing URI matching
+        /// to fail. The presence or absence of the query parameter itself is still respected in matching.
+        /// </summary>
+        public HashSet<string> VolatileQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+        };
+
+        private const string VolatileValue = "Volatile";
 
         public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
         {
@@ -171,11 +183,24 @@ namespace Azure.Core.TestFramework
             IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
             CompareHeaderDictionaries(entry.Request.Headers, otherEntry.Request.Headers, VolatileHeaders) == 0;
 
-        private static bool AreUrisSame(string entryUri, string otherEntryUri) =>
-            // Some versions of .NET behave differently when calling new Uri("...")
-            // so we'll normalize the recordings (which may have been against
-            // a different .NET version) to be safe
-            new Uri(entryUri).ToString() == new Uri(otherEntryUri).ToString();
+        private bool AreUrisSame(string entryUri, string otherEntryUri) =>
+            NormalizeUri(entryUri) == NormalizeUri(otherEntryUri);
+
+        private string NormalizeUri(string uriToNormalize)
+        {
+            var req = new RequestUriBuilder();
+            var uri = new Uri(uriToNormalize);
+            req.Reset(uri);
+            req.Query = "";
+            NameValueCollection queryParams = HttpUtility.ParseQueryString(uri.Query);
+            foreach (string param in queryParams)
+            {
+                req.AppendQuery(
+                    param,
+                    VolatileQueryParameters.Contains(param) ? VolatileValue : queryParams[param]);
+            }
+            return req.ToUri().ToString();
+        }
 
         protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
             AreUrisSame(entryUri, otherEntryUri);

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{797FF941-76FD-45FD-AC17-A73DFE2BA621}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs", "..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj", "{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,17 +35,12 @@ Global
 		{7DFF0E65-DC9A-410D-9A11-AD6A06860FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DFF0E65-DC9A-410D-9A11-AD6A06860FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DFF0E65-DC9A-410D-9A11-AD6A06860FE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7DFF0E65-DC9A-410D-9A11-AD6A06860FE1} = {797FF941-76FD-45FD-AC17-A73DFE2BA621}
-		{65ECFE8C-4D8C-454B-AC63-4559FBE5AF7A} = {797FF941-76FD-45FD-AC17-A73DFE2BA621}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BD3BD5-61DF-464D-8627-E00B0BC4B3A3}

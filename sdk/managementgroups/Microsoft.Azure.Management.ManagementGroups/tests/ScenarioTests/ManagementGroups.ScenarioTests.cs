@@ -162,7 +162,7 @@ namespace ResourceGroups.Tests
                 var managementGroup = ((JObject) managementGroupsClient.ManagementGroups.CreateOrUpdate(groupId,
                     new CreateManagementGroupRequest(
                         id: "/providers/Microsoft.Management/managementGroups/TestGroup1Child2",
-                        type: "/providers/Microsoft.Management/managementGroups", 
+                        type: "/providers/Microsoft.Management/managementGroups",
                         name: "TestGroup1Child2",
                         displayName: "TestGroup1->Child2",
                         details: new CreateManagementGroupDetails()
