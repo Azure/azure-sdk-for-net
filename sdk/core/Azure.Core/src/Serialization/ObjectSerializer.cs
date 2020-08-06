@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// An abstraction from reading typed objects.
