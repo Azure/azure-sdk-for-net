@@ -14,21 +14,21 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a supported private link resource for the Azure Cognitive
-    /// Search service.
+    /// The resource model definition for a Azure Resource Manager resource
+    /// with an etag.
     /// </summary>
-    public partial class PrivateLinkResource : Resource
+    public partial class AzureEntityResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        public PrivateLinkResource()
+        public AzureEntityResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -36,13 +36,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="properties">Describes the properties of a supported
-        /// private link resource for the Azure Cognitive Search
-        /// service.</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties))
+        /// <param name="etag">Resource Etag.</param>
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
             : base(id, name, type)
         {
-            Properties = properties;
+            Etag = etag;
             CustomInit();
         }
 
@@ -52,11 +50,10 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets describes the properties of a supported private link resource
-        /// for the Azure Cognitive Search service.
+        /// Gets resource Etag.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PrivateLinkResourceProperties Properties { get; private set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }
