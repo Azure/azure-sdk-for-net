@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
