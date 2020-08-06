@@ -1333,47 +1333,33 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(field.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(field.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
-                var labelData = field.LabelData;
+                ValidateFieldData(field.LabelData, includeFieldElements);
+                ValidateFieldData(field.ValueData, includeFieldElements);
+            }
+        }
 
-                if (labelData != null)
-                {
-                    Assert.Greater(labelData.PageNumber, 0);
+        private void ValidateFieldData(FieldData fieldData, bool includeFieldElements)
+        {
+            if (fieldData == null)
+            {
+                return;
+            }
 
-                    Assert.NotNull(labelData.BoundingBox.Points);
+            Assert.Greater(fieldData.PageNumber, 0);
 
-                    if (labelData.BoundingBox.Points.Length != 0)
-                    {
-                        Assert.AreEqual(4, labelData.BoundingBox.Points.Length);
-                    }
+            Assert.NotNull(fieldData.BoundingBox.Points);
 
-                    Assert.NotNull(labelData.Text);
-                    Assert.NotNull(labelData.FieldElements);
+            if (fieldData.BoundingBox.Points.Length != 0)
+            {
+                Assert.AreEqual(4, fieldData.BoundingBox.Points.Length);
+            }
 
-                    if (!includeFieldElements)
-                    {
-                        Assert.AreEqual(0, labelData.FieldElements.Count);
-                    }
-                }
+            Assert.NotNull(fieldData.Text);
+            Assert.NotNull(fieldData.FieldElements);
 
-                var valueData = field.ValueData;
-
-                if (valueData != null)
-                {
-                    Assert.NotNull(valueData.BoundingBox.Points);
-
-                    if (valueData.BoundingBox.Points.Length != 0)
-                    {
-                        Assert.AreEqual(4, valueData.BoundingBox.Points.Length);
-                    }
-
-                    Assert.NotNull(valueData.Text);
-                    Assert.NotNull(valueData.FieldElements);
-
-                    if (!includeFieldElements)
-                    {
-                        Assert.AreEqual(0, valueData.FieldElements.Count);
-                    }
-                }
+            if (!includeFieldElements)
+            {
+                Assert.AreEqual(0, fieldData.FieldElements.Count);
             }
         }
     }
