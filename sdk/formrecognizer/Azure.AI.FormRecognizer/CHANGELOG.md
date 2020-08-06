@@ -12,11 +12,13 @@
 - Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
 - Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
 - Renamed `FormValueType.Integer` to `FormValueType.Int64`.
+- `FormField` property `ValueData` is now set to null if there is no text, bounding box or page number associated with it.
 
 ### Fixes
 
 - Made the `TrainingFileFilter` constructor public.
 - Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
+- Fixed a bug in which the `BoundingBox` indexer and `ToString` method threw a `NullReferenceException` if it had no points ([#13971](https://github.com/Azure/azure-sdk-for-net/issues/13971)).
 
 ### New Features
 
