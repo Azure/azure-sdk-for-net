@@ -120,6 +120,8 @@ public virtual async Task<Response<TwinConfiguration>> GetConfigurationAsync(str
 /// </summary>
 /// <param name="configuration">Twin configuration to update</param>
 /// <param name="precondition">The condition on which to perform this operation</param>
+/// In case of create, the condition must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.
+/// In case of update, if no ETag is present on the twin configuration, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The created automatic device/module management twin configuration</returns>
 public virtual async Task<Response<TwinConfiguration>> CreateOrUpdateConfigurationAsync(TwinConfiguration configuration, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
