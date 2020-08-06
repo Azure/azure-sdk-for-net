@@ -42,25 +42,15 @@ namespace Azure.Storage.Blobs
 
                 string blockId = StorageExtensions.GenerateBlockId(_position + _buffer.Length);
 
-                if (async)
-                {
-                    await _blockBlobClient.StageBlockAsync(
-                        base64BlockId: blockId,
-                        content: _buffer,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    _blockBlobClient.StageBlock(
-                        base64BlockId: blockId,
-                        content: _buffer,
-                        conditions: _conditions,
-                        progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken);
-                }
+                await _blockBlobClient.StageBlockInternal(
+                    base64BlockId: blockId,
+                    content: _buffer,
+                    transactionalContentHash: default,
+                    conditions: _conditions,
+                    progressHandler: _progressHandler,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 _blockIds.Add(blockId);
                 _buffer.Clear();
@@ -87,12 +77,12 @@ namespace Azure.Storage.Blobs
         {
             if (bufferSize < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be greater than 1");
             }
 
             if (bufferSize > Constants.Blob.Block.MaxStageBytes)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.Blob.Block.MaxStageBytes}");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must be less than or equal to {Constants.Blob.Block.MaxStageBytes}");
             }
         }
     }

@@ -51,9 +51,9 @@ namespace Azure.Storage.Blobs
             else
             {
                 // We need a multiple of 512 to flush.
-                if (_buffer.Length % Constants.Blob.Page.PageSize != 0)
+                if (_buffer.Length % Constants.Blob.Page.PageSizeBytes != 0)
                 {
-                    int bytesToWrite = (int)(Constants.Blob.Page.PageSize - _buffer.Length % Constants.Blob.Page.PageSize);
+                    int bytesToWrite = (int)(Constants.Blob.Page.PageSizeBytes - _buffer.Length % Constants.Blob.Page.PageSizeBytes);
                     await WriteToBufferInternal(buffer, offset, bytesToWrite, async, cancellationToken).ConfigureAwait(false);
                     remaining -= bytesToWrite;
                     offset += bytesToWrite;
@@ -119,25 +119,25 @@ namespace Azure.Storage.Blobs
         {
             if (bufferSize < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be greater than or equal to 1");
             }
 
             if (bufferSize > 4 * Constants.MB)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must <= {Constants.DefaultBufferSize}");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must less than or equal to {Constants.DefaultBufferSize}");
             }
 
             if (bufferSize % 512 != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must be a multiple of {Constants.Blob.Page.PageSize}");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must be a multiple of {Constants.Blob.Page.PageSizeBytes}");
             }
         }
 
         private static void ValidatePosition(long position)
         {
-            if (position % Constants.Blob.Page.PageSize != 0)
+            if (position % Constants.Blob.Page.PageSizeBytes != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(position), $"Must be a multiple of {Constants.Blob.Page.PageSize}");
+                throw new ArgumentOutOfRangeException(nameof(position), $"Must be a multiple of {Constants.Blob.Page.PageSizeBytes}");
             }
         }
     }

@@ -50,9 +50,9 @@ namespace Azure.Storage.Blobs
                 _conditions.IfMatch = response.Value.ETag;
                 _conditions.IfAppendPositionEqual = null;
                 _conditions.IfMaxSizeLessThanOrEqual = null;
-            }
 
-            _buffer.Clear();
+                _buffer.Clear();
+            }
         }
 
         protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
@@ -62,12 +62,12 @@ namespace Azure.Storage.Blobs
         {
             if (bufferSize < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be greater than or equal to 1");
             }
 
             if (bufferSize > Constants.Blob.Append.MaxAppendBlockBytes)
             {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), $"Must less than or equal to {Constants.Blob.Append.MaxAppendBlockBytes}");
             }
         }
     }

@@ -182,7 +182,7 @@ namespace Azure.Storage
 
             internal static class Page
             {
-                public const int PageSize = 512;
+                public const int PageSizeBytes = 512;
             }
 
             internal static class Container
