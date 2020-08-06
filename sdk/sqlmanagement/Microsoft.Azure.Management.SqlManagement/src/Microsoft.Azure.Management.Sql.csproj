@@ -12,9 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added auto complete restore and last backup name parameters for Azure SQL Managed Database
 - Added Short Term Retention for SQL Databases APIs (2020-02-02-preview)
-- Added Short Term Retention for SQL Databases APIs (2020-02-02-stable)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
