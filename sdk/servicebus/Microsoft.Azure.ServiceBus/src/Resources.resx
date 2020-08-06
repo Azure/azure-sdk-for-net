@@ -192,6 +192,9 @@
   <data name="MessageHandlerAlreadyRegistered" xml:space="preserve">
     <value>A message handler has already been registered.</value>
   </data>
+  <data name="MessageHandlerNotRegisteredYet" xml:space="preserve">
+    <value>A message handler has not been registered yet.</value>
+  </data>
   <data name="SessionHandlerAlreadyRegistered" xml:space="preserve">
     <value>A session handler has already been registered.</value>
   </data>

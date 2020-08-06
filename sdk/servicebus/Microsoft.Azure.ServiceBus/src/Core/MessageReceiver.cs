@@ -900,6 +900,30 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
+        /// Unregister messgae hander from the receiver if there is active message handler registered. 
+        /// </summary>
+        public void UnregisterMessageHandler()
+        {
+            this.ThrowIfClosed();
+
+            MessagingEventSource.Log.UnregisterMessageHandlerStart(this.ClientId);
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    this.receivePumpCancellationTokenSource.Cancel();
+                    this.receivePumpCancellationTokenSource.Dispose();
+                    this.receivePump = null;
+                }
+                else
+                {
+                    throw new InvalidOperationException(Resources.MessageHandlerNotRegisteredYet);
+                }
+            }
+            MessagingEventSource.Log.UnregisterMessageHandlerStop(this.ClientId);
+        }
+
+        /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)

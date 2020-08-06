@@ -420,6 +420,15 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Unregister messgae hander from the receiver if there is active message handler registered. 
+        /// </summary>
+        public void UnregisterMessageHandler()
+        {
+            this.ThrowIfClosed();
+            this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandler();
+        }
+
+        /// <summary>
         /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
         /// </summary>
