@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Network.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 using NUnit.Framework;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
             var setPrivateEndpointResponse = await WaitForCompletionAsync(await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
-                new Management.Network.Models.PrivateEndpoint()
+                new ResourceManager.Network.Models.PrivateEndpoint()
                 {
                     Location = "eastus",
                     PrivateLinkServiceConnections = { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,

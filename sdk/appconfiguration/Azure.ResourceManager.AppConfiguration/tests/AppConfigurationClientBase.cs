@@ -3,8 +3,8 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Label = "test_label1_" + LabelUuId;
             TestContentType = "test content type";
             TestValue = "test value";
-            ResourceGroupPrefix = "Default-EventHub-";
+            ResourceGroupPrefix = "Default-AppConfiguration-";
             AppConfigurationManagementClient = GetAppConfigurationManagementClient();
             ConfigurationStoresOperations = AppConfigurationManagementClient.ConfigurationStores;
             PrivateEndpointConnectionsOperations = AppConfigurationManagementClient.PrivateEndpointConnections;
