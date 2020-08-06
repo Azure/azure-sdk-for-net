@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
         /// <param name="properties"> Properties of spark job definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SparkJobDefinitionResource(SparkJobDefinition properties)
         {
             if (properties == null)

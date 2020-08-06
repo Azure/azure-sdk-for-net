@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "708",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9f33bfd1984e65aa214cc06ebe4fd602",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDevice938981638\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1190250327\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice238727890\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1980223866\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1695855564\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice933442212\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1580180749\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1677797952\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1118348821\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1591157015\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Jul 2020 22:17:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "904c007d-9730-4fdb-a4bb-2133cc0a5b58"
+      },
+      "ResponseBody": {
+        "isSuccessful": true,
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "518",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "61705aa6c9323eebf30deb08764510bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDevice938981638\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1190250327\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice238727890\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1980223866\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1695855564\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice933442212\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1580180749\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1677797952\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1118348821\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDevice1591157015\u0022,\u0022importMode\u0022:\u0022delete\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Jul 2020 22:17:21 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "be8769b7-6644-432f-a889-e5230eeb037b"
+      },
+      "ResponseBody": {
+        "isSuccessful": true,
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "Variables": {
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "RandomSeed": "846779539"
+  }
+}

@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of TriggerResource. </summary>
         /// <param name="properties"> Properties of the trigger. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TriggerResource(Trigger properties)
         {
             if (properties == null)

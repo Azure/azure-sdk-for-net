@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\**\*.csproj" Condition="'$(AZURE_EVENTGRID_TEST_MODE)' == 'Live'" />
+  </ItemGroup>
+</Project>

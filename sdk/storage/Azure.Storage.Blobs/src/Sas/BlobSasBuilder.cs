@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +14,9 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="BlobSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage container or blob.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public class BlobSasBuilder
     {
@@ -82,15 +85,21 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The name of the blob being made accessible, or
-        /// <see cref="String.Empty"/> for a container SAS.
+        /// <see cref="string.Empty"/> for a container SAS.
         /// </summary>
         public string BlobName { get; set; }
 
         /// <summary>
         /// The name of the snapshot being made accessible, or
-        /// <see cref="String.Empty"/> for a blob SAS.
+        /// <see cref="string.Empty"/> for a blob SAS.
         /// </summary>
         public string Snapshot { get; set; }
+
+        /// <summary>
+        /// The name of the blob version being made accessible, or
+        /// <see cref="string.Empty"/> for a blob SAS.
+        /// </summary>
+        public string BlobVersionId { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
@@ -106,6 +115,11 @@ namespace Azure.Storage.Sas
         /// Beginning in version 2018-11-09, specify "bs" if the shared resource
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
+        /// blob.
+        ///
+        /// Beginning in version 2019-12-12, specify "bv" if the shared resource
+        /// is a blob version.  This grants access to the content and
+        /// metadata of the specific version, but not the corresponding root
         /// blob.
         /// </summary>
         public string Resource { get; set; }
@@ -181,6 +195,40 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
+        /// Sets the permissions for a Version SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="SnapshotSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(BlobVersionSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: s_validPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
@@ -188,6 +236,21 @@ namespace Azure.Storage.Sas
         {
             Permissions = rawPermissions;
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.FilterByTags,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -221,7 +284,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot,
+                Snapshot ?? BlobVersionId,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
@@ -290,7 +353,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot,
+                Snapshot ?? BlobVersionId,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
@@ -374,7 +437,7 @@ namespace Azure.Storage.Sas
             }
 
             // Container
-            if (String.IsNullOrEmpty(BlobName))
+            if (string.IsNullOrEmpty(BlobName))
             {
                 Resource = Constants.Sas.Resource.Container;
             }
@@ -383,18 +446,22 @@ namespace Azure.Storage.Sas
             else
             {
                 // Blob
-                if (String.IsNullOrEmpty(Snapshot))
+                if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
-                else
+                else if (string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.BlobSnapshot;
                 }
-
+                // Blob Version
+                else
+                {
+                    Resource = Constants.Sas.Resource.BlobVersion;
+                }
             }
-            if (String.IsNullOrEmpty(Version))
+            if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }

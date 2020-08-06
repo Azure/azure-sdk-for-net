@@ -39,11 +39,16 @@ namespace Azure.Identity
         private TokenCredential _credential;
 
         /// <summary>
+        /// Creates a new instance of the <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public DefaultAzureCredential() : this(false) { }
+
+        /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
         /// <param name="includeInteractiveCredentials">Specifies whether credentials requiring user interaction will be included in the default authentication flow.</param>
-        public DefaultAzureCredential(bool includeInteractiveCredentials = false)
-            : this((includeInteractiveCredentials) ? new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = !includeInteractiveCredentials } : null)
+        public DefaultAzureCredential(bool includeInteractiveCredentials)
+            : this(includeInteractiveCredentials ? new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = false } : null)
         {
         }
 
@@ -99,32 +104,37 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token;
-
-                if (_credential != null)
-                {
-                    token = async ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
-                }
-                else
-                {
-                    token = await GetTokenFromSourcesAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
-                }
+                AccessToken token = _credential != null
+                    ? await GetTokenFromCredentialAsync(async, requestContext, cancellationToken).ConfigureAwait(false)
+                    : await GetTokenFromSourcesAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(token);
             }
+            catch (Exception e)
+            {
+               throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private async ValueTask<AccessToken> GetTokenFromCredentialAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return async
+                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(requestContext, cancellationToken);
+            }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
-               throw scope.FailWrapAndThrow(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+                throw new AuthenticationFailedException(UnhandledExceptionMessage, e);
             }
         }
 
         private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            int i;
+            List<AuthenticationFailedException> exceptions = new List<AuthenticationFailedException>();
 
-            List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
-
-            for (i = 0; i < _sources.Length && _sources[i] != null; i++)
+            for (var i = 0; i < _sources.Length && _sources[i] != null; i++)
             {
                 try
                 {
@@ -138,21 +148,27 @@ namespace Azure.Identity
 
                     return token;
                 }
-                catch (CredentialUnavailableException e)
+                catch (AuthenticationFailedException e)
                 {
                     exceptions.Add(e);
                 }
             }
 
-            // build the credential unavailable message, this code is only reachable if all credentials throw CredentialUnavailableException
+            // Build the credential unavailable message, this code is only reachable if all credentials throw AuthenticationFailedException
             StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage);
 
-            foreach (Exception ex in exceptions)
+            bool allCredentialUnavailableException = true;
+            foreach (AuthenticationFailedException ex in exceptions)
             {
-                errorMsg.Append(Environment.NewLine).Append(ex.Message);
+                allCredentialUnavailableException &= ex is CredentialUnavailableException;
+                errorMsg.Append(Environment.NewLine).Append("- ").Append(ex.Message);
             }
 
-            throw new CredentialUnavailableException(errorMsg.ToString());
+            // If all credentials have thrown CredentialUnavailableException, throw CredentialUnavailableException,
+            // otherwise throw AuthenticationFailedException
+            throw allCredentialUnavailableException
+                ? new CredentialUnavailableException(errorMsg.ToString())
+                : new AuthenticationFailedException(errorMsg.ToString());
         }
 
         private static TokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)

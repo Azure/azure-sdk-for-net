@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SecureString. </summary>
         /// <param name="value"> Value of secure string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecureString(string value)
         {
             if (value == null)

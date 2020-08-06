@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         public NetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
     public partial class Operation
     {
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class Permissions
     {
         public Permissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
     }
     public partial class PrivateEndpoint
     {
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class PrivateEndpointConnectionItem
     {
-        public PrivateEndpointConnectionItem() { }
-        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        internal PrivateEndpointConnectionItem() { }
+        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class PrivateLinkResourceListResult
     {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Id { get { throw null; } }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class ResourceListResult
@@ -436,9 +436,26 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class Sku
     {
-        public Sku(Azure.ResourceManager.KeyVault.Models.SkuName name) { }
-        public string Family { get { throw null; } set { } }
+        public Sku(Azure.ResourceManager.KeyVault.Models.SkuFamily family, Azure.ResourceManager.KeyVault.Models.SkuName name) { }
+        public Azure.ResourceManager.KeyVault.Models.SkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.SkuName Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SkuFamily>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SkuFamily(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.SkuFamily A { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.SkuFamily other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.SkuFamily (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum SkuName
     {
@@ -510,7 +527,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public VaultCreateOrUpdateParameters(string location, Azure.ResourceManager.KeyVault.Models.VaultProperties properties) { }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VaultListResult
     {
@@ -522,12 +539,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public VaultPatchParameters() { }
         public Azure.ResourceManager.KeyVault.Models.VaultPatchProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VaultPatchProperties
     {
         public VaultPatchProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }
@@ -541,7 +558,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultProperties
     {
         public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.Sku sku) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }
@@ -549,7 +566,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public bool? EnableSoftDelete { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public string VaultUri { get { throw null; } set { } }

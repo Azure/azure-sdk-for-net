@@ -12,6 +12,12 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class TrainingDocumentInfo
     {
         /// <summary>
+        /// Training document name.
+        /// </summary>
+        [CodeGenMember("documentName")]
+        public string Name { get; }
+
+        /// <summary>
         /// The number of pages the document has.
         /// </summary>
         [CodeGenMember("pages")]

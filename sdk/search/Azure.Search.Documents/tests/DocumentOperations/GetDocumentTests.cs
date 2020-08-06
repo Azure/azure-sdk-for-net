@@ -51,16 +51,18 @@ namespace Azure.Search.Documents.Tests
                 {
                     case SearchDocument subDoc:
                         ICollection<string> subFields = SelectPopulatedFields(subDoc);
-                        if (subFields.Any())
+                        if (!subFields.Any() ||
+                            (subFields.Contains("type") && subDoc.GetString("type") == "Point"))
+                        {
+                            // Ignore empty documents or GeographyPoints represented as documents
+                            selected.Add(field);
+                        }
+                        else
                         {
                             foreach (string subField in subFields)
                             {
                                 selected.Add(MakeFieldPath(subField));
                             }
-                        }
-                        else
-                        {
-                            selected.Add(field);
                         }
                         break;
 
@@ -301,7 +303,7 @@ namespace Azure.Search.Documents.Tests
             {
                 ["hotelId"] = "1",
                 ["hotelName"] = "2015-02-11T12:58:00Z",
-                ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586), // Test that we don't confuse Geo-JSON & complex types.
+                ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586), // Test that we don't confuse Geo-JSON & complex types.
                 ["rooms"] = new[]
                 {
                     new SearchDocument
@@ -317,7 +319,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     ["hotelId"] = "1",
                     ["hotelName"] = new DateTimeOffset(2015, 2, 11, 12, 58, 0, TimeSpan.Zero),
-                    ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                    ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                     ["rooms"] = new[]
                     {
                         new SearchDocument

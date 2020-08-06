@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(publicKeys));
             }
 
-            PublicKeys = publicKeys.ToArray();
+            PublicKeys = publicKeys.ToList();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>

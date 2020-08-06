@@ -49,8 +49,10 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Uri VaultUri { get { throw null; } }
         public virtual Azure.Security.KeyVault.Administration.BackupOperation StartBackup(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.BackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartRestore(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartRestoreAsync(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartRestore(System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartRestoreAsync(System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartSelectiveRestore(string keyName, System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartSelectiveRestoreAsync(string keyName, System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultBackupClientOptions : Azure.Core.ClientOptions
     {
@@ -82,7 +84,7 @@ namespace Azure.Security.KeyVault.Administration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleAssignmentScope(string value) { throw null; }
-        public RoleAssignmentScope(System.Uri ResourceId) { throw null; }
+        public RoleAssignmentScope(System.Uri resourceId) { throw null; }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Global { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Keys { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.RoleAssignmentScope other) { throw null; }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             RuleGroupName = ruleGroupName;
-            Rules = rules.ToArray();
+            Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>

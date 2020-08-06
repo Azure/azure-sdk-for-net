@@ -26,19 +26,21 @@
   <!-- Validates that there is a release note entry for the current package version -->
   <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingDataPlaneLibrary)' == 'true'" >
     <PropertyGroup>
-      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
-      <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
-      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)/common/Extract-ReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec Condition="Exists('$(ChangeLogPath)')" ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(_VersionInProject)">
-      <Output TaskParameter="ConsoleOutput" ItemName="ExtractedReleaseNotesTemp" />
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
-    <Error Condition="Exists('$(ChangeLogPath)') and '$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. @(ExtractedReleaseNotesTemp)" />
-    <ItemGroup Condition="Exists('$(ChangeLogPath)')">
-      <ExtractedReleaseNotes Condition="'$(SetReleaseNotesErrorCode)'=='0'" Include="@(ExtractedReleaseNotesTemp)" />
-    </ItemGroup>
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
+  </Target>
+
+  <!--Run Aggregate Updates to Source -->
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+    <PropertyGroup>
+      <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
+    </PropertyGroup>
+    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
@@ -111,11 +113,6 @@
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
-  <!--Generate Assembly Attributes file in IntermediateOutputPath -->
-  <PropertyGroup>
-    <TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)</TargetFrameworkMonikerAssemblyAttributesPath>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
     <!-- Find all Azure projects -->
     <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
@@ -135,7 +132,7 @@
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
- 
+
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -179,7 +176,7 @@
       Properties="TargetPackageName=$(PackageId);
                   TargetPackageVersion=$(ApiCompatVersion);
                   TargetOutputPath=$(IntermediateOutputPath);
-                  BaseIntermediateOutputPath=$(BaseIntermediateOutputPath)\ApiCompat\"
+                  BaseIntermediateOutputPath=$(IntermediateOutputPath)\ApiCompat\"
       Targets="ApiCompatVerification"
      />
   </Target>

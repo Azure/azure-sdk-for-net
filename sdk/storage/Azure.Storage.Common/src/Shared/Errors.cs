@@ -42,5 +42,8 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidService(char s)
             => new ArgumentException($"Invalid service: '{s}'");
+
+        public static ArgumentException InsufficientStorageTransferOptions(long streamLength, long statedMaxBlockSize, long necessaryMinBlockSize)
+            => new ArgumentException($"Cannot upload {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the StorageTransferOptions.MaximumTransferSize to at least {necessaryMinBlockSize}.");
     }
 }

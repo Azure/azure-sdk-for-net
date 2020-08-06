@@ -177,7 +177,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Filter to only ratings greater than or equal our preference
                 Filter = SearchFilter.Create($"rating ge {stars}"),
                 Size = 5, // Take only 5 results
-                OrderBy = new[] { "rating desc" } // Sort by rating from high to low
+                OrderBy = { "rating desc" } // Sort by rating from high to low
             };
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
@@ -257,8 +257,8 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_Readme_Index
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-                IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-                IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+                    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+                    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
 
                 IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
                 client.IndexDocuments(batch, options);

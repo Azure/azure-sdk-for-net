@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -165,7 +165,7 @@
           "60016994-e285-4ffa-ad53-ea42acd02354"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=9dd1c11cb8da96f01b5d593dd639e6631bd9aae15f6c21ba2cfeafc7ce7c4659;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -205,8 +205,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D14_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -249,7 +249,7 @@
           "1b631e42-73bb-4b28-9274-74111109b2ba"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=63be0527b865f856b484dc6c55de34972eeaf17077dacccb9fa11d7e01640823;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -286,8 +286,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -349,8 +349,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -412,8 +412,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -475,8 +475,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -538,8 +538,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -601,8 +601,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -664,8 +664,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -727,8 +727,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -790,8 +790,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -853,8 +853,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -916,8 +916,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -979,8 +979,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1042,8 +1042,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1105,8 +1105,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1168,8 +1168,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1231,8 +1231,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1294,8 +1294,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1357,8 +1357,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1420,8 +1420,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1483,8 +1483,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1546,8 +1546,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1609,8 +1609,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1672,8 +1672,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1735,8 +1735,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1798,8 +1798,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1861,8 +1861,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1924,8 +1924,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/db90f4fa-2b15-4d75-8344-e4bd4c5b515c?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RiOTBmNGZhLTJiMTUtNGQ3NS04MzQ0LWU0YmQ0YzViNTE1Yz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1987,8 +1987,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2053,8 +2053,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2125,8 +2125,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2191,8 +2191,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2263,8 +2263,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2335,8 +2335,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2395,8 +2395,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2458,8 +2458,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2521,8 +2521,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2584,8 +2584,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2647,8 +2647,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2710,8 +2710,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2773,8 +2773,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2836,8 +2836,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2899,8 +2899,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2962,8 +2962,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3025,8 +3025,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3088,8 +3088,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3151,8 +3151,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3214,8 +3214,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3277,8 +3277,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3340,8 +3340,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3403,8 +3403,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ba70c3bc-ea61-4366-a8de-2c525cfa2c5d?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2JhNzBjM2JjLWVhNjEtNDM2Ni1hOGRlLTJjNTI1Y2ZhMmM1ZD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3466,8 +3466,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505/stop?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDUvc3RvcD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505/stop?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDUvc3RvcD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3492,13 +3492,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14&operationResultResponseType=Location"
         ],
         "x-ms-request-id": [
           "9d7f0f4c-97a2-468b-99e4-a163a3df33a2"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=58e912a579bcbdcd4d39cdfe9f22b26a8257c0436fbb6567ba405f84999f917f;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -3535,8 +3535,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3598,8 +3598,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3661,8 +3661,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3724,8 +3724,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3787,8 +3787,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3850,8 +3850,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3913,8 +3913,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3976,8 +3976,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4039,8 +4039,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4102,8 +4102,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4165,8 +4165,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4228,8 +4228,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4291,8 +4291,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4354,8 +4354,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4417,8 +4417,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4480,8 +4480,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4543,8 +4543,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4606,8 +4606,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4669,8 +4669,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4732,8 +4732,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4795,8 +4795,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4858,8 +4858,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-02-15&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a84a055c-76b8-4ec3-be4f-c1b8397da430?api-version=2020-06-14&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E4NGEwNTVjLTc2YjgtNGVjMy1iZTRmLWMxYjgzOTdkYTQzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4915,8 +4915,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505/start?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDUvc3RhcnQ/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505/start?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDUvc3RhcnQ/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4941,13 +4941,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14&operationResultResponseType=Location"
         ],
         "x-ms-request-id": [
           "91e4afd8-3ff7-43ac-951c-28d15e8dc6e9"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=06c134b3c9389fbb156c738e838d14a64c82219bd42d1857a4c800679837e9d9;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -4984,8 +4984,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5047,8 +5047,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5110,8 +5110,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5173,8 +5173,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5236,8 +5236,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5299,8 +5299,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5362,8 +5362,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5425,8 +5425,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5488,8 +5488,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5551,8 +5551,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5614,8 +5614,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5677,8 +5677,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5740,8 +5740,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5803,8 +5803,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5866,8 +5866,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5929,8 +5929,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5992,8 +5992,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6055,8 +6055,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6118,8 +6118,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6181,8 +6181,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6244,8 +6244,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6307,8 +6307,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6370,8 +6370,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6433,8 +6433,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6496,8 +6496,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6559,8 +6559,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6622,8 +6622,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6685,8 +6685,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-02-15&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/6c585983-e736-4851-8fd0-9476a46041ac?api-version=2020-06-14&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzZjNTg1OTgzLWU3MzYtNDg1MS04ZmQwLTk0NzZhNDYwNDFhYz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6742,8 +6742,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wMi0xNQ==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg4621/providers/Microsoft.Kusto/clusters/testcluster2505?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ2MjEvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjI1MDU/YXBpLXZlcnNpb249MjAyMC0wNi0xNA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6768,10 +6768,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14&operationResultResponseType=Location"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=bdcba91e9bcbc56b9060b4d1381e146266292798f0414daff7cdc223cbf46afe;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -6811,8 +6811,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6874,8 +6874,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -6937,8 +6937,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7000,8 +7000,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7063,8 +7063,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7126,8 +7126,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7189,8 +7189,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7252,8 +7252,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7315,8 +7315,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7378,8 +7378,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7441,8 +7441,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7504,8 +7504,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7567,8 +7567,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -7630,8 +7630,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-02-15&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/7d142c06-7414-4b4e-a270-c09565e832b6?api-version=2020-06-14&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzdkMTQyYzA2LTc0MTQtNGI0ZS1hMjcwLWMwOTU2NWU4MzJiNj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

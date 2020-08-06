@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.DigitalTwins
         DigitalTwinsEndpointResource IOperationSource<DigitalTwinsEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
-            }
+            return DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
         }
 
         async ValueTask<DigitalTwinsEndpointResource> IOperationSource<DigitalTwinsEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
-            }
+            return DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
         }
     }
 }

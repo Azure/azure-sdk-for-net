@@ -2,13 +2,22 @@
 
 ## 4.1.0-preview.2 (Unreleased)
 
-
 ## 4.1.0-preview.1 (2020-03-09)
 
 ### Added
 
 - Add "import" value to `KeyOperation` enumeration.
 - Add `RecoverableDays` property to `KeyProperties`.
+
+## 4.0.4 (2020-07-09)
+
+### Fixed
+
+- The "get" permission is no longer required to resolve keys for `KeyResolver` ([#11574](https://github.com/Azure/azure-sdk-for-net/issues/11574))
+
+### Minor changes
+
+- Make public `JsonWebKey` properties settable ([#12084](https://github.com/Azure/azure-sdk-for-net/issues/12084))
 
 ## 4.0.3 (2020-03-18)
 

@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public WebActivityAuthentication(string type)
         {
             if (type == null)

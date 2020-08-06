@@ -4,8 +4,7 @@ This sample demonstrates how to use the session processor. The session processor
 
 ### Processing messages from a session-enabled queue
 
-Processing session messages is performed with a `ServiceBusSessionProcessor`. This type
-derives from `ServiceBusProcessor` and exposes session-related functionality.
+Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusProcessSessionMessages
 string connectionString = "<connection_string>";
@@ -39,8 +38,12 @@ var options = new ServiceBusSessionProcessorOptions
     // If I want more fine-grained control over settlement, I can set this to false.
     AutoComplete = false,
 
-    // I can also allow for multi-threading
-    MaxConcurrentCalls = 2
+    // I can also allow for processing multiple sessions
+    MaxConcurrentSessions = 5,
+
+    // By default, there will be a single concurrent call per session. I can
+    // increase that here to enable parallel processing within each session.
+    MaxConcurrentCallsPerSession = 2
 };
 
 // create a session processor that we can use to process the messages
@@ -50,6 +53,7 @@ ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, 
 // this sample from terminating immediately, we can use a task completion source that
 // we complete from within the message handler.
 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+int processedMessageCount = 0;
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -58,12 +62,18 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
     var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
     await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-    tcs.SetResult(true);
+
+    // Once we've received the last message, complete the
+    // task completion source.
+    if (Interlocked.Increment(ref processedMessageCount) == 2)
+    {
+        tcs.SetResult(true);
+    }
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)

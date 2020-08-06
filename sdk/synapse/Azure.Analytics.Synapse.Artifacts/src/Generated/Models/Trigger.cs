@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Trigger. </summary>
         public Trigger()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Annotations = new ChangeTrackingList<object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "Trigger";
         }
 
@@ -32,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Description = description;
             RuntimeState = runtimeState;
             Annotations = annotations;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Trigger type. </summary>
@@ -42,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </summary>
         public TriggerRuntimeState? RuntimeState { get; }
         /// <summary> List of tags that can be used for describing the trigger. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

@@ -52,7 +52,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitMethodCall(MethodCallExpression m)
         {
-            if (m.Method == ReflectionUtil.DictionaryGetItemMethodInfo && m.Arguments.Count == 1 && m.Arguments[0] is ConstantExpression ce)
+            if (ReflectionUtil.s_dictionaryMethodInfosHash.Contains(m.Method) && m.Arguments.Count == 1 && m.Arguments[0] is ConstantExpression ce)
             {
                 _builder.Append(ce.Value as string);
             }

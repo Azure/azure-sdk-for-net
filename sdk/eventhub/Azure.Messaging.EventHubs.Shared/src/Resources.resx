@@ -151,10 +151,10 @@
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Key  (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
   </data>
   <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
-    <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.</value>
+    <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.  Please verify that your connection string does not have the `EntityPath` token if you are passing an explicit Event Hub name.</value>
   </data>
   <data name="UnknownConnectionType" xml:space="preserve">
     <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>

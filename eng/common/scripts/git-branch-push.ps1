@@ -28,8 +28,6 @@ param(
     [string] $PushArgs = ""
 )
 
-Write-Host "> $PSCommandPath $args"
-
 # This is necessay because of the janky git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
@@ -118,11 +116,11 @@ do
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to apply diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
-                continue
+                exit $LASTEXITCODE
             }
 
             Write-Host "git add -A"
-            git add -A 
+            git add -A
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to git add LASTEXITCODE=$($LASTEXITCODE), see command output above."

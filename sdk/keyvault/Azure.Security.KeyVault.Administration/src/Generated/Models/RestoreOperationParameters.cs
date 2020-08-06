@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RestoreOperationParameters. </summary>
         /// <param name="sasTokenParameters"> . </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folderToRestore"/> is null. </exception>
         public RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore)
         {
             if (sasTokenParameters == null)

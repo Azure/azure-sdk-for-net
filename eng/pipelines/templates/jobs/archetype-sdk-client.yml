@@ -9,7 +9,7 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
-      - template: tools/daily-dev-build-variable/daily-dev-build-variable.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -20,6 +20,16 @@ jobs:
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
+        parameters:
+          TargetFolder: '.'
+          RootFolder: '.'
+          BuildSHA: $(Build.SourceVersion)
+          RepoId: 'Azure/azure-sdk-for-net'
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
@@ -123,6 +133,10 @@ jobs:
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+        Windows_NetFramework_ProjectReferences:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1

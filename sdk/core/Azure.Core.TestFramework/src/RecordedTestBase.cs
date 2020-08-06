@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -17,6 +19,17 @@ namespace Azure.Core.TestFramework
         public TestRecording Recording { get; private set; }
 
         public RecordedTestMode Mode { get; }
+
+        // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
+        // as it is the most restrictive of all platforms
+        private static readonly HashSet<char> s_invalidChars = new HashSet<char>(new char[]
+        {
+            '\"', '<', '>', '|', '\0',
+            (char)1, (char)2, (char)3, (char)4, (char)5, (char)6, (char)7, (char)8, (char)9, (char)10,
+            (char)11, (char)12, (char)13, (char)14, (char)15, (char)16, (char)17, (char)18, (char)19, (char)20,
+            (char)21, (char)22, (char)23, (char)24, (char)25, (char)26, (char)27, (char)28, (char)29, (char)30,
+            (char)31, ':', '*', '?', '\\', '/'
+        });
 
 #if DEBUG
         /// <summary>
@@ -40,15 +53,22 @@ namespace Azure.Core.TestFramework
             Mode = mode;
         }
 
-        private string GetSessionFilePath(string name = null)
+        private string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
-            name ??= testAdapter.Name;
+            string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
+            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
+                null;
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
+            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "SessionRecords",
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
+                fileName);
         }
 
         /// <summary>

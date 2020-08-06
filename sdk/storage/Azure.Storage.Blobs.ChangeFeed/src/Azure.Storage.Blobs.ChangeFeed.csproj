@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.Blobs.ChangeFeed client library</AssemblyTitle>
+    <Version>12.0.0-preview.3</Version>
+    <DefineConstants>ChangeFeedSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Change Feed;Microsoft;Azure;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
+    <Description>
+      This client library enables working with the Microsoft Azure Storage Change Feed feature to review and monitor changes to an Azure Storage account.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/CHANGELOG.md
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
+    </Description>
+    <GenerateAPIListing>true</GenerateAPIListing>
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project> 

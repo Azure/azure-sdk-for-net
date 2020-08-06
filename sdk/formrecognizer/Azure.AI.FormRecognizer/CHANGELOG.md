@@ -1,11 +1,51 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 3.0.0-preview.5 (Unreleased)
 
 ### Breaking changes
 
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
+- Renamed the `FieldValue` property `Type` to `ValueType`.
+- Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
+- Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomForms` parameter `formFileStream` to `form`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
+- Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
+- Renamed `FormValueType.Integer` to `FormValueType.Int64`.
+
+### Fixes
+
+- Made the `TrainingFileFilter` constructor public.
+- Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
+
+### New Features
+
+- Added diagnostics functionality to the `FormRecognizerClient`, to the `FormTrainingClient` and to long-running operation types.
+
+## 1.0.0-preview.4 (2020-07-07)
+
+### Renames
+
+- Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `LabelText` renamed to `LabelData` on `FormField`.
+- Property `ValueText` renamed to `ValueData` on `FormField`.
+- Property `TextContent` renamed to `FieldElements` on `FieldData` and `FormTableCell`.
+- Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
+- Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
+- Parameter `accessToken` in `CopyAuthorization.FromJson` has been renamed to `copyAuthorization`.
+- Parameter `IncludeTextContent` in `RecognizeOptions` has been renamed to `IncludeFieldElements`.
+- Model `FieldText` renamed to `FieldData`.
+- Model `FormContent` renamed to `FormElement`.
+
+### Other breaking changes
+
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 - `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
+
+### Fixes
+
+- Fixed a bug in which the `FormPage.TextAngle` property sometimes fell out of the (-180, 180] range ([#13082](https://github.com/Azure/azure-sdk-for-net/issues/13082)).
 
 ## 1.0.0-preview.3 (06-10-2020)
 

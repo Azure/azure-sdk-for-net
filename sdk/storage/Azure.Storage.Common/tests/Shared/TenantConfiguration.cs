@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {

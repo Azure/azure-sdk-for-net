@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Creates a new search index or updates an index if it already exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-index">Update Index</see>
         /// </summary>
         /// <param name='index'>
         /// The definition of the index to create or update.

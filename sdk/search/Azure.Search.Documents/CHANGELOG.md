@@ -1,10 +1,22 @@
 # Release History
 
-## 11.0.0-preview.5 (Unreleased)
+## 11.1.0-preview.1 (Unreleased)
 
-### Minor Changes
+
+## 11.0.0 (2020-07-07)
+
+### Changed
 
 - Changed version to 11.0.0.
+- Removed preview version `SearchClientOptions.ServiceVersion.V2019_05_06_Preview`
+  and added version `SearchClientOptions.ServiceVersion.V2020_06_30`.
+
+### Removed
+
+- Removed `Azure.Core.Experimental` reference and features until they're moved
+  into `Azure.Core`.
+- Removed `SearchServiceCounters.SkillsetCounter`.
+- Removed `new SearchOptions(string continuationToken)` overload.
 
 ## 1.0.0-preview.4 (2020-06-09)
 

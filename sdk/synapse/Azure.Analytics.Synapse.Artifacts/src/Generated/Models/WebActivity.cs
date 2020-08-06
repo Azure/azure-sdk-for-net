@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="url"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="url"/> is null. </exception>
         public WebActivity(string name, WebActivityMethod method, object url) : base(name)
         {
             if (name == null)
@@ -30,6 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Method = method;
             Url = url;
+            Datasets = new ChangeTrackingList<DatasetReference>();
+            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
             Type = "WebActivity";
         }
 
@@ -74,9 +78,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Authentication method used for calling the endpoint. </summary>
         public WebActivityAuthentication Authentication { get; set; }
         /// <summary> List of datasets passed to web endpoint. </summary>
-        public IList<DatasetReference> Datasets { get; set; }
+        public IList<DatasetReference> Datasets { get; }
         /// <summary> List of linked services passed to web endpoint. </summary>
-        public IList<LinkedServiceReference> LinkedServices { get; set; }
+        public IList<LinkedServiceReference> LinkedServices { get; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
     }
