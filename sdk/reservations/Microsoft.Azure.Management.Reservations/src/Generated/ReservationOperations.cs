@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Properties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Properties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, IList<string> body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse<Properties> _response = await BeginAvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -754,7 +754,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Properties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Properties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, IList<string> body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (reservationOrderId == null)
             {
