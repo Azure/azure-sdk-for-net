@@ -4,4 +4,4 @@
 
 ### Added
 
-- Added `NewtonsoftJsonObjectSerializer` that uses JSON.NET to implement `ObjectSerializer`
+- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `Newtonsoft.Json`, aka JSON.NET.
