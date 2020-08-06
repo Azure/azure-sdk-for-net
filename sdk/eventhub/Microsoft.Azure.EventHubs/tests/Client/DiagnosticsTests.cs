@@ -443,6 +443,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     using (var listener = this.CreateEventListener(null, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
+                        // Enable all events.
+                        listener.Enable((name, queueName, arg) => true);
+
                         // Create a batch until it is maxed out.
                         var batch = ehClient.CreateBatch();
                         while (batch.TryAdd(new EventData(new byte[10 * 1024]))) { }
@@ -489,6 +492,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             using (var listener = this.CreateEventListener(null, eventQueue))
             using (var subscription = this.SubscribeToEvents(listener))
             {
+                // Enable all events.
+                listener.Enable((name, queueName, arg) => true);
+                
                 batch = new EventDataBatch(1024 * 1024);
                 while (batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello EventHub by partitionKey!")))) { }
                 batchSizeWithDiagnostics = batch.Count;
