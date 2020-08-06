@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> System generated.  Ignored at creation. </summary>
+    /// <summary> System generated.  Ignored at creation. The status of the job. </summary>
     public readonly partial struct JobResponseStatus : IEquatable<JobResponseStatus>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="JobResponseStatus"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobResponseStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -14,11 +14,11 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class CassandraResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup2510";
-        const string databaseAccountName = "db2725";
+        const string resourceGroupName = "CosmosDBResourceGroup3668";
+        const string databaseAccountName = "db8192";
 
         const string keyspaceName = "keyspaceName2510";
         const string keyspaceName2 = "keyspaceName22510";

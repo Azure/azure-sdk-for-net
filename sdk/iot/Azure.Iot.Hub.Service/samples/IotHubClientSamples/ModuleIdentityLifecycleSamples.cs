@@ -14,11 +14,11 @@ namespace Azure.Iot.Hub.Service.Samples
     /// </summary>
     internal class ModuleIdentityLifecycleSamples
     {
-        public readonly IoTHubServiceClient IoTHubServiceClient;
+        public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        public ModuleIdentityLifecycleSamples(IoTHubServiceClient client)
+        public ModuleIdentityLifecycleSamples(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

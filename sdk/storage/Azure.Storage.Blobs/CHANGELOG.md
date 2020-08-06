@@ -1,6 +1,9 @@
 # Release History
 
-## 12.5.0-preview.6 (Unreleased)
+## 12.5.0-preview.7 (Unreleased)
+- Added support for custom local emulator hostname for blob storage endpoints.
+
+## 12.5.0-preview.6 (2020-07-27)
 - Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
 - Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
 - Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.

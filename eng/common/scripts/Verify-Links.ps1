@@ -87,7 +87,7 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
     return $null
   }
 
-  if ($null -ne $ignoreLinks -and $ignoreLinks.Contains($link)) {
+  if ($null -ne $ignoreLinks -and ($ignoreLinks.Contains($link) -or $ignoreLinks.Contains($linkUri.ToString()))) {
     Write-Verbose "Ignoring invalid link $linkUri because it is in the ignore file."
     return $null
   }

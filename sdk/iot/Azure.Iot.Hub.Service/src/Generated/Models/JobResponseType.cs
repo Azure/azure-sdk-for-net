@@ -10,16 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary>
-    /// Required.
-    /// 
-    /// The type of job to execute.
-    /// </summary>
+    /// <summary> The job type. </summary>
     public readonly partial struct JobResponseType : IEquatable<JobResponseType>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="JobResponseType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobResponseType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

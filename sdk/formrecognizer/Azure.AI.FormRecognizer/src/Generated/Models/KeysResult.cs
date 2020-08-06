@@ -15,6 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of KeysResult. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusters"/> is null. </exception>
         internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)
         {
             if (clusters == null)

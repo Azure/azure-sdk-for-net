@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Azure.Core
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// A <see cref="NewtonsoftJsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.

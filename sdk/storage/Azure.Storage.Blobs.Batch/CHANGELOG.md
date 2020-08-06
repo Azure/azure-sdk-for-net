@@ -1,7 +1,10 @@
 # Release History
 
-## 12.3.0-preview.2 (Unreleased)
+## 12.3.0-preview.3 (Unreleased)
 
+
+## 12.3.0-preview.2 (2020-07-03)
+- This release contains bug fixes to improve quality.
 
 ## 12.3.0-preview.1 (2020-07-03)
 - Added support for service version 2019-12-12.

@@ -100,6 +100,20 @@ See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/te
 2. Navigate to repository root directory
 3. Invoke `dotnet build eng\service.proj`
 
+### Support for Visual Studio Code & Dev Containers
+
+This repository has been configured with support for Visual Studio Code's dev container extension to make it easier to get started working on code without needing to know about how to setup all the pre-requisites. Configuration for dev containers is contained within the ```.devcontainer``` folder off the root directory.
+
+To get started:
+
+1. Install and configure Docker for your platform.
+2. Install the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) into Visual Studio Code.
+3. Clone the repository to your local workstation.
+4. Open Visual Studio Code at the root of the reposiory.
+5. Select "Reopen in Container" when prompted.
+
+After a few moments of initial configuration Visual Studio Code will launch the container with all dependencies (.NET SDK etc) pre-installed.
+
 ## TO TEST:
 
 ### Single Service from Command Line
@@ -200,6 +214,16 @@ public string SomeProperty { get; set; }
 
 For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples)
 
+## Updating Source on Build
+You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
+1. The property `UpdateSourceOnBuild` 
+2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
+
+e.g.
+```
+dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuild=true
+```
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
@@ -214,7 +238,7 @@ The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced i
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## Dev Feed
-We publish nightly built packages to a dev feed which can be consumed by adding the dev feed as a package source in Visual Studio. 
+We publish daily built packages to a [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) which can be consumed by adding the dev feed as a package source in Visual Studio. 
 
 Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
 

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         /// <param name="maintenanceScope">The impact area. Possible values
         /// include: 'All', 'Host', 'Resource', 'InResource', 'OSImage',
-        /// 'Extension', 'InGuestPatch'</param>
+        /// 'Extension', 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'</param>
         /// <param name="impactType">The impact type. Possible values include:
         /// 'None', 'Freeze', 'Restart', 'Redeploy'</param>
         /// <param name="status">The status. Possible values include:
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <summary>
         /// Gets or sets the impact area. Possible values include: 'All',
         /// 'Host', 'Resource', 'InResource', 'OSImage', 'Extension',
-        /// 'InGuestPatch'
+        /// 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'
         /// </summary>
         [JsonProperty(PropertyName = "maintenanceScope")]
         public string MaintenanceScope { get; set; }
