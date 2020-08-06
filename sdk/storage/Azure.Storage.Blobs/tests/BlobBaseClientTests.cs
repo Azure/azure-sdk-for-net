@@ -1092,7 +1092,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // "https://github.com/Azure/azure-sdk-for-net/issues/13510"
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3172,8 +3171,8 @@ namespace Azure.Storage.Blobs.Test
                 Id = signedIdentifierId,
                 AccessPolicy = new BlobAccessPolicy
                 {
-                    StartsOn = Recording.UtcNow.AddHours(-1),
-                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                    PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                     Permissions = "rw"
                 }
             };

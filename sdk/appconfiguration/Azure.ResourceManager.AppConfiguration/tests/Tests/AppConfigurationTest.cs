@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task AppConfigurationListKeyValues()
         {
             var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName,
@@ -85,13 +84,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 Location = "eastus",
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string> { "10.0.0.0/16" }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string> { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet> { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
+                Subnets = { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
             };
             var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
@@ -99,14 +98,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 new ResourceManager.Network.Models.PrivateEndpoint()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> {
-                        new PrivateLinkServiceConnection(){
-                            Name = "myconnection",
-                            PrivateLinkServiceId = configurationCreateResult.Value.Id,
-                            GroupIds = new List<string>{"configurationStores"},
-                            RequestMessage = "Please approve my connection"
-                        }
-                    },
+                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
+                                                                       configurationCreateResult.Value.Id,new List<string>{"configurationStores"},"Please approve my connection",null)},
                     Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 }));
             //get Configuration
