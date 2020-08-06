@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -322,7 +323,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new share
+        /// The <see cref="Create(ShareCreateOptions, CancellationToken)"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
@@ -330,11 +331,8 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
         /// Create Share</see>.
         /// </summary>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this share.
-        /// </param>
-        /// <param name="quotaInGB">
-        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -349,18 +347,53 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> Create(
-            Metadata metadata = default,
-            int? quotaInGB = default,
+            ShareCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
-                metadata,
-                quotaInGB,
-                false, // async
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new share
+        /// The <see cref="CreateAsync(ShareCreateOptions, CancellationToken)"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> CreateAsync(
+            ShareCreateOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateInternal(
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Create(Metadata, int?, CancellationToken)"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
@@ -386,14 +419,58 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareInfo> Create(
+            Metadata metadata,
+            int? quotaInGB = default,
+            CancellationToken cancellationToken = default) =>
+            CreateInternal(
+                metadata,
+                quotaInGB,
+                accessTier: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateAsync(Metadata, int?, CancellationToken)"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Metadata metadata = default,
             int? quotaInGB = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 metadata,
                 quotaInGB,
-                true, // async
+                accessTier: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -411,6 +488,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="accessTier">
+        /// Optional.  Specifies the access tier of the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -433,6 +513,7 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response<ShareInfo>> CreateInternal(
             Metadata metadata,
             int? quotaInGB,
+            ShareAccessTier? accessTier,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -453,6 +534,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         quotaInGB: quotaInGB,
+                        accessTier: accessTier,
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
@@ -473,7 +555,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Create If Not Exists
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new share
+        /// The <see cref="CreateIfNotExists(ShareCreateOptions, CancellationToken)"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, it is not changed.
         ///
@@ -481,11 +563,8 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
         /// Create Share</see>.
         /// </summary>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this share.
-        /// </param>
-        /// <param name="quotaInGB">
-        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -500,17 +579,51 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> CreateIfNotExists(
-            Metadata metadata = default,
-            int? quotaInGB = default,
+            ShareCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
-                metadata,
-                quotaInGB,
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new share
+        /// The <see cref="CreateIfNotExistsAsync(Metadata, int?, CancellationToken)"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.  If the share already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> CreateIfNotExistsAsync(
+            ShareCreateOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Create(Metadata, int?, CancellationToken)"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, it is not changed.
         ///
@@ -536,13 +649,57 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareInfo> CreateIfNotExists(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            int? quotaInGB,
+            CancellationToken cancellationToken) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                quotaInGB,
+                accessTier: default,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(Metadata, int?, CancellationToken)"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.  If the share already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareInfo>> CreateIfNotExistsAsync(
-            Metadata metadata = default,
-            int? quotaInGB = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            int? quotaInGB,
+            CancellationToken cancellationToken) =>
             await CreateIfNotExistsInternal(
                 metadata,
                 quotaInGB,
+                accessTier: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -560,6 +717,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="quotaInGB">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="accessTier">
+        /// Optional.  Specifies the access tier of the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -579,6 +739,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareInfo>> CreateIfNotExistsInternal(
             Metadata metadata,
             int? quotaInGB,
+            ShareAccessTier? accessTier,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -595,6 +756,7 @@ namespace Azure.Storage.Files.Shares
                     response = await CreateInternal(
                         metadata,
                         quotaInGB,
+                        accessTier,
                         async,
                         cancellationToken,
                         $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")

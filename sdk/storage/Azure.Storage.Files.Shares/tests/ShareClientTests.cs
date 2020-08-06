@@ -187,6 +187,53 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_AccessTier()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            try
+            {
+                // Act
+                Response<ShareInfo> response = await FileRestClient.Share.CreateAsync(
+                        share.ClientDiagnostics,
+                        share.Pipeline,
+                        share.Uri,
+                        accessTier: ShareAccessTier.TransactionOptimized,
+                        version: "2020-02-10",
+                        async: true)
+                        .ConfigureAwait(false);
+
+                await FileRestClient.Share.SetQuotaAsync(
+                        share.ClientDiagnostics,
+                        share.Pipeline,
+                        share.Uri,
+                        accessTier: ShareAccessTier.Hot,
+                        version: "2020-02-10",
+                        async: true)
+                        .ConfigureAwait(false);
+
+                Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+                Assert.IsNotNull(propertiesResponse.Value.AccessTier);
+                Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
+                Assert.IsNotNull(propertiesResponse.Value.AccessTierTransitionState);
+
+                var shares = new List<ShareItem>();
+                await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
+                {
+                    shares.AddRange(page.Values);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [Test]
         public async Task CreateAsync_Error()
         {
             // Arrange
