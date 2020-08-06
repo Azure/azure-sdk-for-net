@@ -45,11 +45,13 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             }
+#if !UAP10 && !IOS && !ANDROID
             else if (string.Equals(csb.Authentication, "ManagedIdentity", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {
                 this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
             }
+#endif
 
             this.CbsTokenProvider = new TokenProviderAdapter(this);
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);

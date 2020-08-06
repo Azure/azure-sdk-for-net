@@ -6,7 +6,6 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// Encapsulates information related to an Event Hubs partition used by <see cref="IEventProcessor"/>.

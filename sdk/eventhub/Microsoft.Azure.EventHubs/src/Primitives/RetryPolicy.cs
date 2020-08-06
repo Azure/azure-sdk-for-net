@@ -6,7 +6,6 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using System.Net.Sockets;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// Represents an abstraction for retrying messaging operations. Users should not 

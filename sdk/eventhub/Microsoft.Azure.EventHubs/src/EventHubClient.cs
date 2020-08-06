@@ -9,8 +9,6 @@ namespace Microsoft.Azure.EventHubs
     using System.Net;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Amqp;
-    using Microsoft.Azure.EventHubs.Primitives;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// Anchor class - all EventHub client operations start here.
@@ -115,6 +113,7 @@ namespace Microsoft.Azure.EventHubs
                 transportType);
         }
 
+#if !UAP10 && !IOS && !ANDROID
         /// <summary>
         /// Creates a new instance of the <see cref="EventHubClient" /> by using Azure Managed Identity authentication.
         /// </summary>
@@ -136,6 +135,7 @@ namespace Microsoft.Azure.EventHubs
                 operationTimeout,
                 transportType);
         }
+#endif
 
         /// <summary>
         /// Creates a new instance of the Event Hubs client using the specified connection string builder.

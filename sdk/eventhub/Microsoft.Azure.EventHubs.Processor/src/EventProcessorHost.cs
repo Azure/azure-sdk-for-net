@@ -5,7 +5,6 @@ namespace Microsoft.Azure.EventHubs.Processor
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
     using Microsoft.Azure.Storage;
 
     /// <summary>

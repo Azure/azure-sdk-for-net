@@ -5,7 +5,6 @@ namespace Microsoft.Azure.EventHubs
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
@@ -91,12 +90,14 @@ namespace Microsoft.Azure.EventHubs
             return new AzureActiveDirectoryTokenProvider(authCallback, authority, state);
         }
 
+#if !UAP10 && !IOS && !ANDROID
         /// <summary>Creates Azure Managed Identity token provider.</summary>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateManagedIdentityTokenProvider()
         {
             return new ManagedIdentityTokenProvider();
         }
+#endif
 
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.

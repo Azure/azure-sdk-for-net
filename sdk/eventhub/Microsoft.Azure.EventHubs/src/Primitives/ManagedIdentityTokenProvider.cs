@@ -7,6 +7,7 @@ namespace Microsoft.Azure.EventHubs
     using System.Threading.Tasks;
     using Azure.Services.AppAuthentication;
 
+#if !UAP10 && !IOS && !ANDROID
     /// <summary>
     /// Represents the Azure Active Directory token provider for Azure Managed Identity integration.
     /// </summary>
@@ -40,4 +41,5 @@ namespace Microsoft.Azure.EventHubs
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }
+#endif
 }

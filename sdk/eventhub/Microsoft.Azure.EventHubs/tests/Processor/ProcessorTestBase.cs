@@ -9,7 +9,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
     using Microsoft.Azure.EventHubs.Processor;
     using Xunit;
 

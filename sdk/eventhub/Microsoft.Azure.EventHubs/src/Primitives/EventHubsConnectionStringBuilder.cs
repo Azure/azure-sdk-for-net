@@ -5,7 +5,6 @@ namespace Microsoft.Azure.EventHubs
 {
     using System;
     using System.Text;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     ///  Supported transport types

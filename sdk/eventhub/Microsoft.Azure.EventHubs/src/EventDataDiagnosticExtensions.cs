@@ -6,7 +6,6 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// Diagnostic extension methods for <see cref="EventData"/>.

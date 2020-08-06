@@ -6,7 +6,6 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.EventHubs.Amqp;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// Represents options can be set during the creation of a event hub receiver.

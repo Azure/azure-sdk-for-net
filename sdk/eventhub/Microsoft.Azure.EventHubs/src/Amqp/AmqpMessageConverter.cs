@@ -12,7 +12,6 @@ namespace Microsoft.Azure.EventHubs.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     static class AmqpMessageConverter
     {

@@ -7,7 +7,6 @@ namespace Microsoft.Azure.EventHubs
     using System.Collections.Generic;
     using System.Globalization;
     using System.Net;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// A SecurityToken that wraps a Shared Access Signature

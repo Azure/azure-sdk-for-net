@@ -10,7 +10,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
     using Microsoft.Azure.EventHubs.Processor;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Azure.Storage;

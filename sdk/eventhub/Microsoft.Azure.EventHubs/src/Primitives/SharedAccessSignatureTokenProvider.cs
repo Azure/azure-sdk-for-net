@@ -11,7 +11,6 @@ namespace Microsoft.Azure.EventHubs
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.

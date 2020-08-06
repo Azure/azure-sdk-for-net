@@ -7,7 +7,6 @@ namespace Microsoft.Azure.EventHubs
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
 
     /// <summary>
     /// This sender class is a logical representation of sending events to a specific EventHub partition. Do not use this class
