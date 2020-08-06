@@ -91,7 +91,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Validation for the Event Hubs fully qualified namespace has been improved, allowing for more deterministic failures when creating clients.
 
-- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes]((https://github.com/christothes)))
+- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
 - Diagnostic activities have been extended with additional information about events being processed and with additional environmental context.
 

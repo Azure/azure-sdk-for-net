@@ -139,7 +139,7 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 [digital_twins_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
 [digital_twins_documentation]: https://docs.microsoft.com/en-us/azure/digital-twins/
 [azure_cli]: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
-[iot_cli_extension]: https://docs.microsoft.com/en-us/azure/iot-pnp/howto-install-pnp-cli
+[iot_cli_extension]: https://docs.microsoft.com/en-us/azure/iot-pnp/howto-use-iot-pnp-cli
 [iot_cli_doc]: https://docs.microsoft.com/en-us/cli/azure/ext/azure-iot/dt?view=azure-cli-latest
 [http_status_code]: https://docs.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
 [adt_nuget]: https://www.nuget.org/packages/Azure.DigitalTwins.Core

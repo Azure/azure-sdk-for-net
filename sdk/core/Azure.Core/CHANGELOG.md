@@ -1,6 +1,11 @@
 # Release History
 
-## 1.4.0-preview.1 (Unreleased)
+## 1.4.0 (2020-08-06)
+
+### Added
+- Added `ObjectSerializer` base class for serialization.
+- Added `IMemberNameConverter` for converting member names to serialized property names.
+- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
 
 ### Fixed
 - Connection leak for retried non-buffered requests on .NET Framework.

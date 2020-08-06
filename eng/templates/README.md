@@ -28,7 +28,7 @@ Following parameter is available
 * dotnet new azuremgmt --provider `ResourceProviderName` --tagVersion `Optional tag in README.MD`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --includeCI true
 * 
-> Note: Please use proper casing for the directory name as well as resource provider name. `Azure.ResourceManager.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/`resource name`/resource-manager/readme.md
+> Note: Please use proper casing for the directory name as well as resource provider name. `Azure.ResourceManager.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/<resource name>/resource-manager/readme.md`
 
 ---
 
