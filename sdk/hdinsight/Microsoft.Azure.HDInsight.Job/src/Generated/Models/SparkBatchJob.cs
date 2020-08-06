@@ -28,12 +28,13 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkBatchJob class.
         /// </summary>
-        /// <param name="id">The session id.</param>
-        /// <param name="appId">The application id of this session.</param>
+        /// <param name="id">The livy id of the spark batch job.</param>
+        /// <param name="appId">The application id of this job.</param>
         /// <param name="appInfo">The detailed application info.</param>
-        /// <param name="state">The batch state. Possible values include:
-        /// 'not_started', 'starting', 'idle', 'running', 'busy',
-        /// 'shutting_down', 'error', 'dead', 'killed', 'success'</param>
+        /// <param name="state">The current state of the spark batch job.
+        /// Possible values include: 'not_started', 'starting', 'idle',
+        /// 'running', 'busy', 'shutting_down', 'error', 'dead', 'killed',
+        /// 'success', 'recovering'</param>
         /// <param name="logLines">The log lines.</param>
         public SparkBatchJob(int? id = default(int?), string appId = default(string), IDictionary<string, string> appInfo = default(IDictionary<string, string>), string state = default(string), IList<string> logLines = default(IList<string>))
         {
@@ -51,13 +52,13 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the session id.
+        /// Gets or sets the livy id of the spark batch job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the application id of this session.
+        /// Gets or sets the application id of this job.
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
@@ -69,9 +70,10 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public IDictionary<string, string> AppInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the batch state. Possible values include:
-        /// 'not_started', 'starting', 'idle', 'running', 'busy',
-        /// 'shutting_down', 'error', 'dead', 'killed', 'success'
+        /// Gets or sets the current state of the spark batch job. Possible
+        /// values include: 'not_started', 'starting', 'idle', 'running',
+        /// 'busy', 'shutting_down', 'error', 'dead', 'killed', 'success',
+        /// 'recovering'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

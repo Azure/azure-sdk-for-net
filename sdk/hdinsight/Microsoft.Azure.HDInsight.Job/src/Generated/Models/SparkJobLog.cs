@@ -28,6 +28,7 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkJobLog class.
         /// </summary>
+        /// <param name="id">The livy id of the spark job.</param>
         /// <param name="fromProperty">Offset from start of log.</param>
         /// <param name="size">Max number of log lines.</param>
         /// <param name="total">Total number of log lines.</param>
@@ -48,6 +49,7 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the livy id of the spark job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }

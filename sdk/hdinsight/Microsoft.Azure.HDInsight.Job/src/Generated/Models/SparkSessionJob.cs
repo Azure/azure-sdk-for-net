@@ -28,16 +28,17 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkSessionJob class.
         /// </summary>
-        /// <param name="id">The session id.</param>
-        /// <param name="appId">The application id of this session.</param>
-        /// <param name="owner">Remote user who submitted this session.</param>
+        /// <param name="id">The livy id of the spark session job.</param>
+        /// <param name="appId">The application id of this job.</param>
+        /// <param name="owner">Remote user who submitted this job.</param>
         /// <param name="proxyUser">User to impersonate when running.</param>
-        /// <param name="kind">Session kind. Possible values include: 'spark',
-        /// 'pyspark', 'sparkr', 'sql'</param>
+        /// <param name="kind">Spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'</param>
         /// <param name="logLines">The log lines.</param>
-        /// <param name="state">The session state. Possible values include:
-        /// 'not_started', 'starting', 'idle', 'running', 'busy',
-        /// 'shutting_down', 'error', 'dead', 'killed', 'success'</param>
+        /// <param name="state">The current state of the spark session job.
+        /// Possible values include: 'not_started', 'starting', 'idle',
+        /// 'running', 'busy', 'shutting_down', 'error', 'dead', 'killed',
+        /// 'success', 'recovering'</param>
         /// <param name="appInfo">The detailed application info.</param>
         public SparkSessionJob(int? id = default(int?), string appId = default(string), string owner = default(string), string proxyUser = default(string), string kind = default(string), IList<string> logLines = default(IList<string>), string state = default(string), IDictionary<string, string> appInfo = default(IDictionary<string, string>))
         {
@@ -58,19 +59,19 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the session id.
+        /// Gets or sets the livy id of the spark session job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the application id of this session.
+        /// Gets or sets the application id of this job.
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
 
         /// <summary>
-        /// Gets or sets remote user who submitted this session.
+        /// Gets or sets remote user who submitted this job.
         /// </summary>
         [JsonProperty(PropertyName = "owner")]
         public string Owner { get; set; }
@@ -82,8 +83,8 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public string ProxyUser { get; set; }
 
         /// <summary>
-        /// Gets or sets session kind. Possible values include: 'spark',
-        /// 'pyspark', 'sparkr', 'sql'
+        /// Gets or sets spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
@@ -95,9 +96,10 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public IList<string> LogLines { get; set; }
 
         /// <summary>
-        /// Gets or sets the session state. Possible values include:
-        /// 'not_started', 'starting', 'idle', 'running', 'busy',
-        /// 'shutting_down', 'error', 'dead', 'killed', 'success'
+        /// Gets or sets the current state of the spark session job. Possible
+        /// values include: 'not_started', 'starting', 'idle', 'running',
+        /// 'busy', 'shutting_down', 'error', 'dead', 'killed', 'success',
+        /// 'recovering'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

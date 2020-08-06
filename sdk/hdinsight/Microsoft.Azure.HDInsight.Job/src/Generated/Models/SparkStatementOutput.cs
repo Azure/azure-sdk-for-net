@@ -28,7 +28,8 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// </summary>
         /// <param name="status">Execution status. Possible values include:
         /// 'ok', 'error', 'abort'</param>
-        /// <param name="executionCount">Execution status.</param>
+        /// <param name="executionCount">A monotonically increasing
+        /// number.</param>
         /// <param name="data">Statement output.</param>
         public SparkStatementOutput(string status = default(string), int? executionCount = default(int?), object data = default(object))
         {
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets execution status.
+        /// Gets or sets a monotonically increasing number.
         /// </summary>
         [JsonProperty(PropertyName = "execution_count")]
         public int? ExecutionCount { get; set; }

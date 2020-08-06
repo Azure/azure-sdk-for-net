@@ -12,9 +12,9 @@ namespace Microsoft.Azure.HDInsight.Job.Models
 {
 
     /// <summary>
-    /// Defines values for SessionState.
+    /// Defines values for JobState.
     /// </summary>
-    public static class SessionState
+    public static class JobState
     {
         public const string NotStarted = "not_started";
         public const string Starting = "starting";
@@ -26,5 +26,6 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public const string Dead = "dead";
         public const string Killed = "killed";
         public const string Success = "success";
+        public const string Recovering = "recovering";
     }
 }

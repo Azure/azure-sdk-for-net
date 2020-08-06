@@ -28,14 +28,14 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkSessionJobRequest class.
         /// </summary>
-        /// <param name="kind">Session kind. Possible values include: 'spark',
-        /// 'pyspark', 'sparkr', 'sql'</param>
+        /// <param name="kind">Spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'</param>
         /// <param name="proxyUser">User to impersonate when starting the
         /// session.</param>
-        /// <param name="jars">jars to be used in this session.</param>
+        /// <param name="jars">Jars to be used in this session.</param>
         /// <param name="pythonFiles">Python files to be used in this
         /// session.</param>
-        /// <param name="files">files to be used in this session.</param>
+        /// <param name="files">Files to be used in this session.</param>
         /// <param name="driverMemory">Amount of memory to use for the driver
         /// process.</param>
         /// <param name="driverCores">Number of cores to use for the driver
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets session kind. Possible values include: 'spark',
-        /// 'pyspark', 'sparkr', 'sql'
+        /// Gets or sets spark session job kind. Possible values include:
+        /// 'spark', 'pyspark', 'sparkr', 'sql'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
