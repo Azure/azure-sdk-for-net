@@ -113,7 +113,7 @@ namespace Microsoft.Azure.EventHubs
                 transportType);
         }
 
-#if !UAP10 && !IOS && !ANDROID
+#if !IOS && !ANDROID
         /// <summary>
         /// Creates a new instance of the <see cref="EventHubClient" /> by using Azure Managed Identity authentication.
         /// </summary>

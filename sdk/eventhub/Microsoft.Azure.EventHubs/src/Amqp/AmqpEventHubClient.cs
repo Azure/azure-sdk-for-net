@@ -45,7 +45,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             }
-#if !UAP10 && !IOS && !ANDROID
+#if !IOS && !ANDROID
             else if (string.Equals(csb.Authentication, "ManagedIdentity", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {

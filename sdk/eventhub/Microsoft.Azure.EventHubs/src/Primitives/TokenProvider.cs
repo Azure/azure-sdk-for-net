@@ -90,7 +90,7 @@ namespace Microsoft.Azure.EventHubs
             return new AzureActiveDirectoryTokenProvider(authCallback, authority, state);
         }
 
-#if !UAP10 && !IOS && !ANDROID
+#if !IOS && !ANDROID
         /// <summary>Creates Azure Managed Identity token provider.</summary>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateManagedIdentityTokenProvider()
