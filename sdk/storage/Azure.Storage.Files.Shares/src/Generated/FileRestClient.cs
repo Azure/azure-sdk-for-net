@@ -1456,9 +1456,9 @@ namespace Azure.Storage.Files.Shares
             }
             #endregion Share.GetPermissionAsync
 
-            #region Share.SetQuotaAsync
+            #region Share.SetPropertiesAsync
             /// <summary>
-            /// Sets quota for the specified share.
+            /// Sets properties for the specified share.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
@@ -1471,7 +1471,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetQuotaAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1480,7 +1480,7 @@ namespace Azure.Storage.Files.Shares
                 int? quotaInGB = default,
                 Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
                 bool async = true,
-                string operationName = "ShareClient.SetQuota",
+                string operationName = "ShareClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1488,7 +1488,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpMessage _message = SetQuotaAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         version,
@@ -1509,7 +1509,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetQuotaAsync_CreateResponse(clientDiagnostics, _response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1524,7 +1524,7 @@ namespace Azure.Storage.Files.Shares
             }
 
             /// <summary>
-            /// Create the Share.SetQuotaAsync request.
+            /// Create the Share.SetPropertiesAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
@@ -1532,8 +1532,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="accessTier">Specifies the access tier of the share.</param>
-            /// <returns>The Share.SetQuotaAsync Message.</returns>
-            internal static Azure.Core.HttpMessage SetQuotaAsync_CreateMessage(
+            /// <returns>The Share.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
@@ -1571,12 +1571,12 @@ namespace Azure.Storage.Files.Shares
             }
 
             /// <summary>
-            /// Create the Share.SetQuotaAsync response or throw a failure exception.
+            /// Create the Share.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.SetQuotaAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetQuotaAsync_CreateResponse(
+            /// <returns>The Share.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetPropertiesAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -1612,7 +1612,7 @@ namespace Azure.Storage.Files.Shares
                     }
                 }
             }
-            #endregion Share.SetQuotaAsync
+            #endregion Share.SetPropertiesAsync
 
             #region Share.SetMetadataAsync
             /// <summary>

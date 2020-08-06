@@ -194,43 +194,21 @@ namespace Azure.Storage.Files.Shares.Test
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-
-            try
+            ShareCreateOptions options = new ShareCreateOptions
             {
-                // Act
-                Response<ShareInfo> response = await FileRestClient.Share.CreateAsync(
-                        share.ClientDiagnostics,
-                        share.Pipeline,
-                        share.Uri,
-                        accessTier: ShareAccessTier.TransactionOptimized,
-                        version: "2020-02-10",
-                        async: true)
-                        .ConfigureAwait(false);
+                AccessTier = ShareAccessTier.Hot
+            };
 
-                await FileRestClient.Share.SetQuotaAsync(
-                        share.ClientDiagnostics,
-                        share.Pipeline,
-                        share.Uri,
-                        accessTier: ShareAccessTier.Hot,
-                        version: "2020-02-10",
-                        async: true)
-                        .ConfigureAwait(false);
+            // Act
+            await share.CreateAsync(options);
 
-                Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-                Assert.IsNotNull(propertiesResponse.Value.AccessTier);
-                Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
-                Assert.IsNotNull(propertiesResponse.Value.AccessTierTransitionState);
+            // Assert
+            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), propertiesResponse.Value.AccessTier);
+            Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
 
-                var shares = new List<ShareItem>();
-                await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
-                {
-                    shares.AddRange(page.Values);
-                }
-            }
-            finally
-            {
-                await share.DeleteAsync(false);
-            }
+            // Cleanup
+            await share.DeleteAsync();
         }
 
         [Test]
@@ -877,6 +855,36 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateSnapshotAsync(),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task SetAccessTierAsync()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Act
+            await share.SetAccessTierAsync(ShareAccessTier.Hot);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
+            Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
+            Assert.IsNotNull(response.Value.AccessTierChangeTime);
+        }
+
+        [Test]
+        public async Task SetAccessTierAsync_Error()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.SetAccessTierAsync(ShareAccessTier.Hot),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
