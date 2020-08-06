@@ -1,8 +1,29 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    MaxParallel: 4
-    ServiceDirectory: servicebus
-    TimeoutInMinutes: 120
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: servicebus
+        TimeoutInMinutes: 120
+        ScenarioName: AzureCloud
+        MaxParallel: 4
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+
+      # AzureUSGovernment
+      - ServiceDirectory: servicebus
+        TimeoutInMinutes: 120
+        ScenarioName: AzureUSGovernment
+        MaxParallel: 4
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+
+      # AzureChinaCloud
+      - ServiceDirectory: servicebus
+        TimeoutInMinutes: 120
+        ScenarioName: AzureChinaCloud
+        MaxParallel: 4
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
