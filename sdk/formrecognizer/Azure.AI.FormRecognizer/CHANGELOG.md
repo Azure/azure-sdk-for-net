@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 3.0.0-preview.5 (Unreleased)
 
 ### Breaking changes
 
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
 - Renamed the `FieldValue` property `Type` to `ValueType`.
 - Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
 - Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.

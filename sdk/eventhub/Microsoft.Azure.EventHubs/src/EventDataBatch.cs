@@ -52,6 +52,16 @@ namespace Microsoft.Azure.EventHubs
             }
         }
 
+        /// <summary>Gets the current batch size in bytes.</summary>
+        public long Size
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                return this.currentSize;
+            }
+        }
+
         /// <summary>Tries to add an event data to the batch if permitted by the batch's size limit.</summary>
         /// <param name="eventData">The <see cref="Microsoft.Azure.EventHubs.EventData" /> to add.</param>
         /// <returns>A boolean value indicating if the event data has been added to the batch or not.</returns>

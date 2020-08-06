@@ -16,7 +16,8 @@ namespace Azure.Core.Tests
 
     [TestFixture(typeof(HttpClientTransport), true)]
     [TestFixture(typeof(HttpClientTransport), false)]
-#if NETFRAMEWORK
+// TODO: Uncomment after release
+#if false && NETFRAMEWORK
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
 #endif
