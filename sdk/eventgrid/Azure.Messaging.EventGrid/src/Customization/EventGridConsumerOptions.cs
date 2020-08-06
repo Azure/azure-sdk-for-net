@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid
@@ -20,8 +18,9 @@ namespace Azure.Messaging.EventGrid
         public ObjectSerializer ObjectSerializer { get; set; } = new JsonObjectSerializer();
 
         /// <summary>
-        /// Contains the mappings for custom event types. For example, "Contoso.Items.ItemReceived" mapping to ContosoItemReceivedEventData.
+        /// Contains the mappings for custom event types. For example,
+        /// "Contoso.Items.ItemReceived" mapping to type ContosoItemReceivedEventData.
         /// </summary>
-        public IDictionary<string, Type> CustomEventTypeMappings => new Dictionary<string, Type>();
+        public IDictionary<string, Type> CustomEventTypeMappings { get; private set; } = new Dictionary<string, Type>();
     }
 }

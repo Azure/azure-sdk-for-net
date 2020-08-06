@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid
                             data.RootElement,
                             egEvent.EventType,
                             egEvent.EventTime,
-                            "1.0")
+                            egEvent.DataVersion)
                     {
                         Topic = egEvent.Topic
                     };

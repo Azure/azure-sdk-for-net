@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -52,13 +50,36 @@ namespace Azure.Messaging.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>A list of EventGrid Events.</returns>
         public virtual EventGridEvent[] DeserializeEventGridEvents(string requestContent, CancellationToken cancellationToken = default)
+            => DeserializeEventGridEventsInternal(requestContent, false /*async*/, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Deserializes JSON encoded events and returns an array of events encoded in the EventGrid event schema.
+        /// </summary>
+        /// <param name="requestContent">
+        /// The JSON encoded representation of either a single event or an array or events, encoded in the EventGrid event schema.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>A list of EventGrid Events.</returns>
+        public virtual async Task<EventGridEvent[]> DeserializeEventGridEventsAsync(string requestContent, CancellationToken cancellationToken = default)
+            => await DeserializeEventGridEventsInternal(requestContent, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        private async Task<EventGridEvent[]> DeserializeEventGridEventsInternal(string requestContent, bool async, CancellationToken cancellationToken = default)
         {
             List<EventGridEventInternal> egInternalEvents = new List<EventGridEventInternal>();
             List<EventGridEvent> egEvents = new List<EventGridEvent>();
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
-            JsonDocument requestDocument = JsonDocument.Parse(stream, default);
+            JsonDocument requestDocument;
+            if (async)
+            {
+                requestDocument = await JsonDocument.ParseAsync(stream, default, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                requestDocument = JsonDocument.Parse(stream, default);
+            }
+
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
@@ -69,8 +90,13 @@ namespace Azure.Messaging.EventGrid
             {
                 JsonElement dataElement = egEventInternal.Data;
                 object egEventData = null;
-                // better to use ObjectSerializer?
-                MemoryStream dataStream = new MemoryStream(Encoding.UTF8.GetBytes(dataElement.ToString()));
+
+                // Reserialize JsonElement to stream
+                MemoryStream dataStream = new MemoryStream();
+
+                JsonObjectSerializer serializer = new JsonObjectSerializer();
+                serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
+                dataStream.Position = 0;
 
                 // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
@@ -80,46 +106,25 @@ namespace Azure.Messaging.EventGrid
                 // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
                 else if (_customEventTypeMappings.TryGetValue(egEventInternal.EventType, out Type typeOfEventData))
                 {
-                    if (dataElement.ValueKind == JsonValueKind.True || dataElement.ValueKind == JsonValueKind.False)
+                    if (!TryGetPrimitiveFromJsonElement(dataElement, out egEventData))
                     {
-                        egEventData = dataElement.GetBoolean();
-                    }
-                    else if (dataElement.ValueKind == JsonValueKind.Number)
-                    {
-                        var oki = dataElement.TryGetInt32(out var vali);
-                        if (oki)
+                        if (async)
                         {
-                            egEventData = vali;
+                            egEventData = await _objectSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
                         }
-                        var okl = dataElement.TryGetInt64(out var vall);
-                        if (okl)
+                        else
                         {
-                            egEventData = vall;
+                            egEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                         }
-                        var okd = dataElement.TryGetDouble(out var val);
-                        if (okd)
-                        {
-                            egEventData = val;
-                        }
-                    }
-                    else if (dataElement.ValueKind == JsonValueKind.String)
-                    {
-                        egEventData = dataElement.GetString();
-                    }
-                    else
-                    {
-                        egEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                     }
                 }
                 else
                 {
-                    // perhaps return as BinaryData?
-                    //MemoryStream dataStream = new MemoryStream();
-                    //ObjectSerializer.Serialize(dataStream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
-                    //dataStream.Seek(0, SeekOrigin.Begin);
-                    //egEvent.Data = BinaryData.FromStream(dataStream);
-
-                    egEventData = egEventInternal.Data.ToString();
+                    // If event data is not a primitive/string, return as BinaryData
+                    if (!TryGetPrimitiveFromJsonElement(dataElement, out egEventData))
+                    {
+                        egEventData = BinaryData.FromStream(dataStream);
+                    }
                 }
 
                 egEvents.Add(new EventGridEvent(
@@ -145,13 +150,36 @@ namespace Azure.Messaging.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>A list of CloudEvents.</returns>
         public virtual CloudEvent[] DeserializeCloudEvents(string requestContent, CancellationToken cancellationToken = default)
+            => DeserializeCloudEventsInternal(requestContent, false /*async*/, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Deserializes JSON encoded events and returns an array of events encoded in the CloudEvent schema.
+        /// </summary>
+        /// <param name="requestContent">
+        /// The JSON encoded representation of either a single event or an array or events, encoded in the CloudEvent schema.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>A list of CloudEvents.</returns>
+        public virtual async Task<CloudEvent[]> DeserializeCloudEventsAsync(string requestContent, CancellationToken cancellationToken = default)
+            => await DeserializeCloudEventsInternal(requestContent, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        private async Task<CloudEvent[]> DeserializeCloudEventsInternal(string requestContent, bool async, CancellationToken cancellationToken = default)
         {
             List<CloudEventInternal> cloudEventsInternal = new List<CloudEventInternal>();
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
-            JsonDocument requestDocument = JsonDocument.Parse(stream, default);
+            JsonDocument requestDocument;
+            if (async)
+            {
+                requestDocument = await JsonDocument.ParseAsync(stream, default, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                requestDocument = JsonDocument.Parse(stream, default);
+            }
+
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
@@ -160,51 +188,57 @@ namespace Azure.Messaging.EventGrid
             // Deserialize 'Data' property from JsonElement for each event
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
-                JsonElement dataElement = cloudEventInternal.Data;
                 object cloudEventData = null;
-                MemoryStream dataStream = new MemoryStream(Encoding.UTF8.GetBytes(dataElement.ToString()));
-
                 if (cloudEventInternal.DataBase64 != null)
                 {
                     cloudEventData = Convert.FromBase64String(cloudEventInternal.DataBase64);
                 }
-                // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
-                else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
+                else
                 {
-                    cloudEventData = systemDeserializationFunction(dataElement);
-                }
-                // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
-                else if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
-                {
-                    if (dataElement.ValueKind == JsonValueKind.True || dataElement.ValueKind == JsonValueKind.False)
+                    JsonElement dataElement = cloudEventInternal.Data;
+
+                    // Reserialize JsonElement to stream
+                    MemoryStream dataStream = new MemoryStream();
+                    if (dataElement.ValueKind != JsonValueKind.Undefined)
                     {
-                        cloudEventData = dataElement.GetBoolean();
-                    }
-                    else if (dataElement.ValueKind == JsonValueKind.Number)
-                    {
-                        var oki = dataElement.TryGetInt32(out var vali);
-                        if (oki)
+                        JsonObjectSerializer serializer = new JsonObjectSerializer();
+                        serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
+                        dataStream.Position = 0;
+
+                        // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
+                        if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
                         {
-                            cloudEventData = vali;
+                            cloudEventData = systemDeserializationFunction(dataElement);
                         }
-                        var okl = dataElement.TryGetInt64(out var vall);
-                        if (okl)
+                        // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
+                        else if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
                         {
-                            cloudEventData = vall;
+                            if (!TryGetPrimitiveFromJsonElement(dataElement, out cloudEventData))
+                            {
+                                if (async)
+                                {
+                                    cloudEventData = await _objectSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    cloudEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
+                                }
+                            }
                         }
-                        var okd = dataElement.TryGetDouble(out var val);
-                        if (okd)
+                        // If no custom mapping was added, either return a primitive/string, or an object wrapped as BinaryData
+                        else
                         {
-                            cloudEventData = val;
+                            // If event data is not a primitive/string, return as BinaryData
+                            if (!TryGetPrimitiveFromJsonElement(dataElement, out cloudEventData))
+                            {
+                                cloudEventData = BinaryData.FromStream(dataStream);
+                            }
                         }
                     }
-                    else if (dataElement.ValueKind == JsonValueKind.String)
+                    else // Event has no data
                     {
-                        cloudEventData = dataElement.GetString();
-                    }
-                    else
-                    {
-                        cloudEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
+                        cloudEventData = "";
+                        cloudEventInternal.Type = "";
                     }
                 }
 
@@ -215,7 +249,6 @@ namespace Azure.Messaging.EventGrid
                     Id = cloudEventInternal.Id,
                     Data = cloudEventData,
                     Time = cloudEventInternal.Time,
-                    SpecVersion = cloudEventInternal.Specversion,
                     DataSchema = cloudEventInternal.Dataschema,
                     DataContentType = cloudEventInternal.Datacontenttype,
                     Subject = cloudEventInternal.Subject
@@ -223,6 +256,43 @@ namespace Azure.Messaging.EventGrid
             }
 
             return cloudEvents.ToArray();
+        }
+
+        private static bool TryGetPrimitiveFromJsonElement(JsonElement jsonElement, out object elementValue)
+        {
+            elementValue = null;
+            if (jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False)
+            {
+                elementValue = jsonElement.GetBoolean();
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.Number)
+            {
+                var oki = jsonElement.TryGetInt32(out var vali);
+                if (oki)
+                {
+                    elementValue = vali;
+                }
+                var okl = jsonElement.TryGetInt64(out var vall);
+                if (okl)
+                {
+                    elementValue = vall;
+                }
+                var okd = jsonElement.TryGetDouble(out var val);
+                if (okd)
+                {
+                    elementValue = val;
+                }
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.String)
+            {
+                elementValue = jsonElement.GetString();
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.Undefined)
+            {
+                elementValue = "";
+            }
+
+            return elementValue != null;
         }
     }
 }
