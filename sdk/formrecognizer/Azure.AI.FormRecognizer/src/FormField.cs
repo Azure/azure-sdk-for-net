@@ -47,9 +47,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (fieldValue.BoundingBox.Count != 0 || fieldValue.Page != null || fieldValue.Text != null)
             {
-                IReadOnlyList<FormElement> FormElement = fieldValue.Elements != null
-                    ? ConvertTextReferences(fieldValue.Elements, readResults)
-                    : new List<FormElement>();
+                IReadOnlyList<FormElement> FormElement = ConvertTextReferences(fieldValue.Elements, readResults);
 
                 // TODO: FormEnum<T> ?
                 BoundingBox boundingBox = new BoundingBox(fieldValue.BoundingBox);
