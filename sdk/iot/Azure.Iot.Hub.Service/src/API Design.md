@@ -130,7 +130,7 @@ public virtual async Task<Response<TwinConfiguration>> CreateOrUpdateConfigurati
 /// Deletes a configuration on the IoT Hub for automatic device/module management
 /// </summary>
 /// <param name="configuration">Twin configuration to delete</param>
-/// <param name="precondition">The condition on which to perform this operation</param>
+/// <param name="precondition">The condition on which to perform this operation. If no ETag is present on the twin configuration, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>."/>.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The http response <see cref="Response{T}"/>.</returns>
 public virtual async Task<Response> DeleteConfigurationAsync(TwinConfiguration configuration, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
