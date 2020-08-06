@@ -127,18 +127,18 @@ public virtual async Task<Response<TwinConfiguration>> CreateOrUpdateConfigurati
 /// <summary>
 /// Deletes a configuration on the IoT Hub for automatic device/module management
 /// </summary>
-/// <param name="configurationId">The unique identifier of the configuration.</param>
+/// <param name="configuration">Twin configuration to delete</param>
 /// <param name="precondition">The condition on which to perform this operation</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The http response <see cref="Response{T}"/>.</returns>
-public virtual async Task<Response> DeleteConfigurationAsync(string configurationId, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+public virtual async Task<Response> DeleteConfigurationAsync(TwinConfiguration configuration, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
 /// <summary>
 /// Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported.
 /// </summary>
 /// <param name="count">The number of configurations to retrieve. TODO: Can value be overriden if too large?.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>The retrieved list of automatic device/module management twin configuration</returns>
+/// <returns>The retrieved list of automatic device/module management twin configurations</returns>
 public virtual async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? count = null, CancellationToken cancellationToken = default)
 
 /// <summary>
