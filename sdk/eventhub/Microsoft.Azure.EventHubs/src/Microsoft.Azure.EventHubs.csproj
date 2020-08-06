@@ -5,7 +5,7 @@
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.xml</DocumentationFile>
-    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4;MonoAndroid8.1;Xamarin.iOS10;uap10.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4;MonoAndroid8.1;Xamarin.iOS10</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,15 +49,5 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'MonoAndroid8.1'">
     <DefineConstants>$(DefineConstants);ANDROID</DefineConstants>
   </PropertyGroup> 
-  
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <DefineConstants>$(DefineConstants);UAP10</DefineConstants>
-	    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-  </PropertyGroup>
 
 </Project>
