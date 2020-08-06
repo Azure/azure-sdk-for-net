@@ -1,4 +1,7 @@
 # Release History
+## 4.2.0-preview.1 (Unreleased)
+
+
 ## 4.1.4 (2020-08-05)
 - Setting sessionId to be same as partition key and adding validation
 
