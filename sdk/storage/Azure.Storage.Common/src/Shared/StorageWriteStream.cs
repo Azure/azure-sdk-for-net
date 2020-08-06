@@ -115,26 +115,22 @@ namespace Azure.Storage.Shared
                 // We need to loop, because remaining bytes might be greater than _buffer size.
                 while (remaining > 0)
                 {
+                    int available = (int)Math.Min(remaining, _bufferSize);
                     await WriteToBufferInternal(
                         buffer,
                         offset,
-                        (int)Math.Min(remaining, _bufferSize),
+                        available,
                         async,
                         cancellationToken).ConfigureAwait(false);
+                    remaining -= available;
+                    offset += available;
 
                     // Renaming bytes won't fit in buffer.
-                    if (remaining > _bufferSize)
+                    if (remaining > 0)
                     {
                         await AppendInternal(async, cancellationToken).ConfigureAwait(false);
-                        remaining -= (int)_bufferSize;
-                        offset += (int)_bufferSize;
                     }
 
-                    // Remaining bytes will fit in buffer.
-                    else
-                    {
-                        remaining = 0;
-                    }
                 }
             }
         }
