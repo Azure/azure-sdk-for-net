@@ -181,9 +181,9 @@ namespace Azure.Storage.Shared
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
             }
 
-            if (offset >= buffer.Length)
+            if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be greater than or equal to {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be greater than {nameof(buffer)} length.");
             }
 
             if (count < 0)
