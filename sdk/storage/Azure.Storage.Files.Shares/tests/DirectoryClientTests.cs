@@ -351,9 +351,6 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task Exists_Error()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
-
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
@@ -365,8 +362,7 @@ namespace Azure.Storage.Files.Shares.Test
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
