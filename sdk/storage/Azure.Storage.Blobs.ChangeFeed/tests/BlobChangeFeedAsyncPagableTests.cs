@@ -446,6 +446,69 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
+        /// <summary>
+        /// To setup account for this test have a steady stream of events (i.e. some changes every 1 minute) that covers at least from an hour before start time
+        /// to an hour after end time.
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task TestAlreadyRoundedBoundaries()
+        {
+            // This is hardcoded for playback stability. Feel free to modify but make sure recordings match.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 5, 16, 00, 00, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 8, 5, 18, 00, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime,
+                    end: endTime);
+            var eventList = new List<BlobChangeFeedEvent>(await blobChangeFeedAsyncPagable.ToListAsync());
+
+            // Assert
+            Assert.Greater(eventList.Count, 1);
+            Assert.IsNull(eventList.Find(e => e.EventTime < startTime.AddMinutes(-15)), "No event 15 minutes before start is present");
+            Assert.IsNull(eventList.Find(e => e.EventTime > endTime.AddMinutes(15)), "No event 15 minutes after end is present");
+            Assert.IsNotNull(eventList.Find(e => e.EventTime < startTime.AddMinutes(15)), "There is some event 15 minutes after start");
+            Assert.IsNotNull(eventList.Find(e => e.EventTime > endTime.AddMinutes(-15)), "There is some event 15 minutes before end");
+        }
+
+        /// <summary>
+        /// To setup account for this test have a steady stream of events (i.e. some changes every 1 minute) that covers at least from an hour before start time
+        /// to an hour after end time.
+        /// </summary>
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task TestNonRoundedBoundaries()
+        {
+            // This is hardcoded for playback stability. Feel free to modify but make sure recordings match.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 5, 16, 24, 00, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 8, 5, 18, 35, 00, TimeSpan.Zero);
+            DateTimeOffset roundedStartTime = new DateTimeOffset(2020, 8, 5, 16, 00, 00, TimeSpan.Zero);
+            DateTimeOffset roundedEndTime = new DateTimeOffset(2020, 8, 5, 19, 00, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime,
+                    end: endTime);
+            var eventList = new List<BlobChangeFeedEvent>(await blobChangeFeedAsyncPagable.ToListAsync());
+
+            // Assert
+            Assert.Greater(eventList.Count, 1);
+            Assert.IsNull(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(-15)), "No event 15 minutes before start is present");
+            Assert.IsNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(15)), "No event 15 minutes after end is present");
+            Assert.IsNotNull(eventList.Find(e => e.EventTime < roundedStartTime.AddMinutes(15)), "There is some event 15 minutes after start");
+            Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
+        }
+
         [Test]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CursorFormatTest()
