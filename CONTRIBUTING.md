@@ -255,7 +255,7 @@ You can then consume packages from this package source, remember to check the [I
 In `sdk\< Service Name >`, you will find projects for services that have already been implemented
 
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/repo-structure.md)
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md)
    - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
    - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
