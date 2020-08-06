@@ -45,7 +45,11 @@ namespace Azure.AI.FormRecognizer.Models
             //
             // In these scenarios we do not set a ValueData.
 
-            if (fieldValue.BoundingBox.Count != 0 || fieldValue.Page != null || fieldValue.Text != null)
+            if (fieldValue.BoundingBox.Count == 0 && fieldValue.Page == null && fieldValue.Text == null)
+            {
+                ValueData = null;
+            }
+            else
             {
                 IReadOnlyList<FormElement> FormElement = ConvertTextReferences(fieldValue.Elements, readResults);
 
