@@ -18,8 +18,7 @@ namespace Azure.Storage.Blobs.Models
         public long? BufferSize { get; set; }
 
         /// <summary>
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
-        /// inital conditions on appending content to this append blob.
+        /// Access conditions used to open the write stream.
         /// </summary>
         public AppendBlobRequestConditions OpenConditions { get; set; }
 

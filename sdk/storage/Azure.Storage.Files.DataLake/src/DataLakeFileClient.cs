@@ -3881,6 +3881,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -3898,9 +3901,11 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             DataLakeFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -3909,6 +3914,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Opens a stream for writing to the file..
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -3926,9 +3934,11 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             DataLakeFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -3937,6 +3947,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -3955,6 +3968,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
             DataLakeFileOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -3965,38 +3979,77 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                long position = 0;
-                ETag? eTag = null;
+                long position;
+                ETag? eTag;
 
-                Response<PathProperties> propertiesResponse;
-
-                if (async)
+                if (overwrite)
                 {
-                    propertiesResponse = await GetPropertiesAsync(
-                        conditions: options?.Conditions,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<PathInfo> createResponse = await CreateInternal(
+                        resourceType: PathResourceType.File,
+                        httpHeaders: default,
+                        metadata: default,
+                        permissions: default,
+                        umask: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    position = 0;
+                    eTag = createResponse.Value.ETag;
                 }
                 else
                 {
-                    propertiesResponse = GetProperties(
-                        conditions: options?.Conditions,
-                        cancellationToken: cancellationToken);
-                }
+                    try
+                    {
+                        Response<PathProperties> propertiesResponse;
 
-                position = propertiesResponse.Value.ContentLength;
-                eTag = propertiesResponse.Value.ETag;
+                        if (async)
+                        {
+                            propertiesResponse = await GetPropertiesAsync(
+                                conditions: options?.OpenConditions,
+                                cancellationToken: cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            propertiesResponse = GetProperties(
+                                conditions: options?.OpenConditions,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        position = propertiesResponse.Value.ContentLength;
+                        eTag = propertiesResponse.Value.ETag;
+                    }
+                    catch (RequestFailedException ex)
+                    when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                    {
+                        Response<PathInfo> createResponse = await CreateInternal(
+                            resourceType: PathResourceType.File,
+                            httpHeaders: default,
+                            metadata: default,
+                            permissions: default,
+                            umask: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        position = 0;
+                        eTag = createResponse.Value.ETag;
+                    }
+                }
 
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions
                 {
                     IfMatch = eTag,
-                    LeaseId = options?.Conditions?.LeaseId
+                    LeaseId = options?.OpenConditions?.LeaseId
                 };
 
                 return new DataLakeFileWriteStream(
                     fileClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    conditions: options?.Conditions,
+                    conditions: conditions,
                     progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)

@@ -2866,11 +2866,17 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_OverwiteNewBlob()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_OverwiteNewBlob(bool blobExists)
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            if (blobExists)
+            {
+                await blob.CreateAsync(Constants.KB);
+            }
 
             byte[] expectedData = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(expectedData);
@@ -2881,38 +2887,6 @@ namespace Azure.Storage.Blobs.Test
                 position: 0,
                 size: Constants.KB);
             await stream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
-        }
-
-        [Test]
-        public async Task OpenWriteAsync_OverwiteExistingBlob()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            long size = Constants.KB;
-            await blob.CreateAsync(size);
-
-            byte[] initalData = GetRandomBuffer(Constants.KB);
-            using Stream initalStream = new MemoryStream(initalData);
-            await blob.UploadPagesAsync(initalStream, 0);
-
-            byte[] expectedData = GetRandomBuffer(Constants.KB);
-            using Stream expectedStream = new MemoryStream(expectedData);
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(
-                overwrite: true,
-                position: 0,
-                size: Constants.KB);
-            await expectedStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
             // Assert

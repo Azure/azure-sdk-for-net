@@ -18,10 +18,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public long? BufferSize { get; set; }
 
         /// <summary>
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on appending content to this file.
+        /// Access conditions used to open the write stream.
         /// </summary>
-        public DataLakeRequestConditions Conditions { get; set; }
+        public DataLakeRequestConditions OpenConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide

@@ -3815,7 +3815,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 BufferSize = Constants.KB
             };
 
-            Stream stream = await file.OpenWriteAsync(options);
+            Stream stream = await file.OpenWriteAsync(
+                overwrite: false,
+                options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 
@@ -3853,7 +3855,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream newStream = new MemoryStream(newData);
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync();
+            Stream openWriteStream = await file.OpenWriteAsync(overwrite: false);
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -3879,7 +3881,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.OpenWriteAsync(),
+                file.OpenWriteAsync(overwrite: false),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
@@ -3895,7 +3897,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync();
+            Stream openWriteStream = await file.OpenWriteAsync(overwrite: false);
 
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
@@ -3928,7 +3930,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync(options);
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: false,
+                options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -3938,7 +3942,40 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenWriteAsync_AccessConditions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_Overwite(bool fileExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            if (fileExists)
+            {
+                await file.CreateAsync();
+            }
+
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: true);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<FileDownloadInfo> result = await file.ReadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_AccessConditions(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Conditions_Data)
@@ -3958,11 +3995,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
                 {
-                    Conditions = conditions
+                    OpenConditions = conditions
                 };
 
                 // Act
-                Stream openWriteStream = await file.OpenWriteAsync(options);
+                Stream openWriteStream = await file.OpenWriteAsync(
+                    overwrite: overwrite,
+                    options);
                 await stream.CopyToAsync(openWriteStream);
                 await openWriteStream.FlushAsync();
 
@@ -3976,7 +4015,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenWriteAsync_AccessConditionsFail()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_AccessConditionsFail(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
@@ -3990,7 +4031,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
                 {
-                    Conditions = conditions
+                    OpenConditions = conditions
                 };
 
                 byte[] data = GetRandomBuffer(Constants.KB);
@@ -4000,7 +4041,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        await file.OpenWriteAsync(options);
+                        await file.OpenWriteAsync(
+                            overwrite: overwrite,
+                            options);
                     });
             }
         }
