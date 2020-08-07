@@ -29,7 +29,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly string _username;
         private readonly AuthenticationRecord _record;
-        private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
+        private readonly Lazy<Task<IAccount>> _account;
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
@@ -75,7 +75,7 @@ namespace Azure.Identity
 
             _client = client ?? new MsalPublicClient(_pipeline, tenantId, Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
 
-            _accountAsyncLock = new AsyncLockWithValue<IAccount>();
+            _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
 
         /// <summary>
@@ -106,8 +106,15 @@ namespace Azure.Identity
 
             try
             {
-                IAccount account = await GetAccountAsync(async, cancellationToken).ConfigureAwait(false);
+                IAccount account = async
+                    ? await _account.Value.ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                    : _account.Value.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+
+
                 AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
+
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException)
@@ -120,23 +127,14 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<IAccount> GetAccountAsync(bool async, CancellationToken cancellationToken)
+        private async Task<IAccount> GetAccountAsync()
         {
-            using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
-            if (asyncLock.HasValue)
-            {
-                return asyncLock.Value;
-            }
-
-            IAccount account;
             if (_record != null)
             {
-                account = new AuthenticationAccount(_record);
-                asyncLock.SetValue(account);
-                return account;
+                return new AuthenticationAccount(_record);
             }
 
-            List<IAccount> accounts = await _client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
+            List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
@@ -152,9 +150,7 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts));
             }
 
-            account = filteredAccounts.First();
-            asyncLock.SetValue(account);
-            return account;
+            return filteredAccounts.First();
         }
 
         private string GetCredentialUnavailableMessage(List<IAccount> accounts, List<IAccount> filteredAccounts)
