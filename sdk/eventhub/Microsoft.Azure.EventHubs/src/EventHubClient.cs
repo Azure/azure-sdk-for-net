@@ -297,6 +297,8 @@ namespace Microsoft.Azure.EventHubs
         /// <see cref="PartitionSender.SendAsync(EventData)"/>
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
+            this.ThrowIfClosed();
+
             // eventDatas null check is inside ValidateEvents
             int count = EventDataSender.ValidateEvents(eventDatas);
 
@@ -396,6 +398,8 @@ namespace Microsoft.Azure.EventHubs
         /// </summary>
         public async Task<EventHubRuntimeInformation> GetRuntimeInformationAsync()
         {
+            this.ThrowIfClosed();
+
             EventHubsEventSource.Log.GetEventHubRuntimeInformationStart(this.ClientId);
 
             try
@@ -419,6 +423,8 @@ namespace Microsoft.Azure.EventHubs
         public async Task<EventHubPartitionRuntimeInformation> GetPartitionRuntimeInformationAsync(string partitionId)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(partitionId), partitionId);
+            this.ThrowIfClosed();
+
             EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStart(this.ClientId, partitionId);
 
             try
