@@ -24,7 +24,7 @@ Install-Package Azure.Identity
 * An [Azure subscription][azure_sub].
 * The [Azure CLI][azure_cli] can also be useful for authenticating in a development environment, creating accounts, and managing account roles.
 
-### Authenticating the client
+### Authenticate the client
 
 When debugging and executing code locally it is typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools which can be used to perform this authentication in your development environment.
 
@@ -61,7 +61,7 @@ A credential is a class which contains or can obtain the data needed for a servi
 
 The Azure Identity library focuses on OAuth authentication with Azure Active directory, and it offers a variety of credential classes capable of acquiring an AAD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`. 
 
-See [Credential Classes](#Credential-Classes)
+See [Credential Classes](#Credential-Classes) for a complete listing of available credential types.
 
 ### DefaultAzureCredential
 The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
