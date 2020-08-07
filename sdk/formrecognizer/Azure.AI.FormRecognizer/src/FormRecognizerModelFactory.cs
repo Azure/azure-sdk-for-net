@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
@@ -28,12 +29,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="points">The sequence of points defining this <see cref="FormRecognizer.Models.BoundingBox"/>.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.BoundingBox"/> instance for mocking.</returns>
-        public static BoundingBox BoundingBox(IReadOnlyList<PointF> points)
-        {
-            Argument.AssertNotNull(points, nameof(points));
-
-            return new BoundingBox(points);
-        }
+        public static BoundingBox BoundingBox(IReadOnlyList<PointF> points) =>
+            new BoundingBox(points);
 
         // TODO: CopyAuthorization
 
@@ -48,8 +45,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
         /// <param name="errors">A list of errors ocurred during the training operation.</param>
         /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
-        public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors) =>
-            new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors);
+        public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors)
+        {
+            submodels = submodels?.ToList();
+            trainingDocuments = trainingDocuments?.ToList();
+            errors = errors?.ToList();
+
+            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModelField"/> class.
@@ -79,8 +82,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="accuracy">The mean of the accuracies of this model's <see cref="Training.CustomFormModelField"/> instances.</param>
         /// <param name="fields">A dictionary of the fields that this submodel will recognize from the input document.</param>
         /// <returns>A new <see cref="Training.CustomFormSubmodel"/> instance for mocking.</returns>
-        public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields) =>
-            new CustomFormSubmodel(formType, accuracy, fields);
+        public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
+        {
+            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            return new CustomFormSubmodel(formType, accuracy, fields);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FieldData"/> class.
@@ -90,8 +97,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FieldData"/> instance for mocking.</returns>
-        public static FieldData FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements) =>
-            new FieldData(boundingBox, pageNumber, text, fieldElements);
+        public static FieldData FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
+        {
+            fieldElements = fieldElements?.ToList();
+
+            return new FieldData(boundingBox, pageNumber, text, fieldElements);
+        }
 
         // TODO: FieldValue
 
@@ -115,8 +126,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="words">A list of the words that make up the line.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
-        public static FormLine FormLine(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words) =>
-            new FormLine(boundingBox, pageNumber, text, words);
+        public static FormLine FormLine(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
+        {
+            words = words?.ToList();
+
+            return new FormLine(boundingBox, pageNumber, text, words);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPage"/> class.
@@ -129,8 +144,13 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
-        public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables) =>
-            new FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
+        public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
+        {
+            lines = lines?.ToList();
+            tables = tables?.ToList();
+
+            return new FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPageCollection"/> class.
@@ -168,8 +188,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rowCount">The number of rows in this table.</param>
         /// <param name="cells">A list of cells contained in this table.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormTable"/> instance for mocking.</returns>
-        public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells) =>
-            new FormTable(pageNumber, columnCount, rowCount, cells);
+        public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
+        {
+            cells = cells?.ToList();
+
+            return new FormTable(pageNumber, columnCount, rowCount, cells);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTableCell"/> class.
@@ -186,8 +210,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this cell.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormTableCell"/> instance for mocking.</returns>
-        public static FormTableCell FormTableCell(BoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements) =>
-            new FormTableCell(boundingBox, pageNumber, text, columnIndex, rowIndex, columnSpan, rowSpan, isHeader, isFooter, confidence, fieldElements);
+        public static FormTableCell FormTableCell(BoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
+        {
+            fieldElements = fieldElements?.ToList();
+
+            return new FormTableCell(boundingBox, pageNumber, text, columnIndex, rowIndex, columnSpan, rowSpan, isHeader, isFooter, confidence, fieldElements);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormWord"/> class.
@@ -208,8 +236,13 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
         /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.RecognizedForm"/> instance for mocking.</returns>
-        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages) =>
-            new RecognizedForm(formType, pageRange, fields, pages);
+        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages)
+        {
+            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            pages = pages?.ToList();
+
+            return new RecognizedForm(formType, pageRange, fields, pages);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.RecognizedFormCollection"/> class.
@@ -229,7 +262,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="errors">List of errors.</param>
         /// <param name="status">Status of the training operation.</param>
         /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
-        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status) =>
-            new TrainingDocumentInfo(name, pageCount, errors, status);
+        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
+        {
+            errors = errors?.ToList();
+
+            return new TrainingDocumentInfo(name, pageCount, errors, status);
+        }
     }
 }
