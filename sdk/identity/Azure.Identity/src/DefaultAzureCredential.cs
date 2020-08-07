@@ -31,23 +31,20 @@ namespace Azure.Identity
     {
         private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
         private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed.";
-        private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
+        private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(null), new DefaultAzureCredentialOptions());
 
         private readonly CredentialPipeline _pipeline;
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
         private TokenCredential[] _sources;
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="DefaultAzureCredential"/>.
-        /// </summary>
-        public DefaultAzureCredential() : this(false) { }
+        internal DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
         /// <param name="includeInteractiveCredentials">Specifies whether credentials requiring user interaction will be included in the default authentication flow.</param>
-        public DefaultAzureCredential(bool includeInteractiveCredentials)
+        public DefaultAzureCredential(bool includeInteractiveCredentials = false)
             : this(includeInteractiveCredentials ? new DefaultAzureCredentialOptions { ExcludeInteractiveBrowserCredential = false } : null)
         {
         }
@@ -57,7 +54,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
-            : this(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(options)), options)
+            : this(new DefaultAzureCredentialFactory(options), options)
         {
         }
 
@@ -100,7 +97,7 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DefaultAzureCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScopeGroup("DefaultAzureCredential.GetToken", requestContext);
 
             try
             {

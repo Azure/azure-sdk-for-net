@@ -298,7 +298,8 @@ namespace Microsoft.Azure.EventHubs
         /// <see cref="PartitionSender.SendAsync(EventData)"/>
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
-            // Convert enumerator to a rescannable collection to avoid skipping events if underlying enumerator is not re-scannabled.
+            this.ThrowIfClosed();
+
             var eventDataList = eventDatas?.ToList();
 
             // eventDatas null check is inside ValidateEvents
@@ -400,6 +401,8 @@ namespace Microsoft.Azure.EventHubs
         /// </summary>
         public async Task<EventHubRuntimeInformation> GetRuntimeInformationAsync()
         {
+            this.ThrowIfClosed();
+
             EventHubsEventSource.Log.GetEventHubRuntimeInformationStart(this.ClientId);
 
             try
@@ -423,6 +426,8 @@ namespace Microsoft.Azure.EventHubs
         public async Task<EventHubPartitionRuntimeInformation> GetPartitionRuntimeInformationAsync(string partitionId)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(partitionId), partitionId);
+            this.ThrowIfClosed();
+
             EventHubsEventSource.Log.GetEventHubPartitionRuntimeInformationStart(this.ClientId, partitionId);
 
             try

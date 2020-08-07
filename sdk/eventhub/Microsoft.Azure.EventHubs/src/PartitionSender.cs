@@ -126,6 +126,7 @@ namespace Microsoft.Azure.EventHubs
         public async Task SendAsync(IEnumerable<EventData> eventDatas)
         {
             Guard.ArgumentNotNull(nameof(eventDatas), eventDatas);
+            this.ThrowIfClosed();
 
             if (eventDatas is EventDataBatch && !string.IsNullOrEmpty(((EventDataBatch)eventDatas).PartitionKey))
             {
