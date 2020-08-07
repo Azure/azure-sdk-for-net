@@ -1334,40 +1334,33 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(field.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(field.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
 
-                var labelData = field.LabelData;
+                ValidateFieldData(field.LabelData, includeFieldElements);
+                ValidateFieldData(field.ValueData, includeFieldElements);
+            }
+        }
 
-                if (labelData != null)
-                {
-                    Assert.Greater(labelData.PageNumber, 0);
+        private void ValidateFieldData(FieldData fieldData, bool includeFieldElements)
+        {
+            if (fieldData == null)
+            {
+                return;
+            }
 
-                    if (labelData.BoundingBox.Points != null)
-                    {
-                        Assert.AreEqual(4, labelData.BoundingBox.Points.Length);
-                    }
+            Assert.Greater(fieldData.PageNumber, 0);
 
-                    Assert.NotNull(labelData.FieldElements);
+            Assert.NotNull(fieldData.BoundingBox.Points);
 
-                    if (!includeFieldElements)
-                    {
-                        Assert.AreEqual(0, labelData.FieldElements.Count);
-                    }
-                }
+            if (fieldData.BoundingBox.Points.Length != 0)
+            {
+                Assert.AreEqual(4, fieldData.BoundingBox.Points.Length);
+            }
 
-                var valueData = field.ValueData;
+            Assert.NotNull(fieldData.Text);
+            Assert.NotNull(fieldData.FieldElements);
 
-                Assert.NotNull(valueData);
-
-                if (valueData.BoundingBox.Points != null)
-                {
-                    Assert.AreEqual(4, valueData.BoundingBox.Points.Length);
-                }
-
-                Assert.NotNull(valueData.FieldElements);
-
-                if (!includeFieldElements)
-                {
-                    Assert.AreEqual(0, valueData.FieldElements.Count);
-                }
+            if (!includeFieldElements)
+            {
+                Assert.AreEqual(0, fieldData.FieldElements.Count);
             }
         }
     }
