@@ -1,7 +1,10 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.0.1 (2020-08-06)
 
+### Fixed
+
+- Deadlock on .NET Framework (https://github.com/Azure/azure-sdk-for-net/pull/12605)
 
 ## 1.0.0 (2020-06-04)
 

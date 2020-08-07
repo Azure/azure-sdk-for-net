@@ -18,10 +18,10 @@ namespace Microsoft.Azure.EventHubs.Tests
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Storage;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.WindowsAzure.Storage;
     using Polly;
 
     using StorageManagement = Microsoft.Azure.Management.Storage.Models;

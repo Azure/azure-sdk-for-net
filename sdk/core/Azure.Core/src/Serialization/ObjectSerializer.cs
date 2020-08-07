@@ -6,10 +6,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// An abstraction from reading typed objects.
+    /// An abstraction for reading typed objects.
     /// </summary>
     public abstract class ObjectSerializer
     {
