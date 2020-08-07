@@ -4,6 +4,7 @@
 
 ### Breaking changes
 
+- Now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
 - Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
 - Renamed the `FieldValue` property `Type` to `ValueType`.
 - Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
