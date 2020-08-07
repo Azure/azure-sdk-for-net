@@ -2729,6 +2729,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             Stream stream = await blob.OpenWriteAsync(
+                overwrite: false,
                 position: 0,
                 options: options);
 
@@ -2768,7 +2769,9 @@ namespace Azure.Storage.Blobs.Test
             using Stream newStream = new MemoryStream(newData);
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB);
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: Constants.KB);
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -2794,7 +2797,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.OpenWriteAsync(position: 0),
+                blob.OpenWriteAsync(
+                    overwrite: false,
+                    position: 0),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
@@ -2814,7 +2819,10 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options);
 
             await stream.CopyToAsync(openWriteStream);
             stream.Position = 0;
@@ -2845,7 +2853,10 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -2855,7 +2866,67 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_AccessConditions()
+        public async Task OpenWriteAsync_OverwiteNewBlob()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            byte[] expectedData = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(expectedData);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: true,
+                position: 0,
+                size: Constants.KB);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_OverwiteExistingBlob()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            long size = Constants.KB;
+            await blob.CreateAsync(size);
+
+            byte[] initalData = GetRandomBuffer(Constants.KB);
+            using Stream initalStream = new MemoryStream(initalData);
+            await blob.UploadPagesAsync(initalStream, 0);
+
+            byte[] expectedData = GetRandomBuffer(Constants.KB);
+            using Stream expectedStream = new MemoryStream(expectedData);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: true,
+                position: 0,
+                size: Constants.KB);
+            await expectedStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_AccessConditions(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
@@ -2874,14 +2945,18 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
                 {
-                    Conditions = accessConditions
+                    OpenConditions = accessConditions
                 };
 
                 byte[] data = GetRandomBuffer(Constants.KB);
                 Stream stream = new MemoryStream(data);
 
                 // Act
-                Stream openWriteStream = await blob.OpenWriteAsync(position: 0, options);
+                Stream openWriteStream = await blob.OpenWriteAsync(
+                    overwrite: overwrite,
+                    position: 0,
+                    size: Constants.KB,
+                    options: options);
                 await stream.CopyToAsync(openWriteStream);
                 await openWriteStream.FlushAsync();
 
@@ -2895,10 +2970,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_AccessConditionsFail()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_AccessConditionsFail(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetUploadClearAsync_AccessConditionsFail_Data(garbageLeaseId))
+
+            AccessConditionParameters [] testCase = new[]
+            {
+                new AccessConditionParameters { IfModifiedSince = NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = OldDate },
+                new AccessConditionParameters { Match = GarbageETag },
+                new AccessConditionParameters { NoneMatch = ReceivedETag },
+                new AccessConditionParameters { LeaseId = garbageLeaseId }
+            };
+
+            foreach (AccessConditionParameters parameters in testCase)
             {
                 // Arrange
                 await using DisposingContainer test = await GetTestContainerAsync();
@@ -2917,14 +3004,18 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
                 {
-                    Conditions = accessConditions
+                    OpenConditions = accessConditions
                 };
 
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        Stream openWriteStream = await blob.OpenWriteAsync(position: Constants.KB, options);
+                        Stream openWriteStream = await blob.OpenWriteAsync(
+                            overwrite: overwrite,
+                            position: 0,
+                            size: Constants.KB,
+                            options: options);
                         await stream.CopyToAsync(openWriteStream);
                         await openWriteStream.FlushAsync();
                     });

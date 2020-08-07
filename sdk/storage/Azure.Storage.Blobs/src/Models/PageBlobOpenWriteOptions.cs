@@ -18,16 +18,10 @@ namespace Azure.Storage.Blobs.Models
         public long? BufferSize { get; set; }
 
         /// <summary>
-        /// Required if Overwrite is set to true.
-        /// Specifies the size of the new Page Blob.
-        /// </summary>
-        public long Size { get; set; }
-
-        /// <summary>
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on appending content to this page blob.
         /// </summary>
-        public PageBlobRequestConditions Conditions { get; set; }
+        public PageBlobRequestConditions OpenConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide

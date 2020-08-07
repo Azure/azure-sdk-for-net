@@ -1396,7 +1396,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.
         /// </summary>
         /// <param name="overwrite">
-        /// Whether the upload should overwrite an existing blob.
+        /// Whether an existing blob should be deleted and recreated.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1429,7 +1429,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.
         /// </summary>
         /// <param name="overwrite">
-        /// Whether the upload should overwrite an existing blob.
+        /// Whether an existing blob should be deleted and recreated.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1462,7 +1462,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.
         /// </summary>
         /// <param name="overwrite">
-        /// Whether the upload should overwrite an existing blob.
+        /// Whether an existing blob should be deleted and recreated.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
