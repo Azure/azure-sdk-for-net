@@ -156,25 +156,25 @@ namespace Azure.Identity
 
         public readonly struct Lock : IDisposable
         {
-            public AsyncLockWithValue<T> Owner { get; }
-            public bool HasValue => Owner == default;
+            private readonly AsyncLockWithValue<T> _owner;
+            public bool HasValue => _owner == default;
             public T Value { get; }
 
             public Lock(T value)
             {
-                Owner = default;
+                _owner = default;
                 Value = value;
             }
 
             public Lock(AsyncLockWithValue<T> owner)
             {
-                Owner = owner;
+                _owner = owner;
                 Value = default;
             }
 
-            public void SetValue(T value) => Owner.SetValue(value);
+            public void SetValue(T value) => _owner.SetValue(value);
 
-            public void Dispose() => Owner?.Reset();
+            public void Dispose() => _owner?.Reset();
         }
     }
 }
