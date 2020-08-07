@@ -1,12 +1,10 @@
-# Creating and Deleting Tables
-This sample demonstrates how to create and delete a table. To get started, you'll need either a Storage or Cosmos DB account.
+# Create and Delete Tables
+This sample demonstrates how to create and delete a table. To get started, you'll need access to either a Storage or Cosmos DB account.
 
-## Creating a `TableServiceClient`
-A `TableServiceClient` performs account-level operations like creating and deleting tables. Authentication will be taken care of by creating a `TableSharedKeyCredential` which requires the account name as well as the account key.
+## Create a `TableServiceClient`
+A `TableServiceClient` performs account-level operations like creating and deleting tables. To create a `TableServiceClient`, you will need a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
-You can set `accountName` and `storageAccountKey` based on an environment variable, configuration setting, or any way that works for your application.
-
-For the purpose of this test, we are going to use a Storage Resource.
+In the sample below, we will use a Storage account and authenticate with an endpoint and `TableSharedKeyCredential`, which requires an account name and an account key. You can set `accountName` and `storageAccountKey` with an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:TablesSample1CreateClient
 // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
@@ -15,8 +13,8 @@ var serviceClient = new TableServiceClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-## Creating a Table
-To create a table, create a `TableClient` by invoking `CreateTable` from the `TableServiceClient`. A `TableClient` represents a single table and performs table-level operations like inserting and deleting entities within that table. `tableName` can be replaced with any string to be the name of the table. Tables must have unique names.
+## Create a table
+To create a table, invoke `CreateTable` with a [unique table name](https://docs.microsoft.com/en-us/rest/api/storageservices/understanding-the-table-service-data-model#table-names). The `tableName` can be replaced with any string to be the name of the table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
@@ -24,15 +22,17 @@ TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
 
-## Deleting a Table
-To delete the table, invoke `DeleteTable` from the service client with the table name.
+A `TableClient` is needed to perform table-level operations like inserting and deleting entities within the table. To get the `TableClient`, invoke `GetTableClient` with the table name.
+
+## Delete a table
+To delete the table, invoke `DeleteTable` with the table name.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
 serviceClient.DeleteTable(tableName);
 ```
 
-## Handling Errors
+## Handle errors
 To get more information from a thrown exception when creating and deleting tables, use a try/catch statement to print out the exception.
 
 ```C# Snippet:TablesSample1CreateExistingTable
@@ -50,3 +50,8 @@ catch (RequestFailedException e)
     Console.WriteLine(e.Message);
 }
 ```
+---
+To see the full example source files, see:
+- [Synchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTable.cs)
+- [Asynchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableAsync.cs)
+- [CreateDeleteTableErrors](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableErrors.cs)

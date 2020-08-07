@@ -62,21 +62,30 @@ namespace Azure.Data.Tables.Samples
             Console.WriteLine($"The query returned {count} entities.");
             #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesExpressionTreeAsync
-            // Use the <see cref="TableClient"> to query the table and pass in expression tree.
+            #region Snippet:TablesSample4QueryEntitiesExpressionAsync
+            // Use the <see cref="TableClient"> to query the table using a filter expression.
             double priceCutOff = 6.00;
             AsyncPageable<OfficeSupplyEntity> queryResultsLINQ = client.QueryAsync<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
-            count = 0;
-
-            // Iterate the <see cref="Pageable"> in order to access individual queried entities.
-            await foreach (OfficeSupplyEntity qEntity in queryResultsLINQ)
-            {
-                Console.WriteLine($"{qEntity.Product}: ${qEntity.Price}");
-                count++;
-            }
-
-            Console.WriteLine($"The LINQ query returned {count} entities.");
             #endregion
+
+            #region Snippet:TablesSample4QueryEntitiesSelectAsync
+            AsyncPageable<TableEntity> queryResultsSelect = client.QueryAsync<TableEntity>(select: new List<string>() { "Product", "Price" });
+            #endregion
+
+            #region Snippet:TablesSample4QueryEntitiesMaxPerPageAsync
+            AsyncPageable<TableEntity> queryResultsMaxPerPage = client.QueryAsync<TableEntity>(maxPerPage: 10);
+
+            // Iterate the <see cref="Pageable"> by page.
+            await foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
+            {
+                Console.WriteLine("This is a new page!");
+                foreach (TableEntity qEntity in page.Values)
+                {
+                    Console.WriteLine($"# of {qEntity.GetString("Product")} inventoried: {qEntity.GetInt32("Quantity")}");
+                }
+            }
+            #endregion
+
             await serviceClient.DeleteTableAsync(tableName);
         }
     }

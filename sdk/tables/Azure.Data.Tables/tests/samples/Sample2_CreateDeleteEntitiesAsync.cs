@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies2p2";
-            string partitionKey = "somePartition";
+            string partitionKey = "Stationery";
             string rowKey = "A1";
             string rowKeyStrong = "B1";
 
@@ -36,30 +36,38 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:TablesSample2CreateEntityAsync
-            // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
+            // Make a dictionary entity by defining a <see cref="TableEntity">.
             var entity = new TableEntity(partitionKey, rowKey)
             {
-                {"Product", "Markers" },
-                {"Price", 5.00 },
+                { "Product", "Marker Set" },
+                { "Price", 5.00 },
+                { "Quantity", 21 }
             };
 
+            Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+            #endregion
+
+            #region Snippet:TablesSample2AddEntityAsync
             // Insert the newly created entity.
             await client.CreateEntityAsync(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntityAsync
-            // Make a strongly typed entity by defining a custom class that extends <see cref="TableEntity">.
+            // Create an instance of the strongly-typed entity and set their properties.
             var strongEntity = new OfficeSupplyEntity
             {
                 PartitionKey = partitionKey,
                 RowKey = rowKeyStrong,
                 Product = "Notebook",
-                Price = 3.00
+                Price = 3.00,
+                Quantity = 50
             };
 
-            // Insert the newly created entity.
-            await client.CreateEntityAsync(strongEntity);
+            Console.WriteLine($"{entity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
             #endregion
+
+            // Add the newly created entity.
+            await client.CreateEntityAsync(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntityAsync
             // Delete the entity given the partition and row key.
