@@ -38,6 +38,7 @@ namespace Azure.Core.Experimental.Tests
             stream.Seek(1, SeekOrigin.Current);
             Assert.AreEqual(buffer[7], stream.ReadByte());
             stream.Seek(-2, SeekOrigin.End);
+            Assert.AreEqual(buffer.Length - 2, stream.Position);
             Assert.AreEqual(buffer[buffer.Length - 2], stream.ReadByte());
             stream.Seek(-2, SeekOrigin.End);
             var read = new byte[buffer.Length - stream.Position];
@@ -70,6 +71,19 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(
                 new ReadOnlyMemory<byte>(buffer, 3, buffer.Length - 3).ToArray(),
                 read);
+        }
+
+        [Test]
+        public void ValidatesPositionValue()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var stream = new ReadOnlyMemoryStream(buffer);
+            Assert.That(
+                () => stream.Position = -1,
+                Throws.InstanceOf<ArgumentException>());
+            Assert.That(
+                () => stream.Position = (long)int.MaxValue + 1,
+                Throws.InstanceOf<ArgumentException>());
         }
     }
 }
