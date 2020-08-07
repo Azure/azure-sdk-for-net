@@ -2924,6 +2924,36 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenWriteAsync_OverwiteNoSize()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.OpenWriteAsync(
+                    overwrite: true,
+                    position: 0),
+                e => Assert.AreEqual("size must be set if overwrite is set to true", e.Message));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NewBlobNoSize()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.OpenWriteAsync(
+                    overwrite: false,
+                    position: 0),
+                e => Assert.AreEqual("size must be set if the Page Blob is being created for the first time", e.Message));
+        }
+
+        [Test]
         [TestCase(false)]
         [TestCase(true)]
         public async Task OpenWriteAsync_AccessConditions(bool overwrite)

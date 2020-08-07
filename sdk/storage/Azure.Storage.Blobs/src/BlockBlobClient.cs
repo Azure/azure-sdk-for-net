@@ -2007,6 +2007,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -2024,9 +2027,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -2036,6 +2041,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.  If the blob exists,
         /// it will be overwritten.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -2053,9 +2061,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -2065,6 +2075,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for writing to the blob.  If the blob exists,
         /// it will be overwritten.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -2083,6 +2096,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
             BlockBlobOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -2093,14 +2107,20 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Start();
 
+                if (!overwrite)
+                {
+                    throw new ArgumentException($"{nameof(BlockBlobClient)}.{nameof(BlockBlobClient.OpenWrite)} only supports overwrite.");
+                }
+
                 long position = 0;
 
+                // Create Block Blob
                 Response<BlobContentInfo> response = await UploadInternal(
                     content: new MemoryStream(Array.Empty<byte>()),
                     blobHttpHeaders: default,
                     metadata: default,
                     tags: default,
-                    conditions: options?.Conditions,
+                    conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
                     operationName: default,
@@ -2111,7 +2131,7 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobRequestConditions conditions = new BlobRequestConditions
                 {
                     IfMatch = response.Value.ETag,
-                    LeaseId = options?.Conditions?.LeaseId
+                    LeaseId = options?.OpenConditions?.LeaseId
                 };
 
                 return new BlockBlobWriteStream(

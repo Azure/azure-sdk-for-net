@@ -2125,7 +2125,9 @@ namespace Azure.Storage.Blobs.Test
                 BufferSize = Constants.KB
             };
 
-            Stream stream = await blob.OpenWriteAsync(options);
+            Stream stream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 
@@ -2163,7 +2165,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream newStream = new MemoryStream(newData);
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync();
+            Stream openWriteStream = await blob.OpenWriteAsync(overwrite: true);
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -2185,8 +2187,22 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.OpenWriteAsync(),
+                blob.OpenWriteAsync(overwrite: true),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NoOverwrite()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.OpenWriteAsync(overwrite: false),
+                e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwrite.", e.Message));
         }
 
         [Test]
@@ -2201,7 +2217,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync();
+            Stream openWriteStream = await blob.OpenWriteAsync(overwrite: true);
 
             string blockId = GenerateBlockId();
             await blob.StageBlockAsync(blockId, stream);
@@ -2233,7 +2249,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(options);
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -2260,11 +2278,13 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
                 {
-                    Conditions = accessConditions
+                    OpenConditions = accessConditions
                 };
 
                 // Act
-                Stream openWriteStream = await blob.OpenWriteAsync(options);
+                Stream openWriteStream = await blob.OpenWriteAsync(
+                    overwrite: true,
+                    options);
                 await stream.CopyToAsync(openWriteStream);
                 await openWriteStream.FlushAsync();
 
@@ -2295,11 +2315,13 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
                 {
-                    Conditions = accessConditions
+                    OpenConditions = accessConditions
                 };
 
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    blob.OpenWriteAsync(options),
+                    blob.OpenWriteAsync(
+                        overwrite: true,
+                        options),
                     e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
             }
         }
