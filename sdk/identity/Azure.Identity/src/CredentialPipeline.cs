@@ -120,7 +120,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    _childScopes[name] = (DateTimeHelpers.GetUtcNow(), default);
+                    _childScopes[name] = (DateTime.UtcNow, default);
                 }
             }
 
