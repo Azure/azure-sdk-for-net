@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base definition of a linked integration runtime.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("LinkedIntegrationRuntimeType")]
     public partial class LinkedIntegrationRuntimeType
     {
         /// <summary>

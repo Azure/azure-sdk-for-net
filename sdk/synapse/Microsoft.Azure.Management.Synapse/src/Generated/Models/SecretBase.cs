@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base definition of a secret type.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SecretBase")]
     public partial class SecretBase
     {
         /// <summary>
