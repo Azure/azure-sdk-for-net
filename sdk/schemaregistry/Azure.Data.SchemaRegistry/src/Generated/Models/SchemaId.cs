@@ -5,20 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Data.SchemaRegistry.Models
 {
     /// <summary> JSON Object received from the registry containing schema identifiers. </summary>
-    public partial class SchemaId
+    internal readonly partial struct SchemaId
     {
         /// <summary> Initializes a new instance of SchemaId. </summary>
-        internal SchemaId()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SchemaId. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SchemaId(string id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             Id = id;
         }
 

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    public partial class SchemaId
+    internal partial struct SchemaId
     {
         internal static SchemaId DeserializeSchemaId(JsonElement element)
         {
