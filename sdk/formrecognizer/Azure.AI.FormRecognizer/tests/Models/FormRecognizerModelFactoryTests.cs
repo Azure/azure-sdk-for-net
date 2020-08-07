@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -12,16 +13,12 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <summary>
     /// The suite of tests for the <see cref="FormRecognizerModelFactory"/> class.
     /// </summary>
-    public class FormRecognizerModelFactoryTests : ClientTestBase
+    public class FormRecognizerModelFactoryTests
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizerModelFactoryTests"/> class.
+        /// Assists in <see cref="BoundingBox"/> creation.
         /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerModelFactoryTests(bool isAsync)
-            : base(isAsync)
-        {
-        }
+        private readonly IReadOnlyList<PointF> ListOfPoints = new List<PointF>() { new PointF(3.1415f, 1.6180f), new PointF(6.6740f, 8.9876f) };
 
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateAccountProperties()
@@ -33,6 +30,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(customModelCount, accountProperties.CustomModelCount);
             Assert.AreEqual(customModelLimit, accountProperties.CustomModelLimit);
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateBoundingBox()
+        {
+            var boundingBox = FormRecognizerModelFactory.BoundingBox(ListOfPoints);
+
+            CollectionAssert.AreEqual(ListOfPoints, boundingBox.Points);
         }
 
         [Test]
@@ -76,18 +81,29 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formType = "Pythagoras";
             var accuracy = 0.1414f;
-            // TODO: dictionary of fields.
+            var fields = new Dictionary<string, CustomFormModelField>();
 
-            var customFormSubmodel = FormRecognizerModelFactory.CustomFormSubmodel(formType, accuracy, null);
+            var customFormSubmodel = FormRecognizerModelFactory.CustomFormSubmodel(formType, accuracy, fields);
 
             Assert.AreEqual(formType, customFormSubmodel.FormType);
             Assert.AreEqual(accuracy, customFormSubmodel.Accuracy);
+            Assert.AreEqual(fields, customFormSubmodel.Fields);
         }
 
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldData()
         {
-            // TODO.
+            var boundingBox = new BoundingBox(ListOfPoints);
+            var pageNumber = 109;
+            var text = "Poincare";
+            var fieldElements = new List<FormElement>();
+
+            var fieldData = new FieldData(boundingBox, pageNumber, text, fieldElements);
+
+            Assert.AreEqual(boundingBox, fieldData.BoundingBox);
+            Assert.AreEqual(pageNumber, fieldData.PageNumber);
+            Assert.AreEqual(text, fieldData.Text);
+            Assert.AreEqual(fieldElements, fieldData.FieldElements);
         }
 
         [Test]

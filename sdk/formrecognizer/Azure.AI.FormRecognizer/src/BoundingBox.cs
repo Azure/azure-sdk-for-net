@@ -34,6 +34,15 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BoundingBox"/> structure.
+        /// </summary>
+        /// <param name="points">The sequence of points defining this <see cref="BoundingBox"/>.</param>
+        internal BoundingBox(IReadOnlyList<PointF> points)
+        {
+            Points = points.ToArray();
+        }
+
+        /// <summary>
         /// </summary>
         internal PointF[] Points { get; }
 

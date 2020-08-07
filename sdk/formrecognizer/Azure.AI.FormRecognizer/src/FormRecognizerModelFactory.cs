@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,7 +23,18 @@ namespace Azure.AI.FormRecognizer.Models
         public static AccountProperties AccountProperties(int customModelCount, int customModelLimit) =>
             new AccountProperties(customModelCount, customModelLimit);
 
-        // TODO: BoundingBox
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.BoundingBox"/> structure.
+        /// </summary>
+        /// <param name="points">The sequence of points defining this <see cref="FormRecognizer.Models.BoundingBox"/>.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.BoundingBox"/> instance for mocking.</returns>
+        public static BoundingBox BoundingBox(IReadOnlyList<PointF> points)
+        {
+            Argument.AssertNotNull(points, nameof(points));
+
+            return new BoundingBox(points);
+        }
+
         // TODO: CopyAuthorization
 
         /// <summary>
