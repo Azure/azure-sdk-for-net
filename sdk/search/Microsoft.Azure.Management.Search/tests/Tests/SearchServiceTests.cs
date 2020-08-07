@@ -498,6 +498,35 @@ namespace Microsoft.Azure.Management.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanListSupportedGroupIds()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                SearchService service = CreateServiceForSku(searchMgmt, SkuName.Basic);
+
+                WaitForProvisioningToComplete(searchMgmt, service);
+
+                IList<PrivateLinkResource> resources =
+                    searchMgmt.PrivateLinkResources.ListSupported(Data.ResourceGroupName, service.Name).ToList();
+
+                Assert.NotNull(resources);
+
+                Assert.Equal(1, resources.Count);
+
+                PrivateLinkResource resource = resources.Single();
+
+                Assert.NotNull(resource.Id);
+                Assert.NotNull(resource.Properties.GroupId);
+                Assert.NotEmpty(resource.Properties.RequiredMembers);
+                Assert.NotEmpty(resource.Properties.RequiredZoneNames);
+                Assert.NotEmpty(resource.Properties.ShareablePrivateLinkResourceTypes);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
         private static void AssertServicesEqual(SearchService a, SearchService b) =>
             Assert.Equal(a, b, new ModelComparer<SearchService>());
 
