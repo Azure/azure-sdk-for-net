@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid
     {
         public EventGridConsumerOptions() { }
         public System.Collections.Generic.IDictionary<string, System.Type> CustomEventTypeMappings { get { throw null; } }
-        public Azure.Core.ObjectSerializer DataSerializer { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer DataSerializer { get { throw null; } set { } }
     }
     public partial class EventGridEvent
     {
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid
     public partial class EventGridPublisherClientOptions : Azure.Core.ClientOptions
     {
         public EventGridPublisherClientOptions(Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridPublisherClientOptions.ServiceVersion.V2018_01_01) { }
-        public Azure.Core.ObjectSerializer DataSerializer { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer DataSerializer { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,

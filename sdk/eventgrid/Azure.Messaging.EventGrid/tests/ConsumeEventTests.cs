@@ -9,6 +9,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Azure.EventGrid.Tests;
 using NUnit.Framework;
 using System.Collections;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
