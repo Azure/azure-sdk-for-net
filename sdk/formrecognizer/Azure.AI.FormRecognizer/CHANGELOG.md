@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-preview.5 (Unreleased)
+## 3.0.0-preview.1 (Unreleased)
 
 ### Breaking changes
 
