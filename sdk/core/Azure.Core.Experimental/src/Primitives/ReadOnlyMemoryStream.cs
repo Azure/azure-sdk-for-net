@@ -73,7 +73,7 @@ namespace Azure.Core
             return Read(new Span<byte>(buffer, offset, count));
         }
 
-        public int Read(Span<byte> buffer)
+        private int Read(Span<byte> buffer)
         {
             int remaining = _content.Length - _position;
 
