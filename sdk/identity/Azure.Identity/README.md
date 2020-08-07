@@ -24,20 +24,20 @@ Install-Package Azure.Identity
 * An [Azure subscription][azure_sub].
 * The [Azure CLI][azure_cli] can also be useful for authenticating in a development environment, creating accounts, and managing account roles.
 
-### Authenticating the development environment
+### Authenticating the client
 
 When debugging and executing code locally it is typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools which can be used to perform this authentication in your development environment.
 
 #### Authenticating via Visual Studio 
 
-Developers using Visual Studio 2017 or later can authenticate an Azure Active Directory account through the IDE. Applications using the `DefaultAzureCredential` or the `ViusalStudioCredential` can then use this account to authenticate calls in their application when running locally.
+Developers using Visual Studio 2017 or later can authenticate an Azure Active Directory account through the IDE. Applications using the `DefaultAzureCredential` or the `VisualStudioCredential` can then use this account to authenticate calls in their application when running locally.
 
 To authenticate in Visual Studio select the `Tools > Options` menu to launch the Options dialog. Then navigate to the `Azure Service Authentication` options to sign in with your Azure Active Directory account.
 
 ![Visual Studio Account Selection](./images/VsLoginDialog.png)
 
 #### Authenticating via Visual Studio Code
-Developers using Visual Studio Code can use the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account), to authenticate via the IDE. Applications using the `DefaultAzureCredential` or the `ViusalStudioCodeCredential` can then use this account to authenticate calls in their application when running locally.
+Developers using Visual Studio Code can use the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account), to authenticate via the IDE. Applications using the `DefaultAzureCredential` or the `VisualStudioCodeCredential` can then use this account to authenticate calls in their application when running locally.
 
 To authenticate in Visual Studio Code, first ensure the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is installed. Once the extension is installed, press `F1` to open the command palette and run the `Azure: Sign In` command.
 
@@ -59,16 +59,16 @@ For systems without a default web browser, the `az login` command will use the d
 
 A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across Azure SDK accept credentials when they are constructed, and service clients use those credentials to authenticate requests to the service. 
 
-The Azure Identity library focuses on OAuth authentication with Azure Active directory, and it offers a variety of credential classes capable of acquiring an AAD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used by to construct service clients capable of authenticating with a `TokenCredential`. 
+The Azure Identity library focuses on OAuth authentication with Azure Active directory, and it offers a variety of credential classes capable of acquiring an AAD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`. 
 
-See (Credential Classes)
+See [Credential Classes](#Credential-Classes)
 
 ### DefaultAzureCredential
 The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
 
 ![DefaultAzureCredential authentication flow](./images/DefaultAzureCredentialAuthenticationFlow.png)
 
- - Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#Enviornment-variables) and use it to authenticate.
+ - Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#Environment-Variables) and use it to authenticate.
  - Managed Identity - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
  - Visual Studio - If the developer has authenticated via Visual Studio, the `DefaultAzureCredential` will authenticate with that account.
  - Visual Studio Code - If the developer has authenticated via the Visual Studio Code Azure Account plugin, the `DefaultAzureCredential` will authenticate with that account.
@@ -143,7 +143,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 |credential  | usage
 |-|-
 |`ClientSecretCredential`|authenticates a service principal using a secret
-|`CertificateCredential`|authenticates a service principal using a certificate
+|`ClientCertificateCredential`|authenticates a service principal using a certificate
 
 
 ### Authenticating Users
@@ -159,9 +159,39 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 |-|-
 |`AzureCliCredential`|authenticate in a development environment with the Azure CLI
 |`VisualStudioCredential`|authenticate in a development environment with Visual Studio
-|`VisualStudioCodeCredential`|authenticate in a development environment with Visual Studio
+|`VisualStudioCodeCredential`|authenticate in a development environment with Visual Studio Code
 
-> __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used to create multiple service clients.
+> __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
+
+## Environment Variables
+[DefaultAzureCredential][default_cred_ref] and
+[EnvironmentCredential][environment_cred_ref] can be configured with
+environment variables. Each type of authentication requires values for specific
+variables:
+
+#### Service principal with secret
+|variable name|value
+|-|-
+|`AZURE_CLIENT_ID`|id of an Azure Active Directory application
+|`AZURE_TENANT_ID`|id of the application's Azure Active Directory tenant
+|`AZURE_CLIENT_SECRET`|one of the application's client secrets
+
+#### Service principal with certificate
+|variable name|value
+|-|-
+|`AZURE_CLIENT_ID`|id of an Azure Active Directory application
+|`AZURE_TENANT_ID`|id of the application's Azure Active Directory tenant
+|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PEM-encoded certificate file including private key (without password protection)
+
+#### Username and password
+|variable name|value
+|-|-
+|`AZURE_CLIENT_ID`|id of an Azure Active Directory application
+|`AZURE_USERNAME`|a username (usually an email address)
+|`AZURE_PASSWORD`|that user's password
+
+Configuration is attempted in the above order. For example, if values for a
+client secret and certificate are both present, the client secret will be used.
 
 ## Troubleshooting
 
