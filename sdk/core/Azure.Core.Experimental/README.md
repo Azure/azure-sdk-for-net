@@ -4,7 +4,7 @@ Azure.Core.Experimental contains types that are being evaluated and might eventu
 
 ## Binary Data
 ### Overview
- The `BinaryData` type provides a lightweight abstraction for a payload of bytes. This type integrates with [ObjectSerializer](../../../Azure.Core/src/ObjectSerializer.cs) to allow for serializing and deserializing payloads. It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes. The assumption when converting to and from string is that the encoding is UTF-8.
+ The `BinaryData` type provides a lightweight abstraction for a payload of bytes. This type integrates with [ObjectSerializer](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs) to allow for serializing and deserializing payloads. It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes. The assumption when converting to and from string is that the encoding is UTF-8.
  
  ### Data ownership
  The ownership model of the underlying bytes varies depending on how the instance is constructed:
@@ -34,7 +34,7 @@ data = BinaryData.FromStream(new MemoryStream());
 var stream = data.ToStream();
 ```
  
- It is also used to integrate with `ObjectSerializer`. Here is an [example](../../../../servicebus/Azure.Messaging.ServiceBus/tests/Message/MessageLiveTests.cs#L148) from Service Bus where `BinaryData` is used to represent a message body:
+ It is also used to integrate with `ObjectSerializer`. Here is an [example](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Message/MessageLiveTests.cs#L149) from Service Bus where `BinaryData` is used to represent a message body:
  
 ```c#
 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
