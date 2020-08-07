@@ -298,7 +298,7 @@ namespace Microsoft.Azure.EventHubs
         /// <see cref="PartitionSender.SendAsync(EventData)"/>
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
-            // Convert enumerator to a rescannable collection to avoid skipping events if underlying enumerator is not rescannabled.
+            // Convert enumerator to a rescannable collection to avoid skipping events if underlying enumerator is not re-scannabled.
             var eventDataList = eventDatas?.ToList();
 
             // eventDatas null check is inside ValidateEvents
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.EventHubs
             Task sendTask = null;
             try
             {
-                sendTask = this.InnerSender.SendInternalAsync(eventDataList, partitionKey);
+                sendTask = this.InnerSender.SendAsync(eventDataList, partitionKey);
                 await sendTask.ConfigureAwait(false);
             }
             catch (Exception exception)

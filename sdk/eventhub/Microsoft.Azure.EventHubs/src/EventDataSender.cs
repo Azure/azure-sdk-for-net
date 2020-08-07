@@ -24,14 +24,6 @@ namespace Microsoft.Azure.EventHubs
 
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
-            // Convert enumerator to a rescannable collection to avoid skipping events if underlying enumerator is not rescannabled.
-            var eventDataList = eventDatas.ToList();
-
-            await this.SendInternalAsync(eventDataList, partitionKey).ConfigureAwait(false);
-        }
-
-        public async Task SendInternalAsync(IEnumerable<EventData> eventDatas, string partitionKey)
-        {
             var processedEvents = await this.ProcessEvents(eventDatas).ConfigureAwait(false);
 
             await this.OnSendAsync(processedEvents, partitionKey)
