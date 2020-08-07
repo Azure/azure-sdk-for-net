@@ -338,12 +338,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task SendNonrescannableEnumerator()
         {
             int numberOfEvents = 10;
-            int maxBatchSize = 3;
             string partitionId = "0";
 
             IEnumerable<EventData> GetBatch()
             {
-                for (int i = 0; i < maxBatchSize; i++)
+                for (int i = 0; i < numberOfEvents; i++)
                 {
                     yield return new EventData(Encoding.UTF8.GetBytes(i.ToString()));
                 }
