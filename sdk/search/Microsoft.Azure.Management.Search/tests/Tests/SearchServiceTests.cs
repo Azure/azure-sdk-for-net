@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName, 
                         service.Name, 
-                        new SearchService() { ReplicaCount = 2, PartitionCount = 2 });
+                        new SearchServiceUpdate() { ReplicaCount = 2, PartitionCount = 2 });
 
                 service = WaitForProvisioningToComplete(searchMgmt, service);
                 Assert.Equal(2, service.ReplicaCount);
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName, 
                         service.Name, 
-                        new SearchService() { ReplicaCount = 1, PartitionCount = 1 });
+                        new SearchServiceUpdate() { ReplicaCount = 1, PartitionCount = 1 });
 
                 service = WaitForProvisioningToComplete(searchMgmt, service);
                 Assert.Equal(1, service.ReplicaCount);
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName,
                         service.Name,
-                        new SearchService() { Tags = testTags });
+                        new SearchServiceUpdate() { Tags = testTags });
 
                 Assert.Equal(testTags, service.Tags);
 
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName,
                         service.Name,
-                        new SearchService() { Tags = testTags });
+                        new SearchServiceUpdate() { Tags = testTags });
 
                 Assert.Equal(testTags, service.Tags);
 
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName,
                         service.Name,
-                        new SearchService() { Tags = testTags });
+                        new SearchServiceUpdate() { Tags = testTags });
 
                 Assert.Equal(testTags, service.Tags);
             });
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                         searchMgmt.Services.Update(
                             Data.ResourceGroupName,
                             service.Name,
-                            new SearchService() { HostingMode = HostingMode.HighDensity }));
+                            new SearchServiceUpdate() { HostingMode = HostingMode.HighDensity }));
 
                 Assert.Equal("Updating HostingMode of an existing search service is not allowed.", e.Message);
 
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                     searchMgmt.Services.Update(
                         Data.ResourceGroupName,
                         service.Name,
-                        new SearchService() { Location = "East US" });  // We run live tests in West US.
+                        new SearchServiceUpdate() { Location = "East US" });  // We run live tests in West US.
 
                 Assert.Equal(service.Location, updatedService.Location);
 
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                         searchMgmt.Services.Update(
                             Data.ResourceGroupName,
                             service.Name,
-                            new SearchService() { Sku = new Sku(SkuName.Basic) }));
+                            new SearchServiceUpdate() { Sku = new Sku(SkuName.Basic) }));
 
                 Assert.Equal("Updating Sku of an existing search service is not allowed.", e.Message);
             });
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 CloudException e =
                     Assert.Throws<CloudException>(() =>
-                        searchMgmt.Services.Update(Data.ResourceGroupName, "missing", new SearchService()));
+                        searchMgmt.Services.Update(Data.ResourceGroupName, "missing", new SearchServiceUpdate()));
 
                 Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
             });
@@ -422,8 +422,12 @@ namespace Microsoft.Azure.Management.Search.Tests
                 Assert.Equal(IdentityType.None, service.Identity?.Type ?? IdentityType.None);
 
                 // assign an identity of type 'SystemAssigned'
-                service.Identity = new Identity(IdentityType.SystemAssigned);
-                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service);
+                var serviceUpdateWithIdentity = new SearchServiceUpdate
+                {
+                    Identity = new Identity(IdentityType.SystemAssigned)
+                };
+                
+                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, serviceUpdateWithIdentity);
                 Assert.NotNull(service);
                 Assert.NotNull(service.Identity);
                 Assert.Equal(IdentityType.SystemAssigned, service.Identity.Type);
@@ -435,8 +439,12 @@ namespace Microsoft.Azure.Management.Search.Tests
                 Assert.NotNull(tenantId);
 
                 // remove the identity by setting it's type to 'None'
-                service.Identity.Type = IdentityType.None;
-                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service);
+                var serviceUpdateWithIdentityRemoved = new SearchServiceUpdate
+                {
+                    Identity = new Identity(IdentityType.None)
+                };
+
+                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, serviceUpdateWithIdentityRemoved);
                 Assert.NotNull(service);
                 Assert.Equal(IdentityType.None, service.Identity?.Type ?? IdentityType.None);
 
@@ -467,9 +475,13 @@ namespace Microsoft.Azure.Management.Search.Tests
                 Assert.Null(service.Identity);
 
                 // try update the created service by defining an identity
-                service.Identity = new Identity();
+                var serviceUpdate = new SearchServiceUpdate
+                {
+                    Identity = new Identity()
+                };
+
                 e = Assert.Throws<CloudException>(() =>
-                    searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service));
+                    searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, serviceUpdate));
 
                 Assert.Equal("Resource identity is not supported for the selected SKU", e.Message);
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
