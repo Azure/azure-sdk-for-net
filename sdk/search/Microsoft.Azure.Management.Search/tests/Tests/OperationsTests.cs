@@ -117,7 +117,35 @@ namespace Microsoft.Azure.Management.Search.Tests
                             provider: "Microsoft Search",
                             resource: "Private Endpoint Connection Proxy",
                             operation: "Delete Private Endpoint Connection Proxy",
-                            description: "Deletes an existing private endpoint connection proxy"))
+                            description: "Deletes an existing private endpoint connection proxy")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/write",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Create Shared Private Link Resource",
+                            description: "Creates a new shared private link resource with the specified parameters or updates the properties for the specified shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/read",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Get Shared Private Link Resource",
+                            description: "Returns the list of shared private link resources or gets the properties for the specified shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/delete",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Delete Shared Private Link Resource",
+                            description: "Deletes an existing shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/operationStatuses/read",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Get Operation Status",
+                            description: "Get the details of a long running shared private link resource operation"))
                 };
 
                 Operation[] actualOperations = searchMgmt.Operations.List().ToArray();
