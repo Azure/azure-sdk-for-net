@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
-    <ProjectReference Include="../../../core/Azure.Core.Experimental/src/Azure.Core.Experimental.csproj" />
+    <PacakgeReference Include="Azure.Core" />
+    <PacakgeReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
 </Project>
