@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// automatically be updated by the OS. The property
         /// WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br
         /// /&gt;&lt;br /&gt; ** AutomaticByPlatform** - the virtual machine
-        /// will automatically updated by the OS. The properties
+        /// will automatically updated by the platform. The properties
         /// provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates
         /// must be true. Possible values include: 'Manual', 'AutomaticByOS',
         /// 'AutomaticByPlatform'</param>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine will automatically be updated by the OS. The property
         /// WindowsConfiguration.enableAutomaticUpdates must be true.
         /// &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; ** AutomaticByPlatform** -
-        /// the virtual machine will automatically updated by the OS. The
+        /// the virtual machine will automatically updated by the platform. The
         /// properties provisionVMAgent and
         /// WindowsConfiguration.enableAutomaticUpdates must be true. Possible
         /// values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'

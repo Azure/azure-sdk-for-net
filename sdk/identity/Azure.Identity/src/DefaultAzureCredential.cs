@@ -34,9 +34,9 @@ namespace Azure.Identity
         private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
         private readonly CredentialPipeline _pipeline;
+        private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
         private TokenCredential[] _sources;
-        private TokenCredential _credential;
 
         /// <summary>
         /// Creates a new instance of the <see cref="DefaultAzureCredential"/>.
@@ -64,8 +64,8 @@ namespace Azure.Identity
         internal DefaultAzureCredential(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
             _pipeline = factory.Pipeline;
-
             _sources = GetDefaultAzureCredentialChain(factory, options);
+            _credentialLock = new AsyncLockWithValue<TokenCredential>();
         }
 
         /// <summary>
@@ -104,9 +104,20 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = _credential != null
-                    ? await GetTokenFromCredentialAsync(async, requestContext, cancellationToken).ConfigureAwait(false)
-                    : await GetTokenFromSourcesAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                using var asyncLock = await _credentialLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
+                AccessToken token;
+                if (asyncLock.HasValue)
+                {
+                    token = await GetTokenFromCredentialAsync(asyncLock.Value, requestContext, async, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    TokenCredential credential;
+                    (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
+                    _sources = default;
+                    asyncLock.SetValue(credential);
+                }
 
                 return scope.Succeeded(token);
             }
@@ -116,13 +127,13 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> GetTokenFromCredentialAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private static async ValueTask<AccessToken> GetTokenFromCredentialAsync(TokenCredential credential, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             try
             {
                 return async
-                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
-                    : _credential.GetToken(requestContext, cancellationToken);
+                    ? await credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : credential.GetToken(requestContext, cancellationToken);
             }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
@@ -130,23 +141,19 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<AuthenticationFailedException> exceptions = new List<AuthenticationFailedException>();
 
-            for (var i = 0; i < _sources.Length && _sources[i] != null; i++)
+            for (var i = 0; i < sources.Length && sources[i] != null; i++)
             {
                 try
                 {
                     AccessToken token = async
-                        ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
-                        : _sources[i].GetToken(requestContext, cancellationToken);
+                        ? await sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                        : sources[i].GetToken(requestContext, cancellationToken);
 
-                    _credential = _sources[i];
-
-                    _sources = null;
-
-                    return token;
+                    return (token, sources[i]);
                 }
                 catch (AuthenticationFailedException e)
                 {

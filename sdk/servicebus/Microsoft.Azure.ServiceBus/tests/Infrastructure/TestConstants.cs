@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     static class TestConstants
     {
-        // Enviornment Variables
+        // Environment Variables
         internal const string ConnectionStringEnvironmentVariable = "SERVICEBUS_T1_CONNECTION_STRING";
 
         // General

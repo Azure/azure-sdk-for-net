@@ -83,6 +83,42 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true)] // Comment this attribute to run this tests on Linux with Libsecret enabled
+        public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
+        {
+            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = true,
+                ExcludeInteractiveBrowserCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+            });
+
+            var cloudName = Guid.NewGuid().ToString();
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
+            var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
+
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, default);
+            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+
+            var tasks = new List<Task<AccessToken>>();
+            using (await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName))
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None)));
+                }
+
+                await Task.WhenAll(tasks);
+            }
+
+            foreach (Task<AccessToken> task in tasks)
+            {
+                Assert.IsNotNull(task.Result.Token);
+            }
+        }
+
+        [Test]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -105,6 +141,40 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+        }
+
+        [Test]
+        public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
+        {
+            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = true,
+                ExcludeInteractiveBrowserCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+            });
+
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
+
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter);
+            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+
+            var tasks = new List<Task<AccessToken>>();
+            for (int i = 0; i < 10; i++)
+            {
+                tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None)));
+            }
+
+            await Task.WhenAll(tasks);
+
+            foreach (Task<AccessToken> task in tasks)
+            {
+                Assert.AreEqual(task.Result.Token, expectedToken);
+                Assert.AreEqual(task.Result.ExpiresOn, expectedExpiresOn);
+            }
         }
 
         [Test]
