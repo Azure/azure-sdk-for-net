@@ -224,12 +224,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.
         /// </summary>
-        /// <param name="documentName">Training document name.</param>
+        /// <param name="name">Training document name.</param>
         /// <param name="pageCount">Total number of pages trained.</param>
         /// <param name="errors">List of errors.</param>
         /// <param name="status">Status of the training operation.</param>
         /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
-        public static TrainingDocumentInfo TrainingDocumentInfo(string documentName, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status) =>
-            new TrainingDocumentInfo(documentName, pageCount, errors, status);
+        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status) =>
+            new TrainingDocumentInfo(name, pageCount, errors, status);
     }
 }
