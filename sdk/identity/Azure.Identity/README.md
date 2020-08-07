@@ -133,7 +133,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 ## Credential Classes
 ### Authenticating Azure Hosted Applications
 |credential  | usage
-|-|-|-
+|-|-
 |`DefaultAzureCredential`|provides a simplified authentication experience to quickly start developing applications run in the Azure cloud
 |`ChainedTokenCredential`|allows users to define custom authentication flows composing multiple credentials
 |`EnvironmentCredential`|authenticates a service principal or user via credential information specified in environment variables
@@ -141,14 +141,14 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 
 ### Authenticating Service Principals
 |credential  | usage
-|-|-|-
+|-|-
 |`ClientSecretCredential`|authenticates a service principal using a secret
 |`CertificateCredential`|authenticates a service principal using a certificate
 
 
 ### Authenticating Users
 |credential  | usage
-|-|-|-
+|-|-
 |`InteractiveBrowserCredential`|interactively authenticates a user with the default system browser
 |`DeviceCodeCredential`|interactively authenticates a user on devices with limited UI
 |`UserPasswordCredential`|authenticates a user with a username and password
@@ -156,7 +156,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 
 ### Authenticating via Development Tools
 |credential  | usage
-|-|-|-
+|-|-
 |`AzureCliCredential`|authenticate in a development environment with the Azure CLI
 |`VisualStudioCredential`|authenticate in a development environment with Visual Studio
 |`VisualStudioCodeCredential`|authenticate in a development environment with Visual Studio
