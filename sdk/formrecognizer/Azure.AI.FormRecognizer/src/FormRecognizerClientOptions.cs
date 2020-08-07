@@ -26,12 +26,12 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// The template service version.
+        /// The service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V2.0
+            /// The V2.0 of the service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2_0 = 1
