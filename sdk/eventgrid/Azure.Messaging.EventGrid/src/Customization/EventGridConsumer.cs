@@ -195,12 +195,12 @@ namespace Azure.Messaging.EventGrid
                 }
                 else
                 {
-                    JsonElement dataElement = cloudEventInternal.Data;
+                    JsonElement? dataElement = cloudEventInternal.Data;
 
-                    // Reserialize JsonElement to stream
-                    MemoryStream dataStream = new MemoryStream();
-                    if (dataElement.ValueKind != JsonValueKind.Undefined)
+                    if (dataElement.HasValue && dataElement.Value.ValueKind != JsonValueKind.Null)
                     {
+                        // Reserialize JsonElement to stream
+                        MemoryStream dataStream = new MemoryStream();
                         JsonObjectSerializer serializer = new JsonObjectSerializer();
                         serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
                         dataStream.Position = 0;
@@ -208,12 +208,12 @@ namespace Azure.Messaging.EventGrid
                         // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
                         if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
                         {
-                            cloudEventData = systemDeserializationFunction(dataElement);
+                            cloudEventData = systemDeserializationFunction(dataElement.Value);
                         }
                         // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
                         else if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
                         {
-                            if (!TryGetPrimitiveFromJsonElement(dataElement, out cloudEventData))
+                            if (!TryGetPrimitiveFromJsonElement(dataElement.Value, out cloudEventData))
                             {
                                 if (async)
                                 {
@@ -229,11 +229,16 @@ namespace Azure.Messaging.EventGrid
                         else
                         {
                             // If event data is not a primitive/string, return as BinaryData
-                            if (!TryGetPrimitiveFromJsonElement(dataElement, out cloudEventData))
+                            if (!TryGetPrimitiveFromJsonElement(dataElement.Value, out cloudEventData))
                             {
                                 cloudEventData = BinaryData.FromStream(dataStream);
                             }
                         }
+                    }
+                    else if (dataElement?.ValueKind == JsonValueKind.Null) // Event has null data
+                    {
+                        cloudEventData = null;
+                        cloudEventInternal.Type = "";
                     }
                     else // Event has no data
                     {

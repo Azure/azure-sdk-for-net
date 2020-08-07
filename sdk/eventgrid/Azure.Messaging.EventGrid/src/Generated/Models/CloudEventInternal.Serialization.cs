@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                Data.WriteTo(writer);
+                Data.Value.WriteTo(writer);
             }
             if (Optional.IsDefined(DataBase64))
             {
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventGrid.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+            return new CloudEventInternal(id, source, Optional.ToNullable(data), dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
         }
     }
 }

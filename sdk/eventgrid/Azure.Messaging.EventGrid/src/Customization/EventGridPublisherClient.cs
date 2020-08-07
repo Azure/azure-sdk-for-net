@@ -226,11 +226,6 @@ namespace Azure.Messaging.EventGrid
                             stream.Position = 0;
                             JsonDocument data = JsonDocument.Parse(stream);
                             newCloudEvent.Data = data.RootElement;
-
-                            //newCloudEvent.Data = new EventGridSerializer(
-                            //    cloudEvent.Data,
-                            //    _serializer,
-                            //    cancellationToken);
                         }
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
