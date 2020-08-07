@@ -18,26 +18,13 @@
     <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
 
-    <UseFieldBuilder Condition="'$(UseFieldBuilder)' == '' OR '$(UseAzureCoreSerializer)' == 'true'">true</UseFieldBuilder>
+    <UseFieldBuilder Condition="'$(UseFieldBuilder)' == '' AND '$(UseAzureCoreSerializer)' == 'true'">true</UseFieldBuilder>
     <DefineConstants Condition="'$(UseFieldBuilder)' == 'true'">EXPERIMENTAL_FIELDBUILDER;$(DefineConstants)</DefineConstants>
-
-    <!-- Use a Package or Project reference to Azure.Core -->
-    <UseAzureCoreProjectReference Condition="'$(UseAzureCoreProjectReference)' == '' OR '$(UseAzureCoreSerializer)' == 'true'">true</UseAzureCoreProjectReference>
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->
     <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalDynamic)' == 'true')">true</AddExperimentalReference>
     <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">$(UseProjectReferenceToAzureClients)</UseExperimentalProjectReference>
   </PropertyGroup>
-
-  <!-- Add a reference to Azure.Core -->
-  <Import
-    Condition="'$(UseAzureCoreProjectReference)' != 'true'"
-    Project="$(MSBuildThisFileDirectory)..\..\core\Azure.Core\src\Azure.Core.props" />
-  <ItemGroup>
-    <ProjectReference
-      Condition="'$(UseAzureCoreProjectReference)' == 'true'"
-      Include="$(MSBuildThisFileDirectory)..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
 
   <!-- Add a reference to Azure.Core.Experimental -->
   <ItemGroup Condition="'$(AddExperimentalReference)' == 'true' AND '$(IsTestProject)' != 'true'">

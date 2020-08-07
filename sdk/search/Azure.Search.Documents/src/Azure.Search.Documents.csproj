@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <!-- Project and Package references -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
