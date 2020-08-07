@@ -2993,6 +2993,7 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
             Stream stream = await file.OpenWriteAsync(
+                overwrite: false,
                 position: 0,
                 options: options);
 
@@ -3033,7 +3034,9 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream newStream = new MemoryStream(newData);
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync(position: Constants.KB);
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: false,
+                position: Constants.KB);
             await newStream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -3060,7 +3063,9 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.OpenWriteAsync(position: 0),
+                file.OpenWriteAsync(
+                    overwrite: false,
+                    position: 0),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
@@ -3083,7 +3088,10 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync(position: 0, options);
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -3092,8 +3100,72 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task OpenWriteAsync_Overwite(bool fileExists)
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            if (fileExists)
+            {
+                await file.CreateAsync(Constants.KB);
+            }
+
+            byte[] expectedData = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(expectedData);
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: true,
+                position: 0,
+                maxSize: Constants.KB);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_OverwriteNoSize()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.OpenWriteAsync(
+                    overwrite: true,
+                    position: 0),
+                e => Assert.AreEqual("maxSize must be set if overwrite is set to true", e.Message));
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NewFileNoSize()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.OpenWriteAsync(
+                    overwrite: false,
+                    position: 0),
+                e => Assert.AreEqual("maxSize must be set if the File is being created for the first time", e.Message));
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task OpenWriteAsync_Lease()
+        public async Task OpenWriteAsync_Lease(bool overwrite)
         {
             // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -3111,18 +3183,24 @@ namespace Azure.Storage.Files.Shares.Test
 
             ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
             {
-                Conditions = conditions
+                OpenConditions = conditions
             };
 
             // Act
-            Stream openWriteStream = await file.OpenWriteAsync(position: 0, options);
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: overwrite,
+                position: 0,
+                maxSize: Constants.KB,
+                options: options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
         }
 
         [Test]
+        [TestCase(false)]
+        [TestCase(true)]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task OpenWriteAsync_InvalidLease()
+        public async Task OpenWriteAsync_InvalidLease(bool overwrite)
         {
             // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -3139,12 +3217,16 @@ namespace Azure.Storage.Files.Shares.Test
 
             ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
             {
-                Conditions = conditions
+                OpenConditions = conditions
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                 file.OpenWriteAsync(position: 0, options),
+                 file.OpenWriteAsync(
+                     overwrite: overwrite,
+                     position: 0,
+                     maxSize: Constants.KB,
+                     options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 

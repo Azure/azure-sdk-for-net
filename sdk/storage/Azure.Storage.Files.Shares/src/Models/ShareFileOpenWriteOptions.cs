@@ -17,16 +17,9 @@ namespace Azure.Storage.Files.Shares.Models
         public long? BufferSize { get; set; }
 
         /// <summary>
-        /// Required if Overwrite is set to true.
-        /// Specifies the size of the new File.
+        /// Access conditions used to open the write stream.
         /// </summary>
-        public long MaxSize { get; set; }
-
-        /// <summary>
-        /// Optional <see cref="ShareFileRequestConditions"/> to add
-        /// conditions on appending content to this file.
-        /// </summary>
-        public ShareFileRequestConditions Conditions { get; set; }
+        public ShareFileRequestConditions OpenConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide

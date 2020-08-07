@@ -4755,8 +4755,16 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="position">
         /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required if overwrite is set to true, or the underlying
+        /// file is being created for the first time.
+        /// Specifies the size of the new Page Blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4775,11 +4783,15 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             long position,
+            long? maxSize = default,
             ShareFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
+                overwrite: overwrite,
                 position: position,
+                maxSize: maxSize,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -4788,8 +4800,16 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="position">
         /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required if overwrite is set to true, or the underlying
+        /// file is being created for the first time.
+        /// Specifies the size of the new Page Blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4808,11 +4828,15 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             long position,
+            long? maxSize = default,
             ShareFileOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
+                overwrite: overwrite,
                 position: position,
+                maxSize: maxSize,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -4821,8 +4845,16 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Opens a stream for writing to the file.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
         /// <param name="position">
         /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required if overwrite is set to true, or the underlying
+        /// file is being created for the first time.
+        /// Specifies the size of the new Page Blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4842,7 +4874,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
             long position,
+            long? maxSize,
             ShareFileOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -4853,17 +4887,60 @@ namespace Azure.Storage.Files.Shares
             {
                 scope.Start();
 
-                await GetPropertiesInternal(
-                    conditions: options?.Conditions,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                if (overwrite)
+                {
+                    if (maxSize == null)
+                    {
+                        throw new ArgumentException($"{nameof(maxSize)} must be set if {nameof(overwrite)} is set to true");
+                    }
+
+                    Response<ShareFileInfo> createResponse = await CreateInternal(
+                        maxSize: maxSize.Value,
+                        httpHeaders: default,
+                        metadata: default,
+                        smbProperties: default,
+                        filePermission: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    try
+                    {
+                        Response<ShareFileProperties> propertiesResponse = await GetPropertiesInternal(
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    when(ex.ErrorCode == ShareErrorCode.ResourceNotFound)
+                    {
+                        if (maxSize == null)
+                        {
+                            throw new ArgumentException($"{nameof(maxSize)} must be set if the File is being created for the first time");
+                        }
+
+                        Response<ShareFileInfo> createResponse = await CreateInternal(
+                            maxSize: maxSize.Value,
+                            httpHeaders: default,
+                            metadata: default,
+                            smbProperties: default,
+                            filePermission: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                }
 
                 return new ShareFileWriteStream(
                     fileClient: this,
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
-                    conditions: options?.Conditions,
+                    conditions: options?.OpenConditions,
                     progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)

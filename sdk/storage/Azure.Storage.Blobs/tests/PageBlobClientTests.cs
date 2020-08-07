@@ -2868,7 +2868,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        public async Task OpenWriteAsync_OverwiteNewBlob(bool blobExists)
+        public async Task OpenWriteAsync_OverwriteNewBlob(bool blobExists)
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2898,7 +2898,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task OpenWriteAsync_OverwiteNoSize()
+        public async Task OpenWriteAsync_OverwriteNoSize()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
