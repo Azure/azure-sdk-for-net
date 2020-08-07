@@ -19,9 +19,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
-        /// conditions on appending content to this append blob.
+        /// inital conditions on appending content to this append blob.
         /// </summary>
-        public AppendBlobRequestConditions Conditions { get; set; }
+        public AppendBlobRequestConditions OpenConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide

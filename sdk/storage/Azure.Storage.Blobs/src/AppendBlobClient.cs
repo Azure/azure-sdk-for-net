@@ -1395,6 +1395,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing blob.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -1412,9 +1415,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             AppendBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -1423,6 +1428,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing blob.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -1440,9 +1448,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
             AppendBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
+                overwrite: overwrite,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -1451,6 +1461,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing blob.
+        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -1469,6 +1482,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
             AppendBlobOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -1479,22 +1493,57 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Start();
 
-                long position = 0;
+                long position;
+                ETag? etag;
 
-                Response<BlobProperties> blobPropertiesResponse = await GetPropertiesInternal(
-                    conditions: options?.Conditions,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                if (overwrite)
+                {
+                    Response<BlobContentInfo> createResponse = await CreateInternal(
+                        httpHeaders: default,
+                        metadata: default,
+                        tags: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
 
-                position = blobPropertiesResponse.Value.ContentLength;
+                    position = 0;
+                    etag = createResponse.Value.ETag;
+                }
+                else
+                {
+                    try
+                    {
+                        Response<BlobProperties> propertiesResponse = await GetPropertiesInternal(
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        position = propertiesResponse.Value.ContentLength;
+                        etag = propertiesResponse.Value.ETag;
+                    }
+                    catch (RequestFailedException ex)
+                    when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                    {
+                        Response<BlobContentInfo> createResponse = await CreateInternal(
+                            httpHeaders: default,
+                            metadata: default,
+                            tags: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        position = 0;
+                        etag = createResponse.Value.ETag;
+                    }
+                }
 
                 AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
                 {
-                    IfMatch = blobPropertiesResponse.Value.ETag,
-                    LeaseId = options?.Conditions?.LeaseId,
-                    IfAppendPositionEqual = options?.Conditions?.IfAppendPositionEqual,
-                    IfMaxSizeLessThanOrEqual = options?.Conditions?.IfMaxSizeLessThanOrEqual
+                    IfMatch = etag,
+                    LeaseId = options?.OpenConditions?.LeaseId,
                 };
 
                 return new AppendBlobWriteStream(
