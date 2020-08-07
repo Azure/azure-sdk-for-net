@@ -13,9 +13,9 @@ namespace Azure.Messaging.EventGrid
     public class EventGridConsumerOptions
     {
         /// <summary>
-        /// Serializer used to decode events and custom payloads from JSON.
+        /// Serializer used to decode custom payloads from JSON.
         /// </summary>
-        public ObjectSerializer ObjectSerializer { get; set; } = new JsonObjectSerializer();
+        public ObjectSerializer DataSerializer { get; set; } = new JsonObjectSerializer();
 
         /// <summary>
         /// Contains the mappings for custom event types. For example,

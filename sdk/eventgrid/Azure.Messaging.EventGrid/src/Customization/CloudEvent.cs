@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> Properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema. </summary>
     public class CloudEvent

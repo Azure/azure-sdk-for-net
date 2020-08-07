@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.Serializer ?? new JsonObjectSerializer();
+            _serializer = options.DataSerializer ?? new JsonObjectSerializer();
             _apiVersion = options.Version.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.Serializer ?? new JsonObjectSerializer();
+            _serializer = options.DataSerializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
@@ -317,11 +317,14 @@ namespace Azure.Messaging.EventGrid
             const char Expiration = 'e';
             const char Signature = 's';
 
-            // todo: validation for uri
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(endpoint);
+            if (uriBuilder.Query.Contains("api-version"))
+            {
+                uriBuilder.Query = ""; // remove queries if api version is already added to Uri
+            }
             uriBuilder.AppendQuery("api-version", apiVersion.GetVersionString(), true);
-            string encodedResource = HttpUtility.UrlEncode(endpoint.ToString());
+            string encodedResource = HttpUtility.UrlEncode(uriBuilder.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");
             var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
 

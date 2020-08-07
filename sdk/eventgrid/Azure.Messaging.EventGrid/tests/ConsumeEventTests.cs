@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
             consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-            consumerOptions.ObjectSerializer = new JsonObjectSerializer(
+            consumerOptions.DataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
             consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData[]));
-            consumerOptions.ObjectSerializer = new JsonObjectSerializer(
+            consumerOptions.DataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -1341,7 +1341,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
             consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-            consumerOptions.ObjectSerializer = new JsonObjectSerializer(
+            consumerOptions.DataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -1361,7 +1361,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
             consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-            consumerOptions.ObjectSerializer = new JsonObjectSerializer(
+            consumerOptions.DataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

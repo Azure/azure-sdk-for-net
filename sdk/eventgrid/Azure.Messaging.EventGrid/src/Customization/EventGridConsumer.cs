@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid
         public EventGridConsumer(EventGridConsumerOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
-            _objectSerializer = options.ObjectSerializer;
+            _objectSerializer = options.DataSerializer;
             _customEventTypeMappings = options.CustomEventTypeMappings;
         }
 
@@ -96,13 +96,8 @@ namespace Azure.Messaging.EventGrid
                 serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
                 dataStream.Position = 0;
 
-                // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
-                {
-                    egEventData = systemDeserializationFunction(dataElement);
-                }
-                // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
-                else if (_customEventTypeMappings.TryGetValue(egEventInternal.EventType, out Type typeOfEventData))
+                // First, let's attempt to find the mapping for the event type in the custom event mapping.
+                if (_customEventTypeMappings.TryGetValue(egEventInternal.EventType, out Type typeOfEventData))
                 {
                     if (!TryGetPrimitiveFromJsonElement(dataElement, out egEventData))
                     {
@@ -115,6 +110,11 @@ namespace Azure.Messaging.EventGrid
                             egEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                         }
                     }
+                }
+                // If a custom mapping doesn't exist, let's attempt to find the mapping for the deserialization function in the system event type mapping.
+                else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
+                {
+                    egEventData = systemDeserializationFunction(dataElement);
                 }
                 else
                 {
@@ -202,13 +202,8 @@ namespace Azure.Messaging.EventGrid
                         serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
                         dataStream.Position = 0;
 
-                        // First, let's attempt to find the mapping for the deserialization function in the system event type mapping.
-                        if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
-                        {
-                            cloudEventData = systemDeserializationFunction(dataElement.Value);
-                        }
-                        // If not a system event, let's attempt to find the mapping for the event type in the custom event mapping.
-                        else if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
+                        // First, let's attempt to find the mapping for the event type in the custom event mapping.
+                        if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
                         {
                             if (!TryGetPrimitiveFromJsonElement(dataElement.Value, out cloudEventData))
                             {
@@ -221,6 +216,11 @@ namespace Azure.Messaging.EventGrid
                                     cloudEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                                 }
                             }
+                        }
+                        // If a custom mapping doesn't exist, let's attempt to find the mapping for the deserialization function in the system event type mapping.
+                        else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
+                        {
+                            cloudEventData = systemDeserializationFunction(dataElement.Value);
                         }
                         // If no custom mapping was added, either return a primitive/string, or an object wrapped as BinaryData
                         else

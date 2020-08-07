@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
     public class EventGridEvent
