@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="EventGridConsumer"/> class.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options"> Options for configuring deserialization. </param>
         public EventGridConsumer(EventGridConsumerOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -79,7 +79,6 @@ namespace Azure.Messaging.EventGrid
             {
                 requestDocument = JsonDocument.Parse(stream, default);
             }
-
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
@@ -93,7 +92,6 @@ namespace Azure.Messaging.EventGrid
 
                 // Reserialize JsonElement to stream
                 MemoryStream dataStream = new MemoryStream();
-
                 JsonObjectSerializer serializer = new JsonObjectSerializer();
                 serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
                 dataStream.Position = 0;
@@ -179,7 +177,6 @@ namespace Azure.Messaging.EventGrid
             {
                 requestDocument = JsonDocument.Parse(stream, default);
             }
-
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
