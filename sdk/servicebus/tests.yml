@@ -8,6 +8,7 @@ extends:
       - ServiceDirectory: servicebus
         TimeoutInMinutes: 120
         ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         MaxParallel: 4
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
@@ -16,6 +17,7 @@ extends:
       - ServiceDirectory: servicebus
         TimeoutInMinutes: 120
         ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
         MaxParallel: 4
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
@@ -24,6 +26,7 @@ extends:
       - ServiceDirectory: servicebus
         TimeoutInMinutes: 120
         ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
         MaxParallel: 4
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
