@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Core.Tests
 {
     public class ReadOnlyMemoryStreamTests
     {
