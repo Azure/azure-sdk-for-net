@@ -202,7 +202,14 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormPageCollection()
         {
-            // TODO.
+            var formPage = new FormPage(default, default, default, default, default, default, default);
+
+            var list = new List<FormPage>() { formPage };
+
+            var formPageCollection = FormRecognizerModelFactory.FormPageCollection(list);
+
+            Assert.AreNotSame(list, formPageCollection);
+            Assert.AreEqual(list, formPageCollection);
         }
 
         [Test]
@@ -321,7 +328,14 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateRecognizedFormCollection()
         {
-            // TODO.
+            var recognizedForm = new RecognizedForm(default, default, default, default);
+
+            var list = new List<RecognizedForm>() { recognizedForm };
+
+            var recognizedFormCollection = FormRecognizerModelFactory.RecognizedFormCollection(list);
+
+            Assert.AreNotSame(list, recognizedFormCollection);
+            Assert.AreEqual(list, recognizedFormCollection);
         }
 
         [Test]
