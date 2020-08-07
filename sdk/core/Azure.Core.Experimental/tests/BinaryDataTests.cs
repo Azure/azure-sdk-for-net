@@ -74,7 +74,27 @@ namespace Azure.Core.Tests
             var stream = data.ToStream();
             var sr = new StreamReader(stream);
             Assert.AreEqual("payload", await sr.ReadToEndAsync());
+        }
 
+        [Test]
+        public async Task CannotWriteToReadOnlyMemoryStream()
+        {
+            var buffer = Encoding.UTF8.GetBytes("some data");
+            var payload = new MemoryStream(buffer);
+            var data = BinaryData.FromStream(payload);
+            var stream = data.ToStream();
+            Assert.That(
+                () => stream.Write(buffer, 0, buffer.Length),
+                Throws.InstanceOf<NotSupportedException>());
+            Assert.That(
+                async () => await stream.WriteAsync(buffer, 0, buffer.Length),
+                Throws.InstanceOf<NotSupportedException>());
+            Assert.That(
+                () => stream.WriteByte(1),
+                Throws.InstanceOf<NotSupportedException>());
+            Assert.IsFalse(stream.CanWrite);
+            var sr = new StreamReader(stream);
+            Assert.AreEqual("some data", await sr.ReadToEndAsync());
         }
 
         [Test]
