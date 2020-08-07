@@ -61,9 +61,13 @@ namespace Azure.Search.Documents.Indexes
             field.IsFacetable = IsFacetable;
             field.IsSortable = IsSortable;
 
-            // Use a SearchableFieldAttribute instead, which will override this property.
-            // The service will return Searchable == false for all non-searchable simple types.
-            field.IsSearchable = false;
+            // Only set the field if not already set (e.g. both SimpleFieldAttribute and SearchableFieldAttribute on same property).
+            if (!field.IsSearchable.HasValue)
+            {
+                // Use a SearchableFieldAttribute instead, which will override this property.
+                // The service will return Searchable == false for all non-searchable simple types.
+                field.IsSearchable = false;
+            }
         }
     }
 }

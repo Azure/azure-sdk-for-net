@@ -141,7 +141,8 @@ namespace Azure.Search.Documents.Indexes
                             return null;
                         }
 
-                        SearchField field = new SearchField(prop.SerializedName, dataType);
+                        // Start with a ComplexField to make sure all properties default to language defaults.
+                        SearchField field = new ComplexField(prop.SerializedName, dataType);
                         foreach (SearchField subField in subFields)
                         {
                             field.Fields.Add(subField);
@@ -163,7 +164,8 @@ namespace Azure.Search.Documents.Indexes
                         return null;
                     }
 
-                    SearchField field = new SearchField(prop.SerializedName, SearchFieldDataType);
+                    // Start with a SimpleField to make sure all properties default to language defaults.
+                    SearchField field = new SimpleField(prop.SerializedName, SearchFieldDataType);
                     foreach (Attribute attribute in attributes)
                     {
                         switch (attribute)

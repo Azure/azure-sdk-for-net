@@ -358,21 +358,29 @@ namespace Azure.Search.Documents.Tests
         {
             var expectedFields = new SearchField[]
             {
+#if EXPERIMENTAL_FIELDBUILDER
+                new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
+                new ComplexField(nameof(ModelWithNestedKey.Inner))
+                {
+                    Fields =
+                    {
+                        new SimpleField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
+
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+                    }
+                }
+#else
                 new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
                 new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Complex)
                 {
                     Fields =
                     {
                         new SearchField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
-
-#if EXPERIMENTAL_FIELDBUILDER
-                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
-                        new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-#else
                         new SearchField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-#endif
                     }
                 }
+#endif
             };
 
             IList<SearchField> actualFields = BuildForType(typeof(ModelWithNestedKey));
@@ -385,19 +393,26 @@ namespace Azure.Search.Documents.Tests
         {
             var expectedFields = new SearchField[]
             {
+#if EXPERIMENTAL_FIELDBUILDER
+                new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
+                new ComplexField(nameof(ModelWithNestedKey.Inner), collection: true)
+                {
+                    Fields =
+                    {
+                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
+                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
+                    }
+                }
+#else
                 new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
                 new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Collection(SearchFieldDataType.Complex))
                 {
                     Fields =
                     {
-#if EXPERIMENTAL_FIELDBUILDER
-                        // Use a SimpleField helper since the property is attributed with a SimpleFieldAttribute with the same behavior of defaulting property values.
-                        new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-#else
                         new SearchField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-#endif
                     }
                 }
+#endif
             };
 
             IList<SearchField> actualFields = BuildForType(typeof(ModelWithIgnoredProperties));

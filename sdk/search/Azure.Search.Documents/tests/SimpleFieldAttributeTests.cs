@@ -40,5 +40,55 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(facetable, field.IsFacetable ?? false);
             Assert.AreEqual(sortable, field.IsSortable ?? false);
         }
+
+        [Test]
+        [Parallelizable]
+        public void IsSearchableNotOverwritten()
+        {
+            SearchField field = new SearchField("test", SearchFieldDataType.String);
+            ISearchFieldAttribute attribute = new SearchableFieldAttribute
+            {
+                AnalyzerName = LexicalAnalyzerName.Values.EnLucene,
+                IsFilterable = true,
+                IsSortable = true,
+            };
+
+            attribute.SetField(field);
+
+            Assert.AreEqual("test", field.Name);
+            Assert.AreEqual(SearchFieldDataType.String, field.Type);
+            Assert.IsFalse(field.IsFacetable);
+            Assert.IsTrue(field.IsFilterable);
+            Assert.IsFalse(field.IsHidden);
+            Assert.IsFalse(field.IsKey);
+            Assert.IsTrue(field.IsSearchable);
+            Assert.IsTrue(field.IsSortable);
+            Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
+            Assert.IsNull(field.IndexAnalyzerName);
+            Assert.IsNull(field.SearchAnalyzerName);
+            Assert.IsEmpty(field.SynonymMapNames);
+
+            // Make sure that if a SimpleFieldAttribute were also specified, it does not overwrite IsSearchable
+            // but does overwrite every other SimpleField property not set otherwise.
+            attribute = new SimpleFieldAttribute
+            {
+                IsKey = true,
+            };
+
+            attribute.SetField(field);
+
+            Assert.AreEqual("test", field.Name);
+            Assert.AreEqual(SearchFieldDataType.String, field.Type);
+            Assert.IsFalse(field.IsFacetable);
+            Assert.IsFalse(field.IsFilterable);
+            Assert.IsFalse(field.IsHidden);
+            Assert.IsTrue(field.IsKey);
+            Assert.IsTrue(field.IsSearchable);
+            Assert.IsFalse(field.IsSortable);
+            Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
+            Assert.IsNull(field.IndexAnalyzerName);
+            Assert.IsNull(field.SearchAnalyzerName);
+            Assert.IsEmpty(field.SynonymMapNames);
+        }
     }
 }
