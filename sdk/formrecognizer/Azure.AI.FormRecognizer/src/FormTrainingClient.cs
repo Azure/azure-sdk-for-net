@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
@@ -117,16 +117,17 @@ namespace Azure.AI.FormRecognizer.Training
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingOptions trainingOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
+            trainingOptions ??= new TrainingOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartTraining)}");
             scope.Start();
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
 
                 ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
@@ -144,7 +145,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
+        /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
@@ -152,16 +153,17 @@ namespace Azure.AI.FormRecognizer.Training
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingOptions trainingOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
+            trainingOptions ??= new TrainingOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormTrainingClient)}.{nameof(StartTraining)}");
             scope.Start();
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingFileFilter, UseLabelFile = useTrainingLabels };
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) { SourceFilter = trainingOptions.TrainingFileFilter, UseLabelFile = useTrainingLabels };
 
                 ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
                 return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
