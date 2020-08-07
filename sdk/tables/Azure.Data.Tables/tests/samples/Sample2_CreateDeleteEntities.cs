@@ -25,13 +25,13 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2CreateTableWithTableClient
             // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-            var client = new TableClient(
+            var tableClient = new TableClient(
                 tableName,
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             // Create the table in the service.
-            client.Create();
+            tableClient.Create();
             #endregion
 
             #region Snippet:TablesSample2CreateDictionaryEntity
@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2AddEntity
             // Add the newly created entity.
-            client.CreateEntity(entity);
+            tableClient.CreateEntity(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntity
@@ -66,15 +66,15 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             // Add the newly created entity.
-            client.CreateEntity(strongEntity);
+            tableClient.CreateEntity(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntity
             // Delete the entity given the partition and row key.
-            client.DeleteEntity(partitionKey, rowKey);
+            tableClient.DeleteEntity(partitionKey, rowKey);
             #endregion
 
             #region Snippet:TablesSample2DeleteTableWithTableClient
-            client.Delete();
+            tableClient.Delete();
             #endregion
         }
 

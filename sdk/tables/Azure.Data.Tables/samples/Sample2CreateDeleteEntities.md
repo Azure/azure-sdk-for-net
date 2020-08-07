@@ -1,27 +1,27 @@
-# Create and Delete Entities
-This sample demonstrates how to add and delete entities. To get started, you'll need access to either a Storage or Cosmos DB account.
+# Add and Delete Entities
+This sample demonstrates how to add and delete entities. You will have needed to [create a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it.To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
-A `TableClient` is needed to perform table-level operations like inserting and deleting entities within the table. There are two ways to get a `TableClient`:
+A `TableClient` is needed to perform table-level operations like inserting and deleting entities within the table, so it is ideal for dealing with only a specific table. There are two ways to get a `TableClient`:
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
+
+```C# Snippet:TablesSample1GetTableClient
+tableName = "OfficeSupplies1p2";
+var tableClient = serviceClient.GetTableClient(tableName);
+```
+
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
-If the table has not been created in the service, call `Create`.
-
-```C# Snippet:TablesSample2CreateTableWithTableClient
-// Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-var client = new TableClient(
+```C# Snippet:TablesSample1CreateTableClient
+tableClient = new TableClient(
     tableName,
     new Uri(storageUri),
     new TableSharedKeyCredential(accountName, storageAccountKey));
-
-// Create the table in the service.
-client.Create();
 ```
 
-//TODO: Include snippet for deleting the table with the TableClient(?)
+If you have not created a table, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
 
-## Create an entity
+## Create a local entity
 An entity has a set of properties, and each property is a name, typed-value pair. Entities can be strongly-typed or in dictionary form using the `TableEntity` class.
 
 ### Strongly-typed entity
@@ -79,7 +79,7 @@ To add the entity to the table, invoke `CreateEntity` and pass in the newly crea
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-client.CreateEntity(entity);
+tableClient.CreateEntity(entity);
 ```
 
 ## Delete an entity
@@ -87,7 +87,7 @@ To delete an entity, invoke `DeleteEntity` and pass in its partition and row key
 
 ```C# Snippet:TablesSample2DeleteEntity
 // Delete the entity given the partition and row key.
-client.DeleteEntity(partitionKey, rowKey);
+tableClient.DeleteEntity(partitionKey, rowKey);
 ```
 ---
 To see the full example source files, see:

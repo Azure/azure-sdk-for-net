@@ -37,6 +37,26 @@ namespace Azure.Data.Tables.Samples
             // Deletes the table made previously.
             serviceClient.DeleteTable(tableName);
             #endregion
+
+            #region Snippet:TablesSample1GetTableClient
+            tableName = "OfficeSupplies1p2";
+            var tableClient = serviceClient.GetTableClient(tableName);
+            #endregion
+
+            #region Snippet:TablesSample1CreateTableClient
+            tableClient = new TableClient(
+                tableName,
+                new Uri(storageUri),
+                new TableSharedKeyCredential(accountName, storageAccountKey));
+            #endregion
+
+            #region Snippet:TablesSample1TableClientCreateTable
+            tableClient.Create();
+            #endregion
+
+            #region Snippet:TablesSample1TableClientDeleteTable
+            tableClient.Delete();
+            #endregion
         }
     }
 }

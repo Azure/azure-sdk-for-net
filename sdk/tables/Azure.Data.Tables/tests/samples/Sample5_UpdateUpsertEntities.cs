@@ -27,7 +27,7 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             serviceClient.CreateTable(tableName);
-            var client = serviceClient.GetTableClient(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
             #region Snippet:TablesSample5UpsertEntity
             var entity = new TableEntity(partitionKey, rowKey)
@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
-            client.UpsertEntity(entity);
+            tableClient.UpsertEntity(entity);
             #endregion
 
             #region Snippet:TablesSample5UpsertWithReplace
@@ -47,18 +47,18 @@ namespace Azure.Data.Tables.Samples
 
             // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
             // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-            client.UpsertEntity(entity, TableUpdateMode.Replace);
+            tableClient.UpsertEntity(entity, TableUpdateMode.Replace);
             #endregion
 
             #region Snippet:TablesSample5UpdateEntity
             // Get the entity to update.
-            TableEntity qEntity = client.GetEntity<TableEntity>(partitionKey, rowKey);
+            TableEntity qEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
             qEntity["Price"] = 7.00;
 
             // Since no UpdateMode was passed, the request will default to Merge.
-            client.UpdateEntity(qEntity, qEntity.ETag);
+            tableClient.UpdateEntity(qEntity, qEntity.ETag);
 
-            TableEntity updatedEntity = client.GetEntity<TableEntity>(partitionKey, rowKey);
+            TableEntity updatedEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
             Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
             Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
             #endregion

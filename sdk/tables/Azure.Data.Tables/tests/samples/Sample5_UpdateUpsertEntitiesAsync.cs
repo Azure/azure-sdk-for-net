@@ -28,7 +28,7 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             await serviceClient.CreateTableAsync(tableName);
-            var client = serviceClient.GetTableClient(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
             #region Snippet:TablesSample5UpsertEntity
             var entity = new TableEntity(partitionKey, rowKey)
@@ -39,7 +39,7 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
-            await client.UpsertEntityAsync(entity);
+            await tableClient.UpsertEntityAsync(entity);
             #endregion
 
             #region Snippet:TablesSample5UpsertWithReplace
@@ -48,18 +48,18 @@ namespace Azure.Data.Tables.Samples
 
             // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
             // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-            await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            await tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
             #endregion
 
             #region Snippet:TablesSample5UpdateEntityAsync
             // Get the entity to update.
-            TableEntity qEntity = await client.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            TableEntity qEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
             qEntity["Price"] = 7.00;
 
             // Since no UpdateMode was passed, the request will default to Merge.
-            await client.UpdateEntityAsync(qEntity, qEntity.ETag);
+            await tableClient.UpdateEntityAsync(qEntity, qEntity.ETag);
 
-            TableEntity updatedEntity = await client.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            TableEntity updatedEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
             Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
             Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
             #endregion

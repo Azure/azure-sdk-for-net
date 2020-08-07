@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             serviceClient.CreateTable(tableName);
-            var client = serviceClient.GetTableClient(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
             var entity = new TableEntity(partitionKey, rowKey)
             {
@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Samples
                 { "Price", 5.00 },
                 { "Quantity", 34 }
             };
-            client.CreateEntity(entity);
+            tableClient.CreateEntity(entity);
 
             var entity2 = new TableEntity(partitionKey, rowKey2)
             {
@@ -46,10 +46,10 @@ namespace Azure.Data.Tables.Samples
                 { "Price", 7.00 },
                 { "Quantity", 34 }
             };
-            client.CreateEntity(entity2);
+            tableClient.CreateEntity(entity2);
 
             #region Snippet:TablesSample4QueryEntitiesFilter
-            Pageable<TableEntity> queryResultsFilter = client.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
             // Iterate the <see cref="Pageable"> to access all queried entities.
             foreach (TableEntity qEntity in queryResultsFilter)
@@ -63,15 +63,15 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample4QueryEntitiesExpression
             // Use the <see cref="TableClient"> to query the table using a filter expression.
             double priceCutOff = 6.00;
-            Pageable<OfficeSupplyEntity> queryResultsLINQ = client.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+            Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
             #endregion
 
             #region Snippet:TablesSample4QueryEntitiesSelect
-            Pageable<TableEntity> queryResultsSelect = client.Query<TableEntity>(select: new List<string>() { "Product", "Price"});
+            Pageable<TableEntity> queryResultsSelect = tableClient.Query<TableEntity>(select: new List<string>() { "Product", "Price"});
             #endregion
 
             #region Snippet:TablesSample4QueryEntitiesMaxPerPage
-            Pageable<TableEntity> queryResultsMaxPerPage = client.Query<TableEntity>(maxPerPage: 10);
+            Pageable<TableEntity> queryResultsMaxPerPage = tableClient.Query<TableEntity>(maxPerPage: 10);
 
             // Iterate the <see cref="Pageable"> by page.
             foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
