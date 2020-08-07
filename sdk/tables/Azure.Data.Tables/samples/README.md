@@ -22,5 +22,8 @@ You can find samples for each of this main functions below.
 To get started you'll need an Azure Tables endpoint and credentials. See Azure Tables Client Library [Readme][README] for more information and instructions.
 
 - [Create/delete tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md)
+- [Create/delete entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md)
+- [Query tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample3QueryTables.md)
+- [Query entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample4QueryEntities.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/readme.md
