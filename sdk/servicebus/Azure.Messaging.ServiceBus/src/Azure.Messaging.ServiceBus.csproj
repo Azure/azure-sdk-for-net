@@ -32,8 +32,8 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="SharedSource\Azure.Core\AzureResourceProviderNamespaceAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PacakgeReference Include="Azure.Core" />
-    <PacakgeReference Include="Azure.Core.Experimental" />
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">
