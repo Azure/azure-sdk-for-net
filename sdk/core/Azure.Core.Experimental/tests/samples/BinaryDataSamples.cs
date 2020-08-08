@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests.samples
@@ -11,26 +12,76 @@ namespace Azure.Core.Experimental.Tests.samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void HelloWorld()
+        public void ToFromString()
         {
-            #region Snippet:BinaryDataHelloWorld
+            #region Snippet:BinaryDataToFromString
             var data = new BinaryData("some data");
+            // ToString will decode the bytes using UTF-8
+            Console.WriteLine(data.ToString()); // prints "some data"
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ToFromBytes()
+        {
+            #region Snippet:BinaryDataToFromBytes
+            var bytes = Encoding.UTF8.GetBytes("some data");
+            // when using the ReadOnlySpan constructor the underlying data is copied.
+            var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
+
+            // when using the FromMemory method, the data is wrapped
+            data = BinaryData.FromMemory(bytes);
 
             // there is an implicit cast defined for ReadOnlyMemory<byte>
-            ReadOnlyMemory<byte> bytes = data;
+            ReadOnlyMemory<byte> rom = data;
 
             // there is also a Bytes property that holds the data
-            bytes = data.Bytes;
+            rom = data.Bytes;
 
             // ToString will decode the bytes using UTF-8
             Console.WriteLine(data.ToString()); // prints "some data"
-
-            // you can also create BinaryData from a stream
-            data = BinaryData.FromStream(new MemoryStream());
-
-            // and convert it to a stream
-            var stream = data.ToStream();
             #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ToFromStream()
+        {
+            #region Snippet:BinaryDataToFromStream
+            var bytes = Encoding.UTF8.GetBytes("some data");
+            Stream stream = new MemoryStream(bytes);
+            var data = BinaryData.FromStream(stream);
+
+            // Calling ToStream will give back a stream that is backed by ReadOnlyMemory, so it is not writable.
+            stream = data.ToStream();
+            Console.WriteLine(stream.CanWrite); // prints false
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ToFromCustomType()
+        {
+            #region Snippet:BinaryDataToFromCustomModel
+            var model = new CustomModel
+            {
+                A = "some text",
+                B = 5,
+                C = true
+            };
+            // By default, the JsonObjectSerializer will be used, but any serializer deriving from ObjectSerializer can be
+            // used.
+            var data = BinaryData.Serialize(model);
+            model = data.Deserialize<CustomModel>();
+            #endregion
+        }
+
+        private class CustomModel
+        {
+            public string A { get; set; }
+            public int B { get; set; }
+            public bool C { get; set; }
         }
     }
 }

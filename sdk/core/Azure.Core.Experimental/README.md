@@ -15,45 +15,53 @@ Azure.Core.Experimental contains types that are being evaluated and might eventu
  ### Usage
  The main value of this type is its ability to easily convert from string to bytes to stream. This can greatly simplify API surface areas by exposing this type as opposed to numerous overloads or properties.
  
- ```C# Snippet:BinaryDataHelloWorld
+To/From string:
+```C# Snippet:BinaryDataToFromString
 var data = new BinaryData("some data");
+// ToString will decode the bytes using UTF-8
+Console.WriteLine(data.ToString()); // prints "some data"
+```
+ 
+ To/From bytes:
+```C# Snippet:BinaryDataToFromBytes
+var bytes = Encoding.UTF8.GetBytes("some data");
+// when using the ReadOnlySpan constructor the underlying data is copied.
+var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
+
+// when using the FromMemory method, the data is wrapped
+data = BinaryData.FromMemory(bytes);
 
 // there is an implicit cast defined for ReadOnlyMemory<byte>
-ReadOnlyMemory<byte> bytes = data;
+ReadOnlyMemory<byte> rom = data;
 
 // there is also a Bytes property that holds the data
-bytes = data.Bytes;
+rom = data.Bytes;
 
 // ToString will decode the bytes using UTF-8
 Console.WriteLine(data.ToString()); // prints "some data"
-
-// you can also create BinaryData from a stream
-data = BinaryData.FromStream(new MemoryStream());
-
-// and convert it to a stream
-var stream = data.ToStream();
 ```
- 
- It is also used to integrate with `ObjectSerializer`. Here is an [example](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Message/MessageLiveTests.cs#L149) from Service Bus where `BinaryData` is used to represent a message body:
- 
-```c#
-var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-var sender = client.CreateSender(scope.QueueName);
-var serializer = new JsonObjectSerializer();
-var testBody = new TestBody
+To/From stream:
+```C# Snippet:BinaryDataToFromStream
+var bytes = Encoding.UTF8.GetBytes("some data");
+Stream stream = new MemoryStream(bytes);
+var data = BinaryData.FromStream(stream);
+
+// Calling ToStream will give back a stream that is backed by ReadOnlyMemory, so it is not writable.
+stream = data.ToStream();
+Console.WriteLine(stream.CanWrite); // prints false
+```
+
+ `BinaryData` also can be used to integrate with `ObjectSerializer`. By default, the `JsonObjectSerializer` will be used, but any serializer deriving from `ObjectSerializer` can be used.
+```C# Snippet:BinaryDataToFromCustomModel
+var model = new CustomModel
 {
-A = "text",
-B = 5,
-C = false
+    A = "some text",
+    B = 5,
+    C = true
 };
 
-// The serializer param is optional. If omitted, JsonObjectSerializer is used.
-var body = BinaryData.Serialize(testBody, serializer);
-var msg = new ServiceBusMessage(body);
-
-await sender.SendMessageAsync(msg);
-
-var receiver = client.CreateReceiver(scope.QueueName);
-var received = await receiver.ReceiveMessageAsync();
-var receivedBody = received.Body.Deserialize<TestBody>(serializer);
+var data = BinaryData.Serialize(model);
+model = data.Deserialize<CustomModel>();
 ```
+
+
