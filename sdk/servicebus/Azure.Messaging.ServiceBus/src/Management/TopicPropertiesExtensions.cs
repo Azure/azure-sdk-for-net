@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         public static List<TopicProperties> ParseCollectionFromContent(string xml)
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("No topics were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("No topics were found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         private static TopicProperties ParseFromEntryElement(XElement xEntry)
@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in qdXml.Elements())

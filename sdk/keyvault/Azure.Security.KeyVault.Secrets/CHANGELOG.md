@@ -65,7 +65,7 @@ https://aka.ms/azure-sdk-preview1-net.
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
 using that library would require code changes to use `Azure.Security.KeyVault.Secrets`.
 This package's
-[documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+[documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
 and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples)
 demonstrate the new API.
@@ -79,7 +79,7 @@ only).
 - Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Secrets` package.
 - Authentication using `Azure.Identity` credentials
   - see this package's
-  [documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+  [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
   , and the
   [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
   for more information

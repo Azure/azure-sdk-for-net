@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Infrastructure
         }
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
         {
-            if (variableName == ServiceBusTestEnvironment.NamespaceConnectionStringVariableName)
+            if (variableName == ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)
             {
                 return Regex.Replace(environmentVariableValue, "SharedAccessKey=.*", "SharedAccessKey=Kg==");
             }

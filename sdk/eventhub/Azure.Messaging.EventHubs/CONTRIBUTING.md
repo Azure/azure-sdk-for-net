@@ -56,10 +56,10 @@ The maximum duration, in minutes, that a single test is permitted to run before 
   The connection string to an existing Blob Storage account to use for `EventProcessorClient` testing.  If specified, this account will be used as the basis for the test run, with container instances dynamically managed by the tests.  When the run is complete, the account will be left in the state that it was in before the test run took place.  If not specified, a new storage account will be dynamically created for the test run and removed at the end of the run.
   
 - `AZURE_AUTHORITY_HOST` _**(optional)**_  
-  The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.  ****
+  The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
   
 - `SERVICE_MANAGEMENT_URL` _**(optional)**_  
-  The URL of the endpoint responsible for servivce management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+  The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
   
 - `RESOURCE_MANAGER_URL` _**(optional)**_  
   The URL of the endpoint responsible for resource management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.

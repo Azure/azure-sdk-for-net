@@ -16,9 +16,10 @@ namespace Azure.Core.Tests
             _isAsync = isAsync;
         }
 
-        protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport)
+        protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
             var message = new HttpMessage(request, new ResponseClassifier());
+            message.CancellationToken = cancellationToken;
             if (_isAsync)
             {
                 await transport.ProcessAsync(message);

@@ -64,7 +64,7 @@ namespace Azure.Iot.Hub.Service.Authentication
         private static string BuildExpiresOn(TimeSpan timeToLive)
         {
             DateTimeOffset expiresOn = DateTimeOffset.UtcNow.Add(timeToLive);
-            TimeSpan secondsFromBaseTime = expiresOn.Subtract(SharedAccessSignatureConstants.EpochTime);
+            TimeSpan secondsFromBaseTime = expiresOn.Subtract(SharedAccessSignatureConstants.s_epochTime);
             long seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
             return Convert.ToString(seconds, CultureInfo.InvariantCulture);
         }

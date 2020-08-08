@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -37,7 +38,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             // Models we'll need later
             Queue<string> chunks = new Queue<string>();
-            long chunkIndex = shardCursor?.ChunkIndex ?? 0;
             long blockOffset = shardCursor?.BlockOffset ?? 0;
             long eventIndex = shardCursor?.EventIndex ?? 0;
 
@@ -66,22 +66,37 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
             }
 
+            long chunkIndex = 0;
+            string currentChunkPath = shardCursor?.CurrentChunkPath;
             Chunk currentChunk = null;
             if (chunks.Count > 0) // Chunks can be empty right after hour flips.
             {
                 // Fast forward to current Chunk
-                if (chunkIndex > 0)
+                if (!string.IsNullOrWhiteSpace(currentChunkPath))
                 {
-                    for (int i = 0; i < chunkIndex; i++)
+                    while (chunks.Count > 0)
                     {
-                        chunks.Dequeue();
+                        if (chunks.Peek() == currentChunkPath)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            chunks.Dequeue();
+                            chunkIndex++;
+                        }
+                    }
+                    if (chunks.Count == 0)
+                    {
+                        throw new ArgumentException($"Chunk {currentChunkPath} not found.");
                     }
                 }
 
-                currentChunk = _chunkFactory.BuildChunk(
+                currentChunk = await _chunkFactory.BuildChunk(
+                    async,
                     chunks.Dequeue(),
                     blockOffset,
-                    eventIndex);
+                    eventIndex).ConfigureAwait(false);
             }
 
             return new Shard(
@@ -89,7 +104,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 _chunkFactory,
                 chunks,
                 currentChunk,
-                chunkIndex);
+                chunkIndex,
+                shardPath);
         }
     }
 }
