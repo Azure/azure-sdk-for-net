@@ -19,63 +19,72 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies2p1";
-            string partitionKey = "somePartition";
+            string partitionKey = "Stationery";
             string rowKey = "A1";
             string rowKeyStrong = "B1";
 
             #region Snippet:TablesSample2CreateTableWithTableClient
             // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-            var client = new TableClient(
+            var tableClient = new TableClient(
                 tableName,
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             // Create the table in the service.
-            client.Create();
+            tableClient.Create();
             #endregion
 
-            #region Snippet:TablesSample2CreateEntity
-            // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
+            #region Snippet:TablesSample2CreateDictionaryEntity
+            // Make a dictionary entity by defining a <see cref="TableEntity">.
             var entity = new TableEntity(partitionKey, rowKey)
             {
-                {"Product", "Markers" },
-                {"Price", 5.00 },
+                { "Product", "Marker Set" },
+                { "Price", 5.00 },
+                { "Quantity", 21 }
             };
 
-            // Insert the newly created entity.
-            client.CreateEntity(entity);
+            Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+            #endregion
+
+            #region Snippet:TablesSample2AddEntity
+            // Add the newly created entity.
+            tableClient.CreateEntity(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntity
-            // Make a strongly typed entity by defining a custom class that extends <see cref="TableEntity">.
+            // Create an instance of the strongly-typed entity and set their properties.
             var strongEntity = new OfficeSupplyEntity
             {
                 PartitionKey = partitionKey,
                 RowKey = rowKeyStrong,
                 Product = "Notebook",
-                Price = 3.00
+                Price = 3.00,
+                Quantity = 50
             };
 
-            // Insert the newly created entity.
-            client.CreateEntity(strongEntity);
+            Console.WriteLine($"{entity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
             #endregion
+
+            // Add the newly created entity.
+            tableClient.CreateEntity(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntity
             // Delete the entity given the partition and row key.
-            client.DeleteEntity(partitionKey, rowKey);
+            tableClient.DeleteEntity(partitionKey, rowKey);
             #endregion
 
             #region Snippet:TablesSample2DeleteTableWithTableClient
-            client.Delete();
+            tableClient.Delete();
             #endregion
         }
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
-        // Define a strongly typed entity by extending the <see cref="TableEntity"> class.
+        // Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
         public class OfficeSupplyEntity : ITableEntity
         {
             public string Product { get; set; }
             public double Price { get; set; }
+            public int Quantity { get; set; }
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
