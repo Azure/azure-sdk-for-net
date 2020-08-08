@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 var services = searchMgmt.Services.ListBySubscription();
                 Assert.NotNull(services);
-                Assert.Equal(2, services.Count());
+                Assert.Equal(2, services.Where(service => service.Name.StartsWith("azs-")).Count());
                 Assert.Contains(service1.Name, services.Select(s => s.Name));
                 Assert.Contains(service2.Name, services.Select(s => s.Name));
             });
