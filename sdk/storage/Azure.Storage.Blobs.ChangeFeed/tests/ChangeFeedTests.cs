@@ -122,23 +122,24 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<SegmentCursor>()))
                 .ReturnsAsync(segment.Object);
 
-            long chunkIndex = 1;
+            string currentChunkPath = "chunk1";
             long blockOffset = 2;
             long eventIndex = 3;
             ShardCursor shardCursor = new ShardCursor(
-                chunkIndex,
+                currentChunkPath,
                 blockOffset,
                 eventIndex);
 
             DateTimeOffset segmentTime = new DateTimeOffset(2020, 1, 4, 17, 0, 0, TimeSpan.Zero);
-            int shardIndex = 0;
+            string segmentPath = "idx/segments/2020/01/04/1700/meta.json";
+            string currentShardPath = "log/00/2020/01/04/1700/";
             SegmentCursor segmentCursor = new SegmentCursor(
-                segmentTime,
+                segmentPath,
                 new List<ShardCursor>
                 {
                     shardCursor
                 },
-                shardIndex);
+                currentShardPath);
 
             segment.Setup(r => r.GetCursor()).Returns(segmentCursor);
 
@@ -167,12 +168,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(expectedCursor.EndTime, actualCursor.EndTime);
             Assert.AreEqual(expectedCursor.UrlHash, actualCursor.UrlHash);
 
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.SegmentTime, actualCursor.CurrentSegmentCursor.SegmentTime);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardIndex, actualCursor.CurrentSegmentCursor.ShardIndex);
+            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.SegmentPath, actualCursor.CurrentSegmentCursor.SegmentPath);
+            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.CurrentShardPath, actualCursor.CurrentSegmentCursor.CurrentShardPath);
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors.Count, actualCursor.CurrentSegmentCursor.ShardCursors.Count);
 
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset, actualCursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset);
-            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].ChunkIndex, actualCursor.CurrentSegmentCursor.ShardCursors[0].ChunkIndex);
+            Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath, actualCursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath);
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex, actualCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex);
 
             containerClient.Verify(r => r.Uri);
@@ -239,11 +240,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 IsAsync,
                 "idx/segments/2020/01/16/2300/meta.json",
                 It.Is<SegmentCursor>(
-                    r => r.SegmentTime == segmentTime
-                    && r.ShardIndex == shardIndex
+                    r => r.SegmentPath == segmentPath
+                    && r.CurrentShardPath == currentShardPath
                     && r.ShardCursors.Count == 1
                     && r.ShardCursors[0].BlockOffset == blockOffset
-                    && r.ShardCursors[0].ChunkIndex == chunkIndex
+                    && r.ShardCursors[0].CurrentChunkPath == currentChunkPath
                     && r.ShardCursors[0].EventIndex == eventIndex
                 )));
 
@@ -432,23 +433,24 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     events[7]
                 }));
 
-            long chunkIndex = 1;
+            string currentChunkPath = "chunk1";
             long blockOffset = 2;
             long eventIndex = 3;
             ShardCursor shardCursor = new ShardCursor(
-                chunkIndex,
+                currentChunkPath,
                 blockOffset,
                 eventIndex);
 
             DateTimeOffset segmentTime = new DateTimeOffset(2020, 1, 4, 17, 0, 0, TimeSpan.Zero);
-            int shardIndex = 0;
+            string segmentPath = "idx/segments/2020/01/04/1700/meta.json";
+            string currentShardPath = "log/00/2020/01/04/1700/";
             SegmentCursor segmentCursor = new SegmentCursor(
-                segmentTime,
+                segmentPath,
                 new List<ShardCursor>
                 {
                     shardCursor
                 },
-                shardIndex);
+                currentShardPath);
             ChangeFeedCursor changeFeedCursor = new ChangeFeedCursor(
                 BlobChangeFeedExtensions.ComputeMD5(containerUri.ToString()),
                 null,

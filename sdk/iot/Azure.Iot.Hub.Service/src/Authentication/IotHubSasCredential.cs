@@ -104,7 +104,7 @@ namespace Azure.Iot.Hub.Service.Authentication
             }.Uri;
         }
 
-        string ISasTokenProvider.GetSasToken()
+        public string GetSasToken()
         {
             lock (_lock)
             {

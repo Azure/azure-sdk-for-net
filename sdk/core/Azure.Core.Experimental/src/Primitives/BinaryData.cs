@@ -224,16 +224,8 @@ namespace Azure.Core
         /// Converts the BinaryData to a stream.
         /// </summary>
         /// <returns>A stream representing the data.</returns>
-        public Stream ToStream()
-        {
-            if (MemoryMarshal.TryGetArray(
-                Bytes,
-                out ArraySegment<byte> data))
-            {
-                return new MemoryStream(data.Array, data.Offset, data.Count);
-            }
-            return new MemoryStream(Bytes.ToArray());
-        }
+        public Stream ToStream() =>
+            new ReadOnlyMemoryStream(Bytes);
 
         /// <summary>
         /// Converts the BinaryData to the specified type using

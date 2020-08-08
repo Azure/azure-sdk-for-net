@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies5p2";
-            string partitionKey = "somePartition";
+            string partitionKey = "Stationery";
             string rowKey = "A1";
 
             var serviceClient = new TableServiceClient(
@@ -28,12 +28,9 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             await serviceClient.CreateTableAsync(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
-            #region Snippet:TablesSample5UpsertEntityAsync
-            // Get the <see cref="TableClient" /> of the table.
-            var client = serviceClient.GetTableClient(tableName);
-
-            // Make an entity.
+            #region Snippet:TablesSample5UpsertEntity
             var entity = new TableEntity(partitionKey, rowKey)
             {
                 {"Product", "Markers" },
@@ -42,38 +39,30 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
-            await client.UpsertEntityAsync(entity);
+            await tableClient.UpsertEntityAsync(entity);
+            #endregion
 
+            #region Snippet:TablesSample5UpsertWithReplace
             // Delete an entity property.
             entity.Remove("Brand");
 
-            // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode (which defaults to Merge if not given).
+            // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
             // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-            await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            await tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
             #endregion
-
 
             #region Snippet:TablesSample5UpdateEntityAsync
-            // Query for entities to update.
-            AsyncPageable<TableEntity> queryResultsBefore = client.QueryAsync<TableEntity>();
+            // Get the entity to update.
+            TableEntity qEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            qEntity["Price"] = 7.00;
 
-            await foreach (TableEntity qEntity in queryResultsBefore)
-            {
-                // Changing property of entity.
-                qEntity["Price"] = 7.00;
+            // Since no UpdateMode was passed, the request will default to Merge.
+            await tableClient.UpdateEntityAsync(qEntity, qEntity.ETag);
 
-                // Updating to changed entity using its generated eTag.
-                // Since no UpdateMode was passed, the request will default to Merge.
-                await client.UpdateEntityAsync(qEntity, qEntity.ETag);
-            }
+            TableEntity updatedEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
+            Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
             #endregion
-
-            AsyncPageable<TableEntity> queryResultsAfter = client.QueryAsync<TableEntity>();
-            await foreach (TableEntity qEntity in queryResultsAfter)
-            {
-                Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
-                Console.WriteLine($"'Price' after updating: ${qEntity.GetDouble("Price")}");
-            }
 
             await serviceClient.DeleteTableAsync(tableName);
         }
