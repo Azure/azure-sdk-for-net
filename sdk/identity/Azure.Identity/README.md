@@ -50,7 +50,7 @@ To authenticate with the [Azure CLI][azure_cli] users can run the command `az lo
 
 ![Azure CLI Account Sign In](./images/AzureCliLogin.png)
 
-For systems without a default web browser, the `az login` command will use the device code authentication flow. The user can also force the Azure ClI to use the device code flow rather than launching a browser by specifying the `--use-device-code` argument.
+For systems without a default web browser, the `az login` command will use the device code authentication flow. The user can also force the Azure CLI to use the device code flow rather than launching a browser by specifying the `--use-device-code` argument.
 
 ![Azure CLI Account Device Code Sign In](./images/AzureCliLoginDeviceCode.png)
 
