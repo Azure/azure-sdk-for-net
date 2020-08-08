@@ -70,8 +70,7 @@ namespace Azure.Core.Experimental.Tests.samples
                 B = 5,
                 C = true
             };
-            // By default, the JsonObjectSerializer will be used, but any serializer deriving from ObjectSerializer can be
-            // used.
+
             var data = BinaryData.Serialize(model);
             model = data.Deserialize<CustomModel>();
             #endregion
