@@ -18,6 +18,7 @@ Azure.Core.Experimental contains types that are being evaluated and might eventu
 To/From string:
 ```C# Snippet:BinaryDataToFromString
 var data = new BinaryData("some data");
+
 // ToString will decode the bytes using UTF-8
 Console.WriteLine(data.ToString()); // prints "some data"
 ```
@@ -25,6 +26,7 @@ Console.WriteLine(data.ToString()); // prints "some data"
  To/From bytes:
 ```C# Snippet:BinaryDataToFromBytes
 var bytes = Encoding.UTF8.GetBytes("some data");
+
 // when using the ReadOnlySpan constructor the underlying data is copied.
 var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
 
@@ -36,9 +38,6 @@ ReadOnlyMemory<byte> rom = data;
 
 // there is also a Bytes property that holds the data
 rom = data.Bytes;
-
-// ToString will decode the bytes using UTF-8
-Console.WriteLine(data.ToString()); // prints "some data"
 ```
 To/From stream:
 ```C# Snippet:BinaryDataToFromStream
