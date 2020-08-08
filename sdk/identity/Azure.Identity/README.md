@@ -197,8 +197,8 @@ client secret and certificate are both present, the client secret will be used.
 
 ### Error Handling
 Errors arising from authentication can be raised on any service client method which makes a request to the service. This is because the first time the token is requested from the credential is on the first call to the service, and any subsequent calls might need to refresh the token. In order to distinguish these failures from failures in the service client Azure Identity classes raise the `AuthenticationFailedException` with details to the source of the error in the exception message as well as possibly the error message. Depending on the application these errors may or may not be recoverable.
-~~~ c#
 
+``` c#
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
@@ -214,7 +214,8 @@ catch (AuthenticationFailedException e)
     Console.WriteLine($"Authentication Failed. {e.Message}");
     return null;
 }
-~~~
+```
+
 For more details on dealing with errors arising from failed requests to Azure Active Directory, or managed identity endpoints please refer to the Azure Active Directory [documentation on authorization error codes][aad_err_doc].
 
 ### Logging
@@ -223,14 +224,14 @@ The Azure Identity library provides the same [logging capabilities](https://gith
 
 The simplest way to see the logs to help debug authentication issues is to enable the console logging.
 
-~~~ c#
+``` c#
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
-~~~
+```
 
 All credentials can be configured with diagnostic options, in the same way as other clients in the SDK.
 
-~~~ c#
+``` c#
 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 {
     Diagnostics =
@@ -240,7 +241,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
         IsLoggingContentEnabled = true
     }
 };
-~~~
+```
 
 > CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
 
@@ -260,7 +261,7 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
@@ -271,6 +272,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [aad_err_doc]: https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
