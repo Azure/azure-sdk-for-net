@@ -26,6 +26,8 @@ namespace Azure.Search.Documents.Indexes
     /// </summary>
     public class FieldBuilder
     {
+        private const string HelpLink = "https://aka.ms/azsdk/net/search/fieldbuilder";
+
         private static readonly IReadOnlyDictionary<Type, SearchFieldDataType> s_primitiveTypeMap =
             new ReadOnlyDictionary<Type, SearchFieldDataType>(
                 new Dictionary<Type, SearchFieldDataType>()
@@ -201,10 +203,13 @@ namespace Azure.Search.Documents.Indexes
                 {
                     string errorMessage =
                         $"Property '{prop.Name}' is of type '{prop.PropertyType}', which does not map to an " +
-                        "Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] or " +
-                        "[FieldBuilderIgnore] and define the field by creating a SearchField object.";
+                        "Azure Search data type. Please use a supported data type or mark the property with [FieldBuilderIgnore] " +
+                        $"and define the field by creating a SearchField object. See {HelpLink} for more information.";
 
-                    return new ArgumentException(errorMessage, nameof(modelType));
+                    return new ArgumentException(errorMessage, nameof(modelType))
+                    {
+                        HelpLink = HelpLink,
+                    };
                 }
 
                 IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType, nameProvider);
@@ -215,7 +220,7 @@ namespace Azure.Search.Documents.Indexes
                     onComplexDataType: CreateComplexField);
             }
 
-            return info.Properties.Select(BuildField).Where(field => field != null).ToArray();
+            return info.Properties.Select(BuildField).Where(field => field != null).ToList();
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)

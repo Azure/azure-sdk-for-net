@@ -431,11 +431,12 @@ namespace Azure.Search.Documents.Tests
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
                 "which does not map to an Azure Search data type. Please use a supported data type or mark the property with " +
-                "[JsonIgnore] or [FieldBuilderIgnore] and define the field by creating a SearchField object." +
+                "[FieldBuilderIgnore] and define the field by creating a SearchField object. See https://aka.ms/azsdk/net/search/fieldbuilder for more information." +
                 $"{Environment.NewLine}Parameter name: {nameof(modelType)}";
 
             Assert.AreEqual(nameof(modelType), e.ParamName);
             Assert.AreEqual(expectedErrorMessage, e.Message);
+            Assert.AreEqual("https://aka.ms/azsdk/net/search/fieldbuilder", e.HelpLink);
         }
 
         [TestCase(typeof(int))]
