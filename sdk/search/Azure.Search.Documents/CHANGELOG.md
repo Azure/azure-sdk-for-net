@@ -2,6 +2,9 @@
 
 ## 11.1.0-preview.1 (Unreleased)
 
+### Removed
+
+- Removed `$select` from logged query parameters.
 
 ## 11.0.0 (2020-07-07)
 
