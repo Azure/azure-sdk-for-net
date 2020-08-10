@@ -49,11 +49,6 @@ namespace Microsoft.Azure.Management.KeyVault
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }

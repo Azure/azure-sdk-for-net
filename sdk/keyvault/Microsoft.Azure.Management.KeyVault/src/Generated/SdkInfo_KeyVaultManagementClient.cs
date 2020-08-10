@@ -20,11 +20,11 @@ namespace Microsoft.Azure.Management.KeyVault
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("KeyVault", "ManagedHsms", "2020-04-01-preview"),
-                new Tuple<string, string, string>("KeyVault", "Operations", "2020-04-01-preview"),
-                new Tuple<string, string, string>("KeyVault", "PrivateEndpointConnections", "2020-04-01-preview"),
-                new Tuple<string, string, string>("KeyVault", "PrivateLinkResources", "2020-04-01-preview"),
-                new Tuple<string, string, string>("KeyVault", "Vaults", "2020-04-01-preview"),
-                new Tuple<string, string, string>("KeyVaultManagementClient", "Vaults", "2020-04-01-preview"),
+                new Tuple<string, string, string>("KeyVault", "Operations", "2019-09-01"),
+                new Tuple<string, string, string>("KeyVault", "PrivateEndpointConnections", "2019-09-01"),
+                new Tuple<string, string, string>("KeyVault", "PrivateLinkResources", "2019-09-01"),
+                new Tuple<string, string, string>("KeyVault", "Vaults", "2019-09-01"),
+                new Tuple<string, string, string>("KeyVaultManagementClient", "Vaults", "2019-09-01"),
               }.AsEnumerable();
           }
       }
