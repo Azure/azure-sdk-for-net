@@ -1,6 +1,6 @@
 # Release History
 
-## 7.0.0-preview.5 (Unreleased)
+## 7.0.0-preview.5 (2020-08-11)
 
 ### Acknowledgements
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
