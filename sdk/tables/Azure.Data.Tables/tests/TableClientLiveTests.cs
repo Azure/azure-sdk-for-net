@@ -26,6 +26,26 @@ namespace Azure.Data.Tables.Tests
         public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CreateIfNotExists()
+        {
+            // Call CreateIfNotExists when the table already exists.
+            Assert.That(async () => await client.CreateIfNotExistsAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Call CreateIfNotExists when the table does not already exists.
+            var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            var tableClient = service.GetTableClient(newTableName);
+            TableItem table = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+            Assert.That(table.TableName, Is.EqualTo(newTableName));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
         [Test]
         public async Task ValidateCreateDeleteTable()
         {
@@ -48,6 +68,9 @@ namespace Azure.Data.Tables.Tests
             Assert.That(() => tableResponses, Is.Empty);
         }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
         [Test]
         public void ValidateSasCredentials()
         {

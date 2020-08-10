@@ -26,6 +26,22 @@ namespace Azure.Data.Tables.Tests
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CreateTableIfNotExists()
+        {
+            // Call CreateTableIfNotExists when the table already exists.
+            Assert.That(async () => await service.CreateTableIfNotExistsAsync(tableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Call CreateTableIfNotExists when the table does not already exists.
+            var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            TableItem table = await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false);
+
+            Assert.That(table.TableName, Is.EqualTo(newTableName));
+        }
+
         [Test]
         public void ValidateAccountSasCredentialsWithPermissions()
         {
