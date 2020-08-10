@@ -404,22 +404,18 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task ExistsAsync_Error()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
-
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 Services = AccountSasServices.Files,
                 ResourceTypes = AccountSasResourceTypes.Service,
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = Recording.UtcNow.AddHours(1)
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
             // Act
@@ -478,22 +474,18 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task DeleteIfExistsAsync_Error()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
-
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 Services = AccountSasServices.Files,
                 ResourceTypes = AccountSasResourceTypes.Service,
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = Recording.UtcNow.AddHours(1)
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareServiceClient service = new ShareServiceClient(sasUri.Uri);
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
             // Act

@@ -30,47 +30,58 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             serviceClient.CreateTable(tableName);
-            var client = serviceClient.GetTableClient(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
             var entity = new TableEntity(partitionKey, rowKey)
             {
-                {"Product", "Markers" },
-                {"Price", 5.00 },
+                { "Product", "Markers" },
+                { "Price", 5.00 },
+                { "Quantity", 34 }
             };
-            client.CreateEntity(entity);
+            tableClient.CreateEntity(entity);
 
             var entity2 = new TableEntity(partitionKey, rowKey2)
             {
-                {"Product", "Chair" },
-                {"Price", 7.00 },
+                { "Product", "Planner" },
+                { "Price", 7.00 },
+                { "Quantity", 34 }
             };
-            client.CreateEntity(entity2);
+            tableClient.CreateEntity(entity2);
 
-            #region Snippet:TablesSample4QueryEntities
-            // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
-            Pageable<TableEntity> queryResults = client.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
+            #region Snippet:TablesSample4QueryEntitiesFilter
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
-            // Iterate the <see cref="Pageable"> in order to access individual queried entities.
-            foreach (TableEntity qEntity in queryResults)
+            // Iterate the <see cref="Pageable"> to access all queried entities.
+            foreach (TableEntity qEntity in queryResultsFilter)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
             }
 
-            Console.WriteLine($"The query returned {queryResults.Count()} entities.");
+            Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
             #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesExpressionTree
+            #region Snippet:TablesSample4QueryEntitiesExpression
             // Use the <see cref="TableClient"> to query the table using a filter expression.
             double priceCutOff = 6.00;
-            Pageable<OfficeSupplyEntity> queryResultsLINQ = client.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+            Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+            #endregion
 
-            // Iterate the <see cref="Pageable"> in order to access individual queried entities.
-            foreach (OfficeSupplyEntity qEntity in queryResultsLINQ)
+            #region Snippet:TablesSample4QueryEntitiesSelect
+            Pageable<TableEntity> queryResultsSelect = tableClient.Query<TableEntity>(select: new List<string>() { "Product", "Price"});
+            #endregion
+
+            #region Snippet:TablesSample4QueryEntitiesMaxPerPage
+            Pageable<TableEntity> queryResultsMaxPerPage = tableClient.Query<TableEntity>(maxPerPage: 10);
+
+            // Iterate the <see cref="Pageable"> by page.
+            foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
             {
-                Console.WriteLine($"{qEntity.Product}: ${qEntity.Price}");
+                Console.WriteLine("This is a new page!");
+                foreach (TableEntity qEntity in page.Values)
+                {
+                    Console.WriteLine($"# of {qEntity.GetString("Product")} inventoried: {qEntity.GetInt32("Quantity")}");
+                }
             }
-
-            Console.WriteLine($"The LINQ query returned {queryResultsLINQ.Count()} entities.");
             #endregion
 
             serviceClient.DeleteTable(tableName);
