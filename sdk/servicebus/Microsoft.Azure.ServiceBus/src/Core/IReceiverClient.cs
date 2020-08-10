@@ -64,7 +64,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions);
 
         /// <summary>
-        /// Unregister messgae hander from the receiver if there is active message handler registered. 
+        /// Unregister message handler from the receiver if there is an active message handler registered. 
         /// </summary>
         void UnregisterMessageHandler();
 
