@@ -3,8 +3,8 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources;
+using Azure.Management.Network;
+using Azure.Management.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
