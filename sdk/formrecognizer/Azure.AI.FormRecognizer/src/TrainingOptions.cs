@@ -4,7 +4,7 @@
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognize receipt method
+    /// The set of options that can be specified when calling the training method
     /// to configure the behavior of the request.
     /// </summary>
     public class TrainingOptions
