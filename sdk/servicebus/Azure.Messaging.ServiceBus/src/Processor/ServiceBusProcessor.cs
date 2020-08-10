@@ -187,9 +187,12 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
+            _sessionIds = sessionIds ?? Array.Empty<string>();
 
             int maxCalls = isSessionEntity ?
-                MaxConcurrentSessions * MaxConcurrentCallsPerSession :
+                (_sessionIds.Length > 0 ?
+                    Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
+                    MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
                 MaxConcurrentCalls;
 
             MessageHandlerSemaphore = new SemaphoreSlim(
@@ -205,7 +208,6 @@ namespace Azure.Messaging.ServiceBus
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
-            _sessionIds = sessionIds ?? Array.Empty<string>();
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
         }
@@ -479,6 +481,13 @@ namespace Azure.Messaging.ServiceBus
                 for (int i = 0; i < numReceivers; i++)
                 {
                     var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
+                    // If the user has listed named sessions, and they
+                    // have MaxConcurrentSessions greater or equal to the number
+                    // of sessions, we can leave the sessions open at all times
+                    // instead of cycling through them as receive calls time out.
+                    bool keepOpenOnReceiveTimeout = _sessionIds.Length > 0 &&
+                        MaxConcurrentSessions >= _sessionIds.Length;
+
                     _receiverManagers.Add(
                         new SessionReceiverManager(
                             _connection,
@@ -494,7 +503,8 @@ namespace Azure.Messaging.ServiceBus
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
                             _plugins,
-                            MaxConcurrentCallsPerSession));
+                            MaxConcurrentCallsPerSession,
+                            keepOpenOnReceiveTimeout));
                 }
             }
             else
@@ -580,8 +590,7 @@ namespace Azure.Messaging.ServiceBus
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
                         await receiverManager.CloseReceiverIfNeeded(
-                            cancellationToken,
-                            forceClose: true)
+                            cancellationToken)
                             .ConfigureAwait(false);
                     }
                 }

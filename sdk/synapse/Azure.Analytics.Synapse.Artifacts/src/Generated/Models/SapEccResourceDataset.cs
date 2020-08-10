@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SapEccResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
         public SapEccResourceDataset(LinkedServiceReference linkedServiceName, object path) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

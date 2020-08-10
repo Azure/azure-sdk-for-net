@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SqlScriptRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -126,6 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScript"> Sql Script resource definition. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
         public async Task<Response<SqlScriptResource>> CreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -158,6 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScript"> Sql Script resource definition. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
         public Response<SqlScriptResource> CreateOrUpdateSqlScript(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -207,6 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public async Task<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -236,6 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public Response<SqlScriptResource> GetSqlScript(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -278,6 +282,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public async Task<Response> DeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -300,6 +305,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public Response DeleteSqlScript(string sqlScriptName, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -334,6 +340,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists sql scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -360,6 +367,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists sql scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SqlScriptsListResponse> GetSqlScriptsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

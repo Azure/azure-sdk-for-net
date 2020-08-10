@@ -44,9 +44,6 @@ namespace Azure.Storage.Test.Shared
             set => _innerStream.Position = value;
         }
 
-        public override async Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken) =>
-            await _innerStream.CopyToAsync(destination, bufferSize, cancellationToken);
-
         public override void Flush() => _innerStream.Flush();
 
         public override Task FlushAsync(CancellationToken cancellationToken) =>

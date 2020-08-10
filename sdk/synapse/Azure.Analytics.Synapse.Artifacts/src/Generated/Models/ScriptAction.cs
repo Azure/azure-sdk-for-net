@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public ScriptAction(string name, string uri, HdiNodeTypes roles)
         {
             if (name == null)

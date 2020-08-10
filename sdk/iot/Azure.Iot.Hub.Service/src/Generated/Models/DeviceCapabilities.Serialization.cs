@@ -15,10 +15,10 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IotEdge))
+            if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge");
-                writer.WriteBooleanValue(IotEdge.Value);
+                writer.WriteBooleanValue(IsIotEdgeDevice.Value);
             }
             writer.WriteEndObject();
         }

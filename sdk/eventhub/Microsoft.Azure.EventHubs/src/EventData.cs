@@ -74,6 +74,11 @@ namespace Microsoft.Azure.EventHubs
             get; set;
         }
 
+        /// <summary>
+        /// Gets and sets type of the content.
+        /// </summary>
+        public string ContentType { get; set; }
+
         internal AmqpMessage AmqpMessage { get; set; }
 
         internal long LastSequenceNumber { get; set; }

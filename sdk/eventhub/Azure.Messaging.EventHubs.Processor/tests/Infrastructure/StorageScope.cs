@@ -28,6 +28,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <summary>The manager for common live test resource operations.</summary>
         private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
 
+        /// <summary>The location of the Azure Resource Manager for the active cloud environment.</summary>
+        private static readonly Uri AzureResourceManagerUri = new Uri(EventHubsTestEnvironment.Instance.ResourceManagerUrl);
+
         /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
         private bool _disposed = false;
 
@@ -62,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var storageAccount = StorageTestEnvironment.Instance.StorageAccountName;
             var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
-            var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId };
+            var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId };
 
             try
             {
@@ -104,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
+            using (var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
             {
                 BlobContainer container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None)).ConfigureAwait(false);
                 return new StorageScope(container.Name);
@@ -126,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             static string CreateName() => $"neteventhubs{ Guid.NewGuid().ToString("N").Substring(0, 12) }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription).ConfigureAwait(false);
                 var sku = new Sku(SkuName.StandardLRS, SkuTier.Standard);
@@ -134,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters)).ConfigureAwait(false);
 
                 StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name)).ConfigureAwait(false);
-                return new StorageTestEnvironment.StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net", shouldRemoveAtCompletion: true);
+                return new StorageTestEnvironment.StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ StorageTestEnvironment.Instance.StorageEndpointSuffix }", shouldRemoveAtCompletion: true);
             }
         }
 
@@ -151,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName)).ConfigureAwait(false);
             }

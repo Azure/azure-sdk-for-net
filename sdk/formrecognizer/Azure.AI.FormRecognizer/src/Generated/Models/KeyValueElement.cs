@@ -16,6 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of KeyValueElement. </summary>
         /// <param name="text"> The text content of the key or value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal KeyValueElement(string text)
         {
             if (text == null)

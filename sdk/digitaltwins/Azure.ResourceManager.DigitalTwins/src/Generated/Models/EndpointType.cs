@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EndpointType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

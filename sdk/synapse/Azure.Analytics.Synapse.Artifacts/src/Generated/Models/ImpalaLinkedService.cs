@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ImpalaLinkedService. </summary>
         /// <param name="host"> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ImpalaLinkedService(object host, ImpalaAuthenticationType authenticationType)
         {
             if (host == null)

@@ -86,7 +86,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     {
                         // Evaluate retry condition?
                         TimeSpan? retryInterval = this.RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
-                        if (retryInterval != null && !this.EventHubClient.IsClosed)
+                        if (retryInterval != null && !this.IsClosed && !this.EventHubClient.IsClosed)
                         {
                             await Task.Delay(retryInterval.Value).ConfigureAwait(false);
                             shouldRetry = true;

@@ -228,6 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Executes the spark job definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public virtual async Task<SparkJobDefinitionExecuteSparkJobDefinitionOperation> StartExecuteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -252,6 +253,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Executes the spark job definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public virtual SparkJobDefinitionExecuteSparkJobDefinitionOperation StartExecuteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -276,6 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Debug the spark job definition. </summary>
         /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
         public virtual async Task<SparkJobDefinitionDebugSparkJobDefinitionOperation> StartDebugSparkJobDefinitionAsync(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionAzureResource == null)
@@ -300,6 +303,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Debug the spark job definition. </summary>
         /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
         public virtual SparkJobDefinitionDebugSparkJobDefinitionOperation StartDebugSparkJobDefinition(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionAzureResource == null)
