@@ -34,25 +34,25 @@ Developers using Visual Studio 2017 or later can authenticate an Azure Active Di
 
 To authenticate in Visual Studio select the `Tools > Options` menu to launch the Options dialog. Then navigate to the `Azure Service Authentication` options to sign in with your Azure Active Directory account.
 
-![Visual Studio Account Selection](./images/VsLoginDialog.png)
+![Visual Studio Account Selection][vs_login_image]
 
 #### Authenticating via Visual Studio Code
 Developers using Visual Studio Code can use the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account), to authenticate via the IDE. Applications using the `DefaultAzureCredential` or the `VisualStudioCodeCredential` can then use this account to authenticate calls in their application when running locally.
 
 To authenticate in Visual Studio Code, first ensure the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is installed. Once the extension is installed, press `F1` to open the command palette and run the `Azure: Sign In` command.
 
-![Visual Studio Code Account Sign In](./images/VsCodeLoginCommand.png)
+![Visual Studio Code Account Sign In][vs_code_login_image]
 
 #### Authenticating via the Azure CLI
 Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Applications using the `DefaultAzureCredential` or the `AzureCliCredential` can then use this account to authenticate calls in their application when running locally.
 
 To authenticate with the [Azure CLI][azure_cli] users can run the command `az login`. For users running on a system with a default web browser the azure cli will launch the browser to authenticate the user.
 
-![Azure CLI Account Sign In](./images/AzureCliLogin.png)
+![Azure CLI Account Sign In][azure_cli_login_image]
 
 For systems without a default web browser, the `az login` command will use the device code authentication flow. The user can also force the Azure CLI to use the device code flow rather than launching a browser by specifying the `--use-device-code` argument.
 
-![Azure CLI Account Device Code Sign In](./images/AzureCliLoginDeviceCode.png)
+![Azure CLI Account Device Code Sign In][azure_cli_login_device_code_image]
 
 ## Key concepts
 ### Credentials
@@ -66,7 +66,7 @@ See [Credential Classes](#Credential-Classes) for a complete listing of availabl
 ### DefaultAzureCredential
 The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
 
-![DefaultAzureCredential authentication flow](./images/DefaultAzureCredentialAuthenticationFlow.png)
+![DefaultAzureCredential authentication flow][default_azure_credential_authflow_image]
 
  - Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#Environment-Variables) and use it to authenticate.
  - Managed Identity - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
@@ -281,4 +281,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [identity_api_docs]: https://azure.github.io/azure-sdk-for-net/identity.html
+[vs_login_image]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/images/VsLoginDialog.png
+[vs_code_login_image]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/images/VsCodeLoginCommand.png
+[azure_cli_login_image]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/images/AzureCliLogin.png
+[azure_cli_login_device_code_image]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
+[default_azure_credential_authflow_image]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/images/DefaultAzureCredentialAuthenticationFlow.png
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)
