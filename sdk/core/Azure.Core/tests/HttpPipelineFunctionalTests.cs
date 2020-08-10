@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,11 +21,11 @@ namespace Azure.Core.Tests
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
 #endif
-    public class HttpPipelineFunctionalTests: PipelineTestBase
+    public class HttpPipelineFunctionalTests : PipelineTestBase
     {
         private readonly Type _transportType;
 
-        public HttpPipelineFunctionalTests(Type transportType, bool isAsync): base(isAsync)
+        public HttpPipelineFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
         {
             _transportType = transportType;
         }
@@ -32,7 +33,7 @@ namespace Azure.Core.Tests
         private TestOptions GetOptions()
         {
             var options = new TestOptions();
-            options.Transport = (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+            options.Transport = (HttpPipelineTransport)Activator.CreateInstance(_transportType);
             return options;
         }
 
@@ -393,6 +394,46 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formData.Current.Headers.Count, 2);
             Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
             Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
+        }
+
+        [Test]
+        public async Task SendMultipartBatch()
+        {
+            string requestBody = null;
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    using var sr = new StreamReader(context.Request.Body, Encoding.UTF8);
+                    requestBody = sr.ReadToEnd();
+                    return Task.CompletedTask;
+                });
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Put;
+            request.Uri.Reset(testServer.Address);
+
+            Guid batchGuid = Guid.NewGuid();
+            var content = new MultipartContent("mixed", $"batch_{batchGuid}");
+            content.ApplyToRequest(request);
+            Guid changesetGuid = Guid.NewGuid();
+            var changeset = new MultipartContent("mixed", $"changeset_{changesetGuid}");
+            content.Add(changeset, new Dictionary<string, string> { { HttpHeader.Names.ContentType, $"multipart/mixed;boundary=\"changeset_{changesetGuid}\"" } });
+
+            var message = httpPipeline.CreateMessage();
+            var req = message.Request;
+            req.Method = RequestMethod.Post;
+            req.Uri.Reset(new Uri("https://myaccount.table.core.windows.net/Blogs"));
+            req.Headers.Add("x-ms-version", "2019-02-02");
+            req.Headers.Add("DataServiceVersion", "3.0");
+            req.Headers.Add("Accept", "application/json");
+            req.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            req.Content = RequestContent.Create(Encoding.UTF8.GetBytes("{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}"));
+            changeset.Add(new RequestContentContent(req, new Dictionary<string, string> { { "Content-Transfer-Encoding", "binary" } }));
+            changeset.Add(new RequestContentContent(req, new Dictionary<string, string> { { "Content-Transfer-Encoding", "binary" } }));
+            request.Content = content;
+            using Response response = await ExecuteRequest(request, httpPipeline);
         }
 
         private class TestOptions : ClientOptions

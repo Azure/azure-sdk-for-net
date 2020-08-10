@@ -7,6 +7,7 @@ using Azure.Core.Buffers;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
+using System.Collections.Generic;
 
 namespace Azure.Core
 {
@@ -76,6 +77,11 @@ namespace Azure.Core
         /// Frees resources held by the <see cref="RequestContent"/> object.
         /// </summary>
         public abstract void Dispose();
+
+        /// <summary>
+        /// A collection of header values associated with this request content.
+        /// </summary>
+        internal virtual Dictionary<string, string>? Headers { get; set; }
 
         private sealed class StreamContent : RequestContent
         {
