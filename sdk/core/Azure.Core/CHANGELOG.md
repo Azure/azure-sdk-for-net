@@ -2,14 +2,6 @@
 
 ## 1.5.0-preview.1 (Unreleased)
 
-
-## 1.4.0 (2020-08-06)
-
-### Added
-- Added `ObjectSerializer` base class for serialization.
-- Added `IMemberNameConverter` for converting member names to serialized property names.
-- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
-
 ### Added
 - HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
 
@@ -20,6 +12,13 @@
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
+
+## 1.4.0 (2020-08-06)
+
+### Added
+- Added `ObjectSerializer` base class for serialization.
+- Added `IMemberNameConverter` for converting member names to serialized property names.
+- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
 
 ### Fixed
 - Connection leak for retried non-buffered requests on .NET Framework.
