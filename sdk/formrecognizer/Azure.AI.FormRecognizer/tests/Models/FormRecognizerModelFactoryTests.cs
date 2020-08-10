@@ -136,6 +136,164 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringType()
+        {
+            var value = "Lovelace";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithStringType(value);
+
+            Assert.AreEqual(FieldValueType.String, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsString());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithInt64Type()
+        {
+            var value = 1709;
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithInt64Type(value);
+
+            Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsInt64());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithFloatType()
+        {
+            var value = 6.0221f;
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithFloatType(value);
+
+            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsFloat());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDateType()
+        {
+            var value = DateTime.UtcNow;
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithDateType(value);
+
+            Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsDate());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithTimeType()
+        {
+            var value = TimeSpan.FromSeconds(104717);
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithTimeType(value);
+
+            Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsTime());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithPhoneNumberType()
+        {
+            var value = "1500450271";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithPhoneNumberType(value);
+
+            Assert.AreEqual(FieldValueType.PhoneNumber, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsPhoneNumber());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithListType()
+        {
+            var formField = new FormField(default, default, default, default, default);
+
+            var value = new List<FormField>() { formField };
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithListType(value);
+
+            Assert.AreEqual(FieldValueType.List, fieldValue.ValueType);
+            Assert.AreNotSame(value, fieldValue.AsList());
+            Assert.AreEqual(value, fieldValue.AsList());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDictionaryType()
+        {
+            var formField = new FormField(default, default, default, default, default);
+
+            var value = new Dictionary<string, FormField>() { { "", formField } };
+
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithDictionaryType(value);
+
+            Assert.AreEqual(FieldValueType.Dictionary, fieldValue.ValueType);
+            Assert.AreNotSame(value, fieldValue.AsDictionary());
+            Assert.AreEqual(value, fieldValue.AsDictionary());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+        }
+
+        [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormField()
         {
             var name = "Cardano";
