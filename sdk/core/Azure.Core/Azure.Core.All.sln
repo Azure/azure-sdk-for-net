@@ -221,6 +221,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Internal.Avro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotHubClientSamples", "..\..\iot\Azure.Iot.Hub.Service\samples\IotHubClientSamples\IotHubClientSamples.csproj", "{E4EA7D47-B37F-45EE-8366-944A395859F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{512581E8-E5EE-428C-8682-BF35079F6A73}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{359ffa3a-4f5d-411c-8978-28e58f50eea3}*SharedItemsImports = 5
@@ -1547,6 +1549,18 @@ Global
 		{E4EA7D47-B37F-45EE-8366-944A395859F2}.Release|x64.Build.0 = Release|Any CPU
 		{E4EA7D47-B37F-45EE-8366-944A395859F2}.Release|x86.ActiveCfg = Release|Any CPU
 		{E4EA7D47-B37F-45EE-8366-944A395859F2}.Release|x86.Build.0 = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|x64.Build.0 = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Debug|x86.Build.0 = Debug|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|x64.ActiveCfg = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|x64.Build.0 = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|x86.ActiveCfg = Release|Any CPU
+		{512581E8-E5EE-428C-8682-BF35079F6A73}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

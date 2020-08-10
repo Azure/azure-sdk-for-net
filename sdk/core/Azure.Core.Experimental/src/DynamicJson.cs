@@ -521,13 +521,13 @@ namespace Azure.Core
         public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) serializer.Deserialize(stream, typeof(T), cancellationToken);
+            return (T)serializer.Deserialize(stream, typeof(T), cancellationToken)!;
         }
 
         public async Task<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false);
+            return (T)(await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false))!;
         }
 
         private struct Number

@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -287,15 +288,15 @@ namespace Azure.Core
             Argument.AssertNotNull(serializer, nameof(serializer));
             if (async)
             {
-                return (T)await serializer.DeserializeAsync(
-                    ToStream(),
-                    typeof(T),
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                return (T)(await serializer.DeserializeAsync(
+                        ToStream(),
+                        typeof(T),
+                        cancellationToken)
+                    .ConfigureAwait(false))!;
             }
             else
             {
-                return (T)serializer.Deserialize(ToStream(), typeof(T), cancellationToken);
+                return (T)(serializer.Deserialize(ToStream(), typeof(T), cancellationToken))!;
             }
         }
 
