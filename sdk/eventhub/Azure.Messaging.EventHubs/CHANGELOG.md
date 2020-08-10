@@ -1,7 +1,25 @@
 # Release History
 
-## 5.2.0-preview.2 (Unreleased)
+## 5.2.0-preview.3 (Unreleased)
 
+
+## 5.2.0-preview.2 (2020-08-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Bug fixes and foundation
+
+- The underlying AMQP library has been enhanced for more efficient resource usage; this will result in a noticeable reduction in memory use in common consuming scenarios.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+- All clients will now perform an eager validation of connection strings upon creation.  Previously, validation was performed just before a service operation in some scenarios which made debugging difficult.
+
+- Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
 
 ## 5.2.0-preview.1 (2020-07-06)
 

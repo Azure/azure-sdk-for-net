@@ -19,7 +19,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies1p2";
+            string tableName = "OfficeSupplies1p2a";
 
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
             var serviceClient = new TableServiceClient(
