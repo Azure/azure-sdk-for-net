@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
+using Azure.Management.Resources;
 using System;
 using System.Linq;
 using System.Threading;
