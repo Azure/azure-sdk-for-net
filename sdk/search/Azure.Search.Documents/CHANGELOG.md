@@ -4,7 +4,7 @@
 
 ### Removed
 
-- Removed `$select` from logged query parameters.
+- Removed `$select` from the query parameters logged by default.  You can add it back via `SearchClientOptions.Diagnostics.LoggedQueryParameters("$select");` if desired.
 
 ## 11.0.0 (2020-07-07)
 
