@@ -15,14 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionResponse. </summary>
-        /// <param name="jobVersion"> The ID of data flow debug job version. </param>
-        internal StartDataFlowDebugSessionResponse(string jobVersion)
-        {
-            JobVersion = jobVersion;
-        }
-
         /// <summary> The ID of data flow debug job version. </summary>
-        public string JobVersion { get; set; }
+        public string JobVersion { get; }
     }
 }

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -63,10 +62,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             ChangeFeed changeFeed = _changeFeedFactory.BuildChangeFeed(
-                async: false,
                 _startTime,
                 _endTime,
-                _continuation)
+                _continuation,
+                async: false,
+                default)
                 .EnsureCompleted();
 
             while (changeFeed.HasNext())

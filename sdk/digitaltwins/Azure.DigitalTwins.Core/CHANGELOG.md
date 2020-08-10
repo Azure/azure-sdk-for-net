@@ -1,7 +1,14 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-preview.4 (Unreleased)
 
+
+## 1.0.0-preview.3 (2020-07-13)
+
+### Breaking changes
+
+- Type definitions in Azure.DigitalTwins.Core.Models namespace moved to Azure.DigitalTwins.Core.
+- `CreateModelsAsync` and `CreateModels` APIs now return `Response<ModelData[]>` instead of `Response<IReadOnlyList<ModelData>>`.
 
 ## 1.0.0-preview.2
 

@@ -21,9 +21,10 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         None = 0,
 
-        /// <summary>
-        /// Flag specifying that deleted containers should be included.
-        /// </summary>
-        Deleted = 1,
+        // TODO re-add when feature is re-enabled.
+        ///// <summary>
+        ///// Flag specifying that deleted containers should be included.
+        ///// </summary>
+        //Deleted = 1,
     }
 }

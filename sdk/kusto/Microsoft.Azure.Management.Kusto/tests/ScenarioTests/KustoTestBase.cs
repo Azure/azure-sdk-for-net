@@ -135,7 +135,7 @@ namespace Kusto.Tests.ScenarioTests
             followerCluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
             database = new ReadWriteDatabase(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
-            eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
+            eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName: tableName, dataFormat: dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
 
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");

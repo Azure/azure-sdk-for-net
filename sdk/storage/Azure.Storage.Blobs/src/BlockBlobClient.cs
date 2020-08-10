@@ -29,11 +29,12 @@ namespace Azure.Storage.Blobs.Specialized
     /// comprised of blocks, each of which is identified by a block ID. You
     /// create or modify a block blob by writing a set of blocks and
     /// committing them by their block IDs. Each block can be a different
-    /// size, up to a maximum of 100 MB (4 MB for requests using REST versions
+    /// size, up to a maximum of 4,000 MB (100 MB for requests using REST
+    /// versions before 2019-12-12 and 4 MB for requests using REST versions
     /// before 2016-05-31), and a block blob can include up to 50,000 blocks.
-    /// The maximum size of a block blob is therefore slightly more than 4.75
-    /// TB (100 MB X 50,000 blocks).  If you are writing a block blob that is
-    /// no more than 256 MB in size, you can upload it in its entirety with a
+    /// The maximum size of a block blob is therefore approximately 190.73 TiB
+    /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
+    /// no more than 5,000 MB in size, you can upload it in its entirety with a
     /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
@@ -70,8 +71,8 @@ namespace Azure.Storage.Blobs.Specialized
     /// usually uses base-64 encoding to normalize strings into equal lengths.
     /// When using base-64 encoding, the pre-encoded string must be 64 bytes
     /// or less.  Block ID values can be duplicated in different blobs.  A
-    /// blob can have up to 100,000 uncommitted blocks, but their total size
-    /// cannot exceed 200,000 MB.
+    /// blob can have up to 100,000 uncommitted blocks, with a max total size
+    /// of appoximately 381.46 TiB (4,000 MB x 100,000 blocks)
     ///
     /// If you write a block for a blob that does not exist, a new block blob
     /// is created, with a length of zero bytes.  This blob will appear in
@@ -86,7 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>. Supported value is now larger
+        /// to <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>. Supported value is now larger
         /// than <see cref="int.MaxValue"/>; please use
         /// <see cref="BlockBlobMaxUploadBlobLongBytes"/>.
         /// </summary>
@@ -97,7 +98,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
+        /// to <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
         /// </summary>
         public virtual long BlockBlobMaxUploadBlobLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
@@ -145,7 +146,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="containerName">
         /// The name of the container containing this block blob.
@@ -167,7 +170,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this block blob.
@@ -315,7 +320,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
         {
-            if (options._clientSideEncryptionOptions != default)
+            if (options?._clientSideEncryptionOptions != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
             }
@@ -327,7 +332,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
@@ -387,17 +394,19 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
         /// <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)" /> operations.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -419,7 +428,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             var uploader = GetPartitionedUploader(
@@ -435,17 +444,19 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
         /// <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)" /> operations.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -467,7 +478,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             var uploader = GetPartitionedUploader(
@@ -494,7 +505,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block blob, use the <see cref="StageBlock"/> and
         /// <see cref="CommitBlockList(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)" /> operations.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -541,7 +554,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => Upload(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -562,7 +575,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block blob, use the <see cref="StageBlockAsync"/> and
         /// <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)" /> operations.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -609,7 +624,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => await UploadAsync(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -630,7 +645,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block blob, use the <see cref="StageBlockInternal"/> and
         /// <see cref="CommitBlockListInternal" /> operations.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -748,7 +765,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// part of a block blob's "staging area" to be eventually committed
         /// via the <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block">
+        /// Put Block</see>.
         /// </summary>
         /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
@@ -813,7 +832,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// part of a block blob's "staging area" to be eventually committed
         /// via the <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block">
+        /// Put Block</see>.
         /// </summary>
         /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
@@ -878,7 +899,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// as part of a block blob's "staging area" to be eventually committed
         /// via the <see cref="CommitBlockListInternal"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block">
+        /// Put Block</see>.
         /// </summary>
         /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
@@ -981,7 +1004,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-from-url">
+        /// Put Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1058,7 +1083,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-from-url">
+        /// Put Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1135,7 +1162,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-from-url">
+        /// Put Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1264,7 +1293,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         ///
-        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
+        /// Put Block List</see>.
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1317,7 +1348,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         ///
-        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
+        /// Put Block List</see>.
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1386,7 +1419,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         ///
-        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
+        /// Put Block List</see>.
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1439,7 +1474,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         ///
-        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
+        /// Put Block List</see>.
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1508,7 +1545,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         ///
-        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
+        /// Put Block List</see>.
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1635,7 +1674,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve the block list
         /// from. For more information on working with blob snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -1685,7 +1725,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve the block list
         /// from. For more information on working with blob snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -1735,7 +1776,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve the block list
         /// from. For more information on working with blob snapshots, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -1806,8 +1848,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Query"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1825,11 +1871,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual Response<BlobDownloadInfo> Query(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: false,
                 cancellationToken)
@@ -1838,8 +1884,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="QueryAsync"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1857,11 +1907,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             await QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: true,
                 cancellationToken)
@@ -1870,8 +1920,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="QueryInternal"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1892,7 +1946,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         private async Task<Response<BlobDownloadInfo>> QueryInternal(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -1906,11 +1960,11 @@ namespace Azure.Storage.Blobs.Specialized
                     QueryRequest queryRequest = new QueryRequest()
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
-                        Expression = query,
+                        Expression = querySqlExpression,
                         InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
-                    Response<BlobQueryResult> result = await BlobRestClient.Blob.QueryAsync(
+                    (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: Uri,
@@ -1924,13 +1978,14 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
                         ifMatch: options?.Conditions?.IfMatch,
                         ifNoneMatch: options?.Conditions?.IfNoneMatch,
+                        ifTags: options?.Conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     Action<BlobQueryError> errorHandler = options?._errorHandler;
-                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, errorHandler);
+                    Stream parsedStream = new BlobQuickQueryStream(stream, options?.ProgressHandler, errorHandler);
                     result.Value.Body = parsedStream;
 
                     return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
@@ -1949,17 +2004,17 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion Query
 
         #region PartitionedUploader
-        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+        internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            =>  new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+            =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 arrayPool,
                 operationName);
 
-        internal static PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
+        internal static PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
         {
             static string GenerateBlockId(long offset)
             {
@@ -1972,7 +2027,7 @@ namespace Azure.Storage.Blobs.Specialized
                 return Convert.ToBase64String(id);
             }
 
-            return new PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors
+            return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
                     => await client.UploadInternal(
@@ -2038,8 +2093,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
             }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobName = blobName
+            };
+
             return new BlockBlobClient(
-                client.Uri.AppendToPath(blobName),
+                blobUriBuilder.ToUri(),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,

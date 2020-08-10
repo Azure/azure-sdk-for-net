@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -62,7 +63,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this append blob.
@@ -84,7 +85,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this append blob.
@@ -223,7 +224,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
@@ -233,9 +236,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
-            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
 
-            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new AppendBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -252,14 +264,23 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithVersion(string versionId)
         {
-            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
 
-            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new AppendBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         #region Create
         /// <summary>
-        /// The <see cref="Create(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="Create(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
         /// to the append blob, call the <see cref="AppendBlock"/> operation.
@@ -280,7 +301,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> Create(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 httpHeaders: options?.HttpHeaders,
@@ -292,7 +313,7 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
         /// to the append blob, call the <see cref="AppendBlock"/> operation.
@@ -313,7 +334,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 httpHeaders: options?.HttpHeaders,
@@ -330,7 +351,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the newly initialized append blob.  To add content to the append
         /// blob, call the <see cref="AppendBlock"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -376,7 +399,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the newly initialized append blob.  To add content to the append
         /// blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -417,12 +442,14 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExists(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
         /// the append blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="options">
         /// Optional parameters.
@@ -440,7 +467,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> CreateIfNotExists(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 options?.HttpHeaders,
@@ -451,12 +478,14 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
         /// the append blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="options">
         /// Optional parameters.
@@ -474,7 +503,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 options?.HttpHeaders,
@@ -490,7 +519,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the content of the existing append blob will remain unchanged.  To add content to
         /// the append blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -530,7 +561,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the content of the existing append blob will remain unchanged.  To add content to the append
         /// blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -570,7 +603,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the existing append blob will remain unchanged.  To add content to the append
         /// blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -649,7 +684,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// the newly initialized append blob.  To add content to the append
         /// blob, call the <see cref="AppendBlockAsync"/> operation.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -752,7 +789,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation is only permitted if the blob was created as an append
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/append-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        /// Append Block</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the block to
@@ -808,7 +847,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation is only permitted if the blob was created as an append
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/append-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        /// Append Block</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the block to
@@ -864,7 +905,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation is only permitted if the blob was created as an append
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/append-block" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        /// Append Block</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the block to
@@ -966,7 +1009,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="AppendBlockFromUri"/> operation is only permitted
         /// if the blob was created as an append blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
+        /// Append Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1035,7 +1080,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="AppendBlockFromUriAsync"/> operation is only permitted
         /// if the blob was created as an append blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
+        /// Append Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1104,7 +1151,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="AppendBlockFromUriInternal"/> operation is only permitted
         /// if the blob was created as an append blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
+        /// Append Block From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1369,8 +1418,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
             }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobName = blobName
+            };
+
             return new AppendBlobClient(
-                client.Uri.AppendToPath(blobName),
+                blobUriBuilder.ToUri(),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,

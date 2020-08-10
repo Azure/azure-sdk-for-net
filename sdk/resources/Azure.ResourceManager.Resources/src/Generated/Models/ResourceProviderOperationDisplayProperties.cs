@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Operation description. </summary>
-        public string Publisher { get; set; }
+        public string Publisher { get; }
         /// <summary> Operation provider. </summary>
-        public string Provider { get; set; }
+        public string Provider { get; }
         /// <summary> Operation resource. </summary>
-        public string Resource { get; set; }
+        public string Resource { get; }
         /// <summary> Resource provider operation. </summary>
-        public string Operation { get; set; }
+        public string Operation { get; }
         /// <summary> Operation description. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
     }
 }

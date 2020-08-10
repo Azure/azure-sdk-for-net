@@ -59,6 +59,11 @@ namespace Azure.Search.Documents.Tests
         public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix=core.windows.net";
 
         /// <summary>
+        /// The Cognitive Services key.
+        /// </summary>
+        public string CognitiveServicesKey => TestFixture.TestEnvironment.SearchCognitiveKey;
+
+        /// <summary>
         /// The name of the blob container.
         /// </summary>
         public string BlobContainerName
@@ -180,6 +185,25 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Creates a new Search service resources with sample data
+        /// loaded into a new blob container but no index.
+        /// </summary>
+        /// <param name="fixture">
+        /// The TestFixture with context about our current test run,
+        /// recordings, instrumentation, etc.
+        /// </param>
+        /// <param name="populate">
+        /// Whether to populate the container with Hotel documents. The default is false.
+        /// </param>
+        /// <returns>A new <see cref="SearchResources"/> context.</returns>
+        public static async Task<SearchResources> CreateWithBlobStorageAsync(SearchTestBase fixture, bool populate = false)
+        {
+            var resources = new SearchResources(fixture);
+            await resources.CreateHotelsBlobContainerAsync(populate);
+            return resources;
+        }
+
+        /// <summary>
         /// Creates a new Search service resources with a Hotel index and sample data
         /// loaded into a new blob container.
         /// </summary>
@@ -187,14 +211,17 @@ namespace Azure.Search.Documents.Tests
         /// The TestFixture with context about our current test run,
         /// recordings, instrumentation, etc.
         /// </param>
+        /// <param name="populate">
+        /// Whether to populate the container with Hotel documents. The default is false.
+        /// </param>
         /// <returns>A new <see cref="SearchResources"/> context.</returns>
-        public static async Task<SearchResources> CreateWithBlobStorageAndIndexAsync(SearchTestBase fixture)
+        public static async Task<SearchResources> CreateWithBlobStorageAndIndexAsync(SearchTestBase fixture, bool populate = false)
         {
             var resources = new SearchResources(fixture);
 
             // Keep them ordered or records may not match seeded random names.
             await resources.CreateSearchServiceAndIndexAsync();
-            await resources.CreateHotelsBlobContainerAsync();
+            await resources.CreateHotelsBlobContainerAsync(populate);
 
             return resources;
         }
@@ -369,7 +396,7 @@ namespace Azure.Search.Documents.Tests
         /// Upload <see cref="TestDocuments"/> to a new blob storage container identified by <see cref="BlobContainerName"/>.
         /// </summary>
         /// <returns>The current <see cref="SearchResources"/>.</returns>
-        private async Task<SearchResources> CreateHotelsBlobContainerAsync()
+        private async Task<SearchResources> CreateHotelsBlobContainerAsync(bool populate)
         {
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
@@ -382,29 +409,32 @@ namespace Azure.Search.Documents.Tests
 
                 RequiresBlobContainerCleanup = true;
 
-                Hotel[] hotels = TestDocuments;
-                List<Task> tasks = new List<Task>(hotels.Length);
-
-                foreach (Hotel hotel in hotels)
+                if (populate)
                 {
-                    Task task = Task.Run(async () =>
+                    Hotel[] hotels = TestDocuments;
+                    List<Task> tasks = new List<Task>(hotels.Length);
+
+                    foreach (Hotel hotel in hotels)
                     {
-                        using MemoryStream stream = new MemoryStream();
-                        await JsonSerializer
-                            .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
-                            .ConfigureAwait(false);
+                        Task task = Task.Run(async () =>
+                        {
+                            using MemoryStream stream = new MemoryStream();
+                            await JsonSerializer
+                                .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
+                                .ConfigureAwait(false);
 
-                        stream.Seek(0, SeekOrigin.Begin);
+                            stream.Seek(0, SeekOrigin.Begin);
 
-                        await client
-                            .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
-                            .ConfigureAwait(false);
-                    });
+                            await client
+                                .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
+                                .ConfigureAwait(false);
+                        });
 
-                    tasks.Add(task);
+                        tasks.Add(task);
+                    }
+
+                    await Task.WhenAll(tasks);
                 }
-
-                await Task.WhenAll(tasks);
             }
 
             return this;

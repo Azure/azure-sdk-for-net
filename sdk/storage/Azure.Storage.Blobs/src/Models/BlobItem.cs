@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// IsCurrentVersion.
         /// </summary>
-        public bool? IsCurrentVersion { get; internal set; }
+        public bool? IsLatestVersion { get; internal set; }
 
         /// <summary>
         /// Properties of a blob.
@@ -53,5 +53,10 @@ namespace Azure.Storage.Blobs.Models
         /// Tags.
         /// </summary>
         public IDictionary<string, string> Tags { get; internal set; }
+
+        /// <summary>
+        /// Object Replication Metadata (OrMetadata)
+        /// </summary>
+        public IList<ObjectReplicationPolicy> ObjectReplicationSourceProperties { get; internal set; }
     }
 }

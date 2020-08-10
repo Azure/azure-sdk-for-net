@@ -15,17 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceError DeserializeSearchServiceError(JsonElement element)
         {
-            string code = default;
+            Optional<string> code = default;
             string message = default;
-            IReadOnlyList<SearchServiceError> details = default;
+            Optional<IReadOnlyList<SearchServiceError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
@@ -36,27 +32,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SearchServiceError> array = new List<SearchServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeSearchServiceError(item));
-                        }
+                        array.Add(DeserializeSearchServiceError(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new SearchServiceError(code, message, details);
+            return new SearchServiceError(code.Value, message, Optional.ToList(details));
         }
     }
 }

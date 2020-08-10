@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Parameters for Schedule Deletion.
     /// </summary>
-    public class DataLakeFileScheduleDeletionOptions
+    internal class DataLakeFileScheduleDeletionOptions
     {
         /// <summary>
         /// Duration before file should be deleted.
@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// set relative to the file's creation time, or the current
         /// time.  Defaults to current time.
         /// </summary>
-        public DataLakeFileExpirationOffset? SetExpiryRelativeTo { get; private set; }
+        public DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> to set for when
@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// set relative to the file's creation time, or the current
         /// time.  Defaults to current time.
         /// </param>
-        public DataLakeFileScheduleDeletionOptions(TimeSpan timeToExpire, DataLakeFileExpirationOffset setRelativeTo)
+        public DataLakeFileScheduleDeletionOptions(TimeSpan timeToExpire, DataLakeFileExpirationOrigin setRelativeTo)
         {
             TimeToExpire = timeToExpire;
             SetExpiryRelativeTo = setRelativeTo;

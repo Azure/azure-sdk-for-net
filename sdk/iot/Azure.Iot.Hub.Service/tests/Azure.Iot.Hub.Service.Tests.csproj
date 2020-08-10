@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);TESTFRAMEWORK</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <!--Temporarily using a track 1 library for testing this track 2 service client. Once
+    the device client is track 2 as well, remove this dependency-->
+    <PackageReference Include="Microsoft.Azure.Devices.Client" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="FluentAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\src\Azure.Iot.Hub.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- required by TestFramework.props -->
+  <ItemGroup>
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Castle.Core" />
+  </ItemGroup>
+
+</Project>

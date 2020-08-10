@@ -5,30 +5,20 @@ namespace Azure.ResourceManager.KeyVault
         protected KeyVaultManagementClient() { }
         public KeyVaultManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.ResourceManager.KeyVault.KeyVaultManagementClientOptions options = null) { }
         public KeyVaultManagementClient(string subscriptionId, System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.ResourceManager.KeyVault.KeyVaultManagementClientOptions options = null) { }
-        public virtual Azure.ResourceManager.KeyVault.OperationsClient GetOperationsClient() { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient() { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.PrivateLinkResourcesClient GetPrivateLinkResourcesClient() { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.VaultsClient GetVaultsClient() { throw null; }
+        public virtual Azure.ResourceManager.KeyVault.Operations Operations { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsOperations PrivateEndpointConnections { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.PrivateLinkResourcesOperations PrivateLinkResources { get { throw null; } }
+        public virtual Azure.ResourceManager.KeyVault.VaultsOperations Vaults { get { throw null; } }
     }
     public partial class KeyVaultManagementClientOptions : Azure.Core.ClientOptions
     {
         public KeyVaultManagementClientOptions() { }
     }
-    public partial class OperationsClient
+    public partial class Operations
     {
-        protected OperationsClient() { }
+        protected Operations() { }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.Operation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.Operation> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PrivateEndpointConnectionsClient
-    {
-        protected PrivateEndpointConnectionsClient() { }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection> Get(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> GetAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection> Put(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> PutAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsDeleteOperation StartDelete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>
     {
@@ -43,15 +33,38 @@ namespace Azure.ResourceManager.KeyVault
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateLinkResourcesClient
+    public partial class PrivateEndpointConnectionsOperations
     {
-        protected PrivateLinkResourcesClient() { }
+        protected PrivateEndpointConnectionsOperations() { }
+        public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection> Get(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> GetAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection> Put(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>> PutAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsDeleteOperation StartDelete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PrivateLinkResourcesOperations
+    {
+        protected PrivateLinkResourcesOperations() { }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateLinkResourceListResult> ListByVault(string resourceGroupName, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.PrivateLinkResourceListResult>> ListByVaultAsync(string resourceGroupName, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VaultsClient
+    public partial class VaultsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.Vault>
     {
-        protected VaultsClient() { }
+        internal VaultsCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.KeyVault.Models.Vault Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.Vault>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.Vault>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VaultsOperations
+    {
+        protected VaultsOperations() { }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityParameters vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityParameters vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -76,19 +89,6 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters> UpdateAccessPolicy(string resourceGroupName, string vaultName, Azure.ResourceManager.KeyVault.Models.AccessPolicyUpdateKind operationKind, Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, Azure.ResourceManager.KeyVault.Models.AccessPolicyUpdateKind operationKind, Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.Vault>> UpdateAsync(string resourceGroupName, string vaultName, Azure.ResourceManager.KeyVault.Models.VaultPatchParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VaultsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.Vault>
-    {
-        internal VaultsCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.KeyVault.Models.Vault Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.Vault>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Models.Vault>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VaultsPurgeDeletedOperation : Azure.Operation<Azure.Response>
     {
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         public NetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
     public partial class Operation
     {
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class Permissions
     {
         public Permissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
     }
     public partial class PrivateEndpoint
     {
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class PrivateEndpointConnectionItem
     {
-        public PrivateEndpointConnectionItem() { }
-        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        internal PrivateEndpointConnectionItem() { }
+        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class PrivateLinkResourceListResult
     {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Id { get { throw null; } }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class ResourceListResult
@@ -436,9 +436,26 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class Sku
     {
-        public Sku(Azure.ResourceManager.KeyVault.Models.SkuName name) { }
-        public string Family { get { throw null; } set { } }
+        public Sku(Azure.ResourceManager.KeyVault.Models.SkuFamily family, Azure.ResourceManager.KeyVault.Models.SkuName name) { }
+        public Azure.ResourceManager.KeyVault.Models.SkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.SkuName Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SkuFamily>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SkuFamily(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.SkuFamily A { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.SkuFamily other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.SkuFamily (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum SkuName
     {
@@ -497,7 +514,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultAccessPolicyProperties
     {
         public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> accessPolicies) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
     }
     public partial class VaultCheckNameAvailabilityParameters
     {
@@ -510,7 +527,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public VaultCreateOrUpdateParameters(string location, Azure.ResourceManager.KeyVault.Models.VaultProperties properties) { }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VaultListResult
     {
@@ -522,12 +539,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public VaultPatchParameters() { }
         public Azure.ResourceManager.KeyVault.Models.VaultPatchProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VaultPatchProperties
     {
         public VaultPatchProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }
@@ -541,7 +558,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultProperties
     {
         public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.Sku sku) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }
@@ -549,7 +566,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public bool? EnableSoftDelete { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public string VaultUri { get { throw null; } set { } }

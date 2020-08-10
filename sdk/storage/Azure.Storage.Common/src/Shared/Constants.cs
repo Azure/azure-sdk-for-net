@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Storage
 {
     internal static class Constants
@@ -21,7 +23,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2019-12-12";
+        public const string DefaultSasVersion = "2020-02-10";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -38,6 +40,11 @@ namespace Azure.Storage
         /// buffers to staging <see cref="LargeBufferSize"/> buffers.
         /// </summary>
         public const int LargeUploadThreshold = 100 * Constants.MB;
+
+        /// <summary>
+        /// The minimum number of bytes to download in Open Read.
+        /// </summary>
+        public const int DefaultStreamingDownloadSize = 4 * Constants.MB;
 
         /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
@@ -153,6 +160,7 @@ namespace Azure.Storage
         {
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
+            public const int QuickQueryDownloadSize = 4 * Constants.MB;
 
             internal static class Append
             {
@@ -212,6 +220,7 @@ namespace Azure.Storage
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
+            public const string SnapshotParameterName = "sharesnapshot";
 
             internal static class Lease
             {
@@ -265,6 +274,8 @@ namespace Azure.Storage
             /// The Azure Storage error codes for Datalake Client.
             /// </summary>
             public const string AlreadyExists = "ContainerAlreadyExists";
+            public const string FilesystemNotFound = "FilesystemNotFound";
+            public const string PathNotFound = "PathNotFound";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -317,6 +328,7 @@ namespace Azure.Storage
             public const string MetaSegmentsPath = "meta/segments.json";
             public const long ChunkBlockDownloadSize = MB;
             public const int DefaultPageSize = 5000;
+            public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
             internal static class Event
             {
@@ -326,7 +338,7 @@ namespace Azure.Storage
                 public const string EventTime = "eventTime";
                 public const string EventId = "id";
                 public const string Data = "data";
-                public const string DataVersion = "dataVersion";
+                public const string SchemaVersion = "schemaVersion";
                 public const string MetadataVersion = "metadataVersion";
             }
 
@@ -395,6 +407,7 @@ namespace Azure.Storage
                 public const char Process = 'p';
                 public const char Create = 'c';
                 public const char Tag = 't';
+                public const char FilterByTags = 'f';
             }
 
             internal static class Parameters

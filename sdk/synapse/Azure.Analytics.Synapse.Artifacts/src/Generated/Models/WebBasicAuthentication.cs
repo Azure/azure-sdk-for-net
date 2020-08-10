@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="username"/>, or <paramref name="password"/> is null. </exception>
         public WebBasicAuthentication(object url, object username, SecretBase password) : base(url)
         {
             if (url == null)
@@ -33,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Username = username;
             Password = password;
-            AuthenticationType = "Basic";
+            AuthenticationType = WebAuthenticationType.Basic;
         }
 
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>

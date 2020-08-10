@@ -126,14 +126,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Don't want to record 120 MB of data.")]
+        [Ignore("Don't want to record 250 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task QueryAsync_Large()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            Stream stream = CreateDataStream(120 * Constants.MB);
+            Stream stream = CreateDataStream(250 * Constants.MB);
             await blockBlobClient.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage";
 
@@ -202,16 +202,16 @@ namespace Azure.Storage.Blobs.Test
             // Act
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
 
-            BlobQueryCsvTextConfiguration csvTextConfiguration = new BlobQueryCsvTextConfiguration
+            BlobQueryCsvTextOptions csvTextConfiguration = new BlobQueryCsvTextOptions
             {
                 ColumnSeparator = ",",
-                FieldQuote = '"',
+                QuotationCharacter = '"',
                 EscapeCharacter = '\\',
                 RecordSeparator = "\n",
                 HasHeaders = false
             };
 
-            BlobQueryJsonTextConfiguration jsonTextConfiguration = new BlobQueryJsonTextConfiguration
+            BlobQueryJsonTextOptions jsonTextConfiguration = new BlobQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };
@@ -285,7 +285,7 @@ namespace Azure.Storage.Blobs.Test
             Stream stream = CreateDataStream(Constants.KB);
             await blockBlobClient.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage;";
-            BlobQueryJsonTextConfiguration jsonTextConfiguration = new BlobQueryJsonTextConfiguration
+            BlobQueryJsonTextOptions jsonTextConfiguration = new BlobQueryJsonTextOptions
             {
                 RecordSeparator = "\n"
             };
@@ -389,6 +389,71 @@ namespace Azure.Storage.Blobs.Test
                         options),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task QueryAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Stream stream = CreateDataStream(Constants.KB);
+            await blockBlobClient.UploadAsync(stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blockBlobClient.SetTagsAsync(tags);
+
+            BlobQueryOptions blobQueryOptions = new BlobQueryOptions
+            {
+                Conditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
+            Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
+                querySqlExpression: query,
+                options: blobQueryOptions);
+
+            using StreamReader streamReader = new StreamReader(response.Value.Content);
+            string s = await streamReader.ReadToEndAsync();
+
+            // Assert
+            Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task QueryAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Stream stream = CreateDataStream(Constants.KB);
+            await blockBlobClient.UploadAsync(stream);
+
+            BlobQueryOptions blobQueryOptions = new BlobQueryOptions
+            {
+                Conditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blockBlobClient.QueryAsync(
+                    querySqlExpression: query,
+                    options: blobQueryOptions),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
         private Stream CreateDataStream(long size)

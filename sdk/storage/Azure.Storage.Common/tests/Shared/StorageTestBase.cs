@@ -18,6 +18,8 @@ using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
@@ -224,12 +226,13 @@ namespace Azure.Storage.Test.Shared
                 new Uri(config.ActiveDirectoryAuthEndpoint));
 
         public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
-            new ClientSecretCredential(
-                tenantId,
-                appId,
-                secret,
-                Recording.InstrumentClientOptions(
-                    new TokenCredentialOptions() { AuthorityHost = authorityHost }));
+            Mode == RecordedTestMode.Playback ?
+                (TokenCredential) new StorageTestTokenCredential() :
+                new ClientSecretCredential(
+                    tenantId,
+                    appId,
+                    secret,
+                    new TokenCredentialOptions() { AuthorityHost = authorityHost });
 
         internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
@@ -469,6 +472,19 @@ namespace Azure.Storage.Test.Shared
                 stream.Seek(0, SeekOrigin.Begin);
             }
             return stream;
+        }
+
+    private class StorageTestTokenCredential : TokenCredential
+    {
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
+            }
         }
     }
 }

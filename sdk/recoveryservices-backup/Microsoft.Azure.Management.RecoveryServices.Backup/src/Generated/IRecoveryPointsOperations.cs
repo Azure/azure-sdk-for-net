@@ -104,6 +104,45 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </exception>
         Task<AzureOperationResponse<RecoveryPointResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Returns the Access token for communication between BMS and
+        /// Protection service
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Fabric name associated with the container.
+        /// </param>
+        /// <param name='containerName'>
+        /// Name of the container.
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// Name of the Protected Item.
+        /// </param>
+        /// <param name='recoveryPointId'>
+        /// Recovery Point Id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CrrAccessTokenResource>> GetAccessTokenWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the backup copies for the backed up item.
         /// </summary>
         /// <param name='nextPageLink'>

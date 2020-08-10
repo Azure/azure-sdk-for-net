@@ -64,9 +64,9 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        ///   The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
-        /// <remarks>When using a <see cref="ServiceBusSessionProcessor"/>, if no message is returned for a call to Receive, a new session will be requested by the processor. Hence, if this value is set to be too low, it could cause new sessions to be requested more often than necessary.</remarks>
         public TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -83,19 +83,36 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan? _maxReceiveWaitTime;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the processor should initiate. The default value is 8.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
-        public int MaxConcurrentCalls
+        /// <summary>Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
+        /// The default value is 8.</summary>
+        /// <value>The maximum number of concurrent sessions to process.</value>
+        public int MaxConcurrentSessions
         {
-            get => _maxConcurrentCalls;
+            get => _maxConcurrentSessions;
 
             set
             {
-                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCalls));
-                _maxConcurrentCalls = value;
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentSessions));
+                _maxConcurrentSessions = value;
             }
         }
-        private int _maxConcurrentCalls;
+        private int _maxConcurrentSessions = 8;
+
+        /// <summary>Gets or sets the maximum number of calls to the callback the processor should initiate per session.
+        /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// The default value is 1.</summary>
+        /// <value>The maximum number of concurrent calls to the callback for each session that is being processed.</value>
+        public int MaxConcurrentCallsPerSession
+        {
+            get => _maxConcurrentCallsPerSessions;
+
+            set
+            {
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCallsPerSession));
+                _maxConcurrentCallsPerSessions = value;
+            }
+        }
+        private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
         /// An optional list of session IDs to scope
@@ -133,9 +150,8 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        internal ServiceBusProcessorOptions ToProcessorOptions()
-        {
-            var clone = new ServiceBusProcessorOptions
+        internal ServiceBusProcessorOptions ToProcessorOptions() =>
+            new ServiceBusProcessorOptions
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
@@ -143,11 +159,5 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime
             };
-            if (MaxConcurrentCalls > 0)
-            {
-                clone.MaxConcurrentCalls = MaxConcurrentCalls;
-            }
-            return clone;
-        }
     }
 }

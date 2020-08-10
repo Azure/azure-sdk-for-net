@@ -10,6 +10,13 @@ namespace Azure.AI.FormRecognizer.Tests
     {
         private const string SanitizedSasUri = "https://sanitized.blob.core.windows.net";
 
+        public FormRecognizerRecordedTestSanitizer()
+            : base()
+        {
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
+        }
+
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(Constants.AuthorizationHeader))

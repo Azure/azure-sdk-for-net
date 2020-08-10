@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -16,24 +17,28 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public readonly struct BoundingBox
     {
+        private readonly PointF[] _points;
+
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
-            // TODO: improve perf here?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10358
-            float[] bbPoints = boundingBox.ToArray();
+            if (boundingBox.Count == 0)
+            {
+                _points = Array.Empty<PointF>();
+                return;
+            }
 
-            int count = bbPoints.Length / 2;
+            int count = boundingBox.Count / 2;
 
-            Points = new PointF[count];
+            _points = new PointF[count];
             for (int i = 0; i < count; i++)
             {
-                Points[i] = new PointF(bbPoints[2 * i], bbPoints[(2 * i) + 1]);
+                _points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
             }
         }
 
         /// <summary>
         /// </summary>
-        internal PointF[] Points { get; }
+        internal PointF[] Points => _points ?? Array.Empty<PointF>();
 
         /// <summary>
         /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.
@@ -43,5 +48,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="index">The 0-based index of the point to be retrieved.</param>
         /// <returns>A <see cref="PointF"/> corresponding to the specified <paramref name="index"/>.</returns>
         public PointF this[int index] => Points[index];
+
+        /// <summary>
+        /// Returns string representation for <see cref="BoundingBox"/>.
+        /// </summary>
+        public override string ToString() => string.Join(",", Points.Select(p => p.ToString()).ToArray());
     }
 }

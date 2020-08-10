@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Billing.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,12 +34,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="destinationInvoiceSectionId">The destination invoice
         /// section id.</param>
-        /// <param name="destinationBillingProfileId">The destination billing
-        /// profile id.</param>
-        public TransferBillingSubscriptionRequestProperties(string destinationInvoiceSectionId = default(string), string destinationBillingProfileId = default(string))
+        public TransferBillingSubscriptionRequestProperties(string destinationInvoiceSectionId)
         {
             DestinationInvoiceSectionId = destinationInvoiceSectionId;
-            DestinationBillingProfileId = destinationBillingProfileId;
             CustomInit();
         }
 
@@ -54,10 +52,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string DestinationInvoiceSectionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the destination billing profile id.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationBillingProfileId")]
-        public string DestinationBillingProfileId { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DestinationInvoiceSectionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationInvoiceSectionId");
+            }
+        }
     }
 }

@@ -50,6 +50,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_Uri()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
+
+            // Act
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
+
+            // Assert
+            BlobUriBuilder builder = new BlobUriBuilder(appendBlobClient.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual(blobName, builder.BlobName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
@@ -99,59 +120,59 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void WithSnapshot()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
+            AppendBlobClient snapshotAppendBlobClient = appendBlobClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotAppendBlobClient.Uri);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, snapshotAppendBlobClient.AccountName);
+            Assert.AreEqual(containerName, snapshotAppendBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, snapshotAppendBlobClient.Name);
+            Assert.AreEqual(snapshotUri, snapshotAppendBlobClient.Uri);
 
-            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-
-            var builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot("foo"));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
         [Test]
         public void WithVersion()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string versionId = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
+            AppendBlobClient versionAppendBlobClient = appendBlobClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionAppendBlobClient.Uri);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, versionAppendBlobClient.AccountName);
+            Assert.AreEqual(containerName, versionAppendBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, versionAppendBlobClient.Name);
+            Assert.AreEqual(versionUri, versionAppendBlobClient.Uri);
 
-            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(blobName));
-
-            var builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.VersionId);
-
-            blob = InstrumentClient(blob.WithVersion("foo"));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.VersionId);
-
-            blob = InstrumentClient(blob.WithVersion(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.VersionId);
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
         [Test]
@@ -181,17 +202,17 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = BuildTags()
             };
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -202,7 +223,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = new Dictionary<string, string>
                 {
@@ -213,10 +234,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -292,7 +313,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateAsync(),
-                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                actualException => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), actualException.ErrorCode)
                 );
         }
 
@@ -478,7 +499,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateIfNotExistsAsync(),
-                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                actualException => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), actualException.ErrorCode)
                 );
         }
 
@@ -775,7 +796,7 @@ namespace Azure.Storage.Blobs.Test
 
             var data = GetRandomBuffer(blobSize);
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act
@@ -1241,10 +1262,12 @@ namespace Azure.Storage.Blobs.Test
             await appendBlob.SealAsync();
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
             Response<BlobDownloadInfo> downloadResponse  = await appendBlob.DownloadAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
             Assert.IsTrue(propertiesResponse.Value.IsSealed);
             Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
+            Assert.IsTrue(blobs.First().Properties.IsSealed);
         }
 
         [Test]

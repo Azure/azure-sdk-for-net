@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </param>
         /// <param name="activities"> List of activities to execute. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="expression"/>, or <paramref name="activities"/> is null. </exception>
         public UntilActivity(string name, Expression expression, IEnumerable<Activity> activities) : base(name)
         {
             if (name == null)
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Expression = expression;
-            Activities = activities.ToArray();
+            Activities = activities.ToList();
             Type = "Until";
         }
 
@@ -61,6 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object Timeout { get; set; }
         /// <summary> List of activities to execute. </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
     }
 }

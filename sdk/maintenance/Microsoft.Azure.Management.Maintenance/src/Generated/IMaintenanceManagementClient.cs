@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Maintenance
 
 
         /// <summary>
+        /// Gets the IPublicMaintenanceConfigurationsOperations.
+        /// </summary>
+        IPublicMaintenanceConfigurationsOperations PublicMaintenanceConfigurations { get; }
+
+        /// <summary>
         /// Gets the IApplyUpdatesOperations.
         /// </summary>
         IApplyUpdatesOperations ApplyUpdates { get; }

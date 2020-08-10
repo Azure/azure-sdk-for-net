@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -72,10 +71,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
-                async: true,
                 _startTime,
                 _endTime,
-                _continuation)
+                _continuation,
+                async: true,
+                default)
                 .ConfigureAwait(false);
 
             while (changeFeed.HasNext())

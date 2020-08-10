@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedEventData.
@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
 
         internal BlobChangeFeedEventData(Dictionary<string, object> record)
         {
-            Api = ((string)record[Constants.ChangeFeed.EventData.Api]);
+            BlobOperationName = new BlobOperationName((string)record[Constants.ChangeFeed.EventData.Api]);
             ClientRequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.ClientRequestId]);
             RequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.RequestId]);
             ETag = new ETag((string)record[Constants.ChangeFeed.EventData.Etag]);
@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// The operation that triggered the event.
         /// </summary>
-        public string Api { get; internal set; }
+        public BlobOperationName BlobOperationName { get; internal set; }
 
         /// <summary>
         /// A client-provided request id for the storage API operation. This id can be used to correlate to Azure Storage

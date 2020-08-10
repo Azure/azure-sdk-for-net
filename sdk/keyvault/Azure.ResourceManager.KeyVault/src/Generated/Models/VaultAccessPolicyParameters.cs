@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of VaultAccessPolicyParameters. </summary>
         /// <param name="properties"> Properties of the access policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public VaultAccessPolicyParameters(VaultAccessPolicyProperties properties)
         {
             if (properties == null)

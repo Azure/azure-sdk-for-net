@@ -1,8 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="perf\**" />
+    <EmbeddedResource Remove="perf\**" />
+    <None Remove="perf\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             string odataType = default;
-            string description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
@@ -46,15 +46,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new CognitiveServicesAccount(odataType, description);
+            return new CognitiveServicesAccount(odataType, description.Value);
         }
     }
 }

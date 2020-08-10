@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedCursor.
@@ -18,9 +16,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public int CursorVersion { get; set; }
 
         /// <summary>
-        /// UrlHash.
+        /// UrlHash. MD5 of the $changefeed container URL.
         /// </summary>
-        public long UrlHash { get; set; }
+        public string UrlHash { get; set; }
 
         /// <summary>
         /// EndDateTime.
@@ -33,7 +31,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public SegmentCursor CurrentSegmentCursor { get; set; }
 
         internal ChangeFeedCursor(
-            long urlHash,
+            string urlHash,
             DateTimeOffset? endDateTime,
             SegmentCursor currentSegmentCursor)
         {

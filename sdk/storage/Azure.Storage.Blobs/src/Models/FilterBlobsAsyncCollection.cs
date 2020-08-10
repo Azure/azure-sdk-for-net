@@ -3,16 +3,12 @@
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class FilterBlobsAsyncCollection : StorageCollectionEnumerator<FilterBlobItem>
+    internal class FilterBlobsAsyncCollection : StorageCollectionEnumerator<TaggedBlobItem>
     {
         private readonly BlobServiceClient _client;
         private readonly string _expression;
@@ -25,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
             _expression = expression;
         }
 
-        public override async ValueTask<Page<FilterBlobItem>> GetNextPageAsync(
+        public override async ValueTask<Page<TaggedBlobItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool async,
@@ -39,8 +35,8 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
-            return Page<FilterBlobItem>.FromValues(
-                response.Value.Blobs.ToArray(),
+            return Page<TaggedBlobItem>.FromValues(
+                response.Value.Blobs.ToBlobTagItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

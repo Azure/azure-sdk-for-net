@@ -36,14 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
-                        }
+                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
                     }
                     accessPolicies = array;
                     continue;

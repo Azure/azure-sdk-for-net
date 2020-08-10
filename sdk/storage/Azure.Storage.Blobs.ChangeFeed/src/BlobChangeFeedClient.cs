@@ -7,12 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedClient.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed?tabs=azure-portal">
+    /// Change Feed</see>.
     /// </summary>
     public class BlobChangeFeedClient
     {
@@ -37,7 +40,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         public BlobChangeFeedClient(string connectionString)
         {
@@ -53,7 +58,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -61,7 +68,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// every request.
         /// </param>
         public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
-
         {
             _blobServiceClient = new BlobServiceClient(connectionString, options);
         }
@@ -129,12 +135,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// GetChanges.
         /// </summary>
-        /// <returns><see cref="BlobChangeFeedPagable"/>.</returns>
+        /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedPagable GetChanges()
+        public virtual Pageable<BlobChangeFeedEvent> GetChanges()
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedPagable pageable = new BlobChangeFeedPagable(
+            BlobChangeFeedPageable pageable = new BlobChangeFeedPageable(
                 _blobServiceClient);
             return pageable;
         }
@@ -142,15 +148,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// GetChanges.
         /// </summary>
-        /// <param name="continuation"></param>
-        /// <returns><see cref="BlobChangeFeedPagable"/>.</returns>
+        /// <param name="continuationToken"></param>
+        /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedPagable GetChanges(string continuation)
+        public virtual Pageable<BlobChangeFeedEvent> GetChanges(string continuationToken)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedPagable pageable = new BlobChangeFeedPagable(
+            BlobChangeFeedPageable pageable = new BlobChangeFeedPageable(
                 _blobServiceClient,
-                continuation);
+                continuationToken);
             return pageable;
         }
 
@@ -159,12 +165,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        /// <returns><see cref="BlobChangeFeedPagable"/>.</returns>
+        /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedPagable GetChanges(DateTimeOffset start = default, DateTimeOffset end = default)
+        public virtual Pageable<BlobChangeFeedEvent> GetChanges(DateTimeOffset? start = default, DateTimeOffset? end = default)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedPagable pageable = new BlobChangeFeedPagable(
+            BlobChangeFeedPageable pageable = new BlobChangeFeedPageable(
                 _blobServiceClient,
                 start,
                 end);
@@ -174,26 +180,26 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// GetChangesAsync.
         /// </summary>
-        /// <returns><see cref="BlobChangeFeedAsyncPagable"/>.</returns>
+        /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedAsyncPagable GetChangesAsync()
+        public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync()
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedAsyncPagable asyncPagable = new BlobChangeFeedAsyncPagable(_blobServiceClient);
+            BlobChangeFeedAsyncPageable asyncPagable = new BlobChangeFeedAsyncPageable(_blobServiceClient);
             return asyncPagable;
         }
 
         /// <summary>
         /// GetChangesAsync.
         /// </summary>
-        /// <param name="continuation"></param>
-        /// <returns><see cref="BlobChangeFeedAsyncPagable"/>.</returns>
+        /// <param name="continuationToken"></param>
+        /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedAsyncPagable GetChangesAsync(string continuation)
+        public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync(string continuationToken)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedAsyncPagable asyncPagable = new BlobChangeFeedAsyncPagable(_blobServiceClient,
-                continuation);
+            BlobChangeFeedAsyncPageable asyncPagable = new BlobChangeFeedAsyncPageable(_blobServiceClient,
+                continuationToken);
             return asyncPagable;
         }
 
@@ -202,14 +208,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        /// <returns><see cref="BlobChangeFeedAsyncPagable"/>.</returns>
+        /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual BlobChangeFeedAsyncPagable GetChangesAsync(
-            DateTimeOffset start = default,
-            DateTimeOffset end = default)
+        public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync(
+            DateTimeOffset? start = default,
+            DateTimeOffset? end = default)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            BlobChangeFeedAsyncPagable asyncPagable = new BlobChangeFeedAsyncPagable(
+            BlobChangeFeedAsyncPageable asyncPagable = new BlobChangeFeedAsyncPageable(
                 _blobServiceClient,
                 start,
                 end);

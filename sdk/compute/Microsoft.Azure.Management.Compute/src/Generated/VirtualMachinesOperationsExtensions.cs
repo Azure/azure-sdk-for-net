@@ -822,6 +822,58 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to retrieve SAS URIs for a virtual machine's boot diagnostic
+            /// logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='sasUriExpirationTimeInMinutes'>
+            /// Expiration duration in minutes for the SAS URIs with a value between 1 to
+            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
+            /// generated with a default expiration duration of 120 minutes.
+            /// </param>
+            public static RetrieveBootDiagnosticsDataResult RetrieveBootDiagnosticsData(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes = default(int?))
+            {
+                return operations.RetrieveBootDiagnosticsDataAsync(resourceGroupName, vmName, sasUriExpirationTimeInMinutes).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to retrieve SAS URIs for a virtual machine's boot diagnostic
+            /// logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='sasUriExpirationTimeInMinutes'>
+            /// Expiration duration in minutes for the SAS URIs with a value between 1 to
+            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
+            /// generated with a default expiration duration of 120 minutes.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RetrieveBootDiagnosticsDataResult> RetrieveBootDiagnosticsDataAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveBootDiagnosticsDataWithHttpMessagesAsync(resourceGroupName, vmName, sasUriExpirationTimeInMinutes, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to perform maintenance on a virtual machine.
             /// </summary>
             /// <param name='operations'>
@@ -895,6 +947,46 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task SimulateEvictionAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SimulateEvictionWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static VirtualMachineAssessPatchesResult AssessPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.AssessPatchesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineAssessPatchesResult> AssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1485,6 +1577,46 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginPerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static VirtualMachineAssessPatchesResult BeginAssessPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.BeginAssessPatchesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineAssessPatchesResult> BeginAssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginAssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

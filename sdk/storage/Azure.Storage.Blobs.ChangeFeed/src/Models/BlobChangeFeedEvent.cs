@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedEvent.
@@ -21,12 +19,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         {
             Topic = (string)record[Constants.ChangeFeed.Event.Topic];
             Subject = (string)record[Constants.ChangeFeed.Event.Subject];
-            EventType = ToBlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
+            EventType = new BlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
             EventTime = DateTimeOffset.Parse((string)record[Constants.ChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
             Id = Guid.Parse((string)record[Constants.ChangeFeed.Event.EventId]);
             EventData = new BlobChangeFeedEventData((Dictionary<string, object>)record[Constants.ChangeFeed.Event.Data]);
-            record.TryGetValue(Constants.ChangeFeed.Event.DataVersion, out object dataVersion);
-            DataVersion = (long?)dataVersion;
+            record.TryGetValue(Constants.ChangeFeed.Event.SchemaVersion, out object schemaVersion);
+            SchemaVersion = (long)schemaVersion;
             record.TryGetValue(Constants.ChangeFeed.Event.MetadataVersion, out object metadataVersion);
             MetadataVersion = (string)metadataVersion;
         }
@@ -66,7 +64,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// The schema version of the data object. The publisher defines the schema version.
         /// </summary>
-        public long? DataVersion { get; internal set; }
+        public long SchemaVersion { get; internal set; }
 
         /// <summary>
         /// The schema version of the event metadata. Event Grid defines the schema of the top-level properties.
@@ -76,18 +74,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
 
         /// <inheritdoc/>
         public override string ToString() => $"{EventTime}: {EventType} {Subject} ({EventData?.ToString() ?? "Unknown Event"})";
-
-        private static BlobChangeFeedEventType ToBlobChangeFeedEventType(string s)
-        {
-            switch (s)
-            {
-                case "BlobCreated":
-                    return BlobChangeFeedEventType.BlobCreated;
-                case "BlobDeleted":
-                    return BlobChangeFeedEventType.BlobDeleted;
-                default:
-                    return default;
-            }
-        }
     }
 }

@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -54,6 +52,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
+
+            // Act
+            BlockBlobClient blockBlobClient = new BlockBlobClient(uri);
+
+            // Assert
+            BlobUriBuilder builder = new BlobUriBuilder(blockBlobClient.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual(blobName, builder.BlobName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -106,59 +125,59 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void WithSnapshot()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            BlockBlobClient blockBlobClient = new BlockBlobClient(uri);
+            BlockBlobClient snapshotBlockBlobClient = blockBlobClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotBlockBlobClient.Uri);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, snapshotBlockBlobClient.AccountName);
+            Assert.AreEqual(containerName, snapshotBlockBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, snapshotBlockBlobClient.Name);
+            Assert.AreEqual(snapshotUri, snapshotBlockBlobClient.Uri);
 
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-
-            var builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot("foo"));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
         [Test]
         public void WithVersion()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string versionId = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            BlockBlobClient blockBlobClient = new BlockBlobClient(uri);
+            BlockBlobClient versionBlockBlobClient = blockBlobClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionBlockBlobClient.Uri);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, versionBlockBlobClient.AccountName);
+            Assert.AreEqual(containerName, versionBlockBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, versionBlockBlobClient.Name);
+            Assert.AreEqual(versionUri, versionBlockBlobClient.Uri);
 
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-
-            var builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.VersionId);
-
-            blob = InstrumentClient(blob.WithVersion("foo"));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.VersionId);
-
-            blob = InstrumentClient(blob.WithVersion(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
         [Test]
@@ -333,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
             // Act
             using (var stream = new FaultyStream(
@@ -817,10 +836,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CommitBlockListAsync(commitList, options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -1632,7 +1651,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
             var data = GetRandomBuffer(Size);
             IDictionary<string, string> tags = BuildTags();
-            UploadBlobOptions options = new UploadBlobOptions
+            BlobUploadOptions options = new BlobUploadOptions
             {
                 Tags = tags
             };
@@ -1645,10 +1664,10 @@ namespace Azure.Storage.Blobs.Test
                     options: options);
             }
 
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(tags, response.Value);
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [LiveOnly]
@@ -1932,7 +1951,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.UploadAsync(content: stream),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -1957,7 +1976,7 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act

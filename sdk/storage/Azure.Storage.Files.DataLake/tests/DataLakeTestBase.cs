@@ -19,7 +19,8 @@ namespace Azure.Storage.Files.DataLake.Tests
     [ClientTestFixture(
         DataLakeClientOptions.ServiceVersion.V2019_02_02,
         DataLakeClientOptions.ServiceVersion.V2019_07_07,
-        DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        DataLakeClientOptions.ServiceVersion.V2019_12_12,
+        DataLakeClientOptions.ServiceVersion.V2020_02_10)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
@@ -377,8 +378,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     AccessPolicy =
                         new DataLakeAccessPolicy
                         {
-                            StartsOn = Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rcw"
                         }
                 }

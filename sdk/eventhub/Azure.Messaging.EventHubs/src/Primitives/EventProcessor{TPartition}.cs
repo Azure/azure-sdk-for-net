@@ -300,6 +300,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             options = options?.Clone() ?? new EventProcessorOptions();
 
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
@@ -1160,7 +1161,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
 
                     var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
-                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+
+                    if (remainingTimeUntilNextCycle != TimeSpan.Zero)
+                    {
+                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 // Cancellation has been requested; throw the corresponding exception to maintain consistent behavior.
@@ -1195,7 +1200,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionIds">The valid set of partition identifiers for the Event Hub to which the processor is associated.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The interval that callers should delay before invoking the next load balancing cycle.</returns>
+        /// <returns>The interval that callers should delay before invoking the next load balancing cycle; <see cref="TimeSpan.Zero"/> if callers should invoke the next cycle immediately.</returns>
         ///
         private async Task<TimeSpan> PerformLoadBalancingAsync(ValueStopwatch cycleDuration,
                                                                string[] partitionIds,
@@ -1210,10 +1215,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             // a fire-and-forget manner.  The processor does not assume responsibility for observing or surfacing exceptions
             // that may occur in the handler, so the associated task is intentionally unobserved.
 
+            var claimedOwnership = default(EventProcessorPartitionOwnership);
+
             if ((partitionIds != default) && (partitionIds.Length > 0))
             {
-                var claimedOwnership = default(EventProcessorPartitionOwnership);
-
                 try
                 {
                     claimedOwnership = await LoadBalancer.RunLoadBalancingAsync(partitionIds, cancellationToken).ConfigureAwait(false);
@@ -1276,6 +1281,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }))
                 .ConfigureAwait(false);
 
+            // If load balancing is greedy and there was a partition claimed, then signal that there should be no delay before
+            // invoking the next load balancing cycle.
+
+            if ((Options.LoadBalancingStrategy == LoadBalancingStrategy.Greedy) && (!LoadBalancer.IsBalanced))
+            {
+                return TimeSpan.Zero;
+            }
+
             // Wait the remaining time, if any, to start the next cycle.
 
             return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
@@ -1305,6 +1318,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var partition = new TPartition { PartitionId = partitionId };
             var operationDescription = Resources.OperationClaimOwnership;
+            var startingPosition = Options.DefaultStartingPosition;
             var cancellationSource = default(CancellationTokenSource);
 
             try
@@ -1322,8 +1336,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 operationDescription = Resources.OperationClaimOwnership;
 
                 // Determine the starting position for processing the partition.
-
-                var startingPosition = Options.DefaultStartingPosition;
 
                 foreach (var checkpoint in checkpoints)
                 {
@@ -1361,7 +1373,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
             }
         }
 

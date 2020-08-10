@@ -8655,12 +8655,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The date-time the policy is active.
         /// </summary>
-        public System.DateTimeOffset StartsOn { get; set; }
+        public System.DateTimeOffset? PolicyStartsOn { get; set; }
 
         /// <summary>
         /// The date-time the policy expires.
         /// </summary>
-        public System.DateTimeOffset ExpiresOn { get; set; }
+        public System.DateTimeOffset? PolicyExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions for the ACL policy.
@@ -8683,15 +8683,24 @@ namespace Azure.Storage.Files.Shares.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Start", ""),
-                value.StartsOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Expiry", ""),
-                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Permission", ""),
-                value.Permissions));
+            if (value.PolicyStartsOn != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Start", ""),
+                    value.PolicyStartsOn.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.PolicyExpiresOn != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Expiry", ""),
+                    value.PolicyExpiresOn.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.Permissions != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Permission", ""),
+                    value.Permissions));
+            }
             return _element;
         }
 
@@ -8708,12 +8717,12 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
             if (_child != null)
             {
-                _value.StartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.PolicyStartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
             if (_child != null)
             {
-                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.PolicyExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
             if (_child != null)
@@ -9723,12 +9732,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Deleted
         /// </summary>
-        public bool? Deleted { get; internal set; }
+        public bool? IsDeleted { get; internal set; }
 
         /// <summary>
         /// Version
         /// </summary>
-        public string Version { get; internal set; }
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// Properties of a share.
@@ -9778,12 +9787,12 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
             if (_child != null)
             {
-                _value.Deleted = bool.Parse(_child.Value);
+                _value.IsDeleted = bool.Parse(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
             if (_child != null)
             {
-                _value.Version = _child.Value;
+                _value.VersionId = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
@@ -9809,16 +9818,16 @@ namespace Azure.Storage.Files.Shares.Models
             string name,
             Azure.Storage.Files.Shares.Models.ShareProperties properties,
             string snapshot = default,
-            bool? deleted = default,
-            string version = default)
+            bool? isDeleted = default,
+            string versionId = default)
         {
             return new ShareItem()
             {
                 Name = name,
                 Properties = properties,
                 Snapshot = snapshot,
-                Deleted = deleted,
-                Version = version,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
             };
         }
     }
@@ -10160,7 +10169,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// DeletedTime
         /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// RemainingRetentionDays
@@ -10240,7 +10249,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
             if (_child != null)
             {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
             if (_child != null)
@@ -10283,7 +10292,7 @@ namespace Azure.Storage.Files.Shares.Models
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
-            System.DateTimeOffset? deletedTime = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
@@ -10296,7 +10305,7 @@ namespace Azure.Storage.Files.Shares.Models
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
-                DeletedTime = deletedTime,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,

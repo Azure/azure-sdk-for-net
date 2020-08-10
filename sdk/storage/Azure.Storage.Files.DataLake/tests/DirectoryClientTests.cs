@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -348,6 +348,21 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task ExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -358,7 +373,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -385,6 +400,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -988,7 +1018,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1011,7 +1041,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1043,7 +1073,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_StopAndResume()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1095,7 +1125,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1138,7 +1168,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1185,7 +1215,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1230,7 +1260,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1286,7 +1316,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1373,7 +1403,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_Error()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1397,7 +1427,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1420,7 +1450,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1452,7 +1482,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_StopAndResume()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1504,7 +1534,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1547,7 +1577,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1594,7 +1624,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1639,7 +1669,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1695,7 +1725,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1782,7 +1812,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_Error()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -1806,7 +1836,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1829,7 +1859,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1861,7 +1891,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_StopAndResume()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1913,7 +1943,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1956,7 +1986,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2003,7 +2033,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2048,7 +2078,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2104,7 +2134,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2191,7 +2221,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_Error()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -2426,8 +2456,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Id = signedIdentifierId,
                 AccessPolicy = new DataLakeAccessPolicy
                 {
-                    StartsOn = Recording.UtcNow.AddHours(-1),
-                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                    PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                     Permissions = "rw"
                 }
             };
@@ -3634,6 +3664,139 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Verify the file name exists in the filesystem
             Assert.AreEqual(2, names.Count);
             Assert.Contains(fullPathName, names);
+        }
+
+        [Test]
+        [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("directory", "%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("!'();[]", "%21%27%28%29%5DäÄöÖüÜß%3B")]
+        [TestCase("%21%27%28%", "%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("directory", "my cool directory")]
+        [TestCase("directory0", "directory1")]
+        public async Task GetSubDirectoryClient_SpecialCharacters(string directoryName, string subDirectoryName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+
+            DataLakeDirectoryClient subDirectory = InstrumentClient(directory.GetSubDirectoryClient(subDirectoryName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
+            string expectedPath = $"{directoryName}/{subDirectoryName}";
+
+            // Act
+            Response<PathInfo> createResponse = await subDirectory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subDirectory.Uri);
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(subDirectoryName, subDirectory.Name);
+            Assert.AreEqual(expectedPath, subDirectory.Path);
+
+            Assert.AreEqual(blobUri, subDirectory.Uri);
+            Assert.AreEqual(blobUri, subDirectory.BlobUri);
+            Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+
+            Assert.AreEqual(subDirectoryName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+        }
+
+        [Test]
+        [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("directory", "%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("!'();[]", "%21%27%28%29%2C%23äÄöÖüÜß%3B")]
+        [TestCase("%29%3B%5B%5D", "%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase("directory", "my cool file")]
+        [TestCase("directory", "file")]
+        public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
+            string expectedPath = $"{directoryName}/{fileName}";
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri);
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(expectedPath, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
+
+            Assert.AreEqual(fileName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndFileAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeFileClient file = await subdirectory.CreateFileAsync(fileName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}", file.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}", file.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndSubDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string lowerSubDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeDirectoryClient lowerSubDirectory = await subdirectory.CreateSubDirectoryAsync(lowerSubDirectoryName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
         }
     }
 }

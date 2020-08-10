@@ -166,14 +166,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public override void Validate()
         {
             base.Validate();
-            if (NodeCount > 200)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "NodeCount", 200);
-            }
-            if (NodeCount < 3)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "NodeCount", 3);
-            }
         }
     }
 }

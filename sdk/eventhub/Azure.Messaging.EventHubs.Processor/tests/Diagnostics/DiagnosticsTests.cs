@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockContext = new Mock<PartitionContext>("65");
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", "host", "hub", Mock.Of<TokenCredential>(), null) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
 
             mockProcessor
                 .Protected()

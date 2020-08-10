@@ -18,31 +18,10 @@ namespace Azure.AI.TextAnalytics
 
         #region Serialize Inputs
 
-        private static readonly JsonEncodedText s_countryHint = JsonEncodedText.Encode("countryHint");
         private static readonly JsonEncodedText s_documents = JsonEncodedText.Encode("documents");
         private static readonly JsonEncodedText s_id = JsonEncodedText.Encode("id");
         private static readonly JsonEncodedText s_language = JsonEncodedText.Encode("language");
         private static readonly JsonEncodedText s_text = JsonEncodedText.Encode("text");
-
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs, string defaultCountryHint)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            var json = new Utf8JsonWriter(writer);
-            json.WriteStartObject();
-            json.WriteStartArray(s_documents);
-            foreach (var input in inputs)
-            {
-                json.WriteStartObject();
-                json.WriteString(s_countryHint, input.CountryHint ?? defaultCountryHint);
-                json.WriteString(s_id, input.Id);
-                json.WriteString(s_text, input.Text);
-                json.WriteEndObject();
-            }
-            json.WriteEndArray();
-            json.WriteEndObject();
-            json.Flush();
-            return writer.WrittenMemory;
-        }
 
         public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<TextDocumentInput> inputs, string defaultLanguage)
         {
@@ -116,7 +95,7 @@ namespace Azure.AI.TextAnalytics
             return errors;
         }
 
-        private static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
+        internal static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
         {
             string errorCode = default;
             string message = default;
@@ -220,89 +199,6 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Deserialize Common
 
-        #region Detect Languages
-
-        public static async Task<DetectLanguageResultCollection> DeserializeDetectLanguageResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadDetectLanguageResultCollection(root, idToIndexMap);
-        }
-
-        public static DetectLanguageResultCollection DeserializeDetectLanguageResponse(Stream content, IDictionary<string, int> idToIndexMap)
-        {
-            using JsonDocument json = JsonDocument.Parse(content, default);
-            JsonElement root = json.RootElement;
-            return ReadDetectLanguageResultCollection(root, idToIndexMap);
-        }
-
-        private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<DetectLanguageResult>();
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
-
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new DetectLanguageResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new DetectLanguageResultCollection(collection, statistics, modelVersion);
-                }
-            }
-
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-            {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    collection.Add(ReadDetectedLanguageResult(documentElement));
-                }
-            }
-
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            return new DetectLanguageResultCollection(collection, statistics, modelVersion);
-        }
-
-        private static DetectLanguageResult ReadDetectedLanguageResult(JsonElement documentElement)
-        {
-            DetectedLanguage language = default;
-            List<TextAnalyticsWarning> warnings = default;
-
-            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
-            {
-                warnings = ReadDocumentWarnings(warningsValue);
-            }
-
-            if (documentElement.TryGetProperty("detectedLanguage", out JsonElement detectedLanguageValue))
-            {
-                language = (ReadDetectedLanguage(detectedLanguageValue, warnings));
-            }
-
-            return new DetectLanguageResult(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement),
-                language);
-        }
-
-        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement, List<TextAnalyticsWarning> warnings)
-        {
-            string name = null;
-            string iso6391Name = null;
-            double confidenceScore = default;
-
-            if (languageElement.TryGetProperty("name", out JsonElement nameValue))
-                name = nameValue.GetString();
-            if (languageElement.TryGetProperty("iso6391Name", out JsonElement iso6391NameValue))
-                iso6391Name = iso6391NameValue.ToString();
-            if (languageElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
-                scoreValue.TryGetDouble(out confidenceScore);
-
-            return new DetectedLanguage(name, iso6391Name, confidenceScore, warnings);
-        }
-
-        #endregion Detect Languages
-
         #region Recognize Entities
 
         public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
@@ -329,10 +225,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -424,10 +316,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -451,7 +339,7 @@ namespace Azure.AI.TextAnalytics
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
-            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores", warnings);
+            var documentSentiment = ReadDocumentSentiment(documentElement, "confidenceScores", warnings);
 
             return new AnalyzeSentimentResult(
                     ReadDocumentId(documentElement),
@@ -556,10 +444,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -627,10 +511,6 @@ namespace Azure.AI.TextAnalytics
             foreach (var error in ReadDocumentErrors(root))
             {
                 collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
-                if (error.Id.Length == 0)
-                {
-                    return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
-                }
             }
 
             if (root.TryGetProperty("documents", out JsonElement documentsValue))

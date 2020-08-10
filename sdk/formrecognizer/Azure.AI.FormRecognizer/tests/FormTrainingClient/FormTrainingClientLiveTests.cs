@@ -28,22 +28,23 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void FormTrainingClientCannotAuthenticateWithFakeApiKey()
+        {
+            var client = CreateFormTrainingClient(apiKey: "fakeKey");
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetAccountPropertiesAsync());
+        }
+
+        [Test]
         public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
         {
-            var client = CreateInstrumentedFormTrainingClient(useTokenCredential: true);
+            var client = CreateFormTrainingClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
-            }
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
+
+            CustomFormModel model = await operation.WaitForCompletionAsync(PollingInterval);
 
             // Sanity check to make sure we got an actual response back from the service.
-
-            CustomFormModel model = await operation.WaitForCompletionAsync();
-
             Assert.IsNotNull(model.ModelId);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
@@ -51,36 +52,32 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartTraining(bool labeled)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartTraining(bool singlePage, bool labeled)
         {
-            var client = CreateInstrumentedFormTrainingClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            }
-
-            await operation.WaitForCompletionAsync();
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.RequestedOn);
-            Assert.IsNotNull(model.CompletedOn);
+            Assert.IsNotNull(model.TrainingStartedOn);
+            Assert.IsNotNull(model.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(0, model.Errors.Count);
 
             foreach (TrainingDocumentInfo doc in model.TrainingDocuments)
             {
-                Assert.IsNotNull(doc.DocumentName);
+                Assert.IsNotNull(doc.Name);
                 Assert.IsNotNull(doc.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, doc.Status);
                 Assert.IsNotNull(doc.Errors);
@@ -102,14 +99,43 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartTrainingSucceedsWithValidPrefix()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "subfolder" };
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
+        }
+
+        [Test]
+        public async Task StartTrainingFailsWithInvalidPrefix()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "invalidPrefix" };
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("2014", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task StartTrainingError()
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
             TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("2001", ex.ErrorCode);
 
             Assert.False(operation.HasValue);
             Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
@@ -120,17 +146,12 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task TrainingOps(bool labeled)
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            }
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -139,8 +160,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
             Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
-            Assert.AreEqual(trainedModel.RequestedOn, resultModel.RequestedOn);
-            Assert.AreEqual(trainedModel.CompletedOn, resultModel.CompletedOn);
+            Assert.AreEqual(trainedModel.TrainingStartedOn, resultModel.TrainingStartedOn);
+            Assert.AreEqual(trainedModel.TrainingCompletedOn, resultModel.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
             Assert.AreEqual(trainedModel.Status, resultModel.Status);
             Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
@@ -150,7 +171,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var tm = trainedModel.TrainingDocuments[i];
                 var rm = resultModel.TrainingDocuments[i];
 
-                Assert.AreEqual(tm.DocumentName, rm.DocumentName);
+                Assert.AreEqual(tm.Name, rm.Name);
                 Assert.AreEqual(tm.PageCount, rm.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, rm.Status);
                 Assert.AreEqual(tm.Status, rm.Status);
@@ -174,8 +195,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
-            Assert.IsNotNull(modelInfo.RequestedOn);
-            Assert.IsNotNull(modelInfo.CompletedOn);
+            Assert.IsNotNull(modelInfo.TrainingStartedOn);
+            Assert.IsNotNull(modelInfo.TrainingCompletedOn);
             Assert.IsNotNull(modelInfo.Status);
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
@@ -185,80 +206,100 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await client.DeleteModelAsync(trainedModel.ModelId);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
+            Assert.AreEqual("1022", ex.ErrorCode);
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
+        public void DeleteModelFailsWhenModelDoesNotExist()
+        {
+            var client = CreateFormTrainingClient();
+            var fakeModelId = "00000000-0000-0000-0000-000000000000";
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
+            Assert.AreEqual("1022", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task CopyModel()
         {
-            var sourceClient = CreateInstrumentedFormTrainingClient();
-            var targetClient = CreateInstrumentedFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
-            CopyModelOperation operation;
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
-            }
+            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModelInfo modelCopied = operation.Value;
 
-            Assert.IsNotNull(modelCopied.CompletedOn);
-            Assert.IsNotNull(modelCopied.RequestedOn);
+            Assert.IsNotNull(modelCopied.TrainingCompletedOn);
+            Assert.IsNotNull(modelCopied.TrainingStartedOn);
             Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
             Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
-        public async Task CopyModelError()
+        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        public void CopyModelError()
         {
-            var sourceClient = CreateInstrumentedFormTrainingClient();
-            var targetClient = CreateInstrumentedFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
+        public async Task StartCopyModelFailsWithWrongRegion()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
+
+            var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("AuthorizationError", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task GetCopyAuthorization()
         {
-            var targetClient = CreateInstrumentedFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             Assert.IsNotNull(targetAuth.ModelId);
             Assert.IsNotNull(targetAuth.AccessToken);
             Assert.IsNotNull(targetAuth.ExpiresOn);
-            Assert.AreEqual(resourceID, targetAuth.ResourceId);
+            Assert.AreEqual(resourceId, targetAuth.ResourceId);
             Assert.AreEqual(region, targetAuth.Region);
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
-            var targetClient = CreateInstrumentedFormTrainingClient();
-            var resourceID = TestEnvironment.TargetResourceId;
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             string jsonTargetAuth = targetAuth.ToJson();
 

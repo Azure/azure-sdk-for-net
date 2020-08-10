@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,6 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
         /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="cells"/> is null. </exception>
         public Notebook(NotebookMetadata metadata, int nbformat, int nbformatMinor, IEnumerable<NotebookCell> cells)
         {
             if (metadata == null)
@@ -34,8 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells.ToArray();
-            AdditionalProperties = new Dictionary<string, object>();
+            Cells = cells.ToList();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>
@@ -56,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
             Cells = cells;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the notebook. </summary>
@@ -72,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </summary>
         public int NbformatMinor { get; set; }
         /// <summary> Array of cells of the current notebook. </summary>
-        public IList<NotebookCell> Cells { get; set; }
+        public IList<NotebookCell> Cells { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

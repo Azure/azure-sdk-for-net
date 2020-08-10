@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The properties for the table entity query response. </summary>
-    public partial class TableEntityQueryResponse
+    internal partial class TableEntityQueryResponse
     {
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
         internal TableEntityQueryResponse()
         {
+            Value = new ChangeTrackingList<IDictionary<string, object>>();
         }
 
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>

@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
         /// <param name="url"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public AzureBlobFSLinkedService(object url)
         {
             if (url == null)

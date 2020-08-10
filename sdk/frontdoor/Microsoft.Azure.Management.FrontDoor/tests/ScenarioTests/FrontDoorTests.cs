@@ -148,7 +148,153 @@ namespace FrontDoor.Tests.ScenarioTests
         }
 
         [Fact]
+        public void FrontDoorPrivateLinkCRUDTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create clients
+                var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
+                var resourcesClient = FrontDoorTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // Get subscription id
+                string subid = frontDoorMgmtClient.SubscriptionId;
+
+                // Create resource group
+                var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create two different frontDoor
+                string frontDoorName = TestUtilities.GenerateName("frontDoor");
+
+                // Generate a name for the PLS
+                string privateLinkName = TestUtilities.GenerateName("fd-pls");
+
+                ForwardingConfiguration forwardingConfiguration = new ForwardingConfiguration(
+                    forwardingProtocol: "MatchRequest",
+                    backendPool: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1"));
+
+                RoutingRule routingrule1 = new RoutingRule(
+                    name: "routingrule1",
+                    frontendEndpoints: new List<refID> { new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/frontendEndpoints/frontendEndpoint1") },
+                    acceptedProtocols: new List<string> { "Https" },
+                    patternsToMatch: new List<string> { "/*" },
+                    routeConfiguration: forwardingConfiguration,
+                    enabledState: "Enabled"
+                );
+                HealthProbeSettingsModel healthProbeSettings1 = new HealthProbeSettingsModel(
+                        name: "healthProbeSettings1",
+                        path: "/",
+                        protocol: "Http",
+                        intervalInSeconds: 120,
+                        healthProbeMethod: "Get",
+                        enabledState: "Enabled"
+                    );
+
+                LoadBalancingSettingsModel loadBalancingSettings1 = new LoadBalancingSettingsModel(
+                    name: "loadBalancingSettings1",
+                    additionalLatencyMilliseconds: 0,
+                    sampleSize: 4,
+                    successfulSamplesRequired: 2
+                    );
+
+                Backend backend1 = new Backend(
+                    address: "backend1.azurewebsites.net",
+                    privateLinkAlias: "pls-east.8c4f19b7-9b90-4976-93c1-0ee0f634202a.eastus.azure.privatelinkservice",
+                    privateLinkApprovalMessage: "Please approve connection request",
+                    httpPort: 80,
+                    httpsPort: 443,
+                    enabledState: "Enabled",
+                    weight: 1,
+                    priority: 2
+                    );
+
+                Backend backend2 = new Backend(
+                    address: "backend2.azurewebsites.net",
+                    privateLinkResourceId: $"/subscriptions/{subid}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{privateLinkName}",
+                    privateLinkLocation: "eastus",
+                    privateLinkApprovalMessage: "Please approve connection request",
+                    httpPort: 80,
+                    httpsPort: 443,
+                    enabledState: "Enabled",
+                    weight: 1,
+                    priority: 2
+                    );
+
+                BackendPool backendPool1 = new BackendPool(
+                    name: "backendPool1",
+                    backends: new List<Backend> { backend1, backend2 },
+                    loadBalancingSettings: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1"),
+                    healthProbeSettings: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1")
+                    );
+
+                BackendPoolsSettings backendPoolsSettings1 = new BackendPoolsSettings(
+                    sendRecvTimeoutSeconds: 123
+                    );
+
+                FrontendEndpoint frontendEndpoint1 = new FrontendEndpoint(
+                    name: "frontendEndpoint1",
+                    hostName: frontDoorName + ".azurefd.net",
+                    sessionAffinityEnabledState: "Disabled",
+                    sessionAffinityTtlSeconds: 0
+                    );
+
+                FrontDoorModel createParameters = new FrontDoorModel
+                {
+                    Location = "global",
+                    FriendlyName = frontDoorName,
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        },
+                    RoutingRules = new List<RoutingRule> { routingrule1 },
+                    LoadBalancingSettings = new List<LoadBalancingSettingsModel> { loadBalancingSettings1 },
+                    HealthProbeSettings = new List<HealthProbeSettingsModel> { healthProbeSettings1 },
+                    FrontendEndpoints = new List<FrontendEndpoint> { frontendEndpoint1 },
+                    BackendPools = new List<BackendPool> { backendPool1 },
+                    BackendPoolsSettings = backendPoolsSettings1
+                };
+
+                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
+
+                // validate that correct frontdoor is created
+                VerifyFrontDoor(createdFrontDoor, createParameters);
+
+                // Retrieve frontdoor 
+                var retrievedFrontDoor = frontDoorMgmtClient.FrontDoors.Get(resourceGroupName, frontDoorName);
+
+                // validate that correct frontdoor is retrieved
+                VerifyFrontDoor(retrievedFrontDoor, createParameters);
+
+                // update FrontDoor
+                retrievedFrontDoor.Tags = new Dictionary<string, string>
+                        {
+                            {"key3","value3"},
+                            {"key4","value4"}
+                        };
+
+
+                var updatedFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, retrievedFrontDoor);
+
+                // validate that frontDoor is correctly updated
+                VerifyFrontDoor(updatedFrontDoor, retrievedFrontDoor);
+
+                // Delete frontDoor
+                frontDoorMgmtClient.FrontDoors.Delete(resourceGroupName, frontDoorName);
+
+                // Verify that frontDoor is deleted
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
+                    frontDoorMgmtClient.FrontDoors.Get(resourceGroupName, frontDoorName);
+                });
+
+                FrontDoorTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
+
+        [Fact]
         public void FrontDoorCRUDTestWithRulesEngine()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

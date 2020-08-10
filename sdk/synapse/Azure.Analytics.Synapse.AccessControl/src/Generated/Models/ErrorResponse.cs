@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="code"> . </param>
         /// <param name="message"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorResponse(string code, string message)
         {
             if (code == null)
@@ -29,6 +31,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
 
             Code = code;
             Message = message;
+            Details = new ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>

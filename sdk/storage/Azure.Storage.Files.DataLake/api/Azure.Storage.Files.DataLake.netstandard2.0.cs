@@ -2,7 +2,7 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_12_12) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2020_02_10) { }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -10,6 +10,7 @@ namespace Azure.Storage.Files.DataLake
             V2019_02_02 = 1,
             V2019_07_07 = 2,
             V2019_12_12 = 3,
+            V2020_02_10 = 4,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -80,8 +81,12 @@ namespace Azure.Storage.Files.DataLake
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Query(string query, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo>> QueryAsync(string query, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.IO.Stream OpenRead(bool allowfileModifications, long position = (long)0, int? bufferSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.IO.Stream OpenRead(long position = (long)0, int? bufferSize = default(int?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenReadAsync(bool allowfileModifications, long position = (long)0, int? bufferSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenReadAsync(long position = (long)0, int? bufferSize = default(int?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Query(string querySqlExpression, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo>> QueryAsync(string querySqlExpression, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read() { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, bool rangeGetContentHash = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -348,23 +353,18 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeAccessPolicy
     {
         public DataLakeAccessPolicy() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
+        public System.DateTimeOffset? PolicyExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? PolicyStartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
     public enum DataLakeFileExpirationOffset
     {
         CreationTime = 0,
         Now = 1,
-    }
-    public partial class DataLakeFileScheduleDeletionOptions
-    {
-        public DataLakeFileScheduleDeletionOptions() { }
-        public DataLakeFileScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
-        public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset setRelativeTo) { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset? SetExpiryRelativeTo { get { throw null; } }
-        public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class DataLakeFileUploadOptions
     {
@@ -434,6 +434,14 @@ namespace Azure.Storage.Files.DataLake.Models
         public char? FieldQuote { get { throw null; } set { } }
         public bool HasHeaders { get { throw null; } set { } }
     }
+    public partial class DataLakeQueryCsvTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
+    {
+        public DataLakeQueryCsvTextOptions() { }
+        public string ColumnSeparator { get { throw null; } set { } }
+        public char? EscapeCharacter { get { throw null; } set { } }
+        public bool HasHeaders { get { throw null; } set { } }
+        public char? QuotationCharacter { get { throw null; } set { } }
+    }
     public partial class DataLakeQueryError
     {
         internal DataLakeQueryError() { }
@@ -446,12 +454,16 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeQueryJsonTextConfiguration() { }
     }
+    public partial class DataLakeQueryJsonTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
+    {
+        public DataLakeQueryJsonTextOptions() { }
+    }
     public partial class DataLakeQueryOptions
     {
         public DataLakeQueryOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextConfiguration InputTextConfiguration { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextConfiguration OutputTextConfiguration { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions InputTextConfiguration { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
     }
@@ -459,6 +471,13 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         protected DataLakeQueryTextConfiguration() { }
         public string RecordSeparator { get { throw null; } set { } }
+    }
+    public abstract partial class DataLakeQueryTextOptions
+    {
+        protected DataLakeQueryTextOptions() { }
+        public string RecordSeparator { get { throw null; } set { } }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeQueryCsvTextOptions DataLakeQueryCsvTextOptions(string recordSeparator, string columnSeparator, char? quotationCharacter, char? escapeCharacter, bool hasHeaders) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeQueryJsonTextOptions DataLakeQueryJsonTextOptions(string recordSeparator) { throw null; }
     }
     public partial class DataLakeRequestConditions : Azure.RequestConditions
     {
@@ -811,6 +830,7 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
+        public void SetPermissions(string rawPermissions, bool normalize = false) { }
         public Azure.Storage.Sas.DataLakeSasQueryParameters ToSasQueryParameters(Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
         public Azure.Storage.Sas.DataLakeSasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

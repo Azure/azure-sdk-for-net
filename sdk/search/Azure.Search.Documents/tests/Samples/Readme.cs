@@ -36,13 +36,15 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+            string indexName = "nycjobs";
+
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -175,7 +177,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Filter to only ratings greater than or equal our preference
                 Filter = SearchFilter.Create($"rating ge {stars}"),
                 Size = 5, // Take only 5 results
-                OrderBy = new[] { "rating desc" } // Sort by rating from high to low
+                OrderBy = { "rating desc" } // Sort by rating from high to low
             };
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
@@ -234,6 +236,19 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        public async Task GetDocument()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resources.GetQueryClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_GetDocument
+            Hotel doc = client.GetDocument<Hotel>("1");
+            Console.WriteLine($"{doc.Id}: {doc.Name}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
         public async Task Index()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
@@ -242,8 +257,8 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_Readme_Index
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-                IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-                IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+                    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+                    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
 
                 IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
                 client.IndexDocuments(batch, options);

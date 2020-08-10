@@ -15,7 +15,7 @@ namespace Azure.Storage.Shared
     /// Functions like a readable <see cref="MemoryStream"/> but uses an ArrayPool to supply the backing memory.
     /// This stream support buffering long sizes.
     /// </summary>
-    internal class PooledMemoryStream : Stream
+    internal class PooledMemoryStream : SlicedStream
     {
         private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
 
@@ -45,7 +45,7 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Absolute position of this stream in the larger stream it was chunked from.
         /// </summary>
-        public long AbsolutePosition { get; }
+        public override long AbsolutePosition { get; }
 
         /// <summary>
         /// List of arrays making up the overall buffer. Since ArrayPool may give us a larger array than needed,

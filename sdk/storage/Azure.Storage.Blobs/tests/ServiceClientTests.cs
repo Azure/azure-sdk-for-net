@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -274,6 +275,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Re-enable when feature is re-enabled.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ListContainersSegmentAsync_Deleted()
         {
@@ -285,13 +287,15 @@ namespace Azure.Storage.Blobs.Test
             await containerClient.DeleteAsync();
 
             // Act
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            // Uncomment line, delete following line.
+            //IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(containerItem.Deleted);
-            Assert.IsNotNull(containerItem.Version);
-            Assert.IsNotNull(containerItem.Properties.DeletedTime);
+            Assert.IsTrue(containerItem.IsDeleted);
+            Assert.IsNotNull(containerItem.VersionId);
+            Assert.IsNotNull(containerItem.Properties.DeletedOn);
             Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
@@ -361,7 +365,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => { });
         }
 
         [Test]
@@ -370,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
             BlobCorsRule[] originalCors = properties.Cors.ToArray();
             properties.Cors =
                 new[]
@@ -389,7 +393,7 @@ namespace Azure.Storage.Blobs.Test
             await service.SetPropertiesAsync(properties);
 
             // Assert
-            properties = (await service.GetPropertiesAsync()).Value;
+            properties = await service.GetPropertiesAsync();
             Assert.AreEqual(1, properties.Cors.Count());
             Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
 
@@ -398,6 +402,40 @@ namespace Azure.Storage.Blobs.Test
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_StaticWebsite()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
+            BlobStaticWebsite originalBlobStaticWebsite = properties.StaticWebsite;
+
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index.html";
+
+            properties.StaticWebsite = new BlobStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.StaticWebsite.Enabled);
+            Assert.AreEqual(errorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(defaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+
+            // Cleanup
+            properties.StaticWebsite = originalBlobStaticWebsite;
+            await service.SetPropertiesAsync(properties);
         }
 
         [Test]
@@ -414,7 +452,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 invalidService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => { });
         }
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
@@ -523,7 +561,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 { tagKey, tagValue }
             };
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
             };
@@ -532,25 +570,67 @@ namespace Azure.Storage.Blobs.Test
             string expression = $"\"{tagKey}\"='{tagValue}'";
 
             // It takes a few seconds for Filter Blobs to pick up new changes
-            await Task.Delay(2000);
+            await Delay(2000);
 
             // Act
-            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
-            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (Page<TaggedBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
 
             // Assert
-            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
-            Assert.AreEqual(tagValue, filterBlob.TagValue);
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.IsNotNull(filterBlob);
         }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(AccountSasPermissions.Filter)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task FindBlobsByTagAsync_AccountSas(AccountSasPermissions accountSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Delay(2000);
+
+            // Act
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
+            BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (Page<TaggedBlobItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.IsNotNull(filterBlob);
+        }
+
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task FindBlobsByTagAsync_Error()
         {
-            // Arrange
             // Arrange
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
@@ -564,6 +644,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Re-enable when API is enabled")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UndeleteBlobContainerAsync()
         {
@@ -573,7 +654,9 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync();
             await container.DeleteAsync();
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            // Uncomment this line, remove folling line.
+            //IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // It takes some time for the Container to be deleted.
@@ -582,7 +665,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
                 containerItem.Name,
-                containerItem.Version,
+                containerItem.VersionId,
                 GetNewContainerName());
 
             // Assert
@@ -593,6 +676,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Re-enable when API is enabled")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UndeleteBlobContainerAsync_Error()
         {

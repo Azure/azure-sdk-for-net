@@ -166,10 +166,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -178,6 +175,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -186,9 +184,9 @@ namespace Microsoft.Azure.Management.Reservations
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations").ToString();
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -356,10 +354,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -369,6 +364,7 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationId", reservationId);
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -379,9 +375,9 @@ namespace Microsoft.Azure.Management.Reservations
             _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(reservationId));
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (expand != null)
             {
@@ -578,10 +574,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -591,6 +584,7 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationId", reservationId);
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListRevisions", tracingParameters);
             }
@@ -600,9 +594,9 @@ namespace Microsoft.Azure.Management.Reservations
             _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(reservationId));
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -770,14 +764,11 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (body == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -787,6 +778,7 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
                 tracingParameters.Add("reservationId", reservationId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginAvailableScopes", tracingParameters);
@@ -797,9 +789,9 @@ namespace Microsoft.Azure.Management.Reservations
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(reservationId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -967,14 +959,11 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (body == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -983,6 +972,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginSplit", tracingParameters);
@@ -992,9 +982,9 @@ namespace Microsoft.Azure.Management.Reservations
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split").ToString();
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1162,14 +1152,11 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (body == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1178,6 +1165,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginMerge", tracingParameters);
@@ -1187,9 +1175,9 @@ namespace Microsoft.Azure.Management.Reservations
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge").ToString();
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1363,14 +1351,11 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1380,6 +1365,7 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
                 tracingParameters.Add("reservationId", reservationId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -1390,9 +1376,9 @@ namespace Microsoft.Azure.Management.Reservations
             _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
             _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(reservationId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

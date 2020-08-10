@@ -202,6 +202,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
             var waitTime = (maximumWaitTime ?? tryTimeout);
+            var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
@@ -220,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // used for this operation; validate the token state before attempting link creation and
                         // again after the operation completes to provide best efforts in respecting it.
 
-                        EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId);
+                        EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId, operationId);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
@@ -293,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, activeEx.Message);
+                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -320,12 +321,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+                EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, receivedEventCount);
+                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount);
             }
         }
 

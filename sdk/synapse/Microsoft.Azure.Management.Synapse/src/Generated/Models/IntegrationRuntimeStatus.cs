@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// <summary>
     /// Integration runtime status.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("IntegrationRuntimeStatus")]
     public partial class IntegrationRuntimeStatus
     {
         /// <summary>

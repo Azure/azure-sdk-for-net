@@ -4,7 +4,7 @@
 using System;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedModelFactory for building mock objects.
@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
                 EventTime = eventTime,
                 Id = id,
                 EventData = eventData,
-                DataVersion = dataVersion,
+                SchemaVersion = dataVersion,
                 MetadataVersion = metadataVersion
             };
 
@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
             string sequencer)
             => new BlobChangeFeedEventData
             {
-                Api = api,
+                BlobOperationName = api,
                 ClientRequestId = clientRequestId,
                 RequestId = requestId,
                 ETag = eTag,
