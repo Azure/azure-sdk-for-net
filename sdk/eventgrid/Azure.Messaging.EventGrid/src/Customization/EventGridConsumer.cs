@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid
     /// </summary>
     public class EventGridConsumer
     {
-        private readonly ObjectSerializer _objectSerializer;
+        private readonly ObjectSerializer _dataSerializer;
         private readonly IDictionary<string, Type> _customEventTypeMappings;
 
         /// <summary>
@@ -38,8 +38,12 @@ namespace Azure.Messaging.EventGrid
         public EventGridConsumer(EventGridConsumerOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
-            _objectSerializer = options.DataSerializer;
-            _customEventTypeMappings = options.CustomEventTypeMappings;
+            _dataSerializer = options.DataSerializer;
+            _customEventTypeMappings = new Dictionary<string, Type>();
+            foreach (KeyValuePair<string, Type> kvp in options.CustomEventTypeMappings)
+            {
+                _customEventTypeMappings.Add(kvp);
+            }
         }
 
         /// <summary>
@@ -70,16 +74,7 @@ namespace Azure.Messaging.EventGrid
             List<EventGridEvent> egEvents = new List<EventGridEvent>();
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
-            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
-            JsonDocument requestDocument;
-            if (async)
-            {
-                requestDocument = await JsonDocument.ParseAsync(stream, default, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                requestDocument = JsonDocument.Parse(stream, default);
-            }
+            JsonDocument requestDocument = await ParseJsonToDocument(requestContent, async, cancellationToken).ConfigureAwait(false);
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
@@ -92,10 +87,7 @@ namespace Azure.Messaging.EventGrid
                 object egEventData = null;
 
                 // Reserialize JsonElement to stream
-                MemoryStream dataStream = new MemoryStream();
-                JsonObjectSerializer serializer = new JsonObjectSerializer();
-                serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
-                dataStream.Position = 0;
+                MemoryStream dataStream = SerializePayloadToStream(dataElement, cancellationToken);
 
                 // First, let's attempt to find the mapping for the event type in the custom event mapping.
                 if (_customEventTypeMappings.TryGetValue(egEventInternal.EventType, out Type typeOfEventData))
@@ -104,11 +96,11 @@ namespace Azure.Messaging.EventGrid
                     {
                         if (async)
                         {
-                            egEventData = await _objectSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
+                            egEventData = await _dataSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            egEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
+                            egEventData = _dataSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                         }
                     }
                 }
@@ -168,16 +160,7 @@ namespace Azure.Messaging.EventGrid
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
-            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
-            JsonDocument requestDocument;
-            if (async)
-            {
-                requestDocument = await JsonDocument.ParseAsync(stream, default, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                requestDocument = JsonDocument.Parse(stream, default);
-            }
+            JsonDocument requestDocument = await ParseJsonToDocument(requestContent, async, cancellationToken).ConfigureAwait(false);
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
@@ -198,10 +181,7 @@ namespace Azure.Messaging.EventGrid
                     if (dataElement.HasValue && dataElement.Value.ValueKind != JsonValueKind.Null)
                     {
                         // Reserialize JsonElement to stream
-                        MemoryStream dataStream = new MemoryStream();
-                        JsonObjectSerializer serializer = new JsonObjectSerializer();
-                        serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
-                        dataStream.Position = 0;
+                        MemoryStream dataStream = SerializePayloadToStream(dataElement, cancellationToken);
 
                         // First, let's attempt to find the mapping for the event type in the custom event mapping.
                         if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
@@ -210,11 +190,11 @@ namespace Azure.Messaging.EventGrid
                             {
                                 if (async)
                                 {
-                                    cloudEventData = await _objectSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
+                                    cloudEventData = await _dataSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
                                 }
                                 else
                                 {
-                                    cloudEventData = _objectSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
+                                    cloudEventData = _dataSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
                                 }
                             }
                         }
@@ -233,14 +213,9 @@ namespace Azure.Messaging.EventGrid
                             }
                         }
                     }
-                    else if (dataElement?.ValueKind == JsonValueKind.Null) // Event has null data
+                    else // Event has null data
                     {
                         cloudEventData = null;
-                        cloudEventInternal.Type = "";
-                    }
-                    else // Event has no data
-                    {
-                        cloudEventData = "";
                         cloudEventInternal.Type = "";
                     }
                 }
@@ -270,18 +245,15 @@ namespace Azure.Messaging.EventGrid
             }
             else if (jsonElement.ValueKind == JsonValueKind.Number)
             {
-                var oki = jsonElement.TryGetInt32(out var vali);
-                if (oki)
+                if (jsonElement.TryGetInt32(out var vali))
                 {
                     elementValue = vali;
                 }
-                var okl = jsonElement.TryGetInt64(out var vall);
-                if (okl)
+                if (jsonElement.TryGetInt64(out var vall))
                 {
                     elementValue = vall;
                 }
-                var okd = jsonElement.TryGetDouble(out var val);
-                if (okd)
+                if (jsonElement.TryGetDouble(out var val))
                 {
                     elementValue = val;
                 }
@@ -296,6 +268,28 @@ namespace Azure.Messaging.EventGrid
             }
 
             return elementValue != null;
+        }
+
+        private static async Task<JsonDocument> ParseJsonToDocument(string requestContent, bool async, CancellationToken cancellationToken)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
+            if (async)
+            {
+                return await JsonDocument.ParseAsync(stream, default, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                return JsonDocument.Parse(stream, default);
+            }
+        }
+
+        private static MemoryStream SerializePayloadToStream(JsonElement? dataElement, CancellationToken cancellationToken)
+        {
+            MemoryStream dataStream = new MemoryStream();
+            JsonObjectSerializer serializer = new JsonObjectSerializer();
+            serializer.Serialize(dataStream, dataElement, dataElement.GetType(), cancellationToken);
+            dataStream.Position = 0;
+            return dataStream;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private readonly string _apiVersion;
-        private readonly ObjectSerializer _serializer;
+        private readonly ObjectSerializer _dataSerializer;
 
         /// <summary>Initalizes an instance of EventGridClient.</summary>
         protected EventGridPublisherClient()
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.DataSerializer ?? new JsonObjectSerializer();
+            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
             _apiVersion = options.Version.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.DataSerializer ?? new JsonObjectSerializer();
+            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventGrid
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
                     MemoryStream stream = new MemoryStream();
-                    _serializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
+                    _dataSerializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
                     stream.Position = 0;
                     JsonDocument data = JsonDocument.Parse(stream);
 
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventGrid
 
                     foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
                     {
-                        newCloudEvent.Add(kvp.Key, new EventGridSerializer(kvp.Value, _serializer, cancellationToken));
+                        newCloudEvent.Add(kvp.Key, new CustomModelSerializer(kvp.Value, _dataSerializer, cancellationToken));
                     }
 
                     // The 'Data' property is optional for CloudEvents
@@ -223,7 +223,7 @@ namespace Azure.Messaging.EventGrid
                         else
                         {
                             MemoryStream stream = new MemoryStream();
-                            _serializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
+                            _dataSerializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
                             stream.Position = 0;
                             JsonDocument data = JsonDocument.Parse(stream);
                             newCloudEvent.Data = data.RootElement;
@@ -273,13 +273,13 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
+                List<CustomModelSerializer> serializedEvents = new List<CustomModelSerializer>();
                 foreach (object customEvent in events)
                 {
                     serializedEvents.Add(
-                        new EventGridSerializer(
+                        new CustomModelSerializer(
                             customEvent,
-                            _serializer,
+                            _dataSerializer,
                             cancellationToken));
                 }
                 if (async)
@@ -320,10 +320,6 @@ namespace Azure.Messaging.EventGrid
 
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(endpoint);
-            if (uriBuilder.Query.Contains("api-version"))
-            {
-                uriBuilder.Query = ""; // remove queries if api version is already added to Uri
-            }
             uriBuilder.AppendQuery("api-version", apiVersion.GetVersionString(), true);
             string encodedResource = HttpUtility.UrlEncode(uriBuilder.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");

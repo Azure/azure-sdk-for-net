@@ -4,9 +4,7 @@
 using System;
 using Azure.Core;
 using System.Text.Json;
-using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
-using Microsoft.Azure.EventGrid.Tests;
 using NUnit.Framework;
 using System.Collections;
 using Azure.Core.Serialization;
@@ -22,9 +20,9 @@ namespace Azure.Messaging.EventGrid.Tests
             _eventGridConsumer = new EventGridConsumer();
         }
 
-        // EVENT GRID EVENT TESTS //
+        #region EventGridEvent tests
 
-        // AppConfiguration events
+        #region AppConfiguration events
         [Test]
         public void ConsumeAppConfigurationKeyValueDeletedEvent()
         {
@@ -48,6 +46,7 @@ namespace Azure.Messaging.EventGrid.Tests
             AppConfigurationKeyValueModifiedEventData eventData = (AppConfigurationKeyValueModifiedEventData)events[0].Data;
             Assert.AreEqual("key1", eventData.Key);
         }
+        #endregion
 
         [Test]
         public void ConsumeStorageBlobDeletedEventWithExtraProperty()
@@ -81,8 +80,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
         }
 
-        // Testing custom events
-
+        #region Custom event tests
         [Test]
         public void ConsumeCustomEvents()
         {
@@ -127,9 +125,9 @@ namespace Azure.Messaging.EventGrid.Tests
             ContosoItemReceivedEventData[] eventData = (ContosoItemReceivedEventData[])events[0].Data;
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData[0].ItemSku);
         }
+        #endregion
 
-        // Testing primitive/string data
-
+        #region Primitive/string data tests
         [Test]
         public void ConsumeCustomEventWithBooleanData()
         {
@@ -163,9 +161,9 @@ namespace Azure.Messaging.EventGrid.Tests
             string eventData = (string)events[0].Data;
             Assert.AreEqual("stringdata", eventData);
         }
+        #endregion
 
-        // Testing custom events with no mappings added
-
+        #region Testing custom events with no mappings added
         [Test]
         public void ConsumeCustomEventWithNoMappingAndObjectData()
         {
@@ -203,8 +201,9 @@ namespace Azure.Messaging.EventGrid.Tests
             string eventData = (string)events[0].Data;
             Assert.AreEqual("stringdata", eventData);
         }
+        #endregion
 
-        // ContainerRegistry events
+        #region ContainerRegistry events
         [Test]
         public void ConsumeContainerRegistryImagePushedEvent()
         {
@@ -234,7 +233,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeContainerRegistryChartDeletedEvent()
         {
-            // timestamp is null
             string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.ContainerRegistry/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.ContainerRegistry.ChartDeleted\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"id\":\"id\",\"timestamp\":\"2018-06-20T12:00:33.6125843-07:00\",\"action\":\"action1\",\"target\":{\"mediaType\":\"mediatype1\",\"size\":20,\"digest\":\"digest1\",\"repository\":null,\"tag\":null,\"name\":\"name1\",\"version\":null}}, \"dataVersion\":\"\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -248,7 +246,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeContainerRegistryChartPushedEvent()
         {
-            // timestamp is null
             string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.ContainerRegistry/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.ContainerRegistry.ChartPushed\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"id\":\"id\",\"timestamp\":\"2018-06-20T12:00:33.6125843-07:00\",\"action\":\"action1\",\"target\":{\"mediaType\":\"mediatype1\",\"size\":40,\"digest\":\"digest1\",\"repository\":null,\"tag\":null,\"name\":\"name1\",\"version\":null}}, \"dataVersion\":\"\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -258,8 +255,9 @@ namespace Azure.Messaging.EventGrid.Tests
             ContainerRegistryChartPushedEventData eventData = (ContainerRegistryChartPushedEventData)events[0].Data;
             Assert.AreEqual("mediatype1", eventData.Target.MediaType);
         }
+        #endregion
 
-        // IoTHub Device events
+        #region IoTHub Device events
         [Test]
         public void ConsumeIoTHubDeviceCreatedEvent()
         {
@@ -324,8 +322,9 @@ namespace Azure.Messaging.EventGrid.Tests
             IotHubDeviceTelemetryEventData eventData = (IotHubDeviceTelemetryEventData)events[0].Data;
             Assert.AreEqual("Active", eventData.Properties["Status"]);
         }
+        #endregion
 
-        // EventGrid events
+        #region EventGrid events
         [Test]
         public void ConsumeEventGridSubscriptionValidationEvent()
         {
@@ -351,8 +350,9 @@ namespace Azure.Messaging.EventGrid.Tests
             SubscriptionDeletedEventData eventData = (SubscriptionDeletedEventData)events[0].Data;
             Assert.AreEqual("/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1", eventData.EventSubscriptionId);
         }
+        #endregion
 
-        // Event Hub Events
+        #region Event Hub Events
         [Test]
         public void ConsumeEventHubCaptureFileCreatedEvent()
         {
@@ -365,8 +365,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventHubCaptureFileCreatedEventData eventData = (EventHubCaptureFileCreatedEventData)events[0].Data;
             Assert.AreEqual("AzureBlockBlob", eventData.FileType);
         }
+        #endregion
 
-        // MachineLearningServices events
+        #region MachineLearningServices events
         [Test]
         public void ConsumeMachineLearningServicesModelRegisteredEvent()
         {
@@ -441,12 +442,12 @@ namespace Azure.Messaging.EventGrid.Tests
             MachineLearningServicesDatasetDriftDetectedEventData eventData = (MachineLearningServicesDatasetDriftDetectedEventData)events[0].Data;
             Assert.AreEqual("copetersDriftMonitor3", eventData.DataDriftName);
         }
+        #endregion
 
-        // Maps events
+        #region Maps events
         [Test]
         public void ConsumeMapsGeofenceEnteredEvent()
         {
-            // invalidPeriodGeofenceGeometryId is null
             string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceEntered\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":[\"id1\",\"id2\"],\"isEventPublished\":true}, \"dataVersion\":\"\"}]";
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
 
@@ -459,7 +460,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMapsGeofenceExitedEvent()
         {
-            // invalidPeriodGeofenceGeometryId is null
             string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceExited\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":[\"id1\",\"id2\"],\"isEventPublished\":true}, \"dataVersion\":\"\"}]";
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
 
@@ -472,7 +472,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMapsGeofenceResultEvent()
         {
-            // invalidPeriodGeofenceGeometryId is null
             string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"eventType\": \"Microsoft.Maps.GeofenceResult\",\"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"expiredGeofenceGeometryId\":[\"id1\",\"id2\"],\"geometries\":[{\"deviceId\":\"id1\",\"distance\":1.0,\"geometryId\":\"gid1\",\"nearestLat\":72.4,\"nearestLon\":100.4,\"udId\":\"id22\"}],\"invalidPeriodGeofenceGeometryId\":[\"id1\",\"id2\"],\"isEventPublished\":true}, \"dataVersion\":\"\"}]";
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
 
@@ -481,8 +480,9 @@ namespace Azure.Messaging.EventGrid.Tests
             MapsGeofenceResultEventData eventData = (MapsGeofenceResultEventData)events[0].Data;
             Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
         }
+        #endregion
 
-        // Media Services events
+        #region Media Services events
         [Test]
         public void ConsumeMediaMediaJobStateChangeEvent()
         {
@@ -558,7 +558,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMediaJobFinishedEvent()
         {
-            // outputs.error is null
             string requestContent = "[{ \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-298338bb-f8d1-4d0f-9fde-544e0ac4d983\",  \"eventType\": \"Microsoft.Media.JobFinished\",  \"eventTime\": \"2018-10-01T20:58:26.7886175\",  \"id\": \"83f8464d-be94-48e5-b67b-46c6199fe28e\",  \"data\": {    \"outputs\": [      {        \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",        \"assetName\": \"output-298338bb-f8d1-4d0f-9fde-544e0ac4d983\",       \"label\": \"VideoAnalyzerPreset_0\",        \"progress\": 100,        \"state\": \"Finished\"      }    ],    \"previousState\": \"Processing\",    \"state\": \"Finished\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\" }]";
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
 
@@ -580,7 +579,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMediaJobCanceledEvent()
         {
-            // outputs.error is null
             string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobCanceled\",  \"eventTime\": \"2018-10-12T15:42:05.6519929\",  \"id\": \"3fef7871-f916-4980-8a45-e79a2675808b\",  \"data\": {    \"outputs\": [      {        \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",        \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",        \"error\": {\"code\":\"ServiceError\", \"message\":\"error message\", \"category\":\"Service\", \"retry\":\"DoNotRetry\", \"details\":[{\"code\":\"code\", \"message\":\"Service Error Message\"}]},      \"label\": \"VideoAnalyzerPreset_0\",        \"progress\": 83,        \"state\": \"Canceled\"      }    ],    \"previousState\": \"Canceling\",    \"state\": \"Canceled\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -624,7 +622,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMediaJobOutputCanceledEvent()
         {
-            // output.error is null
             string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobOutputCanceled\",  \"eventTime\": \"2018-10-12T15:42:04.949555\",  \"id\": \"9297cda2-4a50-4622-a679-c3785d27d512\",  \"data\": {    \"previousState\": \"Canceling\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",      \"error\": {\"code\":\"ServiceError\", \"message\":\"error message\", \"category\":\"Service\", \"retry\":\"DoNotRetry\", \"details\":[{\"code\":\"code\", \"message\":\"Service Error Message\"}]},      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 83,      \"state\": \"Canceled\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -640,7 +637,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMediaJobOutputCancelingEvent()
         {
-            // output.error is null
             string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobOutputCanceling\",  \"eventTime\": \"2018-10-12T15:42:04.949555\",  \"id\": \"9297cda2-4a50-4622-a679-c3785d27d512\",  \"data\": {    \"previousState\": \"Processing\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",      \"error\": {        \"category\": \"Service\",        \"code\": \"ServiceError\",        \"details\": [          {            \"code\": \"Internal\",            \"message\": \"Internal error in initializing the task for processing\"          }        ],        \"message\": \"Fatal service error, please contact support.\",        \"retry\": \"DoNotRetry\"      },      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 83,      \"state\": \"Canceling\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -693,7 +689,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeMediaJobOutputProcessingEvent()
         {
-            // output.error is null
             string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputProcessing\",  \"eventTime\": \"2018-10-12T15:14:17.8962704\",  \"id\": \"d48eeb0b-2bfa-4265-a2f8-624654c3781c\",  \"data\": {    \"previousState\": \"Scheduled\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": {        \"category\": \"Service\",        \"code\": \"ServiceError\",        \"details\": [          {            \"code\": \"Internal\",            \"message\": \"Internal error in initializing the task for processing\"          }        ],        \"message\": \"Fatal service error, please contact support.\",        \"retry\": \"DoNotRetry\"      },      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 0,      \"state\": \"Processing\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
@@ -903,8 +898,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1000", eventData.Timescale);
             Assert.AreEqual("4000", eventData.DiscontinuityGap);
         }
+        #endregion
 
-        // Resource Manager (Azure Subscription/Resource Group) events
+        #region Resource Manager (Azure Subscription/Resource Group) events
         [Test]
         public void ConsumeResourceWriteSuccessEvent()
         {
@@ -1021,9 +1017,9 @@ namespace Azure.Messaging.EventGrid.Tests
             ResourceActionCancelData eventData = (ResourceActionCancelData)events[0].Data;
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
         }
+        #endregion
 
-
-        // ServiceBus events
+        #region ServiceBus events
         [Test]
         public void ConsumeServiceBusActiveMessagesAvailableWithNoListenersEvent()
         {
@@ -1049,8 +1045,9 @@ namespace Azure.Messaging.EventGrid.Tests
             ServiceBusDeadletterMessagesAvailableWithNoListenersEventData eventData = (ServiceBusDeadletterMessagesAvailableWithNoListenersEventData)events[0].Data;
             Assert.AreEqual("testns1", eventData.NamespaceName);
         }
+        #endregion
 
-        // Storage events
+        #region Storage events
         [Test]
         public void ConsumeStorageBlobCreatedEvent()
         {
@@ -1128,7 +1125,9 @@ namespace Azure.Messaging.EventGrid.Tests
             StorageDirectoryRenamedEventData eventData = (StorageDirectoryRenamedEventData)events[0].Data;
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", eventData.DestinationUrl);
         }
+        #endregion
 
+        #region App Service events
         [Test]
         public void ConsumeWebAppUpdatedEvent()
         {
@@ -1146,7 +1145,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebBackupOperationStartedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1161,7 +1159,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebBackupOperationCompletedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1176,7 +1173,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebBackupOperationFailedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.BackupOperationFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1191,7 +1187,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebRestoreOperationStartedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1206,7 +1201,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebRestoreOperationCompletedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1221,7 +1215,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebRestoreOperationFailedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.RestoreOperationFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1236,7 +1229,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebSlotSwapStartedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapStarted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1251,7 +1243,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebSlotSwapCompletedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapCompleted\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1266,7 +1257,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebSlotSwapFailedEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapFailed\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1295,7 +1285,6 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeWebSlotSwapWithPreviewCancelledEvent()
         {
-            // appEventTypeDetail is null
             string siteName = "testSite01";
             string requestContent = $"[{{\"topic\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"eventType\": \"Microsoft.Web.SlotSwapWithPreviewCancelled\", \"eventTime\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
@@ -1320,8 +1309,10 @@ namespace Azure.Messaging.EventGrid.Tests
             WebAppServicePlanUpdatedEventData eventData = (WebAppServicePlanUpdatedEventData)events[0].Data;
             Assert.AreEqual(planName, eventData.Name);
         }
+        #endregion
+        #endregion
 
-        // CLOUD EVENT TESTS //
+        #region CloudEvent tests
         [Test]
         public void ConsumeStorageBlobDeletedCloudEventWithAdditionalProperties()
         {
@@ -1351,7 +1342,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             CloudEvent[] events = eventGridConsumer2.DeserializeCloudEvents(requestContent);
 
-            Assert.AreEqual(events[0].Data, "");
+            Assert.AreEqual(events[0].Data, null);
             Assert.AreEqual(events[0].Type, "");
         }
 
@@ -1421,5 +1412,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(consumerOptions.CustomEventTypeMappings.TryGetValue("Contoso.Items.ItemReceived", out retrievedType));
             Assert.AreEqual(typeof(ContosoItemReceivedEventData), retrievedType);
         }
+
+        #endregion
     }
 }
