@@ -12,7 +12,7 @@ namespace Azure.Management.EventHub.Tests
     public static class Helper
     {
         internal const string ResourceGroupPrefix = "Default-EventHub-";
-        internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string NamespacePrefix = "sdk-eventhub-Namespace-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string EventHubPrefix = "sdk-EventHub-";
