@@ -328,7 +328,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "This test is intermittently failing.  Tracked by issue #9798")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateReceiverWithInclusiveSequenceNumber()
@@ -359,14 +359,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     // Create a new receiver which will start reading from the last message on the stream.
                     TestUtility.Log($"Creating a new receiver with sequence number {pInfo.LastEnqueuedSequenceNumber}");
                     receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromSequenceNumber(pInfo.LastEnqueuedSequenceNumber, true));
-                    var receivedMessages = await receiver.ReceiveAsync(100);
+                    var receivedMessages = await ReceiveAllMessagesAsync(receiver);
 
-                    // We should have received only 1 message from this call.
+                    // We should have received 2 messages from this call.
                     Assert.True(receivedMessages.Count() == 2, $"Didn't receive 2 messages. Received {receivedMessages.Count()} messages(s).");
 
                     // Next receive on this partition shouldn't return any more messages.
-                    receivedMessages = await receiver.ReceiveAsync(100, TimeSpan.FromSeconds(15));
-                    Assert.True(receivedMessages == null, $"Received messages at the end.");
+                    var nextMessages = await receiver.ReceiveAsync(100, TimeSpan.FromSeconds(15));
+                    Assert.True(nextMessages == null, $"Received messages at the end.");
                 }
                 finally
                 {

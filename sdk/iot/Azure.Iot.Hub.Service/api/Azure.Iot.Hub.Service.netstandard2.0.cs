@@ -120,6 +120,7 @@ namespace Azure.Iot.Hub.Service.Authentication
         public System.TimeSpan SasTokenTimeToLive { get { throw null; } }
         public string SharedAccessKey { get { throw null; } }
         public string SharedAccessPolicy { get { throw null; } }
+        public string GetSasToken() { throw null; }
     }
 }
 namespace Azure.Iot.Hub.Service.Models

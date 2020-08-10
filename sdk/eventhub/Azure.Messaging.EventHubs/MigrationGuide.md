@@ -92,7 +92,7 @@ The v4 client allowed for sending a single event or an enumerable of events, whi
 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
-| `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
+| `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events from a known position](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ReadEventsFromAKnownPosition.cs) |
 | `new EventProcessorHost()`                           | `new EventProcessorClient(blobContainerClient, ...)`               | [Basic Event Processing](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs) |
 
 ## Migration samples
@@ -104,7 +104,7 @@ In v4, events could be published to a single partition using `PartitionSender`. 
 In v5, this has been consolidated into a more efficient SendAsync(EventDataBatch) method. Batching merges information from multiple events into a single publish message, reducing the amount of network communication needed vs publishing events one at a time. Events are published to a specific partition when partition id is set in [`CreateBatchOptions`](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer.createbatchoptions?view=azure-dotnet) before calling [`CreateBatchAsync(CreateBatchOptions)`](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer.eventhubproducerclient.createbatchasync?view=azure-dotnet#Azure_Messaging_EventHubs_Producer_EventHubProducerClient_CreateBatchAsync_Azure_Messaging_EventHubs_Producer_CreateBatchOptions_System_Threading_CancellationToken_).
 
 The code below assumes all events fit into a single batch. For more complete example, see sample: [Publish events
-to specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_PublishAnEventBatchToASpecificPartition.cs).
+to specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishAnEventBatchToASpecificPartition.cs).
 
 In v4:
 ```csharp
@@ -285,7 +285,7 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, connection
 }
 ```
 
-See [`ReadEvents.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) for a sample program demonstrating this.
+See [`ReadEventsFromAKnownPosition.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ReadEventsFromAKnownPosition.cs) for a sample program demonstrating this.
 
 ### Migrating code from `EventProcessorHost` to `EventProcessorClient` for reading events
 

@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         private string GetConnectionString() =>
             Mode == RecordedTestMode.Playback ?
-                TestEnvironment.ServiceBusOverrideConnectionString :
+                TestEnvironment.OverrideServiceBusConnectionString :
                 TestEnvironment.ServiceBusConnectionString;
 
         private ServiceBusManagementClient GetClient() =>

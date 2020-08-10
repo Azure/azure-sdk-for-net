@@ -1,0 +1,6 @@
+#private preview
+https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md
+https://github.com/Azure/azure-digital-twins/blob/private-preview/Documentation/how-to-manage-routes.md#filter-events
+https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins
+https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json
+https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins

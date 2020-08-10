@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public int CursorVersion { get; set; }
 
         /// <summary>
-        /// UrlHash.
+        /// UrlHash. MD5 of the $changefeed container URL.
         /// </summary>
         public string UrlHash { get; set; }
 

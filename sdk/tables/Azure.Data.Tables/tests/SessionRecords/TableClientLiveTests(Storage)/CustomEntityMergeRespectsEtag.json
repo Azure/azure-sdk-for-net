@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-6aff444e42cd1c4ca61142d48405e6af-1b2ed23b71a5044c-00",
+        "traceparent": "00-aecc34e7961f4f41ab5e72e641962fc8-ae633c945bea6345-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "24150bb7c0511832d88ed2fba1dae3f4",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:41 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -26,7 +26,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Location": "https://allkimprim.table.core.windows.net/Tables(\u0027testtablel1upyyea\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -35,7 +35,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "24150bb7c0511832d88ed2fba1dae3f4",
-        "x-ms-request-id": "805d4d6e-f002-0079-253a-6463c9000000",
+        "x-ms-request-id": "6610e4a4-1002-004e-2901-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -55,13 +55,13 @@
         "Content-Length": "117",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-69064b960213f04ca5bfb3c3e626e047-9a6eb2bdbd808f41-00",
+        "traceparent": "00-f5110412d644714eb45950063552d157-e7cca2f7857f3b4b-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "1be297f834642ff9488ee8e1e0753152",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -76,15 +76,15 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A27.8962686Z\u0027\u0022",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.384559Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "1be297f834642ff9488ee8e1e0753152",
-        "x-ms-request-id": "805d4d72-f002-0079-283a-6463c9000000",
+        "x-ms-request-id": "6610e4a8-1002-004e-2b01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -97,11 +97,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "23452352fe1712572f05374d8124fb23",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -110,7 +110,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -118,7 +118,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "23452352fe1712572f05374d8124fb23",
-        "x-ms-request-id": "805d4d74-f002-0079-2a3a-6463c9000000",
+        "x-ms-request-id": "6610e4b0-1002-004e-3301-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -127,12 +127,12 @@
           {
             "odata.type": "allkimprim.testtablel1upyyea",
             "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A27.8962686Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.384559Z\u0027\u0022",
             "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-27T17:23:27.8962686Z",
+            "Timestamp": "2020-07-29T23:38:39.384559Z",
             "StringTypeProperty": "This is the original"
           }
         ]
@@ -143,45 +143,45 @@
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "574",
+        "Content-Length": "573",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "If-Match": "*",
-        "traceparent": "00-d850a3c3bd81ca4683e4c29bf2994f77-03db33cc77eb5b42-00",
+        "traceparent": "00-8e3cd73cc5e6d04c8e43f9df3c380a14-36635bb4071b6040-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "6650de8a82ffd7521bf509324a37f818",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
         "odata.type": "allkimprim.testtablel1upyyea",
         "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A27.8962686Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.384559Z\u0027\u0022",
         "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "SomeStringProperty": "This is new and improved!",
-        "Timestamp": "2020-07-27T17:23:27.8962686Z",
+        "Timestamp": "2020-07-29T23:38:39.3845590Z",
         "Timestamp@odata.type": "Edm.DateTime",
-        "StringTypeProperty": "This is the original"
+        "StringTypeProperty": "This is the original",
+        "SomeStringProperty": "This is new and improved!"
       },
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.0033421Z\u0027\u0022",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.5526772Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "6650de8a82ffd7521bf509324a37f818",
-        "x-ms-request-id": "805d4d77-f002-0079-2d3a-6463c9000000",
+        "x-ms-request-id": "6610e4b4-1002-004e-3701-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -194,11 +194,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "b64ea9a0d09df9fb3fd0eb5ffcacae23",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -207,7 +207,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -215,7 +215,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "b64ea9a0d09df9fb3fd0eb5ffcacae23",
-        "x-ms-request-id": "805d4d7a-f002-0079-303a-6463c9000000",
+        "x-ms-request-id": "6610e4b9-1002-004e-3a01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -224,12 +224,12 @@
           {
             "odata.type": "allkimprim.testtablel1upyyea",
             "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.0033421Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.5526772Z\u0027\u0022",
             "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-27T17:23:28.0033421Z",
+            "Timestamp": "2020-07-29T23:38:39.5526772Z",
             "SomeStringProperty": "This is new and improved!",
             "StringTypeProperty": "This is the original"
           }
@@ -244,25 +244,25 @@
         "Content-Length": "584",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
-        "If-Match": "W/\u0022datetime\u00272020-07-27T17%3A23%3A27.8962686Z\u0027\u0022",
-        "traceparent": "00-75a2e3e3d845ca48b6e0f3b345a5e5ec-29d5e442421ab549-00",
+        "If-Match": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.384559Z\u0027\u0022",
+        "traceparent": "00-7f27a6eb7bc7aa41a7b6b3848d5feb7e-01ec8b9ecd0b074f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "0156c592cb24cf53d06e0721f525c7f8",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
         "odata.type": "allkimprim.testtablel1upyyea",
         "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.0033421Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.5526772Z\u0027\u0022",
         "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "Timestamp": "2020-07-27T17:23:28.0033421Z",
+        "Timestamp": "2020-07-29T23:38:39.5526772Z",
         "Timestamp@odata.type": "Edm.DateTime",
         "SomeStringProperty": "This changed due to a matching Etag",
         "StringTypeProperty": "This is the original"
@@ -271,7 +271,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:23:27 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -279,7 +279,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "0156c592cb24cf53d06e0721f525c7f8",
-        "x-ms-request-id": "805d4d7c-f002-0079-323a-6463c9000000",
+        "x-ms-request-id": "6610e4ba-1002-004e-3b01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -287,7 +287,7 @@
           "code": "UpdateConditionNotSatisfied",
           "message": {
             "lang": "en-US",
-            "value": "The update condition specified in the request was not satisfied.\nRequestId:805d4d7c-f002-0079-323a-6463c9000000\nTime:2020-07-27T17:23:28.1114150Z"
+            "value": "The update condition specified in the request was not satisfied.\nRequestId:6610e4ba-1002-004e-3b01-66b165000000\nTime:2020-07-29T23:38:39.6940900Z"
           }
         }
       }
@@ -300,25 +300,25 @@
         "Content-Length": "584",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
-        "If-Match": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.0033421Z\u0027\u0022",
-        "traceparent": "00-9005379a10db3048b5bdb4be868a37cb-74727e456a2ca542-00",
+        "If-Match": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.5526772Z\u0027\u0022",
+        "traceparent": "00-89ce9dbb9520e7438587cd014c0a1b69-cf87f9052b104c4e-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "d7ad1e0c45d6b986e356272e96f3da6f",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
         "odata.type": "allkimprim.testtablel1upyyea",
         "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.0033421Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.5526772Z\u0027\u0022",
         "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "Timestamp": "2020-07-27T17:23:28.0033421Z",
+        "Timestamp": "2020-07-29T23:38:39.5526772Z",
         "Timestamp@odata.type": "Edm.DateTime",
         "SomeStringProperty": "This changed due to a matching Etag",
         "StringTypeProperty": "This is the original"
@@ -327,15 +327,15 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:23:28 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.1724574Z\u0027\u0022",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.753819Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d7ad1e0c45d6b986e356272e96f3da6f",
-        "x-ms-request-id": "805d4d7e-f002-0079-343a-6463c9000000",
+        "x-ms-request-id": "6610e4bb-1002-004e-3c01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -348,11 +348,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "849fe546f7e0d4f3567ee52ec8d9041a",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -361,7 +361,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -369,7 +369,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "849fe546f7e0d4f3567ee52ec8d9041a",
-        "x-ms-request-id": "805d4d80-f002-0079-363a-6463c9000000",
+        "x-ms-request-id": "6610e4bc-1002-004e-3d01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -378,12 +378,12 @@
           {
             "odata.type": "allkimprim.testtablel1upyyea",
             "odata.id": "https://allkimprim.table.core.windows.net/testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A23%3A28.1724574Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-29T23%3A38%3A39.753819Z\u0027\u0022",
             "odata.editLink": "testtablel1upyyea(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-27T17:23:28.1724574Z",
+            "Timestamp": "2020-07-29T23:38:39.753819Z",
             "SomeStringProperty": "This changed due to a matching Etag",
             "StringTypeProperty": "This is the original"
           }
@@ -396,13 +396,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-83ce71867d0071408590912537fe2ec8-cb2ad243c933034c-00",
+        "traceparent": "00-17071d686ffe4e478a6919ecbec40da5-17095baef5543e49-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200729.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "de52f308d7ff4d4c3f9d1dcea42439dd",
-        "x-ms-date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "x-ms-date": "Wed, 29 Jul 2020 23:38:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -411,14 +411,14 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:23:28 GMT",
+        "Date": "Wed, 29 Jul 2020 23:38:38 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "de52f308d7ff4d4c3f9d1dcea42439dd",
-        "x-ms-request-id": "805d4d84-f002-0079-3a3a-6463c9000000",
+        "x-ms-request-id": "6610e4be-1002-004e-3f01-66b165000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
