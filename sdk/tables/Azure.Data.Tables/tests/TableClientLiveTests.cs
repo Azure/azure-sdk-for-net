@@ -232,11 +232,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 

@@ -24,7 +24,7 @@ namespace Azure
         public ETag(string etag)
         {
             _value = etag;
-            _preserveRawValue = true;;
+            _preserveRawValue = true;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure
         private ETag(string etag, bool preserveValue)
         {
             _value = etag;
-            _preserveRawValue = preserveValue;;
+            _preserveRawValue = preserveValue;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure
         }
 
         /// <summary>
-        ///
+        /// Returns the string representation of the <see cref="ETag"/>.
         /// </summary>
         /// <returns>The formatted string representation of this <see cref="ETag"/>. This includes outter quotes and the W/ prefix in the case of weak ETags.</returns>
         public string ToFormattedString()
