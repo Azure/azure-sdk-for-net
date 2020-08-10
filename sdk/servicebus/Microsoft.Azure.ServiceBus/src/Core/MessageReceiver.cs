@@ -900,7 +900,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Unregister messgae hander from the receiver if there is active message handler registered. 
+        /// Unregister message hander from the receiver if there is an active message handler registered. 
         /// </summary>
         public void UnregisterMessageHandler()
         {
