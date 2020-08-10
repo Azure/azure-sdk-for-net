@@ -6,6 +6,7 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Amqp;
@@ -299,28 +300,30 @@ namespace Microsoft.Azure.EventHubs
         {
             this.ThrowIfClosed();
 
+            var eventDataList = eventDatas?.ToList();
+
             // eventDatas null check is inside ValidateEvents
-            int count = EventDataSender.ValidateEvents(eventDatas);
+            int count = EventDataSender.ValidateEvents(eventDataList);
 
             EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.ConnectionStringBuilder, partitionKey, eventDatas, count);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.ConnectionStringBuilder, partitionKey, eventDataList, count);
 
             Task sendTask = null;
             try
             {
-                sendTask = this.InnerSender.SendAsync(eventDatas, partitionKey);
+                sendTask = this.InnerSender.SendAsync(eventDataList, partitionKey);
                 await sendTask.ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.ConnectionStringBuilder, partitionKey, eventDatas, exception);
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.ConnectionStringBuilder, partitionKey, eventDataList, exception);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.ConnectionStringBuilder, partitionKey, eventDatas, sendTask);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.ConnectionStringBuilder, partitionKey, eventDataList, sendTask);
             }
         }
 
