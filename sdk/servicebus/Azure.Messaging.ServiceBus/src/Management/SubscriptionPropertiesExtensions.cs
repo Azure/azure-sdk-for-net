@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         public static List<SubscriptionProperties> ParseCollectionFromContent(string topicName, string xml)
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("No subscriptions were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("No subscriptions were found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry)
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in qdXml.Elements())

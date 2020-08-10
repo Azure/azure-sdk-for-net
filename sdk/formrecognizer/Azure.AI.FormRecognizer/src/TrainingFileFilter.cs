@@ -29,7 +29,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// A flag to indicate whether subfolders within the set of prefix folders should be included
         /// when searching for content to be preprocessed.
         /// </summary>
-        public bool IncludeSubFolders { get; set; } = false;
+        [CodeGenMember("IncludeSubFolders")]
+        public bool IncludeSubfolders { get; set; } = false;
 
     }
 }

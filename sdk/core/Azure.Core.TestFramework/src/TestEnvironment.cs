@@ -117,6 +117,11 @@ namespace Azure.Core.TestFramework
         public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
 
         /// <summary>
+        ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedOptionalVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
         public string ClientId => GetRecordedVariable("CLIENT_ID");

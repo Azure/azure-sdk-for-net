@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    HasLinkCommunicationError(link)))
+                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -444,11 +444,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 throw new ServiceBusException(
                     Resources.SessionLockExpiredOnMessageSession,
-                    ServiceBusException.FailureReason.SessionLockLost);
+                    ServiceBusFailureReason.SessionLockLost);
             }
             throw new ServiceBusException(
                 Resources.MessageLockLost,
-                ServiceBusException.FailureReason.MessageLockLost);
+                ServiceBusFailureReason.MessageLockLost);
         }
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>

@@ -62,7 +62,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Logging for the Storage Manager for Azure Blobs now follows the common pattern for other Event Hubs types, as well as providing additional context and information.
 
-- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes]((https://github.com/christothes)))
+- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
 - Diagnostic activities have been extended with additional information about events being processed and with additional environmental context.
 
