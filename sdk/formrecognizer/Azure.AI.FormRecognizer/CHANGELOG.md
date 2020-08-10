@@ -6,6 +6,8 @@
 
 - The library now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
 - Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
+- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize API's.
+- Added model`TrainingOptions` to support passing configurable options to training API's. This type now includes `TrainingFileFilter`.
 - Renamed the `FieldValue` property `Type` to `ValueType`.
 - Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
 - Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
