@@ -30,6 +30,8 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+**NOTE:** Content is logged at `Verbose` level, you might need to change listener settings for content logs to appear.
+
 ### Changing log level
 
 The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
