@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -104,7 +103,77 @@ namespace Azure.AI.FormRecognizer.Models
             return new FieldData(boundingBox, pageNumber, text, fieldElements);
         }
 
-        // TODO: FieldValue
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithStringType(string value) =>
+            new FieldValue(value, isPhoneNumber: false);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithInt64Type(long value) =>
+            new FieldValue(value);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithFloatType(float value) =>
+            new FieldValue(value);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithDateType(DateTime value) =>
+            new FieldValue(value);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithTimeType(TimeSpan value) =>
+            new FieldValue(value);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithPhoneNumberType(string value) =>
+            new FieldValue(value, isPhoneNumber: true);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithListType(IReadOnlyList<FormField> value)
+        {
+            value = value?.ToList();
+
+            return new FieldValue(value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithDictionaryType(IReadOnlyDictionary<string, FormField> value)
+        {
+            value = value?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            return new FieldValue(value);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormField"/> class.
