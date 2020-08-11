@@ -23,14 +23,14 @@ namespace Azure.Graph.Rbac.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of KeyCredentialsUpdateParameters. </summary>
         /// <param name="value"> A collection of KeyCredentials. </param>
         internal KeyCredentialsUpdateParameters(IList<KeyCredential> value)
         {
-            Value = value;
+            Value = value ?? new List<KeyCredential>();
         }
 
         /// <summary> A collection of KeyCredentials. </summary>

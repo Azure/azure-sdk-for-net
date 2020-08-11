@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -34,9 +33,9 @@ namespace Azure.DigitalTwins.Core.Tests
             DigitalTwinsClient client = GetClient();
 
             string wifiComponentName = "wifiAccessPoint";
-            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.WifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
+            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
 
             try
@@ -106,7 +105,6 @@ namespace Azure.DigitalTwins.Core.Tests
                     Assert.Fail($"Test clean up failed: {ex.Message}");
                 }
             }
-
         }
 
         private async Task CreateModelsAndTwins(DigitalTwinsClient client, string wifiModelId, string roomWithWifiModelId, string wifiComponentName, string roomWithWifiTwinId)

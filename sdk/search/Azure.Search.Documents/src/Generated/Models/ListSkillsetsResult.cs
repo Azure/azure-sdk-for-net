@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsets"/> is null. </exception>
         internal ListSkillsetsResult(IEnumerable<SearchIndexerSkillset> skillsets)
         {
             if (skillsets == null)
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(skillsets));
             }
 
-            Skillsets = skillsets.ToArray();
+            Skillsets = skillsets.ToList();
         }
 
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>

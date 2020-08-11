@@ -7,7 +7,9 @@ using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -95,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ReceiveDeferredMessageExceptionEvent = 36;
 
         internal const int LinkStateLostEvent = 37;
-        internal const int SessionReceiverLinkClosedEvent = 38;
+        internal const int ReceiveLinkClosedEvent = 38;
         internal const int AmqpLinkRefreshStartEvent = 39;
         internal const int AmqpLinkRefreshCompleteEvent = 40;
         internal const int AmqpLinkRefreshExceptionEvent = 41;
@@ -171,6 +173,14 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
         internal const int ScheduleTaskFailedEvent = 95;
+
+        internal const int PluginStartEvent = 96;
+        internal const int PluginCompleteEvent = 97;
+        internal const int PluginExceptionEvent = 98;
+
+        internal const int MaxMessagesExceedsPrefetchEvent = 99;
+        internal const int SendLinkClosedEvent = 100;
+        internal const int ManagementLinkClosedEvent = 101;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -264,19 +274,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ReceiveDeferredMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
+        [Event(ReceiveDeferredMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, SequenceNumbers = {2}")]
         public void ReceiveDeferredMessageStartCore(string identifier, int messageCount, string sequenceNumbers)
         {
             WriteEvent(ReceiveDeferredMessageStartEvent, identifier, messageCount, sequenceNumbers);
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, int messageCount, IEnumerable<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                ReceiveDeferredMessageStartCore(identifier, messageCount, formattedSequenceNumbers);
+                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
             }
         }
 
@@ -329,17 +339,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #endregion
 
         #region Scheduling
-        [Event(ScheduleMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        public virtual void ScheduleMessageStart(string identifier, string scheduledEnqueueTime)
+        [Event(ScheduleMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. MessageCount = {1}, ScheduleTimeUtc = {2}")]
+        public virtual void ScheduleMessagesStart(string identifier, int messageCount, string scheduledEnqueueTime)
         {
             if (IsEnabled())
             {
-                WriteEvent(ScheduleMessageStartEvent, identifier, scheduledEnqueueTime);
+                WriteEvent(ScheduleMessageStartEvent, identifier, messageCount, scheduledEnqueueTime);
             }
         }
 
         [Event(ScheduleMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync done.")]
-        public virtual void ScheduleMessageComplete(string identifier)
+        public virtual void ScheduleMessagesComplete(string identifier)
         {
             if (IsEnabled())
             {
@@ -348,7 +358,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ScheduleMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
-        public virtual void ScheduleMessageException(string identifier, string exception)
+        public virtual void ScheduleMessagesException(string identifier, string exception)
         {
             if (IsEnabled())
             {
@@ -356,17 +366,27 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CancelScheduledMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. SequenceNumber = {1}")]
-        public virtual void CancelScheduledMessageStart(string identifier, long sequenceNumber)
+        [NonEvent]
+        public virtual void CancelScheduledMessagesStart(string identifier, long[] sequenceNumbers)
         {
             if (IsEnabled())
             {
-                WriteEvent(CancelScheduledMessageStartEvent, identifier, sequenceNumber);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
+                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
+            }
+        }
+
+        [Event(CancelScheduledMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. MessageCount = {1}, SequenceNumbers = {2}")]
+        public virtual void CancelScheduledMessagesStartCore(string identifier, int messageCount, string sequenceNumbers)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CancelScheduledMessageStartEvent, identifier, messageCount, sequenceNumbers);
             }
         }
 
         [Event(CancelScheduledMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync done.")]
-        public virtual void CancelScheduledMessageComplete(string identifier)
+        public virtual void CancelScheduledMessagesComplete(string identifier)
         {
             if (IsEnabled())
             {
@@ -375,7 +395,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CancelScheduledMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
-        public virtual void CancelScheduledMessageException(string identifier, string exception)
+        public virtual void CancelScheduledMessagesException(string identifier, string exception)
         {
             if (IsEnabled())
             {
@@ -818,12 +838,32 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(SessionReceiverLinkClosedEvent, Level = EventLevel.Informational, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
-        public virtual void SessionReceiverLinkClosed(string identifier, string sessionId, string linkException)
+        [NonEvent]
+        public virtual void ReceiveLinkClosed(
+            string identifier,
+            string sessionId,
+            object receiver)
         {
             if (IsEnabled())
             {
-                WriteEvent(SessionReceiverLinkClosedEvent, identifier, sessionId, linkException);
+                var link = (ReceivingAmqpLink)receiver;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    ReceiveLinkClosedCore(
+                        identifier,
+                        sessionId,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(ReceiveLinkClosedEvent, Level = EventLevel.Informational, Message = "Receive Link Closed. Identifier: {0}, SessionId: {1}, linkException: {2}.")]
+        public virtual void ReceiveLinkClosedCore(string identifier, string sessionId, string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiveLinkClosedEvent, identifier, sessionId, linkException);
             }
         }
 
@@ -914,6 +954,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [NonEvent]
+        public virtual void SendLinkClosed(
+            string identifier,
+            object sender)
+        {
+            if (IsEnabled())
+            {
+                var link = (SendingAmqpLink)sender;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    SendLinkClosedCore(
+                        identifier,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(SendLinkClosedEvent, Level = EventLevel.Informational, Message = "Send Link Closed. Identifier: {0}, linkException: {1}.")]
+        public virtual void SendLinkClosedCore(
+            string identifier,
+            string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(SendLinkClosedEvent, identifier, linkException);
+            }
+        }
+
         [Event(CreateReceiveLinkStartEvent, Level = EventLevel.Informational, Message = "Creating receive link for Identifier: {0}.")]
         public virtual void CreateReceiveLinkStart(string identifier)
         {
@@ -965,6 +1034,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateManagementLinkExceptionEvent, identifier, exception);
+            }
+        }
+
+        [NonEvent]
+        public virtual void ManagementLinkClosed(
+            string identifier,
+            object managementLink)
+        {
+            if (IsEnabled())
+            {
+                var link = (RequestResponseAmqpLink)managementLink;
+                if (link != null)
+                {
+                    Exception exception = link.GetInnerException();
+                    ManagementLinkClosedCore(
+                        identifier,
+                        exception?.ToString());
+                }
+            }
+        }
+
+        [Event(ManagementLinkClosedEvent, Level = EventLevel.Informational, Message = "Management Link Closed. Identifier: {0}, linkException: {1}.")]
+        public virtual void ManagementLinkClosedCore(
+            string identifier,
+            string linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ManagementLinkClosedEvent, identifier, linkException);
             }
         }
         #endregion
@@ -1244,6 +1342,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
         #endregion
 
+        #region plugins
+        [Event(PluginStartEvent, Level = EventLevel.Verbose, Message = "User plugin {0} called on message {1}")]
+        public void PluginCallStarted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginStartEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginCompleteEvent, Level = EventLevel.Verbose, Message = "User plugin {0} completed on message {1}")]
+        public void PluginCallCompleted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginCompleteEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginExceptionEvent, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
+        public void PluginCallException(string pluginName, string messageId, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginExceptionEvent, pluginName, messageId, exception);
+            }
+        }
+        #endregion
+
         #region misc
         [NonEvent]
         public void ScheduleTaskFailed(Func<Task> task, Exception exception)
@@ -1266,6 +1393,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ManagementSerializedExceptionEvent, objectName, details);
+            }
+        }
+
+        [Event(MaxMessagesExceedsPrefetchEvent, Level = EventLevel.Warning, Message = "Prefetch count for receiver with Identifier {0} is less than the max messages requested. When using prefetch, it isn't possible to receive more than the prefetch count in any single Receive call: PrefetchCount: {1}; MaxMessages: {2}")]
+        public virtual void MaxMessagesExceedsPrefetch(string identifier, int prefetchCount, int maxMessages)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
             }
         }
         #endregion

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// <summary>
     /// SSIS object metadata.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SsisObjectMetadata")]
     public partial class SsisObjectMetadata
     {
         /// <summary>

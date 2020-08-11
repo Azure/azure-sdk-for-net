@@ -51,10 +51,20 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// service. Possible values include: 'Zero', 'Low', 'Medium',
         /// 'High'</param>
         /// <param name="instanceCount">The instance count.</param>
-        public StatelessServiceUpdateProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), int? instanceCount = default(int?))
+        /// <param name="instanceCloseDelayDuration">Delay duration for
+        /// RequestDrain feature to ensures that the endpoint advertised by the
+        /// stateless instance is removed before the delay starts prior to
+        /// closing the instance. This delay enables existing requests to drain
+        /// gracefully before the instance actually goes down
+        /// (https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-application-upgrade-advanced#avoid-connection-drops-during-stateless-service-planned-downtime-preview).
+        /// It is first interpreted as a string representing an ISO 8601
+        /// duration. If that fails, then it is interpreted as a number
+        /// representing the total number of milliseconds.</param>
+        public StatelessServiceUpdateProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), int? instanceCount = default(int?), string instanceCloseDelayDuration = default(string))
             : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost)
         {
             InstanceCount = instanceCount;
+            InstanceCloseDelayDuration = instanceCloseDelayDuration;
             CustomInit();
         }
 
@@ -68,6 +78,20 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "instanceCount")]
         public int? InstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets delay duration for RequestDrain feature to ensures
+        /// that the endpoint advertised by the stateless instance is removed
+        /// before the delay starts prior to closing the instance. This delay
+        /// enables existing requests to drain gracefully before the instance
+        /// actually goes down
+        /// (https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-application-upgrade-advanced#avoid-connection-drops-during-stateless-service-planned-downtime-preview).
+        /// It is first interpreted as a string representing an ISO 8601
+        /// duration. If that fails, then it is interpreted as a number
+        /// representing the total number of milliseconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "instanceCloseDelayDuration")]
+        public string InstanceCloseDelayDuration { get; set; }
 
         /// <summary>
         /// Validate the object.

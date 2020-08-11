@@ -173,6 +173,55 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal", true, true)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value2", true, true)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1&VolatileParam2=Value2", "http://localhost?param=paramVal&VolatileParam1=Value3&VolatileParam2=Value3", true, true)]
+        // order should still be respected
+        [TestCase("http://localhost?param=paramVal&VolatileParam2=Value2&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value3&VolatileParam2=Value3", true, false)]
+        // presence of volatile param is still required
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1&VolatileParam2=Value2", "http://localhost?param=paramVal&VolatileParam1=Value3", true, false)]
+        // non-volatile param values should be respected
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal2", true, false)]
+        // regression test cases
+        [TestCase("http://localhost?VolatileParam1=Value&param=paramVal", "http://localhost?param=paramVal2&VolatileParam1=Value", false, false)]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal", false, false)]
+        [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value2", false, false)]
+        [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal2", false, false)]
+        public void RecordMatcherRespectsVolatiledQueryParameters(string requestUri, string entryUri, bool includeVolatile, bool shouldMatch)
+        {
+            var matcher = new RecordMatcher();
+            if (includeVolatile)
+            {
+                matcher.VolatileQueryParameters.Add("VolatileParam1");
+                matcher.VolatileQueryParameters.Add("VolatileParam2");
+            }
+
+            var mockRequest = new RecordEntry()
+            {
+                RequestUri = requestUri,
+                RequestMethod = RequestMethod.Put,
+            };
+
+            RecordEntry[] entries = new[]
+            {
+                new RecordEntry()
+                {
+                    RequestUri = entryUri,
+                    RequestMethod = RequestMethod.Put
+                }
+            };
+
+            if (shouldMatch)
+            {
+                Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+            }
+            else
+            {
+                Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            }
+        }
+
+        [Test]
         public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
         {
             var matcher = new RecordMatcher();
@@ -204,6 +253,35 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("SANITIZED", session.Variables["A"]);
             Assert.AreEqual("Totally not a SANITIZED", session.Variables["B"]);
+        }
+
+        [TestCase("*", "invalid json", "invalid json")]
+        [TestCase("$..secret",
+                "{\"secret\":\"I should be sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"I should be sanitized\"}}",
+                "{\"secret\":\"Sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"Sanitized\"}}")]
+        public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add(jsonPath);
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void RecordingSessionSanitizeTextBodyMultipleValues()
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add("$..secret");
+            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+
+            var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
+            var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
         }
 
         [Test]

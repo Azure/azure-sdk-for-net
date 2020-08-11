@@ -25,4 +25,7 @@
       <Link>ProjectBuilderHelper.cs</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\PredictionTests\" />
+  </ItemGroup>
 </Project>

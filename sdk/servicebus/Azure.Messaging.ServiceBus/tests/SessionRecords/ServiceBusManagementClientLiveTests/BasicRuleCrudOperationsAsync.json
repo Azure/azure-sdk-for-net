@@ -1,0 +1,511 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "577",
+        "Content-Type": "application/atom\u002Bxml",
+        "traceparent": "00-5b33b85f3cef2240b2aef35002f32d9d-daf3f1f02defe745-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "c0009fe299ffcd31391cd6bca89f8c73",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\r\n",
+        "      \u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\r\n",
+        "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CAuthorizationRules /\u003E\r\n",
+        "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
+        "      \u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\r\n",
+        "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "    \u003C/TopicDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E33df34f6\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.3Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-03T20:44:01.37Z\u003C/UpdatedAt\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "929",
+        "Content-Type": "application/atom\u002Bxml",
+        "traceparent": "00-eded11f7f3c8444eb99a393d34e46554-7540fee3f7413e46-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "4cf8b4d9fa215c74e45fab24f333c44e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CSubscriptionDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\r\n",
+        "      \u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\r\n",
+        "      \u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\r\n",
+        "      \u003CDeadLetteringOnFilterEvaluationExceptions\u003Etrue\u003C/DeadLetteringOnFilterEvaluationExceptions\u003E\r\n",
+        "      \u003CDefaultRuleDescription\u003E\r\n",
+        "        \u003CFilter p5:type=\u0022TrueFilter\u0022 xmlns:p5=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "          \u003CSqlExpression\u003E1=1\u003C/SqlExpression\u003E\r\n",
+        "          \u003CParameters /\u003E\r\n",
+        "        \u003C/Filter\u003E\r\n",
+        "        \u003CName\u003Erule1\u003C/Name\u003E\r\n",
+        "      \u003C/DefaultRuleDescription\u003E\r\n",
+        "      \u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\r\n",
+        "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
+        "    \u003C/SubscriptionDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E226f8811\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CSubscriptionDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDeadLetteringOnFilterEvaluationExceptions\u003Etrue\u003C/DeadLetteringOnFilterEvaluationExceptions\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.9158104Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-03T20:44:01.9158104Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00\u003C/AccessedAt\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003C/SubscriptionDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2a310f9608d4444fb7d3b9c415862f44-6ecb6dc713c9e44c-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "601d04770d3b78ed56a1e946c293d7e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Esb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule1\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022sb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022TrueFilter\u0022\u003E\u003CSqlExpression\u003E1=1\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.9139358Z\u003C/CreatedAt\u003E\u003CName\u003Erule1\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "1837",
+        "Content-Type": "application/atom\u002Bxml",
+        "traceparent": "00-6e4bc876557f16439da1bc3dc0681385-4705414bb15e0d4c-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "43814c37a712e74b2ba3db9fee0dd905",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CFilter p4:type=\u0022SqlFilter\u0022 xmlns:p4=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "        \u003CSqlExpression\u003EstringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam\u003C/SqlExpression\u003E\r\n",
+        "        \u003CParameters\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003E@stringParam\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:string\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003Estring\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003E@intParam\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:int\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E1\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003E@longParam\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:long\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E12\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003E@dateParam\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:dateTime\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E2020-08-03T20:44:01.3987201Z\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003E@timeSpanParam\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:duration\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EP1D\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "        \u003C/Parameters\u003E\r\n",
+        "      \u003C/Filter\u003E\r\n",
+        "      \u003CAction p4:type=\u0022SqlRuleAction\u0022 xmlns:p4=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "        \u003CSqlExpression\u003ESET a=\u0027b\u0027\u003C/SqlExpression\u003E\r\n",
+        "        \u003CParameters /\u003E\r\n",
+        "      \u003C/Action\u003E\r\n",
+        "      \u003CName\u003Erule2\u003C/Name\u003E\r\n",
+        "    \u003C/RuleDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule2\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022SqlFilter\u0022\u003E\u003CSqlExpression\u003EstringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@stringParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:string\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003Estring\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@intParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:int\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E1\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@longParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:long\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E12\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@dateParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:dateTime\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E2020-08-03T20:44:01.3987201Z\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@timeSpanParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:duration\u0022 xmlns:d6p1=\u0022http://schemas.microsoft.com/2003/10/Serialization/\u0022\u003EP1D\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Parameters\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022SqlRuleAction\u0022\u003E\u003CSqlExpression\u003ESET a=\u0027b\u0027\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters/\u003E\u003C/Action\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.1501969Z\u003C/CreatedAt\u003E\u003CName\u003Erule2\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3e7559217b6eec4299cc57a020d85090-2b1efcdbb917b146-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a44488572b82cc37c680f57f112e9a51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Esb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule2\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022sb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule2?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022SqlFilter\u0022\u003E\u003CSqlExpression\u003EstringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@stringParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:string\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003Estring\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@intParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:int\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E1\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@longParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:long\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E12\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@dateParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:dateTime\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E2020-08-03T20:44:01.3987201Z\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@timeSpanParam\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:duration\u0022 xmlns:d6p1=\u0022http://schemas.microsoft.com/2003/10/Serialization/\u0022\u003EP1D\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Parameters\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022SqlRuleAction\u0022\u003E\u003CSqlExpression\u003ESET a=\u0027b\u0027\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters/\u003E\u003C/Action\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.1483547Z\u003C/CreatedAt\u003E\u003CName\u003Erule2\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "962",
+        "Content-Type": "application/atom\u002Bxml",
+        "traceparent": "00-abb9912ec466384aab654652635961a9-b4ca05a6034eef4c-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a7ecc38780b2d03bb8353598324e8949",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CFilter p4:type=\u0022CorrelationFilter\u0022 xmlns:p4=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "        \u003CCorrelationId\u003EcorrelationId\u003C/CorrelationId\u003E\r\n",
+        "        \u003CMessageId\u003EmessageId\u003C/MessageId\u003E\r\n",
+        "        \u003CTo\u003Eto\u003C/To\u003E\r\n",
+        "        \u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\r\n",
+        "        \u003CLabel\u003Elabel\u003C/Label\u003E\r\n",
+        "        \u003CSessionId\u003EsessionId\u003C/SessionId\u003E\r\n",
+        "        \u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\r\n",
+        "        \u003CContentType\u003EcontentType\u003C/ContentType\u003E\r\n",
+        "        \u003CProperties\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003EcustomKey\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:string\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "        \u003C/Properties\u003E\r\n",
+        "      \u003C/Filter\u003E\r\n",
+        "      \u003CName\u003Erule3\u003C/Name\u003E\r\n",
+        "    \u003C/RuleDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule3\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022CorrelationFilter\u0022\u003E\u003CCorrelationId\u003EcorrelationId\u003C/CorrelationId\u003E\u003CMessageId\u003EmessageId\u003C/MessageId\u003E\u003CTo\u003Eto\u003C/To\u003E\u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\u003CLabel\u003Elabel\u003C/Label\u003E\u003CSessionId\u003EsessionId\u003C/SessionId\u003E\u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\u003CContentType\u003EcontentType\u003C/ContentType\u003E\u003CProperties\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003EcustomKey\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:string\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Properties\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.2752018Z\u003C/CreatedAt\u003E\u003CName\u003Erule3\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-acf13fe57984854aa04f95a38d7fe557-41172139d4b67c4b-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "3aeee4c7334f0c6514b47d92b1cbd6fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Esb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule3\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022sb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022CorrelationFilter\u0022\u003E\u003CCorrelationId\u003EcorrelationId\u003C/CorrelationId\u003E\u003CMessageId\u003EmessageId\u003C/MessageId\u003E\u003CTo\u003Eto\u003C/To\u003E\u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\u003CLabel\u003Elabel\u003C/Label\u003E\u003CSessionId\u003EsessionId\u003C/SessionId\u003E\u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\u003CContentType\u003EcontentType\u003C/ContentType\u003E\u003CProperties\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003EcustomKey\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:string\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Properties\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.2733318Z\u003C/CreatedAt\u003E\u003CName\u003Erule3\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026enrich=False\u0026$skip=0\u0026$top=100",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2b188a093220d7534d74eb4df59f9a78",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003ERules\u003C/title\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u003C/id\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022/\u003E\u003Centry xml:base=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules/rule1?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule1\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022rules/rule1?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022TrueFilter\u0022\u003E\u003CSqlExpression\u003E1=1\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.9139358Z\u003C/CreatedAt\u003E\u003CName\u003Erule1\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E\u003Centry xml:base=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules/rule2?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule2\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022rules/rule2?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022SqlFilter\u0022\u003E\u003CSqlExpression\u003EstringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@stringParam\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:string\u0022 xmlns:d5p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003Estring\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@intParam\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:int\u0022 xmlns:d5p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E1\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@longParam\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:long\u0022 xmlns:d5p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E12\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@dateParam\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:dateTime\u0022 xmlns:d5p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003E2020-08-03T20:44:01.3987201Z\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003E@timeSpanParam\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:duration\u0022 xmlns:d5p1=\u0022http://schemas.microsoft.com/2003/10/Serialization/\u0022\u003EP1D\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Parameters\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022SqlRuleAction\u0022\u003E\u003CSqlExpression\u003ESET a=\u0027b\u0027\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003CParameters/\u003E\u003C/Action\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.1483547Z\u003C/CreatedAt\u003E\u003CName\u003Erule2\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E\u003Centry xml:base=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules?api-version=2017-04\u0026amp;enrich=False\u0026amp;$skip=0\u0026amp;$top=100\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/rules/rule3?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule3\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022rules/rule3?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022CorrelationFilter\u0022\u003E\u003CCorrelationId\u003EcorrelationId\u003C/CorrelationId\u003E\u003CMessageId\u003EmessageId\u003C/MessageId\u003E\u003CTo\u003Eto\u003C/To\u003E\u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\u003CLabel\u003Elabel\u003C/Label\u003E\u003CSessionId\u003EsessionId\u003C/SessionId\u003E\u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\u003CContentType\u003EcontentType\u003C/ContentType\u003E\u003CProperties\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003EcustomKey\u003C/Key\u003E\u003CValue i:type=\u0022d5p1:string\u0022 xmlns:d5p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Properties\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.2733318Z\u003C/CreatedAt\u003E\u003CName\u003Erule3\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E\u003C/feed\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-74c4ba4738601f45ba483cd031276b1f-980ebb418795e14e-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2cb8acf65f4053025ee093fd02a81eed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Esb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E226f8811\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022sb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CSubscriptionDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDeadLetteringOnFilterEvaluationExceptions\u003Etrue\u003C/DeadLetteringOnFilterEvaluationExceptions\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.9139358Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-08-03T20:44:01.9139358Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E2020-08-03T20:44:01.913\u003C/AccessedAt\u003E\u003CCountDetails xmlns:d3p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd3p1:ActiveMessageCount\u003E0\u003C/d3p1:ActiveMessageCount\u003E\u003Cd3p1:DeadLetterMessageCount\u003E0\u003C/d3p1:DeadLetterMessageCount\u003E\u003Cd3p1:ScheduledMessageCount\u003E0\u003C/d3p1:ScheduledMessageCount\u003E\u003Cd3p1:TransferMessageCount\u003E0\u003C/d3p1:TransferMessageCount\u003E\u003Cd3p1:TransferDeadLetterMessageCount\u003E0\u003C/d3p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003C/SubscriptionDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "970",
+        "Content-Type": "application/atom\u002Bxml",
+        "If-Match": "*",
+        "traceparent": "00-12cbb6306ea4fa41898ed74bb79b6913-c4a0e20233362c49-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a78e395f5e3595289017ecda48181674",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\r\n",
+        "  \u003Ccontent type=\u0022application/xml\u0022\u003E\r\n",
+        "    \u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022\u003E\r\n",
+        "      \u003CFilter p4:type=\u0022CorrelationFilter\u0022 xmlns:p4=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\r\n",
+        "        \u003CCorrelationId\u003EcorrelationIdModified\u003C/CorrelationId\u003E\r\n",
+        "        \u003CMessageId\u003EmessageId\u003C/MessageId\u003E\r\n",
+        "        \u003CTo\u003Eto\u003C/To\u003E\r\n",
+        "        \u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\r\n",
+        "        \u003CLabel\u003Elabel\u003C/Label\u003E\r\n",
+        "        \u003CSessionId\u003EsessionId\u003C/SessionId\u003E\r\n",
+        "        \u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\r\n",
+        "        \u003CContentType\u003EcontentType\u003C/ContentType\u003E\r\n",
+        "        \u003CProperties\u003E\r\n",
+        "          \u003CKeyValueOfstringanyType\u003E\r\n",
+        "            \u003CKey\u003EcustomKey\u003C/Key\u003E\r\n",
+        "            \u003CValue p4:type=\u0022l28:string\u0022 xmlns:l28=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\r\n",
+        "          \u003C/KeyValueOfstringanyType\u003E\r\n",
+        "        \u003C/Properties\u003E\r\n",
+        "      \u003C/Filter\u003E\r\n",
+        "      \u003CName\u003Erule3\u003C/Name\u003E\r\n",
+        "    \u003C/RuleDescription\u003E\r\n",
+        "  \u003C/content\u003E\r\n",
+        "\u003C/entry\u003E"
+      ],
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule3\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:02Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:02Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule3?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022CorrelationFilter\u0022\u003E\u003CCorrelationId\u003EcorrelationIdModified\u003C/CorrelationId\u003E\u003CMessageId\u003EmessageId\u003C/MessageId\u003E\u003CTo\u003Eto\u003C/To\u003E\u003CReplyTo\u003EreplyTo\u003C/ReplyTo\u003E\u003CLabel\u003Elabel\u003C/Label\u003E\u003CSessionId\u003EsessionId\u003C/SessionId\u003E\u003CReplyToSessionId\u003EreplyToSessionId\u003C/ReplyToSessionId\u003E\u003CContentType\u003EcontentType\u003C/ContentType\u003E\u003CProperties\u003E\u003CKeyValueOfstringanyType\u003E\u003CKey\u003EcustomKey\u003C/Key\u003E\u003CValue i:type=\u0022d6p1:string\u0022 xmlns:d6p1=\u0022http://www.w3.org/2001/XMLSchema\u0022\u003EcustomValue\u003C/Value\u003E\u003C/KeyValueOfstringanyType\u003E\u003C/Properties\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:02.5252532Z\u003C/CreatedAt\u003E\u003CName\u003Erule3\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6544d37bfbf1b14c8060ef9400b4cd8f-995fb26330dff848-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "059c051aa913a9bc88c4cc409f56d4a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Esb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erule1\u003C/title\u003E\u003Cpublished\u003E2020-08-03T20:44:01Z\u003C/published\u003E\u003Cupdated\u003E2020-08-03T20:44:01Z\u003C/updated\u003E\u003Clink rel=\u0022self\u0022 href=\u0022sb://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CRuleDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CFilter i:type=\u0022TrueFilter\u0022\u003E\u003CSqlExpression\u003E1=1\u003C/SqlExpression\u003E\u003CCompatibilityLevel\u003E20\u003C/CompatibilityLevel\u003E\u003C/Filter\u003E\u003CAction i:type=\u0022EmptyRuleAction\u0022/\u003E\u003CCreatedAt\u003E2020-08-03T20:44:01.9139358Z\u003C/CreatedAt\u003E\u003CName\u003Erule1\u003C/Name\u003E\u003C/RuleDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-721946403595de4d9675245dab4d1692-104f728b9e2eb148-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "bcedfd55f210974283229b2972270b46",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 03 Aug 2020 20:44:01 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f0f58a030b5c5a4e89315ce2ca377c47-2dc26d59a00aa642-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "fde21ec9190bb5da7ce51f7191e8f53a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:02 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003EEntity \u0027recordedtests:Topic:33df34f6|226f8811|rule1\u0027 was not found. To know more visit https://aka.ms/sbResourceMgrExceptions.  TrackingId:ecb406ee-7e3f-4e9a-af6f-fc215521df00_G8_B64, SystemTracker:recordedtests:Topic:33df34f6|226f8811|rule1, Timestamp:2020-08-03T20:44:02\u003C/Detail\u003E\u003C/Error\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6/Subscriptions/226f8811/Rules/rule1?api-version=2017-04\u0026enrich=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0be690c1520dd14b8135d3082dfeea50-18ecdcc70ac3924d-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "4a8548425a2a2864c20582f00d933660",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml; charset=utf-8",
+        "Date": "Mon, 03 Aug 2020 20:44:04 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003EEntity \u0027recordedtests:Topic:33df34f6|226f8811|rule1\u0027 was not found. To know more visit https://aka.ms/sbResourceMgrExceptions.  TrackingId:384e4a9f-576b-4f1b-b2d8-77224f8ba74d_G8_B64, SystemTracker:recordedtests:Topic:33df34f6|226f8811|rule1, Timestamp:2020-08-03T20:44:03\u003C/Detail\u003E\u003C/Error\u003E"
+    },
+    {
+      "RequestUri": "https://recordedtests.servicebus.windows.net/33df34f6?api-version=2017-04",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-970470d5cf4a614886726c504558df1e-2f8d394d669bae4b-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.ServiceBus/7.0.0-dev.20200803.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "817686b9d6733c9923373f2bd2d1059a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 03 Aug 2020 20:44:05 GMT",
+        "ETag": "637320842413700000",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2020-08-03T16:44:01.3987201-04:00",
+    "RandomSeed": "860882088",
+    "SERVICEBUS_CONNECTION_STRING": "Endpoint=sb://recordedtests.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
+  }
+}

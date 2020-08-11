@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -107,27 +108,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the event handler.</value>
-        public int MaxConcurrentCalls
-        {
-            get => _maxConcurrentCalls;
-
-            private set
-            {
-                _maxConcurrentCalls = value;
-                _maxConcurrentAcceptSessions = Math.Min(value, 2 * Environment.ProcessorCount);
-            }
-        }
+        public int MaxConcurrentCalls { get; }
 
         /// <summary>
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         public TimeSpan? MaxReceiveWaitTime { get; }
-
-        private int _maxConcurrentCalls;
-        private int _maxConcurrentAcceptSessions;
-
-        private const int DefaultMaxConcurrentCalls = 1;
-        private const int DefaultMaxConcurrentSessions = 8;
 
         /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusProcessor"/> should automatically
         /// complete messages after the event handler has completed processing. If the event handler
@@ -152,27 +138,38 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+        internal int MaxConcurrentSessions { get; }
+        internal int MaxConcurrentCallsPerSession { get; }
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
+        private readonly IList<ServiceBusPlugin> _plugins;
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
-        /// <param name="entityPath"></param>
-        /// <param name="isSessionEntity"></param>
-        /// <param name="sessionIds"></param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="options"></param>
-        ///
+        /// <param name="entityPath">The queue name or subscription path to process messages from.</param>
+        /// <param name="isSessionEntity">Whether or not the processor is associated with a session entity.</param>
+        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        /// <param name="sessionIds">An optional set of session Ids to limit processing to.
+        /// Only applies if isSessionEntity is true.</param>
+        /// <param name="maxConcurrentSessions">The max number of sessions that can be processed concurrently.
+        /// Only applies if isSessionEntity is true.</param>
+        /// <param name="maxConcurrentCallsPerSession">The max number of concurrent calls per session.
+        /// Only applies if isSessionEntity is true.</param>
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusProcessorOptions options,
-            string[] sessionIds = default)
+            string[] sessionIds = default,
+            int maxConcurrentSessions = default,
+            int maxConcurrentCallsPerSession = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -188,25 +185,31 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
-            if (MaxConcurrentCalls == 0)
-            {
-                MaxConcurrentCalls = isSessionEntity ? DefaultMaxConcurrentSessions : DefaultMaxConcurrentCalls;
-            }
-            MessageHandlerSemaphore = new SemaphoreSlim(
-                MaxConcurrentCalls,
-                MaxConcurrentCalls);
+            MaxConcurrentSessions = maxConcurrentSessions;
+            MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
+            _sessionIds = sessionIds ?? Array.Empty<string>();
 
+            int maxCalls = isSessionEntity ?
+                (_sessionIds.Length > 0 ?
+                    Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
+                    MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
+                MaxConcurrentCalls;
+
+            MessageHandlerSemaphore = new SemaphoreSlim(
+                maxCalls,
+                maxCalls);
+            var maxAcceptSessions = Math.Min(maxCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
-                _maxConcurrentAcceptSessions,
-                _maxConcurrentAcceptSessions);
+                maxAcceptSessions,
+                maxAcceptSessions);
 
             MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             AutoComplete = _options.AutoComplete;
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
-            _sessionIds = sessionIds ?? Array.Empty<string>();
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+            _plugins = plugins;
         }
 
         /// <summary>
@@ -386,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Optional event that can be set to be notified when a session is about to be closed for processing.
-        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
+        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out so there are currently no messages
         /// available to be received for the session.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -474,10 +477,17 @@ namespace Azure.Messaging.ServiceBus
         {
             if (IsSessionProcessor)
             {
-                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentCalls;
+                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentSessions;
                 for (int i = 0; i < numReceivers; i++)
                 {
                     var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
+                    // If the user has listed named sessions, and they
+                    // have MaxConcurrentSessions greater or equal to the number
+                    // of sessions, we can leave the sessions open at all times
+                    // instead of cycling through them as receive calls time out.
+                    bool keepOpenOnReceiveTimeout = _sessionIds.Length > 0 &&
+                        MaxConcurrentSessions >= _sessionIds.Length;
+
                     _receiverManagers.Add(
                         new SessionReceiverManager(
                             _connection,
@@ -491,7 +501,10 @@ namespace Azure.Messaging.ServiceBus
                             _processSessionMessageAsync,
                             _processErrorAsync,
                             MaxConcurrentAcceptSessionsSemaphore,
-                            _scopeFactory));
+                            _scopeFactory,
+                            _plugins,
+                            MaxConcurrentCallsPerSession,
+                            keepOpenOnReceiveTimeout));
                 }
             }
             else
@@ -505,7 +518,8 @@ namespace Azure.Messaging.ServiceBus
                         _options,
                         _processMessageAsync,
                         _processErrorAsync,
-                        _scopeFactory));
+                        _scopeFactory,
+                        _plugins));
             }
         }
 
@@ -576,8 +590,7 @@ namespace Azure.Messaging.ServiceBus
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
                         await receiverManager.CloseReceiverIfNeeded(
-                            cancellationToken,
-                            forceClose: true)
+                            cancellationToken)
                             .ConfigureAwait(false);
                     }
                 }

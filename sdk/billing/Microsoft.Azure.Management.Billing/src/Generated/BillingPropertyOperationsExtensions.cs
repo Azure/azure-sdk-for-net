@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingPropertyOperationsExtensions
     {
             /// <summary>
-            /// Get billing property by subscription Id.
+            /// Get the billing properties for a subscription. This operation is not
+            /// supported for billing accounts with agreement type Enterprise Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -34,7 +35,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get billing property by subscription Id.
+            /// Get the billing properties for a subscription. This operation is not
+            /// supported for billing accounts with agreement type Enterprise Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -46,6 +48,46 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<BillingProperty> GetAsync(this IBillingPropertyOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the billing property of a subscription. Currently, cost center can
+            /// be updated. The operation is supported only for billing accounts with
+            /// agreement type Microsoft Customer Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the update billing property
+            /// operation.
+            /// </param>
+            public static BillingProperty Update(this IBillingPropertyOperations operations, BillingProperty parameters)
+            {
+                return operations.UpdateAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the billing property of a subscription. Currently, cost center can
+            /// be updated. The operation is supported only for billing accounts with
+            /// agreement type Microsoft Customer Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the update billing property
+            /// operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingProperty> UpdateAsync(this IBillingPropertyOperations operations, BillingProperty parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -12,6 +13,11 @@ namespace Azure.Data.Tables
 {
     internal static class DictionaryTableExtensions
     {
+        /// <summary>
+        /// A cache for reflected <see cref="PropertyInfo"/> array for the given <see cref="Type"/>.
+        /// </summary>
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> s_propertyInfoCache = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
         /// <summary>
         /// Returns a new Dictionary with the appropriate Odata type annotation for a given propertyName value pair.
         /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
@@ -107,10 +113,14 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            var result = new List<T>();
+            PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
+
+            var result = new List<T>(entityList.Count);
 
             foreach (var entity in entityList)
             {
@@ -125,10 +135,26 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : class, ITableEntity, new()
         {
-            properties ??= typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var result = new T();
+
+            if (result is IDictionary<string, object> dictionary)
+            {
+                entity.CastAndRemoveAnnotations();
+
+                foreach (var entProperty in entity.Keys)
+                {
+                    dictionary[entProperty] = entity[entProperty];
+                }
+
+                return result;
+            }
+
+            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
 
             // Iterate through each property of the entity and set them as the correct type.
             foreach (var property in properties)

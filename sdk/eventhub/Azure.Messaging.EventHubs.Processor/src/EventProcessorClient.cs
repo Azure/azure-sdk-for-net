@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -30,20 +31,20 @@ namespace Azure.Messaging.EventHubs
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
-        /// <summary>The number of events to request as the maximum size for batches read from a partition.</summary>
-        private const int ReadBatchSize = 15;
-
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
         private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
 
+        /// <summary>The set of default options for the processor.</summary>
+        private static readonly EventProcessorClientOptions DefaultClientOptions = new EventProcessorClientOptions();
+
+        /// <summary>The default starting position for the processor.</summary>
+        private readonly EventPosition DefaultStartingPosition = new EventProcessorOptions().DefaultStartingPosition;
+
         /// <summary>The set of default starting positions for partitions being processed; these are collected at initialization and are surfaced as checkpoints to override defaults on a partition-specific basis.</summary>
-        private readonly Dictionary<string, EventPosition> PartitionStartingPositionDefaults = new Dictionary<string, EventPosition>();
+        private readonly ConcurrentDictionary<string, EventPosition> PartitionStartingPositionDefaults = new ConcurrentDictionary<string, EventPosition>();
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly SemaphoreSlim ProcessorStatusGuard = new SemaphoreSlim(1, 1);
-
-        /// <summary>The active default starting position for the processor.</summary>
-        private readonly EventPosition DefaultStartingPosition = new EventProcessorOptions().DefaultStartingPosition;
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
         private Func<PartitionInitializingEventArgs, Task> _partitionInitializingAsync;
@@ -58,7 +59,10 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
-        ///   The event to be raised just before event processing starts for a given partition.
+        ///    Performs the tasks to initialize a partition, and its associated context, for event processing.
+        ///
+        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -92,7 +96,11 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event to be raised once event processing stops for a given partition.
+        ///   Performs the tasks needed when processing for a partition is being stopped.  This commonly occurs when the partition is claimed by another event processor instance or when
+        ///   the current event processor instance is shutting down.
+        ///
+        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -126,8 +134,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
-        ///   is mandatory.
+        ///  Performs the tasks needed to process a batch of events for a given partition as they are read from the Event Hubs service. Implementation is mandatory.
+        ///
+        ///  <para>Should an exception occur within the code for this handler, the <see cref="EventProcessorClient" /> will allow it to bubble and will not surface to the error handler or attempt to handle
+        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account, including the need to retry processing, and guard against them using try/catch blocks and other means,
+        ///   as appropriate.</para>
+        ///
+        ///  <para>It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -161,8 +175,23 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory.
+        ///   Performs the tasks needed when an unexpected exception occurs within the operation of the event processor infrastructure.  Implementation is mandatory.
+        ///
+        ///   <para>This error handler is invoked when there is an exception observed within the <see cref="EventProcessorClient" /> itself; it is not invoked for exceptions in
+        ///   code that has been implemented to process events or other event handlers and extension points that execute developer code.  The <see cref="EventProcessorClient" /> will
+        ///   make every effort to recover from exceptions and continue processing.  Should an exception that cannot be recovered from be encountered, the processor will attempt to forfeit
+        ///   ownership of all partitions that it was processing so that work may be redistributed.</para>
+        ///
+        ///   <para>The exceptions surfaced to this method may be fatal or non-fatal; because the processor may not be able to accurately predict whether an
+        ///   exception was fatal or whether its state was corrupted, this method has responsibility for making the determination as to whether processing
+        ///   should be terminated or restarted.  The method may do so by calling Stop on the processor instance and then, if desired, calling Start on the processor.</para>
+        ///
+        ///   <para>It is recommended that, for production scenarios, the decision be made by considering observations made by this error handler, the method invoked
+        ///   when initializing processing for a partition, and the method invoked when processing for a partition is stopped.  Many developers will also include
+        ///   data from their monitoring platforms in this decision as well.</para>
+        ///
+        ///   <para>As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
+        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.</para>
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -239,10 +268,7 @@ namespace Azure.Messaging.EventHubs
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public new string Identifier
-        {
-            get => base.Identifier;
-        }
+        public new string Identifier => base.Identifier;
 
         /// <summary>
         ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
@@ -366,7 +392,7 @@ namespace Azure.Messaging.EventHubs
                                     string consumerGroup,
                                     string connectionString,
                                     string eventHubName,
-                                    EventProcessorClientOptions clientOptions) : base(ReadBatchSize, consumerGroup, connectionString, eventHubName, CreateOptions(clientOptions))
+                                    EventProcessorClientOptions clientOptions) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, connectionString, eventHubName, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
@@ -393,7 +419,7 @@ namespace Azure.Messaging.EventHubs
                                     string fullyQualifiedNamespace,
                                     string eventHubName,
                                     TokenCredential credential,
-                                    EventProcessorClientOptions clientOptions = default) : base(ReadBatchSize, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
+                                    EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
@@ -407,6 +433,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
         /// <param name="credential">An Azure identity credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
@@ -418,8 +445,9 @@ namespace Azure.Messaging.EventHubs
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
+                                      int cacheEventCount,
                                       TokenCredential credential,
-                                      EventProcessorOptions clientOptions) : base(ReadBatchSize, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));
 
@@ -890,7 +918,7 @@ namespace Azure.Messaging.EventHubs
                 await _partitionClosingAsync(eventArgs).ConfigureAwait(false);
             }
 
-            PartitionStartingPositionDefaults.Remove(partition.PartitionId);
+            PartitionStartingPositionDefaults.TryRemove(partition.PartitionId, out var _);
         }
 
         /// <summary>
@@ -937,7 +965,7 @@ namespace Azure.Messaging.EventHubs
                        EventHubName = EventHubName,
                        ConsumerGroup = ConsumerGroup,
                        PartitionId = partition,
-                       StartingPosition = PartitionStartingPositionDefaults[partition]
+                       StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partition, out EventPosition position) ? position : DefaultStartingPosition
                     };
                 }
             }
@@ -990,7 +1018,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private static EventProcessorOptions CreateOptions(EventProcessorClientOptions clientOptions)
         {
-            clientOptions ??= new EventProcessorClientOptions();
+            clientOptions ??= DefaultClientOptions;
 
             return new EventProcessorOptions
             {
@@ -998,7 +1026,9 @@ namespace Azure.Messaging.EventHubs
                 RetryOptions = clientOptions.RetryOptions.Clone(),
                 Identifier = clientOptions.Identifier,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
-                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
+                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties,
+                LoadBalancingStrategy = clientOptions.LoadBalancingStrategy,
+                PrefetchCount = clientOptions.PrefetchCount
             };
         }
 

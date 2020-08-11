@@ -53,124 +53,64 @@ namespace Azure.ResourceManager.Resources
             _subscriptionId = subscriptionId;
         }
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of DeploymentsClient. </summary>
-        public virtual DeploymentsClient GetDeploymentsClient()
-        {
-            return new DeploymentsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DeploymentsOperations. </summary>
+        public virtual DeploymentsOperations Deployments => new DeploymentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ProvidersClient. </summary>
-        public virtual ProvidersClient GetProvidersClient()
-        {
-            return new ProvidersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ProvidersOperations. </summary>
+        public virtual ProvidersOperations Providers => new ProvidersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourcesClient. </summary>
-        public virtual ResourcesClient GetResourcesClient()
-        {
-            return new ResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourcesOperations. </summary>
+        public virtual ResourcesOperations Resources => new ResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourceGroupsClient. </summary>
-        public virtual ResourceGroupsClient GetResourceGroupsClient()
-        {
-            return new ResourceGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourceGroupsOperations. </summary>
+        public virtual ResourceGroupsOperations ResourceGroups => new ResourceGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of TagsClient. </summary>
-        public virtual TagsClient GetTagsClient()
-        {
-            return new TagsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of TagsOperations. </summary>
+        public virtual TagsOperations Tags => new TagsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DeploymentClient. </summary>
-        public virtual DeploymentClient GetDeploymentClient()
-        {
-            return new DeploymentClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DeploymentOperations. </summary>
+        public virtual DeploymentOperations Deployment => new DeploymentOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of SubscriptionsClient. </summary>
-        public virtual SubscriptionsClient GetSubscriptionsClient()
-        {
-            return new SubscriptionsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of SubscriptionsOperations. </summary>
+        public virtual SubscriptionsOperations Subscriptions => new SubscriptionsOperations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of TenantsClient. </summary>
-        public virtual TenantsClient GetTenantsClient()
-        {
-            return new TenantsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of TenantsOperations. </summary>
+        public virtual TenantsOperations Tenants => new TenantsOperations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of PolicyAssignmentsClient. </summary>
-        public virtual PolicyAssignmentsClient GetPolicyAssignmentsClient()
-        {
-            return new PolicyAssignmentsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PolicyAssignmentsOperations. </summary>
+        public virtual PolicyAssignmentsOperations PolicyAssignments => new PolicyAssignmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PolicyDefinitionsClient. </summary>
-        public virtual PolicyDefinitionsClient GetPolicyDefinitionsClient()
-        {
-            return new PolicyDefinitionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PolicyDefinitionsOperations. </summary>
+        public virtual PolicyDefinitionsOperations PolicyDefinitions => new PolicyDefinitionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PolicySetDefinitionsClient. </summary>
-        public virtual PolicySetDefinitionsClient GetPolicySetDefinitionsClient()
-        {
-            return new PolicySetDefinitionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PolicySetDefinitionsOperations. </summary>
+        public virtual PolicySetDefinitionsOperations PolicySetDefinitions => new PolicySetDefinitionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DeploymentScriptsClient. </summary>
-        public virtual DeploymentScriptsClient GetDeploymentScriptsClient()
-        {
-            return new DeploymentScriptsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DeploymentScriptsOperations. </summary>
+        public virtual DeploymentScriptsOperations DeploymentScripts => new DeploymentScriptsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ServiceClient. </summary>
-        public virtual ServiceClient GetServiceClient()
-        {
-            return new ServiceClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of ServiceOperations. </summary>
+        public virtual ServiceOperations Service => new ServiceOperations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of FeaturesClient. </summary>
-        public virtual FeaturesClient GetFeaturesClient()
-        {
-            return new FeaturesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of FeaturesOperations. </summary>
+        public virtual FeaturesOperations Features => new FeaturesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of AuthorizationClient. </summary>
-        public virtual AuthorizationClient GetAuthorizationClient()
-        {
-            return new AuthorizationClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of AuthorizationOperations. </summary>
+        public virtual AuthorizationOperations Authorization => new AuthorizationOperations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of ManagementLocksClient. </summary>
-        public virtual ManagementLocksClient GetManagementLocksClient()
-        {
-            return new ManagementLocksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ManagementLocksOperations. </summary>
+        public virtual ManagementLocksOperations ManagementLocks => new ManagementLocksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourceLinksClient. </summary>
-        public virtual ResourceLinksClient GetResourceLinksClient()
-        {
-            return new ResourceLinksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourceLinksOperations. </summary>
+        public virtual ResourceLinksOperations ResourceLinks => new ResourceLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ApplicationsClient. </summary>
-        public virtual ApplicationsClient GetApplicationsClient()
-        {
-            return new ApplicationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ApplicationsOperations. </summary>
+        public virtual ApplicationsOperations Applications => new ApplicationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ApplicationDefinitionsClient. </summary>
-        public virtual ApplicationDefinitionsClient GetApplicationDefinitionsClient()
-        {
-            return new ApplicationDefinitionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ApplicationDefinitionsOperations. </summary>
+        public virtual ApplicationDefinitionsOperations ApplicationDefinitions => new ApplicationDefinitionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

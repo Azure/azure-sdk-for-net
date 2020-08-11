@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of GetMetadataActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
             if (name == null)
@@ -28,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Dataset = dataset;
+            FieldList = new ChangeTrackingList<object>();
             Type = "GetMetadata";
         }
 
@@ -52,6 +55,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>
-        public IList<object> FieldList { get; set; }
+        public IList<object> FieldList { get; }
     }
 }

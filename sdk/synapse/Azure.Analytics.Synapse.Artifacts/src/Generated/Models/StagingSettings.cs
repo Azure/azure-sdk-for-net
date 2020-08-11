@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of StagingSettings. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public StagingSettings(LinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
@@ -24,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of StagingSettings. </summary>
@@ -37,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LinkedServiceName = linkedServiceName;
             Path = path;
             EnableCompression = enableCompression;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Staging linked service reference. </summary>

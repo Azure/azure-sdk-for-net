@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="countries"> List of available countries. </param>
         internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries)
         {
-            Countries = countries;
+            Countries = countries ?? new List<AvailableProvidersListCountry>();
         }
 
         /// <summary> List of available countries. </summary>

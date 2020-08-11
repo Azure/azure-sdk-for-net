@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="managedBy">Unused. Always Null.</param>
-        /// <param name="timeCreated">The time when the disk was
+        /// <param name="timeCreated">The time when the snapshot was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
@@ -71,7 +71,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption))
+        /// <param name="networkAccessPolicy">Possible values include:
+        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
+        /// <param name="diskAccessId">ARM id of the DiskAccess resource for
+        /// using private endpoints on disks.</param>
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -87,6 +91,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             Incremental = incremental;
             Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
             CustomInit();
         }
 
@@ -107,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SnapshotSku Sku { get; set; }
 
         /// <summary>
-        /// Gets the time when the disk was created.
+        /// Gets the time when the snapshot was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }
@@ -183,6 +189,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
+        /// 'DenyAll'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
+        public string NetworkAccessPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM id of the DiskAccess resource for using private
+        /// endpoints on disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskAccessId")]
+        public string DiskAccessId { get; set; }
 
         /// <summary>
         /// Validate the object.

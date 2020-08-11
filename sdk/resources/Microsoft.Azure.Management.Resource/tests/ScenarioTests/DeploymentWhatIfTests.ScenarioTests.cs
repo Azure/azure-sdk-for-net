@@ -20,10 +20,16 @@ namespace ResourceGroups.Tests
         private static readonly string BlankTemplate = LoadTemplateContent("blank_template.json");
 
         private static readonly string ResourceGroupTemplate = LoadTemplateContent("simple-storage-account.json");
-        
+
         private static readonly string ResourceGroupTemplateParameters = LoadTemplateContent("simple-storage-account-parameters.json");
 
         private static readonly string SubscriptionTemplate = LoadTemplateContent("subscription_level_template.json");
+
+        private static readonly string ManagementGroupTemplate = LoadTemplateContent("management_group_level_template.json");
+
+        private static readonly string ManagementGroupTemplateParameters = LoadTemplateContent("management_group_level_template.parameters.json");
+
+        private static readonly string TenantTemplate = LoadTemplateContent("tenant_level_template.json");
 
         [Fact]
         public void WhatIf_BlankTemplate_ReturnsNoChange()
@@ -345,7 +351,7 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(result.Changes);
                 result.Changes.ForEach(change =>
                 {
-                    if(change.ResourceId.EndsWith("SDK-test"))
+                    if (change.ResourceId.EndsWith("SDK-test"))
                     {
                         Assert.Equal(ChangeType.Ignore, change.ChangeType);
                     }
@@ -420,6 +426,218 @@ namespace ResourceGroups.Tests
                 Assert.Equal(PropertyChangeType.Modify, policyRuleChange.PropertyChangeType);
                 Assert.Equal("northeurope", policyRuleChange.Before);
                 Assert.Equal("westeurope", policyRuleChange.After);
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_BlankTemplate_ReturnsNoChange()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = BlankTemplate,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.ResourceIdOnly)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.Empty(result.Changes);
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_ResourceIdOnlyMode_ReturnsChangesWithResourceIdsOnly()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = ManagementGroupTemplate,
+                        Parameters = ManagementGroupTemplateParameters,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.ResourceIdOnly)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.NotEmpty(result.Changes);
+                result.Changes.ForEach(change =>
+                {
+                    Assert.NotNull(change.ResourceId);
+                    Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.Null(change.After);
+                    Assert.Null(change.Delta);
+                });
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtManagementGroupScope_FullResourcePayloadMode_ReturnsChangesWithPayloads()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = ManagementGroupTemplate,
+                        Parameters = ManagementGroupTemplateParameters,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.FullResourcePayloads)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.NotEmpty(result.Changes);
+                result.Changes.ForEach(change =>
+                {
+                    Assert.NotNull(change.ResourceId);
+                    Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.NotNull(change.After);
+                    Assert.Null(change.Delta);
+                });
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_BlankTemplate_ReturnsNoChange()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = BlankTemplate,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.ResourceIdOnly)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtTenantScope(NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.Empty(result.Changes);
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_ResourceIdOnlyMode_ReturnsChangesWithResourceIdsOnly()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = TenantTemplate,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.ResourceIdOnly)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtTenantScope(NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.NotEmpty(result.Changes);
+                result.Changes.ForEach(change =>
+                {
+                    Assert.NotNull(change.ResourceId);
+                    Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.Null(change.After);
+                    Assert.Null(change.Delta);
+                });
+            }
+        }
+
+        [Fact]
+        public void WhatIfAtTenantScope_FullResourcePayloadMode_ReturnsChangesWithPayloads()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Arrange.
+                ResourceManagementClient client = this.GetResourceManagementClient(context);
+                var deploymentWhatIf = new ScopedDeploymentWhatIf
+                {
+                    Location = "westus",
+                    Properties = new DeploymentWhatIfProperties
+                    {
+                        Mode = DeploymentMode.Incremental,
+                        Template = TenantTemplate,
+                        WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.FullResourcePayloads)
+                    }
+                };
+
+                // Act.
+                WhatIfOperationResult result = client.Deployments
+                    .WhatIfAtTenantScope(NewDeploymentName(), deploymentWhatIf);
+
+                // Assert.
+                Assert.Equal("Succeeded", result.Status);
+                Assert.NotNull(result.Changes);
+                Assert.NotEmpty(result.Changes);
+                result.Changes.ForEach(change =>
+                {
+                    Assert.NotNull(change.ResourceId);
+                    Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.NotNull(change.After);
+                    Assert.Null(change.Delta);
+                });
             }
         }
 

@@ -12,10 +12,10 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Credentials used to authenticate to a search service.
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/">Azure Cognitive Search Service REST</see>
     /// </summary>
     /// <remarks>
-    /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+    /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
     /// </remarks>
     public class SearchCredentials : ServiceClientCredentials
     {

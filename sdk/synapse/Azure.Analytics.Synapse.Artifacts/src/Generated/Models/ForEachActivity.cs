@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Collection to iterate. </param>
         /// <param name="activities"> List of activities to execute . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/>, or <paramref name="activities"/> is null. </exception>
         public ForEachActivity(string name, Expression items, IEnumerable<Activity> activities) : base(name)
         {
             if (name == null)
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Items = items;
-            Activities = activities.ToArray();
+            Activities = activities.ToList();
             Type = "ForEach";
         }
 
@@ -65,6 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Collection to iterate. </summary>
         public Expression Items { get; set; }
         /// <summary> List of activities to execute . </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
     }
 }

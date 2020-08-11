@@ -1,12 +1,31 @@
 parameters:
-  PreSteps: []
-  PostSteps: []
-  EnvVars: {}
-  MaxParallel: 0
-  BuildInParallel: true
-  TimeoutInMinutes: 60
-  Location: ''
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SubscriptionConfiguration
+  type: string
+  default: $(sub-config-azure-cloud-test-resources)
+- name: ServiceDirectory
+  type: string
+  default: not-specified
 
 jobs:
   - job: "Test"
@@ -35,6 +54,10 @@ jobs:
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+        Windows_NetFramework_ProjectReferences:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1

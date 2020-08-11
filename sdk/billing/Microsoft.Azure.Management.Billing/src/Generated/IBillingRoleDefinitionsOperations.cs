@@ -24,13 +24,16 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingRoleDefinitionsOperations
     {
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on a billing account. The operation
+        /// is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,19 +52,22 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingAccountWithHttpMessagesAsync(string billingAccountName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on an invoice section. The operation
+        /// is supported only for billing accounts with agreement type
+        /// Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,16 +86,19 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingRoleDefinition>> GetByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on a billing profile. The operation
+        /// is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -108,10 +117,13 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the role definition for a billing account
+        /// Lists the role definitions for a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,18 +140,21 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the role definition for an invoice Section
+        /// Lists the role definitions for an invoice section. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -156,15 +171,18 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the role definition for a Billing Profile
+        /// Lists the role definitions for a billing profile. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -181,6 +199,81 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the role definitions for a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the role definitions for an invoice section. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByInvoiceSectionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the role definitions for a billing profile. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingProfileNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

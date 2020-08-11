@@ -14,7 +14,9 @@ namespace Azure.Storage.Files.Shares.Models
     /// names, as specified in the Header Field Definitions section 14 of the
     /// HTTP/1.1 protocol specification.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-and-retrieving-properties-and-metadata-for-blob-resources">
+    /// Setting and retrieving properties and metadata for service resources</see>.
     /// </summary>
     public class ShareFileHttpHeaders
     {

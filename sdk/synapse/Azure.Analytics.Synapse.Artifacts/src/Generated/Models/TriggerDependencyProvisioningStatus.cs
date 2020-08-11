@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerDependencyProvisioningStatus. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="provisioningStatus"> Provisioning status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>
         internal TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus)
         {
             if (triggerName == null)
@@ -31,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Trigger name. </summary>
-        public string TriggerName { get; set; }
+        public string TriggerName { get; }
         /// <summary> Provisioning status. </summary>
-        public string ProvisioningStatus { get; set; }
+        public string ProvisioningStatus { get; }
     }
 }

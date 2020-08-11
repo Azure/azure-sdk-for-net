@@ -24,10 +24,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartTime { get; }
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset EndTime { get; set; }
+        public DateTimeOffset EndTime { get; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </summary>
-        public int MaxConcurrency { get; set; }
+        public int MaxConcurrency { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultCreateOrUpdateParameters. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="properties"> Properties of the vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
         public VaultCreateOrUpdateParameters(string location, VaultProperties properties)
         {
             if (location == null)
@@ -28,24 +30,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             Location = location;
-            Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of VaultCreateOrUpdateParameters. </summary>
-        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
-        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        internal VaultCreateOrUpdateParameters(string location, IDictionary<string, string> tags, VaultProperties properties)
-        {
-            Location = location;
-            Tags = tags;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 
         /// <summary> The supported Azure location where the key vault should be created. </summary>
         public string Location { get; }
         /// <summary> The tags that will be assigned to the key vault. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the vault. </summary>
         public VaultProperties Properties { get; }
     }

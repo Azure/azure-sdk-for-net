@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,17 +16,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowReference : IDictionary<string, object>
     {
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
+        /// <param name="type"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
-        public DataFlowReference(string referenceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        public DataFlowReference(DataFlowReferenceType type, string referenceName)
         {
             if (referenceName == null)
             {
                 throw new ArgumentNullException(nameof(referenceName));
             }
 
-            Type = "DataFlowReference";
+            Type = type;
             ReferenceName = referenceName;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
@@ -33,16 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
         /// <param name="additionalProperties"> . </param>
-        internal DataFlowReference(string type, string referenceName, object datasetParameters, IDictionary<string, object> additionalProperties)
+        internal DataFlowReference(DataFlowReferenceType type, string referenceName, object datasetParameters, IDictionary<string, object> additionalProperties)
         {
             Type = type;
             ReferenceName = referenceName;
             DatasetParameters = datasetParameters;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Data flow reference type. </summary>
-        public string Type { get; set; }
+        public DataFlowReferenceType Type { get; set; }
         /// <summary> Reference data flow name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Reference data flow parameters from dataset. </summary>

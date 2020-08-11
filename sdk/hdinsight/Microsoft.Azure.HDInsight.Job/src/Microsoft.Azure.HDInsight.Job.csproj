@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Provides job operations for Microsoft Azure HDInsight.</Description>
     <AssemblyTitle>Microsoft Azure HDInsight Job Library</AssemblyTitle>
-    <AzureApiTag>HDInsightJobManagementClient_2018-11-01-preview;</AzureApiTag>
+    <AzureApiTag>HDInsightJobClient_2018-11-01-preview;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Version>3.0.0-preview.1</Version>

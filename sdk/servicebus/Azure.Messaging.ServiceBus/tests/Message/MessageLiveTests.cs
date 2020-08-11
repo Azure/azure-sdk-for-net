@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -44,8 +45,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.Properties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
                 msg.Properties.Add("TimeSpan", TimeSpan.FromMinutes(5));
 
-                await sender.SendAsync(msg);
-                var receivedMsg = await receiver.ReceiveAsync();
+                await sender.SendMessageAsync(msg);
+                var receivedMsg = await receiver.ReceiveMessageAsync();
 
                 Assert.IsInstanceOf(typeof(byte), receivedMsg.Properties["byte"]);
                 Assert.IsInstanceOf(typeof(sbyte), receivedMsg.Properties["sbyte"]);
@@ -80,11 +81,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
                 var maxSizeMessage = new ServiceBusMessage(maxPayload);
 
-                await client.CreateSender(scope.QueueName).SendAsync(maxSizeMessage);
+                await client.CreateSender(scope.QueueName).SendMessageAsync(maxSizeMessage);
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var receivedMaxSizeMessage = await receiver.ReceiveAsync();
-                await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.AsBytes().ToArray());
+                var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
+                await receiver.CompleteMessageAsync(receivedMaxSizeMessage.LockToken);
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.Bytes.ToArray());
             }
         }
 
@@ -109,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.SessionId = "key";
                 msg.TimeToLive = TimeSpan.FromSeconds(60);
                 msg.To = "to";
-                await sender.SendAsync(msg);
+                await sender.SendMessageAsync(msg);
 
                 var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
@@ -117,14 +118,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     {
                         ReceiveMode = ReceiveMode.ReceiveAndDelete
                     });
-                var received = await receiver.ReceiveAsync();
+                var received = await receiver.ReceiveMessageAsync();
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.AsBytes().ToArray().SequenceEqual(sentMessage.Body.AsBytes().ToArray()));
+                    Assert.IsTrue(received.Body.Bytes.ToArray().SequenceEqual(sentMessage.Body.Bytes.ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Label, sentMessage.Label);
@@ -158,14 +159,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = BinaryData.Create(testBody, serializer);
+                var body = BinaryData.Serialize(testBody, serializer);
                 var msg = new ServiceBusMessage(body);
 
-                await sender.SendAsync(msg);
+                await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var received = await receiver.ReceiveAsync();
-                var receivedBody = received.Body.As<TestBody>(serializer);
+                var received = await receiver.ReceiveMessageAsync();
+                var receivedBody = received.Body.Deserialize<TestBody>(serializer);
                 Assert.AreEqual(testBody.A, receivedBody.A);
                 Assert.AreEqual(testBody.B, receivedBody.B);
                 Assert.AreEqual(testBody.C, receivedBody.C);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,20 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
         internal WorkspaceUpdateParameters()
         {
-        }
-
-        /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> Managed service identity of the workspace. </param>
-        internal WorkspaceUpdateParameters(IReadOnlyDictionary<string, string> tags, WorkspaceIdentity identity)
-        {
-            Tags = tags;
-            Identity = identity;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; set; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity of the workspace. </summary>
-        public WorkspaceIdentity Identity { get; set; }
+        public WorkspaceIdentity Identity { get; }
     }
 }

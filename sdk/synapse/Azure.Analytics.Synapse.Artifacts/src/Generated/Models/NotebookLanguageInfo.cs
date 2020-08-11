@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
         /// <param name="name"> The programming language which this kernel runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NotebookLanguageInfo(string name)
         {
             if (name == null)
@@ -24,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Name = name;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
@@ -35,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Name = name;
             CodemirrorMode = codemirrorMode;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The programming language which this kernel runs. </summary>

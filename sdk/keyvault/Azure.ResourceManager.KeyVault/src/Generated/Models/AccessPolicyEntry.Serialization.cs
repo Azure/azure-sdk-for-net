@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId");
             writer.WriteStringValue(ObjectId);
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId");
                 writer.WriteStringValue(ApplicationId.Value);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Guid tenantId = default;
             string objectId = default;
-            Guid? applicationId = default;
+            Optional<Guid> applicationId = default;
             Permissions permissions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,10 +50,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("applicationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     applicationId = property.Value.GetGuid();
                     continue;
                 }
@@ -63,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new AccessPolicyEntry(tenantId, objectId, applicationId, permissions);
+            return new AccessPolicyEntry(tenantId, objectId, Optional.ToNullable(applicationId), permissions);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -32,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateClient()
         {
-            var fakeEndpoint = new Uri("http://localhost");
+            var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
             return new FormRecognizerClient(fakeEndpoint, fakeCredential);
@@ -98,6 +99,23 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
+        [Test]
+        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                await client.StartRecognizeContentFromUriAsync(uri);
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
+        }
+
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
         /// method.
@@ -117,13 +135,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeContentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
-            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
+            var options = new RecognizeContentOptions { ContentType = FormContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, options, cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeContentAsync(stream, options, cancellationSource.Token));
         }
 
         /// <summary>
@@ -150,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -172,13 +190,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeReceiptsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
-            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
+            var options = new RecognizeReceiptsOptions { ContentType = FormContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeReceiptsAsync(stream, recognizeReceiptsOptions: options, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -205,7 +223,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -223,7 +241,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 : typeof(ArgumentException);
 
             using var stream = new MemoryStream(Array.Empty<byte>());
-            var options = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+            var options = new RecognizeCustomFormsOptions { ContentType = FormContentType.Jpeg };
 
             Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsAsync(modelId, stream, options));
         }
@@ -248,7 +266,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateClient();
             using var stream = new MemoryStream(Array.Empty<byte>());
-            var options = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+            var options = new RecognizeCustomFormsOptions { ContentType = FormContentType.Jpeg };
 
             Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
         }
@@ -261,13 +279,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeCustomFormsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
-            var options = new RecognizeOptions { ContentType = FormContentType.Pdf };
+            var options = new RecognizeCustomFormsOptions { ContentType = FormContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", stream, recognizeCustomFormsOptions: options, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -326,7 +344,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
         }
     }
 }

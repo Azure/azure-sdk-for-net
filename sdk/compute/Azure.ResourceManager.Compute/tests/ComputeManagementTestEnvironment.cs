@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class ComputeManagementTestEnvironment : TestEnvironment
     {
-        public ComputeManagementTestEnvironment() : base("computemgmt")
+        public ComputeManagementTestEnvironment() : base("compute")
         {
         }
     }

@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -124,16 +124,13 @@ namespace Azure.DigitalTwins.Core
         ///
         /// <code snippet="Snippet:DigitalTwinsSampleGetCustomDigitalTwin">
         /// Response&lt;string&gt; getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
-        /// if (getCustomDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-        /// {
-        ///     CustomDigitalTwin customDt = JsonSerializer.Deserialize&lt;CustomDigitalTwin&gt;(getCustomDtResponse.Value);
-        ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {customDt.Id}:\n\t&quot; +
-        ///         $&quot;ETag: {customDt.ETag}\n\t&quot; +
-        ///         $&quot;Prop1: {customDt.Prop1}\n\t&quot; +
-        ///         $&quot;Prop2: {customDt.Prop2}\n\t&quot; +
-        ///         $&quot;ComponentProp1: {customDt.Component1.ComponentProp1}\n\t&quot; +
-        ///         $&quot;ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
-        /// }
+        /// CustomDigitalTwin customDt = JsonSerializer.Deserialize&lt;CustomDigitalTwin&gt;(getCustomDtResponse.Value);
+        /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {customDt.Id}:\n\t&quot; +
+        ///     $&quot;ETag: {customDt.ETag}\n\t&quot; +
+        ///     $&quot;Prop1: {customDt.Prop1}\n\t&quot; +
+        ///     $&quot;Prop2: {customDt.Prop2}\n\t&quot; +
+        ///     $&quot;ComponentProp1: {customDt.Component1.ComponentProp1}\n\t&quot; +
+        ///     $&quot;ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> GetDigitalTwinAsync(string digitalTwinId, CancellationToken cancellationToken = default)
@@ -200,8 +197,8 @@ namespace Azure.DigitalTwins.Core
         /// };
         /// string dt2Payload = JsonSerializer.Serialize(customTwin);
         ///
-        /// Response&lt;string&gt; createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-        /// Console.WriteLine($&quot;Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.&quot;);
+        /// await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
+        /// Console.WriteLine($&quot;Created digital twin &apos;{customDtId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, CancellationToken cancellationToken = default)
@@ -251,7 +248,8 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteTwin">
-        /// await client.DeleteDigitalTwinAsync(twin.Key);
+        /// await client.DeleteDigitalTwinAsync(digitalTwinId);
+        /// Console.WriteLine($&quot;Deleted digital twin &apos;{digitalTwinId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
@@ -350,9 +348,8 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
-        ///
-        /// Console.WriteLine($&quot;Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}&quot;);
+        /// await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+        /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> GetComponentAsync(string digitalTwinId, string componentPath, CancellationToken cancellationToken = default)
@@ -404,14 +401,13 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
         /// </exception>
         /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
-        /// // Update Component1 by replacing the property ComponentProp1 value
+        /// // Update Component1 by replacing the property ComponentProp1 value,
+        /// // using an optional utility to build the payload.
         /// var componentUpdateUtility = new UpdateOperationsUtility();
         /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
         /// string updatePayload = componentUpdateUtility.Serialize();
-        ///
-        /// Response&lt;string&gt; response = await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
-        ///
-        /// Console.WriteLine($&quot;Updated component for digital twin {basicDtId}. Update response status: {response.GetRawResponse().Status}&quot;);
+        /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
+        /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> UpdateComponentAsync(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
@@ -454,7 +450,13 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <remarks>
+        /// <para>
+        /// String relationships that are returned as part of the pageable list can always be deserialized into an instnace of <see cref="Serialization.BasicRelationship"/>.
+        /// You may also deserialize the relationship into custom type that extend the <see cref="Serialization.BasicRelationship"/>.
+        /// </para>
+        /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -463,8 +465,17 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetRelationships">
-        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(twin.Key);
+        /// This sample demonstrates iterating over outgoing relationships and deserializing relationship strings into BasicRelationship objects.
+        /// <code snippet="Snippet:DigitalTwinsSampleGetAllRelationships">
+        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(&quot;buildingTwinId&quot;);
+        /// await foreach (var relationshipJson in relationships)
+        /// {
+        ///     BasicRelationship relationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(relationshipJson);
+        ///     Console.WriteLine($&quot;Retrieved relationship &apos;{relationship.Id}&apos; with source {relationship.SourceId}&apos; and &quot; +
+        ///         $&quot;target {relationship.TargetId}.\n\t&quot; +
+        ///         $&quot;Prop1: {relationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
+        ///         $&quot;Prop2: {relationship.CustomProperties[&quot;Prop2&quot;]}&quot;);
+        /// }
         /// </code>
         /// </example>
         public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
@@ -587,7 +598,12 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships">
-        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
+        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(&quot;buildingTwinId&quot;);
+        ///
+        /// await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
+        /// {
+        ///     Console.WriteLine($&quot;Found an incoming relationship &apos;{incomingRelationship.RelationshipId}&apos; from &apos;{incomingRelationship.SourceId}&apos;.&quot;);
+        /// }
         /// </code>
         /// </example>
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
@@ -690,7 +706,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
+        /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -698,6 +716,16 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
+        /// <example>
+        /// This sample demonstrates getting and deserializing a digital twin relationship into a custom data type.
+        /// <code snippet="Snippet:DigitalTwinsSampleGetCustomRelationship">
+        /// Response&lt;string&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;);
+        /// CustomRelationship getCustomRelationship = JsonSerializer.Deserialize&lt;CustomRelationship&gt;(getCustomRelationshipResponse.Value);
+        /// Console.WriteLine($&quot;Retrieved and deserialized relationship &apos;{getCustomRelationship.Id}&apos; from twin &apos;{getCustomRelationship.SourceId}&apos;.\n\t&quot; +
+        ///     $&quot;Prop1: {getCustomRelationship.Prop1}\n\t&quot; +
+        ///     $&quot;Prop2: {getCustomRelationship.Prop2}&quot;);
+        /// </code>
+        /// </example>
         public virtual Task<Response<string>> GetRelationshipAsync(string digitalTwinId, string relationshipId, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetRelationshipByIdAsync(digitalTwinId, relationshipId, cancellationToken);
@@ -797,27 +825,20 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateRelationship">
-        /// // From loaded relationships, get the source Id and Id from each one,
-        /// // and create it with full relationship payload
-        /// foreach (BasicRelationship relationship in relationships)
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomRelationship">
+        /// var floorBuildingRelationshipPayload = new CustomRelationship
         /// {
-        ///     try
-        ///     {
-        ///         string serializedRelationship = JsonSerializer.Serialize(relationship);
+        ///     Id = &quot;floorBuildingRelationshipId&quot;,
+        ///     SourceId = &quot;floorTwinId&quot;,
+        ///     TargetId = &quot;buildingTwinId&quot;,
+        ///     Name = &quot;containedIn&quot;,
+        ///     Prop1 = &quot;Prop1 val&quot;,
+        ///     Prop2 = 4
+        /// };
+        /// string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
         ///
-        ///         await client.CreateRelationshipAsync(
-        ///             relationship.SourceId,
-        ///             relationship.Id,
-        ///             serializedRelationship);
-        ///
-        ///         Console.WriteLine($&quot;Linked twin {relationship.SourceId} to twin {relationship.TargetId} as &apos;{relationship.Name}&apos;&quot;);
-        ///     }
-        ///     catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
-        ///     {
-        ///         Console.WriteLine($&quot;Relationship {relationship.Id} already exists: {ex.Message}&quot;);
-        ///     }
-        /// }
+        /// Response&lt;string&gt; createCustomRelationshipResponse = await client.CreateRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, serializedCustomRelationship);
+        /// Console.WriteLine($&quot;Created a digital twin relationship &apos;floorBuildingRelationshipId&apos; from twin &apos;floorTwinId&apos; to twin &apos;buildingTwinId&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, CancellationToken cancellationToken = default)
@@ -924,7 +945,10 @@ namespace Azure.DigitalTwins.Core
         /// AsyncPageable&lt;ModelData&gt; allModels = client.GetModelsAsync();
         /// await foreach (ModelData model in allModels)
         /// {
-        ///     Console.WriteLine($&quot;Model Id: {model.Id}, display name: {model.DisplayName[&quot;en&quot;]}, upload time: {model.UploadTime}, is decommissioned: {model.Decommissioned}&quot;);
+        ///     Console.WriteLine($&quot;Retrieved model &apos;{model.Id}&apos;, &quot; +
+        ///         $&quot;display name &apos;{model.DisplayName[&quot;en&quot;]}&apos;, &quot; +
+        ///         $&quot;upload time &apos;{model.UploadTime}&apos;, &quot; +
+        ///         $&quot;and decommissioned &apos;{model.Decommissioned}&apos;&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1036,7 +1060,8 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModel">
-        /// Response&lt;ModelData&gt; sampleModel = await client.GetModelAsync(sampleModelId);
+        /// Response&lt;ModelData&gt; sampleModelResponse = await client.GetModelAsync(sampleModelId);
+        /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<ModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
@@ -1096,11 +1121,11 @@ namespace Azure.DigitalTwins.Core
         /// try
         /// {
         ///     await client.DecommissionModelAsync(sampleModelId);
-        ///     Console.WriteLine($&quot;Successfully decommissioned model {sampleModelId}&quot;);
+        ///     Console.WriteLine($&quot;Decommissioned model &apos;{sampleModelId}&apos;.&quot;);
         /// }
         /// catch (RequestFailedException ex)
         /// {
-        ///     FatalError($&quot;Failed to decommision model {sampleModelId} due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to decommision model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1161,13 +1186,14 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
-        /// Response&lt;IReadOnlyList&lt;ModelData&gt;&gt; response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
-        /// Console.WriteLine($&quot;Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}&quot;);
+        /// await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
+        /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<IReadOnlyList<ModelData>>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModelData[]>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            return _dtModelsRestClient.AddAsync(models, cancellationToken);
+            Response<IReadOnlyList<ModelData>> response = await _dtModelsRestClient.AddAsync(models, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -1193,9 +1219,10 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<IReadOnlyList<ModelData>> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual Response<ModelData[]> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            return _dtModelsRestClient.Add(models, cancellationToken);
+            Response<IReadOnlyList<ModelData>> response = _dtModelsRestClient.Add(models, cancellationToken);
+            return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -1228,12 +1255,11 @@ namespace Azure.DigitalTwins.Core
         /// try
         /// {
         ///     await client.DeleteModelAsync(sampleModelId);
-        ///
-        ///     Console.WriteLine($&quot;Deleted model {sampleModelId}&quot;);
+        ///     Console.WriteLine($&quot;Deleted model &apos;{sampleModelId}&apos;.&quot;);
         /// }
         /// catch (Exception ex)
         /// {
-        ///     FatalError($&quot;Failed to delete model {sampleModelId} due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to delete model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1299,7 +1325,7 @@ namespace Azure.DigitalTwins.Core
         /// await foreach (string response in asyncPageableResponse)
         /// {
         ///     BasicDigitalTwin twin = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(response);
-        ///     Console.WriteLine($&quot;Found digital twin: {twin.Id}&quot;);
+        ///     Console.WriteLine($&quot;Found digital twin &apos;{twin.Id}&apos;&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1432,7 +1458,7 @@ namespace Azure.DigitalTwins.Core
         /// AsyncPageable&lt;EventRoute&gt; response = client.GetEventRoutesAsync();
         /// await foreach (EventRoute er in response)
         /// {
-        ///     Console.WriteLine($&quot;Event route: {er.Id}, endpoint name: {er.EndpointName}&quot;);
+        ///     Console.WriteLine($&quot;Event route &apos;{er.Id}&apos;, endpoint name &apos;{er.EndpointName}&apos;&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1592,7 +1618,8 @@ namespace Azure.DigitalTwins.Core
         ///     Filter = eventFilter
         /// };
         ///
-        /// Response createEventRouteResponse = await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+        /// await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+        /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, EventRoute eventRoute, CancellationToken cancellationToken = default)
@@ -1641,7 +1668,8 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteEventRoute">
-        /// Response response = await client.DeleteEventRouteAsync(_eventRouteId);
+        /// await client.DeleteEventRouteAsync(_eventRouteId);
+        /// Console.WriteLine($&quot;Deleted event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
@@ -1694,8 +1722,8 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry">
         /// // construct your json telemetry payload by hand.
-        /// Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
-        /// Console.WriteLine($&quot;Successfully published telemetry message, status: {publishTelemetryResponse.Status}&quot;);
+        /// await client.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
+        /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
@@ -1762,13 +1790,13 @@ namespace Azure.DigitalTwins.Core
         /// // construct your json telemetry payload by serializing a dictionary.
         /// var telemetryPayload = new Dictionary&lt;string, int&gt;
         /// {
-        ///     { &quot;ComponentTelemetry1&quot;, 9}
+        ///     { &quot;ComponentTelemetry1&quot;, 9 }
         /// };
-        /// Response publishTelemetryToComponentResponse = await client.PublishComponentTelemetryAsync(
+        /// await client.PublishComponentTelemetryAsync(
         ///     twinId,
         ///     &quot;Component1&quot;,
         ///     JsonSerializer.Serialize(telemetryPayload));
-        /// Console.WriteLine($&quot;Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}&quot;);
+        /// Console.WriteLine($&quot;Published component telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)

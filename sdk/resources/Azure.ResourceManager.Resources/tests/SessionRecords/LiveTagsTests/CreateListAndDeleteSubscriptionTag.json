@@ -1,0 +1,107 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg8836?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f97a5fd9ffb4b740954a4daa89dfcd0b-5afbacaa06676443-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "7f70feafe39dc7885b6b50a8798eadb8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "148",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:33:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c565a207-e5a2-475f-8899-7930bf9c97ae",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "c565a207-e5a2-475f-8899-7930bf9c97ae",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T023324Z:c565a207-e5a2-475f-8899-7930bf9c97ae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg8836",
+        "tagName": "csmtg8836",
+        "count": {
+          "type": "Total",
+          "value": 0
+        },
+        "values": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "19b596f18f870343c0884bd6554fffd5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8328",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:33:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b77a35d2-7ffb-41a3-882a-c6bb3024e1f7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "b77a35d2-7ffb-41a3-882a-c6bb3024e1f7",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T023325Z:b77a35d2-7ffb-41a3-882a-c6bb3024e1f7"
+      },
+      "ResponseBody": "{\u0022value\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/ms-resource-usage\u0022,\u0022tagName\u0022:\u0022ms-resource-usage\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/ms-resource-usage/tagValues/azure-cloud-shell\u0022,\u0022tagValue\u0022:\u0022azure-cloud-shell\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/testtag\u0022,\u0022tagName\u0022:\u0022testtag\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/testtag/tagValues/testval\u0022,\u0022tagValue\u0022:\u0022testval\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/testTag2\u0022,\u0022tagName\u0022:\u0022testTag2\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/testTag2/tagValues/testVal2\u0022,\u0022tagValue\u0022:\u0022testVal2\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg2086\u0022,\u0022tagName\u0022:\u0022csmtg2086\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg2086/tagValues/csmtgv9941\u0022,\u0022tagValue\u0022:\u0022csmtgv9941\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg3447\u0022,\u0022tagName\u0022:\u0022csmtg3447\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg3447/tagValues/csmtgv123\u0022,\u0022tagValue\u0022:\u0022csmtgv123\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg3486\u0022,\u0022tagName\u0022:\u0022csmtg3486\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg3486/tagValues/csmtgv123\u0022,\u0022tagValue\u0022:\u0022csmtgv123\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg4974\u0022,\u0022tagName\u0022:\u0022csmtg4974\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg4974/tagValues/csmtgv123\u0022,\u0022tagValue\u0022:\u0022csmtgv123\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag\u0022,\u0022tagName\u0022:\u0022pretag\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/0001\u0022,\u0022tagValue\u0022:\u00220001\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/Finance\u0022,\u0022tagValue\u0022:\u0022Finance\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/Finance1\u0022,\u0022tagValue\u0022:\u0022Finance1\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/Finance1\u002B\u0022,\u0022tagValue\u0022:\u0022Finance1\u002B\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/Finance1\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u0022,\u0022tagValue\u0022:\u0022Finance1\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/finance001\u0022,\u0022tagValue\u0022:\u0022finance001\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/kusto123456\u0022,\u0022tagValue\u0022:\u0022kusto123456\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/value1\u0022,\u0022tagValue\u0022:\u0022value1\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/pretag/tagValues/value3\u0022,\u0022tagValue\u0022:\u0022value3\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/product\u0022,\u0022tagName\u0022:\u0022product\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:12},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/product/tagValues/azurecli\u0022,\u0022tagValue\u0022:\u0022azurecli\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:12}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cause\u0022,\u0022tagName\u0022:\u0022cause\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:12},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cause/tagValues/automation\u0022,\u0022tagValue\u0022:\u0022automation\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:12}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date\u0022,\u0022tagName\u0022:\u0022date\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:12},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-05-08T05:46:21Z\u0022,\u0022tagValue\u0022:\u00222020-05-08T05:46:21Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-05-08T05:48:53Z\u0022,\u0022tagValue\u0022:\u00222020-05-08T05:48:53Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-05-11T01:15:49Z\u0022,\u0022tagValue\u0022:\u00222020-05-11T01:15:49Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:15:35Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:15:35Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:17:50Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:17:50Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:18:28Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:18:28Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:19:17Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:19:17Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:33:50Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:33:50Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-23T18:44:26Z\u0022,\u0022tagValue\u0022:\u00222020-04-23T18:44:26Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-04-24T03:48:35Z\u0022,\u0022tagValue\u0022:\u00222020-04-24T03:48:35Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-05-01T05:38:24Z\u0022,\u0022tagValue\u0022:\u00222020-05-01T05:38:24Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/date/tagValues/2020-05-08T21:49:23Z\u0022,\u0022tagValue\u0022:\u00222020-05-08T21:49:23Z\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/a\u0022,\u0022tagName\u0022:\u0022a\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:3},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/a/tagValues/{\u0027k\u0027: \u0027v\u0027}\u0022,\u0022tagValue\u0022:\u0022{\u0027k\u0027: \u0027v\u0027}\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:3}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/b\u0022,\u0022tagName\u0022:\u0022b\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:3},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/b/tagValues/{\\\u0022k\\\u0022:\\\u0022v\\\u0022}\u0022,\u0022tagValue\u0022:\u0022{\\\u0022k\\\u0022:\\\u0022v\\\u0022}\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:3}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cliName3\u0022,\u0022tagName\u0022:\u0022cliName3\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cliName3/tagValues/clivalue3\u0022,\u0022tagValue\u0022:\u0022clivalue3\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cliName4\u0022,\u0022tagName\u0022:\u0022cliName4\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1},\u0022values\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cliName4/tagValues/clivalue4\u0022,\u0022tagValue\u0022:\u0022clivalue4\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:1}}]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/cli_test_tag\u0022,\u0022tagName\u0022:\u0022cli_test_tag\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg3613\u0022,\u0022tagName\u0022:\u0022csmtg3613\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg8836\u0022,\u0022tagName\u0022:\u0022csmtg8836\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[]},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/predefined\u0022,\u0022tagName\u0022:\u0022predefined\u0022,\u0022count\u0022:{\u0022type\u0022:\u0022Total\u0022,\u0022value\u0022:0},\u0022values\u0022:[]}]}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg8836?api-version=2019-10-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-daa63bd3bc051d4f8241ea2130c739c4-74822ca80a78a140-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "c7d850770020e46659ba5df8522d0b7f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 29 May 2020 02:33:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "46c5c49e-f9f3-493b-bea0-bdc0e4bc2d3c",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "46c5c49e-f9f3-493b-bea0-bdc0e4bc2d3c",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T023327Z:46c5c49e-f9f3-493b-bea0-bdc0e4bc2d3c"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1048897998",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

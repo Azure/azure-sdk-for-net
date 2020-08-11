@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/entities/recognition/general?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general?showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4ef105640c6791429a2148698b0bc49f-1991d5a625ef1541-00",
+        "traceparent": "00-7862eb108e4e644f879323ea9b136d74-3d60df994c61364c-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6f227d9e516f56f6910180d80b03554b",
@@ -31,14 +31,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "78358281-b9df-48fc-ac0a-f462085dec93",
+        "apim-request-id": "a89e70b5-e902-4be2-b0ee-d1856b2b31bf",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 25 Apr 2020 20:38:37 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "74"
+        "x-envoy-upstream-service-time": "79"
       },
       "ResponseBody": {
         "statistics": {
@@ -60,21 +60,21 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.52
+                "confidenceScore": 0.83
               },
               {
                 "text": "Bill Gates",
                 "category": "Person",
                 "offset": 25,
                 "length": 10,
-                "confidenceScore": 0.51
+                "confidenceScore": 0.85
               },
               {
                 "text": "Paul Allen",
                 "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "confidenceScore": 0.76
+                "confidenceScore": 0.9
               }
             ],
             "warnings": []
@@ -101,6 +101,13 @@
                 "offset": 11,
                 "length": 2,
                 "confidenceScore": 0.8
+              },
+              {
+                "text": "veterinario",
+                "category": "PersonType",
+                "offset": 36,
+                "length": 11,
+                "confidenceScore": 0.52
               }
             ],
             "warnings": []
@@ -114,6 +121,6 @@
   "Variables": {
     "RandomSeed": "982730472",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.ppe.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

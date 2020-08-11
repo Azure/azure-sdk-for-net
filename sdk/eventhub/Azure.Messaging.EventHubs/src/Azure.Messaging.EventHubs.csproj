@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.2.0-preview.1</Version>
+    <Version>5.2.0-preview.3</Version>
+    <ApiCompatVersion>5.1.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -18,15 +19,6 @@
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
   <!-- Import Event Hubs shared source -->
