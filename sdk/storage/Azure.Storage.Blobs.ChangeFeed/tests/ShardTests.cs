@@ -616,22 +616,22 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk0", false, null)),
+                    BlobsModelFactory.BlobItem("chunk0", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue))),
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk1", false, null)),
+                    BlobsModelFactory.BlobItem("chunk1", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue))),
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk2", false, null)),
+                    BlobsModelFactory.BlobItem("chunk2", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue))),
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk3", false, null)),
+                    BlobsModelFactory.BlobItem("chunk3", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue))),
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk4", false, null)),
+                    BlobsModelFactory.BlobItem("chunk4", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue))),
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
-                    BlobsModelFactory.BlobItem("chunk5", false, null))
+                    BlobsModelFactory.BlobItem("chunk5", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue)))
             });
 
         private static Dictionary<string, Mock<Chunk>> GetChunkMocks(long blockOffset, long eventIndex)
