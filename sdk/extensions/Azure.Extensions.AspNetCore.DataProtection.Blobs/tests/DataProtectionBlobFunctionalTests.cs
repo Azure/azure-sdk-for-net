@@ -56,7 +56,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         private static async Task<BlobClient> GetBlobClient(string name)
         {
             var client = new BlobServiceClient(
-                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.core.windows.net/"),
+                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.{DataProtectionTestEnvironment.Instance.StorageEndpointSuffix}/"),
                 new StorageSharedKeyCredential(
                     DataProtectionTestEnvironment.Instance.StorageAccountName,
                     DataProtectionTestEnvironment.Instance.StorageAccountKey));
