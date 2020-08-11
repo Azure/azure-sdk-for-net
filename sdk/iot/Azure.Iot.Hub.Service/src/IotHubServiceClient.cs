@@ -21,6 +21,10 @@ namespace Azure.Iot.Hub.Service
         private readonly QueryRestClient _queryRestClient;
         private readonly StatisticsRestClient _statisticsRestClient;
 
+        // IoT Hub service currently does not support OAuth tokens, so they do not have their authorization scopes defined.
+        // This value will need to be correctly populated once OAuth token support is available.
+        private static readonly string[] s_authorizationScopes = new[] { "" };
+
         /// <summary>
         /// place holder for Devices.
         /// </summary>
@@ -120,7 +124,7 @@ namespace Azure.Iot.Hub.Service
             options ??= new IotHubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            options.AddPolicy(new SasTokenAuthenticationPolicy(credential), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, s_authorizationScopes), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
