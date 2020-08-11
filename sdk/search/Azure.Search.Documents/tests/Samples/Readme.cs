@@ -129,9 +129,15 @@ namespace Azure.Search.Documents.Tests.Samples
         public class Hotel
         {
             [JsonPropertyName("hotelId")]
+#if EXPERIMENTAL_FIELDBUILDER
+            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+#endif
             public string Id { get; set; }
 
             [JsonPropertyName("hotelName")]
+#if EXPERIMENTAL_FIELDBUILDER
+            [SearchableField(IsFilterable = true, IsSortable = true)]
+#endif
             public string Name { get; set; }
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
@@ -184,6 +190,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }
 
+#if EXPERIMENTAL_FIELDBUILDER // This won't condition the README.md file, which will require manual effort.
         [Test]
         [SyncOnly]
         public async Task CreateIndex()
@@ -201,7 +208,37 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchIndexClient client = new SearchIndexClient(endpoint, credential);
             /*@@*/ client = resources.GetIndexClient();
 
-            // Create the index
+            // Create the index using FieldBuilder.
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex
+            //@@SearchIndex index = new SearchIndex("hotels")
+            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+            {
+                Fields = new FieldBuilder().Build(typeof(Hotel)),
+                Suggesters =
+                {
+                    // Suggest query terms from the hotelName field.
+                    new SearchSuggester("sg", "hotelName")
+                }
+            };
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex
+
+            client.CreateIndex(index);
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+
+            resources.IndexName = index.Name;
+        }
+#endif
+
+        [Test]
+        [SyncOnly]
+        public async Task CreateManualIndex()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            SearchIndexClient client = resources.GetIndexClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+            // Create the index using field definitions.
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex
             //@@SearchIndex index = new SearchIndex("hotels")
             /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
             {
@@ -225,13 +262,16 @@ namespace Azure.Search.Documents.Tests.Samples
                 },
                 Suggesters =
                 {
-                    // Suggest query terms from both the hotelName and description fields.
-                    new SearchSuggester("sg", "hotelName", "description")
+                    // Suggest query terms from the hotelName field.
+                    new SearchSuggester("sg", "hotelName")
                 }
             };
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex
 
             client.CreateIndex(index);
-            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex
+
+            resources.IndexName = index.Name;
         }
 
         [Test]
