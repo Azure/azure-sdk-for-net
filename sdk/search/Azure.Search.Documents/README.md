@@ -214,20 +214,16 @@ Let's explore them with a search for a "luxury" hotel.
 We can decorate our own C# types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
-        public class Hotel
-        {
-            [JsonPropertyName("hotelId")]
-#if EXPERIMENTAL_FIELDBUILDER
-            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
-#endif
-            public string Id { get; set; }
+public class Hotel
+{
+    [JsonPropertyName("HotelId")]
+    [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+    public string Id { get; set; }
 
-            [JsonPropertyName("hotelName")]
-#if EXPERIMENTAL_FIELDBUILDER
-            [SearchableField(IsFilterable = true, IsSortable = true)]
-#endif
-            public string Name { get; set; }
-        }
+    [JsonPropertyName("HotelName")]
+    [SearchableField(IsFilterable = true, IsSortable = true)]
+    public string Name { get; set; }
+}
 ```
 
 Then we use them as the type parameter when querying to return strongly-typed search results:
@@ -270,10 +266,10 @@ Let's search for the top 5 luxury hotels with a good rating.
 int stars = 4;
 SearchOptions options = new SearchOptions
 {
-    // Filter to only ratings greater than or equal our preference
-    Filter = SearchFilter.Create($"rating ge {stars}"),
+    // Filter to only Rating greater than or equal our preference
+    Filter = SearchFilter.Create($"Rating ge {stars}"),
     Size = 5, // Take only 5 results
-    OrderBy = { "rating desc" } // Sort by rating from high to low
+    OrderBy = { "Rating desc" } // Sort by Rating from high to low
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
