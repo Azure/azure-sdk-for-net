@@ -6,7 +6,6 @@
 - Added column delimiter for SAP Table/open hub
 - Added azureCloudType for Aad Auth
 - Added snapshot to Azure File Storage linked service
-- Added source/sink level staging support in dataflow
 
 ## Version 4.10.0
 ###  Feature Additions
