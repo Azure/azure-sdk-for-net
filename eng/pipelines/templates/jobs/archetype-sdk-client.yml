@@ -126,23 +126,29 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
+          CodeCoverageArgs: --collect:"XPlat Code Coverage"
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          CodeCoverageArgs: --collect:"XPlat Code Coverage"
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+          CodeCoverageArgs: --collect:"XPlat Code Coverage"
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+          CodeCoverageArgs: ''
         Windows_NetFramework_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+          CodeCoverageArgs: ''
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+          CodeCoverageArgs: --collect:"XPlat Code Coverage"
     pool:
       vmImage: "$(OSVmImage)"
     steps:
@@ -159,7 +165,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) $(CodeCoverageArgs)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -173,3 +179,8 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - task: PublishCodeCoverageResults@1
+        displayName: 'Publish code coverage report'
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: '**/coverage.cobertura.xml'
