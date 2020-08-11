@@ -255,8 +255,8 @@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury")
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     SearchDocument doc = result.Document;
-    string id = (string)doc["hotelId"];
-    string name = (string)doc["hotelName"];
+    string id = (string)doc["HotelId"];
+    string name = (string)doc["HotelName"];
     Console.WriteLine("{id}: {name}");
 }
 ```
@@ -414,9 +414,9 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-* [Go further with Azure.Search.Documents and our samples][samples]
-* [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
-* [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
+* Go further with Azure.Search.Documents and our [samples][samples]
+* Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
+* Read more about the [Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
 

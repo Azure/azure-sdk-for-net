@@ -106,8 +106,10 @@ namespace Azure.Search.Documents.Tests.Samples
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
-                string id = (string)doc["hotelId"];
-                string name = (string)doc["hotelName"];
+                //@@ string id = (string)doc["HotelId"];
+                /*@@*/ string id = (string)doc["hotelId"];
+                //@@ string name = (string)doc["HotelName"];
+                /*@@*/ string name = (string)doc["hotelName"];
                 Console.WriteLine("{id}: {name}");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict

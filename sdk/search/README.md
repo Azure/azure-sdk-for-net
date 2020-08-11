@@ -15,14 +15,15 @@ persisted index that you create, own, and store in your service.
 
 Functionality is exposed through several client libraries:
 
-- [Azure.Search.Documents](./Azure.Search.Documents/) is a preview experience
-  built on top of [Azure.Core](../core/Azure.Core/README.md) and the
+- [Azure.Search.Documents](./Azure.Search.Documents/) is the latest .NET client
+  library for building applications with Azure Cognitive Search.  It is built on
+  top of [Azure.Core](../core/Azure.Core/README.md) and the
   [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- [Microsoft.Azure.Search](./Microsoft.Azure.Search/) is the officially
-supported .NET client library that makes it easy to develop applications using
-Azure Cognitive Search.  The `Microsoft.Azure.Search` package includes the
-following client libraries:
+- [Microsoft.Azure.Search](./Microsoft.Azure.Search/) is the previous .NET
+  client library that makes it easy to develop applications using
+  Azure Cognitive Search.  The `Microsoft.Azure.Search` package includes the
+  following client libraries:
   - [Microsoft.Azure.Search.Data](./Microsoft.Azure.Search.Data/) enables
     querying or updating documents in your indexes.
   - [Microsoft.Azure.Search.Service](./Microsoft.Azure.Search.Service/) manages
