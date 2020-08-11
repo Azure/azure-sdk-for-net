@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Maps
         /// which allow access to the Maps REST APIs.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Maps
         /// updated after creation, such as Sku and Tags.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Maps
         /// Delete a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Maps
         /// Get a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Maps
         /// Get all Maps Accounts in a Resource Group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -170,36 +170,13 @@ namespace Microsoft.Azure.Management.Maps
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<MapsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Moves Maps Accounts from one ResourceGroup (or Subscription) to
-        /// another
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains Maps Account to move.
-        /// </param>
-        /// <param name='moveRequest'>
-        /// The details of the Maps Account move.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, MapsAccountsMoveRequest moveRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get the keys to use with the Maps APIs. A key is used to
         /// authenticate and authorize access to the Maps REST APIs. Only one
         /// key is needed at a time; two are given to provide seamless key
         /// regeneration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -210,7 +187,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -225,7 +202,7 @@ namespace Microsoft.Azure.Management.Maps
         /// Maps APIs. The old key will stop working immediately.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure Resource Group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// The name of the Maps Account.
@@ -239,7 +216,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -249,24 +226,5 @@ namespace Microsoft.Azure.Management.Maps
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<MapsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsKeySpecification keySpecification, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List operations available for the Maps Resource Provider
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MapsOperationsValueItem>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

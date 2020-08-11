@@ -10,26 +10,27 @@
 
 namespace Microsoft.Azure.Management.Maps.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An Azure resource which represents access to a suite of Maps REST APIs.
+    /// The resource model definition for a ARM tracked top level resource
     /// </summary>
-    public partial class MapsAccount : TrackedResource
+    public partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the MapsAccount class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        public MapsAccount()
+        public TrackedResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsAccount class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -40,16 +41,11 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="sku">The SKU of this account.</param>
-        /// <param name="systemData">The system meta data relating to this
-        /// resource.</param>
-        /// <param name="properties">The map account properties.</param>
-        public MapsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), SystemData systemData = default(SystemData), MapsAccountProperties properties = default(MapsAccountProperties))
-            : base(location, id, name, type, tags)
+        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type)
         {
-            Sku = sku;
-            SystemData = systemData;
-            Properties = properties;
+            Tags = tags;
+            Location = location;
             CustomInit();
         }
 
@@ -59,35 +55,28 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the SKU of this account.
+        /// Gets or sets resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; private set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets the system meta data relating to this resource.
+        /// Gets or sets the geo-location where the resource lives
         /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
-        /// Gets the map account properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public MapsAccountProperties Properties { get; private set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (Sku != null)
+            if (Location == null)
             {
-                Sku.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
         }
     }

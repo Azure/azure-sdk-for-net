@@ -13,9 +13,10 @@ namespace Microsoft.Azure.Management.Maps.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with Error information.
+    /// Exception thrown for an invalid response with ErrorResponse
+    /// information.
     /// </summary>
-    public partial class ErrorException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -30,30 +31,30 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public Error Body { get; set; }
+        public ErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
-        public ErrorException()
+        public ErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public ErrorException(string message)
+        public ErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public ErrorException(string message, System.Exception innerException)
+        public ErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }
