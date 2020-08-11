@@ -37,7 +37,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Gets a configuration on the IoT Hub for automatic device/module management
+        /// Gets a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configurationId">The unique identifier of the configuration.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -48,7 +48,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Gets a configuration on the IoT Hub for automatic device/module management
+        /// Gets a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configurationId">The unique identifier of the configuration.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -59,7 +59,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Create or update a configuration on the IoT Hub for automatic device/module management
+        /// Create or update a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configuration">Twin configuration to update</param>
         /// <param name="precondition">The condition on which to perform this operation</param>
@@ -75,7 +75,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Create or update a configuration on the IoT Hub for automatic device/module management
+        /// Create or update a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configuration">Twin configuration to update</param>
         /// <param name="precondition">The condition on which to perform this operation</param>
@@ -91,7 +91,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Deletes a configuration on the IoT Hub for automatic device/module management
+        /// Deletes a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configuration">Twin configuration to delete</param>
         /// <param name="precondition">The condition on which to perform this operation. If no ETag is present on the twin configuration, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>."/>.</param>
@@ -105,7 +105,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Deletes a configuration on the IoT Hub for automatic device/module management
+        /// Deletes a twin configuration on the IoT Hub for automatic device/module management
         /// </summary>
         /// <param name="configuration">Twin configuration to delete</param>
         /// <param name="precondition">The condition on which to perform this operation. If no ETag is present on the twin configuration, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>."/>.</param>
@@ -119,7 +119,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported.
+        /// Gets twin configurations on the IoT Hub for automatic device/module management. Pagination is not supported.
         /// </summary>
         /// <param name="count">The number of configurations to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -130,7 +130,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported.
+        /// Gets twin configurations on the IoT Hub for automatic device/module management. Pagination is not supported.
         /// </summary>
         /// <param name="count">The number of configurations to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -141,7 +141,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Validates target condition and custom metric queries for a configuration on the IoT Hub.
+        /// Validates target condition and custom metric queries for a twin configuration on the IoT Hub.
         /// </summary>
         /// <param name="configuration">The configuration for target condition and custom metric queries.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -152,7 +152,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Validates target condition and custom metric queries for a configuration on the IoT Hub.
+        /// Validates target condition and custom metric queries for a twin configuration on the IoT Hub.
         /// </summary>
         /// <param name="configuration">The configuration for target condition and custom metric queries.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
