@@ -36,13 +36,6 @@
       Include="Azure.Core.Experimental" />
   </ItemGroup>
 
-  <!-- Other package references -->
-  <ItemGroup>
-    <PackageReference
-      Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'"
-      Include="Microsoft.Spatial" />
-  </ItemGroup>
-
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
   -->
