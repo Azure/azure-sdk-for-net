@@ -107,7 +107,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     // This shouldn't happen under normal circumstances, i.e. we couldn't read past the end of chunk.
                     throw new ArgumentException($"Cursor contains a blockOffset that is invalid. BlockOffset={blockOffset}");
                 }
-                // Otherwise we ended at the end of the chunk and no events has been written since then.
+                else
+                {
+                    // Otherwise we ended at the end of the chunk and no events has been written since then. Check if new chunk was created in case of current chunk overflow.
+                    if (chunks.Count > 0)
+                    {
+                        currentChunk = await _chunkFactory.BuildChunk(
+                        async,
+                        chunks.Dequeue().Name).ConfigureAwait(false);
+                    }
+                }
             }
 
             return new Shard(
