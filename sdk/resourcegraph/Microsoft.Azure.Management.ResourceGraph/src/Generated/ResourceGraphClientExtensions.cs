@@ -59,5 +59,73 @@ namespace Microsoft.Azure.Management.ResourceGraph
                 }
             }
 
+            /// <summary>
+            /// List changes to a resource for a given time interval.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// the parameters for this request for changes.
+            /// </param>
+            public static ResourceChangeList ResourceChanges(this IResourceGraphClient operations, ResourceChangesRequestParameters parameters)
+            {
+                return operations.ResourceChangesAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List changes to a resource for a given time interval.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// the parameters for this request for changes.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceChangeList> ResourceChangesAsync(this IResourceGraphClient operations, ResourceChangesRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResourceChangesWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get resource change details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for this request for resource change details.
+            /// </param>
+            public static ResourceChangeData ResourceChangeDetails(this IResourceGraphClient operations, ResourceChangeDetailsRequestParameters parameters)
+            {
+                return operations.ResourceChangeDetailsAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get resource change details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for this request for resource change details.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceChangeData> ResourceChangeDetailsAsync(this IResourceGraphClient operations, ResourceChangeDetailsRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResourceChangeDetailsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
