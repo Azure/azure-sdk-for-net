@@ -1,6 +1,6 @@
 # Release History
 
-## 4.1.0-preview.2 (Unreleased)
+## 4.1.0 (2020-08-11)
 
 ### Changed
 
