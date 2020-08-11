@@ -189,9 +189,9 @@ namespace Azure.Data.Tables.Models
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
     }
-    public partial class TableGeoReplication
+    public partial class TableGeoReplicationInfo
     {
-        internal TableGeoReplication() { }
+        internal TableGeoReplicationInfo() { }
         public System.DateTimeOffset LastSyncedOn { get { throw null; } }
         public Azure.Data.Tables.Models.TableGeoReplicationStatus Status { get { throw null; } }
     }
@@ -230,7 +230,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableServiceStatistics
     {
         internal TableServiceStatistics() { }
-        public Azure.Data.Tables.Models.TableGeoReplication GeoReplication { get { throw null; } }
+        public Azure.Data.Tables.Models.TableGeoReplicationInfo GeoReplication { get { throw null; } }
     }
 }
 namespace Azure.Data.Tables.Sas
