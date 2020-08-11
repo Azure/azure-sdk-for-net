@@ -93,8 +93,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
 
                 BlobItem currentChunkBlobItem = chunks.Dequeue();
-             if (currentChunkBlobItem.Properties.ContentLength > blockOffset)
+                if (currentChunkBlobItem.Properties.ContentLength > blockOffset)
                 {
+                    // There are more events to read from current chunk.
                     currentChunk = await _chunkFactory.BuildChunk(
                         async,
                         currentChunkBlobItem.Name,
@@ -103,8 +104,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
                 else if (currentChunkBlobItem.Properties.ContentLength < blockOffset)
                 {
+                    // This shouldn't happen under normal circumstances, i.e. we couldn't read past the end of chunk.
                     throw new ArgumentException($"Cursor contains a blockOffset that is invalid. BlockOffset={blockOffset}");
                 }
+                // Otherwise we ended at the end of the chunk and no events has been written since then.
             }
 
             return new Shard(
