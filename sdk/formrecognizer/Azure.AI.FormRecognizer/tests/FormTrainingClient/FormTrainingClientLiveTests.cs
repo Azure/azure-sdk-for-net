@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "subfolder" };
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter});
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "invalidPrefix" };
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter });
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             Assert.AreEqual("2014", ex.ErrorCode);

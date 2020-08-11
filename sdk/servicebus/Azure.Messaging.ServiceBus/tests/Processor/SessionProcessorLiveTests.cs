@@ -849,9 +849,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 else
                 {
-                    Assert.That(
-                        async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
-                        Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
+                    try
+                    {
+                        await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName);
+                    }
+                    catch (ServiceBusException ex)
+                    when (ex.Reason == ServiceBusFailureReason.ServiceTimeout ||
+                        ex.Reason == ServiceBusFailureReason.ServiceCommunicationProblem)
+                    {
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.Fail($"Unexpected exception: {ex}");
+                    }
+                    Assert.Fail("No exception!");
                 }
             }
         }

@@ -67,6 +67,83 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// This test checks if tail of the change feed can be listened to.
+        /// To setup recording have an account where changes are generated quite frequently (i.e. every 1 minute).
+        /// This test runs long in recording mode as it waits multiple times for events.
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task TestTailEvents()
+        {
+            // Uncomment when recording.
+            //DateTimeOffset startTime = DateTimeOffset.Now;
+
+            // Update and uncomment after recording.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 10, 16, 00, 00, TimeSpan.Zero);
+
+            TimeSpan pollInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromMinutes(3);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+            Page<BlobChangeFeedEvent> lastPage = null;
+            ISet<string> EventIdsPart1 = new HashSet<string>();
+            ISet<string> EventIdsPart2 = new HashSet<string>();
+            ISet<string> EventIdsPart3 = new HashSet<string>();
+
+            // Part 1
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(start: startTime);
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart1.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart1);
+
+            await Task.Delay(pollInterval);
+
+            // Part 2
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(lastPage.ContinuationToken);
+            asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart2.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart2);
+
+            await Task.Delay(pollInterval);
+
+            // Part 3
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(lastPage.ContinuationToken);
+            asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart3.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart3);
+
+            // Assert events are not duplicated
+            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
+            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
+            CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
+        }
+
         [Test]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
