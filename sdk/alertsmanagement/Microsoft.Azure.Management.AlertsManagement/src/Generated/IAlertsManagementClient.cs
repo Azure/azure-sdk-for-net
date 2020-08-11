@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// client API version
+        /// The ID of the target subscription.
         /// </summary>
-        string ApiVersion { get; }
+        string SubscriptionId1 { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -88,6 +88,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// Gets the IActionRulesOperations.
         /// </summary>
         IActionRulesOperations ActionRules { get; }
+
+        /// <summary>
+        /// Gets the ISmartDetectorAlertRulesOperations.
+        /// </summary>
+        ISmartDetectorAlertRulesOperations SmartDetectorAlertRules { get; }
 
     }
 }

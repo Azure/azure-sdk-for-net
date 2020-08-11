@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ActionRulesOperations operations.
+    /// SmartDetectorAlertRulesOperations operations.
     /// </summary>
-    internal partial class ActionRulesOperations : IServiceOperations<AlertsManagementClient>, IActionRulesOperations
+    internal partial class SmartDetectorAlertRulesOperations : IServiceOperations<AlertsManagementClient>, ISmartDetectorAlertRulesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ActionRulesOperations class.
+        /// Initializes a new instance of the SmartDetectorAlertRulesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ActionRulesOperations(AlertsManagementClient client)
+        internal SmartDetectorAlertRulesOperations(AlertsManagementClient client)
         {
             if (client == null)
             {
@@ -51,48 +51,10 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public AlertsManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get all action rule in a given subscription
+        /// List all the existing Smart Detector alert rules within the subscription.
         /// </summary>
-        /// <remarks>
-        /// List all action rules of the subscription and given input filters
-        /// </remarks>
-        /// <param name='targetResourceGroup'>
-        /// Filter by target resource group name. Default value is select all.
-        /// </param>
-        /// <param name='targetResourceType'>
-        /// Filter by target resource type. Default value is select all.
-        /// </param>
-        /// <param name='targetResource'>
-        /// Filter by target resource( which is full ARM ID) Default value is select
-        /// all.
-        /// </param>
-        /// <param name='severity'>
-        /// Filter by severity.  Default value is select all. Possible values include:
-        /// 'Sev0', 'Sev1', 'Sev2', 'Sev3', 'Sev4'
-        /// </param>
-        /// <param name='monitorService'>
-        /// Filter by monitor service which generates the alert instance. Default value
-        /// is select all. Possible values include: 'Application Insights',
-        /// 'ActivityLog Administrative', 'ActivityLog Security', 'ActivityLog
-        /// Recommendation', 'ActivityLog Policy', 'ActivityLog Autoscale', 'Log
-        /// Analytics', 'Nagios', 'Platform', 'SCOM', 'ServiceHealth', 'SmartDetector',
-        /// 'VM Insights', 'Zabbix'
-        /// </param>
-        /// <param name='impactedScope'>
-        /// filter by impacted/target scope (provide comma separated list for multiple
-        /// scopes). The value should be an well constructed ARM id of the scope.
-        /// </param>
-        /// <param name='description'>
-        /// filter by alert rule description
-        /// </param>
-        /// <param name='alertRuleId'>
-        /// filter by alert rule id
-        /// </param>
-        /// <param name='actionGroup'>
-        /// filter by action group configured as part of action rule
-        /// </param>
-        /// <param name='name'>
-        /// filter by action rule name
+        /// <param name='expandDetector'>
+        /// Indicates if Smart Detector should be expanded.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -100,7 +62,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -115,7 +77,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ActionRule>,ActionRulesListBySubscriptionHeaders>> ListBySubscriptionWithHttpMessagesAsync(string targetResourceGroup = default(string), string targetResourceType = default(string), string targetResource = default(string), string severity = default(string), string monitorService = default(string), string impactedScope = default(string), string description = default(string), string alertRuleId = default(string), string actionGroup = default(string), string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AlertRule>>> ListWithHttpMessagesAsync(bool? expandDetector = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -128,7 +90,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2019-05-05-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -136,68 +98,23 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("targetResourceGroup", targetResourceGroup);
-                tracingParameters.Add("targetResourceType", targetResourceType);
-                tracingParameters.Add("targetResource", targetResource);
-                tracingParameters.Add("severity", severity);
-                tracingParameters.Add("monitorService", monitorService);
-                tracingParameters.Add("impactedScope", impactedScope);
-                tracingParameters.Add("description", description);
-                tracingParameters.Add("alertRuleId", alertRuleId);
-                tracingParameters.Add("actionGroup", actionGroup);
-                tracingParameters.Add("name", name);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("expandDetector", expandDetector);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListBySubscription", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/microsoft.alertsManagement/smartDetectorAlertRules").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (targetResourceGroup != null)
-            {
-                _queryParameters.Add(string.Format("targetResourceGroup={0}", System.Uri.EscapeDataString(targetResourceGroup)));
-            }
-            if (targetResourceType != null)
-            {
-                _queryParameters.Add(string.Format("targetResourceType={0}", System.Uri.EscapeDataString(targetResourceType)));
-            }
-            if (targetResource != null)
-            {
-                _queryParameters.Add(string.Format("targetResource={0}", System.Uri.EscapeDataString(targetResource)));
-            }
-            if (severity != null)
-            {
-                _queryParameters.Add(string.Format("severity={0}", System.Uri.EscapeDataString(severity)));
-            }
-            if (monitorService != null)
-            {
-                _queryParameters.Add(string.Format("monitorService={0}", System.Uri.EscapeDataString(monitorService)));
-            }
-            if (impactedScope != null)
-            {
-                _queryParameters.Add(string.Format("impactedScope={0}", System.Uri.EscapeDataString(impactedScope)));
-            }
-            if (description != null)
-            {
-                _queryParameters.Add(string.Format("description={0}", System.Uri.EscapeDataString(description)));
-            }
-            if (alertRuleId != null)
-            {
-                _queryParameters.Add(string.Format("alertRuleId={0}", System.Uri.EscapeDataString(alertRuleId)));
-            }
-            if (actionGroup != null)
-            {
-                _queryParameters.Add(string.Format("actionGroup={0}", System.Uri.EscapeDataString(actionGroup)));
-            }
-            if (name != null)
-            {
-                _queryParameters.Add(string.Format("name={0}", System.Uri.EscapeDataString(name)));
-            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (expandDetector != null)
+            {
+                _queryParameters.Add(string.Format("expandDetector={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expandDetector, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -259,11 +176,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -287,7 +204,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ActionRule>,ActionRulesListBySubscriptionHeaders>();
+            var _result = new AzureOperationResponse<IPage<AlertRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -300,7 +217,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ActionRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AlertRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -312,19 +229,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesListBySubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -333,52 +237,14 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Get all action rules created in a resource group
+        /// List all the existing Smart Detector alert rules within the subscription
+        /// and resource group.
         /// </summary>
-        /// <remarks>
-        /// List all action rules of the subscription, created in given resource group
-        /// and given input filters
-        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// Resource group name where the resource is created.
+        /// The name of the resource group.
         /// </param>
-        /// <param name='targetResourceGroup'>
-        /// Filter by target resource group name. Default value is select all.
-        /// </param>
-        /// <param name='targetResourceType'>
-        /// Filter by target resource type. Default value is select all.
-        /// </param>
-        /// <param name='targetResource'>
-        /// Filter by target resource( which is full ARM ID) Default value is select
-        /// all.
-        /// </param>
-        /// <param name='severity'>
-        /// Filter by severity.  Default value is select all. Possible values include:
-        /// 'Sev0', 'Sev1', 'Sev2', 'Sev3', 'Sev4'
-        /// </param>
-        /// <param name='monitorService'>
-        /// Filter by monitor service which generates the alert instance. Default value
-        /// is select all. Possible values include: 'Application Insights',
-        /// 'ActivityLog Administrative', 'ActivityLog Security', 'ActivityLog
-        /// Recommendation', 'ActivityLog Policy', 'ActivityLog Autoscale', 'Log
-        /// Analytics', 'Nagios', 'Platform', 'SCOM', 'ServiceHealth', 'SmartDetector',
-        /// 'VM Insights', 'Zabbix'
-        /// </param>
-        /// <param name='impactedScope'>
-        /// filter by impacted/target scope (provide comma separated list for multiple
-        /// scopes). The value should be an well constructed ARM id of the scope.
-        /// </param>
-        /// <param name='description'>
-        /// filter by alert rule description
-        /// </param>
-        /// <param name='alertRuleId'>
-        /// filter by alert rule id
-        /// </param>
-        /// <param name='actionGroup'>
-        /// filter by action group configured as part of action rule
-        /// </param>
-        /// <param name='name'>
-        /// filter by action rule name
+        /// <param name='expandDetector'>
+        /// Indicates if Smart Detector should be expanded.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -386,7 +252,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -401,7 +267,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ActionRule>,ActionRulesListByResourceGroupHeaders>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string targetResourceGroup = default(string), string targetResourceType = default(string), string targetResource = default(string), string severity = default(string), string monitorService = default(string), string impactedScope = default(string), string description = default(string), string alertRuleId = default(string), string actionGroup = default(string), string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AlertRule>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, bool? expandDetector = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -418,7 +284,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2019-05-05-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -427,69 +293,24 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("targetResourceGroup", targetResourceGroup);
-                tracingParameters.Add("targetResourceType", targetResourceType);
-                tracingParameters.Add("targetResource", targetResource);
-                tracingParameters.Add("severity", severity);
-                tracingParameters.Add("monitorService", monitorService);
-                tracingParameters.Add("impactedScope", impactedScope);
-                tracingParameters.Add("description", description);
-                tracingParameters.Add("alertRuleId", alertRuleId);
-                tracingParameters.Add("actionGroup", actionGroup);
-                tracingParameters.Add("name", name);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("expandDetector", expandDetector);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.alertsManagement/smartDetectorAlertRules").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (targetResourceGroup != null)
-            {
-                _queryParameters.Add(string.Format("targetResourceGroup={0}", System.Uri.EscapeDataString(targetResourceGroup)));
-            }
-            if (targetResourceType != null)
-            {
-                _queryParameters.Add(string.Format("targetResourceType={0}", System.Uri.EscapeDataString(targetResourceType)));
-            }
-            if (targetResource != null)
-            {
-                _queryParameters.Add(string.Format("targetResource={0}", System.Uri.EscapeDataString(targetResource)));
-            }
-            if (severity != null)
-            {
-                _queryParameters.Add(string.Format("severity={0}", System.Uri.EscapeDataString(severity)));
-            }
-            if (monitorService != null)
-            {
-                _queryParameters.Add(string.Format("monitorService={0}", System.Uri.EscapeDataString(monitorService)));
-            }
-            if (impactedScope != null)
-            {
-                _queryParameters.Add(string.Format("impactedScope={0}", System.Uri.EscapeDataString(impactedScope)));
-            }
-            if (description != null)
-            {
-                _queryParameters.Add(string.Format("description={0}", System.Uri.EscapeDataString(description)));
-            }
-            if (alertRuleId != null)
-            {
-                _queryParameters.Add(string.Format("alertRuleId={0}", System.Uri.EscapeDataString(alertRuleId)));
-            }
-            if (actionGroup != null)
-            {
-                _queryParameters.Add(string.Format("actionGroup={0}", System.Uri.EscapeDataString(actionGroup)));
-            }
-            if (name != null)
-            {
-                _queryParameters.Add(string.Format("name={0}", System.Uri.EscapeDataString(name)));
-            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (expandDetector != null)
+            {
+                _queryParameters.Add(string.Format("expandDetector={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expandDetector, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -551,11 +372,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -579,7 +400,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ActionRule>,ActionRulesListByResourceGroupHeaders>();
+            var _result = new AzureOperationResponse<IPage<AlertRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -592,7 +413,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ActionRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AlertRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -604,19 +425,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesListByResourceGroupHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -625,16 +433,16 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Get action rule by name
+        /// Get a specific Smart Detector alert rule.
         /// </summary>
-        /// <remarks>
-        /// Get a specific action rule
-        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// Resource group name where the resource is created.
+        /// The name of the resource group.
         /// </param>
-        /// <param name='actionRuleName'>
-        /// The name of action rule that needs to be fetched
+        /// <param name='alertRuleName'>
+        /// The name of the alert rule.
+        /// </param>
+        /// <param name='expandDetector'>
+        /// Indicates if Smart Detector should be expanded.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -642,7 +450,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -657,7 +465,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ActionRule,ActionRulesGetByNameHeaders>> GetByNameWithHttpMessagesAsync(string resourceGroupName, string actionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AlertRule>> GetWithHttpMessagesAsync(string resourceGroupName, string alertRuleName, bool? expandDetector = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -674,11 +482,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (actionRuleName == null)
+            if (alertRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "alertRuleName");
             }
-            string apiVersion = "2019-05-05-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -687,21 +495,26 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("actionRuleName", actionRuleName);
+                tracingParameters.Add("alertRuleName", alertRuleName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("expandDetector", expandDetector);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.alertsManagement/smartDetectorAlertRules/{alertRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{actionRuleName}", System.Uri.EscapeDataString(actionRuleName));
+            _url = _url.Replace("{alertRuleName}", System.Uri.EscapeDataString(alertRuleName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (expandDetector != null)
+            {
+                _queryParameters.Add(string.Format("expandDetector={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expandDetector, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -763,11 +576,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -791,7 +604,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ActionRule,ActionRulesGetByNameHeaders>();
+            var _result = new AzureOperationResponse<AlertRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -804,7 +617,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ActionRule>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -816,19 +629,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesGetByNameHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -837,19 +637,16 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Create/update an action rule
+        /// Create or update a Smart Detector alert rule.
         /// </summary>
-        /// <remarks>
-        /// Creates/Updates a specific action rule
-        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// Resource group name where the resource is created.
+        /// The name of the resource group.
         /// </param>
-        /// <param name='actionRuleName'>
-        /// The name of action rule that needs to be created/updated
+        /// <param name='alertRuleName'>
+        /// The name of the alert rule.
         /// </param>
-        /// <param name='actionRule'>
-        /// action rule to be created/updated
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -857,7 +654,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -872,7 +669,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ActionRule,ActionRulesCreateUpdateHeaders>> CreateUpdateWithHttpMessagesAsync(string resourceGroupName, string actionRuleName, ActionRule actionRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AlertRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string alertRuleName, AlertRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -889,19 +686,19 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (actionRuleName == null)
+            if (alertRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "alertRuleName");
             }
-            if (actionRule == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRule");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (actionRule != null)
+            if (parameters != null)
             {
-                actionRule.Validate();
+                parameters.Validate();
             }
-            string apiVersion = "2019-05-05-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -910,18 +707,18 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("actionRuleName", actionRuleName);
-                tracingParameters.Add("actionRule", actionRule);
+                tracingParameters.Add("alertRuleName", alertRuleName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.alertsManagement/smartDetectorAlertRules/{alertRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{actionRuleName}", System.Uri.EscapeDataString(actionRuleName));
+            _url = _url.Replace("{alertRuleName}", System.Uri.EscapeDataString(alertRuleName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -965,9 +762,237 @@ namespace Microsoft.Azure.Management.AlertsManagement
 
             // Serialize Request
             string _requestContent = null;
-            if(actionRule != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(actionRule, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            {
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<AlertRule>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertRule>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertRule>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Patch a specific Smart Detector alert rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='alertRuleName'>
+        /// The name of the alert rule.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="SmartDetectorErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<AlertRule>> PatchWithHttpMessagesAsync(string resourceGroupName, string alertRuleName, AlertRulePatchObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (alertRuleName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "alertRuleName");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            string apiVersion = "2019-06-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("alertRuleName", alertRuleName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Patch", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.alertsManagement/smartDetectorAlertRules/{alertRuleName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{alertRuleName}", System.Uri.EscapeDataString(alertRuleName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -993,11 +1018,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1021,7 +1046,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ActionRule,ActionRulesCreateUpdateHeaders>();
+            var _result = new AzureOperationResponse<AlertRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1034,7 +1059,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ActionRule>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1046,19 +1071,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesCreateUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -1067,16 +1079,13 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Delete action rule
+        /// Delete an existing Smart Detector alert rule.
         /// </summary>
-        /// <remarks>
-        /// Deletes a given action rule
-        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// Resource group name where the resource is created.
+        /// The name of the resource group.
         /// </param>
-        /// <param name='actionRuleName'>
-        /// The name that needs to be deleted
+        /// <param name='alertRuleName'>
+        /// The name of the alert rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1084,11 +1093,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -1099,7 +1105,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<bool?,ActionRulesDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string actionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string alertRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1116,11 +1122,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (actionRuleName == null)
+            if (alertRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "alertRuleName");
             }
-            string apiVersion = "2019-05-05-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1129,17 +1135,17 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("actionRuleName", actionRuleName);
+                tracingParameters.Add("alertRuleName", alertRuleName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.alertsManagement/smartDetectorAlertRules/{alertRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{actionRuleName}", System.Uri.EscapeDataString(actionRuleName));
+            _url = _url.Replace("{alertRuleName}", System.Uri.EscapeDataString(alertRuleName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1203,13 +1209,13 @@ namespace Microsoft.Azure.Management.AlertsManagement
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1233,43 +1239,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<bool?,ActionRulesDeleteHeaders>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<bool?>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesDeleteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1279,237 +1254,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Patch action rule
+        /// List all the existing Smart Detector alert rules within the subscription.
         /// </summary>
-        /// <remarks>
-        /// Update enabled flag and/or tags for the given action rule
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Resource group name where the resource is created.
-        /// </param>
-        /// <param name='actionRuleName'>
-        /// The name that needs to be updated
-        /// </param>
-        /// <param name='actionRulePatch'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<ActionRule,ActionRulesUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string actionRuleName, PatchObject actionRulePatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (Client.SubscriptionId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (actionRuleName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRuleName");
-            }
-            if (actionRulePatch == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "actionRulePatch");
-            }
-            string apiVersion = "2019-05-05-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("actionRuleName", actionRuleName);
-                tracingParameters.Add("actionRulePatch", actionRulePatch);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{actionRuleName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{actionRuleName}", System.Uri.EscapeDataString(actionRuleName));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(actionRulePatch != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(actionRulePatch, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<ActionRule,ActionRulesUpdateHeaders>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ActionRule>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get all action rule in a given subscription
-        /// </summary>
-        /// <remarks>
-        /// List all action rules of the subscription and given input filters
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -1519,7 +1265,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1534,7 +1280,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ActionRule>,ActionRulesListBySubscriptionHeaders>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AlertRule>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1549,7 +1295,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListBySubscriptionNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1615,11 +1361,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1643,7 +1389,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ActionRule>,ActionRulesListBySubscriptionHeaders>();
+            var _result = new AzureOperationResponse<IPage<AlertRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1656,7 +1402,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ActionRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AlertRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1668,19 +1414,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesListBySubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -1689,12 +1422,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
         }
 
         /// <summary>
-        /// Get all action rules created in a resource group
+        /// List all the existing Smart Detector alert rules within the subscription
+        /// and resource group.
         /// </summary>
-        /// <remarks>
-        /// List all action rules of the subscription, created in given resource group
-        /// and given input filters
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -1704,7 +1434,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AlertsManagementErrorResponseException">
+        /// <exception cref="SmartDetectorErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1719,7 +1449,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ActionRule>,ActionRulesListByResourceGroupHeaders>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AlertRule>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1800,11 +1530,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AlertsManagementErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new SmartDetectorErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AlertsManagementErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AlertsManagementErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    SmartDetectorErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<SmartDetectorErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1828,7 +1558,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ActionRule>,ActionRulesListByResourceGroupHeaders>();
+            var _result = new AzureOperationResponse<IPage<AlertRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1841,7 +1571,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ActionRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AlertRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1852,19 +1582,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ActionRulesListByResourceGroupHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
