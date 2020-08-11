@@ -14,6 +14,8 @@ namespace Azure
         private const char QuoteCharacter = '"';
         private const string QuoteString = "\"";
         private const string WeakETagPrefix = "W/\"";
+        private const string DefaultFormat = "G";
+        private const string HeaderFormat = "H";
         private readonly string _value;
         private readonly bool _preserveRawValue;
 
@@ -98,14 +100,29 @@ namespace Azure
         /// <summary>
         /// Returns the string representation of the <see cref="ETag"/>.
         /// </summary>
-        /// <returns>The formatted string representation of this <see cref="ETag"/>. This includes outter quotes and the W/ prefix in the case of weak ETags.</returns>
-        public string ToFormattedString()
+        /// <param name="format">A format string. Valid values are "G" for standard format and "H" for header format.</param>
+        /// <returns>The formatted string representation of this <see cref="ETag"/>. This includes outer quotes and the W/ prefix in the case of weak ETags.</returns>
+        /// <example>
+        /// <code>
+        /// ETag tag = ETag.Parse("\"sometag\"");
+        /// Console.WriteLine(tag.ToString("G"));
+        /// // Displays: sometag
+        /// Console.WriteLine(tag.ToString("H"));
+        /// // Displays: "sometag"
+        /// </code>
+        /// </example>
+        public string ToString(string format)
         {
             if (_value == null)
             {
                 return "<null>";
             }
-            return _preserveRawValue ? _value : $"{QuoteString}{_value}{QuoteString}";
+            return format switch
+            {
+                HeaderFormat => _preserveRawValue ? _value : $"{QuoteString}{_value}{QuoteString}",
+                DefaultFormat => ToString(),
+                _ => throw new ArgumentException("Invalid format string.")
+            };
         }
 
         internal static ETag Parse(string value)

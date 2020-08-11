@@ -16,7 +16,8 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag(value);
             Assert.AreSame(value, eTag.ToString());
-            Assert.AreSame(value, eTag.ToFormattedString());
+            Assert.AreSame(value, eTag.ToString("H"));
+            Assert.AreSame(value, eTag.ToString("G"));
         }
 
         [Test]
@@ -100,6 +101,7 @@ namespace Azure.Core.Tests
         {
             ETag tag = ETag.Parse(value);
             Assert.AreEqual(expectedValue, tag.ToString());
+            Assert.AreEqual(expectedValue, tag.ToString("G"));
         }
 
         [Theory]
@@ -110,7 +112,18 @@ namespace Azure.Core.Tests
         public void ParsesEtagToFormattedString(string value, string expectedValue)
         {
             ETag tag = ETag.Parse(value);
-            Assert.AreEqual(expectedValue, tag.ToFormattedString());
+            Assert.AreEqual(expectedValue, tag.ToString("H"));
+        }
+
+        [Theory]
+        [TestCase("A")]
+        [TestCase(null)]
+        [TestCase("g")]
+        [TestCase("h")]
+        public void InvalidFormatThrows(string format)
+        {
+            ETag tag  = new ETag("foo");
+            Assert.Throws<ArgumentException>(() => tag.ToString(format));
         }
     }
 }

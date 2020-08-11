@@ -469,6 +469,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -519,6 +521,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
