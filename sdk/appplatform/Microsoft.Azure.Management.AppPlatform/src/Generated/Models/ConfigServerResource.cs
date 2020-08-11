@@ -14,33 +14,31 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Deployment resource payload
+    /// Config Server resource
     /// </summary>
-    public partial class DeploymentResource : ProxyResource
+    public partial class ConfigServerResource : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the DeploymentResource class.
+        /// Initializes a new instance of the ConfigServerResource class.
         /// </summary>
-        public DeploymentResource()
+        public ConfigServerResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeploymentResource class.
+        /// Initializes a new instance of the ConfigServerResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="properties">Properties of the Deployment
+        /// <param name="properties">Properties of the Config Server
         /// resource</param>
-        /// <param name="sku">Sku of the Deployment resource</param>
-        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), DeploymentResourceProperties properties = default(DeploymentResourceProperties), Sku sku = default(Sku))
+        public ConfigServerResource(string id = default(string), string name = default(string), string type = default(string), ConfigServerProperties properties = default(ConfigServerProperties))
             : base(id, name, type)
         {
             Properties = properties;
-            Sku = sku;
             CustomInit();
         }
 
@@ -50,16 +48,23 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the Deployment resource
+        /// Gets or sets properties of the Config Server resource
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DeploymentResourceProperties Properties { get; set; }
+        public ConfigServerProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets sku of the Deployment resource
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
-
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
+        }
     }
 }
