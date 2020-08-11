@@ -699,7 +699,7 @@ namespace Azure.Storage.Blobs.Models
         public long TagCount { get { throw null; } }
         public string VersionId { get { throw null; } }
     }
-    public partial class BlobQueryCsvTextOptions : Azure.Storage.Blobs.Models.IBlobQueryTextOptions
+    public partial class BlobQueryCsvTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {
         public BlobQueryCsvTextOptions() { }
         public string ColumnSeparator { get { throw null; } set { } }
@@ -716,7 +716,7 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get { throw null; } }
         public long Position { get { throw null; } }
     }
-    public partial class BlobQueryJsonTextOptions : Azure.Storage.Blobs.Models.IBlobQueryTextOptions
+    public partial class BlobQueryJsonTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {
         public BlobQueryJsonTextOptions() { }
         public string RecordSeparator { get { throw null; } set { } }
@@ -725,10 +725,14 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobQueryOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.IBlobQueryTextOptions InputTextConfiguration { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.IBlobQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobQueryTextOptions InputTextConfiguration { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { add { } remove { } }
+    }
+    public abstract partial class BlobQueryTextOptions
+    {
+        protected BlobQueryTextOptions() { }
     }
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {
@@ -974,9 +978,6 @@ namespace Azure.Storage.Blobs.Models
     {
         public GetBlobTagResult() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial interface IBlobQueryTextOptions
-    {
     }
     public enum LeaseDurationType
     {

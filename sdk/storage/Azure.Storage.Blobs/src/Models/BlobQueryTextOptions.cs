@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.Models
     /// See <see cref="BlobQueryCsvTextOptions"/> and <see cref="BlobQueryJsonTextOptions"/>.
     /// </summary>
 #pragma warning disable CA1040 // Avoid empty interfaces
-    public interface IBlobQueryTextOptions
+    public abstract class BlobQueryTextOptions
 #pragma warning restore CA1040 // Avoid empty interfaces
     {
     }

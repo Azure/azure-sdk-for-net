@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// See <see cref="DataLakeQueryCsvTextOptions"/> and <see cref="DataLakeQueryJsonTextOptions"/>.
     /// </summary>
 #pragma warning disable CA1040 // Avoid empty interfaces
-    public interface IDataLakeQueryTextOptions
+    public abstract class DataLakeQueryTextOptions
 #pragma warning restore CA1040 // Avoid empty interfaces
     {
     }
