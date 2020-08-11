@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BuildingModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "BUILDING_MODEL_ID",
+    "@type": "Interface",
+    "displayName": "Building",
+    "description": "A free-standing structure.",
+    "contents": [
+        {
+            "@type": "Relationship",
+            "name": "has",
+            "target": "FLOOR_MODEL_ID"
+        },
+        {
+            "@type": "Relationship",
+            "name": "isEquippedWith",
+            "target": "HVAC_MODEL_ID"
+        },
+        {
+            "@type": "Property",
+            "name": "AverageTemperature",
+            "schema": "double"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}</value>
+  </data>
+  <data name="FloorModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "FLOOR_MODEL_ID",
+    "@type": "Interface",
+    "@context": "dtmi:dtdl:context;2",
+    "displayName": "Floor",
+    "description": "A building story.",
+    "contents": [
+        {
+            "@type": "Relationship",
+            "name": "contains",
+            "target": "ROOM_MODEL_ID",
+            "properties": [
+                {
+                    "@type": "Property",
+                    "name": "isAccessRestricted",
+                    "schema": "boolean"
+                }
+            ]
+        },
+        {
+            "@type": "Relationship",
+            "name": "cooledBy",
+            "target": "HVAC_MODEL_ID"
+        },
+        {
+            "@type": "Property",
+            "name": "AverageTemperature",
+            "schema": "double"
+        }
+    ]
+}</value>
+  </data>
+  <data name="FloorTwinPayload" xml:space="preserve">
+    <value>{
+  "$metadata": {
+    "$model": "FLOOR_MODEL_ID"
+  },
+  "AverageTemperature": 75
+}</value>
+  </data>
+  <data name="HvacModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "HVAC_MODEL_ID",
+    "@type": "Interface",
+    "displayName": "HVAC",
+    "description": "A heating, ventilation, and air conditioning unit.",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "Efficiency",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "TargetTemperature",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "TargetHumidity",
+            "schema": "double"
+        },
+        {
+            "@type": "Relationship",
+            "name": "cools",
+            "target": "FLOOR_MODEL_ID"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}</value>
+  </data>
+  <data name="HvacTwinPayload" xml:space="preserve">
+    <value>{
+  "$metadata": {
+    "$model": "HVAC_MODEL_ID"
+  },
+  "TargetTemperature": 80,
+  "TargetHumidity": 25
+}</value>
+  </data>
+  <data name="RelationshipPayload" xml:space="preserve">
+    <value>{
+     "$targetId": "TARGET_TWIN_ID",
+     "$relationshipName": "RELATIONSHIP_NAME"
+}</value>
+  </data>
+  <data name="RelationshipWithPropertyPayload" xml:space="preserve">
+    <value>{
+     "$targetId": "TARGET_TWIN_ID",
+     "$relationshipName": "RELATIONSHIP_NAME",
+     "PROPERTY_NAME": "PROPERTY_VALUE"
+}</value>
+  </data>
+  <data name="RoomModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "ROOM_MODEL_ID",
+    "@type": "Interface",
+    "displayName": "Room",
+    "description": "An enclosure inside a building.",
+    "contents": [
+        {
+            "@type": "Relationship",
+            "name": "containedIn",
+            "target": "FLOOR_MODEL_ID"
+        },
+        {
+            "@type": "Property",
+            "name": "Temperature",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "Humidity",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "IsOccupied",
+            "schema": "boolean"
+        },
+        {
+            "@type": "Property",
+            "name": "EmployeeId",
+            "schema": "string"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}</value>
+  </data>
+  <data name="RoomTwinPayload" xml:space="preserve">
+    <value>{
+  "$metadata": {
+    "$model": "ROOM_MODEL_ID"
+  },
+  "Temperature": 80,
+  "Humidity": 25,
+  "IsOccupied": true,
+  "EmployeeId": "Employee1"
+}</value>
+  </data>
+  <data name="RoomWithWifiModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "ROOM_WITH_WIFI_MODEL_ID",
+    "@type": "Interface",
+    "displayName": "RoomWithWifi",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "Temperature",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "Humidity",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "IsOccupied",
+            "schema": "boolean"
+        },
+        {
+            "@type": "Property",
+            "name": "EmployeeId",
+            "schema": "string"
+        },
+        {
+            "@type": "Component",
+            "name": "WIFI_COMPONENT_NAME",
+            "schema": "WIFI_MODEL_ID"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}</value>
+  </data>
+  <data name="RoomWithWifiTwinPayload" xml:space="preserve">
+    <value>{
+  "$metadata": {
+    "$model": "ROOM_WITH_WIFI_MODEL_ID"
+  },
+  "Temperature": 80,
+  "Humidity": 25,
+  "IsOccupied": true,
+  "EmployeeId": "Employee1",
+  "WIFI_COMPONENT_NAME": {
+        "$metadata": {
+        },
+        "RouterName": "Cisco1",
+        "Network": "Room1"
+    }
+}</value>
+  </data>
+  <data name="WardModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "WARD_MODEL_ID",
+    "@type": "Interface",
+    "displayName": "Ward",
+    "description": "A separate partition in a building, made of rooms and hallways.",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "VisitorCount",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "HandWashPercentage",
+            "schema": "double"
+        },
+        {
+            "@type": "Relationship",
+            "name": "managedRooms"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}</value>
+  </data>
+  <data name="WifiModelPayload" xml:space="preserve">
+    <value>{
+    "@id": "WIFI_MODEL_ID",
+    "@type": "Interface",
+    "@context": "dtmi:dtdl:context;2",
+    "displayName": "Wifi",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "RouterName",
+            "schema": "string"
+        },
+        {
+            "@type": "Property",
+            "name": "Network",
+            "schema": "string"
+        }
+    ]
+}</value>
+  </data>
+</root>

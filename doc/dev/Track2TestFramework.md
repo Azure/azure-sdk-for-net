@@ -1,0 +1,1 @@
+See the project [readme](../../sdk/core/Azure.Core.TestFramework/README.md).

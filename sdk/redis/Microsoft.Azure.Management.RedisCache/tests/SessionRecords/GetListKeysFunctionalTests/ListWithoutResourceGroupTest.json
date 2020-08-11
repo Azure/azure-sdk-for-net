@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache/Redis?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "beff58e7-9ad1-4466-9f00-fcde1b945f05"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "f4168163-d7b9-4b53-aa88-b3d90e822b4c",
+          "75245ba9-6fac-4525-9f6b-82b285c96d7f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "x-ms-correlation-request-id": [
+          "cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191125T012437Z:cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 25 Nov 2019 01:24:37 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "1323"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList5011/providers/Microsoft.Cache/Redis/RedisGetList8041\",\r\n      \"location\": \"West Central US\",\r\n      \"name\": \"RedisGetList8041\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000\r\n          }\r\n        ],\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxfragmentationmemory-reserved\": \"12\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList8041.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/mechandr/providers/Microsoft.Cache/Redis/geoself\",\r\n      \"location\": \"East US 2 EUAP\",\r\n      \"name\": \"geoself\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000\r\n          },\r\n          {\r\n            \"sslPort\": 15001\r\n          }\r\n        ],\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"geoself.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
+  }
+}

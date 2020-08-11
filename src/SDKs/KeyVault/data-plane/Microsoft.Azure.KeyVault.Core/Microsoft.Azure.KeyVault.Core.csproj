@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Description>Microsoft Azure Key Vault Core Class Library</Description>
-    <AssemblyTitle>Microsoft Azure Key Vault Core</AssemblyTitle>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
-</Project>

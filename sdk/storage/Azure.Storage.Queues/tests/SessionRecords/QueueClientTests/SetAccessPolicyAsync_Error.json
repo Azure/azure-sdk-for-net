@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-b9f9dd47-c855-4e1b-8e6d-4f5b3e0bfa12?comp=acl",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "251",
+        "Content-Type": "application/xml",
+        "Request-Id": "|2a3f1d2d-4d5d8cf65964664c.",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "24e2c9bc-8392-5f28-9085-ff0ab21be2cd",
+        "x-ms-date": "Thu, 12 Sep 2019 22:20:42 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": "<SignedIdentifiers><SignedIdentifier><Id>liswwwbatliovmsbfvdh</Id><AccessPolicy><Start>2019-09-12T21:20:42.7381655Z</Start><Expiry>2019-09-12T23:20:42.7381655Z</Expiry><Permission>raup</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "217",
+        "Content-Type": "application/xml",
+        "Date": "Thu, 12 Sep 2019 22:20:42 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "QueueNotFound",
+        "x-ms-request-id": "e224bbc6-b003-0013-0fb8-69b637000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>QueueNotFound</Code><Message>The specified queue does not exist.\n",
+        "RequestId:e224bbc6-b003-0013-0fb8-69b637000000\n",
+        "Time:2019-09-12T22:20:42.8014195Z</Message></Error>"
+      ]
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2019-09-12T15:20:42.7381655-07:00",
+    "RandomSeed": "78786428",
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp://gapradev.blob.core.windows.net\nhttp://gapradev.file.core.windows.net\nhttp://gapradev.queue.core.windows.net\nhttp://gapradev.table.core.windows.net\n\n\n\n\nhttp://gapradev-secondary.blob.core.windows.net\nhttp://gapradev-secondary.file.core.windows.net\nhttp://gapradev-secondary.queue.core.windows.net\nhttp://gapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://gapradev.blob.core.windows.net/;QueueEndpoint=http://gapradev.queue.core.windows.net/;TableEndpoint=http://gapradev.table.core.windows.net/;FileEndpoint=http://gapradev.file.core.windows.net/;BlobSecondaryEndpoint=http://gapradev-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://gapradev-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://gapradev-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://gapradev-secondary.file.core.windows.net/;AccountName=gapradev;AccountKey=Sanitized\nseanscope1"
+  }
+}

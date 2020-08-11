@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "containerservice/resource-manager" -AutoRestVersion "v2"

@@ -13,8 +13,8 @@ sdkdir=$rootdir/src/SDKs
 azStackDir=$rootdir/src/AzureStack
 
 restoreBuildCR() {
-    echo "Restore ClientRuntime for $ubuntu1404"
-    dotnet restore src/SdkCommon/ClientRuntime.sln -r $ubuntu1404
+    echo "Restore ClientRuntime"
+    dotnet restore src/SdkCommon/ClientRuntime.sln
 
     echo "Build ClientRuntime for $net14"
     #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
@@ -45,8 +45,8 @@ restoreBuildAzStack() {
                 testProj=($childDir/*.Tests/*.csproj)
                 if [ -f $testProj ]; then
                     printf "Test ------ $testProj for framework $netcore20\n"
-                    dotnet build $testProj -f $netcore20
-                    dotnet test $testProj -f $netcore20
+                    #dotnet build $testProj -f $netcore20
+                    #dotnet test $testProj -f $netcore20
                 fi
             fi
         fi
@@ -76,8 +76,8 @@ restoreBuildRepo() {
                         printf "$skipRp\n"
                         if [ "$skipTest" == "false" ]; then
                             printf "Test ------ $tp for framework $netcore20\n"
-                            dotnet build $tp -f $netcore20
-                            dotnet test $tp -f $netcore20
+                            #dotnet build $tp -f $netcore20
+                            #dotnet test $tp -f $netcore20
                         fi
                     done
                 fi
@@ -99,7 +99,7 @@ restoreBuildCog() {
     if [ -d $cogMgmtDir/*.Tests ]; then
         cogMgmtTestProj=($cogMgmtDir/*.Tests/*.csproj)
         printf "Test ------ $cogMgmtTestProj for framework $netcore20\n"
-        dotnet test $cogMgmtTestProj -f $netcore20
+        #dotnet test $cogMgmtTestProj -f $netcore20
     fi
 
 
@@ -115,7 +115,7 @@ restoreBuildCog() {
         if [ -d $cogDir/*.Tests ]; then
             cogDataTestProj=($cogDir/*.Tests/*.csproj)
             printf "Test ------ $cogDataTestProj for framework $netcore20\n"
-            dotnet test $cogDataTestProj -f $netcore20
+            #dotnet test $cogDataTestProj -f $netcore20
         fi
     done
 }
@@ -142,7 +142,7 @@ restoreBuildKV() {
                     if [ "$kvTProj" == "false" ]; then
                         printf "KV TestProject ... $kvTestProj\n"
                         dotnet restore $kvTestProj -r $ubuntu1404
-                        dotnet test $kvTestProj -f $netcore20
+                        #dotnet test $kvTestProj -f $netcore20
                     fi
             else
                 if [ -f $kvDir/*.csproj ]; then

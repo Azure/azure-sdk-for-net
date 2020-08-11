@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "datashare/resource-manager" -AutoRestVersion "v2" -ConfigFileTag "package-2019-11-01"

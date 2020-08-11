@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableApiCompat>false</EnableApiCompat>
+    <!-- These supressions should be removed in a production library -->
+    <NoWarn>$(NoWarn);CA1812;1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Nuget properties -->
+  <PropertyGroup>
+    <PackageTags>IoT;PnP;$(PackageCommonTags)</PackageTags>
+    <Description>SDK for the Azure IoT Hub service</Description>
+    <Version>1.0.0-preview.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <!-- Common source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
+</Project>

@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "storagesync/resource-manager" -AutoRestVersion "v2"

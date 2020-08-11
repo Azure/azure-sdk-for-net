@@ -1,0 +1,4530 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d366a73170e62b47aa66f5d33d44fb3b-685ff667bb8c3643-00",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f042ea8b5be2f1ee629f1cb965ca09c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "Sanitized",
+        "useLabelFile": false
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "7a5685bd-f86b-4d5b-b700-b15eac9b33b8",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Aug 2020 02:29:23 GMT",
+        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5103"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "6bc31f04a00fcadfdc363b021c85f871",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "89b31431-2031-4cd2-98dd-48f3009dccbb",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:23 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "64a517f30d479580a61f9adc697393e1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9b06ff88-42c9-4624-88ba-66996832b826",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "002c08661271eb380b7813ab20ebd4dc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d1004491-c00b-446c-acb4-0ba6f40eccf8",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4dc5aba6a425f67b9f2dc5f005036169",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e81db8ce-4f12-4987-a749-476ca35e3837",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "39"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "139b59a3f758e1ffdfba59cef9d474ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4bd0dc0d-bc2e-4bca-9222-c1c29fbebc65",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "bd35be4a45adc2bb8d3661434d47e507",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "73091fbb-e7a4-4145-921c-50aaa9757a19",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c708aa17c050af83abe46e6b4bacfcca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c2beed41-99c1-4914-8943-46cbf7b24998",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "47a60ab9a3cd5dbb9dd9862296bb9497",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c33a6317-a4ad-49b0-b8df-df6099a900da",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4fb751d4adcb89693a8612c9d65076e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "019ccaa3-e340-413f-a6ce-521d06562c3b",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "428a963a9ea1733aefaa29773a6118f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c2f8fd20-cdec-41ce-a098-6995337faad7",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:32 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "creating",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:11Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f996d74fadf40bfea11c0c4791f1874d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6925e269-5604-4c95-9dfe-e3c4c821ec77",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d8ad26da-e127-478b-ab42-3a8381696293",
+          "status": "ready",
+          "createdDateTime": "2020-08-07T02:29:11Z",
+          "lastUpdatedDateTime": "2020-08-07T02:29:33Z"
+        },
+        "keys": {
+          "clusters": {
+            "0": [
+              "Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in",
+              "Included",
+              "Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person",
+              "Package",
+              "Price",
+              "Rates:",
+              "Vendor #:",
+              "Vendor Registration",
+              "below, and attach a check made out to:",
+              "waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form"
+            ],
+            "1": [
+              "Company Name:",
+              "Contact:",
+              "Preferred Package:",
+              "Special Requests:",
+              "Vendor #:",
+              "Vendor Details:"
+            ]
+          }
+        },
+        "trainResult": {
+          "trainingDocuments": [
+            {
+              "documentName": "multi1.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi2.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi3.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi4.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi5.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyze?includeTextDetails=true",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "711607",
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-546565d707134a4fa024eb19ff635d89-e61ef372ab69404e-00",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "ffe8a562513036f517445f2183f24fd9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "94ba43de-1171-4a5f-a1c8-b467b135b539",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Aug 2020 02:29:35 GMT",
+        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeresults/f91dfd24-13c4-4991-9e21-112843479eed",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "348"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "fe79216d7db98cec987ea18591f3e2fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b86d8d9c-467b-40b5-9a5c-647338d39725",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:36Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9414dc231979fdbfe25fe2b04ddd87af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0daea419-f415-4712-8d30-9dcc442be723",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:37Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "6fd933cc8877e593b95b67b1b06fa524",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7184874c-509f-414f-89fd-db69481ad35c",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:37Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "a7fe6162bbdd5360627b1c599a3c3fba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ba469c15-ca64-4763-88b1-6202afe1ffa2",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:37Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5eb9f1f672199a86492fdb1db20d4d72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3a9176b5-82d6-4511-aeb5-24ca2cf67dfd",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:37Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293/analyzeResults/f91dfd24-13c4-4991-9e21-112843479eed",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "ec4ebebae0de10d1d2850dfb6b394b7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2b21ec93-83d7-42f7-be58-f1fedf61f7e0",
+        "Content-Length": "32988",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Aug 2020 02:29:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "37"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2020-08-07T02:29:36Z",
+        "lastUpdatedDateTime": "2020-08-07T02:29:41Z",
+        "analyzeResult": {
+          "version": "2.0.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11.0,
+              "unit": "inch",
+              "lines": [
+                {
+                  "text": "Vendor #:",
+                  "boundingBox": [
+                    6.1236,
+                    1.0014,
+                    7.1167,
+                    1.0014,
+                    7.1167,
+                    1.3056,
+                    6.1236,
+                    1.3056
+                  ],
+                  "words": [
+                    {
+                      "text": "Vendor",
+                      "boundingBox": [
+                        6.1236,
+                        1.0014,
+                        6.8694,
+                        1.0014,
+                        6.8694,
+                        1.3056,
+                        6.1236,
+                        1.3056
+                      ]
+                    },
+                    {
+                      "text": "#:",
+                      "boundingBox": [
+                        6.9264,
+                        1.0014,
+                        7.1167,
+                        1.0014,
+                        7.1167,
+                        1.3056,
+                        6.9264,
+                        1.3056
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "121",
+                  "boundingBox": [
+                    7.1167,
+                    1.0014,
+                    7.4958,
+                    1.0014,
+                    7.4958,
+                    1.3056,
+                    7.1167,
+                    1.3056
+                  ],
+                  "words": [
+                    {
+                      "text": "121",
+                      "boundingBox": [
+                        7.1167,
+                        1.0014,
+                        7.4958,
+                        1.0014,
+                        7.4958,
+                        1.3056,
+                        7.1167,
+                        1.3056
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Vendor Registration",
+                  "boundingBox": [
+                    2.2181,
+                    1.4417,
+                    6.2736,
+                    1.4417,
+                    6.2736,
+                    2.05,
+                    2.2181,
+                    2.05
+                  ],
+                  "words": [
+                    {
+                      "text": "Vendor",
+                      "boundingBox": [
+                        2.2181,
+                        1.4417,
+                        3.7111,
+                        1.4417,
+                        3.7111,
+                        2.05,
+                        2.2181,
+                        2.05
+                      ]
+                    },
+                    {
+                      "text": "Registration",
+                      "boundingBox": [
+                        3.8236,
+                        1.4417,
+                        6.2736,
+                        1.4417,
+                        6.2736,
+                        2.05,
+                        3.8236,
+                        2.05
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in",
+                  "boundingBox": [
+                    1.0,
+                    2.5417,
+                    7.0903,
+                    2.5417,
+                    7.0903,
+                    2.7444,
+                    1.0,
+                    2.7444
+                  ],
+                  "words": [
+                    {
+                      "text": "Contoso",
+                      "boundingBox": [
+                        1.0,
+                        2.5417,
+                        1.5625,
+                        2.5417,
+                        1.5625,
+                        2.7444,
+                        1.0,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "Ltd.",
+                      "boundingBox": [
+                        1.5986,
+                        2.5417,
+                        1.8556,
+                        2.5417,
+                        1.8556,
+                        2.7444,
+                        1.5986,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "Conference",
+                      "boundingBox": [
+                        1.8917,
+                        2.5417,
+                        2.6708,
+                        2.5417,
+                        2.6708,
+                        2.7444,
+                        1.8917,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "will",
+                      "boundingBox": [
+                        2.7083,
+                        2.5417,
+                        2.9431,
+                        2.5417,
+                        2.9431,
+                        2.7444,
+                        2.7083,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "be",
+                      "boundingBox": [
+                        2.9792,
+                        2.5417,
+                        3.15,
+                        2.5417,
+                        3.15,
+                        2.7444,
+                        2.9792,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "held",
+                      "boundingBox": [
+                        3.1861,
+                        2.5417,
+                        3.4833,
+                        2.5417,
+                        3.4833,
+                        2.7444,
+                        3.1861,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        3.5222,
+                        2.5417,
+                        3.6972,
+                        2.5417,
+                        3.6972,
+                        2.7444,
+                        3.5222,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "May",
+                      "boundingBox": [
+                        3.7389,
+                        2.5417,
+                        4.0444,
+                        2.5417,
+                        4.0444,
+                        2.7444,
+                        3.7389,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "28-29,",
+                      "boundingBox": [
+                        4.0806,
+                        2.5417,
+                        4.5125,
+                        2.5417,
+                        4.5125,
+                        2.7444,
+                        4.0806,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "2020",
+                      "boundingBox": [
+                        4.5514,
+                        2.5417,
+                        4.8889,
+                        2.5417,
+                        4.8889,
+                        2.7444,
+                        4.5514,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "at",
+                      "boundingBox": [
+                        4.9278,
+                        2.5417,
+                        5.0625,
+                        2.5417,
+                        5.0625,
+                        2.7444,
+                        4.9278,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "the",
+                      "boundingBox": [
+                        5.1,
+                        2.5417,
+                        5.3278,
+                        2.5417,
+                        5.3278,
+                        2.7444,
+                        5.1,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "Elm",
+                      "boundingBox": [
+                        5.3653,
+                        2.5417,
+                        5.6167,
+                        2.5417,
+                        5.6167,
+                        2.7444,
+                        5.3653,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "Conference",
+                      "boundingBox": [
+                        5.6542,
+                        2.5417,
+                        6.4347,
+                        2.5417,
+                        6.4347,
+                        2.7444,
+                        5.6542,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "Center",
+                      "boundingBox": [
+                        6.4722,
+                        2.5417,
+                        6.9264,
+                        2.5417,
+                        6.9264,
+                        2.7444,
+                        6.4722,
+                        2.7444
+                      ]
+                    },
+                    {
+                      "text": "in",
+                      "boundingBox": [
+                        6.9653,
+                        2.5417,
+                        7.0903,
+                        2.5417,
+                        7.0903,
+                        2.7444,
+                        6.9653,
+                        2.7444
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person",
+                  "boundingBox": [
+                    1.0,
+                    2.7597,
+                    7.3583,
+                    2.7597,
+                    7.3583,
+                    2.9625,
+                    1.0,
+                    2.9625
+                  ],
+                  "words": [
+                    {
+                      "text": "Maple",
+                      "boundingBox": [
+                        1.0,
+                        2.7597,
+                        1.4319,
+                        2.7597,
+                        1.4319,
+                        2.9625,
+                        1.0,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "City,",
+                      "boundingBox": [
+                        1.4681,
+                        2.7597,
+                        1.7694,
+                        2.7597,
+                        1.7694,
+                        2.9625,
+                        1.4681,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "Massachusetts.",
+                      "boundingBox": [
+                        1.8056,
+                        2.7597,
+                        2.85,
+                        2.7597,
+                        2.85,
+                        2.9625,
+                        1.8056,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "The",
+                      "boundingBox": [
+                        2.8875,
+                        2.7597,
+                        3.1403,
+                        2.7597,
+                        3.1403,
+                        2.9625,
+                        2.8875,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "conference",
+                      "boundingBox": [
+                        3.1764,
+                        2.7597,
+                        3.9375,
+                        2.7597,
+                        3.9375,
+                        2.9625,
+                        3.1764,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "has",
+                      "boundingBox": [
+                        3.975,
+                        2.7597,
+                        4.2083,
+                        2.7597,
+                        4.2083,
+                        2.9625,
+                        3.975,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "sold",
+                      "boundingBox": [
+                        4.2458,
+                        2.7597,
+                        4.5222,
+                        2.7597,
+                        4.5222,
+                        2.9625,
+                        4.2458,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "out",
+                      "boundingBox": [
+                        4.5625,
+                        2.7597,
+                        4.7917,
+                        2.7597,
+                        4.7917,
+                        2.9625,
+                        4.5625,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "of",
+                      "boundingBox": [
+                        4.8306,
+                        2.7597,
+                        4.9681,
+                        2.7597,
+                        4.9681,
+                        2.9625,
+                        4.8306,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "its",
+                      "boundingBox": [
+                        5.0056,
+                        2.7597,
+                        5.1667,
+                        2.7597,
+                        5.1667,
+                        2.9625,
+                        5.0056,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "1,500",
+                      "boundingBox": [
+                        5.2028,
+                        2.7597,
+                        5.5819,
+                        2.7597,
+                        5.5819,
+                        2.9625,
+                        5.2028,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "tickets,",
+                      "boundingBox": [
+                        5.6194,
+                        2.7597,
+                        6.1042,
+                        2.7597,
+                        6.1042,
+                        2.9625,
+                        5.6194,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "with",
+                      "boundingBox": [
+                        6.1417,
+                        2.7597,
+                        6.4431,
+                        2.7597,
+                        6.4431,
+                        2.9625,
+                        6.1417,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "a",
+                      "boundingBox": [
+                        6.4806,
+                        2.7597,
+                        6.5597,
+                        2.7597,
+                        6.5597,
+                        2.9625,
+                        6.4806,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "400",
+                      "boundingBox": [
+                        6.5972,
+                        2.7597,
+                        6.85,
+                        2.7597,
+                        6.85,
+                        2.9625,
+                        6.5972,
+                        2.9625
+                      ]
+                    },
+                    {
+                      "text": "person",
+                      "boundingBox": [
+                        6.8875,
+                        2.7597,
+                        7.3583,
+                        2.7597,
+                        7.3583,
+                        2.9625,
+                        6.8875,
+                        2.9625
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form",
+                  "boundingBox": [
+                    1.0,
+                    2.9806,
+                    7.2597,
+                    2.9806,
+                    7.2597,
+                    3.1833,
+                    1.0,
+                    3.1833
+                  ],
+                  "words": [
+                    {
+                      "text": "waitlist.",
+                      "boundingBox": [
+                        1.0,
+                        2.9806,
+                        1.5319,
+                        2.9806,
+                        1.5319,
+                        3.1833,
+                        1.0,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "Vendor",
+                      "boundingBox": [
+                        1.5708,
+                        2.9806,
+                        2.0681,
+                        2.9806,
+                        2.0681,
+                        3.1833,
+                        1.5708,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "applications",
+                      "boundingBox": [
+                        2.1056,
+                        2.9806,
+                        2.9208,
+                        2.9806,
+                        2.9208,
+                        3.1833,
+                        2.1056,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "are",
+                      "boundingBox": [
+                        2.9597,
+                        2.9806,
+                        3.1806,
+                        2.9806,
+                        3.1806,
+                        3.1833,
+                        2.9597,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "being",
+                      "boundingBox": [
+                        3.2181,
+                        2.9806,
+                        3.5931,
+                        2.9806,
+                        3.5931,
+                        3.1833,
+                        3.2181,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "accepted",
+                      "boundingBox": [
+                        3.6319,
+                        2.9806,
+                        4.2458,
+                        2.9806,
+                        4.2458,
+                        3.1833,
+                        3.6319,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "through",
+                      "boundingBox": [
+                        4.2833,
+                        2.9806,
+                        4.825,
+                        2.9806,
+                        4.825,
+                        3.1833,
+                        4.2833,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "Feb",
+                      "boundingBox": [
+                        4.8694,
+                        2.9806,
+                        5.1194,
+                        2.9806,
+                        5.1194,
+                        3.1833,
+                        4.8694,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "28,",
+                      "boundingBox": [
+                        5.1556,
+                        2.9806,
+                        5.3694,
+                        2.9806,
+                        5.3694,
+                        3.1833,
+                        5.1556,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "2020.",
+                      "boundingBox": [
+                        5.4056,
+                        2.9806,
+                        5.7875,
+                        2.9806,
+                        5.7875,
+                        3.1833,
+                        5.4056,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "Please",
+                      "boundingBox": [
+                        5.8264,
+                        2.9806,
+                        6.2611,
+                        2.9806,
+                        6.2611,
+                        3.1833,
+                        5.8264,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "fill",
+                      "boundingBox": [
+                        6.2986,
+                        2.9806,
+                        6.4667,
+                        2.9806,
+                        6.4667,
+                        3.1833,
+                        6.2986,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "in",
+                      "boundingBox": [
+                        6.5028,
+                        2.9806,
+                        6.6278,
+                        2.9806,
+                        6.6278,
+                        3.1833,
+                        6.5028,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "the",
+                      "boundingBox": [
+                        6.6653,
+                        2.9806,
+                        6.8917,
+                        2.9806,
+                        6.8917,
+                        3.1833,
+                        6.6653,
+                        3.1833
+                      ]
+                    },
+                    {
+                      "text": "form",
+                      "boundingBox": [
+                        6.9292,
+                        2.9806,
+                        7.2597,
+                        2.9806,
+                        7.2597,
+                        3.1833,
+                        6.9292,
+                        3.1833
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "below, and attach a check made out to:",
+                  "boundingBox": [
+                    1.0,
+                    3.2,
+                    3.6722,
+                    3.2,
+                    3.6722,
+                    3.4028,
+                    1.0,
+                    3.4028
+                  ],
+                  "words": [
+                    {
+                      "text": "below,",
+                      "boundingBox": [
+                        1.0,
+                        3.2,
+                        1.4569,
+                        3.2,
+                        1.4569,
+                        3.4028,
+                        1.0,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "and",
+                      "boundingBox": [
+                        1.4944,
+                        3.2,
+                        1.75,
+                        3.2,
+                        1.75,
+                        3.4028,
+                        1.4944,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "attach",
+                      "boundingBox": [
+                        1.7889,
+                        3.2,
+                        2.2167,
+                        3.2,
+                        2.2167,
+                        3.4028,
+                        1.7889,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "a",
+                      "boundingBox": [
+                        2.2542,
+                        3.2,
+                        2.3347,
+                        3.2,
+                        2.3347,
+                        3.4028,
+                        2.2542,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "check",
+                      "boundingBox": [
+                        2.3722,
+                        3.2,
+                        2.7556,
+                        3.2,
+                        2.7556,
+                        3.4028,
+                        2.3722,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "made",
+                      "boundingBox": [
+                        2.7958,
+                        3.2,
+                        3.1778,
+                        3.2,
+                        3.1778,
+                        3.4028,
+                        2.7958,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "out",
+                      "boundingBox": [
+                        3.2181,
+                        3.2,
+                        3.4472,
+                        3.2,
+                        3.4472,
+                        3.4028,
+                        3.2181,
+                        3.4028
+                      ]
+                    },
+                    {
+                      "text": "to:",
+                      "boundingBox": [
+                        3.4847,
+                        3.2,
+                        3.6722,
+                        3.2,
+                        3.6722,
+                        3.4028,
+                        3.4847,
+                        3.4028
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Contoso Ltd.",
+                  "boundingBox": [
+                    1.0,
+                    3.5306,
+                    1.8556,
+                    3.5306,
+                    1.8556,
+                    3.7333,
+                    1.0,
+                    3.7333
+                  ],
+                  "words": [
+                    {
+                      "text": "Contoso",
+                      "boundingBox": [
+                        1.0,
+                        3.5306,
+                        1.5625,
+                        3.5306,
+                        1.5625,
+                        3.7333,
+                        1.0,
+                        3.7333
+                      ]
+                    },
+                    {
+                      "text": "Ltd.",
+                      "boundingBox": [
+                        1.5986,
+                        3.5306,
+                        1.8556,
+                        3.5306,
+                        1.8556,
+                        3.7333,
+                        1.5986,
+                        3.7333
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "2345 Dogwood Lane",
+                  "boundingBox": [
+                    1.0,
+                    3.75,
+                    2.3847,
+                    3.75,
+                    2.3847,
+                    3.9528,
+                    1.0,
+                    3.9528
+                  ],
+                  "words": [
+                    {
+                      "text": "2345",
+                      "boundingBox": [
+                        1.0,
+                        3.75,
+                        1.3389,
+                        3.75,
+                        1.3389,
+                        3.9528,
+                        1.0,
+                        3.9528
+                      ]
+                    },
+                    {
+                      "text": "Dogwood",
+                      "boundingBox": [
+                        1.3764,
+                        3.75,
+                        2.0278,
+                        3.75,
+                        2.0278,
+                        3.9528,
+                        1.3764,
+                        3.9528
+                      ]
+                    },
+                    {
+                      "text": "Lane",
+                      "boundingBox": [
+                        2.0653,
+                        3.75,
+                        2.3847,
+                        3.75,
+                        2.3847,
+                        3.9528,
+                        2.0653,
+                        3.9528
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Birch, Kansas 98123",
+                  "boundingBox": [
+                    1.0,
+                    3.9694,
+                    2.3472,
+                    3.9694,
+                    2.3472,
+                    4.1722,
+                    1.0,
+                    4.1722
+                  ],
+                  "words": [
+                    {
+                      "text": "Birch,",
+                      "boundingBox": [
+                        1.0,
+                        3.9694,
+                        1.3861,
+                        3.9694,
+                        1.3861,
+                        4.1722,
+                        1.0,
+                        4.1722
+                      ]
+                    },
+                    {
+                      "text": "Kansas",
+                      "boundingBox": [
+                        1.4236,
+                        3.9694,
+                        1.8889,
+                        3.9694,
+                        1.8889,
+                        4.1722,
+                        1.4236,
+                        4.1722
+                      ]
+                    },
+                    {
+                      "text": "98123",
+                      "boundingBox": [
+                        1.925,
+                        3.9694,
+                        2.3472,
+                        3.9694,
+                        2.3472,
+                        4.1722,
+                        1.925,
+                        4.1722
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Rates:",
+                  "boundingBox": [
+                    1.0,
+                    4.3556,
+                    1.5486,
+                    4.3556,
+                    1.5486,
+                    4.6264,
+                    1.0,
+                    4.6264
+                  ],
+                  "words": [
+                    {
+                      "text": "Rates:",
+                      "boundingBox": [
+                        1.0,
+                        4.3556,
+                        1.5486,
+                        4.3556,
+                        1.5486,
+                        4.6264,
+                        1.0,
+                        4.6264
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Package",
+                  "boundingBox": [
+                    1.0778,
+                    4.6556,
+                    1.6306,
+                    4.6556,
+                    1.6306,
+                    4.8583,
+                    1.0778,
+                    4.8583
+                  ],
+                  "words": [
+                    {
+                      "text": "Package",
+                      "boundingBox": [
+                        1.0778,
+                        4.6556,
+                        1.6306,
+                        4.6556,
+                        1.6306,
+                        4.8583,
+                        1.0778,
+                        4.8583
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Included",
+                  "boundingBox": [
+                    2.6986,
+                    4.6556,
+                    3.2833,
+                    4.6556,
+                    3.2833,
+                    4.8583,
+                    2.6986,
+                    4.8583
+                  ],
+                  "words": [
+                    {
+                      "text": "Included",
+                      "boundingBox": [
+                        2.6986,
+                        4.6556,
+                        3.2833,
+                        4.6556,
+                        3.2833,
+                        4.8583,
+                        2.6986,
+                        4.8583
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Price",
+                  "boundingBox": [
+                    5.8236,
+                    4.6556,
+                    6.1597,
+                    4.6556,
+                    6.1597,
+                    4.8583,
+                    5.8236,
+                    4.8583
+                  ],
+                  "words": [
+                    {
+                      "text": "Price",
+                      "boundingBox": [
+                        5.8236,
+                        4.6556,
+                        6.1597,
+                        4.6556,
+                        6.1597,
+                        4.8583,
+                        5.8236,
+                        4.8583
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Gold Sponsor",
+                  "boundingBox": [
+                    1.0778,
+                    4.8653,
+                    1.9861,
+                    4.8653,
+                    1.9861,
+                    5.0681,
+                    1.0778,
+                    5.0681
+                  ],
+                  "words": [
+                    {
+                      "text": "Gold",
+                      "boundingBox": [
+                        1.0778,
+                        4.8653,
+                        1.3958,
+                        4.8653,
+                        1.3958,
+                        5.0681,
+                        1.0778,
+                        5.0681
+                      ]
+                    },
+                    {
+                      "text": "Sponsor",
+                      "boundingBox": [
+                        1.4361,
+                        4.8653,
+                        1.9861,
+                        4.8653,
+                        1.9861,
+                        5.0681,
+                        1.4361,
+                        5.0681
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full booth",
+                  "boundingBox": [
+                    3.2,
+                    4.8736,
+                    3.8847,
+                    4.8736,
+                    3.8847,
+                    5.0764,
+                    3.2,
+                    5.0764
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        4.8736,
+                        3.4417,
+                        4.8736,
+                        3.4417,
+                        5.0764,
+                        3.2,
+                        5.0764
+                      ]
+                    },
+                    {
+                      "text": "booth",
+                      "boundingBox": [
+                        3.4792,
+                        4.8736,
+                        3.8847,
+                        4.8736,
+                        3.8847,
+                        5.0764,
+                        3.4792,
+                        5.0764
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "$1,500",
+                  "boundingBox": [
+                    5.825,
+                    4.8653,
+                    6.2889,
+                    4.8653,
+                    6.2889,
+                    5.0681,
+                    5.825,
+                    5.0681
+                  ],
+                  "words": [
+                    {
+                      "text": "$1,500",
+                      "boundingBox": [
+                        5.825,
+                        4.8653,
+                        6.2889,
+                        4.8653,
+                        6.2889,
+                        5.0681,
+                        5.825,
+                        5.0681
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Pre-keynote thank you",
+                  "boundingBox": [
+                    3.2,
+                    5.0861,
+                    4.7389,
+                    5.0861,
+                    4.7389,
+                    5.2889,
+                    3.2,
+                    5.2889
+                  ],
+                  "words": [
+                    {
+                      "text": "Pre-keynote",
+                      "boundingBox": [
+                        3.2,
+                        5.0861,
+                        4.0264,
+                        5.0861,
+                        4.0264,
+                        5.2889,
+                        3.2,
+                        5.2889
+                      ]
+                    },
+                    {
+                      "text": "thank",
+                      "boundingBox": [
+                        4.0639,
+                        5.0861,
+                        4.45,
+                        5.0861,
+                        4.45,
+                        5.2889,
+                        4.0639,
+                        5.2889
+                      ]
+                    },
+                    {
+                      "text": "you",
+                      "boundingBox": [
+                        4.4875,
+                        5.0861,
+                        4.7389,
+                        5.0861,
+                        4.7389,
+                        5.2889,
+                        4.4875,
+                        5.2889
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Logo on poster",
+                  "boundingBox": [
+                    3.2,
+                    5.2986,
+                    4.2125,
+                    5.2986,
+                    4.2125,
+                    5.5014,
+                    3.2,
+                    5.5014
+                  ],
+                  "words": [
+                    {
+                      "text": "Logo",
+                      "boundingBox": [
+                        3.2,
+                        5.2986,
+                        3.5236,
+                        5.2986,
+                        3.5236,
+                        5.5014,
+                        3.2,
+                        5.5014
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        3.5611,
+                        5.2986,
+                        3.7361,
+                        5.2986,
+                        3.7361,
+                        5.5014,
+                        3.5611,
+                        5.5014
+                      ]
+                    },
+                    {
+                      "text": "poster",
+                      "boundingBox": [
+                        3.7764,
+                        5.2986,
+                        4.2125,
+                        5.2986,
+                        4.2125,
+                        5.5014,
+                        3.7764,
+                        5.5014
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full page ad in program guide",
+                  "boundingBox": [
+                    3.2,
+                    5.5111,
+                    5.2083,
+                    5.5111,
+                    5.2083,
+                    5.7139,
+                    3.2,
+                    5.7139
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        5.5111,
+                        3.4417,
+                        5.5111,
+                        3.4417,
+                        5.7139,
+                        3.2,
+                        5.7139
+                      ]
+                    },
+                    {
+                      "text": "page",
+                      "boundingBox": [
+                        3.4792,
+                        5.5111,
+                        3.8069,
+                        5.5111,
+                        3.8069,
+                        5.7139,
+                        3.4792,
+                        5.7139
+                      ]
+                    },
+                    {
+                      "text": "ad",
+                      "boundingBox": [
+                        3.8444,
+                        5.5111,
+                        4.0111,
+                        5.5111,
+                        4.0111,
+                        5.7139,
+                        3.8444,
+                        5.7139
+                      ]
+                    },
+                    {
+                      "text": "in",
+                      "boundingBox": [
+                        4.0486,
+                        5.5111,
+                        4.175,
+                        5.5111,
+                        4.175,
+                        5.7139,
+                        4.0486,
+                        5.7139
+                      ]
+                    },
+                    {
+                      "text": "program",
+                      "boundingBox": [
+                        4.2125,
+                        5.5111,
+                        4.7958,
+                        5.5111,
+                        4.7958,
+                        5.7139,
+                        4.2125,
+                        5.7139
+                      ]
+                    },
+                    {
+                      "text": "guide",
+                      "boundingBox": [
+                        4.8319,
+                        5.5111,
+                        5.2083,
+                        5.5111,
+                        5.2083,
+                        5.7139,
+                        4.8319,
+                        5.7139
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Silver Sponsor",
+                  "boundingBox": [
+                    1.0778,
+                    5.9347,
+                    2.0361,
+                    5.9347,
+                    2.0361,
+                    6.1375,
+                    1.0778,
+                    6.1375
+                  ],
+                  "words": [
+                    {
+                      "text": "Silver",
+                      "boundingBox": [
+                        1.0778,
+                        5.9347,
+                        1.4472,
+                        5.9347,
+                        1.4472,
+                        6.1375,
+                        1.0778,
+                        6.1375
+                      ]
+                    },
+                    {
+                      "text": "Sponsor",
+                      "boundingBox": [
+                        1.4847,
+                        5.9347,
+                        2.0361,
+                        5.9347,
+                        2.0361,
+                        6.1375,
+                        1.4847,
+                        6.1375
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full booth",
+                  "boundingBox": [
+                    3.2,
+                    5.9431,
+                    3.8847,
+                    5.9431,
+                    3.8847,
+                    6.1458,
+                    3.2,
+                    6.1458
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        5.9431,
+                        3.4417,
+                        5.9431,
+                        3.4417,
+                        6.1458,
+                        3.2,
+                        6.1458
+                      ]
+                    },
+                    {
+                      "text": "booth",
+                      "boundingBox": [
+                        3.4792,
+                        5.9431,
+                        3.8847,
+                        5.9431,
+                        3.8847,
+                        6.1458,
+                        3.4792,
+                        6.1458
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "$1,200",
+                  "boundingBox": [
+                    5.825,
+                    5.9347,
+                    6.2889,
+                    5.9347,
+                    6.2889,
+                    6.1375,
+                    5.825,
+                    6.1375
+                  ],
+                  "words": [
+                    {
+                      "text": "$1,200",
+                      "boundingBox": [
+                        5.825,
+                        5.9347,
+                        6.2889,
+                        5.9347,
+                        6.2889,
+                        6.1375,
+                        5.825,
+                        6.1375
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Post-keynote thank you",
+                  "boundingBox": [
+                    3.2,
+                    6.1556,
+                    4.8056,
+                    6.1556,
+                    4.8056,
+                    6.3583,
+                    3.2,
+                    6.3583
+                  ],
+                  "words": [
+                    {
+                      "text": "Post-keynote",
+                      "boundingBox": [
+                        3.2,
+                        6.1556,
+                        4.0958,
+                        6.1556,
+                        4.0958,
+                        6.3583,
+                        3.2,
+                        6.3583
+                      ]
+                    },
+                    {
+                      "text": "thank",
+                      "boundingBox": [
+                        4.1319,
+                        6.1556,
+                        4.5194,
+                        6.1556,
+                        4.5194,
+                        6.3583,
+                        4.1319,
+                        6.3583
+                      ]
+                    },
+                    {
+                      "text": "you",
+                      "boundingBox": [
+                        4.5556,
+                        6.1556,
+                        4.8056,
+                        6.1556,
+                        4.8056,
+                        6.3583,
+                        4.5556,
+                        6.3583
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Logo on poster",
+                  "boundingBox": [
+                    3.2,
+                    6.3667,
+                    4.2125,
+                    6.3667,
+                    4.2125,
+                    6.5694,
+                    3.2,
+                    6.5694
+                  ],
+                  "words": [
+                    {
+                      "text": "Logo",
+                      "boundingBox": [
+                        3.2,
+                        6.3667,
+                        3.5236,
+                        6.3667,
+                        3.5236,
+                        6.5694,
+                        3.2,
+                        6.5694
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        3.5611,
+                        6.3667,
+                        3.7361,
+                        6.3667,
+                        3.7361,
+                        6.5694,
+                        3.5611,
+                        6.5694
+                      ]
+                    },
+                    {
+                      "text": "poster",
+                      "boundingBox": [
+                        3.7764,
+                        6.3667,
+                        4.2125,
+                        6.3667,
+                        4.2125,
+                        6.5694,
+                        3.7764,
+                        6.5694
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Half page ad in program guide",
+                  "boundingBox": [
+                    3.2,
+                    6.5806,
+                    5.2389,
+                    6.5806,
+                    5.2389,
+                    6.7833,
+                    3.2,
+                    6.7833
+                  ],
+                  "words": [
+                    {
+                      "text": "Half",
+                      "boundingBox": [
+                        3.2,
+                        6.5806,
+                        3.4722,
+                        6.5806,
+                        3.4722,
+                        6.7833,
+                        3.2,
+                        6.7833
+                      ]
+                    },
+                    {
+                      "text": "page",
+                      "boundingBox": [
+                        3.5097,
+                        6.5806,
+                        3.8403,
+                        6.5806,
+                        3.8403,
+                        6.7833,
+                        3.5097,
+                        6.7833
+                      ]
+                    },
+                    {
+                      "text": "ad",
+                      "boundingBox": [
+                        3.8764,
+                        6.5806,
+                        4.0444,
+                        6.5806,
+                        4.0444,
+                        6.7833,
+                        3.8764,
+                        6.7833
+                      ]
+                    },
+                    {
+                      "text": "in",
+                      "boundingBox": [
+                        4.0819,
+                        6.5806,
+                        4.2069,
+                        6.5806,
+                        4.2069,
+                        6.7833,
+                        4.0819,
+                        6.7833
+                      ]
+                    },
+                    {
+                      "text": "program",
+                      "boundingBox": [
+                        4.2444,
+                        6.5806,
+                        4.8264,
+                        6.5806,
+                        4.8264,
+                        6.7833,
+                        4.2444,
+                        6.7833
+                      ]
+                    },
+                    {
+                      "text": "guide",
+                      "boundingBox": [
+                        4.8653,
+                        6.5806,
+                        5.2389,
+                        6.5806,
+                        5.2389,
+                        6.7833,
+                        4.8653,
+                        6.7833
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bronze Sponsor",
+                  "boundingBox": [
+                    1.0778,
+                    6.7903,
+                    2.1389,
+                    6.7903,
+                    2.1389,
+                    6.9931,
+                    1.0778,
+                    6.9931
+                  ],
+                  "words": [
+                    {
+                      "text": "Bronze",
+                      "boundingBox": [
+                        1.0778,
+                        6.7903,
+                        1.5528,
+                        6.7903,
+                        1.5528,
+                        6.9931,
+                        1.0778,
+                        6.9931
+                      ]
+                    },
+                    {
+                      "text": "Sponsor",
+                      "boundingBox": [
+                        1.5889,
+                        6.7903,
+                        2.1389,
+                        6.7903,
+                        2.1389,
+                        6.9931,
+                        1.5889,
+                        6.9931
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full booth",
+                  "boundingBox": [
+                    3.2,
+                    6.7986,
+                    3.8847,
+                    6.7986,
+                    3.8847,
+                    7.0014,
+                    3.2,
+                    7.0014
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        6.7986,
+                        3.4417,
+                        6.7986,
+                        3.4417,
+                        7.0014,
+                        3.2,
+                        7.0014
+                      ]
+                    },
+                    {
+                      "text": "booth",
+                      "boundingBox": [
+                        3.4792,
+                        6.7986,
+                        3.8847,
+                        6.7986,
+                        3.8847,
+                        7.0014,
+                        3.4792,
+                        7.0014
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "$1,000",
+                  "boundingBox": [
+                    5.825,
+                    6.7903,
+                    6.2889,
+                    6.7903,
+                    6.2889,
+                    6.9931,
+                    5.825,
+                    6.9931
+                  ],
+                  "words": [
+                    {
+                      "text": "$1,000",
+                      "boundingBox": [
+                        5.825,
+                        6.7903,
+                        6.2889,
+                        6.7903,
+                        6.2889,
+                        6.9931,
+                        5.825,
+                        6.9931
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Logo on poster",
+                  "boundingBox": [
+                    3.2,
+                    7.0111,
+                    4.2125,
+                    7.0111,
+                    4.2125,
+                    7.2139,
+                    3.2,
+                    7.2139
+                  ],
+                  "words": [
+                    {
+                      "text": "Logo",
+                      "boundingBox": [
+                        3.2,
+                        7.0111,
+                        3.5236,
+                        7.0111,
+                        3.5236,
+                        7.2139,
+                        3.2,
+                        7.2139
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        3.5611,
+                        7.0111,
+                        3.7361,
+                        7.0111,
+                        3.7361,
+                        7.2139,
+                        3.5611,
+                        7.2139
+                      ]
+                    },
+                    {
+                      "text": "poster",
+                      "boundingBox": [
+                        3.7764,
+                        7.0111,
+                        4.2125,
+                        7.0111,
+                        4.2125,
+                        7.2139,
+                        3.7764,
+                        7.2139
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "50% discount on program guide",
+                  "boundingBox": [
+                    3.2,
+                    7.2236,
+                    5.35,
+                    7.2236,
+                    5.35,
+                    7.4264,
+                    3.2,
+                    7.4264
+                  ],
+                  "words": [
+                    {
+                      "text": "50%",
+                      "boundingBox": [
+                        3.2,
+                        7.2236,
+                        3.4875,
+                        7.2236,
+                        3.4875,
+                        7.4264,
+                        3.2,
+                        7.4264
+                      ]
+                    },
+                    {
+                      "text": "discount",
+                      "boundingBox": [
+                        3.525,
+                        7.2236,
+                        4.1069,
+                        7.2236,
+                        4.1069,
+                        7.4264,
+                        3.525,
+                        7.4264
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        4.1444,
+                        7.2236,
+                        4.3194,
+                        7.2236,
+                        4.3194,
+                        7.4264,
+                        4.1444,
+                        7.4264
+                      ]
+                    },
+                    {
+                      "text": "program",
+                      "boundingBox": [
+                        4.3556,
+                        7.2236,
+                        4.9375,
+                        7.2236,
+                        4.9375,
+                        7.4264,
+                        4.3556,
+                        7.4264
+                      ]
+                    },
+                    {
+                      "text": "guide",
+                      "boundingBox": [
+                        4.9764,
+                        7.2236,
+                        5.35,
+                        7.2236,
+                        5.35,
+                        7.4264,
+                        4.9764,
+                        7.4264
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "advertisements",
+                  "boundingBox": [
+                    3.2,
+                    7.4264,
+                    4.25,
+                    7.4264,
+                    4.25,
+                    7.6292,
+                    3.2,
+                    7.6292
+                  ],
+                  "words": [
+                    {
+                      "text": "advertisements",
+                      "boundingBox": [
+                        3.2,
+                        7.4264,
+                        4.25,
+                        7.4264,
+                        4.25,
+                        7.6292,
+                        3.2,
+                        7.6292
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full Booth",
+                  "boundingBox": [
+                    1.0778,
+                    7.6389,
+                    1.7653,
+                    7.6389,
+                    1.7653,
+                    7.8417,
+                    1.0778,
+                    7.8417
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        1.0778,
+                        7.6389,
+                        1.3208,
+                        7.6389,
+                        1.3208,
+                        7.8417,
+                        1.0778,
+                        7.8417
+                      ]
+                    },
+                    {
+                      "text": "Booth",
+                      "boundingBox": [
+                        1.3583,
+                        7.6389,
+                        1.7653,
+                        7.6389,
+                        1.7653,
+                        7.8417,
+                        1.3583,
+                        7.8417
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full booth",
+                  "boundingBox": [
+                    3.2,
+                    7.6472,
+                    3.8847,
+                    7.6472,
+                    3.8847,
+                    7.85,
+                    3.2,
+                    7.85
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        7.6472,
+                        3.4417,
+                        7.6472,
+                        3.4417,
+                        7.85,
+                        3.2,
+                        7.85
+                      ]
+                    },
+                    {
+                      "text": "booth",
+                      "boundingBox": [
+                        3.4792,
+                        7.6472,
+                        3.8847,
+                        7.6472,
+                        3.8847,
+                        7.85,
+                        3.4792,
+                        7.85
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "$600",
+                  "boundingBox": [
+                    5.825,
+                    7.6389,
+                    6.1639,
+                    7.6389,
+                    6.1639,
+                    7.8417,
+                    5.825,
+                    7.8417
+                  ],
+                  "words": [
+                    {
+                      "text": "$600",
+                      "boundingBox": [
+                        5.825,
+                        7.6389,
+                        6.1639,
+                        7.6389,
+                        6.1639,
+                        7.8417,
+                        5.825,
+                        7.8417
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "50% discount on program guide",
+                  "boundingBox": [
+                    3.2,
+                    7.8583,
+                    5.35,
+                    7.8583,
+                    5.35,
+                    8.0611,
+                    3.2,
+                    8.0611
+                  ],
+                  "words": [
+                    {
+                      "text": "50%",
+                      "boundingBox": [
+                        3.2,
+                        7.8583,
+                        3.4875,
+                        7.8583,
+                        3.4875,
+                        8.0611,
+                        3.2,
+                        8.0611
+                      ]
+                    },
+                    {
+                      "text": "discount",
+                      "boundingBox": [
+                        3.525,
+                        7.8583,
+                        4.1069,
+                        7.8583,
+                        4.1069,
+                        8.0611,
+                        3.525,
+                        8.0611
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        4.1444,
+                        7.8583,
+                        4.3194,
+                        7.8583,
+                        4.3194,
+                        8.0611,
+                        4.1444,
+                        8.0611
+                      ]
+                    },
+                    {
+                      "text": "program",
+                      "boundingBox": [
+                        4.3556,
+                        7.8583,
+                        4.9375,
+                        7.8583,
+                        4.9375,
+                        8.0611,
+                        4.3556,
+                        8.0611
+                      ]
+                    },
+                    {
+                      "text": "guide",
+                      "boundingBox": [
+                        4.9764,
+                        7.8583,
+                        5.35,
+                        7.8583,
+                        5.35,
+                        8.0611,
+                        4.9764,
+                        8.0611
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "advertisements",
+                  "boundingBox": [
+                    3.2,
+                    8.0611,
+                    4.25,
+                    8.0611,
+                    4.25,
+                    8.2639,
+                    3.2,
+                    8.2639
+                  ],
+                  "words": [
+                    {
+                      "text": "advertisements",
+                      "boundingBox": [
+                        3.2,
+                        8.0611,
+                        4.25,
+                        8.0611,
+                        4.25,
+                        8.2639,
+                        3.2,
+                        8.2639
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Half Booth",
+                  "boundingBox": [
+                    1.0778,
+                    8.2736,
+                    1.7972,
+                    8.2736,
+                    1.7972,
+                    8.4764,
+                    1.0778,
+                    8.4764
+                  ],
+                  "words": [
+                    {
+                      "text": "Half",
+                      "boundingBox": [
+                        1.0778,
+                        8.2736,
+                        1.35,
+                        8.2736,
+                        1.35,
+                        8.4764,
+                        1.0778,
+                        8.4764
+                      ]
+                    },
+                    {
+                      "text": "Booth",
+                      "boundingBox": [
+                        1.3889,
+                        8.2736,
+                        1.7972,
+                        8.2736,
+                        1.7972,
+                        8.4764,
+                        1.3889,
+                        8.4764
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Full booth",
+                  "boundingBox": [
+                    3.2,
+                    8.2819,
+                    3.8847,
+                    8.2819,
+                    3.8847,
+                    8.4847,
+                    3.2,
+                    8.4847
+                  ],
+                  "words": [
+                    {
+                      "text": "Full",
+                      "boundingBox": [
+                        3.2,
+                        8.2819,
+                        3.4417,
+                        8.2819,
+                        3.4417,
+                        8.4847,
+                        3.2,
+                        8.4847
+                      ]
+                    },
+                    {
+                      "text": "booth",
+                      "boundingBox": [
+                        3.4792,
+                        8.2819,
+                        3.8847,
+                        8.2819,
+                        3.8847,
+                        8.4847,
+                        3.4792,
+                        8.4847
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "$350",
+                  "boundingBox": [
+                    5.825,
+                    8.2736,
+                    6.1639,
+                    8.2736,
+                    6.1639,
+                    8.4764,
+                    5.825,
+                    8.4764
+                  ],
+                  "words": [
+                    {
+                      "text": "$350",
+                      "boundingBox": [
+                        5.825,
+                        8.2736,
+                        6.1639,
+                        8.2736,
+                        6.1639,
+                        8.4764,
+                        5.825,
+                        8.4764
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "25% discount on program guide",
+                  "boundingBox": [
+                    3.2,
+                    8.4931,
+                    5.35,
+                    8.4931,
+                    5.35,
+                    8.6958,
+                    3.2,
+                    8.6958
+                  ],
+                  "words": [
+                    {
+                      "text": "25%",
+                      "boundingBox": [
+                        3.2,
+                        8.4931,
+                        3.4875,
+                        8.4931,
+                        3.4875,
+                        8.6958,
+                        3.2,
+                        8.6958
+                      ]
+                    },
+                    {
+                      "text": "discount",
+                      "boundingBox": [
+                        3.525,
+                        8.4931,
+                        4.1069,
+                        8.4931,
+                        4.1069,
+                        8.6958,
+                        3.525,
+                        8.6958
+                      ]
+                    },
+                    {
+                      "text": "on",
+                      "boundingBox": [
+                        4.1444,
+                        8.4931,
+                        4.3194,
+                        8.4931,
+                        4.3194,
+                        8.6958,
+                        4.1444,
+                        8.6958
+                      ]
+                    },
+                    {
+                      "text": "program",
+                      "boundingBox": [
+                        4.3556,
+                        8.4931,
+                        4.9375,
+                        8.4931,
+                        4.9375,
+                        8.6958,
+                        4.3556,
+                        8.6958
+                      ]
+                    },
+                    {
+                      "text": "guide",
+                      "boundingBox": [
+                        4.9764,
+                        8.4931,
+                        5.35,
+                        8.4931,
+                        5.35,
+                        8.6958,
+                        4.9764,
+                        8.6958
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "advertisements",
+                  "boundingBox": [
+                    3.2,
+                    8.6972,
+                    4.25,
+                    8.6972,
+                    4.25,
+                    8.9,
+                    3.2,
+                    8.9
+                  ],
+                  "words": [
+                    {
+                      "text": "advertisements",
+                      "boundingBox": [
+                        3.2,
+                        8.6972,
+                        4.25,
+                        8.6972,
+                        4.25,
+                        8.9,
+                        3.2,
+                        8.9
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "page": 2,
+              "angle": 359.96,
+              "width": 8.5,
+              "height": 11.0,
+              "unit": "inch",
+              "lines": [
+                {
+                  "text": "Vendor #:",
+                  "boundingBox": [
+                    6.1389,
+                    1.0556,
+                    7.1667,
+                    1.0556,
+                    7.1667,
+                    1.2708,
+                    6.1389,
+                    1.2708
+                  ],
+                  "words": [
+                    {
+                      "text": "Vendor",
+                      "boundingBox": [
+                        6.1389,
+                        1.0556,
+                        6.8917,
+                        1.0556,
+                        6.8917,
+                        1.2708,
+                        6.1389,
+                        1.2708
+                      ]
+                    },
+                    {
+                      "text": "#:",
+                      "boundingBox": [
+                        6.9333,
+                        1.0556,
+                        7.1667,
+                        1.0556,
+                        7.1667,
+                        1.2708,
+                        6.9333,
+                        1.2708
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "121",
+                  "boundingBox": [
+                    7.1667,
+                    1.0556,
+                    7.5167,
+                    1.0556,
+                    7.5167,
+                    1.2708,
+                    7.1667,
+                    1.2708
+                  ],
+                  "words": [
+                    {
+                      "text": "121",
+                      "boundingBox": [
+                        7.1667,
+                        1.0556,
+                        7.5167,
+                        1.0556,
+                        7.5167,
+                        1.2708,
+                        7.1667,
+                        1.2708
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Vendor Details:",
+                  "boundingBox": [
+                    1.0111,
+                    2.1736,
+                    2.375,
+                    2.1736,
+                    2.375,
+                    2.3722,
+                    1.0111,
+                    2.3722
+                  ],
+                  "words": [
+                    {
+                      "text": "Vendor",
+                      "boundingBox": [
+                        1.0111,
+                        2.1736,
+                        1.6736,
+                        2.1736,
+                        1.6736,
+                        2.3722,
+                        1.0111,
+                        2.3722
+                      ]
+                    },
+                    {
+                      "text": "Details:",
+                      "boundingBox": [
+                        1.7111,
+                        2.1736,
+                        2.375,
+                        2.1736,
+                        2.375,
+                        2.3722,
+                        1.7111,
+                        2.3722
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Company Name:",
+                  "boundingBox": [
+                    1.0028,
+                    2.7611,
+                    2.1556,
+                    2.7611,
+                    2.1556,
+                    2.9278,
+                    1.0028,
+                    2.9278
+                  ],
+                  "words": [
+                    {
+                      "text": "Company",
+                      "boundingBox": [
+                        1.0028,
+                        2.7611,
+                        1.6639,
+                        2.7611,
+                        1.6639,
+                        2.9278,
+                        1.0028,
+                        2.9278
+                      ]
+                    },
+                    {
+                      "text": "Name:",
+                      "boundingBox": [
+                        1.6944,
+                        2.7611,
+                        2.1556,
+                        2.7611,
+                        2.1556,
+                        2.9278,
+                        1.6944,
+                        2.9278
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Southridge Video",
+                  "boundingBox": [
+                    2.1917,
+                    2.7611,
+                    3.3542,
+                    2.7611,
+                    3.3542,
+                    2.9278,
+                    2.1917,
+                    2.9278
+                  ],
+                  "words": [
+                    {
+                      "text": "Southridge",
+                      "boundingBox": [
+                        2.1917,
+                        2.7611,
+                        2.9444,
+                        2.7611,
+                        2.9444,
+                        2.9278,
+                        2.1917,
+                        2.9278
+                      ]
+                    },
+                    {
+                      "text": "Video",
+                      "boundingBox": [
+                        2.975,
+                        2.7611,
+                        3.3542,
+                        2.7611,
+                        3.3542,
+                        2.9278,
+                        2.975,
+                        2.9278
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Contact:",
+                  "boundingBox": [
+                    1.0069,
+                    3.0903,
+                    1.5903,
+                    3.0903,
+                    1.5903,
+                    3.2472,
+                    1.0069,
+                    3.2472
+                  ],
+                  "words": [
+                    {
+                      "text": "Contact:",
+                      "boundingBox": [
+                        1.0069,
+                        3.0903,
+                        1.5903,
+                        3.0903,
+                        1.5903,
+                        3.2472,
+                        1.0069,
+                        3.2472
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Jamie@southridgevideo.com",
+                  "boundingBox": [
+                    1.6222,
+                    3.0903,
+                    3.5667,
+                    3.0903,
+                    3.5667,
+                    3.2472,
+                    1.6222,
+                    3.2472
+                  ],
+                  "words": [
+                    {
+                      "text": "Jamie@southridgevideo.com",
+                      "boundingBox": [
+                        1.6222,
+                        3.0903,
+                        3.5667,
+                        3.0903,
+                        3.5667,
+                        3.2472,
+                        1.6222,
+                        3.2472
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Preferred Package:",
+                  "boundingBox": [
+                    1.0028,
+                    3.4236,
+                    2.3194,
+                    3.4236,
+                    2.3194,
+                    3.5806,
+                    1.0028,
+                    3.5806
+                  ],
+                  "words": [
+                    {
+                      "text": "Preferred",
+                      "boundingBox": [
+                        1.0028,
+                        3.4236,
+                        1.6667,
+                        3.4236,
+                        1.6667,
+                        3.5806,
+                        1.0028,
+                        3.5806
+                      ]
+                    },
+                    {
+                      "text": "Package:",
+                      "boundingBox": [
+                        1.6972,
+                        3.4236,
+                        2.3194,
+                        3.4236,
+                        2.3194,
+                        3.5806,
+                        1.6972,
+                        3.5806
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Gold",
+                  "boundingBox": [
+                    2.35,
+                    3.4236,
+                    2.6875,
+                    3.4236,
+                    2.6875,
+                    3.5806,
+                    2.35,
+                    3.5806
+                  ],
+                  "words": [
+                    {
+                      "text": "Gold",
+                      "boundingBox": [
+                        2.35,
+                        3.4236,
+                        2.6875,
+                        3.4236,
+                        2.6875,
+                        3.5806,
+                        2.35,
+                        3.5806
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Special Requests:",
+                  "boundingBox": [
+                    1.0167,
+                    3.7611,
+                    2.2194,
+                    3.7611,
+                    2.2194,
+                    3.9139,
+                    1.0167,
+                    3.9139
+                  ],
+                  "words": [
+                    {
+                      "text": "Special",
+                      "boundingBox": [
+                        1.0167,
+                        3.7611,
+                        1.4972,
+                        3.7611,
+                        1.4972,
+                        3.9139,
+                        1.0167,
+                        3.9139
+                      ]
+                    },
+                    {
+                      "text": "Requests:",
+                      "boundingBox": [
+                        1.5278,
+                        3.7611,
+                        2.2194,
+                        3.7611,
+                        2.2194,
+                        3.9139,
+                        1.5278,
+                        3.9139
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "N/a",
+                  "boundingBox": [
+                    2.25,
+                    3.7611,
+                    2.5111,
+                    3.7611,
+                    2.5111,
+                    3.9139,
+                    2.25,
+                    3.9139
+                  ],
+                  "words": [
+                    {
+                      "text": "N/a",
+                      "boundingBox": [
+                        2.25,
+                        3.7611,
+                        2.5111,
+                        3.7611,
+                        2.5111,
+                        3.9139,
+                        2.25,
+                        3.9139
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "pageResults": [
+            {
+              "page": 1,
+              "keyValuePairs": [
+                {
+                  "key": {
+                    "text": "Vendor #:",
+                    "boundingBox": [
+                      6.1236,
+                      1.0014,
+                      7.1167,
+                      1.0014,
+                      7.1167,
+                      1.3056,
+                      6.1236,
+                      1.3056
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/0/words/0",
+                      "#/readResults/0/lines/0/words/1"
+                    ]
+                  },
+                  "value": {
+                    "text": "121",
+                    "boundingBox": [
+                      7.1167,
+                      1.0014,
+                      7.4958,
+                      1.0014,
+                      7.4958,
+                      1.3056,
+                      7.1167,
+                      1.3056
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/1/words/0"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Address__1",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123",
+                    "boundingBox": [
+                      1.0,
+                      3.5306,
+                      2.3847,
+                      3.5306,
+                      2.3847,
+                      4.1722,
+                      1.0,
+                      4.1722
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/7/words/0",
+                      "#/readResults/0/lines/7/words/1",
+                      "#/readResults/0/lines/8/words/0",
+                      "#/readResults/0/lines/8/words/1",
+                      "#/readResults/0/lines/8/words/2",
+                      "#/readResults/0/lines/9/words/0",
+                      "#/readResults/0/lines/9/words/1",
+                      "#/readResults/0/lines/9/words/2"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__1",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Vendor Registration",
+                    "boundingBox": [
+                      2.2181,
+                      1.4417,
+                      6.2736,
+                      1.4417,
+                      6.2736,
+                      2.05,
+                      2.2181,
+                      2.05
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/2/words/0",
+                      "#/readResults/0/lines/2/words/1"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__2",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in",
+                    "boundingBox": [
+                      1.0,
+                      2.5417,
+                      7.0903,
+                      2.5417,
+                      7.0903,
+                      2.7444,
+                      1.0,
+                      2.7444
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/3/words/0",
+                      "#/readResults/0/lines/3/words/1",
+                      "#/readResults/0/lines/3/words/2",
+                      "#/readResults/0/lines/3/words/3",
+                      "#/readResults/0/lines/3/words/4",
+                      "#/readResults/0/lines/3/words/5",
+                      "#/readResults/0/lines/3/words/6",
+                      "#/readResults/0/lines/3/words/7",
+                      "#/readResults/0/lines/3/words/8",
+                      "#/readResults/0/lines/3/words/9",
+                      "#/readResults/0/lines/3/words/10",
+                      "#/readResults/0/lines/3/words/11",
+                      "#/readResults/0/lines/3/words/12",
+                      "#/readResults/0/lines/3/words/13",
+                      "#/readResults/0/lines/3/words/14",
+                      "#/readResults/0/lines/3/words/15"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__3",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person",
+                    "boundingBox": [
+                      1.0,
+                      2.7597,
+                      7.3583,
+                      2.7597,
+                      7.3583,
+                      2.9625,
+                      1.0,
+                      2.9625
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/4/words/0",
+                      "#/readResults/0/lines/4/words/1",
+                      "#/readResults/0/lines/4/words/2",
+                      "#/readResults/0/lines/4/words/3",
+                      "#/readResults/0/lines/4/words/4",
+                      "#/readResults/0/lines/4/words/5",
+                      "#/readResults/0/lines/4/words/6",
+                      "#/readResults/0/lines/4/words/7",
+                      "#/readResults/0/lines/4/words/8",
+                      "#/readResults/0/lines/4/words/9",
+                      "#/readResults/0/lines/4/words/10",
+                      "#/readResults/0/lines/4/words/11",
+                      "#/readResults/0/lines/4/words/12",
+                      "#/readResults/0/lines/4/words/13",
+                      "#/readResults/0/lines/4/words/14",
+                      "#/readResults/0/lines/4/words/15"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__4",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form",
+                    "boundingBox": [
+                      1.0,
+                      2.9806,
+                      7.2597,
+                      2.9806,
+                      7.2597,
+                      3.1833,
+                      1.0,
+                      3.1833
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/5/words/0",
+                      "#/readResults/0/lines/5/words/1",
+                      "#/readResults/0/lines/5/words/2",
+                      "#/readResults/0/lines/5/words/3",
+                      "#/readResults/0/lines/5/words/4",
+                      "#/readResults/0/lines/5/words/5",
+                      "#/readResults/0/lines/5/words/6",
+                      "#/readResults/0/lines/5/words/7",
+                      "#/readResults/0/lines/5/words/8",
+                      "#/readResults/0/lines/5/words/9",
+                      "#/readResults/0/lines/5/words/10",
+                      "#/readResults/0/lines/5/words/11",
+                      "#/readResults/0/lines/5/words/12",
+                      "#/readResults/0/lines/5/words/13",
+                      "#/readResults/0/lines/5/words/14"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__5",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "below, and attach a check made out to:",
+                    "boundingBox": [
+                      1.0,
+                      3.2,
+                      3.6722,
+                      3.2,
+                      3.6722,
+                      3.4028,
+                      1.0,
+                      3.4028
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/6/words/0",
+                      "#/readResults/0/lines/6/words/1",
+                      "#/readResults/0/lines/6/words/2",
+                      "#/readResults/0/lines/6/words/3",
+                      "#/readResults/0/lines/6/words/4",
+                      "#/readResults/0/lines/6/words/5",
+                      "#/readResults/0/lines/6/words/6",
+                      "#/readResults/0/lines/6/words/7"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__6",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Rates:",
+                    "boundingBox": [
+                      1.0,
+                      4.3556,
+                      1.5486,
+                      4.3556,
+                      1.5486,
+                      4.6264,
+                      1.0,
+                      4.6264
+                    ],
+                    "elements": [
+                      "#/readResults/0/lines/10/words/0"
+                    ]
+                  },
+                  "confidence": 1.0
+                }
+              ],
+              "tables": [
+                {
+                  "rows": 6,
+                  "columns": 3,
+                  "cells": [
+                    {
+                      "text": "Package",
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        4.6556,
+                        1.6306,
+                        4.6556,
+                        1.6306,
+                        4.8583,
+                        1.0778,
+                        4.8583
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/11/words/0"
+                      ],
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Included",
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        2.6986,
+                        4.6556,
+                        3.2833,
+                        4.6556,
+                        3.2833,
+                        4.8583,
+                        2.6986,
+                        4.8583
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/12/words/0"
+                      ],
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Price",
+                      "rowIndex": 0,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.8236,
+                        4.6556,
+                        6.1597,
+                        4.6556,
+                        6.1597,
+                        4.8583,
+                        5.8236,
+                        4.8583
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/13/words/0"
+                      ],
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Gold Sponsor",
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        4.8653,
+                        1.9861,
+                        4.8653,
+                        1.9861,
+                        5.0681,
+                        1.0778,
+                        5.0681
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/14/words/0",
+                        "#/readResults/0/lines/14/words/1"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full booth Pre-keynote thank you Logo on poster Full page ad in program guide",
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2,
+                        4.8736,
+                        5.2083,
+                        4.8736,
+                        5.2083,
+                        5.7139,
+                        3.2,
+                        5.7139
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/15/words/0",
+                        "#/readResults/0/lines/15/words/1",
+                        "#/readResults/0/lines/17/words/0",
+                        "#/readResults/0/lines/17/words/1",
+                        "#/readResults/0/lines/17/words/2",
+                        "#/readResults/0/lines/18/words/0",
+                        "#/readResults/0/lines/18/words/1",
+                        "#/readResults/0/lines/18/words/2",
+                        "#/readResults/0/lines/19/words/0",
+                        "#/readResults/0/lines/19/words/1",
+                        "#/readResults/0/lines/19/words/2",
+                        "#/readResults/0/lines/19/words/3",
+                        "#/readResults/0/lines/19/words/4",
+                        "#/readResults/0/lines/19/words/5"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "$1,500",
+                      "rowIndex": 1,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.825,
+                        4.8653,
+                        6.2889,
+                        4.8653,
+                        6.2889,
+                        5.0681,
+                        5.825,
+                        5.0681
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/16/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Silver Sponsor",
+                      "rowIndex": 2,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        5.9347,
+                        2.0361,
+                        5.9347,
+                        2.0361,
+                        6.1375,
+                        1.0778,
+                        6.1375
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/20/words/0",
+                        "#/readResults/0/lines/20/words/1"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full booth Post-keynote thank you Logo on poster Half page ad in program guide",
+                      "rowIndex": 2,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2,
+                        5.9431,
+                        5.2389,
+                        5.9431,
+                        5.2389,
+                        6.7833,
+                        3.2,
+                        6.7833
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/21/words/0",
+                        "#/readResults/0/lines/21/words/1",
+                        "#/readResults/0/lines/23/words/0",
+                        "#/readResults/0/lines/23/words/1",
+                        "#/readResults/0/lines/23/words/2",
+                        "#/readResults/0/lines/24/words/0",
+                        "#/readResults/0/lines/24/words/1",
+                        "#/readResults/0/lines/24/words/2",
+                        "#/readResults/0/lines/25/words/0",
+                        "#/readResults/0/lines/25/words/1",
+                        "#/readResults/0/lines/25/words/2",
+                        "#/readResults/0/lines/25/words/3",
+                        "#/readResults/0/lines/25/words/4",
+                        "#/readResults/0/lines/25/words/5"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "$1,200",
+                      "rowIndex": 2,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.825,
+                        5.9347,
+                        6.2889,
+                        5.9347,
+                        6.2889,
+                        6.1375,
+                        5.825,
+                        6.1375
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/22/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Bronze Sponsor",
+                      "rowIndex": 3,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        6.7903,
+                        2.1389,
+                        6.7903,
+                        2.1389,
+                        6.9931,
+                        1.0778,
+                        6.9931
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/26/words/0",
+                        "#/readResults/0/lines/26/words/1"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full booth Logo on poster 50% discount on program guide advertisements",
+                      "rowIndex": 3,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2,
+                        6.7986,
+                        5.35,
+                        6.7986,
+                        5.35,
+                        7.6292,
+                        3.2,
+                        7.6292
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/27/words/0",
+                        "#/readResults/0/lines/27/words/1",
+                        "#/readResults/0/lines/29/words/0",
+                        "#/readResults/0/lines/29/words/1",
+                        "#/readResults/0/lines/29/words/2",
+                        "#/readResults/0/lines/30/words/0",
+                        "#/readResults/0/lines/30/words/1",
+                        "#/readResults/0/lines/30/words/2",
+                        "#/readResults/0/lines/30/words/3",
+                        "#/readResults/0/lines/30/words/4",
+                        "#/readResults/0/lines/31/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "$1,000",
+                      "rowIndex": 3,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.825,
+                        6.7903,
+                        6.2889,
+                        6.7903,
+                        6.2889,
+                        6.9931,
+                        5.825,
+                        6.9931
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/28/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full Booth",
+                      "rowIndex": 4,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        7.6389,
+                        1.7653,
+                        7.6389,
+                        1.7653,
+                        7.8417,
+                        1.0778,
+                        7.8417
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/32/words/0",
+                        "#/readResults/0/lines/32/words/1"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full booth 50% discount on program guide advertisements",
+                      "rowIndex": 4,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2,
+                        7.6472,
+                        5.35,
+                        7.6472,
+                        5.35,
+                        8.2639,
+                        3.2,
+                        8.2639
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/33/words/0",
+                        "#/readResults/0/lines/33/words/1",
+                        "#/readResults/0/lines/35/words/0",
+                        "#/readResults/0/lines/35/words/1",
+                        "#/readResults/0/lines/35/words/2",
+                        "#/readResults/0/lines/35/words/3",
+                        "#/readResults/0/lines/35/words/4",
+                        "#/readResults/0/lines/36/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "$600",
+                      "rowIndex": 4,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.825,
+                        7.6389,
+                        6.1639,
+                        7.6389,
+                        6.1639,
+                        7.8417,
+                        5.825,
+                        7.8417
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/34/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Half Booth",
+                      "rowIndex": 5,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0778,
+                        8.2736,
+                        1.7972,
+                        8.2736,
+                        1.7972,
+                        8.4764,
+                        1.0778,
+                        8.4764
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/37/words/0",
+                        "#/readResults/0/lines/37/words/1"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Full booth 25% discount on program guide advertisements",
+                      "rowIndex": 5,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2,
+                        8.2819,
+                        5.35,
+                        8.2819,
+                        5.35,
+                        8.9,
+                        3.2,
+                        8.9
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/38/words/0",
+                        "#/readResults/0/lines/38/words/1",
+                        "#/readResults/0/lines/40/words/0",
+                        "#/readResults/0/lines/40/words/1",
+                        "#/readResults/0/lines/40/words/2",
+                        "#/readResults/0/lines/40/words/3",
+                        "#/readResults/0/lines/40/words/4",
+                        "#/readResults/0/lines/41/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "$350",
+                      "rowIndex": 5,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.825,
+                        8.2736,
+                        6.1639,
+                        8.2736,
+                        6.1639,
+                        8.4764,
+                        5.825,
+                        8.4764
+                      ],
+                      "confidence": 1.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": [
+                        "#/readResults/0/lines/39/words/0"
+                      ],
+                      "isHeader": false,
+                      "isFooter": false
+                    }
+                  ]
+                }
+              ],
+              "clusterId": 0
+            },
+            {
+              "page": 2,
+              "keyValuePairs": [
+                {
+                  "key": {
+                    "text": "Vendor #:",
+                    "boundingBox": [
+                      6.1389,
+                      1.0556,
+                      7.1667,
+                      1.0556,
+                      7.1667,
+                      1.2708,
+                      6.1389,
+                      1.2708
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/0/words/0",
+                      "#/readResults/1/lines/0/words/1"
+                    ]
+                  },
+                  "value": {
+                    "text": "121",
+                    "boundingBox": [
+                      7.1667,
+                      1.0556,
+                      7.5167,
+                      1.0556,
+                      7.5167,
+                      1.2708,
+                      7.1667,
+                      1.2708
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/1/words/0"
+                    ]
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Company Name:",
+                    "boundingBox": [
+                      1.0028,
+                      2.7611,
+                      2.1556,
+                      2.7611,
+                      2.1556,
+                      2.9278,
+                      1.0028,
+                      2.9278
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/3/words/0",
+                      "#/readResults/1/lines/3/words/1"
+                    ]
+                  },
+                  "value": {
+                    "text": "Southridge Video",
+                    "boundingBox": [
+                      2.1917,
+                      2.7611,
+                      3.3542,
+                      2.7611,
+                      3.3542,
+                      2.9278,
+                      2.1917,
+                      2.9278
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/4/words/0",
+                      "#/readResults/1/lines/4/words/1"
+                    ]
+                  },
+                  "confidence": 0.53
+                },
+                {
+                  "key": {
+                    "text": "Contact:",
+                    "boundingBox": [
+                      1.0069,
+                      3.0903,
+                      1.5903,
+                      3.0903,
+                      1.5903,
+                      3.2472,
+                      1.0069,
+                      3.2472
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/5/words/0"
+                    ]
+                  },
+                  "value": {
+                    "text": "Jamie@southridgevideo.com",
+                    "boundingBox": [
+                      1.6222,
+                      3.0903,
+                      3.5667,
+                      3.0903,
+                      3.5667,
+                      3.2472,
+                      1.6222,
+                      3.2472
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/6/words/0"
+                    ]
+                  },
+                  "confidence": 0.53
+                },
+                {
+                  "key": {
+                    "text": "Preferred Package:",
+                    "boundingBox": [
+                      1.0028,
+                      3.4236,
+                      2.3194,
+                      3.4236,
+                      2.3194,
+                      3.5806,
+                      1.0028,
+                      3.5806
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/7/words/0",
+                      "#/readResults/1/lines/7/words/1"
+                    ]
+                  },
+                  "value": {
+                    "text": "Gold",
+                    "boundingBox": [
+                      2.35,
+                      3.4236,
+                      2.6875,
+                      3.4236,
+                      2.6875,
+                      3.5806,
+                      2.35,
+                      3.5806
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/8/words/0"
+                    ]
+                  },
+                  "confidence": 0.53
+                },
+                {
+                  "key": {
+                    "text": "Special Requests:",
+                    "boundingBox": [
+                      1.0167,
+                      3.7611,
+                      2.2194,
+                      3.7611,
+                      2.2194,
+                      3.9139,
+                      1.0167,
+                      3.9139
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/9/words/0",
+                      "#/readResults/1/lines/9/words/1"
+                    ]
+                  },
+                  "value": {
+                    "text": "N/a",
+                    "boundingBox": [
+                      2.25,
+                      3.7611,
+                      2.5111,
+                      3.7611,
+                      2.5111,
+                      3.9139,
+                      2.25,
+                      3.9139
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/10/words/0"
+                    ]
+                  },
+                  "confidence": 0.53
+                },
+                {
+                  "key": {
+                    "text": "__Tokens__1",
+                    "boundingBox": null,
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "Vendor Details:",
+                    "boundingBox": [
+                      1.0111,
+                      2.1736,
+                      2.375,
+                      2.1736,
+                      2.375,
+                      2.3722,
+                      1.0111,
+                      2.3722
+                    ],
+                    "elements": [
+                      "#/readResults/1/lines/2/words/0",
+                      "#/readResults/1/lines/2/words/1"
+                    ]
+                  },
+                  "confidence": 1.0
+                }
+              ],
+              "tables": [],
+              "clusterId": 1
+            }
+          ],
+          "documentResults": [],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/d8ad26da-e127-478b-ab42-3a8381696293",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-67bae41bddc56e42a4ee750061361516-82475b28a499e94f-00",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "bebaac1c46b6ef0ada645daee042a054",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "0b535250-be50-494b-9340-5475f6cd965a",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Aug 2020 02:29:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": "https://azuresdktrainingdata.blob.core.windows.net/multipage-vendor-forms?sp=rl\u0026st=2020-06-25T04:55:22Z\u0026se=2021-06-26T04:55:00Z\u0026sv=2019-10-10\u0026sr=c\u0026sig=Z25JFTIsP3tbxDjHP2CK05HxIS9uz1E%2FDaRfjeEUyaU%3D",
+    "RandomSeed": "1580435474"
+  }
+}

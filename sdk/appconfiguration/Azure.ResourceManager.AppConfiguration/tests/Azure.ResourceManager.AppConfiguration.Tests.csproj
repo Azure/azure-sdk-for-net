@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TestHelperProjects>Resources201705;Network202004</TestHelperProjects>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
+  </ItemGroup>
+</Project>

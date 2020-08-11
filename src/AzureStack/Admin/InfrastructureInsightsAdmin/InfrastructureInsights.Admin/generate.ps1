@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/infrastructureinsights" -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot

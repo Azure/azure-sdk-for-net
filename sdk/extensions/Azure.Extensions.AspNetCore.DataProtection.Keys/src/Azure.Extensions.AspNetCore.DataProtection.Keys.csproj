@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Microsoft Azure Key Vault key encryption support.</Description>
+    <PackageTags>aspnetcore;dataprotection;azure;keyvault</PackageTags>
+    <Version>1.0.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+  </ItemGroup>
+
+</Project>

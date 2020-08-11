@@ -1,0 +1,292 @@
+parameters:
+  Artifacts: []
+  ArtifactName: 'not-specified'
+  # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+  DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
+
+stages:
+  - stage: Signing
+    dependsOn: ${{parameters.DependsOn}}
+    jobs:
+      - deployment: SignPackage
+        environment: esrp
+        pool:
+          vmImage: windows-2019
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+
+                - download: current
+                  artifact: ${{parameters.ArtifactName}}
+                  timeoutInMinutes: 5
+
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - pwsh: |
+                      New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
+                      Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
+                      Get-ChildItem $(Pipeline.Workspace)/staging
+                    displayName: Copying ${{artifact.name}} to staging directory
+
+                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+
+                - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
+                  parameters:
+                    PackagesPath: $(Pipeline.Workspace)/staging
+                    BuildToolsPath: $(AzureSDKBuildToolsPath)
+
+                - publish: $(Pipeline.Workspace)/staging
+                  artifact: ${{parameters.ArtifactName}}-signed
+                  displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
+
+  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - ${{ each artifact in parameters.Artifacts }}:
+      - stage: Release_${{artifact.safeName}}
+        displayName: 'Release: ${{artifact.name}}'
+        dependsOn: Signing
+        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+        jobs:
+          - deployment: TagRepository
+            displayName: "Create release tag"
+            condition: ne(variables['Skip.TagRepository'], 'true')
+            environment: github
+
+            pool:
+              vmImage: windows-2019
+
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+                      parameters:
+                        PackageName: ${{artifact.name}}
+                        ServiceName: ${{parameters.ServiceDirectory}}
+                        ForRelease: true
+                    - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                      parameters:
+                        SourceFolder: ${{parameters.ArtifactName}}-signed
+                        TargetFolder: ${{artifact.safeName}}
+                        FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                    - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
+                      parameters:
+                        ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                        PackageRepository: Nuget
+                        ReleaseSha: $(Build.SourceVersion)
+                        RepoId: Azure/azure-sdk-for-net
+
+          - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
+            - deployment: PublishPackage
+              displayName: Publish package to Nuget.org and DevOps Feed
+              condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
+              environment: nuget
+              dependsOn: TagRepository
+
+              pool:
+                vmImage: ubuntu-18.04
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
+                          TargetFolder: staging
+                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - task: NuGetCommand@2
+                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          nuGetFeedType: external
+                          publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        displayName: 'Publish to DevOps Feed'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+
+          - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
+            - deployment: UploadSymbols
+              displayName: Upload Symbols to Symbols Server
+              condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
+              environment: nuget
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
+                          TargetFolder: staging
+                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - task: MSBuild@1
+                        displayName: 'Upload Symbols for ${{artifact.name}}'
+                        inputs:
+                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+
+          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+            - deployment: PublicDocsMS
+              displayName: Publish to Docs.MS
+              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+              environment: githubio
+              dependsOn: PublishPackage
+
+              variables:
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
+                          TargetFolder: ${{artifact.safeName}}
+                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
+                        parameters:
+                          TargetVariable: "OwningGHUser"
+                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
+                        parameters:
+                          ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                          PackageRepository: Nuget
+                          ReleaseSha: $(Build.SourceVersion)
+                          RepoId: Azure/azure-sdk-for-net
+                          WorkingDirectory: $(System.DefaultWorkingDirectory)
+                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
+                          ArtifactName: ${{artifact.name}}
+                          Language: '.net'
+                          DocRepoDestinationPath: 'api/overview/azure/' 
+                          GHReviewersVariable: 'OwningGHUser'
+                          CIConfigs: $(CIConfigs)
+                          OnboardingBranch: 'onboarding'
+
+          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+            - deployment: PublishDocs
+              displayName: Publish Docs to GitHub pages
+              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+              environment: githubio
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
+                          TargetFolder: ${{artifact.safeName}}/packages
+                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: Docs.${{artifact.name}}
+                          TargetFolder: ${{artifact.safeName}}/Docs.${{artifact.name}}
+                          FileFilter: '*'
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
+                        parameters:
+                          FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
+                          BlobSASKey: '$(azure-sdk-docs-prod-sas)'
+                          BlobName: '$(azure-sdk-docs-prod-blob-name)'
+                          TargetLanguage: 'dotnet'
+                          # we override the regular script path because we have cloned the build tools repo as a separate artifact.
+                          ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
+
+          - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
+            - deployment: UpdatePackageVersion
+              displayName: "Update Package Version"
+              condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
+              environment: github
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - pwsh: |
+                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
+                        displayName: Increment package version
+                      - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+                        parameters:
+                          RepoName: azure-sdk-for-net
+                          PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
+                          CommitMsg: "Increment package version after release of ${{ artifact.name }}"
+                          PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+
+  - stage: Integration
+    dependsOn: Signing
+    jobs:
+    - job: PublishPackages
+      condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+      displayName: Publish package to daily feed
+      variables:
+        BlobFeedUrl: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+      pool:
+        vmImage: windows-2019
+      steps:
+      - checkout: none
+      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+      - download: current
+        artifact: ${{parameters.ArtifactName}}-signed
+      - pwsh: |
+          # For safety default to publishing to the private feed.
+          # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
+          $devopsFeedId = '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'
+          if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
+            # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+            $devopsFeedId = '${{ parameters.DevOpsFeedID }}'
+          }
+          echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
+          echo "Using DevopsFeedId = $devopsFeedId"
+        displayName: Setup DevOpsFeedId
+      - task: NuGetCommand@2
+        displayName: 'Publish to DevOps Feed'
+        inputs:
+          command: push
+          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
+          publishVstsFeed: $(DevOpsFeedID)
