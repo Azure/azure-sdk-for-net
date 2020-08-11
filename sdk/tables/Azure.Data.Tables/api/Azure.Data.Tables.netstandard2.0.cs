@@ -96,8 +96,8 @@ namespace Azure.Data.Tables
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateTableIfNotExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.Tables.Models.ServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.ServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.Tables.Models.TableServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.Tables.Sas.TableAccountSasBuilder GetSasBuilder(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { throw null; }
         public virtual Azure.Data.Tables.Sas.TableAccountSasBuilder GetSasBuilder(string rawPermissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableServiceStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -105,8 +105,8 @@ namespace Azure.Data.Tables
         public virtual Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
         public virtual Azure.Pageable<Azure.Data.Tables.Models.TableItem> GetTables(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableItem> GetTablesAsync(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SetProperties(Azure.Data.Tables.Models.ServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Data.Tables.Models.ServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetProperties(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TableSharedKeyCredential
     {
@@ -131,14 +131,6 @@ namespace Azure.Data.Tables.Models
         public RetentionPolicy(bool enabled) { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
-    }
-    public partial class ServiceProperties
-    {
-        public ServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Data.Tables.Models.TableCorsRule> Cors { get { throw null; } }
-        public Azure.Data.Tables.Models.TableMetrics HourMetrics { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.TableAnalyticsLoggingSettings Logging { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.TableMetrics MinuteMetrics { get { throw null; } set { } }
     }
     public partial class SignedIdentifier
     {
@@ -208,6 +200,14 @@ namespace Azure.Data.Tables.Models
         public bool? IncludeApis { get { throw null; } set { } }
         public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+    }
+    public partial class TableServiceProperties
+    {
+        public TableServiceProperties() { }
+        public System.Collections.Generic.IList<Azure.Data.Tables.Models.TableCorsRule> Cors { get { throw null; } }
+        public Azure.Data.Tables.Models.TableMetrics HourMetrics { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.TableAnalyticsLoggingSettings Logging { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.TableMetrics MinuteMetrics { get { throw null; } set { } }
     }
     public partial class TableServiceStatistics
     {

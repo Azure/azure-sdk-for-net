@@ -45,7 +45,7 @@ namespace Azure.Data.Tables
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(ServiceProperties tableServiceProperties, int? timeout, string requestId)
+        internal HttpMessage CreateSetPropertiesRequest(TableServiceProperties tableServiceProperties, int? timeout, string requestId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,7 +78,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
@@ -103,7 +103,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
@@ -149,7 +149,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, requestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -158,11 +158,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        ServiceProperties value = default;
+                        TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = ServiceProperties.DeserializeServiceProperties(storageServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, requestId);
             _pipeline.Send(message, cancellationToken);
@@ -184,11 +184,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        ServiceProperties value = default;
+                        TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = ServiceProperties.DeserializeServiceProperties(storageServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
