@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,6 +20,7 @@ namespace Azure.Iot.Hub.Service
         private readonly ModulesRestClient _modulesRestClient;
         private readonly QueryRestClient _queryRestClient;
         private readonly StatisticsRestClient _statisticsRestClient;
+        private readonly ConfigurationRestClient _configurationRestClient;
 
         /// <summary>
         /// place holder for Devices.
@@ -35,6 +36,11 @@ namespace Azure.Iot.Hub.Service
         /// place holder for Statistics.
         /// </summary>
         public virtual StatisticsClient Statistics { get; private set; }
+
+        /// <summary>
+        /// place holder for Configurations.
+        /// </summary>
+        public virtual ConfigurationsClient Configurations { get; private set; }
 
         /// <summary>
         /// place holder for Messages.
@@ -110,6 +116,13 @@ namespace Azure.Iot.Hub.Service
         /// <param name="options">
         /// (optional) Options that allow configuration of requests sent to the IoT Hub service.
         /// </param>
+        /// <code snippet="Snippet:IotHubServiceClientInitializeWithIotHubSasCredential">
+        /// // Create an IotHubSasCredential type to use sas tokens to authenticate against your IoT Hub instance.
+        /// // The default lifespan of the sas token is 30 minutes, and it is set to be renewed when at 15% or less of its lifespan.
+        /// var credential = new IotHubSasCredential(options.IotHubSharedAccessPolicy, options.IotHubSharedAccessKey);
+        ///
+        /// IotHubServiceClient hubClient = new IotHubServiceClient(options.Endpoint, credential);
+        /// </code>
         public IotHubServiceClient(Uri endpoint, IotHubSasCredential credential, IotHubServiceClientOptions options = default)
             : this(SetEndpointToIotHubSasCredential(endpoint, credential), options)
         {
@@ -127,10 +140,12 @@ namespace Azure.Iot.Hub.Service
             _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
+            _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
 
             Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
             Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
             Statistics = new StatisticsClient(_statisticsRestClient);
+            Configurations = new ConfigurationsClient(_configurationRestClient);
 
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();

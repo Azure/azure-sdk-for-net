@@ -251,7 +251,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                         await pSender.CloseAsync();
                     }
 
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                    await Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     {
                         TestUtility.Log("Sending another event to partition 0 on the closed sender, this should fail");
                         using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     yield return new EventData(Encoding.UTF8.GetBytes(i.ToString()));
                 }
             }
-            
+
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
