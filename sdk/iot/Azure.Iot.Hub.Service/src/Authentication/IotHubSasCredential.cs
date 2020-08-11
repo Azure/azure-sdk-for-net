@@ -91,7 +91,7 @@ namespace Azure.Iot.Hub.Service.Authentication
 
         /// <summary>
         /// The validity duration of the generated shared access signature token used for authentication.
-        /// The token will be renewed when at 15% or less of it's lifespan. The default value is 30 minutes.
+        /// The token will be renewed when at 15% or less of its lifespan. The default value is 30 minutes.
         /// </summary>
         public TimeSpan SasTokenTimeToLive { get; private set; } = TimeSpan.FromMinutes(30);
 

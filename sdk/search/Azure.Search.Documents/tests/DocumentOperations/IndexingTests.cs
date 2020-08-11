@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #endif

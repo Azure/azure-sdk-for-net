@@ -8,6 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes

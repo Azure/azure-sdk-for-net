@@ -626,7 +626,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             var cursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor);
             Assert.AreEqual(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero), cursor.EndTime);
             Assert.AreEqual(1, cursor.CursorVersion);
-            Assert.AreEqual("15S8ITXExIEUwbdmq7AeZg==", cursor.UrlHash);
+            Assert.AreEqual("emilydevtest.blob.core.windows.net", cursor.UrlHost);
             var currentSegmentCursor = cursor.CurrentSegmentCursor;
             Assert.AreEqual("idx/segments/2020/07/30/2300/meta.json", currentSegmentCursor.SegmentPath);
             Assert.AreEqual("log/00/2020/07/30/2300/", currentSegmentCursor.CurrentShardPath);
