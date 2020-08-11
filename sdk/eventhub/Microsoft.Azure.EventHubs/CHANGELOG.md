@@ -1,10 +1,17 @@
 # Release History
 
-## 4.3.0 (Unreleased)
+## 4.3.0
+### Breaking Changes
+None
 
+### Improvements
+- Batch size can be accessed as a property on the EventDataBatch objects. (https://github.com/Azure/azure-sdk-for-net/pull/13976)
+- ContentType is provided as a property on EventData objects. (https://github.com/Azure/azure-sdk-for-net/pull/14047)
 
-## 4.2.1 (Unreleased)
-
+### Bug Fixes
+- Batch size calculation issue when diagnostics enabled is now fixed. (https://github.com/Azure/azure-sdk-for-net/pull/13966)
+- Senders and receivers can now throw more descriptive error when underlying client is closed. (https://github.com/Azure/azure-sdk-for-net/pull/14030)
+- Sende APIs to handle provided EventData enumerators properly when enumerator is not re-scannable. (https://github.com/Azure/azure-sdk-for-net/pull/14053)
 
 ## 4.2.0
 ### Breaking Changes

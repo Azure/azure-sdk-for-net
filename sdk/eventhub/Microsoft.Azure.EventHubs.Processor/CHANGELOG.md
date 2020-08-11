@@ -1,10 +1,11 @@
 # Release History
 
-## 4.3.0 (Unreleased)
+## 4.3.0
+### Breaking Changes
+- Built-in checkpoint store moved from WindowsAzure.Storage SDK to Microsoft.Azure.Storage due to former is deprecated. (https://github.com/Azure/azure-sdk-for-net/pull/13956)
 
-
-## 4.2.1 (Unreleased)
-
+### Bug fixes
+- Fixing a bug in partition pump management where pump gets stuck in unhealthy state forever if pump-open failed. (https://github.com/Azure/azure-sdk-for-net/pull/12691)
 
 ## 4.2.0
 ### Breaking Changes
