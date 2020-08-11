@@ -1,13 +1,20 @@
-# Azure.Search.Documents Samples - FieldBuilder
+# Azure.Search.Documents Samples - Using FieldBuilderIgnoreAttribute
 
 The `FieldBuilder` class allows you to define a Search index from a model type,
 though not all property types are supported by a Search index without workarounds.
 
+If when using `FieldBuilder` you see the following exception, use the following workaround:
+
+> Property 'Genre' is of type 'MovieGenre', which does not map to an
+> Azure Search data type. Please use a supported data type or mark the property with \[FieldBuilderIgnore\]
+> and define the field by creating a SearchField object. See https://aka.ms/azsdk/net/search/fieldbuilder for more information.";
+
 ## Model
 
-Consider the following model, which declares a property of an `enum` type.
+Consider the following model, which declares a property of an `enum` type,
+which are not currently supported.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilder_Types
+```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_Types
 public class Movie
 {
     [SimpleField(IsKey = true)]
@@ -18,7 +25,7 @@ public class Movie
 
     [FieldBuilderIgnore]
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public Genre Genre { get; set; }
+    public MovieGenre Genre { get; set; }
 
     [SimpleField(IsFacetable = true, IsFilterable = true, IsSortable = true)]
     public int Year { get; set; }
@@ -27,7 +34,7 @@ public class Movie
     public double Rating { get; set; }
 }
 
-public enum Genre
+public enum MovieGenre
 {
     Unknown,
     Action,
@@ -40,23 +47,23 @@ public enum Genre
 }
 ```
 
-The property is attributed with `[FieldBuilderIgnore]` so that `FieldBuilder` will ignore it
-when generating fields for a Search index.
-
 Declaring enum property types will throw an exception if not ignored using either the
 `[FieldBuilderIgnore]` attribute, or another attribute like `[JsonIgnore]` of
 `System.Text.Json`, `Newtonsoft.Json`, or any other method of ignoring a property entirely
 for the serializer you've specified in `SearchClientOptions.Serializer`. Enum property types
-are not processed by default because you may instead want to serialize them as their
+are not supported by default because you may instead want to serialize them as their
 integer values to save space in an index.
+
+The `Genre` property is attributed with `[FieldBuilderIgnore]` so that `FieldBuilder` will ignore it
+when generating fields for a Search index. You can then define a field manually as shown below.
 
 ## Create an index
 
 After creating the index using `FieldBuilder`, you can add fields manually.
-For the `Genre` property we declare that the serializer should convert the `Genre` enum
+For the `Genre` property we declare that the serializer should convert the `MovieGenre` enum
 to a string, and define the `genre` index field ourselves.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilder_CreateIndex
+```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
@@ -109,12 +116,12 @@ indexClient.CreateIndex(index);
 When a `Movie` is serialized, the `Genre` property is converted to a string and
 populates the index's `genre` field.
 
-```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilder_UploadDocument
+```C# Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_UploadDocument
 Movie movie = new Movie
 {
     Id = Guid.NewGuid().ToString("n"),
     Name = "The Lord of the Rings: The Return of the King",
-    Genre = Genre.Fantasy,
+    Genre = MovieGenre.Fantasy,
     Year = 2003,
     Rating = 9.1
 };
@@ -124,4 +131,4 @@ SearchClient searchClient = indexClient.GetSearchClient(index.Name);
 searchClient.UploadDocuments(new[] { movie });
 ```
 
-Similarly, deserializing converts it from a string back into a `Genre` enum value.
+Similarly, deserializing converts it from a string back into a `MovieGenre` enum value.

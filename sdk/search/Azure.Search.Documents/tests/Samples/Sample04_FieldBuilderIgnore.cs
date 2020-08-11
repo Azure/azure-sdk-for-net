@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Tests.Samples
 {
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
-    public class FieldBuilderSample :  SearchTestBase
+    public class FieldBuilderIgnore :  SearchTestBase
     {
-        public FieldBuilderSample(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public FieldBuilderIgnore(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
-            #region Snippet:Azure_Search_Tests_Sample2_FieldBuilder_CreateIndex
+            #region Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_CreateIndex
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
@@ -78,17 +78,17 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create the index.
             indexClient.CreateIndex(index);
-            #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilder_CreateIndex
+            #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_CreateIndex
 
             // Make sure the index is removed.
             resources.IndexName = index.Name;
 
-            #region Snippet:Azure_Search_Tests_Sample2_FieldBuilder_UploadDocument
+            #region Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_UploadDocument
             Movie movie = new Movie
             {
                 Id = Guid.NewGuid().ToString("n"),
                 Name = "The Lord of the Rings: The Return of the King",
-                Genre = Genre.Fantasy,
+                Genre = MovieGenre.Fantasy,
                 Year = 2003,
                 Rating = 9.1
             };
@@ -96,11 +96,11 @@ namespace Azure.Search.Documents.Tests.Samples
             // Add a movie to the index.
             SearchClient searchClient = indexClient.GetSearchClient(index.Name);
             searchClient.UploadDocuments(new[] { movie });
-            #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilder_UploadDocument
+            #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_UploadDocument
         }
     }
 
-    #region Snippet:Azure_Search_Tests_Sample2_FieldBuilder_Types
+    #region Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_Types
     public class Movie
     {
         [SimpleField(IsKey = true)]
@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [FieldBuilderIgnore]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Genre Genre { get; set; }
+        public MovieGenre Genre { get; set; }
 
         [SimpleField(IsFacetable = true, IsFilterable = true, IsSortable = true)]
         public int Year { get; set; }
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents.Tests.Samples
         public double Rating { get; set; }
     }
 
-    public enum Genre
+    public enum MovieGenre
     {
         Unknown,
         Action,
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.Tests.Samples
         Romance,
         SciFi,
     }
-    #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilder_Types
+    #endregion Snippet:Azure_Search_Tests_Sample2_FieldBuilderIgnore_Types
 #pragma warning restore SA1649 // File name should match first type name
 #pragma warning restore SA1402 // File may only contain a single type
 }

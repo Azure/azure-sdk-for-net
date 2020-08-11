@@ -14,7 +14,7 @@ description: Samples for the Azure.Search.Documents client library
 - Get started either [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01b_HelloWorldAsync.md).
 - Perform [service level operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample02_Service.md).
 - Perform [index level operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample03_Index.md).
-- Build a Search index from a model using [FieldBuilder](Sample04_FieldBuilder.md).
+- Use [`[FieldBuilderIgnore]`](Sample04_FieldBuilderIgnore.md) to add fields for unsupported properties using `FieldBuilder`.
 
 ## Sample Code to Include in your Projects
 
