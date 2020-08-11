@@ -41,26 +41,10 @@ jobs:
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
-        Linux:
-          OSVmImage: "ubuntu-18.04"
-          TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-        Windows_NetFramework_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        MacOs:
-          OSVmImage: "macOS-10.15"
-          TestTargetFramework: netcoreapp2.1
+          ConvertToProjectReferenceOption: /t:UpdateSessionsRecords
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -105,14 +89,17 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "None"
+          AZURE_TEST_MODE: "Record"
           ${{ insert }}: ${{ parameters.EnvVars }}
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
-
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: 'sdk/${{ parameters.ServiceDirectory }}/**/*.json'
+          artifactName: drop1
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
