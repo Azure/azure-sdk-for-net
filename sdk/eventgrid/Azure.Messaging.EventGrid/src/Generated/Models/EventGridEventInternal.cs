@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -19,8 +20,8 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventType"> The type of the event that occurred. </param>
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> is null. </exception>
-        public EventGridEventInternal(string id, string subject, object data, string eventType, DateTimeOffset eventTime, string dataVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> is null. </exception>
+        public EventGridEventInternal(string id, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string dataVersion)
         {
             if (id == null)
             {
@@ -29,10 +30,6 @@ namespace Azure.Messaging.EventGrid.Models
             if (subject == null)
             {
                 throw new ArgumentNullException(nameof(subject));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
             }
             if (eventType == null)
             {
@@ -60,7 +57,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="metadataVersion"> The schema version of the event metadata. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        internal EventGridEventInternal(string id, string topic, string subject, object data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
+        internal EventGridEventInternal(string id, string topic, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
         {
             Id = id;
             Topic = topic;
@@ -78,8 +75,6 @@ namespace Azure.Messaging.EventGrid.Models
         public string Topic { get; set; }
         /// <summary> A resource path relative to the topic path. </summary>
         public string Subject { get; set; }
-        /// <summary> Event data specific to the event type. </summary>
-        public object Data { get; set; }
         /// <summary> The type of the event that occurred. </summary>
         public string EventType { get; set; }
         /// <summary> The time (in UTC) the event was generated. </summary>

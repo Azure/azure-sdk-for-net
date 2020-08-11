@@ -1,4 +1,4 @@
-# Azure.AI.FormRecognizer
+# Azure.AI.TextAnalytics
 
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 

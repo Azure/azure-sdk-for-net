@@ -64,9 +64,13 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Creating a new device with Id '{deviceId}'");
 
+                #region Snippet:IotHubCreateDeviceIdentity
+
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
                 SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{response.Value.DeviceId}', ETag: '{response.Value.Etag}'");
+
+                #endregion Snippet: IotHubCreateDeviceIdentity
 
                 return response.Value;
             }
@@ -90,11 +94,15 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Getting device identity with Id: '{deviceId}'\n");
 
+                #region Snippet:IotHubGetDeviceIdentity
+
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
 
                 DeviceIdentity deviceIdentity = response.Value;
 
                 SampleLogger.PrintSuccess($"\t- Device Id: '{deviceIdentity.DeviceId}', ETag: '{deviceIdentity.Etag}'");
+
+                #endregion Snippet:IotHubGetDeviceIdentity
 
                 return deviceIdentity;
             }
@@ -115,6 +123,8 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
+                #region Snippet:IotHubUpdateDeviceIdentity
+
                 Response<DeviceIdentity> getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
 
                 DeviceIdentity deviceIdentity = getResponse.Value;
@@ -128,6 +138,8 @@ namespace Azure.Iot.Hub.Service.Samples
                 DeviceIdentity updatedDevice = response.Value;
 
                 SampleLogger.PrintSuccess($"Successfully updated device identity: DeviceId: '{updatedDevice.DeviceId}', DeviceId: '{updatedDevice.DeviceId}', Status: '{updatedDevice.Status}', ETag: '{updatedDevice.Etag}'");
+
+                #endregion Snippet:IotHubUpdateDeviceIdentity
 
                 return updatedDevice;
             }
@@ -150,9 +162,13 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Getting device twin with Id: '{deviceId}'");
 
+                #region Snippet:IotHubGetDeviceTwin
+
                 Response<TwinData> response = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
 
                 SampleLogger.PrintSuccess($"\t- Device Twin: DeviceId: '{response.Value.DeviceId}', Status: '{response.Value.Status}', ETag: '{response.Value.Etag}'");
+
+                #endregion Snippet:IotHubGetDeviceTwin
 
                 return response.Value;
             }
@@ -175,7 +191,10 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
-                // Get the device device
+                // Get the device
+
+                #region Snippet:IotHubUpdateDeviceTwin
+
                 Response<TwinData> getResponse = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
                 TwinData deviceTwin = getResponse.Value;
 
@@ -194,6 +213,8 @@ namespace Azure.Iot.Hub.Service.Samples
                     .Value;
 
                 SampleLogger.PrintSuccess($"Successfully updated device twin: DeviceId: '{updatedTwin.DeviceId}', desired property: ['{userPropName}': '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
+
+                #endregion Snippet:IotHubUpdateDeviceTwin
 
                 return updatedTwin;
             }
@@ -220,9 +241,13 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 Console.WriteLine($"Deleting device identity with Id: '{deviceIdentity.DeviceId}'");
 
+                #region Snippet:IotHubDeleteDeviceIdentity
+
                 Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
 
                 SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
+
+                #endregion Snippet:IotHubDeleteDeviceIdentity
             }
             catch (Exception ex)
             {

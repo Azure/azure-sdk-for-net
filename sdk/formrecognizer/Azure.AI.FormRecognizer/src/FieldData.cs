@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeFieldElements"/> is set to <c>true</c>, a list of references to
+        /// When `IncludeFieldElements` is set to <c>true</c>, a list of references to
         /// the field elements constituting this <see cref="FieldData"/>. An empty list otherwise. For calls to
         /// recognize content, this list is always populated.
         /// </summary>

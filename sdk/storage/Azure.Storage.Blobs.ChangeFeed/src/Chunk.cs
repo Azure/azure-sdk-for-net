@@ -29,14 +29,21 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public virtual long EventIndex { get; private set; }
 
+        /// <summary>
+        /// The path of the chunk.
+        /// </summary>
+        public virtual string ChunkPath { get; private set; }
+
         public Chunk(
             AvroReader avroReader,
             long blockOffset,
-            long eventIndex)
+            long eventIndex,
+            string chunkPath)
         {
             _avroReader = avroReader;
             BlockOffset = blockOffset;
             EventIndex = eventIndex;
+            ChunkPath = chunkPath;
         }
 
         public virtual bool HasNext()
