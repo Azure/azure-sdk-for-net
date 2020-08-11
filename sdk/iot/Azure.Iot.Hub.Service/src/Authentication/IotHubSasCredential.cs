@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Authentication
@@ -9,7 +11,7 @@ namespace Azure.Iot.Hub.Service.Authentication
     /// <summary>
     /// The IoT Hub credentials, to be used for authenticating against an IoT Hub instance via SAS tokens.
     /// </summary>
-    public class IotHubSasCredential : ISasTokenProvider
+    public class IotHubSasCredential : TokenCredential
     {
         // Time buffer before expiry when the token should be renewed, expressed as a percentage of the time to live.
         // The token will be renewed when it has 15% or less of the sas token's lifespan left.
@@ -104,8 +106,23 @@ namespace Azure.Iot.Hub.Service.Authentication
             }.Uri;
         }
 
-        public string GetSasToken()
+        private bool TokenShouldBeGenerated()
         {
+            // The token needs to be generated if this is the first time it is being accessed (not cached yet)
+            // or the current time is greater than or equal to the token expiry time, less 15% buffer.
+            if (_cachedSasToken == null)
+            {
+                return true;
+            }
+
+            var bufferTimeInMilliseconds = (double)RenewalTimeBufferPercentage / 100 * SasTokenTimeToLive.TotalMilliseconds;
+            DateTimeOffset tokenExpiryTimeWithBuffer = _tokenExpiryTime.AddMilliseconds(-bufferTimeInMilliseconds);
+            return DateTimeOffset.UtcNow.CompareTo(tokenExpiryTimeWithBuffer) >= 0;
+        }
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
             lock (_lock)
             {
                 if (TokenShouldBeGenerated())
@@ -122,22 +139,15 @@ namespace Azure.Iot.Hub.Service.Authentication
                     _cachedSasToken = builder.ToSignature();
                 }
 
-                return _cachedSasToken;
+                var token = new AccessToken(_cachedSasToken, _tokenExpiryTime);
+                return new ValueTask<AccessToken>(token);
             }
         }
 
-        private bool TokenShouldBeGenerated()
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            // The token needs to be generated if this is the first time it is being accessed (not cached yet)
-            // or the current time is greater than or equal to the token expiry time, less 15% buffer.
-            if (_cachedSasToken == null)
-            {
-                return true;
-            }
-
-            var bufferTimeInMilliseconds = (double)RenewalTimeBufferPercentage / 100 * SasTokenTimeToLive.TotalMilliseconds;
-            DateTimeOffset tokenExpiryTimeWithBuffer = _tokenExpiryTime.AddMilliseconds(-bufferTimeInMilliseconds);
-            return DateTimeOffset.UtcNow.CompareTo(tokenExpiryTimeWithBuffer) >= 0;
+            cancellationToken.ThrowIfCancellationRequested();
+            return GetTokenAsync(requestContext, cancellationToken).Result;
         }
     }
 }
