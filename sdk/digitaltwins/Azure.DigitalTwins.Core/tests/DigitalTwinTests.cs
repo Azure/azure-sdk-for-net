@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -44,7 +45,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // get twin
-                await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                string dt = await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                dt.Should().NotBeNullOrEmpty();
+                var basicDt = await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId);
+                basicDt.Should().NotBeNull();
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();

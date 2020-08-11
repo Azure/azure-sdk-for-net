@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -21,6 +23,7 @@ namespace Azure.DigitalTwins.Core
 
         private readonly HttpPipeline _httpPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ObjectSerializer _serializer;
 
         private readonly DigitalTwinsRestClient _dtRestClient;
         private readonly DigitalTwinModelsRestClient _dtModelsRestClient;
@@ -79,6 +82,7 @@ namespace Azure.DigitalTwins.Core
             Argument.AssertNotNull(options, nameof(options));
 
             _clientDiagnostics = new ClientDiagnostics(options);
+            _serializer = options.Serializer ?? new JsonObjectSerializer();
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes(endpoint)), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
@@ -139,6 +143,45 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
+        /// Gets a strongly-typed digital twin asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
+        /// <param name="digitalTwinId">The Id of the digital twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <exception cref="RequestFailedException">
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
+        /// </exception>
+        public virtual async Task<Response<T>> GetDigitalTwinAsync<T>(string digitalTwinId, CancellationToken cancellationToken = default)
+        {
+            Response<string> response = await _dtRestClient.GetByIdAsync(digitalTwinId, cancellationToken).ConfigureAwait(false);
+
+            T result = default;
+
+            if (!string.IsNullOrWhiteSpace(response.Value))
+            {
+                // Hacky work around until we can get a generated REST client that
+                // will return a stream and not have parsed it into a JsonDocument.
+                // There are obvious performance concerns to doing it the way we have.
+                // The goal is to get feedback on providing a typed overload.
+                Stream stream = response.GetRawResponse().ContentStream;
+                stream.Seek(0, SeekOrigin.Begin);
+                result = (T)await _serializer
+                    .DeserializeAsync(stream, typeof(T), cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            return Response.FromValue(
+                result,
+                response.GetRawResponse());
+        }
+
+        /// <summary>
         /// Gets a digital twin synchronously.
         /// </summary>
         /// <remarks>
@@ -163,6 +206,43 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<string> GetDigitalTwin(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.GetById(digitalTwinId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a strongly-typed digital twin synchronously.
+        /// </summary>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
+        /// <param name="digitalTwinId">The Id of the digital twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <exception cref="RequestFailedException">
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
+        /// </exception>
+        public virtual Response<T> GetDigitalTwin<T>(string digitalTwinId, CancellationToken cancellationToken = default)
+        {
+            Response<string> response = _dtRestClient.GetById(digitalTwinId, cancellationToken);
+
+            T result = default;
+
+            if (!string.IsNullOrWhiteSpace(response.Value))
+            {
+                // Hacky work around until we can get a generated REST client that
+                // will return a stream and not have parsed it into a JsonDocument.
+                // There are obvious performance concerns to doing it the way we have.
+                // The goal is to get feedback on providing a typed overload.
+                Stream stream = response.GetRawResponse().ContentStream;
+                stream.Seek(0, SeekOrigin.Begin);
+                result = (T)_serializer.Deserialize(stream, typeof(T), cancellationToken);
+            }
+
+            return Response.FromValue(
+                result,
+                response.GetRawResponse());
         }
 
         /// <summary>
