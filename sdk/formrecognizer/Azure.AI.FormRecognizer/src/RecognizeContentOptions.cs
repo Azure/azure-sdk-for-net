@@ -4,7 +4,7 @@
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognition content method
+    /// The set of options that can be specified when calling a recognize content method
     /// to configure the behavior of the request.
     /// </summary>
     public class RecognizeContentOptions

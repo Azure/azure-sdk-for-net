@@ -1,6 +1,11 @@
 # Release History
 
-## 11.1.0-preview.1 (Unreleased)
+## 11.1.0 (2020-08-11)
+
+### Added
+
+- Added `SearchClientOptions.Serializer` to set which `ObjectSerializer` to use for serialization.
+- Added `FieldBuilder` to easily create `SearchIndex` fields from a model type.
 
 ### Removed
 
