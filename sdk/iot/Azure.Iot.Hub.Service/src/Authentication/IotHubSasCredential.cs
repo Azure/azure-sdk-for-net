@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Iot.Hub.Service.Authentication
 {
@@ -120,7 +121,7 @@ namespace Azure.Iot.Hub.Service.Authentication
             return DateTimeOffset.UtcNow.CompareTo(tokenExpiryTimeWithBuffer) >= 0;
         }
 
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private AccessToken GetSasTokenAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             lock (_lock)
@@ -139,15 +140,18 @@ namespace Azure.Iot.Hub.Service.Authentication
                     _cachedSasToken = builder.ToSignature();
                 }
 
-                var token = new AccessToken(_cachedSasToken, _tokenExpiryTime);
-                return new ValueTask<AccessToken>(token);
+                return new AccessToken(_cachedSasToken, _tokenExpiryTime);
             }
+        }
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            return new ValueTask<AccessToken>(GetSasTokenAsync(cancellationToken));
         }
 
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            return GetTokenAsync(requestContext, cancellationToken).Result;
+            return GetSasTokenAsync(cancellationToken);
         }
     }
 }
