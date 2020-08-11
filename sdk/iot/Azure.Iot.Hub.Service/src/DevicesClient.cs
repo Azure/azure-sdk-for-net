@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -55,6 +55,26 @@ namespace Azure.Iot.Hub.Service
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubCreateDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully create a new device identity with Id: &apos;{response.Value.DeviceId}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
+        /// </code>
+        /// <code snippet="Snippet:IotHubUpdateDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
+        ///
+        /// DeviceIdentity deviceIdentity = getResponse.Value;
+        /// Console.WriteLine($&quot;Current device identity: DeviceId: &apos;{deviceIdentity.DeviceId}&apos;, Status: &apos;{deviceIdentity.Status}&apos;, ETag: &apos;{deviceIdentity.Etag}&apos;&quot;);
+        ///
+        /// Console.WriteLine($&quot;Updating device identity with Id: &apos;{deviceIdentity.DeviceId}&apos;. Disabling device so it cannot connect to IoT Hub.&quot;);
+        /// deviceIdentity.Status = DeviceStatus.Disabled;
+        ///
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+        ///
+        /// DeviceIdentity updatedDevice = response.Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully updated device identity: DeviceId: &apos;{updatedDevice.DeviceId}&apos;, DeviceId: &apos;{updatedDevice.DeviceId}&apos;, Status: &apos;{updatedDevice.Status}&apos;, ETag: &apos;{updatedDevice.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(
             DeviceIdentity deviceIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -91,6 +111,13 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubGetDeviceIdentity">
+        /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
+        ///
+        /// DeviceIdentity deviceIdentity = response.Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;\t- Device Id: &apos;{deviceIdentity.DeviceId}&apos;, ETag: &apos;{deviceIdentity.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<DeviceIdentity>> GetIdentityAsync(string deviceId, CancellationToken cancellationToken = default)
         {
             return _devicesRestClient.GetDeviceAsync(deviceId, cancellationToken);
@@ -114,6 +141,11 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubDeleteDeviceIdentity">
+        /// Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully deleted device identity with Id: &apos;{deviceIdentity.DeviceId}&apos;&quot;);
+        /// </code>
         public virtual Task<Response> DeleteIdentityAsync(
             DeviceIdentity deviceIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -448,6 +480,11 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get the twin of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The device's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubGetDeviceTwin">
+        /// Response&lt;TwinData&gt; response = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
+        ///
+        /// SampleLogger.PrintSuccess($&quot;\t- Device Twin: DeviceId: &apos;{response.Value.DeviceId}&apos;, Status: &apos;{response.Value.Status}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
+        /// </code>
         public virtual Task<Response<TwinData>> GetTwinAsync(string deviceId, CancellationToken cancellationToken = default)
         {
             return _devicesRestClient.GetTwinAsync(deviceId, cancellationToken);
@@ -471,6 +508,26 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition for which this operation will execute.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The new representation of the device twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <code snippet="Snippet:IotHubUpdateDeviceTwin">
+        /// Response&lt;TwinData&gt; getResponse = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
+        /// TwinData deviceTwin = getResponse.Value;
+        ///
+        /// Console.WriteLine($&quot;Updating device twin: DeviceId: &apos;{deviceTwin.DeviceId}&apos;, ETag: &apos;{deviceTwin.Etag}&apos;&quot;);
+        /// Console.WriteLine($&quot;Setting a new desired property {userPropName} to: &apos;{Environment.UserName}&apos;&quot;);
+        ///
+        /// deviceTwin.Properties.Desired.Add(new KeyValuePair&lt;string, object&gt;(userPropName, Environment.UserName));
+        ///
+        /// Response&lt;TwinData&gt; response = await IoTHubServiceClient.Devices.UpdateTwinAsync(deviceTwin);
+        ///
+        /// TwinData updatedTwin = response.Value;
+        ///
+        /// var userPropValue = (string)updatedTwin.Properties.Desired
+        ///     .Where(p =&gt; p.Key == userPropName)
+        ///     .First()
+        ///     .Value;
+        ///
+        /// SampleLogger.PrintSuccess($&quot;Successfully updated device twin: DeviceId: &apos;{updatedTwin.DeviceId}&apos;, desired property: [&apos;{userPropName}&apos;: &apos;{userPropValue}&apos;], ETag: &apos;{updatedTwin.Etag}&apos;,&quot;);
+        /// </code>
         public virtual Task<Response<TwinData>> UpdateTwinAsync(TwinData twinUpdate, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
