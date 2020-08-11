@@ -126,24 +126,6 @@ namespace Azure.Data.Tables
 }
 namespace Azure.Data.Tables.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResponseFormat : System.IEquatable<Azure.Data.Tables.Models.ResponseFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResponseFormat(string value) { throw null; }
-        public static Azure.Data.Tables.Models.ResponseFormat ReturnContent { get { throw null; } }
-        public static Azure.Data.Tables.Models.ResponseFormat ReturnNoContent { get { throw null; } }
-        public bool Equals(Azure.Data.Tables.Models.ResponseFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.Tables.Models.ResponseFormat left, Azure.Data.Tables.Models.ResponseFormat right) { throw null; }
-        public static implicit operator Azure.Data.Tables.Models.ResponseFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Data.Tables.Models.ResponseFormat left, Azure.Data.Tables.Models.ResponseFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RetentionPolicy
     {
         public RetentionPolicy(bool enabled) { }
