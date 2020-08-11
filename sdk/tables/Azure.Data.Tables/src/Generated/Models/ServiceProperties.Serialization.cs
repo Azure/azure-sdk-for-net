@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableServiceProperties : IXmlSerializable
+    public partial class ServiceProperties : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -41,7 +41,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element)
+        internal static ServiceProperties DeserializeServiceProperties(XElement element)
         {
             TableAnalyticsLoggingSettings logging = default;
             TableMetrics hourMetrics = default;
@@ -68,7 +68,7 @@ namespace Azure.Data.Tables.Models
                 }
                 cors = array;
             }
-            return new TableServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+            return new ServiceProperties(logging, hourMetrics, minuteMetrics, cors);
         }
     }
 }

@@ -228,7 +228,7 @@ namespace Azure.Data.Tables.Tests
 
             // Get current properties
 
-            TableServiceProperties responseToChange = await service.GetPropertiesAsync().ConfigureAwait(false);
+            ServiceProperties responseToChange = await service.GetPropertiesAsync().ConfigureAwait(false);
 
             // Change a property
 
@@ -248,11 +248,11 @@ namespace Azure.Data.Tables.Tests
 
             // Get configured properties
 
-            TableServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+            ServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
 
             // Test each property
 
-            CompareTableServiceProperties(responseToChange, changedResponse);
+            CompareServiceProperties(responseToChange, changedResponse);
         }
 
         [Test]
@@ -272,7 +272,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
         }
 
-        private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
+        private void CompareServiceProperties(ServiceProperties expected, ServiceProperties actual)
         {
             Assert.AreEqual(expected.Logging.Read, actual.Logging.Read);
             Assert.AreEqual(expected.Logging.Version, actual.Logging.Version);

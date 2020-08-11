@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Table Service Properties. </summary>
-    public partial class TableServiceProperties
+    public partial class ServiceProperties
     {
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
-        public TableServiceProperties()
+        /// <summary> Initializes a new instance of ServiceProperties. </summary>
+        public ServiceProperties()
         {
             Cors = new ChangeTrackingList<TableCorsRule>();
         }
 
-        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        /// <summary> Initializes a new instance of ServiceProperties. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for tables. </param>
         /// <param name="cors"> The set of CORS rules. </param>
-        internal TableServiceProperties(TableAnalyticsLoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<TableCorsRule> cors)
+        internal ServiceProperties(TableAnalyticsLoggingSettings logging, TableMetrics hourMetrics, TableMetrics minuteMetrics, IList<TableCorsRule> cors)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
