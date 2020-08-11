@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
-            _conditions = conditions;
+            _conditions = conditions ?? new BlobRequestConditions();
             _blockIds = new List<string>();
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs
         {
             await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
-            await _blockBlobClient.CommitBlockListInternal(
+            Response<BlobContentInfo> response = await _blockBlobClient.CommitBlockListInternal(
                 base64BlockIds: _blockIds,
                 blobHttpHeaders: default,
                 metadata: default,
@@ -71,6 +71,8 @@ namespace Azure.Storage.Blobs
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
+
+            _conditions.IfMatch = response.Value.ETag;
         }
 
         protected override void ValidateBufferSize(long bufferSize)

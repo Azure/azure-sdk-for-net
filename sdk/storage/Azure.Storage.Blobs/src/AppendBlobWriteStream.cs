@@ -48,8 +48,6 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
                 _conditions.IfMatch = response.Value.ETag;
-                _conditions.IfAppendPositionEqual = null;
-                _conditions.IfMaxSizeLessThanOrEqual = null;
 
                 _buffer.Clear();
             }

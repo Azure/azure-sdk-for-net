@@ -2898,11 +2898,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="position">
         /// The offset within the blob to begin writing from.
         /// </param>
-        /// <param name="size">
-        /// Required if overwrite is set to true, or the underlying
-        /// Page Blob is being created for the first time.
-        /// Specifies the size of the new Page Blob.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -2922,13 +2917,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             long position,
-            long? size = default,
             PageBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
                 overwrite: overwrite,
                 position: position,
-                size: size,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -2942,11 +2935,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="position">
         /// The offset within the blob to begin writing from.
-        /// </param>
-        /// <param name="size">
-        /// Required if overwrite is set to true, or the underlying
-        /// Page Blob is being created for the first time.
-        /// Specifies the size of the new Page Blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2967,13 +2955,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             long position,
-            long? size = default,
             PageBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
                 overwrite: overwrite,
                 position: position,
-                size: size,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -2987,11 +2973,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="position">
         /// The offset within the page blob to begin writing from.
-        /// </param>
-        /// <param name="size">
-        /// Required if overwrite is set to true, or the underlying
-        /// Page Blob is being created for the first time.
-        /// Specifies the size of the new Page Blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -3013,7 +2994,6 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Stream> OpenWriteInternal(
             bool overwrite,
             long position,
-            long? size,
             PageBlobOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -3028,13 +3008,13 @@ namespace Azure.Storage.Blobs.Specialized
 
                 if (overwrite)
                 {
-                    if (size == null)
+                    if (options?.Size == null)
                     {
-                        throw new ArgumentException($"{nameof(size)} must be set if {nameof(overwrite)} is set to true");
+                        throw new ArgumentException($"{nameof(options)}.{nameof(options.Size)} must be set if {nameof(overwrite)} is set to true");
                     }
 
                     Response<BlobContentInfo> createResponse = await CreateInternal(
-                        size: size.Value,
+                        size: options.Size.Value,
                         sequenceNumber: default,
                         httpHeaders: default,
                         metadata: default,
@@ -3061,13 +3041,13 @@ namespace Azure.Storage.Blobs.Specialized
                     catch (RequestFailedException ex)
                     when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                     {
-                        if (size == null)
+                        if (options?.Size == null)
                         {
-                            throw new ArgumentException($"{nameof(size)} must be set if the Page Blob is being created for the first time");
+                            throw new ArgumentException($"{nameof(options)}.{nameof(options.Size)} must be set if the Page Blob is being created for the first time");
                         }
 
                         Response<BlobContentInfo> createResponse = await CreateInternal(
-                            size: size.Value,
+                            size: options.Size.Value,
                             sequenceNumber: default,
                             httpHeaders: default,
                             metadata: default,

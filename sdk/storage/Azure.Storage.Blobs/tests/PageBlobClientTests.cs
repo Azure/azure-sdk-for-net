@@ -2788,6 +2788,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenWriteAsync_AlternatingWriteAndFlush()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var blobName = GetNewBlobName();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+            byte[] data0 = GetRandomBuffer(512);
+            byte[] data1 = GetRandomBuffer(512);
+            using Stream dataStream0 = new MemoryStream(data0);
+            using Stream dataStream1 = new MemoryStream(data1);
+            byte[] expectedData = new byte[Constants.KB];
+            Array.Copy(data0, expectedData, 512);
+            Array.Copy(data1, 0, expectedData, 512, 512);
+
+            // Act
+            Stream writeStream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0);
+            await dataStream0.CopyToAsync(writeStream);
+            await writeStream.FlushAsync();
+            await dataStream1.CopyToAsync(writeStream);
+            await writeStream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
@@ -2881,11 +2915,16 @@ namespace Azure.Storage.Blobs.Test
             byte[] expectedData = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(expectedData);
 
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                Size = Constants.KB
+            };
+
             // Act
             Stream openWriteStream = await blob.OpenWriteAsync(
                 overwrite: true,
                 position: 0,
-                size: Constants.KB);
+                options: options);
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
@@ -2909,7 +2948,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.OpenWriteAsync(
                     overwrite: true,
                     position: 0),
-                e => Assert.AreEqual("size must be set if overwrite is set to true", e.Message));
+                e => Assert.AreEqual("options.Size must be set if overwrite is set to true", e.Message));
         }
 
         [Test]
@@ -2924,7 +2963,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.OpenWriteAsync(
                     overwrite: false,
                     position: 0),
-                e => Assert.AreEqual("size must be set if the Page Blob is being created for the first time", e.Message));
+                e => Assert.AreEqual("options.Size must be set if the Page Blob is being created for the first time", e.Message));
         }
 
         [Test]
@@ -2949,7 +2988,8 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
                 {
-                    OpenConditions = accessConditions
+                    OpenConditions = accessConditions,
+                    Size = Constants.KB
                 };
 
                 byte[] data = GetRandomBuffer(Constants.KB);
@@ -2959,7 +2999,6 @@ namespace Azure.Storage.Blobs.Test
                 Stream openWriteStream = await blob.OpenWriteAsync(
                     overwrite: overwrite,
                     position: 0,
-                    size: Constants.KB,
                     options: options);
                 await stream.CopyToAsync(openWriteStream);
                 await openWriteStream.FlushAsync();
@@ -3008,7 +3047,8 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
                 {
-                    OpenConditions = accessConditions
+                    OpenConditions = accessConditions,
+                    Size = Constants.KB
                 };
 
                 // Act
@@ -3018,7 +3058,6 @@ namespace Azure.Storage.Blobs.Test
                         Stream openWriteStream = await blob.OpenWriteAsync(
                             overwrite: overwrite,
                             position: 0,
-                            size: Constants.KB,
                             options: options);
                         await stream.CopyToAsync(openWriteStream);
                         await openWriteStream.FlushAsync();

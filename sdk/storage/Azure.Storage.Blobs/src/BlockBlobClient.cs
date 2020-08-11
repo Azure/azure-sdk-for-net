@@ -2109,7 +2109,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 if (!overwrite)
                 {
-                    throw new ArgumentException($"{nameof(BlockBlobClient)}.{nameof(BlockBlobClient.OpenWrite)} only supports overwrite.");
+                    throw new ArgumentException($"{nameof(BlockBlobClient)}.{nameof(BlockBlobClient.OpenWrite)} only supports overwriting");
                 }
 
                 long position = 0;

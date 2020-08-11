@@ -27,5 +27,12 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Required if overwrite is set to true, or the underlying
+        /// Page Blob is being created for the first time.
+        /// Specifies the size of the new Page Blob.
+        /// </summary>
+        public long? Size { get; set; }
     }
 }
