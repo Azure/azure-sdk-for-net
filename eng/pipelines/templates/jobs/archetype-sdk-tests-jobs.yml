@@ -53,8 +53,6 @@ jobs:
         container: ${{ platform.Container }}
 
       steps:
-        - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-
         - ${{ if platform.PreSteps }}:
           - ${{ platform.PreSteps }}
 
