@@ -104,9 +104,9 @@ jobs:
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
-          ${{if eq(variables['Record'], 'true')}:
+          ${{if eq(variables['Record'], 'true')}}:
             AZURE_TEST_MODE: "Record"
-          ${{if ne(variables['Record'], 'true')}:
+          ${{if ne(variables['Record'], 'true')}}:
             AZURE_TEST_MODE: "None"
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -118,7 +118,7 @@ jobs:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
 
-      - ${{if eq(variables['Record'], 'true')}:
+      - ${{if eq(variables['Record'], 'true')}}:
         - task: CopyFiles@2
           displayName: "Copy Test Recordings"
           inputs:
