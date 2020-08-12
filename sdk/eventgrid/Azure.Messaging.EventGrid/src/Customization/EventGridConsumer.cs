@@ -75,9 +75,16 @@ namespace Azure.Messaging.EventGrid
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
             JsonDocument requestDocument = await ParseJsonToDocument(requestContent, async, cancellationToken).ConfigureAwait(false);
-            foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
-                egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
+                egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement));
+            }
+            else // events are wrapped in an array
+            {
+                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+                {
+                    egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
+                }
             }
 
             // Deserialize 'Data' property from JsonElement for each event
@@ -161,9 +168,16 @@ namespace Azure.Messaging.EventGrid
 
             // Deserialize raw JSON string into separate events, deserialize event envelope properties
             JsonDocument requestDocument = await ParseJsonToDocument(requestContent, async, cancellationToken).ConfigureAwait(false);
-            foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
-                cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
+                cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement));
+            }
+            else // events are wrapped in an array
+            {
+                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+                {
+                    cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
+                }
             }
 
             // Deserialize 'Data' property from JsonElement for each event

@@ -22,10 +22,24 @@ namespace Azure.Messaging.EventGrid.Tests
 
         #region EventGridEvent tests
 
+        #region Miscellaneous tests
         [Test]
         public void ConsumeStorageBlobDeletedEventWithExtraProperty()
         {
             string requestContent = "[{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageBlobDeletedEventData);
+            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[0].Data;
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+        }
+
+        [Test]
+        public void ConsumeEventNotWrappedInAnArray()
+        {
+            string requestContent = "{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}";
 
             EventGridEvent[] events = _eventGridConsumer.DeserializeEventGridEvents(requestContent);
 
@@ -53,6 +67,7 @@ namespace Azure.Messaging.EventGrid.Tests
             StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[2].Data;
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
         }
+        #endregion
 
         #region Custom event tests
         [Test]
@@ -1314,10 +1329,24 @@ namespace Azure.Messaging.EventGrid.Tests
 
         #region CloudEvent tests
 
+        #region Miscellaneous tests
         [Test]
         public void ConsumeCloudEventWithAdditionalProperties()
         {
             string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}]";
+
+            CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is StorageBlobDeletedEventData);
+            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[0].Data;
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+        }
+
+        [Test]
+        public void ConsumeCloudEventNotWrappedInAnArray()
+        {
+            string requestContent = "{  \"source\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"type\": \"Microsoft.Storage.BlobDeleted\",  \"time\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }}";
 
             CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
 
@@ -1345,6 +1374,7 @@ namespace Azure.Messaging.EventGrid.Tests
             StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[2].Data;
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
         }
+        #endregion
 
         #region Custom event tests
         [Test]
