@@ -2,6 +2,11 @@
 
 ## 4.1.0 (2020-08-11)
 
+### Added
+
+- Added "import" value to `KeyOperation` enumeration.
+- Added `RecoverableDays` property to `KeyProperties`.
+
 ### Changed
 
 - Default service version is now 7.1.
