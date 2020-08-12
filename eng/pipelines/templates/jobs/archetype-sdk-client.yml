@@ -126,29 +126,24 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          CodeCoverageArgs: --collect:"XPlat Code Coverage"
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CodeCoverageArgs: --collect:"XPlat Code Coverage"
+          CodeCoverageArgs: /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-          CodeCoverageArgs: --collect:"XPlat Code Coverage"
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CodeCoverageArgs: ''
         Windows_NetFramework_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-          CodeCoverageArgs: ''
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CodeCoverageArgs: --collect:"XPlat Code Coverage"
     pool:
       vmImage: "$(OSVmImage)"
     steps:
@@ -179,8 +174,23 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - pwsh: |
+          $(Build.SourcesDirectory)/eng/scripts/Merge-Coverage-Reports.ps1 -RepoRoot '$(Build.SourcesDirectory)' -BinDirectory '$(Build.BinariesDirectory)'
+        displayName: Merge Code Coverage Reports Before Publishing
+        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
+      - task: PublishPipelineArtifact@1
+        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
+        inputs:
+          artifactName: coverage
+          path: '$(Build.SourcesDirectory)/cobertura.xml'
+      - task: PublishPipelineArtifact@1
+        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
+        inputs:
+          artifactName: coverage2
+          path: '$(Build.BinariesDirectory)/CoverageFiles'
       - task: PublishCodeCoverageResults@1
+        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
         displayName: 'Publish code coverage report'
         inputs:
           codeCoverageTool: 'Cobertura'
-          summaryFileLocation: '**/coverage.cobertura.xml'
+          summaryFileLocation: '$(Build.BinariesDirectory)/CoverageFiles/coverage.netcoreapp2.1.cobertura.xml'
