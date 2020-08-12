@@ -40,11 +40,13 @@ jobs:
           value: ${{ parameters.SubscriptionConfiguration }}
         - name: Location
           value: ${{ parameters.Location }}
+        - name: OSVmImage
+          value: ${{ platform.OSVmImage }}
 
       timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
       pool:
-        vmImage: ${{ platform.OSVmImage }}
+        vmImage: $(OSVmImage)
       ${{ if platform.Container }}:
         container: ${{ platform.Container }}
 
