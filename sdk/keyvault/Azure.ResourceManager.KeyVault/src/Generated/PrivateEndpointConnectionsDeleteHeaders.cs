@@ -17,7 +17,9 @@ namespace Azure.ResourceManager.KeyVault
         {
             _response = response;
         }
+        /// <summary> The recommended number of seconds to wait before calling the URI specified in the location header. </summary>
         public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
+        /// <summary> The URI to poll for completion status. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

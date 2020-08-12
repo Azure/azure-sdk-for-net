@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of HBaseLinkedService. </summary>
         /// <param name="host"> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism to use to connect to the HBase server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HBaseLinkedService(object host, HBaseAuthenticationType authenticationType)
         {
             if (host == null)

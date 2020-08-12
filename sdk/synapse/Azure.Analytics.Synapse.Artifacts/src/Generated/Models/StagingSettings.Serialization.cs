@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteObjectValue(Path);
             }
-            if (EnableCompression != null)
+            if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression");
                 writer.WriteObjectValue(EnableCompression);
@@ -39,10 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static StagingSettings DeserializeStagingSettings(JsonElement element)
         {
             LinkedServiceReference linkedServiceName = default;
-            object path = default;
-            object enableCompression = default;
+            Optional<object> path = default;
+            Optional<object> enableCompression = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -52,34 +52,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("enableCompression"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enableCompression = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
+            return new StagingSettings(linkedServiceName, path.Value, enableCompression.Value, additionalProperties);
         }
     }
 }

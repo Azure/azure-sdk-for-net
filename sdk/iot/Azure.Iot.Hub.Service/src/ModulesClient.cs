@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,25 +18,34 @@ namespace Azure.Iot.Hub.Service
     public class ModulesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
-        private const string HubModuleQuery = "select * from modules";
+        private const string HubModuleQuery = "select * from devices.modules";
 
-        private readonly RegistryManagerRestClient _registryManagerClient;
-        private readonly TwinRestClient _twinClient;
-        private readonly DeviceMethodRestClient _deviceMethodClient;
+        private readonly DevicesRestClient _devicesRestClient;
+        private readonly ModulesRestClient _modulesRestClient;
+        private readonly QueryRestClient _queryRestClient;
 
+        /// <summary>
+        /// Initializes a new instance of ModulesClient.
+        /// </summary>
         protected ModulesClient()
         {
         }
 
-        internal ModulesClient(RegistryManagerRestClient registryManagerClient, TwinRestClient twinRestClient, DeviceMethodRestClient deviceMethodRestClient)
+        /// <summary>
+        /// Initializes a new instance of DevicesClient.
+        /// <param name="devicesRestClient"> The REST client to perform bulk operations on the module. </param>
+        /// <param name="modulesRestClient"> The REST client to perform module and module twin operations. </param>
+        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// </summary>
+        internal ModulesClient(DevicesRestClient devicesRestClient, ModulesRestClient modulesRestClient, QueryRestClient queryRestClient)
         {
-            Argument.AssertNotNull(registryManagerClient, nameof(registryManagerClient));
-            Argument.AssertNotNull(twinRestClient, nameof(twinRestClient));
-            Argument.AssertNotNull(deviceMethodRestClient, nameof(deviceMethodRestClient));
+            Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
+            Argument.AssertNotNull(modulesRestClient, nameof(modulesRestClient));
+            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
 
-            _registryManagerClient = registryManagerClient;
-            _twinClient = twinRestClient;
-            _deviceMethodClient = deviceMethodRestClient;
+            _devicesRestClient = devicesRestClient;
+            _modulesRestClient = modulesRestClient;
+            _queryRestClient = queryRestClient;
         }
 
         /// <summary>
@@ -55,7 +65,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(moduleIdentity, nameof(moduleIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, moduleIdentity.Etag);
-            return _registryManagerClient.CreateOrUpdateModuleAsync(moduleIdentity.DeviceId, moduleIdentity.ModuleId, moduleIdentity, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.CreateOrUpdateIdentityAsync(moduleIdentity.DeviceId, moduleIdentity.ModuleId, moduleIdentity, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +85,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(moduleIdentity, nameof(moduleIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, moduleIdentity.Etag);
-            return _registryManagerClient.CreateOrUpdateModule(moduleIdentity.DeviceId, moduleIdentity.ModuleId, moduleIdentity, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.CreateOrUpdateIdentity(moduleIdentity.DeviceId, moduleIdentity.ModuleId, moduleIdentity, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +97,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<ModuleIdentity>> GetIdentityAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
-            return _registryManagerClient.GetModuleAsync(deviceId, moduleId, cancellationToken);
+            return _modulesRestClient.GetIdentityAsync(deviceId, moduleId, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +109,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The retrieved module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<ModuleIdentity> GetIdentity(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
-            return _registryManagerClient.GetModule(deviceId, moduleId, cancellationToken);
+            return _modulesRestClient.GetIdentity(deviceId, moduleId, cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +121,7 @@ namespace Azure.Iot.Hub.Service
         public virtual Task<Response<IReadOnlyList<ModuleIdentity>>> GetIdentitiesAsync(string deviceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            return _registryManagerClient.GetModulesOnDeviceAsync(deviceId, cancellationToken);
+            return _modulesRestClient.GetModulesOnDeviceAsync(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +133,7 @@ namespace Azure.Iot.Hub.Service
         public virtual Response<IReadOnlyList<ModuleIdentity>> GetIdentities(string deviceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            return _registryManagerClient.GetModulesOnDevice(deviceId, cancellationToken);
+            return _modulesRestClient.GetModulesOnDevice(deviceId, cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +150,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(moduleIdentity, nameof(moduleIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, moduleIdentity.Etag);
-            return _registryManagerClient.DeleteModuleAsync(moduleIdentity.DeviceId, moduleIdentity.ModuleId, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.DeleteIdentityAsync(moduleIdentity.DeviceId, moduleIdentity.ModuleId, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +167,199 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(moduleIdentity, nameof(moduleIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, moduleIdentity.Etag);
-            return _registryManagerClient.DeleteModule(moduleIdentity.DeviceId, moduleIdentity.ModuleId, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.DeleteIdentity(moduleIdentity.DeviceId, moduleIdentity.ModuleId, ifMatchHeaderValue, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules with an initial twin. A maximum of 100 creations can be done per call,
+        /// and each creation must have a unique module identity. Multiple modules may be created on a single device.
+        /// All devices that these new modules will belong to must already exist.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="modules">The pairs of modules and their twins that will be created. For fields such as deviceId
+        /// where device and twin have a definition, the device value will override the twin value.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(IDictionary<ModuleIdentity, TwinData> modules, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = modules
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.Key.DeviceId,
+                    ModuleId = x.Key.ModuleId,
+                    Authentication = x.Key.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
+
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules with an initial twin. A maximum of 100 creations can be done per call,
+        /// and each creation must have a unique module identity. Multiple modules may be created on a single device.
+        /// All devices that these new modules will belong to must already exist.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="modules">The pairs of modules and their twins that will be created. For fields such as deviceId
+        /// where device and twin have a definition, the device value will override the twin value.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentitiesWithTwin(IDictionary<ModuleIdentity, TwinData> modules, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = modules
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.Key.DeviceId,
+                    ModuleId = x.Key.ModuleId,
+                    Authentication = x.Key.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
+
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules. A maximum of 100 creations can be done per call, and each module identity must be unique.
+        /// All devices that these modules will belong to must already exist. Multiple modules can be created at a time on a single device.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The module identities to create.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<ModuleIdentity> moduleIdentities, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                });
+
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create multiple modules. A maximum of 100 creations can be done per call, and each module identity must be unique.
+        /// All devices that these modules will belong to must already exist. Multiple modules can be created at a time on a single device.
+        /// For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The module identities to create.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentities(IEnumerable<ModuleIdentity> moduleIdentities, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = ExportImportDeviceImportMode.Create
+                });
+
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to update.</param>
+        /// <param name="precondition">The condition on which to update each module identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentitiesAsync(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                });
+
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to update.</param>
+        /// <param name="precondition">The condition on which to update each module identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> UpdateIdentities(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    Authentication = x.Authentication,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                });
+
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete multiple modules. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The modules to delete.</param>
+        /// <param name="precondition">The condition on which to delete each device identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk deletion and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    ETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
+                });
+
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete multiple modules. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="moduleIdentities">The devices to delete.</param>
+        /// <param name="precondition">The condition on which to delete each device identity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk deletion and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(
+            IEnumerable<ModuleIdentity> moduleIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = moduleIdentities
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    ETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
+                });
+
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +378,7 @@ namespace Azure.Iot.Hub.Service
                 };
 
                 Response<IReadOnlyList<TwinData>> response =
-                    await _registryManagerClient.QueryIotHubAsync(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+                    await _queryRestClient.GetTwinsAsync(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
 
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
@@ -188,7 +390,7 @@ namespace Azure.Iot.Hub.Service
                 var querySpecification = new QuerySpecification();
 
                 Response<IReadOnlyList<TwinData>> response =
-                    await _registryManagerClient.QueryIotHubAsync(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+                    await _queryRestClient.GetTwinsAsync(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
 
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
@@ -212,7 +414,7 @@ namespace Azure.Iot.Hub.Service
                     Query = HubModuleQuery
                 };
 
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
                     querySpecification,
                     null,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -226,7 +428,7 @@ namespace Azure.Iot.Hub.Service
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
                     querySpecification,
                     nextLink,
                     pageSizeHint?.ToString(CultureInfo.InvariantCulture),
@@ -248,7 +450,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The module's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<TwinData>> GetTwinAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
-            return _twinClient.GetModuleTwinAsync(deviceId, moduleId, cancellationToken);
+            return _modulesRestClient.GetTwinAsync(deviceId, moduleId, cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +462,7 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The module's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<TwinData> GetTwin(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
-            return _twinClient.GetModuleTwin(deviceId, moduleId, cancellationToken);
+            return _modulesRestClient.GetTwin(deviceId, moduleId, cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +479,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, twinUpdate.Etag);
-            return _twinClient.UpdateModuleTwinAsync(twinUpdate.DeviceId, twinUpdate.ModuleId, twinUpdate, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.UpdateTwinAsync(twinUpdate.DeviceId, twinUpdate.ModuleId, twinUpdate, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>
@@ -291,7 +493,57 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, twinUpdate.Etag);
-            return _twinClient.UpdateModuleTwin(twinUpdate.DeviceId, twinUpdate.ModuleId, twinUpdate, ifMatchHeaderValue, cancellationToken);
+            return _modulesRestClient.UpdateTwin(twinUpdate.DeviceId, twinUpdate.ModuleId, twinUpdate, ifMatchHeaderValue, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules' twins. A maximum of 100 updates can be done per call, and each operation must be done on a different module twin. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="twinUpdates">The new twins to replace the twins on existing devices.</param>
+        /// <param name="precondition">The condition on which to update each device twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = twinUpdates
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    TwinETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
+
+            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update multiple modules' twins. A maximum of 100 updates can be done per call, and each operation must be done on a different device twin. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
+        /// </summary>
+        /// <param name="twinUpdates">The new twins to replace the twins on existing devices.</param>
+        /// <param name="precondition">The condition on which to update each device twin.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
+        public virtual Response<BulkRegistryOperationResponse> UpdateTwins(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ExportImportDevice> registryOperations = twinUpdates
+                .Select(x => new ExportImportDevice()
+                {
+                    Id = x.DeviceId,
+                    ModuleId = x.ModuleId,
+                    TwinETag = x.Etag,
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.UpdateTwin
+                        : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
+
+            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +560,7 @@ namespace Azure.Iot.Hub.Service
             CloudToDeviceMethodRequest directMethodRequest,
             CancellationToken cancellationToken = default)
         {
-            return _deviceMethodClient.InvokeModuleMethodAsync(deviceId, moduleId, directMethodRequest, cancellationToken);
+            return _modulesRestClient.InvokeMethodAsync(deviceId, moduleId, directMethodRequest, cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +577,7 @@ namespace Azure.Iot.Hub.Service
             CloudToDeviceMethodRequest directMethodRequest,
             CancellationToken cancellationToken = default)
         {
-            return _deviceMethodClient.InvokeModuleMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
+            return _modulesRestClient.InvokeMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
         }
     }
 }

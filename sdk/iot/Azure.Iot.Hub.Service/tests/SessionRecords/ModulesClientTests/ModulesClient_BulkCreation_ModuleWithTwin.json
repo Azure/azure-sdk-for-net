@@ -1,0 +1,179 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://FakeHost.net/devices/bulkDeviceWithTwin1019384117?api-version=2020-03-13",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "If-Match": "\u0022\u0022",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "039c61f333222faf83d0cf7e3e60339c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "deviceId": "bulkDeviceWithTwin1019384117"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "630",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "ETag": "\u0022NzQ4NDA3MjYx\u0022",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "e63d8ec5-4fe3-4b38-ac5a-608d75d2dc6b"
+      },
+      "ResponseBody": {
+        "deviceId": "bulkDeviceWithTwin1019384117",
+        "generationId": "637315714270636839",
+        "etag": "NzQ4NDA3MjYx",
+        "connectionState": "Disconnected",
+        "status": "enabled",
+        "statusReason": null,
+        "connectionStateUpdatedTime": "0001-01-01T00:00:00",
+        "statusUpdatedTime": "0001-01-01T00:00:00",
+        "lastActivityTime": "0001-01-01T00:00:00",
+        "cloudToDeviceMessageCount": 0,
+        "authentication": {
+          "symmetricKey": {
+            "primaryKey": "UTfXnlJuuxnaH\u002B5qU5T7z8a\u002Bz36//6h8V8KNQcYsykM=",
+            "secondaryKey": "yQeqyvs/fDt3IKPYg3K9ezZu00BpccUuZTOQuoM7rzs="
+          },
+          "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+          },
+          "type": "sas"
+        },
+        "capabilities": {
+          "iotEdge": false
+        },
+        "parentScopes": []
+      }
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "1433",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "66e550e25707d195d53645cb529214a1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin349880774\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin282346837\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin1375856670\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin570885850\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin986366759\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin698506601\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin147645663\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin747876081\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin1994188811\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}},{\u0022id\u0022:\u0022bulkDeviceWithTwin1019384117\u0022,\u0022moduleId\u0022:\u0022bulkModuleWithTwin299710662\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022properties\u0022:{\u0022desired\u0022:{\u0022user\u0022:\u0022userA\u0022}}}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "4768ac74-f69a-4a07-a655-33a7fed39d6c"
+      },
+      "ResponseBody": {
+        "isSuccessful": true,
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "RequestUri": "https://FakeHost.net/twins/bulkDeviceWithTwin1019384117/modules/bulkModuleWithTwin349880774?api-version=2020-03-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d01147ce5fb9c300c731cc48654717be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "742",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "e9bc90cf-4f15-461e-a666-6d4d5e19a622"
+      },
+      "ResponseBody": {
+        "deviceId": "bulkDeviceWithTwin1019384117",
+        "moduleId": "bulkModuleWithTwin349880774",
+        "etag": "AAAAAAAAAAE=",
+        "deviceEtag": "MTAxNzcyOTA4NA==",
+        "status": "enabled",
+        "statusUpdateTime": "0001-01-01T00:00:00Z",
+        "connectionState": "Disconnected",
+        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "cloudToDeviceMessageCount": 0,
+        "authenticationType": "sas",
+        "x509Thumbprint": {
+          "primaryThumbprint": null,
+          "secondaryThumbprint": null
+        },
+        "version": 2,
+        "properties": {
+          "desired": {
+            "user": "userA",
+            "$metadata": {
+              "$lastUpdated": "2020-07-28T22:17:07.1418098Z",
+              "$lastUpdatedVersion": 1,
+              "user": {
+                "$lastUpdated": "2020-07-28T22:17:07.1418098Z",
+                "$lastUpdatedVersion": 1
+              }
+            },
+            "$version": 1
+          },
+          "reported": {
+            "$metadata": {
+              "$lastUpdated": "2020-07-28T22:17:07.1418098Z",
+              "$lastUpdatedVersion": 1
+            },
+            "$version": 1
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices/bulkDeviceWithTwin1019384117?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "8e868ba6a50b9cbecccb2eebede3ddf0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "11615198-a7ad-442d-b04a-2fa30b8dbe6b"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "RandomSeed": "225948997"
+  }
+}

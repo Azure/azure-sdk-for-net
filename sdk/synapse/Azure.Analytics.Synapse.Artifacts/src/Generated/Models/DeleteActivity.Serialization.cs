@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -30,12 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -57,22 +57,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive");
                 writer.WriteObjectValue(Recursive);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
                 writer.WriteNumberValue(MaxConcurrentConnections.Value);
             }
-            if (EnableLogging != null)
+            if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging");
                 writer.WriteObjectValue(EnableLogging);
             }
-            if (LogStorageSettings != null)
+            if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings");
                 writer.WriteObjectValue(LogStorageSettings);
@@ -90,37 +90,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DeleteActivity DeserializeDeleteActivity(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
-            object recursive = default;
-            int? maxConcurrentConnections = default;
-            object enableLogging = default;
-            LogStorageSettings logStorageSettings = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
+            Optional<object> recursive = default;
+            Optional<int> maxConcurrentConnections = default;
+            Optional<object> enableLogging = default;
+            Optional<LogStorageSettings> logStorageSettings = default;
             DatasetReference dataset = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -136,51 +128,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                        }
+                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(UserProperty.DeserializeUserProperty(item));
-                        }
+                        array.Add(UserProperty.DeserializeUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -191,37 +157,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("recursive"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             recursive = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrentConnections"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             maxConcurrentConnections = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("enableLogging"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableLogging = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value);
                             continue;
                         }
@@ -233,18 +183,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DeleteActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, recursive, maxConcurrentConnections, enableLogging, logStorageSettings, dataset);
+            return new DeleteActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset);
         }
     }
 }

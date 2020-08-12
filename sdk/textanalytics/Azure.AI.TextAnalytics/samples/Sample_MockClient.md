@@ -40,4 +40,4 @@ Assert.IsTrue(result);
 ```
 
 [moq]: https://github.com/Moq/moq4/
-[moq_samples]: (https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/SampleMoq.cs)
+[moq_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/SampleMoq.cs

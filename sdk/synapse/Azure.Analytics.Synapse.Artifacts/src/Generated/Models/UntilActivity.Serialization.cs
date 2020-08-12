@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression");
             writer.WriteObjectValue(Expression);
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteObjectValue(Timeout);
@@ -74,14 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
             Expression expression = default;
-            object timeout = default;
+            Optional<object> timeout = default;
             IList<Activity> activities = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -96,51 +96,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                        }
+                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(UserProperty.DeserializeUserProperty(item));
-                        }
+                        array.Add(UserProperty.DeserializeUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -156,10 +130,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("timeout"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             timeout = property0.Value.GetObject();
                             continue;
                         }
@@ -168,14 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<Activity> array = new List<Activity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeActivity(item));
-                                }
+                                array.Add(DeserializeActivity(item));
                             }
                             activities = array;
                             continue;
@@ -183,18 +146,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UntilActivity(name, type, description, dependsOn, userProperties, additionalProperties, expression, timeout, activities);
+            return new UntilActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, expression, timeout.Value, activities);
         }
     }
 }

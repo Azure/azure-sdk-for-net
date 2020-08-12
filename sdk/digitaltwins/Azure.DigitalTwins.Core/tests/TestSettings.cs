@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.DigitalTwins.Core.Tests
 {
     /// <summary>
-    /// These are the settings that will be used by the end-to-end tests tests.
+    /// These are the settings that will be used by the end-to-end tests.
     /// The json files configured in the config will load the settings specific to a user.
     /// </summary>
     public class TestSettings

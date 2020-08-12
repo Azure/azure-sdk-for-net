@@ -14,10 +14,10 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             return variableName switch
             {
-                EventGridTestEnvironment.TopicKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.DomainKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.CloudEventTopicKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.CustomEventTopicKeyEnvironmentVariableName => SanitizeValue,
+                EventGridTestEnvironment.TopicKeyEnvironmentVariableName => "Kg==",
+                EventGridTestEnvironment.DomainKeyEnvironmentVariableName => "Kg==",
+                EventGridTestEnvironment.CloudEventTopicKeyEnvironmentVariableName => "Kg==",
+                EventGridTestEnvironment.CustomEventTopicKeyEnvironmentVariableName => "Kg==",
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

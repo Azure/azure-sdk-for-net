@@ -16,19 +16,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool");
             writer.WriteObjectValue(TargetBigDataPool);
-            if (RequiredSparkVersion != null)
+            if (Optional.IsDefined(RequiredSparkVersion))
             {
                 writer.WritePropertyName("requiredSparkVersion");
                 writer.WriteStringValue(RequiredSparkVersion);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language);
@@ -45,21 +45,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkJobDefinition DeserializeSparkJobDefinition(JsonElement element)
         {
-            string description = default;
+            Optional<string> description = default;
             BigDataPoolReference targetBigDataPool = default;
-            string requiredSparkVersion = default;
-            string language = default;
+            Optional<string> requiredSparkVersion = default;
+            Optional<string> language = default;
             SparkJobProperties jobProperties = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -70,19 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("requiredSparkVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     requiredSparkVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("language"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     language = property.Value.GetString();
                     continue;
                 }
@@ -91,18 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jobProperties = SparkJobProperties.DeserializeSparkJobProperties(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description, targetBigDataPool, requiredSparkVersion, language, jobProperties, additionalProperties);
+            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, additionalProperties);
         }
     }
 }

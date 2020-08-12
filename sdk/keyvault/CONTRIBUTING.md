@@ -74,7 +74,7 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/tests/TestFramework
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/tests/
 [live_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AKeyVault

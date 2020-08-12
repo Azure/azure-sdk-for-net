@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/>, or <paramref name="uri"/> is null. </exception>
         public WebApiSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string uri) : base(inputs, outputs)
         {
             if (inputs == null)
@@ -33,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Uri = uri;
-            HttpHeaders = new Dictionary<string, string>();
+            HttpHeaders = new ChangeTrackingDictionary<string, string>();
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
@@ -53,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
         {
             Uri = uri;
-            HttpHeaders = httpHeaders ?? new Dictionary<string, string>();
+            HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
             BatchSize = batchSize;

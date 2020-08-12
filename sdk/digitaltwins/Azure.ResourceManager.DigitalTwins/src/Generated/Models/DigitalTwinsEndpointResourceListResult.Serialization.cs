@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static DigitalTwinsEndpointResourceListResult DeserializeDigitalTwinsEndpointResourceListResult(JsonElement element)
         {
-            string nextLink = default;
-            IReadOnlyList<DigitalTwinsEndpointResource> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DigitalTwinsEndpointResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DigitalTwinsEndpointResource> array = new List<DigitalTwinsEndpointResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(item));
-                        }
+                        array.Add(DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new DigitalTwinsEndpointResourceListResult(nextLink, value);
+            return new DigitalTwinsEndpointResourceListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

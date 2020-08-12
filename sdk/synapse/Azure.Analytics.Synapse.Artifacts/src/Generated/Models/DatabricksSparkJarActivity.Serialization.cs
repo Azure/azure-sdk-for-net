@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -30,12 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mainClassName");
             writer.WriteObjectValue(MainClassName);
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Libraries != null)
+            if (Optional.IsCollectionDefined(Libraries))
             {
                 writer.WritePropertyName("libraries");
                 writer.WriteStartArray();
@@ -96,35 +96,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatabricksSparkJarActivity DeserializeDatabricksSparkJarActivity(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
             object mainClassName = default;
-            IList<object> parameters = default;
-            IList<IDictionary<string, object>> libraries = default;
+            Optional<IList<object>> parameters = default;
+            Optional<IList<IDictionary<string, object>>> libraries = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -140,51 +132,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                        }
+                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(UserProperty.DeserializeUserProperty(item));
-                        }
+                        array.Add(UserProperty.DeserializeUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -200,54 +166,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("parameters"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetObject());
-                                }
+                                array.Add(item.GetObject());
                             }
                             parameters = array;
                             continue;
                         }
                         if (property0.NameEquals("libraries"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<IDictionary<string, object>> array = new List<IDictionary<string, object>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
+                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                foreach (var property1 in item.EnumerateObject())
                                 {
-                                    array.Add(null);
+                                    dictionary.Add(property1.Name, property1.Value.GetObject());
                                 }
-                                else
-                                {
-                                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                                    foreach (var property1 in item.EnumerateObject())
-                                    {
-                                        if (property1.Value.ValueKind == JsonValueKind.Null)
-                                        {
-                                            dictionary.Add(property1.Name, null);
-                                        }
-                                        else
-                                        {
-                                            dictionary.Add(property1.Name, property1.Value.GetObject());
-                                        }
-                                    }
-                                    array.Add(dictionary);
-                                }
+                                array.Add(dictionary);
                             }
                             libraries = array;
                             continue;
@@ -255,18 +192,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksSparkJarActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, mainClassName, parameters, libraries);
+            return new DatabricksSparkJarActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, mainClassName, Optional.ToList(parameters), Optional.ToList(libraries));
         }
     }
 }

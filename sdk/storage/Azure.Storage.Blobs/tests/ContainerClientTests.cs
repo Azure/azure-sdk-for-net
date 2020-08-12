@@ -380,7 +380,23 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = GetServiceClient_AccountSas();
+
+            AccountSasPermissions permissions = AccountSasPermissions.Read
+                | AccountSasPermissions.Write
+                | AccountSasPermissions.Delete
+                | AccountSasPermissions.List
+                | AccountSasPermissions.Add
+                | AccountSasPermissions.Create
+                | AccountSasPermissions.Update
+                | AccountSasPermissions.Process;
+
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+                permissions: permissions);
+
+            BlobServiceClient service = new BlobServiceClient(
+                new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasQueryParameters}"),
+                GetOptions());
+
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -403,7 +419,25 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var containerName = GetNewContainerName();
             BlobServiceClient service = GetServiceClient_BlobServiceSas_Container(containerName);
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read
+                | BlobContainerSasPermissions.Add
+                | BlobContainerSasPermissions.Create
+                | BlobContainerSasPermissions.Write
+                | BlobContainerSasPermissions.Delete
+                | BlobContainerSasPermissions.List;
+
+            BlobSasQueryParameters sasQueryParameters = GetContainerSas(
+                containerName: containerName,
+                permissions: permissions,
+                sasVersion: ToSasVersion(_serviceVersion));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(service.GetBlobContainerClient(containerName).Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
             var pass = false;
 
             try
@@ -681,7 +715,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DeleteIfExistsAsync_Exists()
+        public async Task DeleteIfExistsAsync_NotExists()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -965,9 +999,130 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
             Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+        }
+
+        [Test]
+        public async Task SetAccessPolicyAsync_OldProperties()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange and Act
+            BlobSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    // Create an AccessPolicy with only StartsOn (old property)
+                    AccessPolicy = new BlobAccessPolicy
+                    {
+                        StartsOn = Recording.UtcNow.AddHours(-1),
+                        ExpiresOn = Recording.UtcNow.AddHours(+1)
+                    }
+                }
+            };
+
+            // Assert
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+
+            // Act
+            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(permissions: signedIdentifiers);
+
+            // Assert
+            Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
+            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.StartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.ExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
+        }
+
+        [Test]
+        public async Task SetAccessPolicyAsync_StartsPermissionsProperties()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy = new BlobAccessPolicy
+                    {
+                        // Create an AccessPolicy without PolicyExpiresOn
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        Permissions = "rw"
+                    }
+                }
+            };
+            // Assert
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
+            Assert.IsNull(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn);
+
+            // Act
+            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(permissions: signedIdentifiers);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
+            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
+            Assert.IsNull(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.Permissions, signedIdentifiers[0].AccessPolicy.Permissions);
+        }
+
+        [Test]
+        public async Task SetAccessPolicyAsync_StartsExpiresProperties()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy = new BlobAccessPolicy
+                    {
+                        // Create an AccessPolicy without PolicyExpiresOn
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(+1)
+                    }
+                }
+            };
+            // Assert
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+
+            // Act
+            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(permissions: signedIdentifiers);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
+            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.ExpiresOn);
+            Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
         }
 
         [Test]
@@ -2186,16 +2341,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task DeleteBlobIfExistsAsync_ContainerNotExists()
+        {
+            var name = GetNewBlobName();
+
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+
+            // Act
+            Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
+        }
+
+        [Test]
         public async Task DeleteBlobIfExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient unauthorizedContainerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                unauthorizedContainerClient.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => { });
         }
 
         [Test]

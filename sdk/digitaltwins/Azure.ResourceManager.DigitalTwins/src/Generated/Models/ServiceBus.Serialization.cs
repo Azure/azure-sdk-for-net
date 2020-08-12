@@ -23,17 +23,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(SecondaryConnectionString);
             writer.WritePropertyName("endpointType");
             writer.WriteStringValue(EndpointType.ToString());
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (CreatedTime != null)
-            {
-                writer.WritePropertyName("createdTime");
-                writer.WriteStringValue(CreatedTime.Value, "O");
-            }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -52,9 +42,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             string primaryConnectionString = default;
             string secondaryConnectionString = default;
             EndpointType endpointType = default;
-            EndpointProvisioningState? provisioningState = default;
-            DateTimeOffset? createdTime = default;
-            IDictionary<string, string> tags = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"))
@@ -74,45 +64,26 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new EndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new ServiceBus(endpointType, provisioningState, createdTime, tags, primaryConnectionString, secondaryConnectionString);
+            return new ServiceBus(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToDictionary(tags), primaryConnectionString, secondaryConnectionString);
         }
     }
 }

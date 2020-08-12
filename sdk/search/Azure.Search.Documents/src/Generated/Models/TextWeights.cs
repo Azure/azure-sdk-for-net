@@ -15,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of TextWeights. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)
         {
             if (weights == null)

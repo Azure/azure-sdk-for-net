@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public Dataset(LinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
@@ -24,7 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new Dictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Annotations = new ChangeTrackingList<object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "Dataset";
         }
 
@@ -48,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = parameters;
             Annotations = annotations;
             Folder = folder;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Type of dataset. </summary>
@@ -62,9 +66,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Parameters for dataset. </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+        public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of tags that can be used for describing the Dataset. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         /// <summary> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </summary>
         public DatasetFolder Folder { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }

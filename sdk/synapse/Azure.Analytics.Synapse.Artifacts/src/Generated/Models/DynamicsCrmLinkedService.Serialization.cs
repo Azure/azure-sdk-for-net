@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia");
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -53,54 +53,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType");
             writer.WriteStringValue(DeploymentType.ToString());
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
                 writer.WriteObjectValue(HostName);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteObjectValue(Port);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
                 writer.WriteObjectValue(ServiceUri);
             }
-            if (OrganizationName != null)
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName");
                 writer.WriteObjectValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
                 writer.WriteObjectValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (ServicePrincipalCredentialType != null)
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType");
                 writer.WriteStringValue(ServicePrincipalCredentialType.Value.ToString());
             }
-            if (ServicePrincipalCredential != null)
+            if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential");
                 writer.WriteObjectValue(ServicePrincipalCredential);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
@@ -117,24 +117,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static DynamicsCrmLinkedService DeserializeDynamicsCrmLinkedService(JsonElement element)
         {
             string type = default;
-            IntegrationRuntimeReference connectVia = default;
-            string description = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
             DynamicsDeploymentType deploymentType = default;
-            object hostName = default;
-            object port = default;
-            object serviceUri = default;
-            object organizationName = default;
+            Optional<object> hostName = default;
+            Optional<object> port = default;
+            Optional<object> serviceUri = default;
+            Optional<object> organizationName = default;
             DynamicsAuthenticationType authenticationType = default;
-            object username = default;
-            SecretBase password = default;
-            object servicePrincipalId = default;
-            DynamicsServicePrincipalCredentialType? servicePrincipalCredentialType = default;
-            SecretBase servicePrincipalCredential = default;
-            object encryptedCredential = default;
+            Optional<object> username = default;
+            Optional<SecretBase> password = default;
+            Optional<object> servicePrincipalId = default;
+            Optional<DynamicsServicePrincipalCredentialType> servicePrincipalCredentialType = default;
+            Optional<SecretBase> servicePrincipalCredential = default;
+            Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -144,60 +144,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetObject());
                     }
                     annotations = array;
                     continue;
@@ -213,37 +183,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("serviceUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             serviceUri = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("organizationName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             organizationName = property0.Value.GetObject();
                             continue;
                         }
@@ -254,73 +208,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("username"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             username = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             servicePrincipalId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredentialType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             servicePrincipalCredentialType = new DynamicsServicePrincipalCredentialType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmLinkedService(type, connectVia, description, parameters, annotations, additionalProperties, deploymentType, hostName, port, serviceUri, organizationName, authenticationType, username, password, servicePrincipalId, servicePrincipalCredentialType, servicePrincipalCredential, encryptedCredential);
+            return new DynamicsCrmLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, Optional.ToNullable(servicePrincipalCredentialType), servicePrincipalCredential.Value, encryptedCredential.Value);
         }
     }
 }

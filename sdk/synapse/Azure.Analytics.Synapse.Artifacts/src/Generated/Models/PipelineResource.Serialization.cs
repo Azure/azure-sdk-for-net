@@ -16,34 +16,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Activities != null)
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities");
                 writer.WriteStartArray();
@@ -53,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -64,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Variables != null)
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables");
                 writer.WriteStartObject();
@@ -75,12 +55,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Concurrency != null)
+            if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency");
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -90,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RunDimensions != null)
+            if (Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions");
                 writer.WriteStartObject();
@@ -101,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder");
                 writer.WriteObjectValue(Folder);
@@ -117,55 +97,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PipelineResource DeserializePipelineResource(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string etag = default;
-            string description = default;
-            IList<Activity> activities = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IDictionary<string, VariableSpecification> variables = default;
-            int? concurrency = default;
-            IList<object> annotations = default;
-            IDictionary<string, object> runDimensions = default;
-            PipelineFolder folder = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
+            Optional<string> description = default;
+            Optional<IList<Activity>> activities = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, VariableSpecification>> variables = default;
+            Optional<int> concurrency = default;
+            Optional<IList<object>> annotations = default;
+            Optional<IDictionary<string, object>> runDimensions = default;
+            Optional<PipelineFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
@@ -175,151 +139,76 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("description"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             description = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("activities"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Activity> array = new List<Activity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(Activity.DeserializeActivity(item));
-                                }
+                                array.Add(Activity.DeserializeActivity(item));
                             }
                             activities = array;
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, ParameterSpecification.DeserializeParameterSpecification(property1.Value));
-                                }
+                                dictionary.Add(property1.Name, ParameterSpecification.DeserializeParameterSpecification(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("variables"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, VariableSpecification> dictionary = new Dictionary<string, VariableSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, VariableSpecification.DeserializeVariableSpecification(property1.Value));
-                                }
+                                dictionary.Add(property1.Name, VariableSpecification.DeserializeVariableSpecification(property1.Value));
                             }
                             variables = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("concurrency"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             concurrency = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("annotations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetObject());
-                                }
+                                array.Add(item.GetObject());
                             }
                             annotations = array;
                             continue;
                         }
                         if (property0.NameEquals("runDimensions"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
                             }
                             runDimensions = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("folder"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             folder = PipelineFolder.DeserializePipelineFolder(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id, name, type, etag, description, activities, parameters, variables, concurrency, annotations, runDimensions, folder, additionalProperties);
+            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
         }
     }
 }

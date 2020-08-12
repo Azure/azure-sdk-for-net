@@ -16,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (BigDataPool != null)
+            if (Optional.IsDefined(BigDataPool))
             {
                 writer.WritePropertyName("bigDataPool");
                 writer.WriteObjectValue(BigDataPool);
             }
-            if (SessionProperties != null)
+            if (Optional.IsDefined(SessionProperties))
             {
                 writer.WritePropertyName("sessionProperties");
                 writer.WriteObjectValue(SessionProperties);
@@ -54,41 +54,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Notebook DeserializeNotebook(JsonElement element)
         {
-            string description = default;
-            BigDataPoolReference bigDataPool = default;
-            NotebookSessionProperties sessionProperties = default;
+            Optional<string> description = default;
+            Optional<BigDataPoolReference> bigDataPool = default;
+            Optional<NotebookSessionProperties> sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("bigDataPool"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
                     continue;
                 }
@@ -112,30 +100,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<NotebookCell> array = new List<NotebookCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NotebookCell.DeserializeNotebookCell(item));
-                        }
+                        array.Add(NotebookCell.DeserializeNotebookCell(item));
                     }
                     cells = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description, bigDataPool, sessionProperties, metadata, nbformat, nbformatMinor, cells, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, additionalProperties);
         }
     }
 }

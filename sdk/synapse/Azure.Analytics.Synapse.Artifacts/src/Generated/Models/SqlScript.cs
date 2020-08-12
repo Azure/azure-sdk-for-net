@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SqlScript. </summary>
         /// <param name="content"> The content of the SQL script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SqlScript(SqlScriptContent content)
         {
             if (content == null)
@@ -23,9 +25,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(content));
             }
 
-            Type = "SqlQuery";
             Content = content;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlScript. </summary>
@@ -33,18 +34,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The type of the SQL script. </param>
         /// <param name="content"> The content of the SQL script. </param>
         /// <param name="additionalProperties"> . </param>
-        internal SqlScript(string description, string type, SqlScriptContent content, IDictionary<string, object> additionalProperties)
+        internal SqlScript(string description, SqlScriptType? type, SqlScriptContent content, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             Type = type;
             Content = content;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the SQL script. </summary>
         public string Description { get; set; }
         /// <summary> The type of the SQL script. </summary>
-        public string Type { get; set; }
+        public SqlScriptType? Type { get; set; }
         /// <summary> The content of the SQL script. </summary>
         public SqlScriptContent Content { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }

@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus
            CancellationToken cancellationToken = default)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             if (maxWaitTime.HasValue)
             {
                 Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
@@ -375,7 +375,7 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -452,7 +452,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(lockToken, nameof(lockToken));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -529,7 +529,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
@@ -688,7 +688,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
@@ -768,7 +768,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageStart(Identifier, 1, lockToken);
@@ -848,7 +848,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
@@ -921,7 +921,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();

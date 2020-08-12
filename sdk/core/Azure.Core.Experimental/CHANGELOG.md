@@ -1,5 +1,13 @@
 # Release History
 
+## 0.1.0-preview.4 (Unreleased)
+
+
+## 0.1.0-preview.3 (2020-08-06)
+
+### Breaking Changes
+- `ObjectSerializer`: Moved to `Azure.Core`.
+
 ## 0.1.0-preview.2 (2020-07-02)
 
 ### Breaking Changes

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -315,6 +316,21 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task Exists_Exists()
         {
             // Arrange
@@ -335,15 +351,24 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task Exists_Error()
         {
             // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            // Make Read Only SAS for the Share
+            AccountSasBuilder sas = new AccountSasBuilder
+            {
+                Services = AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.Service,
+                ExpiresOn = Recording.UtcNow.AddHours(1)
+            };
+            sas.SetPermissions(AccountSasPermissions.Read);
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.ExistsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+                e => { });
         }
 
         [Test]
@@ -371,6 +396,21 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            // Act
+            Response<bool> response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExists_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -968,6 +1008,8 @@ namespace Azure.Storage.Files.Shares.Test
 
             await sasFile.GetPropertiesAsync();
 
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(fileFromConstructor.Uri);
+
             // Assert
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
 
@@ -981,6 +1023,10 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(fileName, fileFromConstructor.Name);
             Assert.AreEqual(path, fileFromConstructor.Path);
             Assert.AreEqual(expectedUri, fileFromConstructor.Uri);
+
+            Assert.AreEqual(fileName, shareUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(path, shareUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
 
         [Test]
@@ -1018,6 +1064,8 @@ namespace Azure.Storage.Files.Shares.Test
                 shareFileItems.Add(shareFileItem);
             }
 
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(directoryFromConstructor.Uri);
+
             // Assert
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
 
@@ -1031,6 +1079,10 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(subDirectoryName, directoryFromConstructor.Name);
             Assert.AreEqual(path, directoryFromConstructor.Path);
             Assert.AreEqual(expectedUri, directoryFromConstructor.Uri);
+
+            Assert.AreEqual(subDirectoryName, shareUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(path, shareUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
     }
 }

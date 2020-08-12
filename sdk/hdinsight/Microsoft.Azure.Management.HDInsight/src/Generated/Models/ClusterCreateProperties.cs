@@ -42,9 +42,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="storageProfile">The storage profile.</param>
         /// <param name="diskEncryptionProperties">The disk encryption
         /// properties.</param>
+        /// <param name="encryptionInTransitProperties">The
+        /// encryption-in-transit properties.</param>
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
-        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), string minSupportedTlsVersion = default(string))
+        /// <param name="networkSettings">The network settings.</param>
+        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkSettings networkSettings = default(NetworkSettings))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -55,7 +58,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             ComputeProfile = computeProfile;
             StorageProfile = storageProfile;
             DiskEncryptionProperties = diskEncryptionProperties;
+            EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
+            NetworkSettings = networkSettings;
             CustomInit();
         }
 
@@ -121,10 +126,22 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets the encryption-in-transit properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionInTransitProperties")]
+        public EncryptionInTransitProperties EncryptionInTransitProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets the minimal supported tls version.
         /// </summary>
         [JsonProperty(PropertyName = "minSupportedTlsVersion")]
         public string MinSupportedTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkSettings")]
+        public NetworkSettings NetworkSettings { get; set; }
 
     }
 }

@@ -16,24 +16,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("file");
             writer.WriteStringValue(File);
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className");
                 writer.WriteStringValue(ClassName);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf");
                 writer.WriteObjectValue(Conf);
             }
-            if (Args != null)
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args");
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Jars != null)
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars");
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Files != null)
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files");
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Archives != null)
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives");
                 writer.WriteStartArray();
@@ -93,29 +93,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SparkJobProperties DeserializeSparkJobProperties(JsonElement element)
         {
-            string name = default;
+            Optional<string> name = default;
             string file = default;
-            string className = default;
-            object conf = default;
-            IList<string> args = default;
-            IList<string> jars = default;
-            IList<string> files = default;
-            IList<string> archives = default;
+            Optional<string> className = default;
+            Optional<object> conf = default;
+            Optional<IList<string>> args = default;
+            Optional<IList<string>> jars = default;
+            Optional<IList<string>> files = default;
+            Optional<IList<string>> archives = default;
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;
             int executorCores = default;
             int numExecutors = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -126,102 +122,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("className"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     className = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("conf"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     conf = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("args"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     args = array;
                     continue;
                 }
                 if (property.NameEquals("jars"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     jars = array;
                     continue;
                 }
                 if (property.NameEquals("files"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     files = array;
                     continue;
                 }
                 if (property.NameEquals("archives"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     archives = array;
                     continue;
@@ -251,18 +195,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     numExecutors = property.Value.GetInt32();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobProperties(name, file, className, conf, args, jars, files, archives, driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
+            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(files), Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
         /// <param name="properties"> Properties of linked service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LinkedServiceResource(LinkedService properties)
         {
             if (properties == null)

@@ -573,14 +573,14 @@ namespace Azure.Storage.Blobs.Test
             await Delay(2000);
 
             // Act
-            List<BlobTagItem> blobs = new List<BlobTagItem>();
-            await foreach (Page<BlobTagItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (Page<TaggedBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
 
             // Assert
-            BlobTagItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
             Assert.IsNotNull(filterBlob);
         }
 
@@ -613,16 +613,16 @@ namespace Azure.Storage.Blobs.Test
             await Delay(2000);
 
             // Act
-            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
             BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
-            List<BlobTagItem> blobs = new List<BlobTagItem>();
-            await foreach (Page<BlobTagItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (Page<TaggedBlobItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
 
             // Assert
-            BlobTagItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
             Assert.IsNotNull(filterBlob);
         }
 

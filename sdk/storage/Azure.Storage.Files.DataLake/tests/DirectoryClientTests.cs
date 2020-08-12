@@ -346,6 +346,21 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task ExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -383,6 +398,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeDirectoryClient directory = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -1197,8 +1227,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Id = signedIdentifierId,
                 AccessPolicy = new DataLakeAccessPolicy
                 {
-                    StartsOn = Recording.UtcNow.AddHours(-1),
-                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                    PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                     Permissions = "rw"
                 }
             };
@@ -2438,6 +2468,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
 
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subDirectory.Uri);
+
             // Assert
             Assert.IsNotNull(filePathItem);
             Assert.AreEqual(subDirectoryName, subDirectory.Name);
@@ -2446,6 +2478,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, subDirectory.Uri);
             Assert.AreEqual(blobUri, subDirectory.BlobUri);
             Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+
+            Assert.AreEqual(subDirectoryName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
         [Test]
@@ -2478,6 +2514,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
 
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri);
+
             // Assert
             Assert.IsNotNull(filePathItem);
             Assert.AreEqual(fileName, file.Name);
@@ -2486,6 +2524,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, file.Uri);
             Assert.AreEqual(blobUri, file.BlobUri);
             Assert.AreEqual(dfsUri, file.DfsUri);
+
+            Assert.AreEqual(fileName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
         [Test]

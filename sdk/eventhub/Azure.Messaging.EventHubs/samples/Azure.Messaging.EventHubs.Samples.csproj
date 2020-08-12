@@ -6,11 +6,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
   <ItemGroup>
     <None Remove="README.md" />
   </ItemGroup>

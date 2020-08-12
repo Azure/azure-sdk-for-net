@@ -1,0 +1,207 @@
+﻿{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMTg1ND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c97ba0a6-6c77-4417-839d-6fbf1b43bb06"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Sep 2019 23:55:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "53fc56f2-03e0-4314-94ad-6a1cfd5d8fbd"
+        ],
+        "x-ms-correlation-request-id": [
+          "53fc56f2-03e0-4314-94ad-6a1cfd5d8fbd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190910T235533Z:53fc56f2-03e0-4314-94ad-6a1cfd5d8fbd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "189"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourceGroups/maintenance_rg1854\",\r\n  \"name\": \"maintenance_rg1854\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk3255?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMTg1NC9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGszMjU1P2FwaS12ZXJzaW9uPTIwMjAtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"maintenanceScope\": \"SQLDB\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b8e493c3-15a2-411c-8f7d-57fea03bc8b9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Maintenance.MaintenanceManagementClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "85"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Sep 2019 23:55:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "284fb9ad-7fb6-45d0-8be0-cafe9fe5f9b5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "284fb9ad-7fb6-45d0-8be0-cafe9fe5f9b5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190910T235534Z:284fb9ad-7fb6-45d0-8be0-cafe9fe5f9b5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "402"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"extensionProperties\": {},\r\n  \"maintenanceWindow\":{ \"startDateTime\": \"2020-04-01 01:00:00\"\r\n },   \"maintenanceScope\": \"Host\"\r\n  },\r\n  \"id\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk3255\",\r\n  \"name\": \"maintenancesdk3255\",\r\n  \"type\": \"Microsoft.Maintenance/maintenanceConfigurations\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/maintenancesdk3255?api-version=2020-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFpbnRlbmFuY2UvcHVibGljTWFpbnRlbmFuY2VDb25maWd1cmF0aW9ucy9tYWludGVuYW5jZXNkazMyNTU/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b1ecfe50-a011-4c82-9417-b0087ac7e76a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.00001.0",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Maintenance.MaintenanceManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Sep 2019 23:55:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4e73859b-c67d-4c27-8b5e-5d6c6a00e52d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "4e73859b-c67d-4c27-8b5e-5d6c6a00e52d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190910T235534Z:4e73859b-c67d-4c27-8b5e-5d6c6a00e52d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "402"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"extensionProperties\": {},\r\n  \"maintenanceWindow\":{ \"startDateTime\": \"2020-04-01 01:00:00\"\r\n },\r\n    \"maintenanceScope\": \"SQLDB\"\r\n  },\r\n  \"id\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk3255\",\r\n  \"name\": \"maintenancesdk3255\",\r\n  \"type\": \"Microsoft.Maintenance/maintenanceConfigurations\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "maintenance_rg1854"
+    ],
+    "PublicMaintenanceConfigurationGetTest": [
+      "maintenancesdk3255"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "42c974dd-2c03-4f1b-96ad-b07f050aaa74"
+  }
+}

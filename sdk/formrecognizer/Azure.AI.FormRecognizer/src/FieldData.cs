@@ -6,8 +6,8 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// A form content element representing text that is part of a <see cref="FormField"/>.
-    /// This includes the location of the text in the form and a collection of the content
+    /// A form element representing text that is part of a <see cref="FormField"/>.
+    /// This includes the location of the text in the form and a collection of the form
     /// elements that make up the text.
     /// </summary>
     public class FieldData : FormElement
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeFieldElements"/> is set to <c>true</c>, a list of references to
+        /// When 'IncludeFieldElements' is set to <c>true</c>, a list of references to
         /// the field elements constituting this <see cref="FieldData"/>. An empty list otherwise. For calls to
         /// recognize content, this list is always populated.
         /// </summary>

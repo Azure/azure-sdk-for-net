@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 // Actual limit is 262144 bytes for a single message.
                 ServiceBusMessage message = new ServiceBusMessage(new byte[300000]);
 
-                Assert.That(async () => await sender.SendMessageAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageSizeExceeded));
+                Assert.That(async () => await sender.SendMessageAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageSizeExceeded));
             }
         }
 
@@ -223,10 +223,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
                 await sender.DisposeAsync(); // shouldn't close connection, but should close send link
 
-                Assert.That(async () => await sender.SendMessageAsync(GetMessage()),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
-                Assert.That(async () => await sender.ScheduleMessageAsync(GetMessage(), default), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
-                Assert.That(async () => await sender.CancelScheduledMessageAsync(sequenceNum), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
+                Assert.That(async () => await sender.SendMessageAsync(GetMessage()), Throws.InstanceOf<ObjectDisposedException>());
+                Assert.That(async () => await sender.ScheduleMessageAsync(GetMessage(), default), Throws.InstanceOf<ObjectDisposedException>());
+                Assert.That(async () => await sender.CancelScheduledMessageAsync(sequenceNum), Throws.InstanceOf<ObjectDisposedException>());
 
                 // receive should still work
                 await using var receiver = client.CreateReceiver(scope.QueueName);
@@ -336,7 +335,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(connectionString);
 
                 ServiceBusSender sender = client.CreateSender("FakeEntity");
-                Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
             }
         }
     }
