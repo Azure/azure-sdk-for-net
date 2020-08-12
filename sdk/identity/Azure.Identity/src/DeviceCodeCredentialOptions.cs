@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    internal class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
         /// Prevents the <see cref="DeviceCodeCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="DeviceCodeCredential.GetToken"/> and <see cref="DeviceCodeCredential.GetTokenAsync"/> in the case that
