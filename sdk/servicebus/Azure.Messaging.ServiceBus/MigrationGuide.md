@@ -40,13 +40,13 @@ In the case of Service Bus, the modern client libraries have packages and namesp
 
 In the interest of simplifying the API surface we've made a single top level client called `ServiceBusClient`, rather than one for each of queue, topic, subscription and session. This acts as the single entry point in contrast with six different entry points in the previous library. You can create senders and receivers off of this client to the queue/topic/subscription/session of your choice and start sending/receiving messages.
 
-**Approachability** 
+#### Approachability
 By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can dot into the client and see all the available methods as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, or using sessions or not, users will start their applications by constructing the same client.
  
-**Consistency**
+#### Consistency
 Having similar methods to create senders, receivers and receivers for individual sessions on the same client provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows users to make less changes to their code when they want to move from sessions to non-sessions or the other way around.
  
-**Resource usage**
+#### Resource usage
 By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs. In the previous library, connection sharing was implicit when using the `SessionClient`, but when using other clients, users would need to explicitly pass in a `ServiceBusConnection` object in order to share a connection. By making this sharing be implicit to a ServiceBusClient instance, we can help ensure that applications will not use multiple connections unless they explicitly opt in by creating multiple `ServiceBusClient` instances.
  
 
@@ -201,7 +201,46 @@ await receiver.CompleteMessageAsync(receivedMessage);
 ```
 ### Working with sessions
 
+In v4, you had the below options to receive messages from a session enabled queue/subscription
+- Register message and error handlers using the `QueueClient.RegisterSessionHandler()` method to receive messages from an available set of sessions 
+- Use the `SessionClient.AcceptMessageSessionAsync()` method to get an instance of the `MessageSession` class that will be tied to a given sessionId or to the next available session if no sessionId is provided.
 
+While the first option is similar to what you would do in a non session scenario, the second that allows you finer grained control is very different from any other pattern used in the library.
+
+In v7, we simplfify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
+
+```cs
+// create a processor to receive events from the next available session
+ServiceBusProcessor processor = client.CreateSessionProcessor(queueName);
+
+// create a processor to receive events from the given set of sessions
+var options = new ServiceBusSessionProcessorOptions
+{
+    SessionIds = ["my-session", "your-session"],
+};
+ServiceBusProcessor processor = client.CreateSessionProcessor(queueName, options);
+
+// create a processor to receive events from the 3 next available sessions
+var options = new ServiceBusSessionProcessorOptions
+{
+    MaxConcurrentSessions = 3
+};
+ServiceBusProcessor processor = client.CreateSessionProcessor(queueName);
+```
+
+You have similar options when working with the receivers. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
+
+```cs
+// create a receiver to receive events from the next available session
+await ServiceBusReceiver receiver = client.CreateSessionReceiver(queueName);
+
+// create a receiver to receive events from the given session
+var options = new ServiceBusSessionReceiverOptions
+{
+    SessionId = "my-session"
+};
+await ServiceBusReceiver receiver = client.CreateSessionReceiver(queueName, options);
+```
 
 ## Additional samples
 
