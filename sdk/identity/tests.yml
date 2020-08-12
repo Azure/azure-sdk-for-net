@@ -4,9 +4,10 @@ extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     AdditionalPlatforms:
-      displayName: 'Linux with keyring'
-      vmImage: 'ubuntu-18.04'
-      container:
+      DisplayName: 'Test on Linux Container with keyring'
+      OSVmImage: 'ubuntu-18.04'
+      TestTargetFramework: netcoreapp2.1
+      Container:
         image: runtestsincontainer.azurecr.io/experiment/run_tests_in_docker:latest
         endpoint: 'runtestsincontainer'
         options: -ti --cap-add=IPC_LOCK

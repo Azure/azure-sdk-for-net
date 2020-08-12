@@ -49,7 +49,7 @@ jobs:
 
       pool:
         vmImage: "$(OSVmImage)"
-      ${{ if platform.container }}:
+      ${{ if platform.Container }}:
         container: ${{ platform.Container }}
 
       steps:
