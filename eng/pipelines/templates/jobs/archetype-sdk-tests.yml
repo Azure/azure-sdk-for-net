@@ -98,12 +98,13 @@ jobs:
       - task: CopyFiles@2
         inputs:
           sourceFolder: '$(Build.SourcesDirectory)'
-          contents: 'sdk/${{ parameters.ServiceDirectory }}/**/*.json'
+          contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
           targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
           artifactName: SessionRecords
+          publishLocation: 'pipeline'
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
