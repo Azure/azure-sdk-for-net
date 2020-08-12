@@ -38,10 +38,10 @@ In the case of Service Bus, the modern client libraries have packages and namesp
 
 ### Client hierarchy
 
-In the interest of simplifying the API surface we've made a single top level client called `ServiceBusClient`, rather than one for each of queue, topic, subscription and session. This acts as the single entry point in contrast with six different entry points in the previous library. You can create senders and receivers off of this client to the queue/topic/subscription/session of your choice and start sending/receiving messages.
+In the interest of simplifying the API surface we've made a single top level client called `ServiceBusClient`, rather than one for each of queue, topic, subscription and session. This acts as the single entry point in contrast with multiple entry points from before. You can create senders and receivers off of this client to the queue/topic/subscription/session of your choice and start sending/receiving messages.
 
 #### Approachability
-By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can dot into the client and see all the available methods as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, or using sessions or not, users will start their applications by constructing the same client.
+By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can explore all available features through methods off of a single client, as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, or using sessions or not, users will start their applications by constructing the same client.
  
 #### Consistency
 Having similar methods to create senders, receivers and receivers for individual sessions on the same client provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows users to make less changes to their code when they want to move from sessions to non-sessions or the other way around.
