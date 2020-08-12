@@ -36,14 +36,8 @@ jobs:
       displayName: ${{ platform.DisplayName }}
       variables:
         - template: ../variables/globals.yml
-        - name: SubscriptionConfiguration
-          value: ${{ parameters.SubscriptionConfiguration }}
-        - name: Location
-          value: ${{ parameters.Location }}
         - name: OSVmImage
           value: ${{ platform.OSVmImage }}
-        - name: TestTargetFramework
-          value: ${{ platform.TestTargetFramework }}
 
       timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -74,13 +68,13 @@ jobs:
 
         - template: /eng/common/TestResources/deploy-test-resources.yml
           parameters:
-            Location: $(Location)
+            Location: ${{ parameters.Location }}
             ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-            SubscriptionConfiguration: $(SubscriptionConfiguration)
+            SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
 
         - script: >
             dotnet test eng/service.proj
-            --framework $(TestTargetFramework)
+            --framework ${{ platform.TestTargetFramework }}
             --filter "TestCategory!=Manually"
             --logger "trx"
             --logger:"console;verbosity=normal"
@@ -89,7 +83,7 @@ jobs:
             /p:BuildInParallel=${{ parameters.BuildInParallel }}
             ${{ platform.ConvertToProjectReferenceOption }}
 
-          displayName: "Build & Test (all tests for $(TestTargetFramework))"
+          displayName: "Build & Test (all tests for ${{ platform.TestTargetFramework }})"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -100,14 +94,14 @@ jobs:
         - template: /eng/common/TestResources/remove-test-resources.yml
           parameters:
             ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-            SubscriptionConfiguration: $(SubscriptionConfiguration)
+            SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
 
         - task: PublishTestResults@2
           condition: always()
-          displayName: "Publish Results ($(TestTargetFramework))"
+          displayName: "Publish Results (${{ platform.TestTargetFramework }})"
           inputs:
             testResultsFiles: "**/*.trx"
-            testRunTitle: "$(OSName) $(TestTargetFramework)"
+            testRunTitle: "$(OSName) ${{ platform.TestTargetFramework }}"
             testResultsFormat: "VSTest"
             mergeTestResults: true
 
