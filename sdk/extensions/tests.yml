@@ -18,7 +18,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.usgovcloudapi.net'; }"
         EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
           STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
       # AzureChinaCloud
       - ServiceDirectory: extensions
