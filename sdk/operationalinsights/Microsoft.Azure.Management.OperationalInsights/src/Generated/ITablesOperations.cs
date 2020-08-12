@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DataExportsOperations operations.
+    /// TablesOperations operations.
     /// </summary>
-    public partial interface IDataExportsOperations
+    public partial interface ITablesOperations
     {
         /// <summary>
-        /// Lists the data export instances within a workspace.
+        /// Gets all the tables for the specified Log Analytics workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DataExportErrorResponseException">
+        /// <exception cref="ErrorContractException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<DataExport>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Table>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a data export.
+        /// Updates a Log Analytics workspace table properties.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -57,11 +57,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
-        /// <param name='dataExportName'>
-        /// The data export rule name.
+        /// <param name='tableName'>
+        /// The name of the table.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to create or update a data export.
+        /// <param name='retentionInDays'>
+        /// The data table data retention in days, between 30 and 730. Setting
+        /// this property to null will default to the workspace retention.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DataExportErrorResponseException">
+        /// <exception cref="ErrorContractException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -78,9 +79,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataExport>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataExportName, DataExport parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, int? retentionInDays = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a data export instance.
+        /// Gets a Log Analytics workspace table.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -88,8 +89,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
-        /// <param name='dataExportName'>
-        /// The data export rule name.
+        /// <param name='tableName'>
+        /// The name of the table.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DataExportErrorResponseException">
+        /// <exception cref="ErrorContractException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -106,31 +107,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataExport>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataExportName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the specified data export in a given workspace..
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace.
-        /// </param>
-        /// <param name='dataExportName'>
-        /// The data export rule name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataExportErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataExportName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Table>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
