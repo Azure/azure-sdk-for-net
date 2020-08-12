@@ -18,24 +18,24 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// EffectiveRoutes List.
     /// </summary>
-    public partial class VirtualHubEffectiveRouteList
+    public partial class VirtualHubEffectiveRouteEffectiveRouteList
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualHubEffectiveRouteList
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualHubEffectiveRouteEffectiveRouteList class.
         /// </summary>
-        public VirtualHubEffectiveRouteList()
+        public VirtualHubEffectiveRouteEffectiveRouteList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualHubEffectiveRouteList
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualHubEffectiveRouteEffectiveRouteList class.
         /// </summary>
         /// <param name="value">The list of effective routes configured on the
         /// virtual hub or the specified resource.</param>
-        public VirtualHubEffectiveRouteList(IList<VirtualHubEffectiveRoute> value = default(IList<VirtualHubEffectiveRoute>))
+        public VirtualHubEffectiveRouteEffectiveRouteList(IList<VirtualHubEffectiveRoute> value = default(IList<VirtualHubEffectiveRoute>))
         {
             Value = value;
             CustomInit();
