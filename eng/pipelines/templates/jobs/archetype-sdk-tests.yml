@@ -105,7 +105,7 @@ jobs:
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
           - ${{if eq(variables['Record'], 'true')}:
-            AZURE_TEST_MODE: "${{ parameters.TestMode }}"
+            AZURE_TEST_MODE: "Record"
           - ${{else}}:
             AZURE_TEST_MODE: "None"
 
