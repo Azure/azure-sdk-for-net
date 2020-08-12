@@ -13,7 +13,6 @@ using Azure.Core;
 
 namespace Azure.Management.Dns.Tests
 {
-
     public partial class ScenarioTests : DnsManagementClientBase
     {
         private string location;
@@ -113,7 +112,7 @@ namespace Azure.Management.Dns.Tests
                 {"key1", "value1"}
             };
             aZone.ZoneType = ZoneType.Public;
-            var zoneName = "azure.ameredmond.dns";
+            var zoneName = "azure.ameredmond2.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
             var AaaaRecords = new ChangeTrackingList<AaaaRecord>
             {
@@ -153,7 +152,6 @@ namespace Azure.Management.Dns.Tests
             var listResponse = RecordSetsOperations.ListAllByDnsZoneAsync(this.resourceGroup, this.zoneNameForList);
             Assert.NotNull(listResponse);
             var allResults = await listResponse.ToEnumerableAsync();
-            Console.WriteLine("Count is : " + allResults.Count);
             Assert.True(allResults.Count == 3); //SOA and NS record should exist
             RecordSet aaaaRecord = null;
             foreach (var arecord in allResults)
@@ -193,9 +191,105 @@ namespace Azure.Management.Dns.Tests
             soaRecord.SoaRecord.RefreshTime = 12345;
             soaRecord.SoaRecord.RetryTime = 123456;
             var updateResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, "@", RecordType.SOA, soaRecord);
-            Assert.True(Helper.AreEqual(updateResponse, updateResponse,ignoreEtag: true));
+            Assert.True(Helper.AreEqual(updateResponse, soaRecord, ignoreEtag: true));
             var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A);
         }
+
+        [Test]
+        public async Task DnsUpdateARecord()
+        {
+            var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
+            var aRecords = new ChangeTrackingList<ARecord>
+            {
+              new ARecord {Ipv4Address = "123.32.1.0"}
+            };
+            var recordName = "record1";
+            var testARecordSet = new RecordSet("test_id", recordName, "A", null, this.metadata, 60, null, null, null, aRecords, this.dummyAaaaRecords, this.dummyMxRecords,
+                                               this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
+
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A, testARecordSet);
+            Assert.True(Helper.AreEqual(createRecordSetResponse, testARecordSet, ignoreEtag: true));
+            var getResponseARecord = await RecordSetsOperations.GetAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.A);
+            var aRecord = getResponseARecord.Value;
+            aRecord.TTL = 120; //update TTL from 60 to 120
+            var updateResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.A, aRecord);
+            Assert.AreEqual(updateResponse.Value.TTL, 120);
+            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A);
+            Assert.NotNull(deleteRecordSetResponse);
+        }
+
+
+        [Test]
+        public async Task DnsUpdateARecordMultiRecord()
+        {
+            var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
+            var aRecords = new ChangeTrackingList<ARecord>
+            {
+              new ARecord {Ipv4Address = "123.32.1.0"}
+            };
+            var recordName = "record1";
+            var testARecordSet = new RecordSet("test_id", recordName, "A", null, this.metadata, 60, null, null, null, aRecords, this.dummyAaaaRecords, this.dummyMxRecords,
+                                               this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
+
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A, testARecordSet);
+            Assert.True(Helper.AreEqual(createRecordSetResponse, testARecordSet, ignoreEtag: true));
+            var getResponseARecord = await RecordSetsOperations.GetAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.A);
+            var aRecord = getResponseARecord.Value;
+            aRecord.TTL = 120; //update TTL from 60 to 120
+            aRecord.ARecords.Clear();
+            var aList = new List<ARecord>
+                    {
+                        new ARecord {Ipv4Address = "123.32.1.0"},
+                        new ARecord {Ipv4Address = "101.10.0.1"},
+                        new ARecord {Ipv4Address = "22.33.44.55"},
+                    };
+            ((List<ARecord>)aRecord.ARecords).AddRange(aList);
+            var updateResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.A, aRecord);
+            var updatedRecords = updateResponse.Value;
+            Assert.AreEqual(updatedRecords.TTL, 120);
+            for (int i = 0; i < aList.Count; i++)
+            {
+                Assert.True(updatedRecords.ARecords[i].Ipv4Address == aList[i].Ipv4Address);
+            }
+            Assert.False(string.IsNullOrWhiteSpace(updatedRecords.Etag));
+            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A);
+            Assert.NotNull(deleteRecordSetResponse);
+        }
+
+
+        [Test]
+        public async Task UpdateRecordSetPreconditionFailed()
+        {
+            var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
+            var cnameRecord = new CnameRecord { Cname = "www.contoso.example.com" };
+            var recordName = "record1";
+            var testCnameRecordSet = new RecordSet("test_id", recordName, "Cname", null, this.metadata, 60, null, null, null, this.dummyARecords, this.dummyAaaaRecords, this.dummyMxRecords,
+                                               this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, cnameRecord, null, this.dummyCaaRecords);
+
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.Cname, testCnameRecordSet);
+            bool exceptionCaught = false;
+            try
+            {
+                await RecordSetsOperations.CreateOrUpdateAsync(
+                               this.resourceGroup,
+                               this.zoneNameForList,
+                               recordName,
+                               RecordType.Cname,
+                               ifMatch: "somegibberish",
+                               ifNoneMatch: null,
+                               parameters: testCnameRecordSet);
+            }
+            catch (Azure.RequestFailedException)
+            {
+                exceptionCaught = true;
+            }
+            finally{
+                Assert.True(exceptionCaught);
+            }
+
+        }
+
+
 
     }
 }

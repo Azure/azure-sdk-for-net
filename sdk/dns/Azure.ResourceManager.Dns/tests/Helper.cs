@@ -331,22 +331,5 @@ namespace Azure.Management.Dns.Tests
             return true;
         }
 
-        public static void AssertThrows<T>(
-            Action actionExpectedToThrow,
-            Func<T, bool> exceptionAsserts) where T : Exception
-        {
-            try
-            {
-                actionExpectedToThrow();
-                Assert.False(true, " Ni exception was thrown where expected");
-            }
-            catch (T ex)
-            {
-                Assert.True(
-                    exceptionAsserts(ex),
-                    "An exception of the expected type was thrown but custom asserts failed.");
-            }
-        }
-
     }
 }
