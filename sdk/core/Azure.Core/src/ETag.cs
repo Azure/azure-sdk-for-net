@@ -92,10 +92,7 @@ namespace Azure
         /// </summary>
         /// <returns>The string representation of this <see cref="ETag"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString()
-        {
-            return _value ?? "<null>";
-        }
+        public override string ToString() => ToString("G");
 
         /// <summary>
         /// Returns the string representation of the <see cref="ETag"/>.
@@ -120,7 +117,7 @@ namespace Azure
             return format switch
             {
                 HeaderFormat => _preserveRawValue ? _value : $"{QuoteString}{_value}{QuoteString}",
-                DefaultFormat => ToString(),
+                DefaultFormat => _value,
                 _ => throw new ArgumentException("Invalid format string.")
             };
         }
