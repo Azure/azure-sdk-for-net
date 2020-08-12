@@ -63,6 +63,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             return tokenResult;
         }
 
+
         /// <summary>
         ///  The response has claims as expected from App Service MSI response
         /// </summary>
