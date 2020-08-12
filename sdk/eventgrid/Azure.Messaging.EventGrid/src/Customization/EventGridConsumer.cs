@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventGrid
             {
                 egInternalEvents.Add(EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement));
             }
-            else // events are wrapped in an array
+            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventGrid
             {
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement));
             }
-            else // events are wrapped in an array
+            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
