@@ -44,7 +44,6 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          ConvertToProjectReferenceOption: /t:UpdateSessionsRecords
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -82,7 +81,7 @@ jobs:
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          $(ConvertToProjectReferenceOption)
+          /p:AutoUpdateSessionRecords=true
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
