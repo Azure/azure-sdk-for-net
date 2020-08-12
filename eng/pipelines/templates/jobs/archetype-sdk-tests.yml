@@ -44,7 +44,7 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        ${{if eq(variables['Record'], 'true')}}:
+        ${{if ne(variables['Record'], 'true')}}:
           Linux:
             OSVmImage: "ubuntu-18.04"
             TestTargetFramework: netcoreapp2.1
