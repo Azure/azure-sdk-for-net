@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public AccessControlRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-02-01-preview")
         {
             if (endpoint == null)
@@ -67,6 +67,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createRoleAssignmentOptions"/> is null. </exception>
         public async Task<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
             if (createRoleAssignmentOptions == null)
@@ -93,6 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createRoleAssignmentOptions"/> is null. </exception>
         public Response<RoleAssignmentDetails> CreateRoleAssignment(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
             if (createRoleAssignmentOptions == null)
@@ -216,6 +218,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         public async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
@@ -242,6 +245,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         public Response<RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
@@ -282,6 +286,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         public async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
@@ -304,6 +309,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         public Response DeleteRoleAssignmentById(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
@@ -456,6 +462,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role by role Id. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
         public async Task<Response<SynapseRole>> GetRoleDefinitionByIdAsync(string roleId, CancellationToken cancellationToken = default)
         {
             if (roleId == null)
@@ -482,6 +489,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role by role Id. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
         public Response<SynapseRole> GetRoleDefinitionById(string roleId, CancellationToken cancellationToken = default)
         {
             if (roleId == null)
@@ -520,6 +528,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List roles. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<RolesListResponse>> GetRoleDefinitionsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -546,6 +555,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List roles. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<RolesListResponse> GetRoleDefinitionsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

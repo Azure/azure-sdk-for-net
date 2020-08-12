@@ -121,14 +121,14 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<Dictionary<string, object>> CreateTableEntities(string partitionKeyValue, int count)
+        protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
 
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
                 string number = n.ToString();
-                return new Dictionary<string, object>
+                return new TableEntity
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
@@ -150,14 +150,14 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<DynamicTableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
 
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
                 string number = n.ToString();
-                return new DynamicTableEntity(new Dictionary<string, object>
+                return new TableEntity(new TableEntity
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
@@ -249,6 +249,7 @@ namespace Azure.Data.Tables.Tests
         protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
             int retryCount = 0;
+            int delay = 500;
             while (true)
             {
                 try
@@ -258,16 +259,25 @@ namespace Azure.Data.Tables.Tests
                 // Disable retry throttling in Playback mode.
                 catch (RequestFailedException ex) when (ex.Status == 429 && Mode != RecordedTestMode.Playback)
                 {
-                    if (++retryCount > 3)
+                    if (++retryCount > 6)
                     {
                         throw;
                     }
-                    await Task.Delay(750);
+                    await Task.Delay(delay);
+                    delay *= 2;
                 }
             }
         }
 
-        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : TableEntity, new()
+        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity, new()
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync<T>(entity).ConfigureAwait(false));
+            }
+        }
+
+        protected async Task CreateTestEntities(List<TableEntity> entitiesToCreate)
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -275,15 +285,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task CreateTestEntities(List<Dictionary<string, object>> entitiesToCreate)
-        {
-            foreach (var entity in entitiesToCreate)
-            {
-                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync(entity).ConfigureAwait(false));
-            }
-        }
-
-        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, UpdateMode updateMode) where T : TableEntity, new()
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity, new()
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -291,15 +293,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task UpsertTestEntities(List<Dictionary<string, object>> entitiesToCreate, UpdateMode updateMode)
-        {
-            foreach (var entity in entitiesToCreate)
-            {
-                await CosmosThrottleWrapper(async () => await client.UpsertEntityAsync(entity, updateMode).ConfigureAwait(false));
-            }
-        }
-
-        public class TestEntity : TableEntity
+        public class TestEntity : ITableEntity
         {
             public string StringTypeProperty { get; set; }
 
@@ -316,25 +310,33 @@ namespace Azure.Data.Tables.Tests
             public double DoubleTypeProperty { get; set; }
 
             public int IntTypeProperty { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public string ETag { get; set; }
         }
 
-        public class SimpleTestEntity : TableEntity
+        public class SimpleTestEntity : ITableEntity
         {
             public string StringTypeProperty { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public string ETag { get; set; }
         }
 
-        public class ComplexEntity : TableEntity
+        public class ComplexEntity : ITableEntity
         {
             public const int NumberOfNonNullProperties = 28;
 
             public ComplexEntity()
-                : base()
             {
             }
 
             public ComplexEntity(string pk, string rk)
-                : base(pk, rk)
             {
+                PartitionKey = pk;
+                RowKey = rk;
             }
 
             private DateTimeOffset? dateTimeOffsetNull = null;
@@ -444,6 +446,12 @@ namespace Azure.Data.Tables.Tests
             public Int64 Int64 { get; set; } = 123456789012;
 
             public string String { get; set; } = "test";
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+
+            public DateTimeOffset? Timestamp { get; set; }
+
+            public string ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {

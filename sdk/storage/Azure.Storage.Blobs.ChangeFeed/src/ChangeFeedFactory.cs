@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -56,7 +54,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
                 ValidateCursor(_containerClient, cursor);
-                startTime = cursor.CurrentSegmentCursor.SegmentTime;
+                startTime = BlobChangeFeedExtensions.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
             // Round start and end time if we are not using the cursor.
@@ -171,9 +169,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobContainerClient containerClient,
             ChangeFeedCursor cursor)
         {
-            if (containerClient.Uri.ToString().GetHashCode() != cursor.UrlHash)
+            if (containerClient.Uri.Host != cursor.UrlHost)
             {
-                throw new ArgumentException("Cursor URL does not match container URL");
+                throw new ArgumentException("Cursor URL Host does not match container URL host.");
+            }
+            if (cursor.CursorVersion != 1)
+            {
+                throw new ArgumentException("Unsupported cursor version.");
             }
         }
 

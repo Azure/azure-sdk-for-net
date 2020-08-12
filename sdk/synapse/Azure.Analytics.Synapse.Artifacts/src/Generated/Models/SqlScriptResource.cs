@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SqlScriptResource. </summary>
         /// <param name="properties"> Properties of sql script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SqlScriptResource(SqlScript properties)
         {
             if (properties == null)

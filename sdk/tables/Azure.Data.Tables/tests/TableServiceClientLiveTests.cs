@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -249,11 +249,11 @@ namespace Azure.Data.Tables.Tests
 
             // Get statistics
 
-            TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);
+            TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);
 
             // Test that the secondary location is live
 
-            Assert.AreEqual(new GeoReplicationStatusType("live"), stats.GeoReplication.Status);
+            Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
         }
 
         private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
@@ -267,21 +267,21 @@ namespace Azure.Data.Tables.Tests
 
             Assert.AreEqual(expected.HourMetrics.Enabled, actual.HourMetrics.Enabled);
             Assert.AreEqual(expected.HourMetrics.Version, actual.HourMetrics.Version);
-            Assert.AreEqual(expected.HourMetrics.IncludeAPIs, actual.HourMetrics.IncludeAPIs);
+            Assert.AreEqual(expected.HourMetrics.IncludeApis, actual.HourMetrics.IncludeApis);
             Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Enabled, actual.HourMetrics.RetentionPolicy.Enabled);
             Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Days, actual.HourMetrics.RetentionPolicy.Days);
 
             Assert.AreEqual(expected.MinuteMetrics.Enabled, actual.MinuteMetrics.Enabled);
             Assert.AreEqual(expected.MinuteMetrics.Version, actual.MinuteMetrics.Version);
-            Assert.AreEqual(expected.MinuteMetrics.IncludeAPIs, actual.MinuteMetrics.IncludeAPIs);
+            Assert.AreEqual(expected.MinuteMetrics.IncludeApis, actual.MinuteMetrics.IncludeApis);
             Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Enabled, actual.MinuteMetrics.RetentionPolicy.Enabled);
             Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Days, actual.MinuteMetrics.RetentionPolicy.Days);
 
             Assert.AreEqual(expected.Cors.Count, actual.Cors.Count);
             for (int i = 0; i < expected.Cors.Count; i++)
             {
-                CorsRule expectedRule = expected.Cors[i];
-                CorsRule actualRule = actual.Cors[i];
+                TableCorsRule expectedRule = expected.Cors[i];
+                TableCorsRule actualRule = actual.Cors[i];
                 Assert.AreEqual(expectedRule.AllowedHeaders, actualRule.AllowedHeaders);
                 Assert.AreEqual(expectedRule.AllowedMethods, actualRule.AllowedMethods);
                 Assert.AreEqual(expectedRule.AllowedOrigins, actualRule.AllowedOrigins);

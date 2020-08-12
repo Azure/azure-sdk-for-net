@@ -4,9 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using System.Threading;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -25,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Queue of the paths to Chunks we haven't processed.
         /// </summary>
-        private readonly Queue<string> _chunks;
+        private readonly Queue<BlobItem> _chunks;
 
         /// <summary>
         /// The Chunk we are currently processing.
@@ -38,11 +37,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private long _chunkIndex;
 
         /// <summary>
+        /// The index of the Chunk we are processing.
+        /// </summary>
+        public virtual string ShardPath { get; }
+
+        /// <summary>
         /// Gets the <see cref="ShardCursor"/> for this Shard.
         /// </summary>
         public virtual ShardCursor GetCursor()
-            => new ShardCursor(
-                _chunkIndex,
+            => _currentChunk == null ? null : new ShardCursor(
+                _currentChunk.ChunkPath,
                 _currentChunk.BlockOffset,
                 _currentChunk.EventIndex);
 
@@ -50,7 +54,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// If this Shard has a next event.
         /// </summary>
         public virtual bool HasNext()
-            => _chunks.Count > 0 || _currentChunk.HasNext();
+            => _chunks.Count > 0 || (_currentChunk != null && _currentChunk.HasNext());
 
         /// <summary>
         /// Gets the next <see cref="BlobChangeFeedEvent"/>.
@@ -71,8 +75,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Remove currentChunk if it doesn't have another event.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
-                _currentChunk = _chunkFactory.BuildChunk(
-                    _chunks.Dequeue());
+                _currentChunk = await _chunkFactory.BuildChunk(
+                    async,
+                    _chunks.Dequeue().Name,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 _chunkIndex++;
             }
             return changeFeedEvent;
@@ -84,15 +90,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public Shard(
             BlobContainerClient containerClient,
             ChunkFactory chunkFactory,
-            Queue<string> chunks,
+            Queue<BlobItem> chunks,
             Chunk currentChunk,
-            long chunkIndex)
+            long chunkIndex,
+            string shardPath)
         {
             _containerClient = containerClient;
             _chunkFactory = chunkFactory;
             _chunks = chunks;
             _currentChunk = currentChunk;
             _chunkIndex = chunkIndex;
+            ShardPath = shardPath;
         }
 
         /// <summary>

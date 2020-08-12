@@ -25,6 +25,11 @@ namespace Azure.Core.Pipeline
         {
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
+#else
+            if (HasSynchronizationContext())
+            {
+                throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
+            }
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
@@ -35,6 +40,11 @@ namespace Azure.Core.Pipeline
         {
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
+#else
+            if (HasSynchronizationContext())
+            {
+                throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
+            }
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             task.GetAwaiter().GetResult();
@@ -43,9 +53,12 @@ namespace Azure.Core.Pipeline
 
         public static T EnsureCompleted<T>(this ValueTask<T> task)
         {
-#if DEBUG
-            VerifyTaskCompleted(task.IsCompleted);
-#endif
+            if (!task.IsCompleted)
+            {
+#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+                return EnsureCompleted(task.AsTask());
+#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+            }
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
@@ -53,12 +66,18 @@ namespace Azure.Core.Pipeline
 
         public static void EnsureCompleted(this ValueTask task)
         {
-#if DEBUG
-            VerifyTaskCompleted(task.IsCompleted);
-#endif
+            if (!task.IsCompleted)
+            {
+#pragma warning disable AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+                EnsureCompleted(task.AsTask());
+#pragma warning restore AZC0107 // public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+            }
+            else
+            {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            task.GetAwaiter().GetResult();
+                task.GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            }
         }
 
         public static Enumerable<T> EnsureSyncEnumerable<T>(this IAsyncEnumerable<T> asyncEnumerable) => new Enumerable<T>(asyncEnumerable);
@@ -100,6 +119,9 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Task is not completed");
             }
         }
+
+        private static bool HasSynchronizationContext()
+            => SynchronizationContext.Current != null && SynchronizationContext.Current.GetType() != typeof(SynchronizationContext) || TaskScheduler.Current != TaskScheduler.Default;
 
         /// <summary>
         /// Both <see cref="Enumerable{T}"/> and <see cref="Enumerator{T}"/> are defined as public structs so that foreach can use duck typing

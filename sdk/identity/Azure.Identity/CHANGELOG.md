@@ -1,5 +1,30 @@
 # Release History
 
+## 1.3.0-preview.1 (Unreleased)
+
+- Restoring Application Authentication APIs from 1.2.0-preview.6
+
+## 1.2.0 (2020-08-10)
+
+### Breaking Changes
+- Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
+  - Removed class `AuthenticationRecord`
+  - Removed class `AuthenticationRequiredException`
+  - Removed class `ClientCertificateCredentialOptions` and `ClientCertificateCredential` constructor overloads accepting this type
+  - Removed class `ClientSecretCredentialOptions` and `ClientSecretCredential` constructor overloads accepting this type
+  - Removed class `DeviceCodeCredentialOptions` and `DeviceCodeCredential` constructor overloads accepting this type
+  - Removed class `InteractiveBrowserCredentialOptions` and `InteractiveBrowserCredential` constructor overloads accepting this type
+  - Removed class `UsernamePasswordCredentialOptions` and `UsernamePasswordCredential` constructor overloads accepting this type
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `InteractiveBrowserCredential`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `UsernamePasswordCredential`
+  - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
+
+### Fixes and improvements
+- Fixed excess errors in `DefaultAzureCredential` tracing (Issue [#10659](https://github.com/Azure/azure-sdk-for-net/issues/10659))
+- Fixed concurrency issue in `DefaultAzureCredential` (Issue [#13044](https://github.com/Azure/azure-sdk-for-net/issues/13044))
+
+
 ## 1.2.0-preview.6 (2020-07-22)
 
 ### New Features

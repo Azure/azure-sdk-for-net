@@ -10,8 +10,8 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Iot.Hub.Service.Tests
 {
     /// <summary>
-    /// These are the settings that will be used by the end-to-end tests tests.
-    /// The json files configured in the config will load the settings specific to a user.
+    /// These are the settings that will be used by the end-to-end tests.
+    /// The json files configured in the configuration will load the settings specific to a user.
     /// </summary>
     public class TestSettings
     {
@@ -41,7 +41,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             string userName = Environment.UserName;
 
-            // Initialize the settings related to IoT Hub instance and auth
+            // Initialize the settings related to IoT Hub instance and authentication
             var testSettingsConfigBuilder = new ConfigurationBuilder();
 
             string testSettingsCommonPath = Path.Combine(workingDirectory, "config", "common.config.json");
