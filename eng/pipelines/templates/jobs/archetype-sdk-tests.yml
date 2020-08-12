@@ -44,6 +44,24 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+        - ${{if ne(variables['Record'], 'true')}:
+          Linux:
+            OSVmImage: "ubuntu-18.04"
+            TestTargetFramework: netcoreapp2.1
+          Windows_NetCoreApp_ProjectReferences:
+            OSVmImage: "windows-2019"
+            TestTargetFramework: netcoreapp2.1
+            ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+          Windows_NetFramework:
+            OSVmImage: "windows-2019"
+            TestTargetFramework: net461
+          Windows_NetFramework_ProjectReferences:
+            OSVmImage: "windows-2019"
+            TestTargetFramework: net461
+            ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+          MacOs:
+            OSVmImage: "macOS-10.15"
+            TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -82,33 +100,38 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           /p:AutoUpdateSessionRecords=true
-          /bl
+          $(ConvertToProjectReferenceOption)
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
+          - ${{if eq(variables['Record'], 'true')}:
+            AZURE_TEST_MODE: "${{ parameters.TestMode }}"
+          - ${{else}}:
+            AZURE_TEST_MODE: "None"
+
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "Record"
           ${{ insert }}: ${{ parameters.EnvVars }}
 
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: '$(Build.SourcesDirectory)'
-          contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
-          targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-          artifactName: SessionRecords
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: '$(Build.SourcesDirectory)/msbuild.binlog'
-          artifactName: binlog
+
+      - ${{if eq(variables['Record'], 'true')}:
+        - task: CopyFiles@2
+          displayName: "Copy Test Recordings"
+          inputs:
+            sourceFolder: '$(Build.SourcesDirectory)'
+            contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+            targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+        - task: PublishBuildArtifacts@1
+          displayName: "Publish Test Recordings"
+          inputs:
+            pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+            artifactName: SessionRecords
+
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
