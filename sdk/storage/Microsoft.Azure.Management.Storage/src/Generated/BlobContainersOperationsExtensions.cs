@@ -652,8 +652,8 @@ namespace Microsoft.Azure.Management.Storage
             /// Aborts an unlocked immutability policy. The response of delete has
             /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
             /// required for this operation. Deleting a locked immutability policy is not
-            /// allowed, only way is to delete the container after deleting all blobs
-            /// inside the container.
+            /// allowed, the only way is to delete the container after deleting all expired
+            /// blobs inside the policy locked container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -687,8 +687,8 @@ namespace Microsoft.Azure.Management.Storage
             /// Aborts an unlocked immutability policy. The response of delete has
             /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
             /// required for this operation. Deleting a locked immutability policy is not
-            /// allowed, only way is to delete the container after deleting all blobs
-            /// inside the container.
+            /// allowed, the only way is to delete the container after deleting all expired
+            /// blobs inside the policy locked container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

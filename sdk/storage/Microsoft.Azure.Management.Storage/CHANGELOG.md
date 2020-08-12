@@ -1,5 +1,8 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 17.2.0
+- Update BlobServiceProperties.RestorePolicy: add new property "MinRestoreTime", deprecate old property "LastEnabledTime"
+
 ### Changes in 17.1.0
 
 - Support Create or Update Storage Account with MinimumTlsVersion, AllowBlobPublicAccess
