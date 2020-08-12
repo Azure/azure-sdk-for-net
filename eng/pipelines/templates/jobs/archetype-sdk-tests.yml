@@ -95,10 +95,15 @@ jobs:
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)'
+          contents: 'sdk/${{ parameters.ServiceDirectory }}/**/*.json'
+          targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: 'sdk/${{ parameters.ServiceDirectory }}/**/*.json'
-          artifactName: drop1
+          pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+          artifactName: SessionRecords
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
