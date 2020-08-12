@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.0 (Unreleased)
 
 Changes in this release:
 
@@ -6,6 +6,6 @@ Changes in this release:
 2. Add new enum value "secondly" to Granularity;
 3. Remove preview tag from the release version.
 
-## 1.0.0-preview.1 (Unreleased)
+## 1.0.0-preview.1 (2020-07-07)
 
 
