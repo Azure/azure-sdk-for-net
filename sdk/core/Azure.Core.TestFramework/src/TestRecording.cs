@@ -28,6 +28,7 @@ namespace Azure.Core.TestFramework
             _sanitizer = sanitizer;
             _matcher = matcher;
 
+            Console.WriteLine("Test mode " + Mode);
             switch (Mode)
             {
                 case RecordedTestMode.Record:
