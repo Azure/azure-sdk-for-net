@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 }
             };
 
-            if (hasManagedDisks)
+            if (!hasManagedDisks)
             {
                 virtualMachineScaleSetOsDisk?.VhdContainers.Add(vhdContainer);
             }
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
             }
 
-            if (vmScaleSet.Zones != null)
+            if (vmScaleSet.Zones.Count != 0)
             {
                 Assert.True(vmScaleSet.Zones.SequenceEqual(vmScaleSetOut.Zones), "Zones don't match");
                 if (vmScaleSet.ZoneBalance.HasValue)
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Compute.Tests
             }
             else
             {
-                Assert.Null(vmScaleSetOut.Zones);
+                Assert.IsEmpty(vmScaleSetOut.Zones);
                 Assert.Null(vmScaleSetOut.ZoneBalance);
             }
 

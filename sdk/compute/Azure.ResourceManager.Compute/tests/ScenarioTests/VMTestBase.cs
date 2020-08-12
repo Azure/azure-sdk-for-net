@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await (StorageAccountsOperations.ListByResourceGroupAsync(rgName)).ToEnumerableAsync();
         }
 
-        protected async Task<(VirtualMachine,VirtualMachine)> CreateVM(
+        protected async Task<(VirtualMachine,VirtualMachine, string)> CreateVM(
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await CreateVM(rgName, asName, storageAccount.Name, imageRef, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
         }
 
-        protected async Task<(VirtualMachine, VirtualMachine)> CreateVM(
+        protected async Task<(VirtualMachine, VirtualMachine, string)> CreateVM(
             string rgName, string asName, string storageAccountName, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 var getResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId);
 
-                return (getResponse,inputVM);
+                return (getResponse, inputVM, inputVMName);
             }
             catch
             {

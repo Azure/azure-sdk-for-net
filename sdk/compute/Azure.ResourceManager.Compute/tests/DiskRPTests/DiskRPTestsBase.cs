@@ -518,13 +518,14 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             var returnTwovm = await CreateVM(rgName, asName, storageAccountOutput, imageRef);
             var createdVM = returnTwovm.Item1;
             inputVM = returnTwovm.Item2;
+            string inputVMName = returnTwovm.Item3;
             var listResponse = await VirtualMachinesOperations.ListAllAsync().ToEnumerableAsync();
             Assert.True(listResponse.Count() >= 1);
             string[] id = createdVM.Id.Split('/');
             string subscription = id[2];
             var uri = createdVM.StorageProfile.OsDisk.Vhd.Uri;
 
-            await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
+            await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVMName));
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, createdVM.Name));
 
             Disk disk = GenerateBaseDisk(diskCreateOption);
@@ -610,7 +611,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Assert.AreEqual(diskEncryptionSetExpected.ActiveKey.SourceVault.Id, diskEncryptionSetActual.ActiveKey.SourceVault.Id);
             Assert.AreEqual(diskEncryptionSetExpected.ActiveKey.KeyUrl, diskEncryptionSetActual.ActiveKey.KeyUrl);
             Assert.NotNull(diskEncryptionSetActual.Identity);
-            Assert.AreEqual(ResourceIdentityType.SystemAssigned, diskEncryptionSetActual.Identity.Type);
+            Assert.AreEqual(DiskEncryptionSetIdentityType.SystemAssigned, diskEncryptionSetActual.Identity.Type);
         }
 
         private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)
