@@ -175,7 +175,7 @@ namespace Azure.Core.TestFramework
                 {
                     return;
                 }
-
+                Console.WriteLine("Saving recording to " + _sessionFile);
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
                 {

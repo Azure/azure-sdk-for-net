@@ -82,6 +82,7 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           /p:AutoUpdateSessionRecords=true
+          /bl
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
@@ -104,6 +105,10 @@ jobs:
         inputs:
           pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
           artifactName: SessionRecords
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.SourcesDirectory)/msbuild.binlog'
+          artifactName: binlog
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
