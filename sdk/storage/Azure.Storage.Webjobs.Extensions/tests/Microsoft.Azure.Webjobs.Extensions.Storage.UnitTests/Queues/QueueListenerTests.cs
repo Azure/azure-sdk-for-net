@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 await Fixture.Queue.AddMessageAsync(new CloudQueueMessage($"Message {i}"), null, null, null, null, CancellationToken.None);
             }
 
-            await Task.Delay(25);
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             metrics = await listener.GetMetricsAsync();
 
