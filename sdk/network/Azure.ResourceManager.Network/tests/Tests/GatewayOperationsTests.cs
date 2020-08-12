@@ -705,8 +705,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.GatewayDefaultSite);
 
             // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
+            await WaitForCompletionAsync(await NetworkManagementClient.VirtualNetworkGatewayConnections.StartSetSharedKeyAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, new ConnectionSharedKey("xyz")));
             virtualNetworkGatewayConneciton.RoutingWeight = 4;
-            virtualNetworkGatewayConneciton.SharedKey = "xyz";
 
             putVirtualNetworkGatewayConnectionResponseOperation = await NetworkManagementClient.VirtualNetworkGatewayConnections.StartCreateOrUpdateAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
             putVirtualNetworkGatewayConnectionResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayConnectionResponseOperation);
