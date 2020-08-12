@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Apache.Avro" VersionOverride="1.10.0" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
