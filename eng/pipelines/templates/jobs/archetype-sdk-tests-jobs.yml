@@ -42,6 +42,8 @@ jobs:
           value: ${{ parameters.Location }}
         - name: OSVmImage
           value: ${{ platform.OSVmImage }}
+        - name: TestTargetFramework
+          value: ${{ platform.TestTargetFramework }}
 
       timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -59,8 +61,6 @@ jobs:
         - ${{ parameters.PreSteps }}
 
         - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-          parameters:
-            OSVmImage: ${{ platform.OSVmImage }}
 
         - task: UseDotNet@2
           displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
@@ -82,7 +82,7 @@ jobs:
 
         - script: >
             dotnet test eng/service.proj
-            --framework ${{ platform.TestTargetFramework }}
+            --framework $(TestTargetFramework)
             --filter "TestCategory!=Manually"
             --logger "trx"
             --logger:"console;verbosity=normal"
@@ -91,7 +91,7 @@ jobs:
             /p:BuildInParallel=${{ parameters.BuildInParallel }}
             ${{ platform.ConvertToProjectReferenceOption }}
 
-          displayName: "Build & Test (all tests for ${{ platform.TestTargetFramework }})"
+          displayName: "Build & Test (all tests for $(TestTargetFramework))"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -106,10 +106,10 @@ jobs:
 
         - task: PublishTestResults@2
           condition: always()
-          displayName: "Publish Results (${{ platform.TestTargetFramework }})"
+          displayName: "Publish Results ($(TestTargetFramework))"
           inputs:
             testResultsFiles: "**/*.trx"
-            testRunTitle: "$(OSName) ${{ platform.TestTargetFramework }}"
+            testRunTitle: "$(OSName) $(TestTargetFramework)"
             testResultsFormat: "VSTest"
             mergeTestResults: true
 
