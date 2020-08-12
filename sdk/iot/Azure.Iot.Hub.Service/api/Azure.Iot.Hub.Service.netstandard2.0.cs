@@ -128,14 +128,15 @@ namespace Azure.Iot.Hub.Service
 }
 namespace Azure.Iot.Hub.Service.Authentication
 {
-    public partial class IotHubSasCredential
+    public partial class IotHubSasCredential : Azure.Core.TokenCredential
     {
         public IotHubSasCredential(string sharedAccessPolicy, string sharedAccessKey, System.TimeSpan timeToLive = default(System.TimeSpan)) { }
         public System.Uri Endpoint { get { throw null; } }
         public System.TimeSpan SasTokenTimeToLive { get { throw null; } }
         public string SharedAccessKey { get { throw null; } }
         public string SharedAccessPolicy { get { throw null; } }
-        public string GetSasToken() { throw null; }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Azure.Iot.Hub.Service.Models
