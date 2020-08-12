@@ -15,6 +15,10 @@
 # Extensions
 /sdk/extensions/                                @pakrym
 
+# Compute
+# PRLabel: %Compute
+/sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
+
 # Service teams
 # PRLabel: %AzConfig
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher

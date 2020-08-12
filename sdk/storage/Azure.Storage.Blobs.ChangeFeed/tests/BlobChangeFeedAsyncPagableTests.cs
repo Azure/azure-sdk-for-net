@@ -193,7 +193,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 Console.WriteLine(e);
             }
-
         }
 
         [Test]
@@ -521,6 +520,87 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(EventIdsTail.Count, 0);
             Assert.AreEqual(AllEventIds.Count, EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count);
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
+        }
+
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task ResumeFromEndInThePastYieldsEmptyResult()
+        {
+            // This is hardcoded for playback stability. Feel free to modify but make sure recordings match.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 7, 30, 23, 00, 00, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 7, 30, 23, 15, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime,
+                    end: endTime);
+            ISet<string> AllEventIds = new HashSet<string>();
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 50);
+            Page<BlobChangeFeedEvent> lastPage = null;
+            await foreach (Page<BlobChangeFeedEvent> page in asyncEnumerable)
+            {
+                foreach (BlobChangeFeedEvent e in page.Values)
+                {
+                    AllEventIds.Add(e.Id.ToString());
+                }
+                lastPage = page;
+            }
+
+            string continuation = lastPage.ContinuationToken;
+
+            // Act
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
+            IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
+
+
+            // Assert
+            Assert.AreEqual(0, tail.Count);
+            Assert.Greater(AllEventIds.Count, 0);
+        }
+
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task ImmediateResumeFromEndOfCurrentHourYieldsEmptyResult()
+        {
+            // Uncomment when recording.
+            //DateTimeOffset startTime = DateTimeOffset.Now;
+
+            // Update and uncomment after recording.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 11, 21, 00, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime);
+            ISet<string> AllEventIds = new HashSet<string>();
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 50);
+            Page<BlobChangeFeedEvent> lastPage = null;
+            await foreach (Page<BlobChangeFeedEvent> page in asyncEnumerable)
+            {
+                foreach (BlobChangeFeedEvent e in page.Values)
+                {
+                    AllEventIds.Add(e.Id.ToString());
+                }
+                lastPage = page;
+            }
+
+            string continuation = lastPage.ContinuationToken;
+
+            // Act
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
+            IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
+
+
+            // Assert
+            Assert.AreEqual(0, tail.Count);
+            Assert.Greater(AllEventIds.Count, 0);
         }
 
         /// <summary>
