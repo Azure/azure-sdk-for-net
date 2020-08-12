@@ -116,8 +116,7 @@ for (var i = 0; i < 10; i++)
     ServiceBusMessage message = new ServiceBusMessage($"Hello world! - {i}");
 
     // Add message the batch
-    var tryAddResult = messageBatch.TryAddMessage((message);
-    if (!tryAddResult)
+    if (!messageBatch.TryAddMessage(message))
     {
       Console.WriteLine($"Failed to add message number {i}");
       break;
@@ -233,14 +232,14 @@ You have similar options when working with the receivers. Please note that creat
 
 ```cs
 // create a receiver to receive events from the next available session
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiver(queueName);
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
 // create a receiver to receive events from the given session
 var options = new ServiceBusSessionReceiverOptions
 {
     SessionId = "my-session"
 };
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiver(queueName, options);
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName, options);
 ```
 
 ## Additional samples
