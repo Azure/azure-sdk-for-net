@@ -67,6 +67,83 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// This test checks if tail of the change feed can be listened to.
+        /// To setup recording have an account where changes are generated quite frequently (i.e. every 1 minute).
+        /// This test runs long in recording mode as it waits multiple times for events.
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task TestTailEvents()
+        {
+            // Uncomment when recording.
+            //DateTimeOffset startTime = DateTimeOffset.Now;
+
+            // Update and uncomment after recording.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 10, 16, 00, 00, TimeSpan.Zero);
+
+            TimeSpan pollInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromMinutes(3);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+            Page<BlobChangeFeedEvent> lastPage = null;
+            ISet<string> EventIdsPart1 = new HashSet<string>();
+            ISet<string> EventIdsPart2 = new HashSet<string>();
+            ISet<string> EventIdsPart3 = new HashSet<string>();
+
+            // Part 1
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(start: startTime);
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart1.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart1);
+
+            await Task.Delay(pollInterval);
+
+            // Part 2
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(lastPage.ContinuationToken);
+            asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart2.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart2);
+
+            await Task.Delay(pollInterval);
+
+            // Part 3
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(lastPage.ContinuationToken);
+            asyncEnumerable = blobChangeFeedAsyncPagable.AsPages();
+            await foreach (var page in asyncEnumerable)
+            {
+                lastPage = page;
+                foreach (var evt in page.Values)
+                {
+                    EventIdsPart3.Add(evt.Id.ToString());
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(EventIdsPart3);
+
+            // Assert events are not duplicated
+            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
+            CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
+            CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
+        }
+
         [Test]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
@@ -116,7 +193,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 Console.WriteLine(e);
             }
-
         }
 
         [Test]
@@ -446,6 +522,87 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task ResumeFromEndInThePastYieldsEmptyResult()
+        {
+            // This is hardcoded for playback stability. Feel free to modify but make sure recordings match.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 7, 30, 23, 00, 00, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 7, 30, 23, 15, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime,
+                    end: endTime);
+            ISet<string> AllEventIds = new HashSet<string>();
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 50);
+            Page<BlobChangeFeedEvent> lastPage = null;
+            await foreach (Page<BlobChangeFeedEvent> page in asyncEnumerable)
+            {
+                foreach (BlobChangeFeedEvent e in page.Values)
+                {
+                    AllEventIds.Add(e.Id.ToString());
+                }
+                lastPage = page;
+            }
+
+            string continuation = lastPage.ContinuationToken;
+
+            // Act
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
+            IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
+
+
+            // Assert
+            Assert.AreEqual(0, tail.Count);
+            Assert.Greater(AllEventIds.Count, 0);
+        }
+
+        [Test]
+        [PlaybackOnly("Changefeed E2E tests require previously generated events")]
+        public async Task ImmediateResumeFromEndOfCurrentHourYieldsEmptyResult()
+        {
+            // Uncomment when recording.
+            //DateTimeOffset startTime = DateTimeOffset.Now;
+
+            // Update and uncomment after recording.
+            DateTimeOffset startTime = new DateTimeOffset(2020, 8, 11, 21, 00, 00, TimeSpan.Zero);
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
+
+            // Collect all events within range
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
+                = blobChangeFeedClient.GetChangesAsync(
+                    start: startTime);
+            ISet<string> AllEventIds = new HashSet<string>();
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 50);
+            Page<BlobChangeFeedEvent> lastPage = null;
+            await foreach (Page<BlobChangeFeedEvent> page in asyncEnumerable)
+            {
+                foreach (BlobChangeFeedEvent e in page.Values)
+                {
+                    AllEventIds.Add(e.Id.ToString());
+                }
+                lastPage = page;
+            }
+
+            string continuation = lastPage.ContinuationToken;
+
+            // Act
+            blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
+            IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
+
+
+            // Assert
+            Assert.AreEqual(0, tail.Count);
+            Assert.Greater(AllEventIds.Count, 0);
+        }
+
         /// <summary>
         /// To setup account for this test have a steady stream of events (i.e. some changes every 1 minute) that covers at least from an hour before start time
         /// to an hour after end time.
@@ -549,7 +706,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             var cursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor);
             Assert.AreEqual(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero), cursor.EndTime);
             Assert.AreEqual(1, cursor.CursorVersion);
-            Assert.AreEqual("15S8ITXExIEUwbdmq7AeZg==", cursor.UrlHash);
+            Assert.AreEqual("emilydevtest.blob.core.windows.net", cursor.UrlHost);
             var currentSegmentCursor = cursor.CurrentSegmentCursor;
             Assert.AreEqual("idx/segments/2020/07/30/2300/meta.json", currentSegmentCursor.SegmentPath);
             Assert.AreEqual("log/00/2020/07/30/2300/", currentSegmentCursor.CurrentShardPath);

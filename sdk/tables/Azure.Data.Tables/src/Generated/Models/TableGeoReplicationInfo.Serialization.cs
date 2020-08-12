@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableGeoReplication
+    public partial class TableGeoReplicationInfo
     {
-        internal static TableGeoReplication DeserializeTableGeoReplication(XElement element)
+        internal static TableGeoReplicationInfo DeserializeTableGeoReplicationInfo(XElement element)
         {
             TableGeoReplicationStatus status = default;
             DateTimeOffset lastSyncedOn = default;
@@ -25,7 +25,7 @@ namespace Azure.Data.Tables.Models
             {
                 lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new TableGeoReplication(status, lastSyncedOn);
+            return new TableGeoReplicationInfo(status, lastSyncedOn);
         }
     }
 }

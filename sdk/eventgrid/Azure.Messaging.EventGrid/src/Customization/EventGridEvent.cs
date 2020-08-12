@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
     public class EventGridEvent
@@ -44,9 +44,6 @@ namespace Azure.Messaging.EventGrid.Models
 
         /// <summary> The time (in UTC) the event was generated. </summary>
         public DateTimeOffset EventTime { get; set; } = DateTimeOffset.UtcNow;
-
-        /// <summary> The schema version of the event metadata. </summary>
-        public string MetadataVersion { get; set; }
 
         /// <summary> The schema version of the data object. </summary>
         public string DataVersion { get; set; }

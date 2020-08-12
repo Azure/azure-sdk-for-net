@@ -707,6 +707,7 @@ namespace Azure.Storage.Blobs.Models
         public char? EscapeCharacter { get { throw null; } set { } }
         public bool HasHeaders { get { throw null; } set { } }
         public char? QuotationCharacter { get { throw null; } set { } }
+        public string RecordSeparator { get { throw null; } set { } }
     }
     public partial class BlobQueryError
     {
@@ -719,6 +720,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobQueryJsonTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {
         public BlobQueryJsonTextOptions() { }
+        public string RecordSeparator { get { throw null; } set { } }
     }
     public partial class BlobQueryOptions
     {
@@ -732,9 +734,6 @@ namespace Azure.Storage.Blobs.Models
     public abstract partial class BlobQueryTextOptions
     {
         protected BlobQueryTextOptions() { }
-        public string RecordSeparator { get { throw null; } set { } }
-        public static Azure.Storage.Blobs.Models.BlobQueryCsvTextOptions BlobQueryCsvTextOptions(string recordSeparator, string columnSeparator, char? quotationCharacter, char? escapeCharacter, bool hasHeaders) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobQueryJsonTextOptions BlobQueryJsonTextOptions(string recordSeparator) { throw null; }
     }
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {

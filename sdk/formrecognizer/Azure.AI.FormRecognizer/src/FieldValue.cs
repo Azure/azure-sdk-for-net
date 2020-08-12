@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {ValueType}.");
             }
 
-            return _fieldValue.ValueString;
+            return _fieldValue?.ValueString;
         }
 
         /// <summary>
