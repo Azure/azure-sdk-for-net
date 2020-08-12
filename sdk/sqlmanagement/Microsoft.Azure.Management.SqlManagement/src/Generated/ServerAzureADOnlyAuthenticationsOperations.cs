@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerAzureADAdministratorsOperations operations.
+    /// ServerAzureADOnlyAuthenticationsOperations operations.
     /// </summary>
-    internal partial class ServerAzureADAdministratorsOperations : IServiceOperations<SqlManagementClient>, IServerAzureADAdministratorsOperations
+    internal partial class ServerAzureADOnlyAuthenticationsOperations : IServiceOperations<SqlManagementClient>, IServerAzureADOnlyAuthenticationsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ServerAzureADAdministratorsOperations class.
+        /// Initializes a new instance of the ServerAzureADOnlyAuthenticationsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ServerAzureADAdministratorsOperations(SqlManagementClient client)
+        internal ServerAzureADOnlyAuthenticationsOperations(SqlManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a Azure Active Directory administrator.
+        /// Gets a specific Azure Active Directory only authentication property.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServerAzureADAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerAzureADOnlyAuthentication>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            string apiVersion = "2019-06-01-preview";
-            string administratorName = "ActiveDirectory";
+            string apiVersion = "2020-02-02-preview";
+            string authenticationName = "Default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -107,17 +107,17 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("administratorName", administratorName);
+                tracingParameters.Add("authenticationName", authenticationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{administratorName}", System.Uri.EscapeDataString(administratorName));
+            _url = _url.Replace("{authenticationName}", System.Uri.EscapeDataString(authenticationName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ServerAzureADAdministrator>();
+            var _result = new AzureOperationResponse<ServerAzureADOnlyAuthentication>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADAdministrator>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADOnlyAuthentication>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -249,7 +249,8 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updates an existing Azure Active Directory administrator.
+        /// Sets Server Active Directory only authentication property or updates an
+        /// existing server Active Directory only authentication property.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -259,7 +260,8 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='parameters'>
-        /// The requested Azure Active Directory administrator Resource state.
+        /// The required parameters for creating or updating an Active Directory only
+        /// authentication property.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -267,15 +269,15 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ServerAzureADAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerAzureADOnlyAuthentication>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ServerAzureADAdministrator> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ServerAzureADOnlyAuthentication> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes the Azure Active Directory administrator with the given name.
+        /// Deletes an existing server Active Directory only authentication property.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -298,7 +300,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets a list of Azure Active Directory administrators in a server.
+        /// Gets a list of server Azure Active Directory only authentications.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -328,7 +330,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ServerAzureADAdministrator>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServerAzureADOnlyAuthentication>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -342,7 +344,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            string apiVersion = "2019-06-01-preview";
+            string apiVersion = "2020-02-02-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -358,7 +360,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
@@ -460,7 +462,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ServerAzureADAdministrator>>();
+            var _result = new AzureOperationResponse<IPage<ServerAzureADOnlyAuthentication>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -473,7 +475,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerAzureADAdministrator>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerAzureADOnlyAuthentication>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -493,7 +495,8 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updates an existing Azure Active Directory administrator.
+        /// Sets Server Active Directory only authentication property or updates an
+        /// existing server Active Directory only authentication property.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -503,7 +506,8 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='parameters'>
-        /// The requested Azure Active Directory administrator Resource state.
+        /// The required parameters for creating or updating an Active Directory only
+        /// authentication property.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -526,7 +530,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServerAzureADAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerAzureADOnlyAuthentication>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADOnlyAuthentication parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -548,8 +552,8 @@ namespace Microsoft.Azure.Management.Sql
             {
                 parameters.Validate();
             }
-            string apiVersion = "2019-06-01-preview";
-            string administratorName = "ActiveDirectory";
+            string apiVersion = "2020-02-02-preview";
+            string authenticationName = "Default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -560,18 +564,18 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("administratorName", administratorName);
+                tracingParameters.Add("authenticationName", authenticationName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{administratorName}", System.Uri.EscapeDataString(administratorName));
+            _url = _url.Replace("{authenticationName}", System.Uri.EscapeDataString(authenticationName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -676,7 +680,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ServerAzureADAdministrator>();
+            var _result = new AzureOperationResponse<ServerAzureADOnlyAuthentication>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -689,7 +693,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADAdministrator>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADOnlyAuthentication>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -707,7 +711,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADAdministrator>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ServerAzureADOnlyAuthentication>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -727,7 +731,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Deletes the Azure Active Directory administrator with the given name.
+        /// Deletes an existing server Active Directory only authentication property.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -768,8 +772,8 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            string apiVersion = "2019-06-01-preview";
-            string administratorName = "ActiveDirectory";
+            string apiVersion = "2020-02-02-preview";
+            string authenticationName = "Default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -780,17 +784,17 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("administratorName", administratorName);
+                tracingParameters.Add("authenticationName", authenticationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{administratorName}", System.Uri.EscapeDataString(administratorName));
+            _url = _url.Replace("{authenticationName}", System.Uri.EscapeDataString(authenticationName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -904,7 +908,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets a list of Azure Active Directory administrators in a server.
+        /// Gets a list of server Azure Active Directory only authentications.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -930,7 +934,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ServerAzureADAdministrator>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ServerAzureADOnlyAuthentication>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1044,7 +1048,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ServerAzureADAdministrator>>();
+            var _result = new AzureOperationResponse<IPage<ServerAzureADOnlyAuthentication>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1057,7 +1061,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerAzureADAdministrator>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ServerAzureADOnlyAuthentication>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
