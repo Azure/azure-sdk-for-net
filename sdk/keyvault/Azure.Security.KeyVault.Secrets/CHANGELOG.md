@@ -2,6 +2,10 @@
 
 ## 4.1.0 (2020-08-11)
 
+### Added
+
+- Added `RecoverableDays` property to `SecretProperties`.
+
 ### Changed
 
 - Default service version is now 7.1.
