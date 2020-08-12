@@ -52,6 +52,15 @@ namespace Azure.Storage.Blobs
                     RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
                 };
             }
+            else if (textConfiguration.GetType() == typeof(BlobQueryArrowOptions))
+            {
+                BlobQueryArrowOptions arrowConfiguration = textConfiguration as BlobQueryArrowOptions;
+                serialization.Format.Type = QueryFormatType.Arrow;
+                serialization.Format.ArrowTextConfiguration = new ArrowTextConfigurationInternal
+                {
+                    Schema = arrowConfiguration.Schema.ToArrowSchemaInternal()
+                };
+            }
             else
             {
                 throw new ArgumentException(Constants.QuickQuery.Errors.InvalidTextConfigurationType);
@@ -92,5 +101,50 @@ namespace Azure.Storage.Blobs
                 metadata: quickQueryResult.Metadata,
                 content: quickQueryResult.Body,
                 copyCompletionTime: quickQueryResult.CopyCompletionTime);
+
+        internal static List<ArrowFieldInternal> ToArrowSchemaInternal(this List<BlobQueryArrowField> schema)
+        {
+            if (schema == null)
+            {
+                return null;
+            }
+
+            List<ArrowFieldInternal> arrowFields = new List<ArrowFieldInternal>();
+
+            foreach (BlobQueryArrowField field in schema)
+            {
+                arrowFields.Add(field.ToArrowFieldInternal());
+            }
+
+            return arrowFields;
+        }
+
+        internal static ArrowFieldInternal ToArrowFieldInternal(this BlobQueryArrowField blobQueryArrowField)
+        {
+            if (blobQueryArrowField == null)
+            {
+                return null;
+            }
+
+            return new ArrowFieldInternal
+            {
+                Type = blobQueryArrowField.Type.ToArrowFiledInternalType(),
+                Name = blobQueryArrowField.Name,
+                Precision = blobQueryArrowField.Precision,
+                Scale = blobQueryArrowField.Scale
+            };
+        }
+
+        internal static string ToArrowFiledInternalType(this BlobQueryArrowFieldType blobQueryArrowFieldType)
+            => blobQueryArrowFieldType switch
+            {
+                BlobQueryArrowFieldType.Bool => Constants.Blob.Query.ArrowFieldTypeBool,
+                BlobQueryArrowFieldType.Decimal => Constants.Blob.Query.ArrowFieldTypeDecimal,
+                BlobQueryArrowFieldType.Double => Constants.Blob.Query.ArrowFieldTypeDouble,
+                BlobQueryArrowFieldType.Int64 => Constants.Blob.Query.ArrowFieldTypeInt64,
+                BlobQueryArrowFieldType.String => Constants.Blob.Query.ArrowFieldTypeString,
+                BlobQueryArrowFieldType.Timestamp => Constants.Blob.Query.ArrowFieldTypeTimestamp,
+                _ => throw new ArgumentException($"Unknown {nameof(BlobQueryArrowFieldType)}: {blobQueryArrowFieldType}"),
+            };
     }
 }

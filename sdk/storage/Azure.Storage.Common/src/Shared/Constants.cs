@@ -205,6 +205,16 @@ namespace Azure.Storage
                 /// </summary>
                 public const int InfiniteLeaseDuration = -1;
             }
+
+            internal static class Query
+            {
+                public const string ArrowFieldTypeInt64 = "int64";
+                public const string ArrowFieldTypeBool = "bool";
+                public const string ArrowFieldTypeTimestamp = "timestamp[ms]";
+                public const string ArrowFieldTypeString = "string";
+                public const string ArrowFieldTypeDouble = "double";
+                public const string ArrowFieldTypeDecimal = "decimal";
+            }
         }
 
         /// <summary>

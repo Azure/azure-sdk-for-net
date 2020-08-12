@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-02-10/blob.json
+input-file: C:\Users\Sean\git\azure-rest-api-specs\specification\storage\data-plane\Microsoft.BlobStorage\preview\2020-02-10\blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -1630,6 +1630,26 @@ directive:
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
+```
+
+### Make ArrowField internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ArrowField["x-az-public"] = false;
+    $.ArrowField["x-ms-client-name"] = "ArrowFieldInternal";
+```
+
+### Make ArrowTextConfiguration internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ArrowTextConfiguration["x-az-public"] = false;
+    $.ArrowTextConfiguration["x-ms-client-name"] = "ArrowTextConfigurationInternal";
 ```
 
 ### Treat the API version as a parameter instead of a constant
