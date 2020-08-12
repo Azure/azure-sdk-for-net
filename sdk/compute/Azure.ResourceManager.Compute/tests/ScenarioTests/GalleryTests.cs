@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(imageVersionFromGet);
             ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
             imageVersionFromGet = await GalleryImageVersionsOperations.GetAsync(rgName, galleryName, galleryImageName,
-                galleryImageVersionName);
+                galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
             Assert.AreEqual(StorageAccountType.StandardLRS, imageVersionFromGet.PublishingProfile.StorageAccountType);
             Assert.AreEqual(StorageAccountType.StandardLRS,
                 imageVersionFromGet.PublishingProfile.TargetRegions.First().StorageAccountType);
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.Compute.Tests
             Trace.TraceInformation("Deleted the virtual machine.");
             await WaitForCompletionAsync(await GalleryImagesOperations.StartDeleteAsync(rgName, galleryName, galleryImageName));
             Trace.TraceInformation("Deleted the gallery image.");
-            WaitSeconds(30);
+            WaitSeconds(100);
             await WaitForCompletionAsync(await GalleriesOperations.StartDeleteAsync(rgName, galleryName));
-            WaitSeconds(30);
+            WaitSeconds(100);
             Trace.TraceInformation("Deleted the gallery.");
         }
 
