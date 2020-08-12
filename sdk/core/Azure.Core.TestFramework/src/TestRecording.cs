@@ -28,7 +28,6 @@ namespace Azure.Core.TestFramework
             _sanitizer = sanitizer;
             _matcher = matcher;
 
-            Console.WriteLine("Test mode " + Mode);
             switch (Mode)
             {
                 case RecordedTestMode.Record:
@@ -176,7 +175,7 @@ namespace Azure.Core.TestFramework
                 {
                     return;
                 }
-                Console.WriteLine("Saving recording to " + _sessionFile);
+
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
                 {
