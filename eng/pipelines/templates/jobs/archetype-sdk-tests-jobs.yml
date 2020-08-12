@@ -30,20 +30,18 @@ parameters:
   type: string
   default: not-specified
 
+variables:
+  - template: ../variables/globals.yml
+
 jobs:
   - ${{ each platform in parameters.Platforms }}:
     - job:
       displayName: ${{ platform.DisplayName }}
       variables:
-        - template: ../variables/globals.yml
-        - name: SubscriptionConfiguration
-          value: ${{ parameters.SubscriptionConfiguration }}
-        - name: Location
-          value: ${{ parameters.Location }}
-        - name: OSVmImage
-          value: ${{ parameters.OSVmImage }}
-        - name: TestTargetFramework
-          value: ${{ parameters.TestTargetFramework }}
+        SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+        Location: ${{ parameters.Location }}
+        OSVmImage: ${{ parameters.OSVmImage }}
+        TestTargetFramework: ${{ parameters.TestTargetFramework }}
 
       timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
