@@ -40,11 +40,15 @@ jobs:
           value: ${{ parameters.SubscriptionConfiguration }}
         - name: Location
           value: ${{ parameters.Location }}
+        - name: OSVmImage
+          value: ${{ parameters.OSVmImage }}
+        - name: TestTargetFramework
+          value: ${{ parameters.TestTargetFramework }}
 
       timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
       pool:
-        vmImage: ${{ platform.OSVmImage }}
+        vmImage: "$(OSVmImage)"
       ${{ if platform.container }}:
         container: ${{ platform.Container }}
 
@@ -78,7 +82,7 @@ jobs:
 
         - script: >
             dotnet test eng/service.proj
-            --framework ${{ platform.TestTargetFramework }}
+            --framework $(TestTargetFramework)
             --filter "TestCategory!=Manually"
             --logger "trx"
             --logger:"console;verbosity=normal"
@@ -87,7 +91,7 @@ jobs:
             /p:BuildInParallel=${{ parameters.BuildInParallel }}
             ${{ platform.ConvertToProjectReferenceOption }}
 
-          displayName: "Build & Test (all tests for ${{ platform.TestTargetFramework }})"
+          displayName: "Build & Test (all tests for $(TestTargetFramework))"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -102,10 +106,10 @@ jobs:
 
         - task: PublishTestResults@2
           condition: always()
-          displayName: "Publish Results (${{ platform.TestTargetFramework }})"
+          displayName: "Publish Results ($(TestTargetFramework))"
           inputs:
             testResultsFiles: "**/*.trx"
-            testRunTitle: "$(OSName) ${{ platform.TestTargetFramework }}"
+            testRunTitle: "$(OSName) $(TestTargetFramework)"
             testResultsFormat: "VSTest"
             mergeTestResults: true
 

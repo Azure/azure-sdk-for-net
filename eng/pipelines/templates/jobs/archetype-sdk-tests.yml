@@ -43,24 +43,24 @@ jobs:
     SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
     platforms:
-      - DisplayName: "Linux"
+      - DisplayName: "Test on Linux"
         OSVmImage: "ubuntu-18.04"
         TestTargetFramework: netcoreapp2.1
-      - DisplayName: "Windows NetCoreApp"
+      - DisplayName: "Test on Windows for NetCoreApp"
         OSVmImage: "windows-2019"
         TestTargetFramework: netcoreapp2.1
-      - DisplayName: "Windows NetCoreApp ProjectReferences"
+      - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
         OSVmImage: "windows-2019"
         TestTargetFramework: netcoreapp2.1
         ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-      - DisplayName: "Windows NetFramework"
+      - DisplayName: "Test on Windows for .Net Framework"
         OSVmImage: "windows-2019"
         TestTargetFramework: net461
-      - DisplayName: "Windows NetFramework ProjectReferences"
+      - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
         OSVmImage: "windows-2019"
         TestTargetFramework: net461
         ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-      - DisplayName: "MacOS"
+      - DisplayName: "Test on MacOS"
         OSVmImage: "macOS-10.15"
         TestTargetFramework: netcoreapp2.1
       - ${{ parameters.AdditionalPlatforms }}
