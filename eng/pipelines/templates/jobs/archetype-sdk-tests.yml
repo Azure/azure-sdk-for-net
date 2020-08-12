@@ -104,7 +104,6 @@ jobs:
         inputs:
           pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
           artifactName: SessionRecords
-          publishLocation: 'pipeline'
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
