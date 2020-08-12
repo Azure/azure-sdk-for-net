@@ -15484,11 +15484,12 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Schema", ""));
             foreach (Azure.Storage.Blobs.Models.ArrowFieldInternal _child in value.Schema)
             {
-                _element.Add(Azure.Storage.Blobs.Models.ArrowFieldInternal.ToXml(_child));
+                _elements.Add(Azure.Storage.Blobs.Models.ArrowFieldInternal.ToXml(_child));
             }
-            return _element;
+            _element.Add(_elements);return _element;
         }
     }
 }

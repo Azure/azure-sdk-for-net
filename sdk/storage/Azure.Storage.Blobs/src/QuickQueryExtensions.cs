@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                throw new ArgumentException(Constants.QuickQuery.Errors.InvalidTextConfigurationType);
+                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, and {nameof(BlobQueryArrowOptions)}");
             }
 
             return serialization;
@@ -138,12 +138,12 @@ namespace Azure.Storage.Blobs
         internal static string ToArrowFiledInternalType(this BlobQueryArrowFieldType blobQueryArrowFieldType)
             => blobQueryArrowFieldType switch
             {
-                BlobQueryArrowFieldType.Bool => Constants.Blob.Query.ArrowFieldTypeBool,
-                BlobQueryArrowFieldType.Decimal => Constants.Blob.Query.ArrowFieldTypeDecimal,
-                BlobQueryArrowFieldType.Double => Constants.Blob.Query.ArrowFieldTypeDouble,
-                BlobQueryArrowFieldType.Int64 => Constants.Blob.Query.ArrowFieldTypeInt64,
-                BlobQueryArrowFieldType.String => Constants.Blob.Query.ArrowFieldTypeString,
-                BlobQueryArrowFieldType.Timestamp => Constants.Blob.Query.ArrowFieldTypeTimestamp,
+                BlobQueryArrowFieldType.Bool => Constants.QuickQuery.ArrowFieldTypeBool,
+                BlobQueryArrowFieldType.Decimal => Constants.QuickQuery.ArrowFieldTypeDecimal,
+                BlobQueryArrowFieldType.Double => Constants.QuickQuery.ArrowFieldTypeDouble,
+                BlobQueryArrowFieldType.Int64 => Constants.QuickQuery.ArrowFieldTypeInt64,
+                BlobQueryArrowFieldType.String => Constants.QuickQuery.ArrowFieldTypeString,
+                BlobQueryArrowFieldType.Timestamp => Constants.QuickQuery.ArrowFieldTypeTimestamp,
                 _ => throw new ArgumentException($"Unknown {nameof(BlobQueryArrowFieldType)}: {blobQueryArrowFieldType}"),
             };
     }

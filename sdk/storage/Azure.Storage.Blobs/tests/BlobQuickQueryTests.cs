@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task QueryAsync_ArrowConfiguration()
         {
             // Arrange
@@ -470,9 +470,23 @@ namespace Azure.Storage.Blobs.Test
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
             BlobQueryOptions options = new BlobQueryOptions
             {
-
+                OutputTextConfiguration = new BlobQueryArrowOptions
+                {
+                    Schema = new List<BlobQueryArrowField>()
+                    {
+                        new BlobQueryArrowField
+                        {
+                            Type = BlobQueryArrowFieldType.Decimal,
+                            Name = "Name",
+                            Precision = 4,
+                            Scale = 2
+                        }
+                    }
+                }
             };
-            Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(query);
+            Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
+                query,
+                options: options);
 
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
