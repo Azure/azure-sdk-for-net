@@ -113,12 +113,13 @@ ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 for (var i = 0; i < 10; i++)
 {
     // create a message
-    ServiceBusMessage message = new ServiceBusMessage("Hello world!" + i);
+    ServiceBusMessage message = new ServiceBusMessage($"Hello world! - {i}");
 
     // Add message the batch
     var tryAddResult = messageBatch.TryAddMessage((message);
-    if (!tryAddResult) {
-      Console.WriteLine("Failed to add message number " + i);
+    if (!tryAddResult)
+    {
+      Console.WriteLine($"Failed to add message number {i}");
       break;
     }
 }
@@ -194,8 +195,8 @@ await processor.StartProcessingAsync();
 
 // Or receive using the receiver
 var receiver = client.CreateReceiver(queueName);
-var receivedMessage = await receiver.ReceiveAsync();
-Console.WriteLine($"Received message with Body:{Encoding.UTF8.GetString(receivedMessage.Body)}");
+var receivedMessage = await receiver.ReceiveMessageAsync();
+Console.WriteLine($"Received message with Body: {receivedMessage.Body}");
 await receiver.CompleteMessageAsync(receivedMessage);
 
 ```
@@ -232,14 +233,14 @@ You have similar options when working with the receivers. Please note that creat
 
 ```cs
 // create a receiver to receive events from the next available session
-await ServiceBusReceiver receiver = client.CreateSessionReceiver(queueName);
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiver(queueName);
 
 // create a receiver to receive events from the given session
 var options = new ServiceBusSessionReceiverOptions
 {
     SessionId = "my-session"
 };
-await ServiceBusReceiver receiver = client.CreateSessionReceiver(queueName, options);
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiver(queueName, options);
 ```
 
 ## Additional samples
