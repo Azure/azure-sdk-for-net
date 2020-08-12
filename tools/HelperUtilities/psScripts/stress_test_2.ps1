@@ -31,6 +31,5 @@ ForEach ($loop in 1..$NumThreads) {
 	foreach ($number in 1..2147483647) {$result = $result * $number};
 #            [float]$x = get-random -Minimum 1 -Maximum 999999999
 #            $result = $result * $x
-        }
     }
 }
