@@ -3,15 +3,19 @@
     <SessionRecordTargetFramework>netcoreapp2.1</SessionRecordTargetFramework>
   </PropertyGroup>
 
-  <Target Name="AutoUpdateSessionRecords" Condition="'$(AutoUpdateSessionRecords)' == 'true'" DependsOnTargets="UpdateSessionRecords" AfterTargets="Test;VSTest"/>
+  <Target Name="AutoUpdateSessionRecords" Condition="'$(AutoUpdateSessionRecords)' == 'true'" DependsOnTargets="UpdateSessionRecordsInner" AfterTargets="Test;VSTest"/>
 
   <!-- Support for test recordings -->
-  <Target Name="UpdateSessionRecords" Condition="'$(IsTestProject)' == 'true'" Condition="'$(TargetFramework)' == '$(SessionRecordTargetFramework)'">
+  <Target Name="UpdateSessionRecords">
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Properties="TargetFramework=$(SessionRecordTargetFramework)" Targets="UpdateSessionRecordsInner"/>
+  </Target>
+
+  <Target Name="UpdateSessionRecordsInner" Condition="'$(IsTestProject)' == 'true' AND '$(TargetFramework)' == '$(SessionRecordTargetFramework)'">
     <PropertyGroup>
       <SessionRecordsDirectory>SessionRecords</SessionRecordsDirectory>
     </PropertyGroup>
     <ItemGroup>
-      <_CopyItems Include="$(OutputPath)\$(SessionRecordTargetFramework)\SessionRecords\**\*.*" />
+      <_CopyItems Include="$(OutputPath)\$(SessionRecordsDirectory)\**\*.*" />
     </ItemGroup>
 
     <RemoveDir Directories="$(MSBuildProjectDirectory)\$(SessionRecordsDirectory)" />
