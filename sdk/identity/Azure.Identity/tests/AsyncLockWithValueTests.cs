@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AsyncLockWithValue
+    public class AsyncLockWithValueTests
     {
         [Test]
         public async Task AsyncLockWithValue_GetLockOrValueAsync([Values(true, false)] bool async)
@@ -54,15 +54,17 @@ namespace Azure.Identity.Tests
         {
             var alwv = new AsyncLockWithValue<int>();
             var tcs = new TaskCompletionSource<int>();
+            var tcsWait = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            var task1 = Task.Run(async () =>
-            {
+            var task1 = Task.Run(async () => {
                 using var lock1 = await alwv.GetLockOrValueAsync(async);
+                tcsWait.SetResult(0);
                 return async ? await tcs.Task : tcs.Task.GetAwaiter().GetResult();
             });
 
-            var task2 = Task.Run(async () =>
-            {
+            await tcsWait.Task;
+
+            var task2 = Task.Run(async () => {
                 using var lock2 = await alwv.GetLockOrValueAsync(async);
                 lock2.SetValue(42);
             });
