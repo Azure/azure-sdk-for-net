@@ -85,7 +85,7 @@ await sender.SendAsync(message);
 ```
 
 In v7, we combine all the send related features under a common class `ServiceBusSender` that you can create off of the top level client using the `CreateSender()` method.
-This provides a single stop shop for all your send related needs. 
+This provides a one stop shop for all your send related needs. 
 
 While we continue to support sending bytes in the message, if you are working with strings, you can now create a message directly without having to convert it to bytes first.
 
