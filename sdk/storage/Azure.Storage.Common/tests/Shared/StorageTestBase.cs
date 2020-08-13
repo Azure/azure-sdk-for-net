@@ -340,7 +340,7 @@ namespace Azure.Storage.Test.Shared
             for (var attempts = 0; attempts < 10; attempts++)
             {
                 // ConcurrentBag.GetEnumerator() returns a snapshot in time; we can safely use linq queries
-                if (progressBag.Max() >= totalSize)
+                if (progressBag.Count > 0 && progressBag.Max() >= totalSize)
                 {
                     return;
                 }
