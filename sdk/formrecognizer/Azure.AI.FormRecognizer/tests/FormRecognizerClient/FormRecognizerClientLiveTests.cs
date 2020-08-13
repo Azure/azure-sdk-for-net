@@ -294,7 +294,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeContentCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeContentOptions();
             RecognizeContentOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
@@ -603,7 +603,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeReceiptsOptions() { IncludeFieldElements = true };
             RecognizeReceiptsOperation operation;
 
             if (useStream)
@@ -654,7 +654,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeReceiptsOptions() { IncludeFieldElements = true };
             RecognizeReceiptsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
@@ -682,7 +682,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeReceiptsOptions() { IncludeFieldElements = true };
             RecognizeReceiptsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
@@ -767,7 +767,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions { IncludeFieldElements = includeFieldElements };
+            var options = new RecognizeCustomFormsOptions { IncludeFieldElements = includeFieldElements };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -818,7 +818,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, useMultipageFiles: true);
@@ -870,7 +870,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -900,7 +900,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -983,7 +983,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions { IncludeFieldElements = includeFieldElements };
+            var options = new RecognizeCustomFormsOptions { IncludeFieldElements = includeFieldElements };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
@@ -1035,7 +1035,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, useMultipageFiles: true);
@@ -1083,7 +1083,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
@@ -1115,7 +1115,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeFieldElements = true };
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);

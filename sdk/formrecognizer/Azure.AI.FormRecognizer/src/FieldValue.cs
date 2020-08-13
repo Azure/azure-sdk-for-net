@@ -167,7 +167,7 @@ namespace Azure.AI.FormRecognizer.Models
                 return ValueString;
             }
 
-            return _fieldValue.ValueString;
+            return _fieldValue?.ValueString;
         }
 
         /// <summary>
