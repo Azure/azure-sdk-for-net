@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             ShardCursor shardCursor = default)
         {
             // Models we'll need later
-            Queue<string> chunks = new Queue<string>();
+            Queue<BlobItem> chunks = new Queue<BlobItem>();
             long blockOffset = shardCursor?.BlockOffset ?? 0;
             long eventIndex = shardCursor?.EventIndex ?? 0;
 
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                         continue;
 
                     //Chunk chunk = new Chunk(_containerClient, blobHierarchyItem.Blob.Name);
-                    chunks.Enqueue(blobHierarchyItem.Blob.Name);
+                    chunks.Enqueue(blobHierarchyItem.Blob);
                 }
             }
             else
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    chunks.Enqueue(blobHierarchyItem.Blob.Name);
+                    chunks.Enqueue(blobHierarchyItem.Blob);
                 }
             }
 
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 {
                     while (chunks.Count > 0)
                     {
-                        if (chunks.Peek() == currentChunkPath)
+                        if (chunks.Peek().Name == currentChunkPath)
                         {
                             break;
                         }
@@ -92,11 +92,31 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     }
                 }
 
-                currentChunk = await _chunkFactory.BuildChunk(
-                    async,
-                    chunks.Dequeue(),
-                    blockOffset,
-                    eventIndex).ConfigureAwait(false);
+                BlobItem currentChunkBlobItem = chunks.Dequeue();
+                if (currentChunkBlobItem.Properties.ContentLength > blockOffset)
+                {
+                    // There are more events to read from current chunk.
+                    currentChunk = await _chunkFactory.BuildChunk(
+                        async,
+                        currentChunkBlobItem.Name,
+                        blockOffset,
+                        eventIndex).ConfigureAwait(false);
+                }
+                else if (currentChunkBlobItem.Properties.ContentLength < blockOffset)
+                {
+                    // This shouldn't happen under normal circumstances, i.e. we couldn't read past the end of chunk.
+                    throw new ArgumentException($"Cursor contains a blockOffset that is invalid. BlockOffset={blockOffset}");
+                }
+                else
+                {
+                    // Otherwise we ended at the end of the chunk and no events has been written since then. Check if new chunk was created in case of current chunk overflow.
+                    if (chunks.Count > 0)
+                    {
+                        currentChunk = await _chunkFactory.BuildChunk(
+                        async,
+                        chunks.Dequeue().Name).ConfigureAwait(false);
+                    }
+                }
             }
 
             return new Shard(
