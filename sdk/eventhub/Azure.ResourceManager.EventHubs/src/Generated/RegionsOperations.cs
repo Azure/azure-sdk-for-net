@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets the available Regions for a given sku. </summary>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual AsyncPageable<MessagingRegions> ListBySkuAsync(string sku, CancellationToken cancellationToken = default)
         {
             if (sku == null)
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets the available Regions for a given sku. </summary>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual Pageable<MessagingRegions> ListBySku(string sku, CancellationToken cancellationToken = default)
         {
             if (sku == null)

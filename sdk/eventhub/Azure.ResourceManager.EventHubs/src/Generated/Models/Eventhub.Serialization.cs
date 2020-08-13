@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<IList<string>> partitionIds = default;
+            Optional<IReadOnlyList<string>> partitionIds = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<long> messageRetentionInDays = default;
