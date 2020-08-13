@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithStringType(string value) =>
+        public static FieldValue FieldValueWithStringValueType(string value) =>
             new FieldValue(value, isPhoneNumber: false);
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithInt64Type(long value) =>
+        public static FieldValue FieldValueWithInt64ValueType(long value) =>
             new FieldValue(value);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithFloatType(float value) =>
+        public static FieldValue FieldValueWithFloatValueType(float value) =>
             new FieldValue(value);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithDateType(DateTime value) =>
+        public static FieldValue FieldValueWithDateValueType(DateTime value) =>
             new FieldValue(value);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithTimeType(TimeSpan value) =>
+        public static FieldValue FieldValueWithTimeValueType(TimeSpan value) =>
             new FieldValue(value);
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithPhoneNumberType(string value) =>
+        public static FieldValue FieldValueWithPhoneNumberValueType(string value) =>
             new FieldValue(value, isPhoneNumber: true);
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithListType(IReadOnlyList<FormField> value)
+        public static FieldValue FieldValueWithListValueType(IReadOnlyList<FormField> value)
         {
             value = value?.ToList();
 
@@ -168,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithDictionaryType(IReadOnlyDictionary<string, FormField> value)
+        public static FieldValue FieldValueWithDictionaryValueType(IReadOnlyDictionary<string, FormField> value)
         {
             value = value?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 

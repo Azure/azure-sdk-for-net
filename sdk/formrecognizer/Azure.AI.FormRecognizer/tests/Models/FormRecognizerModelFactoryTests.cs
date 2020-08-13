@@ -136,11 +136,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringValueType()
         {
             var value = "Lovelace";
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithStringType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithStringValueType(value);
 
             Assert.AreEqual(FieldValueType.String, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsString());
@@ -155,11 +155,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithInt64Type()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithInt64ValueType()
         {
             var value = 1709;
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithInt64Type(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithInt64ValueType(value);
 
             Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsInt64());
@@ -174,11 +174,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithFloatType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithFloatValueType()
         {
             var value = 6.0221f;
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithFloatType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithFloatValueType(value);
 
             Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsFloat());
@@ -193,11 +193,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDateType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDateValueType()
         {
             var value = DateTime.UtcNow;
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithDateType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithDateValueType(value);
 
             Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsDate());
@@ -212,11 +212,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithTimeType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithTimeValueType()
         {
             var value = TimeSpan.FromSeconds(104717);
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithTimeType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithTimeValueType(value);
 
             Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsTime());
@@ -231,11 +231,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithPhoneNumberType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithPhoneNumberValueType()
         {
             var value = "1500450271";
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithPhoneNumberType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithPhoneNumberValueType(value);
 
             Assert.AreEqual(FieldValueType.PhoneNumber, fieldValue.ValueType);
             Assert.AreEqual(value, fieldValue.AsPhoneNumber());
@@ -250,13 +250,13 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithListType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithListValueType()
         {
             var formField = new FormField(default, default, default, default, default);
 
             var value = new List<FormField>() { formField };
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithListType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithListValueType(value);
 
             Assert.AreEqual(FieldValueType.List, fieldValue.ValueType);
             Assert.AreNotSame(value, fieldValue.AsList());
@@ -272,13 +272,13 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDictionaryType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDictionaryValueType()
         {
             var formField = new FormField(default, default, default, default, default);
 
             var value = new Dictionary<string, FormField>() { { "", formField } };
 
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithDictionaryType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithDictionaryValueType(value);
 
             Assert.AreEqual(FieldValueType.Dictionary, fieldValue.ValueType);
             Assert.AreNotSame(value, fieldValue.AsDictionary());
