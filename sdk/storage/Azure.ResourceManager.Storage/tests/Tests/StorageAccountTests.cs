@@ -1633,7 +1633,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(SkuName.StandardLRS, account.Sku.Name);
 
             account = await WaitToGetAccountSuccessfullyAsync(rgname, accountName);
-            IList<PrivateEndpointConnection> pes = account.PrivateEndpointConnections;
+            IReadOnlyList<PrivateEndpointConnection> pes = account.PrivateEndpointConnections;
             foreach (PrivateEndpointConnection pe in pes)
             {
                 //Get from account

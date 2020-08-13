@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class BlobRestoreStatus
     {
-        public BlobRestoreStatus() { }
+        internal BlobRestoreStatus() { }
         public string FailureReason { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobRestoreParameters Parameters { get { throw null; } }
         public string RestoreId { get { throw null; } }
@@ -631,12 +631,12 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class Endpoints
     {
-        public Endpoints() { }
+        internal Endpoints() { }
         public string Blob { get { throw null; } }
         public string Dfs { get { throw null; } }
         public string File { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } }
         public string Queue { get { throw null; } }
         public string Table { get { throw null; } }
         public string Web { get { throw null; } }
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class GeoReplicationStats
     {
-        public GeoReplicationStats() { }
+        internal GeoReplicationStats() { }
         public bool? CanFailover { get { throw null; } }
         public System.DateTimeOffset? LastSyncTime { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.GeoReplicationStatus? Status { get { throw null; } }
@@ -740,12 +740,12 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class ImmutabilityPolicyProperties
     {
-        public ImmutabilityPolicyProperties() { }
-        public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
+        internal ImmutabilityPolicyProperties() { }
+        public bool? AllowProtectedAppendWrites { get { throw null; } }
         public string Etag { get { throw null; } }
-        public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
+        public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.UpdateHistoryProperty> UpdateHistory { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.UpdateHistoryProperty> UpdateHistory { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImmutabilityPolicyState : System.IEquatable<Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState>
@@ -980,9 +980,9 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class LegalHoldProperties
     {
-        public LegalHoldProperties() { }
+        internal LegalHoldProperties() { }
         public bool? HasLegalHold { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.TagProperty> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.TagProperty> Tags { get { throw null; } }
     }
     public partial class ListAccountSasResponse
     {
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class PrivateLinkResourceListResult
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.NetworkRuleSet NetworkRuleSet { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.Endpoints PrimaryEndpoints { get { throw null; } }
         public string PrimaryLocation { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.PrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.PrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.RoutingPreference RoutingPreference { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Endpoints SecondaryEndpoints { get { throw null; } }
@@ -1648,7 +1648,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageAccountInternetEndpoints
     {
-        public StorageAccountInternetEndpoints() { }
+        internal StorageAccountInternetEndpoints() { }
         public string Blob { get { throw null; } }
         public string Dfs { get { throw null; } }
         public string File { get { throw null; } }
@@ -1674,7 +1674,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageAccountMicrosoftEndpoints
     {
-        public StorageAccountMicrosoftEndpoints() { }
+        internal StorageAccountMicrosoftEndpoints() { }
         public string Blob { get { throw null; } }
         public string Dfs { get { throw null; } }
         public string File { get { throw null; } }
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class TagProperty
     {
-        public TagProperty() { }
+        internal TagProperty() { }
         public string ObjectIdentifier { get { throw null; } }
         public string Tag { get { throw null; } }
         public string TenantId { get { throw null; } }
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class UpdateHistoryProperty
     {
-        public UpdateHistoryProperty() { }
+        internal UpdateHistoryProperty() { }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } }
         public string ObjectIdentifier { get { throw null; } }
         public string TenantId { get { throw null; } }
