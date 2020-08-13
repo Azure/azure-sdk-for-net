@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>
         /// <param name="ruleGroupName"> The name of the rule group that will be disabled. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName)
         {
             if (ruleGroupName == null)

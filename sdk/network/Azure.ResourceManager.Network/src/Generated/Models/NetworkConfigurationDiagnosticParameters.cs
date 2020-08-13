@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticParameters. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
         /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="profiles"/> is null. </exception>
         public NetworkConfigurationDiagnosticParameters(string targetResourceId, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles)
         {
             if (targetResourceId == null)

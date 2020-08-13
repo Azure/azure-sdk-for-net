@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> id = default;
             Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
             Optional<SubResource> container = default;
-            Optional<IList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

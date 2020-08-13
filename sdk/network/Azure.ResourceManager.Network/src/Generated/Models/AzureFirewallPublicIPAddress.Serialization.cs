@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallPublicIPAddress : IUtf8JsonSerializable
+    public partial class AzureFirewallPublicIPAddress
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
-            {
-                writer.WritePropertyName("address");
-                writer.WriteStringValue(Address);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static AzureFirewallPublicIPAddress DeserializeAzureFirewallPublicIPAddress(JsonElement element)
         {
             Optional<string> address = default;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> serviceName = default;
-            Optional<IList<string>> actions = default;
+            Optional<IReadOnlyList<string>> actions = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal Delegation(string id, string name, string etag, string serviceName, IList<string> actions, ProvisioningState? provisioningState) : base(id)
+        internal Delegation(string id, string name, string etag, string serviceName, IReadOnlyList<string> actions, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </summary>
         public string ServiceName { get; set; }
         /// <summary> The actions permitted to the service upon delegation. </summary>
-        public IList<string> Actions { get; }
+        public IReadOnlyList<string> Actions { get; }
         /// <summary> The provisioning state of the service delegation resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

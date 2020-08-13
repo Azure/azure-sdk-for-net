@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<PolicySettings> policySettings = default;
             Optional<IList<WebApplicationFirewallCustomRule>> customRules = default;
-            Optional<IList<ApplicationGateway>> applicationGateways = default;
+            Optional<IReadOnlyList<ApplicationGateway>> applicationGateways = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<WebApplicationFirewallPolicyResourceState> resourceState = default;
             Optional<ManagedRulesDefinition> managedRules = default;
-            Optional<IList<SubResource>> httpListeners = default;
-            Optional<IList<SubResource>> pathBasedRules = default;
+            Optional<IReadOnlyList<SubResource>> httpListeners = default;
+            Optional<IReadOnlyList<SubResource>> pathBasedRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))

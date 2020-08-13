@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etherType = default;
             Optional<string> allocationDate = default;
             Optional<IList<ExpressRouteLink>> links = default;
-            Optional<IList<SubResource>> circuits = default;
+            Optional<IReadOnlyList<SubResource>> circuits = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())

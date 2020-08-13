@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </param>
         /// <param name="protocolCustomSettings"> The protocol-specific DDoS policy customization parameters. </param>
-        internal DdosCustomPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IList<SubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, type, location, tags)
+        internal DdosCustomPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<SubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ResourceGuid = resourceGuid;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </summary>
-        public IList<SubResource> PublicIPAddresses { get; }
+        public IReadOnlyList<SubResource> PublicIPAddresses { get; }
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
         public IList<ProtocolCustomSettingsFormat> ProtocolCustomSettings { get; }
     }

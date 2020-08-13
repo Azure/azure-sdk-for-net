@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.Network.Models
             Optional<NetworkSecurityGroup> networkSecurityGroup = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<IList<NetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<IList<NetworkInterfaceTapConfiguration>> tapConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceTapConfiguration>> tapConfigurations = default;
             Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
             Optional<string> macAddress = default;
             Optional<bool> primary = default;
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableIPForwarding = default;
-            Optional<IList<string>> hostedWorkloads = default;
+            Optional<IReadOnlyList<string>> hostedWorkloads = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfile(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkProfile(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> List of child container network interfaces. </summary>
-        public IList<ContainerNetworkInterface> ContainerNetworkInterfaces { get; }
+        public IReadOnlyList<ContainerNetworkInterface> ContainerNetworkInterfaces { get; }
         /// <summary> List of chid container network interface configurations. </summary>
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>

@@ -11,44 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RecordSet : IUtf8JsonSerializable
+    public partial class RecordSet
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RecordType))
-            {
-                writer.WritePropertyName("recordType");
-                writer.WriteStringValue(RecordType);
-            }
-            if (Optional.IsDefined(RecordSetName))
-            {
-                writer.WritePropertyName("recordSetName");
-                writer.WriteStringValue(RecordSetName);
-            }
-            if (Optional.IsDefined(Fqdn))
-            {
-                writer.WritePropertyName("fqdn");
-                writer.WriteStringValue(Fqdn);
-            }
-            if (Optional.IsDefined(Ttl))
-            {
-                writer.WritePropertyName("ttl");
-                writer.WriteNumberValue(Ttl.Value);
-            }
-            if (Optional.IsCollectionDefined(IpAddresses))
-            {
-                writer.WritePropertyName("ipAddresses");
-                writer.WriteStartArray();
-                foreach (var item in IpAddresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
             Optional<string> recordType = default;
@@ -56,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> fqdn = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<int> ttl = default;
-            Optional<IList<string>> ipAddresses = default;
+            Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordType"))

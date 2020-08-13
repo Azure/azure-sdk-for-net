@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> virtualRouterIps = default;
             Optional<SubResource> hostedSubnet = default;
             Optional<SubResource> hostedGateway = default;
-            Optional<IList<SubResource>> peerings = default;
+            Optional<IReadOnlyList<SubResource>> peerings = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

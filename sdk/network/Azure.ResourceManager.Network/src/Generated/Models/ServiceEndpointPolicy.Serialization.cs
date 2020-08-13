@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<ServiceEndpointPolicyDefinition>> serviceEndpointPolicyDefinitions = default;
-            Optional<IList<Subnet>> subnets = default;
+            Optional<IReadOnlyList<Subnet>> subnets = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

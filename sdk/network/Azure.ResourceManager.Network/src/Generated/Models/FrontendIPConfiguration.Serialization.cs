@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<IList<string>> zones = default;
             Optional<string> id = default;
-            Optional<IList<SubResource>> inboundNatRules = default;
-            Optional<IList<SubResource>> inboundNatPools = default;
-            Optional<IList<SubResource>> outboundRules = default;
-            Optional<IList<SubResource>> loadBalancingRules = default;
+            Optional<IReadOnlyList<SubResource>> inboundNatRules = default;
+            Optional<IReadOnlyList<SubResource>> inboundNatPools = default;
+            Optional<IReadOnlyList<SubResource>> outboundRules = default;
+            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<IPVersion> privateIPAddressVersion = default;

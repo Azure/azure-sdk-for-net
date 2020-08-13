@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SubResource> virtualHub = default;
             Optional<IList<string>> cloudInitConfigurationBlob = default;
             Optional<long> virtualApplianceAsn = default;
-            Optional<IList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
+            Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

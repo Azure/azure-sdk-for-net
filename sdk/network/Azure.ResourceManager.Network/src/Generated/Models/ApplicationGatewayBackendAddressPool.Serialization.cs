@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<IList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
             Optional<IList<ApplicationGatewayBackendAddress>> backendAddresses = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

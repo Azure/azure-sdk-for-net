@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="disableBgpRoutePropagation"> Whether to disable the routes learned by BGP on that route table. True means disable. </param>
         /// <param name="provisioningState"> The provisioning state of the route table resource. </param>
-        internal RouteTable(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<Route> routes, IList<Subnet> subnets, bool? disableBgpRoutePropagation, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal RouteTable(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<Route> routes, IReadOnlyList<Subnet> subnets, bool? disableBgpRoutePropagation, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Routes = routes;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Collection of routes contained within a route table. </summary>
         public IList<Route> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>
-        public IList<Subnet> Subnets { get; }
+        public IReadOnlyList<Subnet> Subnets { get; }
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>
         public bool? DisableBgpRoutePropagation { get; set; }
         /// <summary> The provisioning state of the route table resource. </summary>

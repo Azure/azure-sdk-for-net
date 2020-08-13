@@ -11,35 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientConnectionHealth : IUtf8JsonSerializable
+    public partial class VpnClientConnectionHealth
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(VpnClientConnectionsCount))
-            {
-                writer.WritePropertyName("vpnClientConnectionsCount");
-                writer.WriteNumberValue(VpnClientConnectionsCount.Value);
-            }
-            if (Optional.IsCollectionDefined(AllocatedIpAddresses))
-            {
-                writer.WritePropertyName("allocatedIpAddresses");
-                writer.WriteStartArray();
-                foreach (var item in AllocatedIpAddresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
         {
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
-            Optional<IList<string>> allocatedIpAddresses = default;
+            Optional<IReadOnlyList<string>> allocatedIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalIngressBytesTransferred"))

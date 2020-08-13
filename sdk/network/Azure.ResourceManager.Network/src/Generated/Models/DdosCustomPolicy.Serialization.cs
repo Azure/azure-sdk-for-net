@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<SubResource>> publicIPAddresses = default;
+            Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
             Optional<IList<ProtocolCustomSettingsFormat>> protocolCustomSettings = default;
             foreach (var property in element.EnumerateObject())
             {

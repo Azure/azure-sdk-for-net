@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> privateDnsZoneId = default;
-            Optional<IList<RecordSet>> recordSets = default;
+            Optional<IReadOnlyList<RecordSet>> recordSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

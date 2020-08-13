@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ApplicationGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public async Task<Response<ApplicationGateway>> GetAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -171,6 +174,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public Response<ApplicationGateway> Get(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -225,6 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -257,6 +262,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -311,6 +317,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ApplicationGateway>> UpdateTagsAsync(string resourceGroupName, string applicationGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,6 +354,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ApplicationGateway> UpdateTags(string resourceGroupName, string applicationGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -398,6 +406,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all application gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationGatewayListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -424,6 +433,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all application gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationGatewayListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -525,6 +535,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public async Task<Response> StartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -552,6 +563,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public Response Start(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -598,6 +610,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public async Task<Response> StopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -625,6 +638,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public Response Stop(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -676,6 +690,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public async Task<Response> BackendHealthAsync(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -704,6 +719,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public Response BackendHealth(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -760,6 +776,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="probeRequest"/> is null. </exception>
         public async Task<Response> BackendHealthOnDemandAsync(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -793,6 +810,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="probeRequest"/> is null. </exception>
         public Response BackendHealthOnDemand(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1199,6 +1217,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetSslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
@@ -1225,6 +1244,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public Response<ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             if (predefinedPolicyName == null)
@@ -1264,6 +1284,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationGatewayListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1295,6 +1316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationGatewayListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1337,6 +1359,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the application gateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationGatewayListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1363,6 +1386,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the application gateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationGatewayListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1401,6 +1425,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationGatewayAvailableSslPredefinedPolicies>> ListAvailableSslPredefinedPoliciesNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1427,6 +1452,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all SSL predefined policies for configuring Ssl policy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationGatewayAvailableSslPredefinedPolicies> ListAvailableSslPredefinedPoliciesNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

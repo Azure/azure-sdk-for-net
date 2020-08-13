@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public FirewallPolicyRuleGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, or <paramref name="ruleGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -101,6 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, or <paramref name="ruleGroupName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string firewallPolicyName, string ruleGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -154,6 +156,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, or <paramref name="ruleGroupName"/> is null. </exception>
         public async Task<Response<FirewallPolicyRuleGroup>> GetAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -190,6 +193,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, or <paramref name="ruleGroupName"/> is null. </exception>
         public Response<FirewallPolicyRuleGroup> Get(string resourceGroupName, string firewallPolicyName, string ruleGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -251,6 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="parameters"> Parameters supplied to the create or update FirewallPolicyRuleGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, <paramref name="ruleGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -288,6 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleGroupName"> The name of the FirewallPolicyRuleGroup. </param>
         /// <param name="parameters"> Parameters supplied to the create or update FirewallPolicyRuleGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="firewallPolicyName"/>, <paramref name="ruleGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -342,6 +348,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         public async Task<Response<FirewallPolicyRuleGroupListResult>> ListAsync(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -373,6 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
         public Response<FirewallPolicyRuleGroupListResult> List(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -417,6 +425,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="firewallPolicyName"/> is null. </exception>
         public async Task<Response<FirewallPolicyRuleGroupListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -453,6 +462,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="firewallPolicyName"/> is null. </exception>
         public Response<FirewallPolicyRuleGroupListResult> ListNextPage(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

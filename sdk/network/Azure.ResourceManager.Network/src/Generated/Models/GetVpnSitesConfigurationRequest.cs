@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of GetVpnSitesConfigurationRequest. </summary>
         /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUrl"/> is null. </exception>
         public GetVpnSitesConfigurationRequest(string outputBlobSasUrl)
         {
             if (outputBlobSasUrl == null)

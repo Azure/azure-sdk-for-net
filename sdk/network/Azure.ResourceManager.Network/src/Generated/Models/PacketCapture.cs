@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCapture. </summary>
         /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
         public PacketCapture(string target, PacketCaptureStorageLocation storageLocation)
         {
             if (target == null)

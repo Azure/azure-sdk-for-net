@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TunnelConnectionHealth : IUtf8JsonSerializable
+    public partial class TunnelConnectionHealth
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
         {
             Optional<string> tunnel = default;

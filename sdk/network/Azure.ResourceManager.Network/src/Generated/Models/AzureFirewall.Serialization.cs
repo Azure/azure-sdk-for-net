@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SubResource> virtualHub = default;
             Optional<SubResource> firewallPolicy = default;
             Optional<HubIPAddresses> hubIpAddresses = default;
-            Optional<IList<AzureFirewallIpGroups>> ipGroups = default;
+            Optional<IReadOnlyList<AzureFirewallIpGroups>> ipGroups = default;
             Optional<AzureFirewallSku> sku = default;
             Optional<IDictionary<string, string>> additionalProperties = default;
             foreach (var property in element.EnumerateObject())

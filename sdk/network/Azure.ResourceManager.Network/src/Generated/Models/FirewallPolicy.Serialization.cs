@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<SubResource>> ruleGroups = default;
+            Optional<IReadOnlyList<SubResource>> ruleGroups = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<SubResource> basePolicy = default;
-            Optional<IList<SubResource>> firewalls = default;
-            Optional<IList<SubResource>> childPolicies = default;
+            Optional<IReadOnlyList<SubResource>> firewalls = default;
+            Optional<IReadOnlyList<SubResource>> childPolicies = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
             Optional<FirewallPolicyIntrusionSystemMode> intrusionSystemMode = default;

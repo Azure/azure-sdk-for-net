@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkService(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IList<NetworkInterface> networkInterfaces, ProvisioningState? provisioningState, IList<PrivateEndpointConnection> privateEndpointConnections, ResourceSet visibility, ResourceSet autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
+        internal PrivateLinkService(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterface> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, ResourceSet visibility, ResourceSet autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
         {
             Etag = etag;
             LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> An array of private link service IP configurations. </summary>
         public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
-        public IList<NetworkInterface> NetworkInterfaces { get; }
+        public IReadOnlyList<NetworkInterface> NetworkInterfaces { get; }
         /// <summary> The provisioning state of the private link service resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> An array of list about connections to the private endpoint. </summary>
-        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
         public ResourceSet Visibility { get; set; }
         /// <summary> The auto-approval list of the private link service. </summary>

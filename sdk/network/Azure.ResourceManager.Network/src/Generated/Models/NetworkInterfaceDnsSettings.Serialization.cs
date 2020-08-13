@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static NetworkInterfaceDnsSettings DeserializeNetworkInterfaceDnsSettings(JsonElement element)
         {
             Optional<IList<string>> dnsServers = default;
-            Optional<IList<string>> appliedDnsServers = default;
+            Optional<IReadOnlyList<string>> appliedDnsServers = default;
             Optional<string> internalDnsNameLabel = default;
             Optional<string> internalFqdn = default;
             Optional<string> internalDomainNameSuffix = default;

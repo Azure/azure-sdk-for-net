@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<Route>> routes = default;
-            Optional<IList<Subnet>> subnets = default;
+            Optional<IReadOnlyList<Subnet>> subnets = default;
             Optional<bool> disableBgpRoutePropagation = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

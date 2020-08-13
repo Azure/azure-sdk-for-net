@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGateway(string id, string name, string type, string location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<SubResource> publicIpAddresses, IList<SubResource> publicIpPrefixes, IList<SubResource> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NatGateway(string id, string name, string type, string location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<SubResource> publicIpAddresses, IList<SubResource> publicIpPrefixes, IReadOnlyList<SubResource> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Zones = zones;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> An array of public ip prefixes associated with the nat gateway resource. </summary>
         public IList<SubResource> PublicIpPrefixes { get; }
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
-        public IList<SubResource> Subnets { get; }
+        public IReadOnlyList<SubResource> Subnets { get; }
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the NAT gateway resource. </summary>

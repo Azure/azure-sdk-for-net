@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DdosCustomPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public async Task<Response<DdosCustomPolicy>> GetAsync(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -170,6 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public Response<DdosCustomPolicy> Get(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -224,6 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosCustomPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -256,6 +261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosCustomPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to update DDoS custom policy resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosCustomPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<DdosCustomPolicy>> UpdateTagsAsync(string resourceGroupName, string ddosCustomPolicyName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -346,6 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to update DDoS custom policy resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosCustomPolicyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<DdosCustomPolicy> UpdateTags(string resourceGroupName, string ddosCustomPolicyName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

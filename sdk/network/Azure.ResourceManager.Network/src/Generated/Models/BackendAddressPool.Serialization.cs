@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<IList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
             Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IList<SubResource>> loadBalancingRules = default;
+            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
             Optional<SubResource> outboundRule = default;
-            Optional<IList<SubResource>> outboundRules = default;
+            Optional<IReadOnlyList<SubResource>> outboundRules = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
