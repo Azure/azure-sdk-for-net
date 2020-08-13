@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of GetMetadataActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
             if (name == null)

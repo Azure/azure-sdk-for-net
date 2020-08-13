@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlScriptContent. </summary>
         /// <param name="query"> SQL query to execute. </param>
         /// <param name="currentConnection"> The connection used to execute the SQL script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="currentConnection"/> is null. </exception>
         public SqlScriptContent(string query, SqlConnection currentConnection)
         {
             if (query == null)

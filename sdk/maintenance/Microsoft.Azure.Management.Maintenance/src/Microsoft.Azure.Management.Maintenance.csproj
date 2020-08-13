@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Maintenance</PackageId>
     <Description>Microsoft Azure Maintenance Management Library</Description>
-    <Version>1.0.0</Version>
+    <Version>1.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Maintenance</AssemblyName>
     <PackageTags>Microsoft Azure Maintenance Management;Maintenance;</PackageTags>
-    <PackageReleaseNotes>Provides capabilities to manage Platform and Resource maintenance on Azure resources.</PackageReleaseNotes>
+    <PackageReleaseNotes>Provides capabilities to manage Platform and Resource maintenance on Azure resources. This version supports all capabilities in the 2020-04-01 version along with changes to support scheduled maintenance windows and public maintenance configurations.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

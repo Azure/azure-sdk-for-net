@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTableCell : FormElement
     {
-        internal FormTableCell(DataTableCell_internal dataTableCell, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
+        internal FormTableCell(DataTableCell dataTableCell, IReadOnlyList<ReadResult> readResults, int pageNumber)
             : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
         {
             ColumnIndex = dataTableCell.ColumnIndex;
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowSpan { get; }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeFieldElements"/> is set to <c>true</c>, a list of references to
+        /// When `IncludeFieldElements` is set to <c>true</c>, a list of references to
         /// the field elements constituting this cell is returned. An empty list otherwise. For calls to recognize content, this
         /// list is always populated.
         /// </summary>

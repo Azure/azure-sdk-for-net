@@ -59,8 +59,8 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string modelId = "<source_modelId>";
             CustomFormModelInfo newModel = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
 
-            Console.WriteLine($"Original modelID => {modelId}");
-            Console.WriteLine($"Copied modelID => {newModel.ModelId}");
+            Console.WriteLine($"Original model ID => {modelId}");
+            Console.WriteLine($"Copied model ID => {newModel.ModelId}");
             #endregion
         }
     }

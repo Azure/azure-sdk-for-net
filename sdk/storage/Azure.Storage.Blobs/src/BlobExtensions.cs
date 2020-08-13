@@ -172,23 +172,30 @@ namespace Azure.Storage.Blobs
         /// </returns>
         internal static IList<ObjectReplicationPolicy> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
         {
-            // If the dictionary contains a key with policy id, we are not required to do any parsing since
-            // the policy id should already be stored in the ObjectReplicationDestinationPolicyId.
-            if (OrIds.First().Key == "policy-id")
+            try
             {
+                // If the dictionary contains a key with policy id, we are not required to do any parsing since
+                // the policy id should already be stored in the ObjectReplicationDestinationPolicyId.
+                KeyValuePair<string, string> destPolicy = OrIds.Single(id => (id.Key == "policy-id"));
                 return default;
             }
-            List <ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
+            catch (Exception)
+            {
+                // If an exception is thrown by Single then we have confirmed that there's not a policy id already
+                // stored in the ObjectReplicationDestinationPolicyId and that we have the unparsed
+                // Object Replication headers from the source blob.
+            }
+            List<ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrIds)
             {
-                string[] ParsedIds = status.Key.Split('_');
-                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
+                string[] parsedIds = status.Key.Split('_');
+                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == parsedIds[0]);
                 if (policyIndex > -1)
                 {
                     OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
-                        ReplicationStatus = (ObjectReplicationStatus) Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                        RuleId = parsedIds[1],
+                        ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                 }
                 else
@@ -196,12 +203,12 @@ namespace Azure.Storage.Blobs
                     IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
                     NewRuleStatus.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
+                        RuleId = parsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                     OrProperties.Add(new ObjectReplicationPolicy()
                     {
-                        PolicyId = ParsedIds[0],
+                        PolicyId = parsedIds[0],
                         Rules = NewRuleStatus
                     });
                 }
@@ -228,17 +235,17 @@ namespace Azure.Storage.Blobs
             List<ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrMetadata)
             {
-                string[] ParsedIds = status.Key.Split('_');
-                if (ParsedIds[0].StartsWith("or-", System.StringComparison.InvariantCulture))
+                string[] parsedIds = status.Key.Split('_');
+                if (parsedIds[0].StartsWith("or-", System.StringComparison.InvariantCulture))
                 {
-                    ParsedIds[0] = ParsedIds[0].Substring("or-".Length);
+                    parsedIds[0] = parsedIds[0].Substring("or-".Length);
                 }
-                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
+                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == parsedIds[0]);
                 if (policyIndex > -1)
                 {
                     OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
+                        RuleId = parsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                 }
@@ -247,12 +254,12 @@ namespace Azure.Storage.Blobs
                     IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
                     NewRuleStatus.Add(new ObjectReplicationRule()
                     {
-                        RuleId = ParsedIds[1],
+                        RuleId = parsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
                     });
                     OrProperties.Add(new ObjectReplicationPolicy()
                     {
-                        PolicyId = ParsedIds[0],
+                        PolicyId = parsedIds[0],
                         Rules = NewRuleStatus
                     });
                 }
@@ -260,28 +267,28 @@ namespace Azure.Storage.Blobs
             return OrProperties;
         }
 
-        internal static BlobTagItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
+        internal static TaggedBlobItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
         {
             if (filterBlobItem == null)
             {
                 return null;
             }
 
-            return new BlobTagItem
+            return new TaggedBlobItem
             {
                 BlobName = filterBlobItem.BlobName,
                 BlobContainerName = filterBlobItem.BlobContainerName
             };
         }
 
-        internal static List<BlobTagItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
+        internal static List<TaggedBlobItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
         {
             if (filterBlobItems == null)
             {
                 return null;
             }
 
-            List<BlobTagItem> list = new List<BlobTagItem>();
+            List<TaggedBlobItem> list = new List<TaggedBlobItem>();
 
             foreach (FilterBlobItem filterBlobItem in filterBlobItems)
             {

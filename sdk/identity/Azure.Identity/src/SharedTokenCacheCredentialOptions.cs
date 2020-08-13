@@ -20,6 +20,16 @@ namespace Azure.Identity
         /// </summary>
         public string TenantId { get; set; }
 
+        /// <summary>
+        /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication with an interactive credential, such as the <see cref="InteractiveBrowserCredential"/> or <see cref="DeviceCodeCredential"/>.
+        /// </summary>
+        internal AuthenticationRecord AuthenticationRecord { get; set; }
+
+        /// <summary>
+        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
+        /// </summary>
+        bool ITokenCacheOptions.AllowUnencryptedCache => true;
+
         bool ITokenCacheOptions.EnablePersistentCache => true;
     }
 }

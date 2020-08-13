@@ -39,7 +39,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDeviceId = $"IdentityLifecycleDevice{GetRandom()}";
 
             DeviceIdentity device = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDeviceId = $"UpdateWithETag{GetRandom()}";
 
             DeviceIdentity device = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -139,7 +139,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             DeviceIdentity device = null;
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT);
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -213,7 +213,7 @@ namespace Azure.Iot.Hub.Service.Tests
         {
             string testDevicePrefix = $"bulkDeviceUpdate";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
             IList<DeviceIdentity> listOfDevicesToUpdate = null;
 
             try
@@ -274,7 +274,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDevicePrefix = $"bulkDevice";
             string existingDeviceName = $"{testDevicePrefix}{GetRandom()}";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
             IList<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT - 1);
 
             try
@@ -307,7 +307,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string userPropertyName = "user";
             string userPropertyValue = "userA";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             IDictionary<string, object> desiredProperties = new Dictionary<string, object>
             {
@@ -348,7 +348,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT);
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -408,7 +408,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             DeviceIdentity device = null;
             DeviceClient deviceClient = null;
-            IoTHubServiceClient serviceClient = GetClient();
+            IotHubServiceClient serviceClient = GetClient();
 
             try
             {
@@ -470,7 +470,14 @@ namespace Azure.Iot.Hub.Service.Tests
 
             foreach (DeviceIdentity device in devices)
             {
-                devicesAndTwins.Add(device, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+                var twinProperties = new TwinProperties();
+
+                foreach (var desiredProperty in desiredProperties)
+                {
+                    twinProperties.Desired.Add(desiredProperty);
+                }
+
+                devicesAndTwins.Add(device, new TwinData { Properties = twinProperties });
             }
 
             return devicesAndTwins;
@@ -488,7 +495,7 @@ namespace Azure.Iot.Hub.Service.Tests
             return deviceList;
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, IEnumerable<DeviceIdentity> devices)
+        private async Task Cleanup(IotHubServiceClient client, IEnumerable<DeviceIdentity> devices)
         {
             try
             {
@@ -503,7 +510,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, DeviceIdentity device)
+        private async Task Cleanup(IotHubServiceClient client, DeviceIdentity device)
         {
             // cleanup
             try

@@ -209,10 +209,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -234,10 +234,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.CreateAsync(options);
-            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
 
             // Assert
-            AssertDictionaryEquality(options.Tags, response.Value);
+            AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
         [Test]
@@ -796,7 +796,7 @@ namespace Azure.Storage.Blobs.Test
 
             var data = GetRandomBuffer(blobSize);
             var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
             var timesFaulted = 0;
 
             // Act
@@ -1262,10 +1262,12 @@ namespace Azure.Storage.Blobs.Test
             await appendBlob.SealAsync();
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
             Response<BlobDownloadInfo> downloadResponse  = await appendBlob.DownloadAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
             Assert.IsTrue(propertiesResponse.Value.IsSealed);
             Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
+            Assert.IsTrue(blobs.First().Properties.IsSealed);
         }
 
         [Test]

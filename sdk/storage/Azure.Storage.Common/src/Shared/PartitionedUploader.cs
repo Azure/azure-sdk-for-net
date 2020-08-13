@@ -17,7 +17,7 @@ namespace Azure.Storage
     {
         #region Definitions
         // delegte for getting a partition from a stream based on the selected data management stragegy
-        private delegate Task<StreamSlice> GetNextStreamPartition(
+        private delegate Task<SlicedStream> GetNextStreamPartition(
             Stream stream,
             long minCount,
             long maxCount,
@@ -260,7 +260,7 @@ namespace Azure.Storage
                 // Partition the stream into individual blocks and stage them
                 if (async)
                 {
-                    await foreach (StreamSlice block in GetPartitionsAsync(
+                    await foreach (SlicedStream block in GetPartitionsAsync(
                         content,
                         contentLength,
                         partitionSize,
@@ -281,7 +281,7 @@ namespace Azure.Storage
                 }
                 else
                 {
-                    foreach (StreamSlice block in GetPartitionsAsync(
+                    foreach (SlicedStream block in GetPartitionsAsync(
                         content,
                         contentLength,
                         partitionSize,
@@ -350,7 +350,7 @@ namespace Azure.Storage
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (StreamSlice block in GetPartitionsAsync(
+                await foreach (SlicedStream block in GetPartitionsAsync(
                     content,
                     contentLength,
                     blockSize,
@@ -358,6 +358,11 @@ namespace Azure.Storage
                     async: true,
                     cancellationToken).ConfigureAwait(false))
                 {
+                    /* We need to do this first! Length is calculated on the fly based on stream buffer
+                     * contents; We need to record the partition data first before consuming the stream
+                     * asynchronously. */
+                    partitions.Add((block.AbsolutePosition, block.Length));
+
                     // Start staging the next block (but don't await the Task!)
                     Task task = StagePartitionAndDisposeInternal(
                         block,
@@ -369,7 +374,6 @@ namespace Azure.Storage
 
                     // Add the block to our task and commit lists
                     runningTasks.Add(task);
-                    partitions.Add((block.AbsolutePosition, block.Length));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
@@ -420,7 +424,7 @@ namespace Azure.Storage
         /// Wraps both the async method and dispose call in one task.
         /// </summary>
         private async Task StagePartitionAndDisposeInternal(
-            StreamSlice partition,
+            SlicedStream partition,
             long offset,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
@@ -469,7 +473,7 @@ namespace Azure.Storage
         /// <summary>
         /// Partition a stream into a series of blocks buffered as needed by an array pool.
         /// </summary>
-        private static async IAsyncEnumerable<StreamSlice> GetPartitionsAsync(
+        private static async IAsyncEnumerable<SlicedStream> GetPartitionsAsync(
             Stream stream,
             long? streamLength,
             long blockSize,
@@ -502,7 +506,7 @@ namespace Azure.Storage
             long absolutePosition = 0;
             do
             {
-                StreamSlice partition = await getNextPartition(
+                SlicedStream partition = await getNextPartition(
                     stream,
                     acceptableBlockSize,
                     blockSize,
@@ -552,7 +556,7 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the buffered stream partition.
         /// </returns>
-        private async Task<StreamSlice> GetBufferedPartitionInternal(
+        private async Task<SlicedStream> GetBufferedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
@@ -594,14 +598,14 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the stream facade.
         /// </returns>
-        private static Task<StreamSlice> GetStreamedPartitionInternal(
+        private static Task<SlicedStream> GetStreamedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => Task.FromResult((StreamSlice)WindowStream.GetWindow(stream, maxCount, absolutePosition));
+            => Task.FromResult((SlicedStream)WindowStream.GetWindow(stream, maxCount, absolutePosition));
         #endregion
     }
 }
