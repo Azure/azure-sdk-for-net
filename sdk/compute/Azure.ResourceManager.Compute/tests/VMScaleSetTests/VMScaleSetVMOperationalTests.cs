@@ -293,12 +293,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task AttachDataDiskToVMScaleSetVM(VirtualMachineScaleSetVM vmssVM, VirtualMachineScaleSetVM vmModel, int lun)
         {
-            if (vmssVM.StorageProfile.DataDisks == null)
-                vmssVM.StorageProfile.DataDisks = new List<DataDisk>();
-
-            if (vmModel.StorageProfile.DataDisks == null)
-                vmModel.StorageProfile.DataDisks = new List<DataDisk>();
-
             var diskName = TestPrefix + "dataDisk" + lun;
 
             var disk = await CreateDataDisk(diskName);

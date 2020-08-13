@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of GroupCreateParameters. </summary>
         /// <param name="displayName"> Group display name. </param>
         /// <param name="mailNickname"> Mail nickname. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="mailNickname"/> is null. </exception>
         public GroupCreateParameters(string displayName, string mailNickname)
         {
             if (displayName == null)
@@ -32,22 +34,7 @@ namespace Azure.Graph.Rbac.Models
             MailEnabled = false;
             MailNickname = mailNickname;
             SecurityEnabled = true;
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of GroupCreateParameters. </summary>
-        /// <param name="displayName"> Group display name. </param>
-        /// <param name="mailEnabled"> Whether the group is mail-enabled. Must be false. This is because only pure security groups can be created using the Graph API. </param>
-        /// <param name="mailNickname"> Mail nickname. </param>
-        /// <param name="securityEnabled"> Whether the group is a security group. Must be true. This is because only pure security groups can be created using the Graph API. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal GroupCreateParameters(string displayName, bool mailEnabled, string mailNickname, bool securityEnabled, IDictionary<string, object> additionalProperties)
-        {
-            DisplayName = displayName;
-            MailEnabled = mailEnabled;
-            MailNickname = mailNickname;
-            SecurityEnabled = securityEnabled;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Group display name. </summary>

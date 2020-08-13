@@ -170,11 +170,12 @@ namespace Azure.ResourceManager.Compute.Tests
                 dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, diskEncryptionSetId: diskEncryptionSetId);
             //VirtualMachine outVM = returnTwoVM.Item1;
             inputVM = returnTwoVM.Item2;
+            string inputVMName = returnTwoVM.Item3;
             // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to
             // allow GA blob to populate.
             WaitMinutes(5);
 
-            var getVMWithInstanceViewResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name)).Value;
+            var getVMWithInstanceViewResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVMName)).Value;
             Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
 
             if (diskEncryptionSetId != null)
@@ -192,18 +193,18 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
 
-            var getVMInstanceViewResponse = await VirtualMachinesOperations.InstanceViewAsync(rgName, inputVM.Name);
+            var getVMInstanceViewResponse = await VirtualMachinesOperations.InstanceViewAsync(rgName, inputVMName);
             Assert.True(getVMInstanceViewResponse != null, "VM in InstanceView");
             ValidateVMInstanceView(inputVM, getVMInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
 
             bool hasUserDefinedAS = zones == null;
 
-            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
             var listResponse = await (VirtualMachinesOperations.ListAsync(rgName)).ToEnumerableAsync();
-            ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
+            ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVMName),
                 expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId);
 
-            var listVMSizesResponse = await (VirtualMachinesOperations.ListAvailableSizesAsync(rgName, inputVM.Name)).ToEnumerableAsync();
+            var listVMSizesResponse = await (VirtualMachinesOperations.ListAvailableSizesAsync(rgName, inputVMName)).ToEnumerableAsync();
             Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
 
             listVMSizesResponse = await (AvailabilitySetsOperations.ListAvailableSizesAsync(rgName, asName)).ToEnumerableAsync();
@@ -223,14 +224,12 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (callUpdateVM)
             {
-                VirtualMachineUpdate updateParams = new VirtualMachineUpdate()
-                {
-                    Tags = inputVM.Tags
-                };
+                VirtualMachineUpdate updateParams = new VirtualMachineUpdate();
+                updateParams.Tags.InitializeFrom(inputVM.Tags);
 
                 string updateKey = "UpdateTag";
                 updateParams.Tags.Add(updateKey, "UpdateTagValue");
-                VirtualMachine updateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartUpdateAsync(rgName, inputVM.Name, updateParams));
+                VirtualMachine updateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartUpdateAsync(rgName, inputVMName, updateParams));
 
                 Assert.True(updateResponse.Tags.ContainsKey(updateKey));
             }

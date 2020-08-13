@@ -14,30 +14,22 @@ namespace Azure.Management.Resources.Models
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            string type = default;
-            object info = default;
+            Optional<string> type = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("info"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     info = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type, info);
+            return new ErrorAdditionalInfo(type.Value, info.Value);
         }
     }
 }
