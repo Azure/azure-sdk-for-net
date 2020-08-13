@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of CustomDomain. </summary>
         /// <param name="name"> Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomDomain(string name)
         {
             if (name == null)
