@@ -31,8 +31,6 @@ namespace Azure.AI.FormRecognizer.Models
         public static BoundingBox BoundingBox(IReadOnlyList<PointF> points) =>
             new BoundingBox(points);
 
-        // TODO: CopyAuthorization
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModel"/> class.
         /// </summary>
