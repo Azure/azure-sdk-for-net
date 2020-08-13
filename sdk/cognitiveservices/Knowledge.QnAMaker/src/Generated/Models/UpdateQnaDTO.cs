@@ -110,13 +110,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "Id", 0);
             }
-            if (Source != null)
-            {
-                if (Source.Length > 300)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Source", 300);
-                }
-            }
         }
     }
 }
