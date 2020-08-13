@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// Azure Synapse secure string definition. The string value will be masked
     /// with asterisks '*' during Get or List API calls.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SecureString")]
     public partial class SecureString : SecretBase
     {
         /// <summary>

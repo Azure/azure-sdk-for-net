@@ -63,8 +63,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// managed on behalf of the user.</param>
         /// <param name="privateEndpointConnections">Private endpoint
         /// connections to the workspace</param>
+        /// <param name="extraProperties">Workspace level configs and feature
+        /// flags</param>
         /// <param name="identity">Identity of the workspace</param>
-        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), ManagedIdentity identity = default(ManagedIdentity))
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IDictionary<string, object> extraProperties = default(IDictionary<string, object>), ManagedIdentity identity = default(ManagedIdentity))
             : base(location, id, name, type, tags)
         {
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             ConnectivityEndpoints = connectivityEndpoints;
             ManagedVirtualNetwork = managedVirtualNetwork;
             PrivateEndpointConnections = privateEndpointConnections;
+            ExtraProperties = extraProperties;
             Identity = identity;
             CustomInit();
         }
@@ -145,6 +148,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets workspace level configs and feature flags
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extraProperties")]
+        public IDictionary<string, object> ExtraProperties { get; private set; }
 
         /// <summary>
         /// Gets or sets identity of the workspace
