@@ -425,7 +425,7 @@ namespace Microsoft.Azure.ServiceBus
         public async Task UnregisterMessageHandler()
         {
             this.ThrowIfClosed();
-            await this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandler();
+            await this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandler().ConfigureAwait(false);
         }
 
         /// <summary>
