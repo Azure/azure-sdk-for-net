@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -172,25 +171,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             return lastConsumable;
-        }
-
-        internal static string ComputeMD5(string input)
-        {
-#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
-            {
-                byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2", CultureInfo.InvariantCulture));
-                }
-                return sb.ToString();
-            }
         }
     }
 }

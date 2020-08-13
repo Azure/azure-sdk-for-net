@@ -6,7 +6,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="ClientCertificateCredential"/>.
     /// </summary>
-    internal class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
 
         /// <summary>

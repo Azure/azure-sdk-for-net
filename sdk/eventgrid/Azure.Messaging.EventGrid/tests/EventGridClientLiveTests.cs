@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
@@ -33,7 +34,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.TopicHost),
                     new AzureKeyCredential(TestEnvironment.TopicKey),
                     options));
-            await client.PublishEventsAsync(GetEventsList());
+            await client.SendEventsAsync(GetEventsList());
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     });
             }
 
-            await client.PublishEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(newEGEvent);
             }
 
-            await client.PublishEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     });
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -179,7 +180,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -208,7 +209,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -237,7 +238,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -268,7 +269,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(cloudEvent);
             }
 
-            await client.PublishCloudEventsAsync(eventsList);
+            await client.SendEventsAsync(eventsList);
         }
 
         [Test]
@@ -280,7 +281,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.CustomEventTopicHost),
                     new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
                     options));
-            await client.PublishCustomEventsAsync(GetCustomEventsList());
+            await client.SendEventsAsync(GetCustomEventsList());
         }
 
         [Test]
@@ -296,14 +297,14 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.TopicHost),
                     new EventGridSharedAccessSignatureCredential(sasToken),
                     Recording.InstrumentClientOptions(new EventGridPublisherClientOptions())));
-            await sasTokenClient.PublishEventsAsync(GetEventsList());
+            await sasTokenClient.SendEventsAsync(GetEventsList());
         }
 
         [Test]
         public async Task CustomizeSerializedJSONPropertiesToCamelCase()
         {
             EventGridPublisherClientOptions options = Recording.InstrumentClientOptions(new EventGridPublisherClientOptions());
-            options.Serializer = new JsonObjectSerializer(
+            options.DataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -314,7 +315,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new Uri(TestEnvironment.CustomEventTopicHost),
                     new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
                     options));
-            await client.PublishCustomEventsAsync(GetCustomEventsList());
+            await client.SendEventsAsync(GetCustomEventsList());
         }
 
         private IList<EventGridEvent> GetEventsList()

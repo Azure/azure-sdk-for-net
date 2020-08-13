@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            var recognizeOptions = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+            var recognizeOptions = new RecognizeContentOptions { ContentType = FormContentType.Jpeg };
             await client.StartRecognizeContentAsync(stream, recognizeOptions);
 
             var request = mockTransport.Requests.Single();
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            var recognizeOptions = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+            var recognizeOptions = new RecognizeReceiptsOptions { ContentType = FormContentType.Jpeg };
             await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
 
             var request = mockTransport.Requests.Single();
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            var recognizeOptions = new RecognizeOptions { ContentType = FormContentType.Jpeg };
+            var recognizeOptions = new RecognizeCustomFormsOptions { ContentType = FormContentType.Jpeg };
             await client.StartRecognizeCustomFormsAsync("00000000000000000000000000000000", stream, recognizeOptions);
 
             var request = mockTransport.Requests.Single();

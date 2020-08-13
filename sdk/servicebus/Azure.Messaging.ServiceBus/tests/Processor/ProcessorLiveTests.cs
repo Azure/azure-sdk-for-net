@@ -370,7 +370,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var exceptionReceivedHandlerCalled = false;
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
-
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             processor.ProcessMessageAsync += ProcessMessage;
             processor.ProcessErrorAsync += ProcessErrors;
 
@@ -400,6 +400,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         sbException.Reason == ServiceBusFailureReason.ServiceCommunicationProblem)
                     {
                         exceptionReceivedHandlerCalled = true;
+                        taskCompletionSource.SetResult(true);
                         return Task.CompletedTask;
                     }
                 }
@@ -407,26 +408,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.Fail($"Unexpected exception: {args.Exception}");
                 return Task.CompletedTask;
             }
-
-            try
-            {
-                await processor.StartProcessingAsync();
-                var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 30)
-                {
-                    if (exceptionReceivedHandlerCalled)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                }
-                Assert.True(exceptionReceivedHandlerCalled);
-            }
-            finally
-            {
-                await processor.StopProcessingAsync();
-            }
+            await processor.StartProcessingAsync();
+            await taskCompletionSource.Task;
+            Assert.True(exceptionReceivedHandlerCalled);
+            await processor.StopProcessingAsync();
         }
 
         [Test]

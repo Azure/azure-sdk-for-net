@@ -16,6 +16,11 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary<T>(this T entity) where T : class, ITableEntity
         {
+            if (entity is IDictionary<string, object> dictEntity)
+            {
+                return dictEntity.ToOdataAnnotatedDictionary();
+            }
+
             var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var annotatedDictionary = new Dictionary<string, object>(properties.Length * 2);
 
