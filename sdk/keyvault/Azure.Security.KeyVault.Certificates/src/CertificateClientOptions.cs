@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_0 = 0,
 
             /// <summary>
-            /// They Key Vault API version 7.1.
+            /// The Key Vault API version 7.1.
             /// </summary>
             V7_1 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
