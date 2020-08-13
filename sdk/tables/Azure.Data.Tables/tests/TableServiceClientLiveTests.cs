@@ -33,13 +33,20 @@ namespace Azure.Data.Tables.Tests
         public async Task CreateTableIfNotExists()
         {
             // Call CreateTableIfNotExists when the table already exists.
-            Assert.That(async () => await service.CreateTableIfNotExistsAsync(tableName).ConfigureAwait(false), Throws.Nothing);
+            Assert.That(async () => await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(tableName).ConfigureAwait(false)), Throws.Nothing);
 
             // Call CreateTableIfNotExists when the table does not already exists.
             var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            TableItem table = await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false);
-
-            Assert.That(table.TableName, Is.EqualTo(newTableName));
+            try
+            {
+                TableItem table = await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false));
+                Assert.That(table.TableName, Is.EqualTo(newTableName));
+            }
+            finally
+            {
+                // Delete the table using the TableClient method.
+                await CosmosThrottleWrapper(async () => await service.DeleteTableAsync(newTableName).ConfigureAwait(false));
+            }
         }
 
         [Test]
