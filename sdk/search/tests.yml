@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
+    TimeoutInMinutes: 120
     MaxParallel: 2
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

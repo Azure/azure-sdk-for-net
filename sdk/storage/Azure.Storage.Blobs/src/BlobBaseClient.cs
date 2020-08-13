@@ -1621,7 +1621,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.IsSealed,
+                options?.ShouldSealDestination,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1772,7 +1772,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.IsSealed,
+                options?.ShouldSealDestination,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2194,7 +2194,6 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                sealBlob: options?.IsSealed,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -2245,7 +2244,6 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                sealBlob: options?.IsSealed,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -2288,10 +2286,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
-        /// <param name="sealBlob">
-        /// If the destination blob should be sealed.
-        /// Only applicable for Append Blobs.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2314,7 +2308,6 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
-            bool? sealBlob,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2349,7 +2342,6 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
-                        sealBlob: sealBlob,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}",
                         cancellationToken: cancellationToken)
@@ -3770,7 +3762,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<Tags> GetTags(
+        public virtual Response<GetBlobTagResult> GetTags(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetTagsInternal(
@@ -3802,7 +3794,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<Tags>> GetTagsAsync(
+        public virtual async Task<Response<GetBlobTagResult>> GetTagsAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetTagsInternal(
@@ -3837,7 +3829,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Tags>> GetTagsInternal(
+        private async Task<Response<GetBlobTagResult>> GetTagsInternal(
             bool async,
             BlobRequestConditions conditions,
             CancellationToken cancellationToken)
@@ -3862,8 +3854,13 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
+                    GetBlobTagResult result = new GetBlobTagResult
+                    {
+                        Tags = response.Value.ToTagDictionary()
+                    };
+
                     return Response.FromValue(
-                        response.Value.ToTagDictionary(),
+                        result,
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

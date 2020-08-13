@@ -66,6 +66,9 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
@@ -133,6 +136,10 @@ jobs:
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+        Windows_NetFramework_ProjectReferences:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1

@@ -16,23 +16,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        [TestCase(1, null)]
-        [TestCase(1, "key")]
-        [TestCase(10000, null)]
-        [TestCase(null, null)]
-        public async Task PeekSession(long? sequenceNumber, string partitionKey)
+        [TestCase(1)]
+        [TestCase(10000)]
+        [TestCase(null)]
+        public async Task PeekSession(long? sequenceNumber)
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
-
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, partitionKey).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, sessionId)
+                    .AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
@@ -61,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
                     Assert.AreEqual(sentMsg.Body.ToString(), peekedText);
-                    Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
+                    Assert.AreEqual(sentMsg.SessionId, peekedMessage.SessionId);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     ct++;
                 }
@@ -100,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await GetNoRetryClient().CreateSessionReceiverAsync(
                         scope.QueueName,
                         options),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
             }
         }
 
@@ -642,64 +641,67 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task ReceiverThrowsAfterSessionLockLost(bool isSessionSpecified)
+        public async Task ReceiverCanReconnectToSameSession(bool isSessionSpecified)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: TimeSpan.FromSeconds(5)))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                var sessionId1 = "sessionId1";
 
-                await sender.SendMessageAsync(GetMessage(sessionId1));
+                await sender.SendMessagesAsync(GetMessages(3, "sessionId1"));
                 // send another session message before the one we are interested in to make sure that when isSessionSpecified=true, it is being respected
-                await sender.SendMessageAsync(GetMessage("sessionId2"));
+                await sender.SendMessagesAsync(GetMessages(3, "sessionId2"));
 
                 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
                     new ServiceBusSessionReceiverOptions
                     {
-                        SessionId = isSessionSpecified ? sessionId1 : null
+                        SessionId = isSessionSpecified ? "sessionId1" : null
                     });
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual(sessionId1, receiver.SessionId);
+                    Assert.AreEqual("sessionId1", receiver.SessionId);
                 }
 
-                var message = await receiver.ReceiveMessageAsync();
-
+                var firstMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(receiver.SessionId, firstMessage.SessionId);
+                var sessionId = receiver.SessionId;
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
-                Assert.That(async () => await receiver.ReceiveMessageAsync(),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                var secondMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(sessionId, receiver.SessionId);
+                Assert.AreEqual(receiver.SessionId, secondMessage.SessionId);
 
-                Assert.That(async () => await receiver.SetSessionStateAsync(null),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                // Even though the receiver has re-established the session link, since the first message was
+                // received before we reconnected, the message won't be able to be settled. This is analogous
+                // to the case of reconnecting a regular non-session link and getting a MessageLockLost error.
+                Assert.That(
+                    async() => await receiver.CompleteMessageAsync(firstMessage),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
+                await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
-                Assert.That(async () => await receiver.GetSessionStateAsync(),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                // If another receiver accepts the session after the lock is lost, we expect a SessionCannotBeLocked error,
+                // when we try to receive again with our initial receiver.
+                ServiceBusSessionReceiver secondReceiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = sessionId
+                    });
 
-                Assert.That(async () => await receiver.CompleteMessageAsync(message),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
-
-                Assert.That(async () => await receiver.CompleteMessageAsync(message),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
-
-                Assert.That(async () => await receiver.DeadLetterMessageAsync(message),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
-
-                Assert.That(async () => await receiver.DeferMessageAsync(message),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
-
-                Assert.That(async () => await receiver.AbandonMessageAsync(message),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                try
+                {
+                    await receiver.ReceiveMessageAsync();
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
+                {
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Expected exception not thrown: {ex}");
+                }
+                Assert.Fail("No exception thrown!");
             }
         }
 
@@ -729,7 +731,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await client.CreateSessionReceiverAsync(scope.QueueName, options);
                 }
                 catch (ServiceBusException ex)
-                when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
                 {
                     return;
                 }

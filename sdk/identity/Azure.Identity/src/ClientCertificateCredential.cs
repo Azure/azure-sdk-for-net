@@ -11,7 +11,6 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,9 +34,6 @@ namespace Azure.Identity
         /// </summary>
         internal string ClientId { get; }
 
-        /// <summary>
-        /// Gets an object which can provide the X509 Certificate of the service principal.
-        /// </summary>
         internal IX509Certificate2Provider ClientCertificateProvider { get; }
 
         private readonly MsalConfidentialClient _client;
@@ -57,7 +53,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath)
-            : this(tenantId, clientId, clientCertificatePath, (TokenCredentialOptions)null)
+            : this(tenantId, clientId, clientCertificatePath, null, null, null)
         {
         }
 
@@ -69,12 +65,7 @@ namespace Azure.Identity
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, TokenCredentialOptions options)
-            : this(new MsalConfidentialClientOptions(
-                tenantId: tenantId ?? throw new ArgumentNullException(nameof(tenantId)),
-                clientId: clientId ?? throw new ArgumentNullException(nameof(clientId)),
-                certificateProvider: new X509Certificate2FromFileProvider(clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath))),
-                options: options))
-
+            : this(tenantId, clientId, clientCertificatePath, options, null, null)
         {
         }
 
@@ -85,11 +76,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
-            : this(tenantId, clientId, clientCertificatePath, (TokenCredentialOptions)options)
-
-        {
-        }
+        internal ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
+            : this(tenantId, clientId, clientCertificatePath, options, null, null)
+        { }
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -98,7 +87,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
-            : this(tenantId, clientId, clientCertificate, (TokenCredentialOptions)null)
+            : this(tenantId, clientId, clientCertificate, null, null, null)
         {
         }
 
@@ -110,14 +99,7 @@ namespace Azure.Identity
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
-            : this(new MsalConfidentialClientOptions(
-                tenantId: tenantId ?? throw new ArgumentNullException(nameof(tenantId)),
-                clientId: clientId ?? throw new ArgumentNullException(nameof(clientId)),
-                certificateProvider: new X509Certificate2FromObjectProvider(clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate))),
-                options: options))
-
-        {
-        }
+            : this(tenantId, clientId, clientCertificate, options, null, null) {}
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -126,45 +108,32 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, ClientCertificateCredentialOptions options)
-            : this(tenantId, clientId, clientCertificate, (TokenCredentialOptions)options)
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, ClientCertificateCredentialOptions options)
+            : this(tenantId, clientId, clientCertificate, options, null, null)
         {
         }
 
-        internal ClientCertificateCredential(MsalConfidentialClientOptions clientOptions)
-        {
-            TenantId = clientOptions.TenantId;
-
-            ClientId = clientOptions.ClientId;
-
-            ClientCertificateProvider = clientOptions.CertificateProvider;
-
-            _pipeline = clientOptions.Pipeline;
-
-            _client = new MsalConfidentialClient(clientOptions);
-        }
-
-        internal ClientCertificateCredential(string tenantId, string clientId, string certificatePath, CredentialPipeline pipeline, MsalConfidentialClient client)
-            : this(tenantId, clientId, new X509Certificate2FromFileProvider(certificatePath), pipeline, client)
+        internal ClientCertificateCredential(string tenantId, string clientId, string certificatePath, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
+            : this(tenantId, clientId, new X509Certificate2FromFileProvider(certificatePath ?? throw new ArgumentNullException(nameof(certificatePath))), options, pipeline, client)
         {
         }
 
-        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 certificate, CredentialPipeline pipeline, MsalConfidentialClient client)
-            : this(tenantId, clientId, new X509Certificate2FromObjectProvider(certificate), pipeline, client)
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 certificate, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
+            : this(tenantId, clientId, new X509Certificate2FromObjectProvider(certificate ?? throw new ArgumentNullException(nameof(certificate))), options, pipeline, client)
         {
         }
 
-        internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider certificateProvider, CredentialPipeline pipeline, MsalConfidentialClient client)
+        internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider certificateProvider, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
-            TenantId = tenantId;
+            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
-            ClientId = clientId;
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             ClientCertificateProvider = certificateProvider;
 
-            _pipeline = pipeline;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client;
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, options as ITokenCacheOptions);
         }
 
         /// <summary>

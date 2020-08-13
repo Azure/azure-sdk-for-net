@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -38,7 +38,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             // Models we'll need later
             Queue<string> chunks = new Queue<string>();
-            long chunkIndex = shardCursor?.ChunkIndex ?? 0;
             long blockOffset = shardCursor?.BlockOffset ?? 0;
             long eventIndex = shardCursor?.EventIndex ?? 0;
 
@@ -63,31 +62,50 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    //Chunk chunk = new Chunk(_containerClient, blobHierarchyItem.Blob.Name);
                     chunks.Enqueue(blobHierarchyItem.Blob.Name);
                 }
             }
 
-            // Fast forward to current Chunk
-            if (chunkIndex > 0)
+            long chunkIndex = 0;
+            string currentChunkPath = shardCursor?.CurrentChunkPath;
+            Chunk currentChunk = null;
+            if (chunks.Count > 0) // Chunks can be empty right after hour flips.
             {
-                for (int i = 0; i < chunkIndex; i++)
+                // Fast forward to current Chunk
+                if (!string.IsNullOrWhiteSpace(currentChunkPath))
                 {
-                    chunks.Dequeue();
+                    while (chunks.Count > 0)
+                    {
+                        if (chunks.Peek() == currentChunkPath)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            chunks.Dequeue();
+                            chunkIndex++;
+                        }
+                    }
+                    if (chunks.Count == 0)
+                    {
+                        throw new ArgumentException($"Chunk {currentChunkPath} not found.");
+                    }
                 }
-            }
 
-            Chunk currentChunk = _chunkFactory.BuildChunk(
-                chunks.Dequeue(),
-                blockOffset,
-                eventIndex);
+                currentChunk = await _chunkFactory.BuildChunk(
+                    async,
+                    chunks.Dequeue(),
+                    blockOffset,
+                    eventIndex).ConfigureAwait(false);
+            }
 
             return new Shard(
                 _containerClient,
                 _chunkFactory,
                 chunks,
                 currentChunk,
-                chunkIndex);
+                chunkIndex,
+                shardPath);
         }
     }
 }

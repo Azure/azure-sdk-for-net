@@ -13,7 +13,7 @@ namespace Azure.Core
     /// </summary>
     public abstract class ClientOptions
     {
-        private HttpPipelineTransport _transport = HttpClientTransport.Shared;
+        private HttpPipelineTransport _transport = GetDefaultTransport();
 
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
@@ -80,5 +80,34 @@ namespace Azure.Core
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+
+        private static HttpPipelineTransport GetDefaultTransport()
+        {
+// TODO: Uncomment after release
+#if false && NETFRAMEWORK
+            bool GetSwitchValue(string switchName, string envVariable)
+            {
+                if (!AppContext.TryGetSwitch(switchName, out bool ret))
+                {
+                    string? switchValue = Environment.GetEnvironmentVariable(envVariable);
+                    if (switchValue != null)
+                    {
+                        ret = string.Equals("true", switchValue, StringComparison.InvariantCultureIgnoreCase) ||
+                              switchValue.Equals("1", StringComparison.InvariantCultureIgnoreCase);
+                    }
+                }
+
+                return ret;
+            }
+
+            if (!GetSwitchValue("Azure.Core.Pipeline.DisableHttpWebRequestTransport", "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
+            {
+                return HttpWebRequestTransport.Shared;
+            }
+#endif
+            return HttpClientTransport.Shared;
+        }
+
     }
 }

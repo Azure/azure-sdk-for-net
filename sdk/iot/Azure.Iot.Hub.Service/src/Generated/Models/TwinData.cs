@@ -7,36 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Twin Representation. </summary>
+    /// <summary> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </summary>
     public partial class TwinData
     {
         /// <summary> Initializes a new instance of TwinData. </summary>
         public TwinData()
         {
+            Tags = new ChangeTrackingDictionary<string, object>();
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>
-        /// <param name="deviceId"> The deviceId uniquely identifies the device in the IoT hub&apos;s identity registry. A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
-        /// <param name="moduleId"> Gets and sets the Module Id. </param>
-        /// <param name="tags"> A JSON document read and written by the solution back end. Tags are not visible to device apps. </param>
-        /// <param name="properties"> Gets and sets the Twin properties. </param>
-        /// <param name="etag"> Twin&apos;s ETag. </param>
-        /// <param name="version"> Version for device twin, including tags and desired properties. </param>
-        /// <param name="deviceEtag"> Device&apos;s ETag. </param>
-        /// <param name="status"> Gets the corresponding Device&apos;s Status. </param>
-        /// <param name="statusReason"> Reason, if any, for the corresponding Device to be in specified Status. </param>
-        /// <param name="statusUpdateTime"> Time when the corresponding Device&apos;s Status was last updated. </param>
-        /// <param name="connectionState"> Corresponding Device&apos;s ConnectionState. </param>
-        /// <param name="lastActivityTime"> The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations. </param>
-        /// <param name="cloudToDeviceMessageCount"> Number of messages sent to the corresponding Device from the Cloud. </param>
-        /// <param name="authenticationType"> Corresponding Device&apos;s authentication type. </param>
-        /// <param name="x509Thumbprint"> Corresponding Device&apos;s X509 thumbprint. </param>
-        /// <param name="capabilities"> Status of Capabilities enabled on the device. </param>
-        /// <param name="deviceScope"> . </param>
-        /// <param name="parentScopes"> . </param>
+        /// <param name="deviceId"> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
+        /// <param name="moduleId"> The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
+        /// <param name="tags"> The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The values are JSON objects, up-to 4KB in length. </param>
+        /// <param name="properties"> The desired and reported properties of the twin. </param>
+        /// <param name="etag"> The string representing a ETag for the device twin, as per RFC7232. </param>
+        /// <param name="version"> The version for the device twin including tags and desired properties. </param>
+        /// <param name="deviceEtag"> The string representing a ETag for the device, as per RFC7232. </param>
+        /// <param name="status"> The enabled status of the device. If disabled, the device cannot connect to the service. </param>
+        /// <param name="statusReason"> The reason for the current status of the device, if any. </param>
+        /// <param name="statusUpdateTime"> The date and time when the status of the device was last updated. </param>
+        /// <param name="connectionState"> The connection state of the device. </param>
+        /// <param name="lastActivityTime"> The date and time when the device last connected or received or sent a message. The date and time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations. </param>
+        /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-device messages sent. </param>
+        /// <param name="authenticationType"> The authentication type used by the device. </param>
+        /// <param name="x509Thumbprint"> The X509 thumbprint of the device. </param>
+        /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
+        /// <param name="deviceScope"> The scope of the device. </param>
+        /// <param name="parentScopes"> The scopes of the upper level edge devices if applicable. Only available for edge devices. </param>
         internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             DeviceId = deviceId;
@@ -59,39 +62,41 @@ namespace Azure.Iot.Hub.Service.Models
             ParentScopes = parentScopes;
         }
 
-        /// <summary> The deviceId uniquely identifies the device in the IoT hub&apos;s identity registry. A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
+        /// <summary> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
         public string DeviceId { get; set; }
-        /// <summary> Gets and sets the Module Id. </summary>
+        /// <summary> The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
         public string ModuleId { get; set; }
-        /// <summary> A JSON document read and written by the solution back end. Tags are not visible to device apps. </summary>
-        public IDictionary<string, object> Tags { get; set; }
-        /// <summary> Gets and sets the Twin properties. </summary>
+        /// <summary> The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The values are JSON objects, up-to 4KB in length. </summary>
+        public IDictionary<string, object> Tags { get; }
+        /// <summary> The desired and reported properties of the twin. </summary>
         public TwinProperties Properties { get; set; }
-        /// <summary> Twin&apos;s ETag. </summary>
+        /// <summary> The string representing a ETag for the device twin, as per RFC7232. </summary>
         public string Etag { get; set; }
-        /// <summary> Version for device twin, including tags and desired properties. </summary>
+        /// <summary> The version for the device twin including tags and desired properties. </summary>
         public long? Version { get; set; }
-        /// <summary> Device&apos;s ETag. </summary>
+        /// <summary> The string representing a ETag for the device, as per RFC7232. </summary>
         public string DeviceEtag { get; set; }
-        /// <summary> Gets the corresponding Device&apos;s Status. </summary>
+        /// <summary> The enabled status of the device. If disabled, the device cannot connect to the service. </summary>
         public TwinStatus? Status { get; set; }
-        /// <summary> Reason, if any, for the corresponding Device to be in specified Status. </summary>
+        /// <summary> The reason for the current status of the device, if any. </summary>
         public string StatusReason { get; set; }
-        /// <summary> Time when the corresponding Device&apos;s Status was last updated. </summary>
+        /// <summary> The date and time when the status of the device was last updated. </summary>
         public DateTimeOffset? StatusUpdateTime { get; set; }
-        /// <summary> Corresponding Device&apos;s ConnectionState. </summary>
+        /// <summary> The connection state of the device. </summary>
         public TwinConnectionState? ConnectionState { get; set; }
-        /// <summary> The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations. </summary>
+        /// <summary> The date and time when the device last connected or received or sent a message. The date and time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations. </summary>
         public DateTimeOffset? LastActivityTime { get; set; }
-        /// <summary> Number of messages sent to the corresponding Device from the Cloud. </summary>
+        /// <summary> The number of cloud-to-device messages sent. </summary>
         public int? CloudToDeviceMessageCount { get; set; }
-        /// <summary> Corresponding Device&apos;s authentication type. </summary>
+        /// <summary> The authentication type used by the device. </summary>
         public TwinAuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Corresponding Device&apos;s X509 thumbprint. </summary>
+        /// <summary> The X509 thumbprint of the device. </summary>
         public X509Thumbprint X509Thumbprint { get; set; }
-        /// <summary> Status of Capabilities enabled on the device. </summary>
+        /// <summary> The status of capabilities enabled on the device. </summary>
         public DeviceCapabilities Capabilities { get; set; }
+        /// <summary> The scope of the device. </summary>
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        /// <summary> The scopes of the upper level edge devices if applicable. Only available for edge devices. </summary>
+        public IList<string> ParentScopes { get; }
     }
 }
