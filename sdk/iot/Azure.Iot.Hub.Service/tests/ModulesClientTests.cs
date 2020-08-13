@@ -41,7 +41,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             DeviceIdentity device = null;
             ModuleIdentity module = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -102,7 +102,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             DeviceIdentity device = null;
             ModuleIdentity module = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.Iot.Hub.Service.Tests
             DeviceIdentity device = null;
             ModuleIdentity module = null;
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.Iot.Hub.Service.Tests
             DeviceIdentity device = null;
             ModuleIdentity module = null;
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
 
             DeviceIdentity device = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -347,7 +347,7 @@ namespace Azure.Iot.Hub.Service.Tests
             DeviceIdentity device = null;
             ModuleIdentity module = null;
             ModuleClient moduleClient = null;
-            IoTHubServiceClient serviceClient = GetClient();
+            IotHubServiceClient serviceClient = GetClient();
 
             try
             {
@@ -427,7 +427,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             IList<ModuleIdentity> moduleIdentities = BuildMultipleModules(deviceId, testModulePrefix, BULK_MODULE_COUNT);
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.Iot.Hub.Service.Tests
                 });
             }
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -499,7 +499,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDevicePrefix = $"bulkDeviceUpdate";
             string testModulePrefix = $"bulkModuleUpdate";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             string deviceId = $"{testDevicePrefix}{GetRandom()}";
             var deviceIdentity = new DeviceIdentity()
@@ -572,7 +572,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDevicePrefix = $"bulkDeviceCreate";
             string testModulePrefix = $"bulkModuleCreate";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             string deviceId = $"{testDevicePrefix}{GetRandom()}";
             var deviceIdentity = new DeviceIdentity()
@@ -620,7 +620,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string userPropertyName = "user";
             string userPropertyValue = "userA";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             string deviceId = $"{testDevicePrefix}{GetRandom()}";
             DeviceIdentity deviceIdentity = new DeviceIdentity()
@@ -669,7 +669,7 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDevicePrefix = $"bulkDevice";
             string testModulePrefix = $"bulkModule";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             string deviceId = $"{testDevicePrefix}{GetRandom()}";
             DeviceIdentity deviceIdentity = new DeviceIdentity()
@@ -731,7 +731,14 @@ namespace Azure.Iot.Hub.Service.Tests
 
             foreach (ModuleIdentity module in modules)
             {
-                modulesAndTwins.Add(module, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+                var twinProperties = new TwinProperties();
+
+                foreach (var desiredProperty in desiredProperties)
+                {
+                    twinProperties.Desired.Add(desiredProperty);
+                }
+
+                modulesAndTwins.Add(module, new TwinData { Properties = twinProperties });
             }
 
             return modulesAndTwins;
@@ -756,7 +763,7 @@ namespace Azure.Iot.Hub.Service.Tests
             return moduleList;
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, IEnumerable<DeviceIdentity> devices)
+        private async Task Cleanup(IotHubServiceClient client, IEnumerable<DeviceIdentity> devices)
         {
             try
             {
@@ -771,7 +778,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, DeviceIdentity device)
+        private async Task Cleanup(IotHubServiceClient client, DeviceIdentity device)
         {
             // cleanup
             try

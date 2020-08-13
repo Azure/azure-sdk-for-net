@@ -1964,7 +1964,7 @@ namespace Azure.Storage.Blobs.Specialized
                         InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
-                    Response<BlobQueryResult> result = await BlobRestClient.Blob.QueryAsync(
+                    (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: Uri,
@@ -1978,13 +1978,14 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
                         ifMatch: options?.Conditions?.IfMatch,
                         ifNoneMatch: options?.Conditions?.IfNoneMatch,
+                        ifTags: options?.Conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     Action<BlobQueryError> errorHandler = options?._errorHandler;
-                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, errorHandler);
+                    Stream parsedStream = new BlobQuickQueryStream(stream, options?.ProgressHandler, errorHandler);
                     result.Value.Body = parsedStream;
 
                     return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());

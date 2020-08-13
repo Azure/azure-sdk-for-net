@@ -89,7 +89,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         /// <summary>
         /// Initalizes this LazyLoadingBlobStream.
-        /// <returns>The number of bytes that were downloaded in the first download request.</returns>
         /// </summary>
         private async Task Initalize(bool async, CancellationToken cancellationToken)
         {
@@ -99,7 +98,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         /// <summary>
         /// Downloads the next block.
-        /// <returns>Number of bytes that were downloaded</returns>
         /// </summary>
         private async Task DownloadBlock(bool async, CancellationToken cancellationToken)
         {
@@ -108,7 +106,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             response = async
                 ? await _blobClient.DownloadAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _blobClient.Download(range);
+                : _blobClient.Download(range, cancellationToken: cancellationToken);
             _stream = response.Value.Content;
             _offset += response.Value.ContentLength;
             _lastDownloadBytes = response.Value.ContentLength;
@@ -198,7 +196,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             string lengthString = response.Value.Details.ContentRange;
             string[] split = lengthString.Split('/');
-            return Convert.ToInt64(split[1], CultureInfo.InvariantCulture);
+            return long.Parse(split[1], CultureInfo.InvariantCulture);
         }
 
         /// <inheritdoc/>
@@ -221,6 +219,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <inheritdoc/>
         public override void Flush()
         {
+        }
+
+        /// <inheritdoc/>
+        public override Task FlushAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc/>

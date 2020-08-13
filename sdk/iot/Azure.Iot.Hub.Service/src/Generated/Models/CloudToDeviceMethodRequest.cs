@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Parameters to execute a direct method on the device. </summary>
+    /// <summary> The parameters to execute a direct method on the device. </summary>
     public partial class CloudToDeviceMethodRequest
     {
         /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
@@ -16,8 +16,8 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
-        /// <param name="methodName"> Method to run. </param>
-        /// <param name="payload"> Payload. </param>
+        /// <param name="methodName"> The name of the method to execute. </param>
+        /// <param name="payload"> The JSON-formatted direct method payload, up to 128kb in size. </param>
         /// <param name="responseTimeoutInSeconds"> . </param>
         /// <param name="connectTimeoutInSeconds"> . </param>
         internal CloudToDeviceMethodRequest(string methodName, object payload, int? responseTimeoutInSeconds, int? connectTimeoutInSeconds)
@@ -28,9 +28,9 @@ namespace Azure.Iot.Hub.Service.Models
             ConnectTimeoutInSeconds = connectTimeoutInSeconds;
         }
 
-        /// <summary> Method to run. </summary>
+        /// <summary> The name of the method to execute. </summary>
         public string MethodName { get; set; }
-        /// <summary> Payload. </summary>
+        /// <summary> The JSON-formatted direct method payload, up to 128kb in size. </summary>
         public object Payload { get; set; }
         public int? ResponseTimeoutInSeconds { get; set; }
         public int? ConnectTimeoutInSeconds { get; set; }

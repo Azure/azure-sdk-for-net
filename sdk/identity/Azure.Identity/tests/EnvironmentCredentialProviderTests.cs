@@ -35,7 +35,7 @@ namespace Azure.Identity.Tests
 
                 var provider = new EnvironmentCredential();
 
-                ClientSecretCredential cred =_credential(provider) as ClientSecretCredential;
+                ClientSecretCredential cred = provider.Credential as ClientSecretCredential;
 
                 Assert.NotNull(cred);
 
@@ -68,13 +68,14 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath");
 
                 var provider = new EnvironmentCredential();
-                var cred = _credential(provider) as ClientCertificateCredential;
-                var certProvider = cred.ClientCertificateProvider as ClientCertificateCredential.X509Certificate2FromFileProvider;
-
+                var cred = provider.Credential as ClientCertificateCredential;
                 Assert.NotNull(cred);
-                Assert.NotNull(certProvider);
                 Assert.AreEqual("mockclientid", cred.ClientId);
                 Assert.AreEqual("mocktenantid", cred.TenantId);
+
+                var certProvider = cred.ClientCertificateProvider as ClientCertificateCredential.X509Certificate2FromFileProvider;
+
+                Assert.NotNull(certProvider);
                 Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
             }
             finally
@@ -86,13 +87,10 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task EnvironmentCredentialUnavailableException()
+        public void EnvironmentCredentialUnavailableException()
         {
             var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null));
-
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-            await Task.CompletedTask;
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
         }
 
         [Test]
@@ -102,7 +100,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
 
-            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient);
+            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, mockMsalClient);
 
             var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred));
 
@@ -113,11 +111,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
-        }
-
-        public static TokenCredential _credential(EnvironmentCredential provider)
-        {
-            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
     }
 }

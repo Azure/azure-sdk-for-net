@@ -28,8 +28,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             Description = description;
             Context = context;
-            Inputs = inputs ?? new List<InputFieldMappingEntry>();
-            Outputs = outputs ?? new List<OutputFieldMappingEntry>();
+            Inputs = inputs;
+            Outputs = outputs;
         }
 
         /// <summary> Identifies the concrete type of the skill. </summary>

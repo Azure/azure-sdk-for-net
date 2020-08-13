@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Result of a device message queue purge operation. </summary>
+    /// <summary> The result of a device message queue purge operation. </summary>
     public partial class PurgeMessageQueueResult
     {
         /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
@@ -17,8 +17,8 @@ namespace Azure.Iot.Hub.Service.Models
 
         /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
         /// <param name="totalMessagesPurged"> . </param>
-        /// <param name="deviceId"> The ID of the device whose messages are being purged. </param>
-        /// <param name="moduleId"> The ID of the device whose messages are being purged. </param>
+        /// <param name="deviceId"> The unique identifier of the device. </param>
+        /// <param name="moduleId"> The unique identifier of the module. </param>
         internal PurgeMessageQueueResult(int? totalMessagesPurged, string deviceId, string moduleId)
         {
             TotalMessagesPurged = totalMessagesPurged;
@@ -27,9 +27,9 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         public int? TotalMessagesPurged { get; }
-        /// <summary> The ID of the device whose messages are being purged. </summary>
+        /// <summary> The unique identifier of the device. </summary>
         public string DeviceId { get; }
-        /// <summary> The ID of the device whose messages are being purged. </summary>
+        /// <summary> The unique identifier of the module. </summary>
         public string ModuleId { get; }
     }
 }

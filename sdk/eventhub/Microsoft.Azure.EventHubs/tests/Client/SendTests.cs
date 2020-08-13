@@ -251,7 +251,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                         await pSender.CloseAsync();
                     }
 
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                    await Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     {
                         TestUtility.Log("Sending another event to partition 0 on the closed sender, this should fail");
                         using (var eventData = new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")))
@@ -331,5 +331,58 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 }
             }
         }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task SendNonrescannableEnumerator()
+        {
+            int numberOfEvents = 10;
+            string partitionId = "0";
+
+            IEnumerable<EventData> GetBatch()
+            {
+                for (int i = 0; i < numberOfEvents; i++)
+                {
+                    yield return new EventData(Encoding.UTF8.GetBytes(i.ToString()));
+                }
+            }
+
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var ehSender = ehClient.CreatePartitionSender(partitionId);
+
+                try
+                {
+                    // Mark end of each partition so that we can start reading from there.
+                    var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(partitionId);
+
+                    // Send events provided by enumerator
+                    var events = GetBatch();
+                    await ehSender.SendAsync(events);
+
+                    // Receive all messages from partition.
+                    var receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromOffset(pInfo.LastEnqueuedOffset));
+                    var messages = await ReceiveAllMessagesAsync(receiver);
+
+                    // All messages received.
+                    Assert.True(messages.Count == numberOfEvents, $"Received { messages.Count } events.");
+
+                    // Validate message contents.
+                    for (int i = 0; i < numberOfEvents; i++)
+                    {
+                        var body = Encoding.UTF8.GetString(messages[i].Body.Array);
+                        Assert.True(body == i.ToString(), $"Message body check failed for message { i }. Actual body: { body }.");
+                    }
+                }
+                finally
+                {
+                    await Task.WhenAll(ehClient.CloseAsync());
+                }
+            }
+        }
+
     }
 }

@@ -14,6 +14,14 @@ namespace Azure.Data.Tables
             public const string SharedKey = "SharedKeyLite";
             public const string Authorization = "Authorization";
             public const string IfMatch = "If-Match";
+            public const string Accept = "Accept";
+            public const string Content = "Content-Type";
+        }
+
+        internal static class MimeType
+        {
+            internal const string ApplicationJson = "application/json";
+            internal const string ApplicationXml = "application/xml";
         }
 
         internal static class QueryParameterNames

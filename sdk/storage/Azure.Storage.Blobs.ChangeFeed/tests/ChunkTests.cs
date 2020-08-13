@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Internal.Avro;
 using Moq;
@@ -26,7 +25,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns true.
         /// </summary>
         [Test]
-        public void HasNext_True()
+        public async Task HasNext_True()
         {
             // Arrange
             string chunkPath = "chunkPath";
@@ -45,12 +44,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(lazyLoadingBlobStream.Object);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
+            avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             ChunkFactory chunkFactory = new ChunkFactory(
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
-            Chunk chunk = chunkFactory.BuildChunk(
+            Chunk chunk = await chunkFactory.BuildChunk(
+                IsAsync,
                 chunkPath);
 
             // Act
@@ -73,7 +74,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns false.
         /// </summary>
         [Test]
-        public void HasNext_False()
+        public async Task HasNext_False()
         {
             // Arrange
             string chunkPath = "chunkPath";
@@ -92,13 +93,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(lazyLoadingBlobStream.Object);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(false);
+            avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             ChunkFactory chunkFactory = new ChunkFactory(
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
-            Chunk chunk = chunkFactory.BuildChunk(
-
+            Chunk chunk = await chunkFactory.BuildChunk(
+                IsAsync,
                 chunkPath);
 
             // Act
@@ -198,6 +200,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
+            avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
             avroReader.Setup(r => r.Next(
                 It.IsAny<bool>(),
                 It.IsAny<CancellationToken>()))
@@ -210,7 +213,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
-            Chunk chunk = chunkFactory.BuildChunk(
+            Chunk chunk = await chunkFactory.BuildChunk(
+                IsAsync,
                 chunkPath,
                 blockOffset,
                 eventIndex);

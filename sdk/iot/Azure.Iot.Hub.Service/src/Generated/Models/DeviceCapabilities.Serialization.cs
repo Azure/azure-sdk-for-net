@@ -15,30 +15,26 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IotEdge != null)
+            if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge");
-                writer.WriteBooleanValue(IotEdge.Value);
+                writer.WriteBooleanValue(IsIotEdgeDevice.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DeviceCapabilities DeserializeDeviceCapabilities(JsonElement element)
         {
-            bool? iotEdge = default;
+            Optional<bool> iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iotEdge"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     iotEdge = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DeviceCapabilities(iotEdge);
+            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
         }
     }
 }

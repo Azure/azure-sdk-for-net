@@ -31,8 +31,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="linkedService">Staging linked service
         /// reference.</param>
-        /// <param name="folderPath">Folder path for staging blob.</param>
-        public DataFlowStagingInfo(LinkedServiceReference linkedService = default(LinkedServiceReference), string folderPath = default(string))
+        /// <param name="folderPath">Folder path for staging blob. Type: string
+        /// (or Expression with resultType string)</param>
+        public DataFlowStagingInfo(LinkedServiceReference linkedService = default(LinkedServiceReference), object folderPath = default(object))
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
@@ -51,10 +52,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public LinkedServiceReference LinkedService { get; set; }
 
         /// <summary>
-        /// Gets or sets folder path for staging blob.
+        /// Gets or sets folder path for staging blob. Type: string (or
+        /// Expression with resultType string)
         /// </summary>
         [JsonProperty(PropertyName = "folderPath")]
-        public string FolderPath { get; set; }
+        public object FolderPath { get; set; }
 
         /// <summary>
         /// Validate the object.

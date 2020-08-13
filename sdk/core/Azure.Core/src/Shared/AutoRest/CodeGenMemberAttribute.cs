@@ -10,17 +10,6 @@ namespace Azure.Core
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     internal class CodeGenMemberAttribute : CodeGenTypeAttribute
     {
-        /// <summary>
-        /// For collection properties. When set to true empty collection would be treated as undefined and not serialized.
-        /// </summary>
-        public bool EmptyAsUndefined { get; set; }
-
-        /// <summary>
-        /// For collection and model properties. Whether the property would always be initialized on creation/deserialization.
-        /// Requires a parameterless constructor for implementation type.
-        /// </summary>
-        public bool Initialize { get; set; }
-
         public CodeGenMemberAttribute() : base(null)
         {
         }

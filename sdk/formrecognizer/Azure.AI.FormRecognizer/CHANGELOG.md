@@ -1,10 +1,32 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 3.0.0-preview.1 (Unreleased)
+
+### Breaking changes
+
+- The library now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
+- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize API's.
+- Added model`TrainingOptions` to support passing configurable options to training API's. This type now includes `TrainingFileFilter`.
+- Renamed the `FieldValue` property `Type` to `ValueType`.
+- Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
+- Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomForms` parameter `formFileStream` to `form`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
+- Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
+- Renamed `FormValueType.Integer` to `FormValueType.Int64`.
+- `FormField` property `ValueData` is now set to null if there is no text, bounding box or page number associated with it.
 
 ### Fixes
 
-- Constructor in `TrainingFileFilter` made public.
+- Made the `TrainingFileFilter` constructor public.
+- Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
+- Fixed a bug in which the `BoundingBox` indexer and `ToString` method threw a `NullReferenceException` if it had no points ([#13971](https://github.com/Azure/azure-sdk-for-net/issues/13971)).
+- Fixed a bug in which a default `FieldValue` threw a `NullReferenceException` if `AsString` was called. The method now returns `null`.
+
+### New Features
+
+- Added diagnostics functionality to the `FormRecognizerClient`, to the `FormTrainingClient` and to long-running operation types.
 
 ## 1.0.0-preview.4 (2020-07-07)
 
