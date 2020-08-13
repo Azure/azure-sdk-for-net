@@ -232,7 +232,7 @@ namespace Azure.AI.FormRecognizer.Models
             new FormPageCollection(list);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPageRange"/> struct.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPageRange"/> structure.
         /// </summary>
         /// <param name="firstPageNumber">The first page number of the range.</param>
         /// <param name="lastPageNumber">The last page number of the range.</param>
