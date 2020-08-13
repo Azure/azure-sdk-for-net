@@ -1185,8 +1185,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3014" : "2005";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
+
+            Assert.AreEqual("2005", ex.ErrorCode);
 
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
