@@ -58,10 +58,7 @@ namespace Azure.Core
             {
                 foreach (var key in headers.Keys)
                 {
-                    if (!Headers.ContainsKey(key))
-                    {
-                        Headers[key] = headers[key];
-                    }
+                    Headers[key] = headers[key];
                 }
             }
 
@@ -118,14 +115,13 @@ namespace Azure.Core
         public override bool TryComputeLength(out long length)
         {
             // We have four states we could be in:
-            //   1. We have content, but the task is still running or finished without success
-            //   2. We have content, the task has finished successfully, and the stream came back as a null or non-seekable
-            //   3. We have content, the task has finished successfully, and the stream is seekable, so we know its length
-            //   4. We don't have content (streamTask.Value == null)
+            //   1. We have content and the stream came back as a null or non-seekable
+            //   2. We have content and the stream is seekable, so we know its length
+            //   3. We don't have content
             //
-            // For #1 and #2, we return false.
-            // For #3, we return true & the size of our headers + the content length
-            // For #4, we return true & the size of our headers
+            // For #1, we return false.
+            // For #2, we return true & the size of our headers + the content length
+            // For #3, we return true & the size of our headers
 
             bool hasContent = request.Content != null;
             length = 0;
@@ -151,15 +147,9 @@ namespace Azure.Core
         private byte[] SerializeHeader()
         {
             StringBuilder message = new StringBuilder(DefaultHeaderAllocation);
-            RequestHeaders headers;
-            RequestContent? content;
 
             SerializeRequestLine(message, request);
-            headers = request.Headers;
-            content = request.Content;
-
-            SerializeHeaderFields(message, headers);
-
+            SerializeHeaderFields(message, request.Headers);
             message.Append(CRLF);
             return Encoding.UTF8.GetBytes(message.ToString());
         }

@@ -397,8 +397,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task SendMultipartBatch()
+        public async Task SendMultipartData()
         {
+            const string ApplicationJson = "application/json";
+            const string cteHeaderName = "Content-Transfer-Encoding";
+            const string Binary = "binary";
+            const string Mixed = "mixed";
+            const string ApplicationJsonOdata = "application/json;odata=nometadata";
+            const string DataServiceVersion = "DataServiceVersion";
+            const string Three0 = "3.0";
+
             string requestBody = null;
 
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
@@ -415,25 +423,85 @@ namespace Azure.Core.Tests
             request.Uri.Reset(testServer.Address);
 
             Guid batchGuid = Guid.NewGuid();
-            var content = new MultipartContent("mixed", $"batch_{batchGuid}");
+            var content = new MultipartContent(Mixed, $"batch_{batchGuid}");
             content.ApplyToRequest(request);
-            Guid changesetGuid = Guid.NewGuid();
-            var changeset = new MultipartContent("mixed", $"changeset_{changesetGuid}");
-            content.Add(changeset, new Dictionary<string, string> { { HttpHeader.Names.ContentType, $"multipart/mixed;boundary=\"changeset_{changesetGuid}\"" } });
 
-            var message = httpPipeline.CreateMessage();
-            var req = message.Request;
-            req.Method = RequestMethod.Post;
-            req.Uri.Reset(new Uri("https://myaccount.table.core.windows.net/Blogs"));
-            req.Headers.Add("x-ms-version", "2019-02-02");
-            req.Headers.Add("DataServiceVersion", "3.0");
-            req.Headers.Add("Accept", "application/json");
-            req.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            req.Content = RequestContent.Create(Encoding.UTF8.GetBytes("{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}"));
-            changeset.Add(new RequestContentContent(req, new Dictionary<string, string> { { "Content-Transfer-Encoding", "binary" } }));
-            changeset.Add(new RequestContentContent(req, new Dictionary<string, string> { { "Content-Transfer-Encoding", "binary" } }));
+            Guid changesetGuid = Guid.NewGuid();
+            var changeset = new MultipartContent(Mixed, $"changeset_{changesetGuid}");
+            content.Add(changeset);
+
+            var postReq1 = httpPipeline.CreateMessage().Request;
+            postReq1.Method = RequestMethod.Post;
+            const string postUri = "https://myaccount.table.core.windows.net/Blogs";
+            postReq1.Uri.Reset(new Uri(postUri));
+            postReq1.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            postReq1.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            postReq1.Headers.Add(DataServiceVersion, Three0);
+            const string post1Body = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"1\", \"Rating\":9, \"Text\":\"Azure...\"}";
+            postReq1.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post1Body));
+            changeset.Add(new RequestContentContent(postReq1, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+
+            var postReq2 = httpPipeline.CreateMessage().Request;
+            postReq1.Method = RequestMethod.Post;
+            postReq1.Uri.Reset(new Uri(postUri));
+            postReq1.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            postReq1.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            postReq1.Headers.Add(DataServiceVersion, Three0);
+            const string post2Body = "{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}";
+            postReq1.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post2Body));
+            changeset.Add(new RequestContentContent(postReq2, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+
+            var patchReq = httpPipeline.CreateMessage().Request;
+            patchReq.Method = RequestMethod.Patch;
+            const string mergeUri = "https://myaccount.table.core.windows.net/Blogs(PartitionKey='Channel_17', RowKey='3')";
+            patchReq.Uri.Reset(new Uri(mergeUri));
+            patchReq.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            patchReq.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            patchReq.Headers.Add(DataServiceVersion, Three0);
+            const string patchBody = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"3\", \"Rating\":9, \"Text\":\"Azure Tables...\"}";
+            patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
+            changeset.Add(new RequestContentContent(postReq2, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+
             request.Content = content;
             using Response response = await ExecuteRequest(request, httpPipeline);
+            Console.WriteLine(requestBody);
+
+            Assert.That(requestBody, Is.EqualTo(@$"--batch_{batchGuid}
+{HttpHeader.Names.ContentType}: multipart/mixed; boundary=changeset_{changesetGuid}
+
+--changeset_{changesetGuid}
+{HttpHeader.Names.ContentType}: application/http
+{cteHeaderName}: {Binary}
+
+POST {postUri} HTTP/1.1
+{HttpHeader.Names.ContentType}: {ApplicationJson}
+{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
+{DataServiceVersion}: {Three0};
+
+{post1Body}
+--changeset_{changesetGuid}
+{HttpHeader.Names.ContentType}: application/http
+{cteHeaderName}: {Binary}
+
+POST {postUri} HTTP/1.1
+{HttpHeader.Names.ContentType}: {ApplicationJson}
+{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
+{DataServiceVersion}: {Three0};
+
+{post2Body}
+--changeset_{changesetGuid}
+{HttpHeader.Names.ContentType}: application/http
+{cteHeaderName}: {Binary}
+
+MERGE {mergeUri} HTTP/1.1
+{HttpHeader.Names.ContentType}: {ApplicationJson}
+{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
+{DataServiceVersion}: {Three0};
+
+{patchBody}
+
+--changeset_{changesetGuid}--
+--batch_{batchGuid}"));
         }
 
         private class TestOptions : ClientOptions

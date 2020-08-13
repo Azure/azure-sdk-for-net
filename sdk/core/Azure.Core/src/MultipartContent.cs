@@ -50,10 +50,12 @@ namespace Azure.Core
         {
             ValidateBoundary(boundary);
             _subtype = subtype;
-            _boundary = boundary;
+
+            // see https://www.ietf.org/rfc/rfc1521.txt page 29.
+            _boundary = boundary.Contains(":") ? $"\"{boundary}\"" : boundary;
             Headers = new Dictionary<string, string>
             {
-                [HttpHeader.Names.ContentType] = $"multipart/{_subtype};boundary=\"{_boundary}\""
+                [HttpHeader.Names.ContentType] = $"multipart/{_subtype}; boundary={_boundary}"
             };
 
             _nestedContent = new List<MultipartRequestContent>();
@@ -108,7 +110,7 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         public void ApplyToRequest(Request request)
         {
-            request.Headers.Add(HttpHeader.Names.ContentType, $"multipart/{_subtype};boundary=\"{_boundary}\"");
+            request.Headers.Add(HttpHeader.Names.ContentType, $"multipart/{_subtype}; boundary={_boundary}");
         }
 
         /// <summary>
@@ -142,11 +144,14 @@ namespace Azure.Core
             {
                 headers = new Dictionary<string, string>();
             }
-            foreach (var key in content.Headers.Keys)
+            if (content.Headers != null)
             {
-                if (!headers.ContainsKey(key))
+                foreach (var key in content.Headers.Keys)
                 {
-                    headers[key] = content.Headers[key];
+                    if (!headers.ContainsKey(key))
+                    {
+                        headers[key] = content.Headers[key];
+                    }
                 }
             }
             _nestedContent.Add(new MultipartRequestContent(content, headers));
