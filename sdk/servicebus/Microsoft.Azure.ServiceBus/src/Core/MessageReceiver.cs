@@ -921,7 +921,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             while (this.receivePump != null
                 && this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount < this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
             {
-                await Task.Delay(10);
+                await Task.Delay(10).ConfigureAwait(false);
             }
 
             lock (this.messageReceivePumpSyncLock)
