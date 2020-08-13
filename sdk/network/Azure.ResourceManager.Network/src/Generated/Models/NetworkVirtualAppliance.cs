@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkVirtualAppliance. </summary>
         public NetworkVirtualAppliance()
         {
+            BootStrapConfigurationBlob = new ChangeTrackingList<string>();
+            CloudInitConfigurationBlob = new ChangeTrackingList<string>();
+            VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualAppliance. </summary>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualAppliance(string id, string name, string type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, VirtualApplianceSkuProperties sku, string etag, IList<string> bootStrapConfigurationBlob, SubResource virtualHub, IList<string> cloudInitConfigurationBlob, long? virtualApplianceAsn, IList<VirtualApplianceNicProperties> virtualApplianceNics, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkVirtualAppliance(string id, string name, string type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, VirtualApplianceSkuProperties sku, string etag, IList<string> bootStrapConfigurationBlob, SubResource virtualHub, IList<string> cloudInitConfigurationBlob, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Identity = identity;
             Sku = sku;
@@ -52,15 +56,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> BootStrapConfigurationBlob storage URLs. </summary>
-        public IList<string> BootStrapConfigurationBlob { get; set; }
+        public IList<string> BootStrapConfigurationBlob { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
         public SubResource VirtualHub { get; set; }
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
-        public IList<string> CloudInitConfigurationBlob { get; set; }
+        public IList<string> CloudInitConfigurationBlob { get; }
         /// <summary> VirtualAppliance ASN. </summary>
         public long? VirtualApplianceAsn { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
-        public IList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
+        public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

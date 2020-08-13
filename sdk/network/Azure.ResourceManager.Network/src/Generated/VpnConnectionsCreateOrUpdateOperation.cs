@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         VpnConnection IOperationSource<VpnConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VpnConnection.DeserializeVpnConnection(document.RootElement);
-            }
+            return VpnConnection.DeserializeVpnConnection(document.RootElement);
         }
 
         async ValueTask<VpnConnection> IOperationSource<VpnConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VpnConnection.DeserializeVpnConnection(document.RootElement);
-            }
+            return VpnConnection.DeserializeVpnConnection(document.RootElement);
         }
     }
 }

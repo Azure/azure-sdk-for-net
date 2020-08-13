@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptions. </summary>
         public ApplicationGatewayAvailableSslOptions()
         {
+            PredefinedPolicies = new ChangeTrackingList<SubResource>();
+            AvailableCipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptions. </summary>
@@ -36,12 +40,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of available Ssl predefined policy. </summary>
-        public IList<SubResource> PredefinedPolicies { get; set; }
+        public IList<SubResource> PredefinedPolicies { get; }
         /// <summary> Name of the Ssl predefined policy applied by default to application gateway. </summary>
         public ApplicationGatewaySslPolicyName? DefaultPolicy { get; set; }
         /// <summary> List of available Ssl cipher suites. </summary>
-        public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; set; }
+        public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; }
         /// <summary> List of available Ssl protocols. </summary>
-        public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; set; }
+        public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
     }
 }

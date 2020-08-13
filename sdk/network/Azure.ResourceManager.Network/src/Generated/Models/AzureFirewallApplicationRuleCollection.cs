@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollection. </summary>
         public AzureFirewallApplicationRuleCollection()
         {
+            Rules = new ChangeTrackingList<AzureFirewallApplicationRule>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollection. </summary>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a rule collection. </summary>
         public AzureFirewallRCAction Action { get; set; }
         /// <summary> Collection of rules used by a application rule collection. </summary>
-        public IList<AzureFirewallApplicationRule> Rules { get; set; }
+        public IList<AzureFirewallApplicationRule> Rules { get; }
         /// <summary> The provisioning state of the application rule collection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

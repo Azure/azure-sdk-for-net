@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Vms != null)
+            if (Optional.IsCollectionDefined(Vms))
             {
                 writer.WritePropertyName("vms");
                 writer.WriteStartArray();
