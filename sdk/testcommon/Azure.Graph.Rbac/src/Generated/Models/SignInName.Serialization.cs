@@ -18,7 +18,7 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> type = default;
             Optional<string> value = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -31,7 +31,6 @@ namespace Azure.Graph.Rbac.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

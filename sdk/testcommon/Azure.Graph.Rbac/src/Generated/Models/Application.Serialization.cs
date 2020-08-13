@@ -52,7 +52,7 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> objectType = default;
             Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"))
@@ -285,7 +285,6 @@ namespace Azure.Graph.Rbac.Models
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

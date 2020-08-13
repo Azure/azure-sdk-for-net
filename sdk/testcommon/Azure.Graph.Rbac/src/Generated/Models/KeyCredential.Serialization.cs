@@ -70,7 +70,7 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> type = default;
             Optional<string> customKeyIdentifier = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"))
@@ -108,7 +108,6 @@ namespace Azure.Graph.Rbac.Models
                     customKeyIdentifier = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

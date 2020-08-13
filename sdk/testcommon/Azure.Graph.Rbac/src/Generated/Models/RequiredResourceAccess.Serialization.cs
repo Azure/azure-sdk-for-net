@@ -41,7 +41,7 @@ namespace Azure.Graph.Rbac.Models
             IList<ResourceAccess> resourceAccess = default;
             Optional<string> resourceAppId = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceAccess"))
@@ -59,7 +59,6 @@ namespace Azure.Graph.Rbac.Models
                     resourceAppId = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

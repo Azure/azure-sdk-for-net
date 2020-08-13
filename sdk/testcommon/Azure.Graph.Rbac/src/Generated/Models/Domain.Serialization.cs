@@ -20,7 +20,7 @@ namespace Azure.Graph.Rbac.Models
             Optional<bool> isVerified = default;
             string name = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"))
@@ -43,7 +43,6 @@ namespace Azure.Graph.Rbac.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
