@@ -126,14 +126,14 @@ jobs:
 
       - task: CopyFiles@2
         displayName: "Copy Test Recordings"
-        condition: eq($(TestMode), 'Record')
+        condition: eq(variables["TestMode"], 'Record')
         inputs:
           sourceFolder: '$(Build.SourcesDirectory)'
           contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
           targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
 
       - task: PublishBuildArtifacts@1
-        condition: eq($(TestMode), 'Record')
+        condition: eq(variables["TestMode"], 'Record')
         displayName: "Publish Test Recordings"
         inputs:
           pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
