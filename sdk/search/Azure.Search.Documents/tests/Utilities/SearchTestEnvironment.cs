@@ -70,11 +70,6 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// Gets the search service suffix.
         /// </summary>
-        public string SearchEndpointSuffix => GetOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
-
-        /// <summary>
-        /// Gets the storage account suffix for external data sources.
-        /// </summary>
-        public string StorageEndpointSuffix => GetOptionalVariable("STORAGE_ENDPOINT_SUFFIX") ?? "core.windows.net";
+        public string SearchEndpointSuffix => GetRecordedOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
     }
 }
