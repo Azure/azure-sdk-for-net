@@ -1,5 +1,8 @@
 # Release History
 
+## 12.4.0-preview.1 (Unreleased)
+
+
 ## 12.3.0 (2020-08-13)
 - Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy
 - Added nullable properties, PolicyStartsOn and PolicyExpiresOn to DataLakeAccessPolicy
