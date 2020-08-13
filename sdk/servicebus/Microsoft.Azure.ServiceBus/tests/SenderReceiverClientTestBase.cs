@@ -274,6 +274,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             Assert.True(count == messageCount);
 
+            // Clear count and unregister handler to verify that receives should not happen
             count = 0;
             await messageReceiver.UnregisterMessageHandlerAsync();
             await TestUtility.SendMessagesAsync(messageSender, messageCount);

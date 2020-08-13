@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus
         void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions);
 
         /// <summary>
-        /// Unregister session hander from the receiver if there is an active session handler registered. This operation waits for the completion
+        /// Unregister session handler from the receiver if there is an active session handler registered. This operation waits for the completion
         /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
         /// registered. 
         /// </summary>

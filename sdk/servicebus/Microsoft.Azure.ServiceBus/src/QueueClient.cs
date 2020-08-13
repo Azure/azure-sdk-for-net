@@ -446,7 +446,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Unregister message hander from the receiver if there is an active message handler registered. This operation waits for the completion
+        /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
         /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
         /// registered. 
         /// </summary>
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Unregister session hander from the receiver if there is an active session handler registered. This operation waits for the completion
+        /// Unregister session handler from the receiver if there is an active session handler registered. This operation waits for the completion
         /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
         /// registered. 
         /// </summary>

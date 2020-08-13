@@ -189,11 +189,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     testSessionHandler.ClearData();
 
-                    // Unregister handler
+                    // Unregister handler to verify that receives should not happen
                     await testSessionHandler.UnregisterSessionHandler();
-
                     await testSessionHandler.SendSessionMessages();
-
                     await testSessionHandler.VerifySessionHandlerNotInvokedAndNoMessageReceived();
                 }
                 finally
