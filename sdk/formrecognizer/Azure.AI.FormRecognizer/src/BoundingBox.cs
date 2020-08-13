@@ -43,9 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="points">The sequence of points defining this <see cref="BoundingBox"/>.</param>
         internal BoundingBox(IReadOnlyList<PointF> points)
         {
-            Argument.AssertNotNull(points, nameof(points));
-
-            _points = points.ToArray();
+            _points = points?.ToArray();
         }
 
         /// <summary>
