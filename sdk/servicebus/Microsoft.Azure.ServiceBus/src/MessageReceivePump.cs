@@ -20,7 +20,6 @@ namespace Microsoft.Azure.ServiceBus
         readonly CancellationToken pumpCancellationToken;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
-
         public MessageReceivePump(IMessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback,
