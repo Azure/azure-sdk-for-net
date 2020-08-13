@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PartitionIds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
