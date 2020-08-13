@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 var binding = context.AddBindingRule<QueueAttribute>();
                 binding
                     .AddConverter<byte[], string>(ConvertByteArrayToCloudQueueMessage)
-                    .AddConverter<string, string>(ConvertStringToCloudQueueMessage) // TODO (kasobol-msft) is this needed ??
+                    //.AddConverter<string, string>(ConvertStringToCloudQueueMessage) // TODO (kasobol-msft) is this needed ??
                     .AddOpenConverter<OpenType.Poco, string>(ConvertPocoToCloudQueueMessage);
 
                 context // global converters, apply to multiple attributes.
@@ -102,14 +102,15 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
             {
                 var attr = (QueueAttribute)attrResolved;
                 var jobj = await SerializeToJobject(arg, context).ConfigureAwait(false);
-                var msg = ConvertJObjectToCloudQueueMessage(jobj, attr);
+                var msg = ConvertJObjectToCloudQueueMessage(jobj);
                 return msg;
             }
 
-            private static string ConvertJObjectToCloudQueueMessage(JObject obj, QueueAttribute attrResolved)
+            private static string ConvertJObjectToCloudQueueMessage(JObject obj/*, QueueAttribute attrResolved*/) // TODO (kasobol-msft) is this needed?
             {
                 var json = obj.ToString(); // convert to JSon
-                return ConvertStringToCloudQueueMessage(json, attrResolved);
+                //return ConvertStringToCloudQueueMessage(json, attrResolved);
+                return json;
             }
 
             // Hook JObject serialization to so we can stamp the object with a causality marker.
@@ -189,10 +190,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 return Encoding.UTF8.GetString(arg);
             }
 
-            private static string ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)
-            {
-                return arg;
-            }
+            //private static string ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed ?
+            //{
+            //    return arg;
+            //}
 
             public IAsyncCollector<string> Convert(QueueAttribute attrResolved)
             {
