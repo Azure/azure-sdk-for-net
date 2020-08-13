@@ -11,19 +11,13 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties : IUtf8JsonSerializable
+    public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(JsonElement element)
         {
             Optional<string> groupId = default;
             Optional<string> requiredMemberName = default;
-            Optional<IList<string>> fqdns = default;
+            Optional<IReadOnlyList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"))

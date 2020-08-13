@@ -19,6 +19,7 @@ namespace Azure.Management.Network.Models
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="matchValues"> Match value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matchVariables"/> or <paramref name="matchValues"/> is null. </exception>
         public MatchCondition(IEnumerable<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, IEnumerable<string> matchValues)
         {
             if (matchVariables == null)

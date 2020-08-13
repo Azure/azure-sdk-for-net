@@ -17,6 +17,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
         public VirtualMachineImageResource(string name, string location)
         {
             if (name == null)

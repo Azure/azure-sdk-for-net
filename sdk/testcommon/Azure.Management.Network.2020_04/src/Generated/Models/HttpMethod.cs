@@ -16,6 +16,7 @@ namespace Azure.Management.Network.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="HttpMethod"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HttpMethod(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

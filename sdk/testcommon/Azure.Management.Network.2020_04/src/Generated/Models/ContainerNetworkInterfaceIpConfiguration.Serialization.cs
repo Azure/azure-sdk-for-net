@@ -10,22 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class ContainerNetworkInterfaceIpConfiguration : IUtf8JsonSerializable
+    public partial class ContainerNetworkInterfaceIpConfiguration
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static ContainerNetworkInterfaceIpConfiguration DeserializeContainerNetworkInterfaceIpConfiguration(JsonElement element)
         {
             Optional<string> name = default;

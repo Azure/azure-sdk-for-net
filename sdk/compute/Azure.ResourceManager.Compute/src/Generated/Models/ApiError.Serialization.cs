@@ -11,47 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ApiError : IUtf8JsonSerializable
+    public partial class ApiError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Details))
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStartArray();
-                foreach (var item in Details)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Innererror))
-            {
-                writer.WritePropertyName("innererror");
-                writer.WriteObjectValue(Innererror);
-            }
-            if (Optional.IsDefined(Code))
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target");
-                writer.WriteStringValue(Target);
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ApiError DeserializeApiError(JsonElement element)
         {
-            Optional<IList<ApiErrorBase>> details = default;
+            Optional<IReadOnlyList<ApiErrorBase>> details = default;
             Optional<InnerError> innererror = default;
             Optional<string> code = default;
             Optional<string> target = default;

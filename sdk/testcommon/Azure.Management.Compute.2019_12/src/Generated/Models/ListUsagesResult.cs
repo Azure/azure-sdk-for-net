@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListUsagesResult(IEnumerable<Usage> value)
         {
             if (value == null)

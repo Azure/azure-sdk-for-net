@@ -109,7 +109,7 @@ namespace Azure.Management.Compute.Models
         internal static Disk DeserializeDisk(JsonElement element)
         {
             Optional<string> managedBy = default;
-            Optional<IList<string>> managedByExtended = default;
+            Optional<IReadOnlyList<string>> managedByExtended = default;
             Optional<DiskSku> sku = default;
             Optional<IList<string>> zones = default;
             Optional<string> id = default;
@@ -133,7 +133,7 @@ namespace Azure.Management.Compute.Models
             Optional<DiskState> diskState = default;
             Optional<Encryption> encryption = default;
             Optional<int> maxShares = default;
-            Optional<IList<ShareInfoElement>> shareInfo = default;
+            Optional<IReadOnlyList<ShareInfoElement>> shareInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))

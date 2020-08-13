@@ -17,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of Domain. </summary>
         /// <param name="name"> the domain name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal Domain(string name)
         {
             if (name == null)

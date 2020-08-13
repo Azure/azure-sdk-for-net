@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class InnerError : IUtf8JsonSerializable
+    public partial class InnerError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Exceptiontype))
-            {
-                writer.WritePropertyName("exceptiontype");
-                writer.WriteStringValue(Exceptiontype);
-            }
-            if (Optional.IsDefined(Errordetail))
-            {
-                writer.WritePropertyName("errordetail");
-                writer.WriteStringValue(Errordetail);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
             Optional<string> exceptiontype = default;

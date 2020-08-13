@@ -14,6 +14,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of ServicePrincipalCreateParameters. </summary>
         /// <param name="appId"> The application ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public ServicePrincipalCreateParameters(string appId)
         {
             if (appId == null)

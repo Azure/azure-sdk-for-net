@@ -30,7 +30,7 @@ namespace Azure.Management.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public ProvidersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2017-05-10")
         {
             if (subscriptionId == null)
@@ -70,6 +70,7 @@ namespace Azure.Management.Resources
         /// <summary> Unregisters a subscription from a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<Provider>> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -96,6 +97,7 @@ namespace Azure.Management.Resources
         /// <summary> Unregisters a subscription from a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<Provider> Unregister(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -139,6 +141,7 @@ namespace Azure.Management.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<Provider>> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -165,6 +168,7 @@ namespace Azure.Management.Resources
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<Provider> Register(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -279,6 +283,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -306,6 +311,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -346,6 +352,7 @@ namespace Azure.Management.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProviderListResult>> ListNextPageAsync(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -374,6 +381,7 @@ namespace Azure.Management.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProviderListResult> ListNextPage(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -16,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of ApplicationCreateParameters. </summary>
         /// <param name="displayName"> The display name of the application. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public ApplicationCreateParameters(string displayName)
         {
             if (displayName == null)

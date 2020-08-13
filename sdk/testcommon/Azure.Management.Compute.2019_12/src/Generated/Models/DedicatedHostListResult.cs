@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of DedicatedHostListResult. </summary>
         /// <param name="value"> The list of dedicated hosts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedHostListResult(IEnumerable<DedicatedHost> value)
         {
             if (value == null)

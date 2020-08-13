@@ -54,7 +54,7 @@ namespace Azure.Management.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<KeyVaultAndKeyReference> activeKey = default;
-            Optional<IList<KeyVaultAndKeyReference>> previousKeys = default;
+            Optional<IReadOnlyList<KeyVaultAndKeyReference>> previousKeys = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

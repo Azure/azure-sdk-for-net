@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProximityPlacementGroupListResult(IEnumerable<ProximityPlacementGroup> value)
         {
             if (value == null)

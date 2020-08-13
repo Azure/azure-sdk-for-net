@@ -16,6 +16,7 @@ namespace Azure.Management.Storage.Models
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public TrackedResource(string location)
         {
             if (location == null)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
         {
             if (subscriptionId == null)
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -104,6 +105,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public Response<PrivateLinkResourceListResult> ListByConfigurationStore(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -156,6 +158,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="groupName"/> is null. </exception>
         public async Task<Response<PrivateLinkResource>> GetAsync(string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -192,6 +195,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="groupName"/> is null. </exception>
         public Response<PrivateLinkResource> Get(string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -240,6 +244,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
         public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -276,6 +281,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="configStoreName"/> is null. </exception>
         public Response<PrivateLinkResourceListResult> ListByConfigurationStoreNextPage(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

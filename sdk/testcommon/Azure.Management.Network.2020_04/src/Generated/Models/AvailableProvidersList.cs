@@ -16,6 +16,7 @@ namespace Azure.Management.Network.Models
     {
         /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
         /// <param name="countries"> List of available countries. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="countries"/> is null. </exception>
         internal AvailableProvidersList(IEnumerable<AvailableProvidersListCountry> countries)
         {
             if (countries == null)

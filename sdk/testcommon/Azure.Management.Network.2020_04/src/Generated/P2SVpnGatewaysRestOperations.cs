@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public P2SVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<P2SVpnGateway>> GetAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -96,6 +97,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<P2SVpnGateway> Get(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -150,6 +152,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to create or Update a virtual wan p2s vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string gatewayName, P2SVpnGateway p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -182,6 +185,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to create or Update a virtual wan p2s vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string gatewayName, P2SVpnGateway p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -236,6 +240,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
         public async Task<Response<P2SVpnGateway>> UpdateTagsAsync(string resourceGroupName, string gatewayName, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -272,6 +277,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
         public Response<P2SVpnGateway> UpdateTags(string resourceGroupName, string gatewayName, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -325,6 +331,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -353,6 +360,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -397,6 +405,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the P2SVpnGateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ListP2SVpnGatewaysResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,6 +432,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the P2SVpnGateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ListP2SVpnGatewaysResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -529,6 +539,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> GenerateVpnProfileAsync(string resourceGroupName, string gatewayName, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -561,6 +572,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response GenerateVpnProfile(string resourceGroupName, string gatewayName, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -611,6 +623,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response> GetP2SVpnConnectionHealthAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -638,6 +651,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response GetP2SVpnConnectionHealth(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -689,6 +703,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="request"/> is null. </exception>
         public async Task<Response> GetP2SVpnConnectionHealthDetailedAsync(string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -721,6 +736,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="request"/> is null. </exception>
         public Response GetP2SVpnConnectionHealthDetailed(string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -776,6 +792,7 @@ namespace Azure.Management.Network
         /// <param name="p2SVpnGatewayName"> The name of the P2S Vpn Gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="p2SVpnGatewayName"/>, or <paramref name="request"/> is null. </exception>
         public async Task<Response> DisconnectP2SVpnConnectionsAsync(string resourceGroupName, string p2SVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -808,6 +825,7 @@ namespace Azure.Management.Network
         /// <param name="p2SVpnGatewayName"> The name of the P2S Vpn Gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="p2SVpnGatewayName"/>, or <paramref name="request"/> is null. </exception>
         public Response DisconnectP2SVpnConnections(string resourceGroupName, string p2SVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -851,6 +869,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ListP2SVpnGatewaysResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -882,6 +901,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ListP2SVpnGatewaysResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -924,6 +944,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the P2SVpnGateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ListP2SVpnGatewaysResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -950,6 +971,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the P2SVpnGateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ListP2SVpnGatewaysResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

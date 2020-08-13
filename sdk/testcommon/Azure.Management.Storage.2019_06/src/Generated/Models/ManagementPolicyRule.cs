@@ -16,6 +16,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="type"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         public ManagementPolicyRule(string name, RuleType type, ManagementPolicyDefinition definition)
         {
             if (name == null)

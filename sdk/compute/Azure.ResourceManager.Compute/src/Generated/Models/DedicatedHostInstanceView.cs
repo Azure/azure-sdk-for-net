@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DedicatedHostInstanceView
     {
         /// <summary> Initializes a new instance of DedicatedHostInstanceView. </summary>
-        public DedicatedHostInstanceView()
+        internal DedicatedHostInstanceView()
         {
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assetId"> Specifies the unique id of the dedicated physical machine on which the dedicated host resides. </param>
         /// <param name="availableCapacity"> Unutilized capacity of the dedicated host. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal DedicatedHostInstanceView(string assetId, DedicatedHostAvailableCapacity availableCapacity, IList<InstanceViewStatus> statuses)
+        internal DedicatedHostInstanceView(string assetId, DedicatedHostAvailableCapacity availableCapacity, IReadOnlyList<InstanceViewStatus> statuses)
         {
             AssetId = assetId;
             AvailableCapacity = availableCapacity;
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the unique id of the dedicated physical machine on which the dedicated host resides. </summary>
         public string AssetId { get; }
         /// <summary> Unutilized capacity of the dedicated host. </summary>
-        public DedicatedHostAvailableCapacity AvailableCapacity { get; set; }
+        public DedicatedHostAvailableCapacity AvailableCapacity { get; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

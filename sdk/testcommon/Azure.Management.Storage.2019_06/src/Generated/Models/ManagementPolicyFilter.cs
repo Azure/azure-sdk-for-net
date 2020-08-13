@@ -17,6 +17,7 @@ namespace Azure.Management.Storage.Models
     {
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
         /// <param name="blobTypes"> An array of predefined enum values. Only blockBlob is supported. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobTypes"/> is null. </exception>
         public ManagementPolicyFilter(IEnumerable<string> blobTypes)
         {
             if (blobTypes == null)

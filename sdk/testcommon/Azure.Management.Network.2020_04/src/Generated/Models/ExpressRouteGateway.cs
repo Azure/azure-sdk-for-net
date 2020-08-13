@@ -30,7 +30,7 @@ namespace Azure.Management.Network.Models
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGateway(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnection> expressRouteConnections, ProvisioningState? provisioningState, VirtualHubId virtualHub) : base(id, name, type, location, tags)
+        internal ExpressRouteGateway(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnection> expressRouteConnections, ProvisioningState? provisioningState, VirtualHubId virtualHub) : base(id, name, type, location, tags)
         {
             Etag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
@@ -44,7 +44,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Configuration for auto scaling. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
-        public IList<ExpressRouteConnection> ExpressRouteConnections { get; }
+        public IReadOnlyList<ExpressRouteConnection> ExpressRouteConnections { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>

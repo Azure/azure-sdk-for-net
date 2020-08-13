@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ApiError
     {
         /// <summary> Initializes a new instance of ApiError. </summary>
-        public ApiError()
+        internal ApiError()
         {
             Details = new ChangeTrackingList<ApiErrorBase>();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        internal ApiError(IList<ApiErrorBase> details, InnerError innererror, string code, string target, string message)
+        internal ApiError(IReadOnlyList<ApiErrorBase> details, InnerError innererror, string code, string target, string message)
         {
             Details = details;
             Innererror = innererror;
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The Api error details. </summary>
-        public IList<ApiErrorBase> Details { get; }
+        public IReadOnlyList<ApiErrorBase> Details { get; }
         /// <summary> The Api inner error. </summary>
-        public InnerError Innererror { get; set; }
+        public InnerError Innererror { get; }
         /// <summary> The error code. </summary>
-        public string Code { get; set; }
+        public string Code { get; }
         /// <summary> The target of the particular error. </summary>
-        public string Target { get; set; }
+        public string Target { get; }
         /// <summary> The error message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

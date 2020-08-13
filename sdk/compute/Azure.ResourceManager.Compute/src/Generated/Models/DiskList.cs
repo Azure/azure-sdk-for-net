@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of DiskList. </summary>
         /// <param name="value"> A list of disks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskList(IEnumerable<Disk> value)
         {
             if (value == null)

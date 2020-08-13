@@ -11,14 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class UpdateHistoryProperty : IUtf8JsonSerializable
+    public partial class UpdateHistoryProperty
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static UpdateHistoryProperty DeserializeUpdateHistoryProperty(JsonElement element)
         {
             Optional<ImmutabilityPolicyUpdateType> update = default;

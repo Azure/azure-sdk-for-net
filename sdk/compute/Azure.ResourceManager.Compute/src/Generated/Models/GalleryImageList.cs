@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         /// <param name="value"> A list of Shared Image Gallery images. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryImageList(IEnumerable<GalleryImage> value)
         {
             if (value == null)

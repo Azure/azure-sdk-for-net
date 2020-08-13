@@ -147,7 +147,7 @@ namespace Azure.Management.Network.Models
             Optional<Ipv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             Optional<ExpressRouteConnectionId> expressRouteConnection = default;
             Optional<IList<ExpressRouteCircuitConnection>> connections = default;
-            Optional<IList<PeerExpressRouteCircuitConnection>> peeredConnections = default;
+            Optional<IReadOnlyList<PeerExpressRouteCircuitConnection>> peeredConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

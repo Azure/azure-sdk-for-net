@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
         /// <param name="value"> The list of skus available for the virtual machine scale set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetListSkusResult(IEnumerable<VirtualMachineScaleSetSku> value)
         {
             if (value == null)

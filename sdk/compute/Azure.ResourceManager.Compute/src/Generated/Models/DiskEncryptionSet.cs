@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of DiskEncryptionSet. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public DiskEncryptionSet(string location) : base(location)
         {
             if (location == null)
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="activeKey"> The key vault key which is currently used by this disk encryption set. </param>
         /// <param name="previousKeys"> A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is no ongoing key rotation. </param>
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
-        internal DiskEncryptionSet(string id, string name, string type, string location, IDictionary<string, string> tags, EncryptionSetIdentity identity, KeyVaultAndKeyReference activeKey, IList<KeyVaultAndKeyReference> previousKeys, string provisioningState) : base(id, name, type, location, tags)
+        internal DiskEncryptionSet(string id, string name, string type, string location, IDictionary<string, string> tags, EncryptionSetIdentity identity, KeyVaultAndKeyReference activeKey, IReadOnlyList<KeyVaultAndKeyReference> previousKeys, string provisioningState) : base(id, name, type, location, tags)
         {
             Identity = identity;
             ActiveKey = activeKey;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The key vault key which is currently used by this disk encryption set. </summary>
         public KeyVaultAndKeyReference ActiveKey { get; set; }
         /// <summary> A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is no ongoing key rotation. </summary>
-        public IList<KeyVaultAndKeyReference> PreviousKeys { get; }
+        public IReadOnlyList<KeyVaultAndKeyReference> PreviousKeys { get; }
         /// <summary> The disk encryption set provisioning state. </summary>
         public string ProvisioningState { get; }
     }

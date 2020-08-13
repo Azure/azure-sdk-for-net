@@ -11,18 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ReplicationStatus : IUtf8JsonSerializable
+    public partial class ReplicationStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)
         {
             Optional<AggregatedReplicationState> aggregatedState = default;
-            Optional<IList<RegionalReplicationStatus>> summary = default;
+            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"))

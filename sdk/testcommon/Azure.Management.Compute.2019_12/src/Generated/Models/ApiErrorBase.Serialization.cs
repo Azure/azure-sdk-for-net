@@ -10,29 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class ApiErrorBase : IUtf8JsonSerializable
+    public partial class ApiErrorBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target");
-                writer.WriteStringValue(Target);
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ApiErrorBase DeserializeApiErrorBase(JsonElement element)
         {
             Optional<string> code = default;

@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public OAuth2PermissionGrantRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -194,6 +194,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a OAuth2 permission grant for the relevant resource Ids of an app. </summary>
         /// <param name="objectId"> The object ID of a permission grant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -215,6 +216,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a OAuth2 permission grant for the relevant resource Ids of an app. </summary>
         /// <param name="objectId"> The object ID of a permission grant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response Delete(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -252,6 +254,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OAuth2PermissionGrantListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -278,6 +281,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OAuth2PermissionGrantListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -316,6 +320,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OAuth2PermissionGrantListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -342,6 +347,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OAuth2PermissionGrantListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -18,6 +18,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
         public StorageAccountCreateParameters(Sku sku, Kind kind, string location)
         {
             if (sku == null)

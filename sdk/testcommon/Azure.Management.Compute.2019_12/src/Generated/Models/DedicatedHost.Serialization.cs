@@ -64,7 +64,7 @@ namespace Azure.Management.Compute.Models
             Optional<int> platformFaultDomain = default;
             Optional<bool> autoReplaceOnFailure = default;
             Optional<string> hostId = default;
-            Optional<IList<SubResourceReadOnly>> virtualMachines = default;
+            Optional<IReadOnlyList<SubResourceReadOnly>> virtualMachines = default;
             Optional<DedicatedHostLicenseTypes> licenseType = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;

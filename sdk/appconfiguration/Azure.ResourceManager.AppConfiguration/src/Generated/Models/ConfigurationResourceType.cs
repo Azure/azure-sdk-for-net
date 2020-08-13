@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ConfigurationResourceType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfigurationResourceType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

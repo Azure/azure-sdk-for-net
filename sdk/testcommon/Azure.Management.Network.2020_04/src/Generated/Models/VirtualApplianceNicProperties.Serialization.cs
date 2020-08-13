@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class VirtualApplianceNicProperties : IUtf8JsonSerializable
+    public partial class VirtualApplianceNicProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element)
         {
             Optional<string> name = default;

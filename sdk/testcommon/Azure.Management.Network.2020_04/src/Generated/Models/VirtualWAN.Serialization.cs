@@ -72,8 +72,8 @@ namespace Azure.Management.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool> disableVpnEncryption = default;
-            Optional<IList<SubResource>> virtualHubs = default;
-            Optional<IList<SubResource>> vpnSites = default;
+            Optional<IReadOnlyList<SubResource>> virtualHubs = default;
+            Optional<IReadOnlyList<SubResource>> vpnSites = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<bool> allowVnetToVnetTraffic = default;
             Optional<OfficeTrafficCategory> office365LocalBreakoutCategory = default;

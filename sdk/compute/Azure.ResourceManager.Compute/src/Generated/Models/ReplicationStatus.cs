@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ReplicationStatus
     {
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>
-        public ReplicationStatus()
+        internal ReplicationStatus()
         {
             Summary = new ChangeTrackingList<RegionalReplicationStatus>();
         }
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>
         /// <param name="aggregatedState"> This is the aggregated replication status based on all the regional replication status flags. </param>
         /// <param name="summary"> This is a summary of replication status for each region. </param>
-        internal ReplicationStatus(AggregatedReplicationState? aggregatedState, IList<RegionalReplicationStatus> summary)
+        internal ReplicationStatus(AggregatedReplicationState? aggregatedState, IReadOnlyList<RegionalReplicationStatus> summary)
         {
             AggregatedState = aggregatedState;
             Summary = summary;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This is the aggregated replication status based on all the regional replication status flags. </summary>
         public AggregatedReplicationState? AggregatedState { get; }
         /// <summary> This is a summary of replication status for each region. </summary>
-        public IList<RegionalReplicationStatus> Summary { get; }
+        public IReadOnlyList<RegionalReplicationStatus> Summary { get; }
     }
 }

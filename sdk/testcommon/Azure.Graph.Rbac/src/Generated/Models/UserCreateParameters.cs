@@ -18,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="passwordProfile"> Password Profile. </param>
         /// <param name="userPrincipalName"> The user principal name (someuser@contoso.com). It must contain one of the verified domains for the tenant. </param>
         /// <param name="mailNickname"> The mail alias for the user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="passwordProfile"/>, <paramref name="userPrincipalName"/>, or <paramref name="mailNickname"/> is null. </exception>
         public UserCreateParameters(bool accountEnabled, string displayName, PasswordProfile passwordProfile, string userPrincipalName, string mailNickname)
         {
             if (displayName == null)

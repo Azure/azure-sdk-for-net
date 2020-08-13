@@ -87,7 +87,7 @@ namespace Azure.Management.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<Subnet> subnet = default;
-            Optional<IList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<PrivateLinkServiceConnection>> privateLinkServiceConnections = default;
             Optional<IList<PrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;

@@ -14,6 +14,7 @@ namespace Azure.Management.Network.Models
     {
         /// <summary> Initializes a new instance of ConnectivitySource. </summary>
         /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectivitySource(string resourceId)
         {
             if (resourceId == null)

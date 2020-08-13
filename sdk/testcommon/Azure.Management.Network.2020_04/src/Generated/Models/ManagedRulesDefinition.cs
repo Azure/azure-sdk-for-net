@@ -17,6 +17,7 @@ namespace Azure.Management.Network.Models
     {
         /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>
         /// <param name="managedRuleSets"> The managed rule sets that are associated with the policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedRuleSets"/> is null. </exception>
         public ManagedRulesDefinition(IEnumerable<ManagedRuleSet> managedRuleSets)
         {
             if (managedRuleSets == null)

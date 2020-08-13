@@ -18,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of GroupCreateParameters. </summary>
         /// <param name="displayName"> Group display name. </param>
         /// <param name="mailNickname"> Mail nickname. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="mailNickname"/> is null. </exception>
         public GroupCreateParameters(string displayName, string mailNickname)
         {
             if (displayName == null)

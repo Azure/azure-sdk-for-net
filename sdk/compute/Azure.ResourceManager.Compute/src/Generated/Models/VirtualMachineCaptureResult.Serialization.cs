@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> schema = default;
             Optional<string> contentVersion = default;
             Optional<object> parameters = default;
-            Optional<IList<object>> resources = default;
+            Optional<IReadOnlyList<object>> resources = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {

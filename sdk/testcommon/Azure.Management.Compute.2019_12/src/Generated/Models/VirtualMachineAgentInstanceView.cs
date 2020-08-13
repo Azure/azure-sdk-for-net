@@ -14,7 +14,7 @@ namespace Azure.Management.Compute.Models
     public partial class VirtualMachineAgentInstanceView
     {
         /// <summary> Initializes a new instance of VirtualMachineAgentInstanceView. </summary>
-        public VirtualMachineAgentInstanceView()
+        internal VirtualMachineAgentInstanceView()
         {
             ExtensionHandlers = new ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
@@ -24,7 +24,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="vmAgentVersion"> The VM Agent full version. </param>
         /// <param name="extensionHandlers"> The virtual machine extension handler instance view. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal VirtualMachineAgentInstanceView(string vmAgentVersion, IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers, IList<InstanceViewStatus> statuses)
+        internal VirtualMachineAgentInstanceView(string vmAgentVersion, IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers, IReadOnlyList<InstanceViewStatus> statuses)
         {
             VmAgentVersion = vmAgentVersion;
             ExtensionHandlers = extensionHandlers;
@@ -32,10 +32,10 @@ namespace Azure.Management.Compute.Models
         }
 
         /// <summary> The VM Agent full version. </summary>
-        public string VmAgentVersion { get; set; }
+        public string VmAgentVersion { get; }
         /// <summary> The virtual machine extension handler instance view. </summary>
-        public IList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; }
+        public IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

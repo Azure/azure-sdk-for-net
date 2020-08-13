@@ -17,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of PasswordProfile. </summary>
         /// <param name="password"> Password. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public PasswordProfile(string password)
         {
             if (password == null)

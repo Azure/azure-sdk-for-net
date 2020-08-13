@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedHostGroupListResult(IEnumerable<DedicatedHostGroup> value)
         {
             if (value == null)

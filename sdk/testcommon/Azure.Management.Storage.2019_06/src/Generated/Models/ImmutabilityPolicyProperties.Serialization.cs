@@ -11,31 +11,12 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class ImmutabilityPolicyProperties : IUtf8JsonSerializable
+    public partial class ImmutabilityPolicyProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
-            {
-                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
-                writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
-            }
-            if (Optional.IsDefined(AllowProtectedAppendWrites))
-            {
-                writer.WritePropertyName("allowProtectedAppendWrites");
-                writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static ImmutabilityPolicyProperties DeserializeImmutabilityPolicyProperties(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<IList<UpdateHistoryProperty>> updateHistory = default;
+            Optional<IReadOnlyList<UpdateHistoryProperty>> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<ImmutabilityPolicyState> state = default;
             Optional<bool> allowProtectedAppendWrites = default;

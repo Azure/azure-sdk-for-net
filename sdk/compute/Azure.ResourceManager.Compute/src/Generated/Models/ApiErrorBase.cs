@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ApiErrorBase
     {
         /// <summary> Initializes a new instance of ApiErrorBase. </summary>
-        public ApiErrorBase()
+        internal ApiErrorBase()
         {
         }
 
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The error code. </summary>
-        public string Code { get; set; }
+        public string Code { get; }
         /// <summary> The target of the particular error. </summary>
-        public string Target { get; set; }
+        public string Target { get; }
         /// <summary> The error message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

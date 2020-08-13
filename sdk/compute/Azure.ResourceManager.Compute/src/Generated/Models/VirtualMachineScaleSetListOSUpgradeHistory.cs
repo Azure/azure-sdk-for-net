@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListOSUpgradeHistory. </summary>
         /// <param name="value"> The list of OS upgrades performed on the virtual machine scale set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetListOSUpgradeHistory(IEnumerable<UpgradeOperationHistoricalStatusInfo> value)
         {
             if (value == null)

@@ -62,7 +62,7 @@ namespace Azure.Management.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Optional<IList<ExpressRouteConnection>> expressRouteConnections = default;
+            Optional<IReadOnlyList<ExpressRouteConnection>> expressRouteConnections = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<VirtualHubId> virtualHub = default;
             foreach (var property in element.EnumerateObject())

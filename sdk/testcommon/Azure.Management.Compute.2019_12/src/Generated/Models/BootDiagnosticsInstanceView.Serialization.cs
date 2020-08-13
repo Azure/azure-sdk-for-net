@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class BootDiagnosticsInstanceView : IUtf8JsonSerializable
+    public partial class BootDiagnosticsInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static BootDiagnosticsInstanceView DeserializeBootDiagnosticsInstanceView(JsonElement element)
         {
             Optional<string> consoleScreenshotBlobUri = default;

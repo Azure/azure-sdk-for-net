@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         /// <param name="location"> The location of the resource. This cannot be changed after the resource is created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Resource(string location)
         {
             if (location == null)

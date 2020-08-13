@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VpnSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public async Task<Response<VpnSite>> GetAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -96,6 +97,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public Response<VpnSite> Get(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -150,6 +152,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vpnSiteName, VpnSite vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -182,6 +185,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string vpnSiteName, VpnSite vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -236,6 +240,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
         public async Task<Response<VpnSite>> UpdateTagsAsync(string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -272,6 +277,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteParameters"/> is null. </exception>
         public Response<VpnSite> UpdateTags(string resourceGroupName, string vpnSiteName, TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -325,6 +331,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -353,6 +360,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -397,6 +405,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the vpnSites in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ListVpnSitesResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,6 +432,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the vpnSites in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ListVpnSitesResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -517,6 +527,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ListVpnSitesResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -548,6 +559,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ListVpnSitesResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -590,6 +602,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the VpnSites in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ListVpnSitesResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -616,6 +629,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the VpnSites in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ListVpnSitesResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

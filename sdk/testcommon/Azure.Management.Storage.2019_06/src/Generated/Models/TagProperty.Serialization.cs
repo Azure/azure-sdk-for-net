@@ -11,14 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class TagProperty : IUtf8JsonSerializable
+    public partial class TagProperty
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static TagProperty DeserializeTagProperty(JsonElement element)
         {
             Optional<string> tag = default;

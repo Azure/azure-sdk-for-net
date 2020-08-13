@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Resource(string location)
         {
             if (location == null)

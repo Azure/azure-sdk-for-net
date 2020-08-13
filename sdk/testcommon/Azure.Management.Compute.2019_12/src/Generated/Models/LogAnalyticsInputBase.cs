@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
         public LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             if (blobContainerSasUri == null)

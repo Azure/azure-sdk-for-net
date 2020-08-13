@@ -40,6 +40,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all available service aliases for this subscription in this region. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<AvailableServiceAlias> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -83,6 +84,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all available service aliases for this subscription in this region. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<AvailableServiceAlias> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -127,6 +129,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<AvailableServiceAlias> ListByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -175,6 +178,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
         public virtual Pageable<AvailableServiceAlias> ListByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

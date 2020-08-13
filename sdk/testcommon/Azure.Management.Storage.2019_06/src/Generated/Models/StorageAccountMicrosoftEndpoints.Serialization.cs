@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class StorageAccountMicrosoftEndpoints : IUtf8JsonSerializable
+    public partial class StorageAccountMicrosoftEndpoints
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element)
         {
             Optional<string> blob = default;

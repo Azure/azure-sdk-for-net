@@ -17,6 +17,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
         public ManagedRuleSet(string ruleSetType, string ruleSetVersion)
         {
             if (ruleSetType == null)

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of CheckNameAvailabilityParameters. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <param name="type"> The resource type to check for name availability. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityParameters(string name, ConfigurationResourceType type)
         {
             if (name == null)

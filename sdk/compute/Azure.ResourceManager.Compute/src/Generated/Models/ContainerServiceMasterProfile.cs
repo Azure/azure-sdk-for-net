@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerServiceMasterProfile. </summary>
         /// <param name="dnsPrefix"> DNS prefix to be used to create the FQDN for master. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsPrefix"/> is null. </exception>
         public ContainerServiceMasterProfile(string dnsPrefix)
         {
             if (dnsPrefix == null)

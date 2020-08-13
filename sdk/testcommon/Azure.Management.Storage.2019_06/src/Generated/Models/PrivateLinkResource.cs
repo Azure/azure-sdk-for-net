@@ -27,7 +27,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal PrivateLinkResource(string id, string name, string type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResource(string id, string name, string type, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -37,7 +37,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
-        public IList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
         public IList<string> RequiredZoneNames { get; }
     }

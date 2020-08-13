@@ -18,6 +18,7 @@ namespace Azure.Management.Network.Models
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="startTime"> The start time for the Azure reachability report. </param>
         /// <param name="endTime"> The end time for the Azure reachability report. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerLocation"/> is null. </exception>
         public AzureReachabilityReportParameters(AzureReachabilityReportLocation providerLocation, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             if (providerLocation == null)

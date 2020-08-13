@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         /// <summary> Initializes a new instance of ListKeyValueParameters. </summary>
         /// <param name="key"> The key to retrieve. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public ListKeyValueParameters(string key)
         {
             if (key == null)

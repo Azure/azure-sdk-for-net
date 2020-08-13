@@ -62,10 +62,10 @@ namespace Azure.Management.Network.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<SecurityRule>> securityRules = default;
-            Optional<IList<SecurityRule>> defaultSecurityRules = default;
-            Optional<IList<NetworkInterface>> networkInterfaces = default;
-            Optional<IList<Subnet>> subnets = default;
-            Optional<IList<FlowLog>> flowLogs = default;
+            Optional<IReadOnlyList<SecurityRule>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<Subnet>> subnets = default;
+            Optional<IReadOnlyList<FlowLog>> flowLogs = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

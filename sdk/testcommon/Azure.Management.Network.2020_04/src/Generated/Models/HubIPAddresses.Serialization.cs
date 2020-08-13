@@ -11,32 +11,11 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class HubIPAddresses : IUtf8JsonSerializable
+    public partial class HubIPAddresses
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicIPAddresses))
-            {
-                writer.WritePropertyName("publicIPAddresses");
-                writer.WriteStartArray();
-                foreach (var item in PublicIPAddresses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PrivateIPAddress))
-            {
-                writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
-            Optional<IList<AzureFirewallPublicIPAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<AzureFirewallPublicIPAddress>> publicIPAddresses = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {

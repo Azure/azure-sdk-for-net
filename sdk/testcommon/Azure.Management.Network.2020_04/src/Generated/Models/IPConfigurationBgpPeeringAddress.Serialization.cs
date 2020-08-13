@@ -37,9 +37,9 @@ namespace Azure.Management.Network.Models
         internal static IPConfigurationBgpPeeringAddress DeserializeIPConfigurationBgpPeeringAddress(JsonElement element)
         {
             Optional<string> ipconfigurationId = default;
-            Optional<IList<string>> defaultBgpIpAddresses = default;
+            Optional<IReadOnlyList<string>> defaultBgpIpAddresses = default;
             Optional<IList<string>> customBgpIpAddresses = default;
-            Optional<IList<string>> tunnelIpAddresses = default;
+            Optional<IReadOnlyList<string>> tunnelIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"))

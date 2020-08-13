@@ -30,7 +30,7 @@ namespace Azure.Management.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public DeploymentRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2017-05-10")
         {
             if (subscriptionId == null)
@@ -75,6 +75,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAsync(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -111,6 +112,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> Get(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -170,6 +172,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAsync(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,6 +205,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> List(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -284,6 +289,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListNextPage(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

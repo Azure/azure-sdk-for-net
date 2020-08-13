@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class BlobRestoreStatus : IUtf8JsonSerializable
+    public partial class BlobRestoreStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
         {
             Optional<BlobRestoreProgressStatus> status = default;

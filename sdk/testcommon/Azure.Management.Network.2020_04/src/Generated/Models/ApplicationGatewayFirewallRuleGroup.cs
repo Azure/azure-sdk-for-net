@@ -17,6 +17,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
         /// <param name="rules"> The rules of the web application firewall rule group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> or <paramref name="rules"/> is null. </exception>
         public ApplicationGatewayFirewallRuleGroup(string ruleGroupName, IEnumerable<ApplicationGatewayFirewallRule> rules)
         {
             if (ruleGroupName == null)

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryImageVersionList. </summary>
         /// <param name="value"> A list of gallery Image Versions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryImageVersionList(IEnumerable<GalleryImageVersion> value)
         {
             if (value == null)

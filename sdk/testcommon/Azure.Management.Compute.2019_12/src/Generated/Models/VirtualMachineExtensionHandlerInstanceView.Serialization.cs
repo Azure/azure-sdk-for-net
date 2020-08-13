@@ -10,29 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class VirtualMachineExtensionHandlerInstanceView : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionHandlerInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsDefined(TypeHandlerVersion))
-            {
-                writer.WritePropertyName("typeHandlerVersion");
-                writer.WriteStringValue(TypeHandlerVersion);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteObjectValue(Status);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static VirtualMachineExtensionHandlerInstanceView DeserializeVirtualMachineExtensionHandlerInstanceView(JsonElement element)
         {
             Optional<string> type = default;

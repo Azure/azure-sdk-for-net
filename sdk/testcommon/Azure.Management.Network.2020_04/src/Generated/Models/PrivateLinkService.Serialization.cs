@@ -98,9 +98,9 @@ namespace Azure.Management.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<FrontendIPConfiguration>> loadBalancerFrontendIpConfigurations = default;
             Optional<IList<PrivateLinkServiceIpConfiguration>> ipConfigurations = default;
-            Optional<IList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<PrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<ResourceSet> visibility = default;
             Optional<ResourceSet> autoApproval = default;
             Optional<IList<string>> fqdns = default;

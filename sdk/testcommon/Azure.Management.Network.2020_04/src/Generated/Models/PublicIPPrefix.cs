@@ -38,7 +38,7 @@ namespace Azure.Management.Network.Models
         /// <param name="loadBalancerFrontendIpConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
-        internal PublicIPPrefix(string id, string name, string type, string location, IDictionary<string, string> tags, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IList<ReferencedPublicIpAddress> publicIPAddresses, SubResource loadBalancerFrontendIpConfiguration, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal PublicIPPrefix(string id, string name, string type, string location, IDictionary<string, string> tags, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, SubResource loadBalancerFrontendIpConfiguration, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Etag = etag;
@@ -68,7 +68,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The allocated Prefix. </summary>
         public string IpPrefix { get; }
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
-        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; }
+        public IReadOnlyList<ReferencedPublicIpAddress> PublicIPAddresses { get; }
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         public SubResource LoadBalancerFrontendIpConfiguration { get; }
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>

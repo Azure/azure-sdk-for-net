@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public UsersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -72,6 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new user. </summary>
         /// <param name="parameters"> Parameters to create a user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async Task<Response<User>> CreateAsync(UserCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -98,6 +99,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new user. </summary>
         /// <param name="parameters"> Parameters to create a user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public Response<User> Create(UserCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -201,6 +203,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets user information from the directory. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user for which to get information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> is null. </exception>
         public async Task<Response<User>> GetAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -227,6 +230,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets user information from the directory. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user for which to get information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> is null. </exception>
         public Response<User> Get(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -274,6 +278,7 @@ namespace Azure.Graph.Rbac
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to update. </param>
         /// <param name="parameters"> Parameters to update an existing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string upnOrObjectId, UserUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -300,6 +305,7 @@ namespace Azure.Graph.Rbac
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to update. </param>
         /// <param name="parameters"> Parameters to update an existing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response Update(string upnOrObjectId, UserUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -341,6 +347,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a user. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -362,6 +369,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a user. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upnOrObjectId"/> is null. </exception>
         public Response Delete(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
@@ -405,6 +413,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the user for which to get group membership. </param>
         /// <param name="parameters"> User filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<UserGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -436,6 +445,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the user for which to get group membership. </param>
         /// <param name="parameters"> User filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response<UserGetMemberGroupsResult> GetMemberGroups(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -482,6 +492,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<UserListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -508,6 +519,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<UserListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -546,6 +558,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<UserListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -572,6 +585,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<UserListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RegionalReplicationStatus : IUtf8JsonSerializable
+    public partial class RegionalReplicationStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
         {
             Optional<string> region = default;

@@ -78,6 +78,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all available run commands for a subscription in a location. </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<RunCommandDocumentBase> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -121,6 +122,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all available run commands for a subscription in a location. </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<RunCommandDocumentBase> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)

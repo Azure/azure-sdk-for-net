@@ -11,49 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class MaintenanceRedeployStatus : IUtf8JsonSerializable
+    public partial class MaintenanceRedeployStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
-            {
-                writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed");
-                writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
-            }
-            if (Optional.IsDefined(PreMaintenanceWindowStartTime))
-            {
-                writer.WritePropertyName("preMaintenanceWindowStartTime");
-                writer.WriteStringValue(PreMaintenanceWindowStartTime.Value, "O");
-            }
-            if (Optional.IsDefined(PreMaintenanceWindowEndTime))
-            {
-                writer.WritePropertyName("preMaintenanceWindowEndTime");
-                writer.WriteStringValue(PreMaintenanceWindowEndTime.Value, "O");
-            }
-            if (Optional.IsDefined(MaintenanceWindowStartTime))
-            {
-                writer.WritePropertyName("maintenanceWindowStartTime");
-                writer.WriteStringValue(MaintenanceWindowStartTime.Value, "O");
-            }
-            if (Optional.IsDefined(MaintenanceWindowEndTime))
-            {
-                writer.WritePropertyName("maintenanceWindowEndTime");
-                writer.WriteStringValue(MaintenanceWindowEndTime.Value, "O");
-            }
-            if (Optional.IsDefined(LastOperationResultCode))
-            {
-                writer.WritePropertyName("lastOperationResultCode");
-                writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(LastOperationMessage))
-            {
-                writer.WritePropertyName("lastOperationMessage");
-                writer.WriteStringValue(LastOperationMessage);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element)
         {
             Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;

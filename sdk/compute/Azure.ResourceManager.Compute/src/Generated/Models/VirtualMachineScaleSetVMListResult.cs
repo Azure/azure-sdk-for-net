@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMListResult. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetVMListResult(IEnumerable<VirtualMachineScaleSetVM> value)
         {
             if (value == null)

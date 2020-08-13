@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> endpoint = default;
             Optional<EncryptionProperties> encryption = default;
-            Optional<IList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {

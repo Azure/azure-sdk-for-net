@@ -11,14 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class RollingUpgradeRunningStatus : IUtf8JsonSerializable
+    public partial class RollingUpgradeRunningStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static RollingUpgradeRunningStatus DeserializeRollingUpgradeRunningStatus(JsonElement element)
         {
             Optional<RollingUpgradeStatusCode> code = default;

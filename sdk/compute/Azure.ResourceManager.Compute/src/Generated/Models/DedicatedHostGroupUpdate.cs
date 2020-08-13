@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Number of fault domains that the host group can span. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IList<SubResourceReadOnly> Hosts { get; }
+        public IReadOnlyList<SubResourceReadOnly> Hosts { get; }
     }
 }

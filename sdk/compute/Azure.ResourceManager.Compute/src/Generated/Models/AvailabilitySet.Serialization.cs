@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> platformFaultDomainCount = default;
             Optional<IList<SubResource>> virtualMachines = default;
             Optional<SubResource> proximityPlacementGroup = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))

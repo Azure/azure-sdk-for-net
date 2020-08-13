@@ -96,7 +96,7 @@ namespace Azure.Management.Network.Models
             Optional<int> idleTimeoutInMinutes = default;
             Optional<IList<SubResource>> publicIpAddresses = default;
             Optional<IList<SubResource>> publicIpPrefixes = default;
-            Optional<IList<SubResource>> subnets = default;
+            Optional<IReadOnlyList<SubResource>> subnets = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

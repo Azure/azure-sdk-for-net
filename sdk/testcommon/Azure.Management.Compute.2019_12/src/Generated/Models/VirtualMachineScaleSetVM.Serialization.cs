@@ -95,8 +95,8 @@ namespace Azure.Management.Compute.Models
             Optional<string> instanceId = default;
             Optional<Sku> sku = default;
             Optional<Plan> plan = default;
-            Optional<IList<VirtualMachineExtension>> resources = default;
-            Optional<IList<string>> zones = default;
+            Optional<IReadOnlyList<VirtualMachineExtension>> resources = default;
+            Optional<IReadOnlyList<string>> zones = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;

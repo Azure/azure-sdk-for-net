@@ -49,7 +49,7 @@ namespace Azure.Management.Network.Models
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: &apos;Updating&apos;, &apos;Deleting&apos;, and &apos;Failed&apos;. </param>
         /// <param name="p2SVpnGateways"> List of references to P2SVpnGateways. </param>
         /// <param name="etagPropertiesEtag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnServerConfiguration(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string namePropertiesName, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IpsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IList<P2SVpnGateway> p2SVpnGateways, string etagPropertiesEtag) : base(id, name, type, location, tags)
+        internal VpnServerConfiguration(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string namePropertiesName, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IpsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGateway> p2SVpnGateways, string etagPropertiesEtag) : base(id, name, type, location, tags)
         {
             Etag = etag;
             NamePropertiesName = namePropertiesName;
@@ -98,7 +98,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The provisioning state of the VpnServerConfiguration resource. Possible values are: &apos;Updating&apos;, &apos;Deleting&apos;, and &apos;Failed&apos;. </summary>
         public string ProvisioningState { get; }
         /// <summary> List of references to P2SVpnGateways. </summary>
-        public IList<P2SVpnGateway> P2SVpnGateways { get; }
+        public IReadOnlyList<P2SVpnGateway> P2SVpnGateways { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string EtagPropertiesEtag { get; }
     }

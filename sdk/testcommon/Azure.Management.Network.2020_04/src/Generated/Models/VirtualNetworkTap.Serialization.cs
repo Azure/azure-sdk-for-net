@@ -66,7 +66,7 @@ namespace Azure.Management.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NetworkInterfaceTapConfiguration>> networkInterfaceTapConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceTapConfiguration>> networkInterfaceTapConfigurations = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfiguration> destinationNetworkInterfaceIPConfiguration = default;

@@ -50,7 +50,7 @@ namespace Azure.Management.Network.Models
         /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
-        internal Subnet(string id, string name, string etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroup networkSecurityGroup, RouteTable routeTable, SubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicy> serviceEndpointPolicies, IList<PrivateEndpoint> privateEndpoints, IList<IPConfiguration> ipConfigurations, IList<IPConfigurationProfile> ipConfigurationProfiles, IList<SubResource> ipAllocations, IList<ResourceNavigationLink> resourceNavigationLinks, IList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, string privateEndpointNetworkPolicies, string privateLinkServiceNetworkPolicies) : base(id)
+        internal Subnet(string id, string name, string etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroup networkSecurityGroup, RouteTable routeTable, SubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicy> serviceEndpointPolicies, IReadOnlyList<PrivateEndpoint> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<SubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, string privateEndpointNetworkPolicies, string privateLinkServiceNetworkPolicies) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -93,17 +93,17 @@ namespace Azure.Management.Network.Models
         /// <summary> An array of service endpoint policies. </summary>
         public IList<ServiceEndpointPolicy> ServiceEndpointPolicies { get; }
         /// <summary> An array of references to private endpoints. </summary>
-        public IList<PrivateEndpoint> PrivateEndpoints { get; }
+        public IReadOnlyList<PrivateEndpoint> PrivateEndpoints { get; }
         /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
-        public IList<IPConfiguration> IpConfigurations { get; }
+        public IReadOnlyList<IPConfiguration> IpConfigurations { get; }
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
-        public IList<IPConfigurationProfile> IpConfigurationProfiles { get; }
+        public IReadOnlyList<IPConfigurationProfile> IpConfigurationProfiles { get; }
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
         public IList<SubResource> IpAllocations { get; }
         /// <summary> An array of references to the external resources using subnet. </summary>
-        public IList<ResourceNavigationLink> ResourceNavigationLinks { get; }
+        public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks { get; }
         /// <summary> An array of references to services injecting into this subnet. </summary>
-        public IList<ServiceAssociationLink> ServiceAssociationLinks { get; }
+        public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks { get; }
         /// <summary> An array of references to the delegations on the subnet. </summary>
         public IList<Delegation> Delegations { get; }
         /// <summary> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </summary>

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of SnapshotList. </summary>
         /// <param name="value"> A list of snapshots. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SnapshotList(IEnumerable<Snapshot> value)
         {
             if (value == null)

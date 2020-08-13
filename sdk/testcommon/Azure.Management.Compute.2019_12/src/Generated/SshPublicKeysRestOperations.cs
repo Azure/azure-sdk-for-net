@@ -28,7 +28,7 @@ namespace Azure.Management.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public SshPublicKeysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -118,6 +118,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<SshPublicKeysGroupListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -144,6 +145,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<SshPublicKeysGroupListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -194,6 +196,7 @@ namespace Azure.Management.Compute
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="parameters"> Parameters supplied to create the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="sshPublicKeyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<SshPublicKeyResource>> CreateAsync(string resourceGroupName, string sshPublicKeyName, SshPublicKeyResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -231,6 +234,7 @@ namespace Azure.Management.Compute
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="parameters"> Parameters supplied to create the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="sshPublicKeyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<SshPublicKeyResource> Create(string resourceGroupName, string sshPublicKeyName, SshPublicKeyResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -290,6 +294,7 @@ namespace Azure.Management.Compute
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="parameters"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="sshPublicKeyName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<SshPublicKeyResource>> UpdateAsync(string resourceGroupName, string sshPublicKeyName, SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -326,6 +331,7 @@ namespace Azure.Management.Compute
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="parameters"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="sshPublicKeyName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<SshPublicKeyResource> Update(string resourceGroupName, string sshPublicKeyName, SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -379,6 +385,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -406,6 +413,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -451,6 +459,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public async Task<Response<SshPublicKeyResource>> GetAsync(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -482,6 +491,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public Response<SshPublicKeyResource> Get(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -532,6 +542,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -563,6 +574,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="sshPublicKeyName"/> is null. </exception>
         public Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(string resourceGroupName, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -605,6 +617,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SshPublicKeysGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -631,6 +644,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SshPublicKeysGroupListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -670,6 +684,7 @@ namespace Azure.Management.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<SshPublicKeysGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -701,6 +716,7 @@ namespace Azure.Management.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<SshPublicKeysGroupListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

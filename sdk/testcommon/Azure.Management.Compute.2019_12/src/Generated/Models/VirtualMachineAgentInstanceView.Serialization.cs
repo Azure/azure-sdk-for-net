@@ -11,44 +11,13 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class VirtualMachineAgentInstanceView : IUtf8JsonSerializable
+    public partial class VirtualMachineAgentInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(VmAgentVersion))
-            {
-                writer.WritePropertyName("vmAgentVersion");
-                writer.WriteStringValue(VmAgentVersion);
-            }
-            if (Optional.IsCollectionDefined(ExtensionHandlers))
-            {
-                writer.WritePropertyName("extensionHandlers");
-                writer.WriteStartArray();
-                foreach (var item in ExtensionHandlers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Statuses))
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static VirtualMachineAgentInstanceView DeserializeVirtualMachineAgentInstanceView(JsonElement element)
         {
             Optional<string> vmAgentVersion = default;
-            Optional<IList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmAgentVersion"))

@@ -11,79 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVMInstanceView : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVMInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformUpdateDomain))
-            {
-                writer.WritePropertyName("platformUpdateDomain");
-                writer.WriteNumberValue(PlatformUpdateDomain.Value);
-            }
-            if (Optional.IsDefined(PlatformFaultDomain))
-            {
-                writer.WritePropertyName("platformFaultDomain");
-                writer.WriteNumberValue(PlatformFaultDomain.Value);
-            }
-            if (Optional.IsDefined(RdpThumbPrint))
-            {
-                writer.WritePropertyName("rdpThumbPrint");
-                writer.WriteStringValue(RdpThumbPrint);
-            }
-            if (Optional.IsDefined(VmAgent))
-            {
-                writer.WritePropertyName("vmAgent");
-                writer.WriteObjectValue(VmAgent);
-            }
-            if (Optional.IsDefined(MaintenanceRedeployStatus))
-            {
-                writer.WritePropertyName("maintenanceRedeployStatus");
-                writer.WriteObjectValue(MaintenanceRedeployStatus);
-            }
-            if (Optional.IsCollectionDefined(Disks))
-            {
-                writer.WritePropertyName("disks");
-                writer.WriteStartArray();
-                foreach (var item in Disks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Extensions))
-            {
-                writer.WritePropertyName("extensions");
-                writer.WriteStartArray();
-                foreach (var item in Extensions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(BootDiagnostics))
-            {
-                writer.WritePropertyName("bootDiagnostics");
-                writer.WriteObjectValue(BootDiagnostics);
-            }
-            if (Optional.IsCollectionDefined(Statuses))
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PlacementGroupId))
-            {
-                writer.WritePropertyName("placementGroupId");
-                writer.WriteStringValue(PlacementGroupId);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static VirtualMachineScaleSetVMInstanceView DeserializeVirtualMachineScaleSetVMInstanceView(JsonElement element)
         {
             Optional<int> platformUpdateDomain = default;
@@ -91,11 +20,11 @@ namespace Azure.Management.Compute.Models
             Optional<string> rdpThumbPrint = default;
             Optional<VirtualMachineAgentInstanceView> vmAgent = default;
             Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
-            Optional<IList<DiskInstanceView>> disks = default;
-            Optional<IList<VirtualMachineExtensionInstanceView>> extensions = default;
+            Optional<IReadOnlyList<DiskInstanceView>> disks = default;
+            Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
             Optional<VirtualMachineHealthStatus> vmHealth = default;
             Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             Optional<string> placementGroupId = default;
             foreach (var property in element.EnumerateObject())
             {

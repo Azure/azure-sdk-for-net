@@ -15,6 +15,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ConnectivityParameters. </summary>
         /// <param name="source"> The source of the connection. </param>
         /// <param name="destination"> The destination of connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityParameters(ConnectivitySource source, ConnectivityDestination destination)
         {
             if (source == null)

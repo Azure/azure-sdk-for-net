@@ -16,6 +16,7 @@ namespace Azure.Management.Storage.Models
     {
         /// <summary> Initializes a new instance of LegalHold. </summary>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public LegalHold(IEnumerable<string> tags)
         {
             if (tags == null)

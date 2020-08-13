@@ -11,14 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class GeoReplicationStats : IUtf8JsonSerializable
+    public partial class GeoReplicationStats
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static GeoReplicationStats DeserializeGeoReplicationStats(JsonElement element)
         {
             Optional<GeoReplicationStatus> status = default;

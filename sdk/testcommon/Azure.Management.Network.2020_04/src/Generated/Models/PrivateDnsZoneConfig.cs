@@ -23,7 +23,7 @@ namespace Azure.Management.Network.Models
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
         /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
-        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IList<RecordSet> recordSets)
+        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets)
         {
             Name = name;
             PrivateDnsZoneId = privateDnsZoneId;
@@ -35,6 +35,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The resource id of the private dns zone. </summary>
         public string PrivateDnsZoneId { get; set; }
         /// <summary> A collection of information regarding a recordSet, holding information to identify private resources. </summary>
-        public IList<RecordSet> RecordSets { get; }
+        public IReadOnlyList<RecordSet> RecordSets { get; }
     }
 }

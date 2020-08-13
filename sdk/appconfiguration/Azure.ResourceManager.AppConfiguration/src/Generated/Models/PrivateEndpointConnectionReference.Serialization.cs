@@ -10,27 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class PrivateEndpointConnectionReference : IUtf8JsonSerializable
+    public partial class PrivateEndpointConnectionReference
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
-            {
-                writer.WritePropertyName("privateEndpoint");
-                writer.WriteObjectValue(PrivateEndpoint);
-            }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static PrivateEndpointConnectionReference DeserializePrivateEndpointConnectionReference(JsonElement element)
         {
             Optional<string> id = default;

@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public LocalNetworkGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -70,6 +70,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +103,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -151,6 +153,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async Task<Response<LocalNetworkGateway>> GetAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -182,6 +185,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public Response<LocalNetworkGateway> Get(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -231,6 +235,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -259,6 +264,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +316,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to update local network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<LocalNetworkGateway>> UpdateTagsAsync(string resourceGroupName, string localNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -346,6 +353,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to update local network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<LocalNetworkGateway> UpdateTags(string resourceGroupName, string localNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -397,6 +405,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<LocalNetworkGatewayListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,6 +432,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<LocalNetworkGatewayListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -462,6 +472,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<LocalNetworkGatewayListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -493,6 +504,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<LocalNetworkGatewayListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

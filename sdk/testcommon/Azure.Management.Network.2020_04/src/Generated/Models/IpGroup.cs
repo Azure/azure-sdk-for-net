@@ -30,7 +30,7 @@ namespace Azure.Management.Network.Models
         /// <param name="provisioningState"> The provisioning state of the IpGroups resource. </param>
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Azure resources that this IpGroups is associated with. </param>
-        internal IpGroup(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IList<SubResource> firewalls) : base(id, name, type, location, tags)
+        internal IpGroup(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<SubResource> firewalls) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -45,6 +45,6 @@ namespace Azure.Management.Network.Models
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
         public IList<string> IpAddresses { get; }
         /// <summary> List of references to Azure resources that this IpGroups is associated with. </summary>
-        public IList<SubResource> Firewalls { get; }
+        public IReadOnlyList<SubResource> Firewalls { get; }
     }
 }

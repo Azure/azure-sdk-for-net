@@ -63,7 +63,7 @@ namespace Azure.Management.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<string>> ipAddresses = default;
-            Optional<IList<SubResource>> firewalls = default;
+            Optional<IReadOnlyList<SubResource>> firewalls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))

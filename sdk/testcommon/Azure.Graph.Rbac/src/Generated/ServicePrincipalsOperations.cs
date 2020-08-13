@@ -339,6 +339,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual AsyncPageable<DirectoryObject> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -382,6 +383,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual Pageable<DirectoryObject> ListOwners(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -425,6 +427,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with the specified service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get keyCredentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual AsyncPageable<KeyCredential> ListKeyCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -453,6 +456,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with the specified service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get keyCredentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual Pageable<KeyCredential> ListKeyCredentials(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -481,6 +485,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the passwordCredentials associated with a service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual AsyncPageable<PasswordCredential> ListPasswordCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -509,6 +514,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the passwordCredentials associated with a service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual Pageable<PasswordCredential> ListPasswordCredentials(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -537,6 +543,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of service principals from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<ServicePrincipal> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -580,6 +587,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of service principals from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<ServicePrincipal> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

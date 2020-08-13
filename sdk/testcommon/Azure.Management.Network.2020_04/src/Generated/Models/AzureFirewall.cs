@@ -46,7 +46,7 @@ namespace Azure.Management.Network.Models
         /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        internal AzureFirewall(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, SubResource virtualHub, SubResource firewallPolicy, HubIPAddresses hubIpAddresses, IList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
+        internal AzureFirewall(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, SubResource virtualHub, SubResource firewallPolicy, HubIPAddresses hubIpAddresses, IReadOnlyList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
         {
             Zones = zones;
             Etag = etag;
@@ -90,7 +90,7 @@ namespace Azure.Management.Network.Models
         /// <summary> IP addresses associated with AzureFirewall. </summary>
         public HubIPAddresses HubIpAddresses { get; }
         /// <summary> IpGroups associated with AzureFirewall. </summary>
-        public IList<AzureFirewallIpGroups> IpGroups { get; }
+        public IReadOnlyList<AzureFirewallIpGroups> IpGroups { get; }
         /// <summary> The Azure Firewall Resource SKU. </summary>
         public AzureFirewallSku Sku { get; set; }
         /// <summary> The additional properties used to further config this azure firewall. </summary>

@@ -56,8 +56,8 @@ namespace Azure.Management.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> id = default;
             Optional<IList<RouteFilterRule>> rules = default;
-            Optional<IList<ExpressRouteCircuitPeering>> peerings = default;
-            Optional<IList<ExpressRouteCircuitPeering>> ipv6Peerings = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitPeering>> peerings = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitPeering>> ipv6Peerings = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

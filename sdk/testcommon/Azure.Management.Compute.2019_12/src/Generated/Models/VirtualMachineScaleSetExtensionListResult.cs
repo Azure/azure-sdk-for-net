@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionListResult. </summary>
         /// <param name="value"> The list of VM scale set extensions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetExtensionListResult(IEnumerable<VirtualMachineScaleSetExtension> value)
         {
             if (value == null)

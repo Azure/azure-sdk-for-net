@@ -128,7 +128,7 @@ namespace Azure.Management.Compute.Models
         internal static VirtualMachine DeserializeVirtualMachine(JsonElement element)
         {
             Optional<Plan> plan = default;
-            Optional<IList<VirtualMachineExtension>> resources = default;
+            Optional<IReadOnlyList<VirtualMachineExtension>> resources = default;
             Optional<VirtualMachineIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<string> id = default;

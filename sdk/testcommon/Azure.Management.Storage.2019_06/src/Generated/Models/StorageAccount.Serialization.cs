@@ -95,7 +95,7 @@ namespace Azure.Management.Storage.Models
             Optional<GeoReplicationStats> geoReplicationStats = default;
             Optional<bool> failoverInProgress = default;
             Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<PrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<RoutingPreference> routingPreference = default;
             Optional<BlobRestoreStatus> blobRestoreStatus = default;
             foreach (var property in element.EnumerateObject())

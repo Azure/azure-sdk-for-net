@@ -11,44 +11,13 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class DiskInstanceView : IUtf8JsonSerializable
+    public partial class DiskInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsCollectionDefined(EncryptionSettings))
-            {
-                writer.WritePropertyName("encryptionSettings");
-                writer.WriteStartArray();
-                foreach (var item in EncryptionSettings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Statuses))
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DiskInstanceView DeserializeDiskInstanceView(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IList<DiskEncryptionSettings>> encryptionSettings = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<DiskEncryptionSettings>> encryptionSettings = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

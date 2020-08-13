@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
         /// <param name="name"> The network configuration name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetNetworkConfiguration(string name)
         {
             if (name == null)

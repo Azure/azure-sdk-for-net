@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of ImageListResult. </summary>
         /// <param name="value"> The list of Images. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ImageListResult(IEnumerable<Image> value)
         {
             if (value == null)

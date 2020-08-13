@@ -48,7 +48,7 @@ namespace Azure.Management.Network.Models
             Optional<string> etag = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<SubResource>> virtualNetworks = default;
+            Optional<IReadOnlyList<SubResource>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))

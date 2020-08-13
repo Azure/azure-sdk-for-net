@@ -53,9 +53,9 @@ namespace Azure.Management.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Optional<IList<SubResourceWithColocationStatus>> virtualMachines = default;
-            Optional<IList<SubResourceWithColocationStatus>> virtualMachineScaleSets = default;
-            Optional<IList<SubResourceWithColocationStatus>> availabilitySets = default;
+            Optional<IReadOnlyList<SubResourceWithColocationStatus>> virtualMachines = default;
+            Optional<IReadOnlyList<SubResourceWithColocationStatus>> virtualMachineScaleSets = default;
+            Optional<IReadOnlyList<SubResourceWithColocationStatus>> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
             foreach (var property in element.EnumerateObject())
             {

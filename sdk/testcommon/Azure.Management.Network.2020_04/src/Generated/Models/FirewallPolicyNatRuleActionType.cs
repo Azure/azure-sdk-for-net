@@ -16,6 +16,7 @@ namespace Azure.Management.Network.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleActionType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyNatRuleActionType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

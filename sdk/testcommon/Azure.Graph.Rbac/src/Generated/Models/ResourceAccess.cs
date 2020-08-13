@@ -17,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of ResourceAccess. </summary>
         /// <param name="id"> The unique identifier for one of the OAuth2Permission or AppRole instances that the resource application exposes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ResourceAccess(string id)
         {
             if (id == null)

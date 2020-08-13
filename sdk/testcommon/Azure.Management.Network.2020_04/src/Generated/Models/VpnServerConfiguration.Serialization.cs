@@ -164,7 +164,7 @@ namespace Azure.Management.Network.Models
             Optional<IList<RadiusServer>> radiusServers = default;
             Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
             Optional<string> provisioningState = default;
-            Optional<IList<P2SVpnGateway>> p2SVpnGateways = default;
+            Optional<IReadOnlyList<P2SVpnGateway>> p2SVpnGateways = default;
             Optional<string> etag0 = default;
             foreach (var property in element.EnumerateObject())
             {

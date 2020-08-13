@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class DedicatedHostAllocatableVM : IUtf8JsonSerializable
+    public partial class DedicatedHostAllocatableVM
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
-            {
-                writer.WritePropertyName("vmSize");
-                writer.WriteStringValue(VmSize);
-            }
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count");
-                writer.WriteNumberValue(Count.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DedicatedHostAllocatableVM DeserializeDedicatedHostAllocatableVM(JsonElement element)
         {
             Optional<string> vmSize = default;

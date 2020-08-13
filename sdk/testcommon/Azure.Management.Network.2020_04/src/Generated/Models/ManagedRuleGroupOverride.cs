@@ -16,6 +16,7 @@ namespace Azure.Management.Network.Models
     {
         /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
         /// <param name="ruleGroupName"> The managed rule group to override. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ManagedRuleGroupOverride(string ruleGroupName)
         {
             if (ruleGroupName == null)

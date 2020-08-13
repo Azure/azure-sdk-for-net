@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of RunCommandInput. </summary>
         /// <param name="commandId"> The run command id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public RunCommandInput(string commandId)
         {
             if (commandId == null)

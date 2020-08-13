@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
         /// <param name="value"> The list of virtual machines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineListResult(IEnumerable<VirtualMachine> value)
         {
             if (value == null)

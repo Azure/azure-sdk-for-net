@@ -29,7 +29,7 @@ namespace Azure.Management.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualMachineImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -75,6 +75,7 @@ namespace Azure.Management.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
         public async Task<Response<VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -121,6 +122,7 @@ namespace Azure.Management.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/>, or <paramref name="version"/> is null. </exception>
         public Response<VirtualMachineImage> Get(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -204,6 +206,7 @@ namespace Azure.Management.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -253,6 +256,7 @@ namespace Azure.Management.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> List(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -316,6 +320,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -352,6 +357,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListOffers(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -404,6 +410,7 @@ namespace Azure.Management.Compute
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -435,6 +442,7 @@ namespace Azure.Management.Compute
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListPublishers(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -489,6 +497,7 @@ namespace Azure.Management.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -530,6 +539,7 @@ namespace Azure.Management.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
         public Response<IReadOnlyList<VirtualMachineImageResource>> ListSkus(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)

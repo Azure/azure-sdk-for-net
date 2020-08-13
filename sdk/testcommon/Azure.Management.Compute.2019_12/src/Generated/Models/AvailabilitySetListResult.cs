@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         /// <param name="value"> The list of availability sets. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AvailabilitySetListResult(IEnumerable<AvailabilitySet> value)
         {
             if (value == null)

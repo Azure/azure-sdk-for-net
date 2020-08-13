@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
         /// <param name="publicKeys"> the list of SSH public keys used to authenticate with Linux-based VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicKeys"/> is null. </exception>
         public ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys)
         {
             if (publicKeys == null)

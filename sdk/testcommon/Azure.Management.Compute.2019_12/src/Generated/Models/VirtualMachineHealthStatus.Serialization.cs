@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class VirtualMachineHealthStatus : IUtf8JsonSerializable
+    public partial class VirtualMachineHealthStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static VirtualMachineHealthStatus DeserializeVirtualMachineHealthStatus(JsonElement element)
         {
             Optional<InstanceViewStatus> status = default;

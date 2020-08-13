@@ -32,7 +32,7 @@ namespace Azure.Management.Network.Models
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal RouteFilter(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRule> rules, IList<ExpressRouteCircuitPeering> peerings, IList<ExpressRouteCircuitPeering> ipv6Peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal RouteFilter(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRule> rules, IReadOnlyList<ExpressRouteCircuitPeering> peerings, IReadOnlyList<ExpressRouteCircuitPeering> ipv6Peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Rules = rules;
@@ -46,9 +46,9 @@ namespace Azure.Management.Network.Models
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
         public IList<RouteFilterRule> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
-        public IList<ExpressRouteCircuitPeering> Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeering> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
-        public IList<ExpressRouteCircuitPeering> Ipv6Peerings { get; }
+        public IReadOnlyList<ExpressRouteCircuitPeering> Ipv6Peerings { get; }
         /// <summary> The provisioning state of the route filter resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

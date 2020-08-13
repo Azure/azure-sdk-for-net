@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public DomainsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -130,6 +130,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a specific domain in the current tenant. </summary>
         /// <param name="domainName"> name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public async Task<Response<Domain>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
@@ -156,6 +157,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a specific domain in the current tenant. </summary>
         /// <param name="domainName"> name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public Response<Domain> Get(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)

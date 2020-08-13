@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of DedicatedHostGroup. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public DedicatedHostGroup(string location) : base(location)
         {
             if (location == null)
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
         /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
         /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
-        internal DedicatedHostGroup(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, int? platformFaultDomainCount, IList<SubResourceReadOnly> hosts) : base(id, name, type, location, tags)
+        internal DedicatedHostGroup(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<SubResourceReadOnly> hosts) : base(id, name, type, location, tags)
         {
             Zones = zones;
             PlatformFaultDomainCount = platformFaultDomainCount;
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Number of fault domains that the host group can span. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IList<SubResourceReadOnly> Hosts { get; }
+        public IReadOnlyList<SubResourceReadOnly> Hosts { get; }
     }
 }

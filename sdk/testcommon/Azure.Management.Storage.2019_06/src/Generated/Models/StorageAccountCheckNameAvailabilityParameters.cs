@@ -14,6 +14,7 @@ namespace Azure.Management.Storage.Models
     {
         /// <summary> Initializes a new instance of StorageAccountCheckNameAvailabilityParameters. </summary>
         /// <param name="name"> The storage account name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StorageAccountCheckNameAvailabilityParameters(string name)
         {
             if (name == null)

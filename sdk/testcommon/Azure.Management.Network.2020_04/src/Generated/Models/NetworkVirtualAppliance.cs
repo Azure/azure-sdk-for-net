@@ -36,7 +36,7 @@ namespace Azure.Management.Network.Models
         /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualAppliance(string id, string name, string type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, VirtualApplianceSkuProperties sku, string etag, IList<string> bootStrapConfigurationBlob, SubResource virtualHub, IList<string> cloudInitConfigurationBlob, long? virtualApplianceAsn, IList<VirtualApplianceNicProperties> virtualApplianceNics, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkVirtualAppliance(string id, string name, string type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, VirtualApplianceSkuProperties sku, string etag, IList<string> bootStrapConfigurationBlob, SubResource virtualHub, IList<string> cloudInitConfigurationBlob, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Identity = identity;
             Sku = sku;
@@ -64,7 +64,7 @@ namespace Azure.Management.Network.Models
         /// <summary> VirtualAppliance ASN. </summary>
         public long? VirtualApplianceAsn { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
-        public IList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
+        public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

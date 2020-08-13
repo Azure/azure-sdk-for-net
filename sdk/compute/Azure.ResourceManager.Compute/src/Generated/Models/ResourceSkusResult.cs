@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceSkusResult(IEnumerable<ResourceSku> value)
         {
             if (value == null)

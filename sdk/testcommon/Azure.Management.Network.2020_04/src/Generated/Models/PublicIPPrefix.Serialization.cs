@@ -92,7 +92,7 @@ namespace Azure.Management.Network.Models
             Optional<IList<IpTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
-            Optional<IList<ReferencedPublicIpAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<ReferencedPublicIpAddress>> publicIPAddresses = default;
             Optional<SubResource> loadBalancerFrontendIpConfiguration = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;

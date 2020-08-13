@@ -17,6 +17,7 @@ namespace Azure.Management.Network.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal Usage(UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             if (name == null)

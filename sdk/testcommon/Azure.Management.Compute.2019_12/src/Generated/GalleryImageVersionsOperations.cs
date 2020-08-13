@@ -86,6 +86,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public virtual AsyncPageable<GalleryImageVersion> ListByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -139,6 +140,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public virtual Pageable<GalleryImageVersion> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -194,6 +196,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public virtual async Task<GalleryImageVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -238,6 +241,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public virtual GalleryImageVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -282,6 +286,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public virtual async Task<GalleryImageVersionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -326,6 +331,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public virtual GalleryImageVersionsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -369,6 +375,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual async Task<GalleryImageVersionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -408,6 +415,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual GalleryImageVersionsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

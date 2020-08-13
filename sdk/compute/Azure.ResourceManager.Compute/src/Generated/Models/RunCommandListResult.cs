@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of RunCommandListResult. </summary>
         /// <param name="value"> The list of virtual machine run commands. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RunCommandListResult(IEnumerable<RunCommandDocumentBase> value)
         {
             if (value == null)

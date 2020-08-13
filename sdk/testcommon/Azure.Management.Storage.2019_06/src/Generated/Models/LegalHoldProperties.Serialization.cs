@@ -11,28 +11,12 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class LegalHoldProperties : IUtf8JsonSerializable
+    public partial class LegalHoldProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartArray();
-                foreach (var item in Tags)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
             Optional<bool> hasLegalHold = default;
-            Optional<IList<TagProperty>> tags = default;
+            Optional<IReadOnlyList<TagProperty>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"))

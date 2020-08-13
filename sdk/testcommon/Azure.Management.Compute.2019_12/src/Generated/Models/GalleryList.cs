@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryList. </summary>
         /// <param name="value"> A list of galleries. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryList(IEnumerable<Gallery> value)
         {
             if (value == null)

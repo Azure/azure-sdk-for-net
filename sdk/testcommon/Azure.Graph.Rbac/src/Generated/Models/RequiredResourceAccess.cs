@@ -18,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of RequiredResourceAccess. </summary>
         /// <param name="resourceAccess"> The list of OAuth2.0 permission scopes and app roles that the application requires from the specified resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAccess"/> is null. </exception>
         public RequiredResourceAccess(IEnumerable<ResourceAccess> resourceAccess)
         {
             if (resourceAccess == null)

@@ -59,7 +59,7 @@ namespace Azure.Management.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IList<SubResourceReadOnly>> hosts = default;
+            Optional<IReadOnlyList<SubResourceReadOnly>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"))

@@ -11,34 +11,13 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class DedicatedHostInstanceView : IUtf8JsonSerializable
+    public partial class DedicatedHostInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AvailableCapacity))
-            {
-                writer.WritePropertyName("availableCapacity");
-                writer.WriteObjectValue(AvailableCapacity);
-            }
-            if (Optional.IsCollectionDefined(Statuses))
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element)
         {
             Optional<string> assetId = default;
             Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetId"))

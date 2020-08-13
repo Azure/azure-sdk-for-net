@@ -37,7 +37,7 @@ namespace Azure.Management.Network.Models
         /// <param name="managedRules"> Describes the managedRules structure. </param>
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
-        internal WebApplicationFirewallPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IList<ApplicationGateway> applicationGateways, ProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IList<SubResource> httpListeners, IList<SubResource> pathBasedRules) : base(id, name, type, location, tags)
+        internal WebApplicationFirewallPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGateway> applicationGateways, ProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<SubResource> httpListeners, IReadOnlyList<SubResource> pathBasedRules) : base(id, name, type, location, tags)
         {
             Etag = etag;
             PolicySettings = policySettings;
@@ -57,7 +57,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The custom rules inside the policy. </summary>
         public IList<WebApplicationFirewallCustomRule> CustomRules { get; }
         /// <summary> A collection of references to application gateways. </summary>
-        public IList<ApplicationGateway> ApplicationGateways { get; }
+        public IReadOnlyList<ApplicationGateway> ApplicationGateways { get; }
         /// <summary> The provisioning state of the web application firewall policy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>
@@ -65,8 +65,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Describes the managedRules structure. </summary>
         public ManagedRulesDefinition ManagedRules { get; set; }
         /// <summary> A collection of references to application gateway http listeners. </summary>
-        public IList<SubResource> HttpListeners { get; }
+        public IReadOnlyList<SubResource> HttpListeners { get; }
         /// <summary> A collection of references to application gateway path rules. </summary>
-        public IList<SubResource> PathBasedRules { get; }
+        public IReadOnlyList<SubResource> PathBasedRules { get; }
     }
 }

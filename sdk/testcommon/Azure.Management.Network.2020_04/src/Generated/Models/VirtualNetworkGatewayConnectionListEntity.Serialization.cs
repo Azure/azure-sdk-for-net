@@ -134,7 +134,7 @@ namespace Azure.Management.Network.Models
             Optional<int> routingWeight = default;
             Optional<string> sharedKey = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<IList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
+            Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
             Optional<long> egressBytesTransferred = default;
             Optional<long> ingressBytesTransferred = default;
             Optional<SubResource> peer = default;

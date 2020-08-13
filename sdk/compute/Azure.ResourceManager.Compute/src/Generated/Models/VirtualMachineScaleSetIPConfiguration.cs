@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
         /// <param name="name"> The IP configuration name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetIPConfiguration(string name)
         {
             if (name == null)

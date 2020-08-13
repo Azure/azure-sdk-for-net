@@ -124,12 +124,12 @@ namespace Azure.Management.Network.Models
             Optional<SubResource> natGateway = default;
             Optional<IList<ServiceEndpointPropertiesFormat>> serviceEndpoints = default;
             Optional<IList<ServiceEndpointPolicy>> serviceEndpointPolicies = default;
-            Optional<IList<PrivateEndpoint>> privateEndpoints = default;
-            Optional<IList<IPConfiguration>> ipConfigurations = default;
-            Optional<IList<IPConfigurationProfile>> ipConfigurationProfiles = default;
+            Optional<IReadOnlyList<PrivateEndpoint>> privateEndpoints = default;
+            Optional<IReadOnlyList<IPConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<IPConfigurationProfile>> ipConfigurationProfiles = default;
             Optional<IList<SubResource>> ipAllocations = default;
-            Optional<IList<ResourceNavigationLink>> resourceNavigationLinks = default;
-            Optional<IList<ServiceAssociationLink>> serviceAssociationLinks = default;
+            Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
+            Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
             Optional<IList<Delegation>> delegations = default;
             Optional<string> purpose = default;
             Optional<ProvisioningState> provisioningState = default;

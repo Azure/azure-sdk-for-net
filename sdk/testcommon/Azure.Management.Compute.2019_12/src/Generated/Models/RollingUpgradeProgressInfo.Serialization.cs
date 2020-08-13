@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class RollingUpgradeProgressInfo : IUtf8JsonSerializable
+    public partial class RollingUpgradeProgressInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element)
         {
             Optional<int> successfulInstanceCount = default;

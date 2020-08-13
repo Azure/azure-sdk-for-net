@@ -60,8 +60,8 @@ namespace Azure.Management.Network.Models
             Optional<string> id = default;
             Optional<IList<HubRoute>> routes = default;
             Optional<IList<string>> labels = default;
-            Optional<IList<SubResource>> associatedConnections = default;
-            Optional<IList<SubResource>> propagatingConnections = default;
+            Optional<IReadOnlyList<SubResource>> associatedConnections = default;
+            Optional<IReadOnlyList<SubResource>> propagatingConnections = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

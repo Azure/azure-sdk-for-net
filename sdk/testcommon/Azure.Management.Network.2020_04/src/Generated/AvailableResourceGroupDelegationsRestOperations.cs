@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public AvailableResourceGroupDelegationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -66,6 +66,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailableDelegationsResult>> ListAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -97,6 +98,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailableDelegationsResult> List(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -141,6 +143,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -177,6 +180,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AvailableDelegationsResult> ListNextPage(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

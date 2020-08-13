@@ -61,7 +61,7 @@ namespace Azure.Management.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ContainerNetworkInterface>> containerNetworkInterfaces = default;
+            Optional<IReadOnlyList<ContainerNetworkInterface>> containerNetworkInterfaces = default;
             Optional<IList<ContainerNetworkInterfaceConfiguration>> containerNetworkInterfaceConfigurations = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;

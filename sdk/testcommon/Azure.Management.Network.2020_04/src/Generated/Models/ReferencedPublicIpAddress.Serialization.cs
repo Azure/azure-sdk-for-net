@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class ReferencedPublicIpAddress : IUtf8JsonSerializable
+    public partial class ReferencedPublicIpAddress
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ReferencedPublicIpAddress DeserializeReferencedPublicIpAddress(JsonElement element)
         {
             Optional<string> id = default;

@@ -11,27 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAvailableCapacity : IUtf8JsonSerializable
+    public partial class DedicatedHostAvailableCapacity
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllocatableVMs))
-            {
-                writer.WritePropertyName("allocatableVMs");
-                writer.WriteStartArray();
-                foreach (var item in AllocatableVMs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            Optional<IList<DedicatedHostAllocatableVM>> allocatableVMs = default;
+            Optional<IReadOnlyList<DedicatedHostAllocatableVM>> allocatableVMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))

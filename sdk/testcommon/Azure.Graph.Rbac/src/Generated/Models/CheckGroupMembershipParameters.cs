@@ -18,6 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of CheckGroupMembershipParameters. </summary>
         /// <param name="groupId"> The object ID of the group to check. </param>
         /// <param name="memberId"> The object ID of the contact, group, user, or service principal to check for membership in the specified group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="memberId"/> is null. </exception>
         public CheckGroupMembershipParameters(string groupId, string memberId)
         {
             if (groupId == null)

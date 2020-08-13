@@ -63,7 +63,7 @@ namespace Azure.Management.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<IList<SubResource>> loadBalancingRules = default;
+            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
             Optional<ProbeProtocol> protocol = default;
             Optional<int> port = default;
             Optional<int> intervalInSeconds = default;
