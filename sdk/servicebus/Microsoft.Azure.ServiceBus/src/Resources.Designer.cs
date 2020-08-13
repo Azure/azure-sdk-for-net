@@ -232,15 +232,6 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A message handler has not been registered yet..
-        /// </summary>
-        internal static string MessageHandlerNotRegisteredYet {
-            get {
-                return ResourceManager.GetString("MessageHandlerNotRegisteredYet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue, or was received by a different receiver instance..
         /// </summary>
         internal static string MessageLockLost {

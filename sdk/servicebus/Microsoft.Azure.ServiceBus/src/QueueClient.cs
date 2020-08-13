@@ -448,10 +448,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Unregister messgae hander from the receiver if there is active message handler registered. 
         /// </summary>
-        public void UnregisterMessageHandler()
+        public async Task UnregisterMessageHandler()
         {
             this.ThrowIfClosed();
-            this.InnerReceiver.UnregisterMessageHandler();
+            await this.InnerReceiver.UnregisterMessageHandler();
         }
 
         /// <summary>

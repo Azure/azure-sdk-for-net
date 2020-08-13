@@ -12,13 +12,14 @@ namespace Microsoft.Azure.ServiceBus
 
     sealed class MessageReceivePump
     {
+        public readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
+        public readonly MessageHandlerOptions registerHandlerOptions;
         readonly Func<Message, CancellationToken, Task> onMessageCallback;
         readonly string endpoint;
-        readonly MessageHandlerOptions registerHandlerOptions;
         readonly IMessageReceiver messageReceiver;
         readonly CancellationToken pumpCancellationToken;
-        readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
         readonly ServiceBusDiagnosticSource diagnosticSource;
+
 
         public MessageReceivePump(IMessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,

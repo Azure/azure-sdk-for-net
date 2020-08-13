@@ -902,23 +902,31 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Unregister message hander from the receiver if there is an active message handler registered. 
         /// </summary>
-        public void UnregisterMessageHandler()
+        public async Task UnregisterMessageHandler()
         {
             this.ThrowIfClosed();
 
             MessagingEventSource.Log.UnregisterMessageHandlerStart(this.ClientId);
             lock (this.messageReceivePumpSyncLock)
             {
-                if (this.receivePump != null)
+                if (this.receivePump == null || this.receivePumpCancellationTokenSource.IsCancellationRequested)
                 {
-                    this.receivePumpCancellationTokenSource.Cancel();
-                    this.receivePumpCancellationTokenSource.Dispose();
-                    this.receivePump = null;
+                    return;
                 }
-                else
-                {
-                    throw new InvalidOperationException(Resources.MessageHandlerNotRegisteredYet);
-                }
+
+                this.receivePumpCancellationTokenSource.Cancel();
+                this.receivePumpCancellationTokenSource.Dispose();
+            }
+
+            while (this.receivePump != null
+                && this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount < this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
+            {
+                await Task.Delay(10);
+            }
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                this.receivePump = null;
             }
             MessagingEventSource.Log.UnregisterMessageHandlerStop(this.ClientId);
         }
