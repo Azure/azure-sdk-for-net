@@ -18,6 +18,7 @@ namespace Azure.Data.SchemaRegistry
     internal partial class SchemaRestClient
     {
         private string endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -25,15 +26,21 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The Schema Registry service endpoint, for example my-namespace.servicebus.windows.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2018-01-01-preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -46,9 +53,9 @@ namespace Azure.Data.SchemaRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/$schemagroups", false);
-            uri.AppendPath("/getSchemaById/", false);
+            uri.AppendPath("/$schemagroups/getSchemaById/", false);
             uri.AppendPath(schemaId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -109,7 +116,7 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        internal HttpMessage CreateGetIdByContentRequest(string groupName, string schemaName, string serializationType, string schemaContent)
+        internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -117,13 +124,16 @@ namespace Azure.Data.SchemaRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/$schemagroups", false);
-            uri.AppendPath("/", false);
+            uri.AppendPath("/$schemagroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/schemas/", false);
             uri.AppendPath(schemaName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("serialization-type", serializationType);
+            if (xSchemaType != null)
+            {
+                request.Headers.Add("X-Schema-Type", xSchemaType.Value.ToString());
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(schemaContent);
@@ -134,11 +144,11 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of the registered schema. </param>
-        /// <param name="serializationType"> Serialization type of the registered schema.  Must match serialization type of the specified schema group. </param>
         /// <param name="schemaContent"> String representation of the registered schema. </param>
+        /// <param name="xSchemaType"> Serialization type for the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="serializationType"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SchemaId, SchemaGetIdByContentHeaders>> GetIdByContentAsync(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
+        public async Task<ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType = null, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -148,18 +158,14 @@ namespace Azure.Data.SchemaRegistry
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
-            if (serializationType == null)
-            {
-                throw new ArgumentNullException(nameof(serializationType));
-            }
             if (schemaContent == null)
             {
                 throw new ArgumentNullException(nameof(schemaContent));
             }
 
-            using var message = CreateGetIdByContentRequest(groupName, schemaName, serializationType, schemaContent);
+            using var message = CreateQueryIdByContentRequest(groupName, schemaName, schemaContent, xSchemaType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new SchemaGetIdByContentHeaders(message.Response);
+            var headers = new SchemaQueryIdByContentHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -177,11 +183,11 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of the registered schema. </param>
-        /// <param name="serializationType"> Serialization type of the registered schema.  Must match serialization type of the specified schema group. </param>
         /// <param name="schemaContent"> String representation of the registered schema. </param>
+        /// <param name="xSchemaType"> Serialization type for the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="serializationType"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public ResponseWithHeaders<SchemaId, SchemaGetIdByContentHeaders> GetIdByContent(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
+        public ResponseWithHeaders<SchemaId, SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType = null, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -191,18 +197,14 @@ namespace Azure.Data.SchemaRegistry
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
-            if (serializationType == null)
-            {
-                throw new ArgumentNullException(nameof(serializationType));
-            }
             if (schemaContent == null)
             {
                 throw new ArgumentNullException(nameof(schemaContent));
             }
 
-            using var message = CreateGetIdByContentRequest(groupName, schemaName, serializationType, schemaContent);
+            using var message = CreateQueryIdByContentRequest(groupName, schemaName, schemaContent, xSchemaType);
             _pipeline.Send(message, cancellationToken);
-            var headers = new SchemaGetIdByContentHeaders(message.Response);
+            var headers = new SchemaQueryIdByContentHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -217,7 +219,7 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string groupName, string schemaName, string serializationType, string schemaContent)
+        internal HttpMessage CreateRegisterRequest(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -225,13 +227,16 @@ namespace Azure.Data.SchemaRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/$schemagroups", false);
-            uri.AppendPath("/", false);
+            uri.AppendPath("/$schemagroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/schemas/", false);
             uri.AppendPath(schemaName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("serialization-type", serializationType);
+            if (xSchemaType != null)
+            {
+                request.Headers.Add("X-Schema-Type", xSchemaType.Value.ToString());
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(schemaContent);
@@ -245,11 +250,11 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema being registered. </param>
-        /// <param name="serializationType"> Serialization type for the schema being registered.  Must match serialization type of the specified schema group. </param>
         /// <param name="schemaContent"> String representation of the schema being registered. </param>
+        /// <param name="xSchemaType"> Serialization type for the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="serializationType"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SchemaId, SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
+        public async Task<ResponseWithHeaders<SchemaId, SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType = null, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -259,16 +264,12 @@ namespace Azure.Data.SchemaRegistry
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
-            if (serializationType == null)
-            {
-                throw new ArgumentNullException(nameof(serializationType));
-            }
             if (schemaContent == null)
             {
                 throw new ArgumentNullException(nameof(schemaContent));
             }
 
-            using var message = CreateRegisterRequest(groupName, schemaName, serializationType, schemaContent);
+            using var message = CreateRegisterRequest(groupName, schemaName, schemaContent, xSchemaType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new SchemaRegisterHeaders(message.Response);
             switch (message.Response.Status)
@@ -291,11 +292,11 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema being registered. </param>
-        /// <param name="serializationType"> Serialization type for the schema being registered.  Must match serialization type of the specified schema group. </param>
         /// <param name="schemaContent"> String representation of the schema being registered. </param>
+        /// <param name="xSchemaType"> Serialization type for the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="serializationType"/>, or <paramref name="schemaContent"/> is null. </exception>
-        public ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> Register(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, or <paramref name="schemaContent"/> is null. </exception>
+        public ResponseWithHeaders<SchemaId, SchemaRegisterHeaders> Register(string groupName, string schemaName, string schemaContent, SerializationType? xSchemaType = null, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -305,16 +306,12 @@ namespace Azure.Data.SchemaRegistry
             {
                 throw new ArgumentNullException(nameof(schemaName));
             }
-            if (serializationType == null)
-            {
-                throw new ArgumentNullException(nameof(serializationType));
-            }
             if (schemaContent == null)
             {
                 throw new ArgumentNullException(nameof(schemaContent));
             }
 
-            using var message = CreateRegisterRequest(groupName, schemaName, serializationType, schemaContent);
+            using var message = CreateRegisterRequest(groupName, schemaName, schemaContent, xSchemaType);
             _pipeline.Send(message, cancellationToken);
             var headers = new SchemaRegisterHeaders(message.Response);
             switch (message.Response.Status)

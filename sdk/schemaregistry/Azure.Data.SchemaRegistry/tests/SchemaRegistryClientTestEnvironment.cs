@@ -11,6 +11,6 @@ namespace Azure.Data.SchemaRegistry.Tests
         {
         }
 
-        public string KeyVaultUri => GetRecordedVariable("KEYVAULT_URL");
+        public string SchemaRegistryUri => GetRecordedVariable("SCHEMAREGISTRY_URL");
     }
 }

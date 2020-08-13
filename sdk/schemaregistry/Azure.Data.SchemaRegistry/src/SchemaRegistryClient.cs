@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -21,18 +22,18 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
         /// </summary>
-        public SchemaRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SchemaRegistryClientOptions())
+        public SchemaRegistryClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new SchemaRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
         /// </summary>
-        public SchemaRegistryClient(Uri endpoint, TokenCredential credential, SchemaRegistryClientOptions options) : this(
+        public SchemaRegistryClient(string endpoint, TokenCredential credential, SchemaRegistryClientOptions options) : this(
             new ClientDiagnostics(options),
-            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
-            endpoint.ToString())//,
-                                //options.Version)
+            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://eventhubs.azure.net/.default")),
+            endpoint)//,
+                     //options.Version)
         {
         }
 
@@ -47,7 +48,8 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="endpoint"> The vault name, for example https://myvault.vault.azure.net. </param>
         internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, endpoint);
+            //TODO: Hardcoded API version.
+            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, endpoint, "2017-04");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -55,15 +57,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Create OR Get). (Register/Create).
         /// </summary>
-        public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
             scope.Start();
             try
             {
-                var response = await RestClient.RegisterAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.RegisterAsync(groupName, schemaName, schemaContent, serializationType, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
@@ -76,15 +78,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Create OR Get). (Register/Create).
         /// </summary>
-        public virtual Response<SchemaProperties> RegisterSchema(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public virtual Response<SchemaProperties> RegisterSchema(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
             scope.Start();
             try
             {
-                var response = RestClient.Register(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                var response = RestClient.Register(groupName, schemaName, schemaContent, serializationType, cancellationToken);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
@@ -97,15 +99,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Opposite of TryGet) (Find/Query/Get).
         /// </summary>
-        public virtual async Task<Response<SchemaProperties>> GetSchemaAsync(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SchemaProperties>> GetSchemaAsync(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
             scope.Start();
             try
             {
-                var response = await RestClient.GetIdByContentAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.QueryIdByContentAsync(groupName, schemaName, schemaContent, serializationType, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
@@ -118,15 +120,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Opposite of TryGet) (Find/Query/Get).
         /// </summary>
-        public virtual Response<SchemaProperties> GetSchema(string groupName, string schemaName, string serializationType, string schemaContent, CancellationToken cancellationToken = default)
+        public virtual Response<SchemaProperties> GetSchema(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
             scope.Start();
             try
             {
-                var response = RestClient.GetIdByContent(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                var response = RestClient.QueryIdByContent(groupName, schemaName, schemaContent, serializationType, cancellationToken);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
@@ -147,7 +149,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 var response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
@@ -168,7 +170,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 var response = RestClient.GetById(schemaId, cancellationToken);
                 return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSerialization, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
+                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
                     response);
             }
             catch (Exception e)
