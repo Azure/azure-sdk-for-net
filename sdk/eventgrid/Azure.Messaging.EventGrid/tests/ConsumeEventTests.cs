@@ -1319,11 +1319,13 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
-
             Assert.NotNull(events);
-            Assert.True(events[0].Data is StorageBlobDeletedEventData);
-            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[0].Data;
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+
+            if (events[0].Type == "Microsoft.Storage.BlobDeleted")
+            {
+                StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
+                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            }
         }
 
         [Test]
@@ -1331,18 +1333,12 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
 
-            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
-            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-            consumerOptions.DataSerializer = new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
 
             CloudEvent[] events = eventGridConsumer2.DeserializeCloudEvents(requestContent);
+            var eventData = events[0].GetData();
 
-            Assert.AreEqual(events[0].Data, null);
+            Assert.AreEqual(eventData, null);
             Assert.AreEqual(events[0].Type, "");
         }
 
@@ -1351,18 +1347,12 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
 
-            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
-            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-            consumerOptions.DataSerializer = new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-            EventGridConsumer eventGridConsumer2 = new EventGridConsumer(consumerOptions);
+            EventGridConsumer eventGridConsumer2 = new EventGridConsumer();
 
             CloudEvent[] events = eventGridConsumer2.DeserializeCloudEvents(requestContent);
+            var eventData = events[0].GetData();
 
-            Assert.AreEqual(events[0].Data, null);
+            Assert.AreEqual(eventData, null);
             Assert.AreEqual(events[0].Type, "");
         }
 
@@ -1372,11 +1362,11 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data_base64\": \"ZGF0YQ==\", \"type\":\"BinaryDataType\",\"specversion\":\"1.0\"}]";
 
             EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
-            consumerOptions.CustomEventTypeMappings.Add("BinaryDataType", typeof(byte[]));
             CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
-            if (events[0].Data is byte[])
+            if (events[0].Type == "Test.Items.BinaryDataType")
             {
-                byte[] data = (byte[])events[0].Data;
+                byte[] eventData = (byte[])events[0].GetData();
+                Assert.AreEqual(Convert.ToBase64String(eventData), "ZGF0YQ==");
             }
         }
 
@@ -1392,25 +1382,20 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.AreEqual(3, events.Length);
-            Assert.True(events[0].Data is StorageBlobCreatedEventData);
-            Assert.True(events[1].Data is StorageBlobDeletedEventData);
-            Assert.True(events[2].Data is StorageBlobDeletedEventData);
-            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[2].Data;
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
-        }
-
-        [Test]
-        public void TestCustomEventMappings()
-        {
-            EventGridConsumerOptions consumerOptions = new EventGridConsumerOptions();
-            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemSent", typeof(ContosoItemSentEventData));
-            consumerOptions.CustomEventTypeMappings.Add("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
-
-            Assert.True(consumerOptions.CustomEventTypeMappings.TryGetValue("Contoso.Items.ItemSent", out Type retrievedType));
-            Assert.AreEqual(typeof(ContosoItemSentEventData), retrievedType);
-
-            Assert.True(consumerOptions.CustomEventTypeMappings.TryGetValue("Contoso.Items.ItemReceived", out retrievedType));
-            Assert.AreEqual(typeof(ContosoItemReceivedEventData), retrievedType);
+            foreach (CloudEvent cloudEvent in events)
+            {
+                switch (cloudEvent.Type)
+                {
+                    case "Microsoft.Storage.BlobDeleted":
+                        StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
+                        break;
+                    case "Microsoft.Storage.BlobCreated":
+                        StorageBlobCreatedEventData blobCreated = cloudEvent.GetData<StorageBlobCreatedEventData>();
+                        break;
+                }
+                StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[2].Data;
+                Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            }
         }
 
         #endregion

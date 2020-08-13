@@ -192,6 +192,8 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
 
+                    object testData = cloudEvent.GetData();
+
                     CloudEventInternal newCloudEvent = new CloudEventInternal(
                         cloudEvent.Id,
                         cloudEvent.Source,
@@ -214,11 +216,11 @@ namespace Azure.Messaging.EventGrid
                     {
                         if (cloudEvent.Data is IEnumerable<byte> enumerable)
                         {
-                            newCloudEvent.DataBase64 = Convert.ToBase64String(enumerable.ToArray());
+                            newCloudEvent.DataBase64 = enumerable.ToArray();
                         }
                         else if (cloudEvent.Data is ReadOnlyMemory<byte> memory)
                         {
-                            newCloudEvent.DataBase64 = Convert.ToBase64String(memory.ToArray());
+                            newCloudEvent.DataBase64 = memory.ToArray();
                         }
                         else
                         {

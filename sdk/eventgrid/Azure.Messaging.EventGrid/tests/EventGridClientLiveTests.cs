@@ -228,13 +228,13 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 CloudEvent cloudEvent = new CloudEvent(
                     "record",
-                    "Microsoft.MockPublisher.TestEvent")
+                    "Microsoft.MockPublisher.TestEvent",
+                    new TestPayload("name", i))
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                cloudEvent.Data = new TestPayload("name", i);
                 eventsList.Add(cloudEvent);
             }
 
@@ -257,13 +257,13 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 CloudEvent cloudEvent = new CloudEvent(
                     "record",
-                    "Microsoft.MockPublisher.TestEvent")
+                    "Microsoft.MockPublisher.TestEvent",
+                    "hello")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                cloudEvent.Data = "hello";
                 cloudEvent.ExtensionAttributes.Add("testattribute1", "test");
                 cloudEvent.ExtensionAttributes.Add("testattribute2", new TestPayload("name", i));
                 eventsList.Add(cloudEvent);

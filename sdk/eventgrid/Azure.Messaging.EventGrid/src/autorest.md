@@ -34,8 +34,8 @@ directive:
     }
 
 input-file:
-    -  https://github.com/ellismg/azure-rest-api-specs/blob/db8e376aa3b6ba4b9d2e22aa29e48e0647f75c58/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
-    -  https://github.com/Azure/azure-rest-api-specs/blob/00ac1cbffba123ba5e30cb324935100495d0700d/specification/eventgrid/data-plane/Microsoft.Storage/stable/2018-01-01/Storage.json
+    -  https://github.com/ellismg/azure-rest-api-specs/blob/4bb5b76cb8401896b15f1be3fdaac6bd5d299b17/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
+    -  https://github.com/Azure/azure-rest-api-specs/blob/3e974736d767fd714b4fb0570aa352e774582ecd/specification/eventgrid/data-plane/Microsoft.Storage/stable/2018-01-01/Storage.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/00ac1cbffba123ba5e30cb324935100495d0700d/specification/eventgrid/data-plane/Microsoft.EventHub/stable/2018-01-01/EventHub.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/00ac1cbffba123ba5e30cb324935100495d0700d/specification/eventgrid/data-plane/Microsoft.Resources/stable/2018-01-01/Resources.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/00ac1cbffba123ba5e30cb324935100495d0700d/specification/eventgrid/data-plane/Microsoft.Devices/stable/2018-01-01/IotHub.json

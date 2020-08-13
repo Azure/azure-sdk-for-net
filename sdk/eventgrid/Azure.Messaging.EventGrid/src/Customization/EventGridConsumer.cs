@@ -166,66 +166,19 @@ namespace Azure.Messaging.EventGrid
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
             }
 
-            // Deserialize 'Data' property from JsonElement for each event
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
-                object cloudEventData = null;
-                if (cloudEventInternal.DataBase64 != null)
+                if (cloudEventInternal.Type == null) // case where data/type is null?
                 {
-                    cloudEventData = Convert.FromBase64String(cloudEventInternal.DataBase64);
+                    cloudEventInternal.Type = "";
                 }
-                else
-                {
-                    JsonElement? dataElement = cloudEventInternal.Data;
-
-                    if (dataElement.HasValue && dataElement.Value.ValueKind != JsonValueKind.Null)
-                    {
-                        // Reserialize JsonElement to stream
-                        MemoryStream dataStream = SerializePayloadToStream(dataElement, cancellationToken);
-
-                        // First, let's attempt to find the mapping for the event type in the custom event mapping.
-                        if (_customEventTypeMappings.TryGetValue(cloudEventInternal.Type, out Type typeOfEventData))
-                        {
-                            if (!TryGetPrimitiveFromJsonElement(dataElement.Value, out cloudEventData))
-                            {
-                                if (async)
-                                {
-                                    cloudEventData = await _dataSerializer.DeserializeAsync(dataStream, typeOfEventData, cancellationToken).ConfigureAwait(false);
-                                }
-                                else
-                                {
-                                    cloudEventData = _dataSerializer.Deserialize(dataStream, typeOfEventData, cancellationToken);
-                                }
-                            }
-                        }
-                        // If a custom mapping doesn't exist, let's attempt to find the mapping for the deserialization function in the system event type mapping.
-                        else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
-                        {
-                            cloudEventData = systemDeserializationFunction(dataElement.Value);
-                        }
-                        // If no custom mapping was added, either return a primitive/string, or an object wrapped as BinaryData
-                        else
-                        {
-                            // If event data is not a primitive/string, return as BinaryData
-                            if (!TryGetPrimitiveFromJsonElement(dataElement.Value, out cloudEventData))
-                            {
-                                cloudEventData = BinaryData.FromStream(dataStream);
-                            }
-                        }
-                    }
-                    else // Event has null data
-                    {
-                        cloudEventData = null;
-                        cloudEventInternal.Type = "";
-                    }
-                }
-
                 cloudEvents.Add(new CloudEvent(
                     cloudEventInternal.Source,
                     cloudEventInternal.Type)
                 {
                     Id = cloudEventInternal.Id,
-                    Data = cloudEventData,
+                    SerializedData = cloudEventInternal.Data,
+                    DataBase64 = cloudEventInternal.DataBase64,
                     Time = cloudEventInternal.Time,
                     DataSchema = cloudEventInternal.Dataschema,
                     DataContentType = cloudEventInternal.Datacontenttype,
