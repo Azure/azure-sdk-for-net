@@ -5,10 +5,10 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Moq;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -27,9 +27,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            CloudQueueMessage expectedMessage = new CloudQueueMessage(expectedGuid);
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            await account.AddQueueMessageAsync(expectedMessage, QueueName);
+            await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceProgram();
 
@@ -43,17 +42,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Act
             var jobHost = host.GetJobHost<InstanceProgram>();
-            var result = await jobHost.RunTriggerAsync<CloudQueueMessage>();
+            var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.AsString);
+            Assert.Equal(expectedGuid, result.MessageText);
         }
 
-        private class InstanceProgram : IProgramWithResult<CloudQueueMessage>
+        private class InstanceProgram : IProgramWithResult<QueueMessage>
         {
-            public TaskCompletionSource<CloudQueueMessage> TaskSource { get; set; }
+            public TaskCompletionSource<QueueMessage> TaskSource { get; set; }
 
-            public void Run([QueueTrigger(QueueName)] CloudQueueMessage message)
+            public void Run([QueueTrigger(QueueName)] QueueMessage message)
             {
                 this.TaskSource.TrySetResult(message);
             }
@@ -64,9 +63,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            CloudQueueMessage expectedMessage = new CloudQueueMessage(expectedGuid);
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            await account.AddQueueMessageAsync(expectedMessage, QueueName);
+            await account.AddQueueMessageAsync(expectedGuid, QueueName);
 
             var prog = new InstanceAsyncProgram();
             IHost host = new HostBuilder()
@@ -79,17 +77,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Act
             var jobHost = host.GetJobHost<InstanceAsyncProgram>();
-            var result = await jobHost.RunTriggerAsync<CloudQueueMessage>();
+            var result = await jobHost.RunTriggerAsync<QueueMessage>();
 
             // Assert
-            Assert.Equal(expectedGuid, result.AsString);
+            Assert.Equal(expectedGuid, result.MessageText);
         }
 
-        private class InstanceAsyncProgram : IProgramWithResult<CloudQueueMessage>
+        private class InstanceAsyncProgram : IProgramWithResult<QueueMessage>
         {
-            public TaskCompletionSource<CloudQueueMessage> TaskSource { get; set; }
+            public TaskCompletionSource<QueueMessage> TaskSource { get; set; }
 
-            public Task RunAsync([QueueTrigger(QueueName)] CloudQueueMessage message)
+            public Task RunAsync([QueueTrigger(QueueName)] QueueMessage message)
             {
                 this.TaskSource.TrySetResult(message);
                 return Task.FromResult(0);
@@ -101,9 +99,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
-            CloudQueueMessage expectedMessage = new CloudQueueMessage("ignore");
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            await account.AddQueueMessageAsync(expectedMessage, QueueName);
+            await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<DisposeInstanceProgram>(builder =>
@@ -121,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<object> TaskSource = new TaskCompletionSource<object>();
 
-            public void Run([QueueTrigger(QueueName)] CloudQueueMessage message)
+            public void Run([QueueTrigger(QueueName)] QueueMessage message)
             {
             }
 
@@ -147,9 +144,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                          .Returns(() => new InstanceCustomActivatorProgram(resultFactory));
             IJobActivator activator = activatorMock.Object;
 
-            CloudQueueMessage message = new CloudQueueMessage("ignore");
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            await account.AddQueueMessageAsync(message, QueueName);
+            await account.AddQueueMessageAsync("ignore", QueueName);
 
             IHost host = new HostBuilder()
               .ConfigureDefaultTestHost<InstanceCustomActivatorProgram>(builder =>
@@ -179,7 +175,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public static TaskCompletionSource<string> TaskSource { get; set; } = new TaskCompletionSource<string>();
 
-            public void Run([QueueTrigger(QueueName)] CloudQueueMessage ignore)
+            public void Run([QueueTrigger(QueueName)] QueueMessage ignore)
             {
                 string result = _resultFactory.Create();
                 TaskSource.TrySetResult(result);

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Queue;
 using System;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
@@ -16,10 +16,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        /// <param name="queue">The <see cref="CloudQueue"/> the <see cref="QueueProcessor"/> will operate on.</param>
+        /// <param name="queue">The <see cref="QueueClient"/> the <see cref="QueueProcessor"/> will operate on.</param>
         /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
         /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
-        public QueueProcessorFactoryContext(CloudQueue queue, ILoggerFactory loggerFactory, CloudQueue poisonQueue = null)
+        public QueueProcessorFactoryContext(QueueClient queue, ILoggerFactory loggerFactory, QueueClient poisonQueue = null)
         {
             Queue = queue ?? throw new ArgumentNullException(nameof(queue));
             PoisonQueue = poisonQueue;
@@ -29,11 +29,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        /// <param name="queue">The <see cref="CloudQueue"/> the <see cref="QueueProcessor"/> will operate on.</param>
+        /// <param name="queue">The <see cref="QueueClient"/> the <see cref="QueueProcessor"/> will operate on.</param>
         /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to create an <see cref="ILogger"/> from.</param>
         /// <param name="options">The queue configuration.</param>
         /// <param name="poisonQueue">The queue to move messages to when unable to process a message after the maximum dequeue count has been exceeded. May be null.</param>
-        internal QueueProcessorFactoryContext(CloudQueue queue, ILoggerFactory loggerFactory, QueuesOptions options, CloudQueue poisonQueue = null)
+        internal QueueProcessorFactoryContext(QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions options, QueueClient poisonQueue = null)
             : this(queue, loggerFactory, poisonQueue)
         {
             BatchSize = options.BatchSize;
@@ -44,15 +44,15 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         }
 
         /// <summary>
-        /// Gets the <see cref="CloudQueue"/> the <see cref="QueueProcessor"/> will operate on.
+        /// Gets the <see cref="QueueClient"/> the <see cref="QueueProcessor"/> will operate on.
         /// </summary>
-        public CloudQueue Queue { get; private set; }
+        public QueueClient Queue { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="CloudQueue"/> for poison messages that the <see cref="QueueProcessor"/> will use.
+        /// Gets the <see cref="QueueClient"/> for poison messages that the <see cref="QueueProcessor"/> will use.
         /// May be null.
         /// </summary>
-        public CloudQueue PoisonQueue { get; private set; }
+        public QueueClient PoisonQueue { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="ILogger"/>.

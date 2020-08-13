@@ -7,12 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.Storage.Queue;
 using System.Globalization;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
-    internal class QueueTriggerExecutor : ITriggerExecutor<CloudQueueMessage>
+    internal class QueueTriggerExecutor : ITriggerExecutor<QueueMessage>
     {
         private readonly ITriggeredFunctionExecutor _innerExecutor;
 
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             _innerExecutor = innerExecutor;
         }
 
-        public async Task<FunctionResult> ExecuteAsync(CloudQueueMessage value, CancellationToken cancellationToken)
+        public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
             Guid? parentId = QueueCausalityManager.GetOwner(value);
             TriggeredFunctionData input = new TriggeredFunctionData
@@ -33,13 +33,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             return await _innerExecutor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
-        internal static Dictionary<string, string> PopulateTriggerDetails(CloudQueueMessage value)
+        internal static Dictionary<string, string> PopulateTriggerDetails(QueueMessage value)
         {
             return new Dictionary<string, string>()
             {
-                { "MessageId", value.Id },
-                { nameof(CloudQueueMessage.DequeueCount), value.DequeueCount.ToString(CultureInfo.InvariantCulture) },
-                { nameof(CloudQueueMessage.InsertionTime), value.InsertionTime?.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture) }
+                { "MessageId", value.MessageId },
+                { nameof(QueueMessage.DequeueCount), value.DequeueCount.ToString(CultureInfo.InvariantCulture) },
+                { nameof(QueueMessage.InsertedOn), value.InsertedOn?.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture) }
             };
         }
     }

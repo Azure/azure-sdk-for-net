@@ -6,12 +6,12 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static ITestOutputHelper _output;
         private static Stopwatch _stopwatch = new Stopwatch();
 
-        private CloudQueue _sharedQueue;
-        private CloudQueue _poisonQueue;
+        private QueueClient _sharedQueue;
+        private QueueClient _poisonQueue;
 
         // Each test should set this up; it will be used during cleanup.
         private IHost _host;
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             // each test will have a different hostId
             // and therefore a different sharedQueue and poisonQueue
-            CloudQueueClient client = _host.GetStorageAccount().CreateCloudQueueClient();
-            _sharedQueue = client.GetQueueReference("azure-webjobs-shared-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
-            _poisonQueue = client.GetQueueReference("azure-webjobs-poison-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
+            var client = _host.GetStorageAccount().CreateQueueServiceClient();
+            _sharedQueue = client.GetQueueClient("azure-webjobs-shared-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
+            _poisonQueue = client.GetQueueClient("azure-webjobs-poison-" + _host.Services.GetService<IHostIdProvider>().GetHostIdAsync(CancellationToken.None).Result);
             _sharedQueue.DeleteIfExistsAsync().Wait();
             _poisonQueue.DeleteIfExistsAsync().Wait();
 

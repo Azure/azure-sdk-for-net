@@ -2,18 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
-    internal static class QueueClient
+    internal static class QueueClientExtensions
     {
-        public static string GetAccountName(this CloudQueueClient client)
-        {
-            return client?.Credentials?.AccountName;
-        }
-
         /// <summary>
         /// Ensures that the passed name is a valid queue name.
         /// If not, an ArgumentException is thrown

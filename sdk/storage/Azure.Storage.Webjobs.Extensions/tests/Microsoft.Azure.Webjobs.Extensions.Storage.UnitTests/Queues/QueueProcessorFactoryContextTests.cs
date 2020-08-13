@@ -5,8 +5,8 @@ using System;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Queue;
 using Xunit;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -15,8 +15,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Fact]
         public void Constructor_DefaultsValues()
         {
-            CloudQueue queue = new CloudQueue(new Uri("https://test.queue.core.windows.net/testqueue"));
-            CloudQueue poisonQueue = new CloudQueue(new Uri("https://test.queue.core.windows.net/poisonqueue"));
+            QueueClient queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
+            QueueClient poisonQueue = new QueueClient(new Uri("https://test.queue.core.windows.net/poisonqueue"));
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             QueuesOptions queuesOptions = new QueuesOptions();

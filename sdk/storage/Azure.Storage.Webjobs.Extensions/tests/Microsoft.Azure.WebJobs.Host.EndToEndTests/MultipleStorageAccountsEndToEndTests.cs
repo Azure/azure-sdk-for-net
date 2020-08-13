@@ -10,10 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -70,15 +71,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Fact]
         public async Task QueueToQueue_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
-            CloudQueueMessage resultMessage = null;
+            QueueMessage resultMessage = null;
 
             await TestHelpers.Await(async () =>
             {
-                resultMessage = await _fixture.OutputQueue2.GetMessageAsync();
+                resultMessage = (await _fixture.OutputQueue2.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 return resultMessage != null;
             });
 
-            Assert.Equal(TestData, resultMessage.AsString);
+            Assert.Equal(TestData, resultMessage.MessageText);
         }
 
         [Theory]
@@ -114,15 +115,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Fact]
         public async Task QueueToQueue_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
-            CloudQueueMessage resultMessage = null;
+            QueueMessage resultMessage = null;
 
             await TestHelpers.Await(async () =>
             {
-                resultMessage = await _fixture.OutputQueue1.GetMessageAsync();
+                resultMessage = (await _fixture.OutputQueue1.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 return resultMessage != null;
             });
 
-            Assert.Equal(TestData, resultMessage.AsString);
+            Assert.Equal(TestData, resultMessage.MessageText);
         }
 
         [Fact]
@@ -241,16 +242,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 OutputContainer2 = blobClient2.GetContainerReference(outputName);
                 await OutputContainer2.CreateIfNotExistsAsync();
 
-                CloudQueueClient queueClient1 = Account1.CreateCloudQueueClient();
-                CloudQueue inputQueue1 = queueClient1.GetQueueReference(inputName);
+                var queueClient1 = Account1.CreateQueueServiceClient();
+                var inputQueue1 = queueClient1.GetQueueClient(inputName);
                 await inputQueue1.CreateIfNotExistsAsync();
-                OutputQueue1 = queueClient1.GetQueueReference(outputName);
+                OutputQueue1 = queueClient1.GetQueueClient(outputName);
                 await OutputQueue1.CreateIfNotExistsAsync();
 
-                CloudQueueClient queueClient2 = Account2.CreateCloudQueueClient();
-                CloudQueue inputQueue2 = queueClient2.GetQueueReference(inputName);
+                var queueClient2 = Account2.CreateQueueServiceClient();
+                var inputQueue2 = queueClient2.GetQueueClient(inputName);
                 await inputQueue2.CreateIfNotExistsAsync();
-                OutputQueue2 = queueClient2.GetQueueReference(outputName);
+                OutputQueue2 = queueClient2.GetQueueClient(outputName);
                 await OutputQueue2.CreateIfNotExistsAsync();
 
                 string outputTableName = nameResolver.ResolveWholeString(OutputTableName);
@@ -262,8 +263,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await blob.UploadTextAsync(TestData);
 
                 // upload some test queue messages to the input queues of both storage accounts
-                await inputQueue1.AddMessageAsync(new CloudQueueMessage(TestData));
-                await inputQueue2.AddMessageAsync(new CloudQueueMessage(TestData));
+                await inputQueue1.SendMessageAsync(TestData);
+                await inputQueue2.SendMessageAsync(TestData);
 
                 Host.Start();
             }
@@ -283,9 +284,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public CloudBlobContainer OutputContainer2 { get; private set; }
 
-            public CloudQueue OutputQueue1 { get; private set; }
+            public QueueClient OutputQueue1 { get; private set; }
 
-            public CloudQueue OutputQueue2 { get; private set; }
+            public QueueClient OutputQueue2 { get; private set; }
 
             public async Task DisposeAsync()
             {
@@ -309,10 +310,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await testContainer.DeleteAsync();
             }
 
-            CloudQueueClient queueClient = account.CreateCloudQueueClient();
-            foreach (var queue in (await queueClient.ListQueuesSegmentedAsync(TestArtifactPrefix, null)).Results)
+            var queueClient = account.CreateQueueServiceClient();
+            await foreach (var queue in queueClient.GetQueuesAsync(prefix: TestArtifactPrefix))
             {
-                await queue.DeleteAsync();
+                await queueClient.GetQueueClient(queue.Name).DeleteAsync();
             }
         }
 

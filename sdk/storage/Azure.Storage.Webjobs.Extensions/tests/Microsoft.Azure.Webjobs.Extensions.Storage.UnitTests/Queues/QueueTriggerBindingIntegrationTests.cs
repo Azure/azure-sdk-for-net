@@ -8,11 +8,11 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -27,11 +27,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             var argumentBinding = provider.TryCreate(pi);
 
             var fakeAccount = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            CloudQueue queue = fakeAccount.CreateCloudQueueClient().GetQueueReference("queueName");
+            QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
+            QueueClient queue = queueServiceClient.GetQueueClient("queueName");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);
             var enqueueWatcher = new Host.Queues.Listeners.SharedQueueWatcher();
-            _binding = new QueueTriggerBinding("parameterName", queue, argumentBinding,
+            _binding = new QueueTriggerBinding("parameterName", queueServiceClient, queue, argumentBinding,
                 new QueuesOptions(), exceptionHandler,
                 enqueueWatcher,
                 null, null);
@@ -52,10 +53,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             object convertedPropertyValue = parseMethod.Invoke(null, new object[] { userPropertyValue });
             userProperty.SetValue(expectedObject, convertedPropertyValue);
             string messageContent = JsonConvert.SerializeObject(expectedObject);
-            CloudQueueMessage message = new CloudQueueMessage(messageContent);
+            // CloudQueueMessage message = new CloudQueueMessage(messageContent); // TODO (kasobol-msft) check this.
 
             // Act
-            ITriggerData data = _binding.BindAsync(message, null).GetAwaiter().GetResult();
+            ITriggerData data = _binding.BindAsync(messageContent, null).GetAwaiter().GetResult();
 
             // Assert
             Assert.NotNull(data);

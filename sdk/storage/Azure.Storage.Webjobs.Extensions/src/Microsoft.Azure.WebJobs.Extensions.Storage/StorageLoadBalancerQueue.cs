@@ -14,8 +14,9 @@ using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace WebJobs.Extensions.Storage
 {
@@ -59,9 +60,9 @@ namespace WebJobs.Extensions.Storage
         private class QueueWriter<T> : IAsyncCollector<T>
         {
             private readonly StorageLoadBalancerQueue _parent;
-            private readonly CloudQueue _queue;
+            private readonly QueueClient _queue;
 
-            public QueueWriter(StorageLoadBalancerQueue parent, CloudQueue queue)
+            public QueueWriter(StorageLoadBalancerQueue parent, QueueClient queue)
             {
                 this._parent = parent;
                 this._queue = queue;
@@ -74,8 +75,7 @@ namespace WebJobs.Extensions.Storage
                     item,
                     JsonSerialization.Settings);
 
-                var msg = new CloudQueueMessage(contents);
-                await _queue.AddMessageAndCreateIfNotExistsAsync(msg, cancellationToken).ConfigureAwait(false);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(contents, cancellationToken).ConfigureAwait(false);
 
                 _parent._sharedWatcher.Notify(_queue.Name);
             }
@@ -86,11 +86,11 @@ namespace WebJobs.Extensions.Storage
             }
         }
 
-        private CloudQueue Convert(string queueMoniker)
+        private QueueClient Convert(string queueMoniker)
         {
             // $$$ Review
             var account = _storageAccountProvider.Get(ConnectionStringNames.Dashboard);
-            var queue = account.CreateCloudQueueClient().GetQueueReference(queueMoniker);
+            var queue = account.CreateQueueServiceClient().GetQueueClient(queueMoniker);
             return queue;
         }
 
@@ -124,13 +124,13 @@ namespace WebJobs.Extensions.Storage
         }
 
         // $$$ cleanup
-        private class Wrapper : ITriggerExecutor<CloudQueueMessage>
+        private class Wrapper : ITriggerExecutor<QueueMessage>
         {
             public Func<string, CancellationToken, Task<FunctionResult>> _callback;
 
-            public Task<FunctionResult> ExecuteAsync(CloudQueueMessage value, CancellationToken cancellationToken)
+            public Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
             {
-                return _callback(value.AsString, cancellationToken);
+                return _callback(value.MessageText, cancellationToken);
             }
         }
     }

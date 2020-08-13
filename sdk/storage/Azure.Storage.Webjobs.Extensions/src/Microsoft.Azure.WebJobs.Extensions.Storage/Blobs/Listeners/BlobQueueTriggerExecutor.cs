@@ -11,15 +11,15 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using System.Globalization;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
-    internal partial class BlobQueueTriggerExecutor : ITriggerExecutor<CloudQueueMessage>
+    internal partial class BlobQueueTriggerExecutor : ITriggerExecutor<QueueMessage>
     {
         private const string BlobCreatedKey = "BlobCreated";
         private const string BlobLastModifiedKey = "BlobLastModified";
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             _registrations.AddOrUpdate(functionId, registration, (i1, i2) => registration);
         }
 
-        public async Task<FunctionResult> ExecuteAsync(CloudQueueMessage value, CancellationToken cancellationToken)
+        public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
-            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.AsString, JsonSerialization.Settings);
+            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.MessageText, JsonSerialization.Settings);
 
             if (message == null)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             FunctionResult successResult = new FunctionResult(true);
             if (!_registrations.TryGetValue(functionId, out BlobQueueRegistration registration))
             {
-                Logger.FunctionNotFound(_logger, message.BlobName, functionId, value.Id);
+                Logger.FunctionNotFound(_logger, message.BlobName, functionId, value.MessageId);
                 return successResult;
             }
 
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             catch (StorageException exception) when (exception.IsNotFound() || exception.IsOk())
             {
                 // If the blob no longer exists, just ignore this message.
-                Logger.BlobNotFound(_logger, blobName, value.Id);
+                Logger.BlobNotFound(_logger, blobName, value.MessageId);
                 return successResult;
             }
 

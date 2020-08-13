@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
-    <PackageReference Include="Microsoft.Azure.Storage.Queue" />
     <PackageReference Include="Microsoft.AspNetCore.Http" VersionOverride="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
@@ -80,39 +80,44 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return result;
         }
 
-        public static CloudQueueMessage SetDequeueCount(this CloudQueueMessage msg, int value)
+        // TODO (kasobol-msft) is this dead code ??
+        public static QueueMessage SetDequeueCount(this QueueMessage msg, int value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.DequeueCount), value);
+            msg.SetInternalProperty(nameof(QueueMessage.DequeueCount), value);
             return msg;
         }
 
-        public static CloudQueueMessage SetExpirationTime(this CloudQueueMessage msg, DateTimeOffset? value)
+        // TODO (kasobol-msft) is this dead code ??
+        public static QueueMessage SetExpirationTime(this QueueMessage msg, DateTimeOffset? value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.ExpirationTime), value);
+            msg.SetInternalProperty(nameof(QueueMessage.ExpiresOn), value);
             return msg;
         }
 
-        public static CloudQueueMessage SetId(this CloudQueueMessage msg, string value)
+        // TODO (kasobol-msft) is this dead code ??
+        public static QueueMessage SetId(this QueueMessage msg, string value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.Id), value);
+            msg.SetInternalProperty(nameof(QueueMessage.MessageId), value);
             return msg;
         }
 
-        public static CloudQueueMessage SetInsertionTime(this CloudQueueMessage msg, DateTimeOffset? value)
+        public static QueueMessage SetInsertionTime(this QueueMessage msg, DateTimeOffset? value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.InsertionTime), value);
+            msg.SetInternalProperty(nameof(QueueMessage.InsertedOn), value);
             return msg;
         }
 
-        public static CloudQueueMessage SetNextVisibleTime(this CloudQueueMessage msg, DateTimeOffset? value)
+        // TODO (kasobol-msft) is this dead code ??
+        public static QueueMessage SetNextVisibleTime(this QueueMessage msg, DateTimeOffset? value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.NextVisibleTime), value);
+            msg.SetInternalProperty(nameof(QueueMessage.NextVisibleOn), value);
             return msg;
         }
 
-        public static CloudQueueMessage SetPopReceipt(this CloudQueueMessage msg, string value)
+        // TODO (kasobol-msft) is this dead code ??
+        public static QueueMessage SetPopReceipt(this QueueMessage msg, string value)
         {
-            msg.SetInternalProperty(nameof(CloudQueueMessage.PopReceipt), value);
+            msg.SetInternalProperty(nameof(QueueMessage.PopReceipt), value);
             return msg;
         }
     }

@@ -9,7 +9,8 @@ using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
     {
         private static readonly IQueueTriggerArgumentBindingProvider InnerProvider =
             new CompositeArgumentBindingProvider(
-                new ConverterArgumentBindingProvider<CloudQueueMessage>(new CloudQueueMessageDirectConverter()), // $$$: Is this the best way to handle a direct CloudQueueMessage?
+                new ConverterArgumentBindingProvider<QueueMessage>(new CloudQueueMessageDirectConverter()), // $$$: Is this the best way to handle a direct CloudQueueMessage? TODO (kasobol-msft) is this needed?
                 new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter()),
                 new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter()),
                 new UserTypeArgumentBindingProvider()); // Must come last, because it will attempt to bind all types.
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             string queueName = Resolve(queueTrigger.QueueName);
             queueName = NormalizeAndValidate(queueName);
 
-            ITriggerDataArgumentBinding<CloudQueueMessage> argumentBinding = InnerProvider.TryCreate(parameter);
+            ITriggerDataArgumentBinding<QueueMessage> argumentBinding = InnerProvider.TryCreate(parameter);
 
             if (argumentBinding == null)
             {
@@ -73,10 +74,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             // requires storage account with queue support
             //account.AssertTypeOneOf(StorageAccountType.GeneralPurpose); $$$
 
-            CloudQueueClient client = account.CreateCloudQueueClient();
-            var queue = client.GetQueueReference(queueName);
+            QueueServiceClient client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
 
-            ITriggerBinding binding = new QueueTriggerBinding(parameter.Name, queue, argumentBinding,
+            ITriggerBinding binding = new QueueTriggerBinding(parameter.Name, client, queue, argumentBinding,
                 _queueOptions, _exceptionHandler, _messageEnqueuedWatcherSetter,
                 _loggerFactory, _queueProcessorFactory);
             return Task.FromResult(binding);
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         private static string NormalizeAndValidate(string queueName)
         {
             queueName = queueName.ToLowerInvariant(); // must be lowercase. coerce here to be nice.
-            QueueClient.ValidateQueueName(queueName);
+            QueueClientExtensions.ValidateQueueName(queueName);
             return queueName;
         }
 

@@ -5,15 +5,16 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
     internal static class StorageQueueExtensions
     {
-        public static async Task AddMessageAndCreateIfNotExistsAsync(this CloudQueue queue,
-            CloudQueueMessage message, CancellationToken cancellationToken)
+        public static async Task<SendReceipt> AddMessageAndCreateIfNotExistsAsync(this QueueClient queue,
+            string message, CancellationToken cancellationToken)
         {
             if (queue == null)
             {
@@ -22,13 +23,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 
             bool isQueueNotFoundException = false;
 
+            SendReceipt receipt = null;
             try
             {
-                await queue.AddMessageAsync(message, cancellationToken).ConfigureAwait(false);
-                return;
+                receipt = await queue.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                return receipt;
             }
             catch (StorageException exception)
-            {
+            { // TODO (kasobol-msft) catch right exception
                 if (!exception.IsNotFoundQueueNotFound())
                 {
                     throw;
@@ -38,8 +40,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
 
             Debug.Assert(isQueueNotFoundException);
-            await queue.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
-            await queue.AddMessageAsync(message, cancellationToken).ConfigureAwait(false);
+            await queue.CreateAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            receipt = await queue.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+            return receipt;
         }
     }
 }

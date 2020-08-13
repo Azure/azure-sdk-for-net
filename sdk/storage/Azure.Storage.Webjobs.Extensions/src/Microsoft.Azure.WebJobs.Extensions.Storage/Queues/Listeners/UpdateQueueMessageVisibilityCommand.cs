@@ -6,18 +6,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
     internal class UpdateQueueMessageVisibilityCommand : ITaskSeriesCommand
     {
-        private readonly CloudQueue _queue;
-        private readonly CloudQueueMessage _message;
+        private readonly QueueClient _queue;
+        private readonly QueueMessage _message;
         private readonly TimeSpan _visibilityTimeout;
         private readonly IDelayStrategy _speedupStrategy;
 
-        public UpdateQueueMessageVisibilityCommand(CloudQueue queue, CloudQueueMessage message,
+        public UpdateQueueMessageVisibilityCommand(QueueClient queue, QueueMessage message,
             TimeSpan visibilityTimeout, IDelayStrategy speedupStrategy)
         {
             if (queue == null)
@@ -47,11 +48,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                await _queue.UpdateMessageAsync(_message, _visibilityTimeout, MessageUpdateFields.Visibility, cancellationToken).ConfigureAwait(false);
+                await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
                 // The next execution should occur after a normal delay.
                 delay = _speedupStrategy.GetNextDelay(executionSucceeded: true);
             }
-            catch (StorageException exception)
+            catch (StorageException exception) // TODO (kasobol-msft) change this exception.
             {
                 // For consistency, the exceptions handled here should match PollQueueCommand.DeleteMessageAsync.
                 if (exception.IsServerSideError())

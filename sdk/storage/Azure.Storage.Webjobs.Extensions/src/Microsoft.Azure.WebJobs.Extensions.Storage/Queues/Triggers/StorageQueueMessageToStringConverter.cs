@@ -2,21 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
-    internal class StorageQueueMessageToStringConverter : IConverter<CloudQueueMessage, string>
+    internal class StorageQueueMessageToStringConverter : IConverter<QueueMessage, string>
     {
-        public string Convert(CloudQueueMessage input)
+        public string Convert(QueueMessage input)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return input.AsString;
+            return input.MessageText;
         }
     }
 }

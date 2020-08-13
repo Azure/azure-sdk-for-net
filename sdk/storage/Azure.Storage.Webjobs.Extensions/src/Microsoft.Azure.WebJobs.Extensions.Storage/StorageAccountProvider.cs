@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs
                 throw new InvalidOperationException($"Storage account connection string for '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' is invalid");
             }
 
-            return StorageAccount.New(cloudStorageAccount, _delegatingHandlerProvider);
+            return StorageAccount.New(cloudStorageAccount, connectionString, _delegatingHandlerProvider);
         }
 
         /// <summary>
