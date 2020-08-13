@@ -1,4 +1,4 @@
-## 1.0.0 (Unreleased)
+## 1.0.0 (2020-08-12)
 
 Changes in this release:
 
