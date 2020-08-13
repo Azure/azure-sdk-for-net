@@ -41,6 +41,15 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void FormRecognizerModelFactoryInstantiatesEmptyBoundingBoxWhenPointsListIsNull()
+        {
+            var boundingBox = FormRecognizerModelFactory.BoundingBox(null);
+
+            Assert.IsNotNull(boundingBox.Points);
+            Assert.IsEmpty(boundingBox.Points);
+        }
+
+        [Test]
         public void FormRecognizerModelFactoryCanInstantiateCustomFormModel()
         {
             var customFormSubmodel = new CustomFormSubmodel(default, default, default);
