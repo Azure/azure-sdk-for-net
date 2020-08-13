@@ -82,5 +82,35 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.RegisterOnSessionHandlerStop(this.ClientId);
         }
+
+        public async Task UnregisterSessionHandlerAsync()
+        {
+            MessagingEventSource.Log.UnregisterSessionHandlerStart(this.ClientId);
+            lock (this.syncLock)
+            {
+                if (this.sessionReceivePump == null || this.sessionPumpCancellationTokenSource.IsCancellationRequested)
+                {
+                    // Silently return if handler has already been unregistered. 
+                    return;
+                }
+
+                this.sessionPumpCancellationTokenSource.Cancel();
+                this.sessionPumpCancellationTokenSource.Dispose();
+            }
+
+            while (this.sessionReceivePump != null
+                && (this.sessionReceivePump.maxConcurrentSessionsSemaphoreSlim.CurrentCount < 
+                    this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentSessions
+                || this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount <           this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls))
+            {
+                await Task.Delay(10).ConfigureAwait(false);
+            }
+
+            lock (this.sessionPumpCancellationTokenSource)
+            {
+                this.sessionReceivePump = null;
+            }
+            MessagingEventSource.Log.UnregisterSessionHandlerStop(this.ClientId);
+        }
     }
 }

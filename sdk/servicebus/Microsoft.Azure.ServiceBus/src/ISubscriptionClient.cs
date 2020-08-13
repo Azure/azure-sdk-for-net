@@ -114,5 +114,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
         /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
         void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions);
+
+        /// <summary>
+        /// Unregister session hander from the receiver if there is an active session handler registered. This operation waits for the completion
+        /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
+        /// registered. 
+        /// </summary>
+        Task UnregisterSessionHandlerAsync();
     }
 }

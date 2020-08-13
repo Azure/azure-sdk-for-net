@@ -186,6 +186,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // Verify messages were received.
                     await testSessionHandler.VerifyRun();
+
+                    testSessionHandler.ClearData();
+
+                    // Unregister handler
+                    await testSessionHandler.UnregisterSessionHandler();
+
+                    await testSessionHandler.SendSessionMessages();
+
+                    await testSessionHandler.VerifySessionHandlerNotInvokedAndNoMessageReceived();
                 }
                 finally
                 {

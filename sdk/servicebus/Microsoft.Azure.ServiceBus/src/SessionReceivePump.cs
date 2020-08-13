@@ -11,15 +11,15 @@ namespace Microsoft.Azure.ServiceBus
 
     sealed class SessionReceivePump
     {
+        public readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
+        public readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
+        public readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string clientId;
         readonly ISessionClient client;
         readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
-        readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string endpoint;
         readonly string entityPath;
         readonly CancellationToken pumpCancellationToken;
-        readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
-        readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public SessionReceivePump(string clientId,

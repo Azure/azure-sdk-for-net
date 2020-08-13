@@ -287,7 +287,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
-            Assert.True(count == 0); //<= maxConcurrentCalls);
+            Assert.True(count == 0); 
         }
 
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
