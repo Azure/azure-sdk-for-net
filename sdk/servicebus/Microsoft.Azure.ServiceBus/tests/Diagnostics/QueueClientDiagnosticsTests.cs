@@ -84,6 +84,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
                         Assert.Equal(processStop.activity, processActivity);
                         Assert.False(exceptionCalled);
+
                     }
                 }
                 finally

@@ -902,7 +902,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Unregister message hander from the receiver if there is an active message handler registered. 
         /// </summary>
-        public async Task UnregisterMessageHandler()
+        public async Task UnregisterMessageHandlerAsync()
         {
             this.ThrowIfClosed();
 
@@ -911,6 +911,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (this.receivePump == null || this.receivePumpCancellationTokenSource.IsCancellationRequested)
                 {
+                    // Silently return if handler has already been unregistered. 
                     return;
                 }
 

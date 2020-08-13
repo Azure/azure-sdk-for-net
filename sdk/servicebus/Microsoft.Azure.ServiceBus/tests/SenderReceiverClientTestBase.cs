@@ -273,6 +273,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
             Assert.True(count == messageCount);
+
+            count = 0;
+            await messageReceiver.UnregisterMessageHandlerAsync();
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == messageCount)
+                {
+                    TestUtility.Log($"All '{messageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == 0); //<= maxConcurrentCalls);
         }
 
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(

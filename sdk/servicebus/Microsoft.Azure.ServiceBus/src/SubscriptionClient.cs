@@ -422,10 +422,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Unregister messgae hander from the receiver if there is active message handler registered. 
         /// </summary>
-        public async Task UnregisterMessageHandler()
+        public async Task UnregisterMessageHandlerAsync()
         {
             this.ThrowIfClosed();
-            await this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandler().ConfigureAwait(false);
+            await this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandlerAsync().ConfigureAwait(false);
         }
 
         /// <summary>
