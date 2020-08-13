@@ -10,7 +10,7 @@ using Azure.AI.FormRecognizer.Training;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// TODO.
+    /// A factory that builds Azure.AI.FormRecognizer model types for mocking.
     /// </summary>
     public static class FormRecognizerModelFactory
     {
