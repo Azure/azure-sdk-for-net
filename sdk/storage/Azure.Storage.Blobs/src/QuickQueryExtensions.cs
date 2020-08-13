@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
             {
                 BlobQueryArrowOptions arrowConfiguration = textConfiguration as BlobQueryArrowOptions;
                 serialization.Format.Type = QueryFormatType.Arrow;
-                serialization.Format.ArrowTextConfiguration = new ArrowTextConfigurationInternal
+                serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
                 {
                     Schema = arrowConfiguration.Schema.ToArrowSchemaInternal()
                 };

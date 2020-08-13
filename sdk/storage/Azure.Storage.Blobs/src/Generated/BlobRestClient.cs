@@ -22435,7 +22435,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// arrow configuration
         /// </summary>
-        public Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal ArrowTextConfiguration { get; set; }
+        public Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
 
         /// <summary>
         /// Creates a new QueryFormat instance
@@ -22444,7 +22444,7 @@ namespace Azure.Storage.Blobs.Models
         {
             DelimitedTextConfiguration = new Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal();
             JsonTextConfiguration = new Azure.Storage.Blobs.Models.JsonTextConfigurationInternal();
-            ArrowTextConfiguration = new Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal();
+            ArrowConfiguration = new Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal();
         }
 
         /// <summary>
@@ -22472,9 +22472,9 @@ namespace Azure.Storage.Blobs.Models
             {
                 _element.Add(Azure.Storage.Blobs.Models.JsonTextConfigurationInternal.ToXml(value.JsonTextConfiguration, "JsonTextConfiguration", ""));
             }
-            if (value.ArrowTextConfiguration != null)
+            if (value.ArrowConfiguration != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal.ToXml(value.ArrowTextConfiguration, "ArrowTextConfiguration", ""));
+                _element.Add(Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal.ToXml(value.ArrowConfiguration, "ArrowConfiguration", ""));
             }
             return _element;
         }

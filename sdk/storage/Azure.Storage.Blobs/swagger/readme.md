@@ -1642,14 +1642,14 @@ directive:
     $.ArrowField["x-ms-client-name"] = "ArrowFieldInternal";
 ```
 
-### Make ArrowTextConfiguration internal
+### Make ArrowConfiguration internal
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.ArrowTextConfiguration["x-az-public"] = false;
-    $.ArrowTextConfiguration["x-ms-client-name"] = "ArrowTextConfigurationInternal";
+    $.ArrowConfiguration["x-az-public"] = false;
+    $.ArrowConfiguration["x-ms-client-name"] = "ArrowTextConfigurationInternal";
 ```
 
 ### Treat the API version as a parameter instead of a constant
