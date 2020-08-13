@@ -413,8 +413,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 expectedProximityPlacementGroup.ProximityPlacementGroupType == outputProximityPlacementGroup.ProximityPlacementGroupType,
                 "ProximityPlacementGroup.ProximityPlacementGroupType in response mismatch with expected value.");
 
-            void VerifySubResource(IList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> inResource,
-                IList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> outResource, string subResourceTypeName)
+            void VerifySubResource(IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> inResource,
+                IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> outResource, string subResourceTypeName)
             {
                 if (inResource == null)
                 {
