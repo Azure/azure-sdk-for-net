@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> maxConcurrentConnections = default;
             Optional<object> copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationTimeout"))
@@ -71,7 +71,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     copyBehavior = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

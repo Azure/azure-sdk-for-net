@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<int>> monthDays = default;
             Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minutes"))
@@ -135,7 +135,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     monthlyOccurrences = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

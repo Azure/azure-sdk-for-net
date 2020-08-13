@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> sourceRetryWait = default;
             Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storeSettings"))
@@ -93,7 +93,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
