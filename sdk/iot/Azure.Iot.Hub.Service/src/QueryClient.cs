@@ -22,15 +22,15 @@ namespace Azure.Iot.Hub.Service
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
-        /// Initializes a new instance of DevicesClient.
+        /// Initializes a new instance of QueryClient. This constructor should only be used for mocking purposes.
         /// </summary>
         protected QueryClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of DevicesClient.
-        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// Initializes a new instance of QueryClient.
+        /// <param name="queryRestClient"> The REST client to perform query operations. </param>
         /// </summary>
         internal QueryClient(QueryRestClient queryRestClient)
         {
@@ -39,7 +39,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// List a set of device twins.
+        /// Query a set of device or module twins asynchronously.
         /// </summary>
         /// <param name="query">
         /// The query for device twins or module twins. See <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language#device-twin-queries">Device Twin query examples</see>
@@ -87,7 +87,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// List a set of device twins.
+        /// Query a set of device or module twins synchronously.
         /// </summary>
         /// <param name="query">
         /// The query for device twins or module twins. See <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language#device-twin-queries">Device Twin query examples</see>
@@ -95,7 +95,7 @@ namespace Azure.Iot.Hub.Service
         /// </param>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A pageable set of device twins <see cref="Pageable{T}"/>.</returns>
+        /// <returns>A pageable set of device or module twins <see cref="Pageable{T}"/>.</returns>
         public virtual Pageable<TwinData> Query(string query, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Page<TwinData> FirstPageFunc(int? pageSizeHint)
