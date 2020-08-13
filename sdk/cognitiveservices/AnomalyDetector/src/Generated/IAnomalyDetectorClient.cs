@@ -20,11 +20,24 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector
 
     /// <summary>
     /// The Anomaly Detector API detects anomalies automatically in time series
-    /// data. It supports two functionalities, one is for detecting the whole
-    /// series with model trained by the timeseries, another is detecting last
-    /// point with model trained by points before. By using this service,
-    /// business customers can discover incidents and establish a logic flow
-    /// for root cause analysis.
+    /// data. It supports two kinds of mode, one is for stateless using,
+    /// another is for stateful using. In stateless mode, there are three
+    /// functionalities. Entire Detect is for detecting the whole series with
+    /// model trained by the time series, Last Detect is detecting last point
+    /// with model trained by points before. ChangePoint Detect is for
+    /// detecting trend changes in time series. In stateful mode, user can
+    /// store time series, the stored time series will be used for detection
+    /// anomalies. Under this mode, user can still use the above three
+    /// functionalities by only giving a time range without preparing time
+    /// series in client side. Besides the above three functionalities,
+    /// stateful model also provide group based detection and labeling service.
+    /// By leveraging labeling service user can provide labels for each
+    /// detection result, these labels will be used for retuning or
+    /// regenerating detection models. Inconsistency detection is a kind of
+    /// group based detection, this detection will find inconsistency ones in a
+    /// set of time series. By using anomaly detector service, business
+    /// customers can discover incidents and establish a logic flow for root
+    /// cause analysis.
     /// </summary>
     public partial interface IAnomalyDetectorClient : System.IDisposable
     {
@@ -98,6 +111,24 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<LastDetectResponse>> LastDetectWithHttpMessagesAsync(Request body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Detect change point for the entire series
+        /// </summary>
+        /// <remarks>
+        /// Evaluate change point score of every series point
+        /// </remarks>
+        /// <param name='body'>
+        /// Time series points and granularity is needed. Advanced model
+        /// parameters can also be set in the request if needed.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ChangePointDetectResponse>> ChangePointDetectWithHttpMessagesAsync(ChangePointDetectRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

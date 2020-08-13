@@ -126,11 +126,17 @@ namespace Sql.Tests
             Assert.Equal(usageName, actual.Name.Value);
         }
 
-        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location, string instancePoolId = null)
+        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location, string instancePoolId = null, bool shouldCheckState = false)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
             Assert.Equal(login, actual.AdministratorLogin);
+
+            if (shouldCheckState)
+            {
+                Assert.Equal("Succeeded", actual.ProvisioningState);
+            }
+
             SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
 
             if (instancePoolId != null)

@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployment time. Once deployed, however, the extension will not
         /// upgrade minor versions unless redeployed, even with this property
         /// set to true.</param>
+        /// <param name="enableAutomaticUpgrade">Indicates whether the
+        /// extension should be automatically upgraded by the platform if there
+        /// is a newer version of the extension available.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">The extension can contain either
@@ -63,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="provisionAfterExtensions">Collection of extension
         /// names after which this extension needs to be provisioned.</param>
-        public VirtualMachineScaleSetExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
+        public VirtualMachineScaleSetExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
             : base(id)
         {
             Name = name;
@@ -73,6 +76,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Type1 = type1;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
@@ -132,6 +136,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the extension should be
+        /// automatically upgraded by the platform if there is a newer version
+        /// of the extension available.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAutomaticUpgrade")]
+        public bool? EnableAutomaticUpgrade { get; set; }
 
         /// <summary>
         /// Gets or sets json formatted public settings for the extension.

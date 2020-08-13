@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -87,8 +88,8 @@ namespace Azure.Search.Documents.Models
             {
                 using Stream stream = element.ToStream();
                 T document = async ?
-                    (T)await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(stream, typeof(T));
+                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
                 suggestion.Document = document;
             }
             else

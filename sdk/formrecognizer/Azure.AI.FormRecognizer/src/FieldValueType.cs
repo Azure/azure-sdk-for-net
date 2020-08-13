@@ -42,7 +42,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Used for <see cref="long"/> type.
         /// </summary>
-        Integer,
+        [CodeGenMember("Integer")]
+        Int64,
 
         /// <summary>
         /// Used for <see cref="List{T}"/> type.

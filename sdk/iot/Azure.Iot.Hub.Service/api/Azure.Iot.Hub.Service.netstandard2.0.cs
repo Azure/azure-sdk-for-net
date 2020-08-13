@@ -9,6 +9,20 @@ namespace Azure.Iot.Hub.Service
     {
         public CloudToDeviceMessagesClient() { }
     }
+    public partial class ConfigurationsClient
+    {
+        protected ConfigurationsClient() { }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinConfiguration> CreateOrUpdateConfiguration(Azure.Iot.Hub.Service.Models.TwinConfiguration configuration, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinConfiguration>> CreateOrUpdateConfigurationAsync(Azure.Iot.Hub.Service.Models.TwinConfiguration configuration, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteConfiguration(Azure.Iot.Hub.Service.Models.TwinConfiguration configuration, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConfigurationAsync(Azure.Iot.Hub.Service.Models.TwinConfiguration configuration, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinConfiguration> GetConfiguration(string configurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinConfiguration>> GetConfigurationAsync(string configurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.TwinConfiguration>> GetConfigurations(int? count = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.TwinConfiguration>>> GetConfigurationsAsync(int? count = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.ConfigurationQueriesTestResponse>> TestQueries(Azure.Iot.Hub.Service.Models.ConfigurationQueriesTestInput configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.ConfigurationQueriesTestResponse> TestQueriesAsync(Azure.Iot.Hub.Service.Models.ConfigurationQueriesTestInput configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DevicesClient
     {
         protected DevicesClient() { }
@@ -52,6 +66,7 @@ namespace Azure.Iot.Hub.Service
         public IotHubServiceClient(string connectionString) { }
         public IotHubServiceClient(string connectionString, Azure.Iot.Hub.Service.IotHubServiceClientOptions options) { }
         public IotHubServiceClient(System.Uri endpoint, Azure.Iot.Hub.Service.Authentication.IotHubSasCredential credential, Azure.Iot.Hub.Service.IotHubServiceClientOptions options = null) { }
+        public virtual Azure.Iot.Hub.Service.ConfigurationsClient Configurations { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.DevicesClient Devices { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.FilesClient Files { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
@@ -113,13 +128,15 @@ namespace Azure.Iot.Hub.Service
 }
 namespace Azure.Iot.Hub.Service.Authentication
 {
-    public partial class IotHubSasCredential
+    public partial class IotHubSasCredential : Azure.Core.TokenCredential
     {
         public IotHubSasCredential(string sharedAccessPolicy, string sharedAccessKey, System.TimeSpan timeToLive = default(System.TimeSpan)) { }
         public System.Uri Endpoint { get { throw null; } }
         public System.TimeSpan SasTokenTimeToLive { get { throw null; } }
         public string SharedAccessKey { get { throw null; } }
         public string SharedAccessPolicy { get { throw null; } }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Azure.Iot.Hub.Service.Models

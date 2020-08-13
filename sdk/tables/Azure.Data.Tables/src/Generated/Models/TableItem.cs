@@ -30,11 +30,5 @@ namespace Azure.Data.Tables.Models
 
         /// <summary> The name of the table. </summary>
         public string TableName { get; }
-        /// <summary> The odata type of the table. </summary>
-        public string OdataType { get; }
-        /// <summary> The id of the table. </summary>
-        public string OdataId { get; }
-        /// <summary> The edit link of the table. </summary>
-        public string OdataEditLink { get; }
     }
 }
