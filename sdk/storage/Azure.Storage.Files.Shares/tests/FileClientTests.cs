@@ -2186,7 +2186,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
-                Assert.GreaterOrEqual(data.LongLength, progressBag.Last(), "Final progress has unexpected value");
+                Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
             }
 
             // Assert

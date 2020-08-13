@@ -813,7 +813,7 @@ namespace Azure.Storage.Blobs.Test
                 // Changing from Assert.AreEqual because these don't always update fast enough
                 if (progressBag.Count > 0)
                 {
-                    Assert.GreaterOrEqual(data.LongLength, progressBag.Last(), "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
                 }
             }
 
