@@ -51,5 +51,10 @@ namespace Azure.Core.GeoJson
 
         /// <inheritdoc />
         public GeoPolygon this[int index] => Polygons[index];
+
+        /// <summary>
+        ///
+        /// </summary>
+        public IReadOnlyList<IReadOnlyList<IReadOnlyList<GeoPosition>>> Coordinates { get; } = null!;
     }
 }

@@ -101,5 +101,10 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="index"></param>
         public double this[int index] => Longitude;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public int Count { get; }
     }
 }

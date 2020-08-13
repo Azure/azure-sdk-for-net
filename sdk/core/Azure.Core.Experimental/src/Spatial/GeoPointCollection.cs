@@ -55,5 +55,10 @@ namespace Azure.Core.GeoJson
 
         /// <inheritdoc />
         public GeoPoint this[int index] => Points[index];
+
+        /// <summary>
+        ///
+        /// </summary>
+        public IReadOnlyList<GeoPosition> Coordinates { get; } = null!;
     }
 }

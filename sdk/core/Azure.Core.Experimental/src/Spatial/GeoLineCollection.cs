@@ -54,5 +54,10 @@ namespace Azure.Core.GeoJson
 
         /// <inheritdoc />
         public GeoLine this[int index] => Lines[index];
+
+        /// <summary>
+        ///
+        /// </summary>
+        public IReadOnlyList<IReadOnlyList<GeoPosition>> Coordinates { get; } = null!;
     }
 }

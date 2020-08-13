@@ -52,5 +52,10 @@ namespace Azure.Core.GeoJson
         /// Gets position of the point.
         /// </summary>
         public GeoPosition Position { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public IReadOnlyList<GeoPosition> Coordinates { get; } = null!;
     }
 }

@@ -50,5 +50,11 @@ namespace Azure.Core.GeoJson
         /// </summary>
         /// <param name="ring"></param>
         public GeoLine this[int ring] => Rings[ring];
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        public IReadOnlyList<IReadOnlyList<GeoPosition>> Coordinates { get; } = null!;
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Core.GeoJson
         /// <summary>
         ///
         /// </summary>
-        public virtual string Type { get; } = "";
+        public virtual GeoObjectType Type { get; }
 
         /// <summary>
         /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
