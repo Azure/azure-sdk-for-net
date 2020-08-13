@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"))
@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.Resources.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
