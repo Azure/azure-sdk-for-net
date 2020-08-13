@@ -1049,26 +1049,13 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
         public string PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
         public string ScriptContent { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptStatus Status { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.StorageAccountConfiguration StorageAccountSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
-        public System.TimeSpan? Timeout { get { throw null; } set { } }
-    }
-    public partial class AzureCliScriptProperties : Azure.ResourceManager.Resources.Models.DeploymentScriptPropertiesBase
-    {
-        public AzureCliScriptProperties(string azCliVersion, System.TimeSpan retentionInterval) { }
-        public string Arguments { get { throw null; } set { } }
-        public string AzCliVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public string PrimaryScriptUri { get { throw null; } set { } }
-        public System.TimeSpan RetentionInterval { get { throw null; } set { } }
-        public string ScriptContent { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
@@ -1081,26 +1068,13 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
         public string PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
         public string ScriptContent { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptStatus Status { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.StorageAccountConfiguration StorageAccountSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
-        public System.TimeSpan? Timeout { get { throw null; } set { } }
-    }
-    public partial class AzurePowerShellScriptProperties : Azure.ResourceManager.Resources.Models.DeploymentScriptPropertiesBase
-    {
-        public AzurePowerShellScriptProperties(string azPowerShellVersion, System.TimeSpan retentionInterval) { }
-        public string Arguments { get { throw null; } set { } }
-        public string AzPowerShellVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public string PrimaryScriptUri { get { throw null; } set { } }
-        public System.TimeSpan RetentionInterval { get { throw null; } set { } }
-        public string ScriptContent { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
@@ -1290,16 +1264,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DeploymentScript> Value { get { throw null; } }
     }
-    public partial class DeploymentScriptPropertiesBase
-    {
-        public DeploymentScriptPropertiesBase() { }
-        public Azure.ResourceManager.Resources.Models.CleanupOptions? CleanupPreference { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ContainerConfiguration ContainerSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ScriptStatus Status { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.StorageAccountConfiguration StorageAccountSettings { get { throw null; } set { } }
-    }
     public partial class DeploymentScriptUpdateParameter : Azure.ResourceManager.Resources.Models.AzureResourceBase
     {
         public DeploymentScriptUpdateParameter() { }
@@ -1354,16 +1318,16 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ErrorAdditionalInfo
     {
-        public ErrorAdditionalInfo() { }
+        internal ErrorAdditionalInfo() { }
         public object Info { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class ErrorResponse
     {
-        public ErrorResponse() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        internal ErrorResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
         public string Code { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ErrorResponse> Details { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorResponse> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
     }
@@ -2029,18 +1993,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.DeploymentProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class ScriptConfigurationBase
-    {
-        public ScriptConfigurationBase(System.TimeSpan retentionInterval) { }
-        public string Arguments { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public string PrimaryScriptUri { get { throw null; } set { } }
-        public System.TimeSpan RetentionInterval { get { throw null; } set { } }
-        public string ScriptContent { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
-        public System.TimeSpan? Timeout { get { throw null; } set { } }
-    }
     public partial class ScriptLog : Azure.ResourceManager.Resources.Models.AzureResourceBase
     {
         public ScriptLog() { }
@@ -2075,10 +2027,10 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ScriptStatus
     {
-        public ScriptStatus() { }
+        internal ScriptStatus() { }
         public string ContainerInstanceId { get { throw null; } }
         public System.DateTimeOffset? EndTime { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ErrorResponse Error { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ErrorResponse Error { get { throw null; } }
         public System.DateTimeOffset? ExpirationTime { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
@@ -2169,13 +2121,13 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class SystemData
     {
-        public SystemData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
-        public string CreatedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
-        public string LastModifiedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        internal SystemData() { }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
+        public string LastModifiedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } }
     }
     public partial class TagCount
     {
