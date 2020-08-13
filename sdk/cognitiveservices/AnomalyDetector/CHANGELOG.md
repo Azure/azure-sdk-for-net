@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2020-08-12)
+## 1.0.0 (2020-08-13)
 
 * First stable release of AnomalyDetector package.
 
