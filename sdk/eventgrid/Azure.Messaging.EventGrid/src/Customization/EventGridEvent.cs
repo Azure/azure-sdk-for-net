@@ -2,7 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
@@ -27,6 +36,10 @@ namespace Azure.Messaging.EventGrid
             DataVersion = dataVersion;
         }
 
+        internal EventGridEvent()
+        {
+        }
+
         /// <summary> An unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -37,7 +50,10 @@ namespace Azure.Messaging.EventGrid
         public string Subject { get; set; }
 
         /// <summary> Event data specific to the event type. </summary>
-        public object Data { get; set; }
+        internal object Data { get; set; }
+
+        /// <summary> Serialized event data specific to the event type. </summary>
+        internal JsonElement SerializedData { get; set; }
 
         /// <summary> The type of the event that occurred. </summary>
         public string EventType { get; set; }
@@ -47,5 +63,167 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> The schema version of the data object. </summary>
         public string DataVersion { get; set; }
+
+        /// <summary>
+        /// Parses JSON encoded events and returns an array of events encoded in the EventGridEvent schema.
+        /// </summary>
+        /// <param name="requestContent"> The JSON encoded representation of either a single event or an array or events, encoded in the EventGridEvent schema. </param>
+        /// <returns> A list of EventGridEvents. </returns>
+        public static EventGridEvent[] Parse(string requestContent)
+        {
+            List<EventGridEventInternal> egEventsInternal = new List<EventGridEventInternal>();
+            List<EventGridEvent> egEvents = new List<EventGridEvent>();
+
+            // Parse raw JSON string into separate events, deserialize event envelope properties
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
+            JsonDocument requestDocument = JsonDocument.Parse(stream);
+            foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+            {
+                egEventsInternal.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
+            }
+
+            foreach (EventGridEventInternal egEventInternal in egEventsInternal)
+            {
+                egEvents.Add(new EventGridEvent()
+                {
+                    Subject = egEventInternal.Subject,
+                    SerializedData = egEventInternal.Data,
+                    EventType = egEventInternal.EventType,
+                    DataVersion = egEventInternal.DataVersion,
+                    Id = egEventInternal.Id,
+                    EventTime = egEventInternal.EventTime
+                });
+            }
+
+            return egEvents.ToArray();
+        }
+
+        /// <summary>
+        /// Deserializes the event payload into a specified event type.
+        /// </summary>
+        /// <typeparam name="T"> Describing the type of the event. </typeparam>
+        /// <param name="serializer"> Custom serializer used to deserialize the payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> Deserialized payload of the event. </returns>
+        public async Task<T> GetDataAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+            => await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deserializes the event payload into a specified event type.
+        /// </summary>
+        /// <typeparam name="T"> Describing the type of the event. </typeparam>
+        /// <param name="serializer"> Custom serializer used to deserialize the payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> Deserialized payload of the event. </returns>
+        public T GetData<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+            => GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Deserializes the event payload into a specified event type.
+        /// </summary>
+        /// <typeparam name="T"> Describing the type of the event. </typeparam>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> Deserialized payload of the event. </returns>
+        public T GetData<T>(CancellationToken cancellationToken = default)
+            => GetDataInternal<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
+
+        private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
+        {
+            if (Data == null)
+            {
+                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+                {
+                    Data = systemDeserializationFunction(SerializedData);
+                }
+                else if (!TryGetPrimitiveFromJsonElement(SerializedData, out object cloudEventData))
+                {
+                    // Reserialize JsonElement to stream
+                    MemoryStream dataStream = SerializePayloadToStream(SerializedData, new JsonObjectSerializer(), cancellationToken);
+
+                    if (async)
+                    {
+                        Data = await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Data = serializer.Deserialize(dataStream, typeof(T), cancellationToken);
+                    }
+                }
+                else
+                {
+                    Data = cloudEventData;
+                }
+            }
+            return (T)Data;
+        }
+
+        /// <summary>
+        /// Attempts to deserialize the event payload into a system event type or as binary data.
+        /// </summary>
+        /// <returns> Deserialized payload of the event. </returns>
+        public object GetData(CancellationToken cancellationToken = default)
+        {
+            if (Data == null)
+            {
+                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+                {
+                    Data = systemDeserializationFunction(SerializedData);
+                }
+                // If event data is not a primitive/string, return as BinaryData
+                else if (!TryGetPrimitiveFromJsonElement(SerializedData, out object cloudEventData))
+                {
+                    // Reserialize JsonElement to stream
+                    MemoryStream dataStream = SerializePayloadToStream(SerializedData, new JsonObjectSerializer(), cancellationToken);
+                    Data = BinaryData.FromStream(dataStream);
+                }
+                else
+                {
+                    Data = cloudEventData;
+                }
+            }
+            return Data;
+        }
+
+        private static MemoryStream SerializePayloadToStream<T>(T payload, ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        {
+            MemoryStream dataStream = new MemoryStream();
+            serializer.Serialize(dataStream, payload, typeof(T), cancellationToken);
+            dataStream.Position = 0;
+            return dataStream;
+        }
+
+        private static bool TryGetPrimitiveFromJsonElement(JsonElement jsonElement, out object elementValue)
+        {
+            elementValue = null;
+            if (jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False)
+            {
+                elementValue = jsonElement.GetBoolean();
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.Number)
+            {
+                if (jsonElement.TryGetInt32(out var vali))
+                {
+                    elementValue = vali;
+                }
+                if (jsonElement.TryGetInt64(out var vall))
+                {
+                    elementValue = vall;
+                }
+                if (jsonElement.TryGetDouble(out var val))
+                {
+                    elementValue = val;
+                }
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.String)
+            {
+                elementValue = jsonElement.GetString();
+            }
+            else if (jsonElement.ValueKind == JsonValueKind.Undefined)
+            {
+                elementValue = "";
+            }
+
+            return elementValue != null;
+        }
     }
 }

@@ -1318,7 +1318,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}]";
 
-            CloudEvent[] events = _eventGridConsumer.DeserializeCloudEvents(requestContent);
+            CloudEvent[] events = CloudEvent.Parse(requestContent);
             Assert.NotNull(events);
 
             if (events[0].Type == "Microsoft.Storage.BlobDeleted")

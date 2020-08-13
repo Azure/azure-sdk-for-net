@@ -6,12 +6,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
@@ -87,6 +89,47 @@ namespace Azure.Messaging.EventGrid
         public Dictionary<string, object> ExtensionAttributes { get; }
 
         /// <summary>
+        /// Parses JSON encoded events and returns an array of events encoded in the CloudEvent schema.
+        /// </summary>
+        /// <param name="requestContent"> The JSON encoded representation of either a single event or an array or events, encoded in the CloudEvent schema. </param>
+        /// <returns> A list of CloudEvents. </returns>
+        public static CloudEvent[] Parse(string requestContent)
+        {
+            List<CloudEventInternal> cloudEventsInternal = new List<CloudEventInternal>();
+            List<CloudEvent> cloudEvents = new List<CloudEvent>();
+
+            // Parse raw JSON string into separate events, deserialize event envelope properties
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent));
+            JsonDocument requestDocument = JsonDocument.Parse(stream);
+            foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+            {
+                cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
+            }
+
+            foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
+            {
+                if (cloudEventInternal.Type == null) // case where data/type is null?
+                {
+                    cloudEventInternal.Type = "";
+                }
+                cloudEvents.Add(new CloudEvent(
+                    cloudEventInternal.Source,
+                    cloudEventInternal.Type)
+                {
+                    Id = cloudEventInternal.Id,
+                    SerializedData = cloudEventInternal.Data,
+                    DataBase64 = cloudEventInternal.DataBase64,
+                    Time = cloudEventInternal.Time,
+                    DataSchema = cloudEventInternal.Dataschema,
+                    DataContentType = cloudEventInternal.Datacontenttype,
+                    Subject = cloudEventInternal.Subject
+                });
+            }
+
+            return cloudEvents.ToArray();
+        }
+
+        /// <summary>
         /// Deserializes the event payload into a specified event type.
         /// </summary>
         /// <typeparam name="T"> Describing the type of the event. </typeparam>
@@ -117,7 +160,7 @@ namespace Azure.Messaging.EventGrid
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
-            if (Data != null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            if (Data == null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
             {
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
@@ -155,7 +198,7 @@ namespace Azure.Messaging.EventGrid
             {
                 return DataBase64;
             }
-            if (Data != null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            if (Data == null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
             {
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
