@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceReference DeserializeResourceReference(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceReference(id);
+            return new ResourceReference(id.Value);
         }
     }
 }

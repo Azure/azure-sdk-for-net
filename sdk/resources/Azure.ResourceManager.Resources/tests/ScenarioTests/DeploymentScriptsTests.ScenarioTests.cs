@@ -51,18 +51,16 @@ namespace DeploymentScripts.Tests
         public async Task CanCrudSimpleDeploymentScript()
         {
             // create user assigned managed identity during test run since we'll be using dynamic properties, such as subscriptionId from the test
-            var userAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
+            var managedIdentity = new ManagedServiceIdentity()
+            {
+                Type = "UserAssigned",
+                UserAssignedIdentities =
                 {
                     {
                         $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi",
                         new UserAssignedIdentity()
                     }
-                };
-
-            var managedIdentity = new ManagedServiceIdentity()
-            {
-                Type = "UserAssigned",
-                UserAssignedIdentities = userAssignedIdentities
+                }
             };
 
             // Create deployment script object with minimal properties
@@ -86,7 +84,7 @@ namespace DeploymentScripts.Tests
             Assert.NotNull(getDeploymentScript);
             Assert.AreEqual(deploymentScript.Location, getDeploymentScript.Location);
             Assert.AreEqual(deploymentScript.AzPowerShellVersion, getDeploymentScript.AzPowerShellVersion);
-            Assert.AreEqual(deploymentScript.Identity.Type.ToLower(), getDeploymentScript.Identity.Type.ToLower());
+            Assert.AreEqual(deploymentScript.Identity.Type, getDeploymentScript.Identity.Type);
             Assert.NotNull(deploymentScript.Identity.UserAssignedIdentities.Values.FirstOrDefault());
             Assert.AreEqual(deploymentScript.Identity.UserAssignedIdentities.Keys.FirstOrDefault(),
                 getDeploymentScript.Identity.UserAssignedIdentities.Keys.FirstOrDefault());
@@ -141,18 +139,16 @@ namespace DeploymentScripts.Tests
         public async Task CanGetDeploymentScriptExecutionLogs()
         {
             // create user assigned managed identity during test run since we'll be using dynamic properties, such as subscriptionId from the test
-            var userAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
+            var managedIdentity = new ManagedServiceIdentity()
+            {
+                Type = "UserAssigned",
+                UserAssignedIdentities =
                 {
                     {
                         $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi",
                         new UserAssignedIdentity()
                     }
-                };
-
-            var managedIdentity = new ManagedServiceIdentity()
-            {
-                Type = "UserAssigned",
-                UserAssignedIdentities = userAssignedIdentities
+                }
             };
 
             // Create deployment script object with minimal properties
@@ -187,18 +183,15 @@ namespace DeploymentScripts.Tests
         public async Task CanReturnErrorOnScriptExecutionFailure()
         {
             // create user assigned managed identity during test run since we'll be using dynamic properties, such as subscriptionId from the test
-            var userAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
-                {
+            var managedIdentity = new ManagedServiceIdentity()
+            {
+                Type = "UserAssigned",
+                UserAssignedIdentities = {
                     {
                         $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi",
                         new UserAssignedIdentity()
                     }
-                };
-
-            var managedIdentity = new ManagedServiceIdentity()
-            {
-                Type = "UserAssigned",
-                UserAssignedIdentities = userAssignedIdentities
+                }
             };
 
             // Create deployment script object with minimal properties
