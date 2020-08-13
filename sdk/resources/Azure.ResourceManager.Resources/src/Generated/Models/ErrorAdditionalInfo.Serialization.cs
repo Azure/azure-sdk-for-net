@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorAdditionalInfo : IUtf8JsonSerializable
+    public partial class ErrorAdditionalInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
             Optional<string> type = default;

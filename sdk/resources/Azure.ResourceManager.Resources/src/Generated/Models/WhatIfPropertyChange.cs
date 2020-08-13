@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of WhatIfPropertyChange. </summary>
         /// <param name="path"> The path of the property. </param>
         /// <param name="propertyChangeType"> The type of property change. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType)
         {
             if (path == null)

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identity"/>, <paramref name="location"/>, or <paramref name="azPowerShellVersion"/> is null. </exception>
         public AzurePowerShellScript(ManagedServiceIdentity identity, string location, TimeSpan retentionInterval, string azPowerShellVersion) : base(identity, location)
         {
             if (identity == null)
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
-        internal AzurePowerShellScript(string id, string name, string type, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, SystemData systemData, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IDictionary<string, object> outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, type, identity, location, tags, kind, systemData)
+        internal AzurePowerShellScript(string id, string name, string type, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, SystemData systemData, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, object> outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, type, identity, location, tags, kind, systemData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IDictionary<string, object> Outputs { get; }
+        public IReadOnlyDictionary<string, object> Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public string PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>

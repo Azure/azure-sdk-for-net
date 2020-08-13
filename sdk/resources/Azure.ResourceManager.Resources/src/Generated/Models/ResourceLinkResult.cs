@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ResourceLinkResult. </summary>
         /// <param name="value"> An array of resource links. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceLinkResult(IEnumerable<ResourceLink> value)
         {
             if (value == null)

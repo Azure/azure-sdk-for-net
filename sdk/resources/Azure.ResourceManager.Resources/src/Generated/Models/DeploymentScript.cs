@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of DeploymentScript. </summary>
         /// <param name="identity"> Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="location"/> is null. </exception>
         public DeploymentScript(ManagedServiceIdentity identity, string location)
         {
             if (identity == null)

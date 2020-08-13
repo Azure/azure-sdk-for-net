@@ -11,19 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptStatus : IUtf8JsonSerializable
+    public partial class ScriptStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error");
-                writer.WriteObjectValue(Error);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ScriptStatus DeserializeScriptStatus(JsonElement element)
         {
             Optional<string> containerInstanceId = default;

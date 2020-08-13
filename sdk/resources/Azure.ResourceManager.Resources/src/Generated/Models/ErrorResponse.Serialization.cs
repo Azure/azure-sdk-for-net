@@ -11,21 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorResponse : IUtf8JsonSerializable
+    public partial class ErrorResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IList<ErrorResponse>> details = default;
-            Optional<IList<ErrorAdditionalInfo>> additionalInfo = default;
+            Optional<IReadOnlyList<ErrorResponse>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<CleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
-            Optional<IDictionary<string, object>> outputs = default;
+            Optional<IReadOnlyDictionary<string, object>> outputs = default;
             Optional<string> primaryScriptUri = default;
             Optional<IList<string>> supportingScriptUris = default;
             Optional<string> scriptContent = default;

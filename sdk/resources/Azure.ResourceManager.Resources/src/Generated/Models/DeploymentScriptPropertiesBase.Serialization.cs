@@ -5,82 +5,9 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentScriptPropertiesBase : IUtf8JsonSerializable
+    internal partial class DeploymentScriptPropertiesBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerSettings))
-            {
-                writer.WritePropertyName("containerSettings");
-                writer.WriteObjectValue(ContainerSettings);
-            }
-            if (Optional.IsDefined(StorageAccountSettings))
-            {
-                writer.WritePropertyName("storageAccountSettings");
-                writer.WriteObjectValue(StorageAccountSettings);
-            }
-            if (Optional.IsDefined(CleanupPreference))
-            {
-                writer.WritePropertyName("cleanupPreference");
-                writer.WriteStringValue(CleanupPreference.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static DeploymentScriptPropertiesBase DeserializeDeploymentScriptPropertiesBase(JsonElement element)
-        {
-            Optional<ContainerConfiguration> containerSettings = default;
-            Optional<StorageAccountConfiguration> storageAccountSettings = default;
-            Optional<CleanupOptions> cleanupPreference = default;
-            Optional<ScriptProvisioningState> provisioningState = default;
-            Optional<ScriptStatus> status = default;
-            Optional<IDictionary<string, object>> outputs = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("containerSettings"))
-                {
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("storageAccountSettings"))
-                {
-                    storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("cleanupPreference"))
-                {
-                    cleanupPreference = new CleanupOptions(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    provisioningState = new ScriptProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    status = ScriptStatus.DeserializeScriptStatus(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("outputs"))
-                {
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
-                    }
-                    outputs = dictionary;
-                    continue;
-                }
-            }
-            return new DeploymentScriptPropertiesBase(containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs));
-        }
     }
 }

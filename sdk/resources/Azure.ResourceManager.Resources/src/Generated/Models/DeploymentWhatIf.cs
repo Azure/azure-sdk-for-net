@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of DeploymentWhatIf. </summary>
         /// <param name="properties"> The deployment properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeploymentWhatIf(DeploymentWhatIfProperties properties)
         {
             if (properties == null)

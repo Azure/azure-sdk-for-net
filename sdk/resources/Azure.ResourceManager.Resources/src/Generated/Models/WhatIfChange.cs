@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of WhatIfChange. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal WhatIfChange(string resourceId, ChangeType changeType)
         {
             if (resourceId == null)

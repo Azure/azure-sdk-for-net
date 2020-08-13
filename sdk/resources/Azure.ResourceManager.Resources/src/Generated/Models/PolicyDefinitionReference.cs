@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
         {
             if (policyDefinitionId == null)

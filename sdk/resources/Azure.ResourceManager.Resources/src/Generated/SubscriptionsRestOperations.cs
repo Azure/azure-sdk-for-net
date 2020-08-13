@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public async Task<Response<LocationListResult>> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public Response<LocationListResult> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -119,6 +121,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details about a specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public async Task<Response<Subscription>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -145,6 +148,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details about a specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public Response<Subscription> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -236,6 +240,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SubscriptionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -262,6 +267,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SubscriptionListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

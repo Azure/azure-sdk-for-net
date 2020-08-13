@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ScopedDeployment. </summary>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
         public ScopedDeployment(string location, DeploymentProperties properties)
         {
             if (location == null)

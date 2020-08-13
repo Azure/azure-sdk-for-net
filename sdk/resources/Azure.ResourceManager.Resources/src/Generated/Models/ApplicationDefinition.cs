@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationDefinition. </summary>
         /// <param name="lockLevel"> The managed application lock level. </param>
         /// <param name="authorizations"> The managed application provider authorizations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
         public ApplicationDefinition(ApplicationLockLevel lockLevel, IEnumerable<ApplicationProviderAuthorization> authorizations)
         {
             if (authorizations == null)

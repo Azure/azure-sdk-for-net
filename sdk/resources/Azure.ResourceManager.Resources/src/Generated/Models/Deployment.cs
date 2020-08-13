@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of Deployment. </summary>
         /// <param name="properties"> The deployment properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public Deployment(DeploymentProperties properties)
         {
             if (properties == null)
