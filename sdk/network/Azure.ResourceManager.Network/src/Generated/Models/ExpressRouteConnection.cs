@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ExpressRouteConnection. </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ExpressRouteConnection(string name)
         {
             if (name == null)

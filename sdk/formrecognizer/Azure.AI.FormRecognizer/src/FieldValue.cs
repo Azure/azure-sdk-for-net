@@ -39,17 +39,17 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {ValueType}.");
             }
 
-            return _fieldValue.ValueString;
+            return _fieldValue?.ValueString;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="long"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="long"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Integer"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Int64"/> or when the value is <c>null</c>.</exception>
         public long AsInt64()
         {
-            if (ValueType != FieldValueType.Integer)
+            if (ValueType != FieldValueType.Int64)
             {
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {ValueType}.");
             }

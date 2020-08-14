@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="name"> The SKU name of the configuration store. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Sku(string name)
         {
             if (name == null)

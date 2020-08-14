@@ -101,11 +101,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return BlobChangeFeedEventPage.Empty();
             }
 
-            if (!_currentSegment.Finalized)
-            {
-                return BlobChangeFeedEventPage.Empty();
-            }
-
             if (pageSize > Constants.ChangeFeed.DefaultPageSize)
             {
                 pageSize = Constants.ChangeFeed.DefaultPageSize;
@@ -137,7 +132,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // [If Change Feed is empty], or [current segment is not finalized]
             // or ([segment count is 0] and [year count is 0] and [current segment doesn't have next])
             if (_empty
-                || !_currentSegment.Finalized
                 || _segments.Count == 0
                     && _years.Count == 0
                     && !_currentSegment.HasNext())
@@ -155,7 +149,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         internal ChangeFeedCursor GetCursor()
             => new ChangeFeedCursor(
-                urlHash: _containerClient.Uri.AbsoluteUri.GetHashCode(),
+                urlHost: _containerClient.Uri.Host,
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
 

@@ -15,22 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -43,70 +28,65 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula");
                 writer.WriteStringValue(Eula);
             }
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
                 writer.WriteStringValue(PrivacyStatementUri);
             }
-            if (ReleaseNoteUri != null)
+            if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
                 writer.WriteStringValue(ReleaseNoteUri);
             }
-            if (OsType != null)
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OsType.Value.ToSerialString());
             }
-            if (OsState != null)
+            if (Optional.IsDefined(OsState))
             {
                 writer.WritePropertyName("osState");
                 writer.WriteStringValue(OsState.Value.ToSerialString());
             }
-            if (HyperVGeneration != null)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (EndOfLifeDate != null)
+            if (Optional.IsDefined(EndOfLifeDate))
             {
                 writer.WritePropertyName("endOfLifeDate");
                 writer.WriteStringValue(EndOfLifeDate.Value, "O");
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier");
                 writer.WriteObjectValue(Identifier);
             }
-            if (Recommended != null)
+            if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended");
                 writer.WriteObjectValue(Recommended);
             }
-            if (Disallowed != null)
+            if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed");
                 writer.WriteObjectValue(Disallowed);
             }
-            if (PurchasePlan != null)
+            if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan");
                 writer.WriteObjectValue(PurchasePlan);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

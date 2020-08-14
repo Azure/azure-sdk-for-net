@@ -112,15 +112,14 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var runCommandImput = new RunCommandInput("RunPowerShellScript")
             {
-                Script = new List<string>() {
+                Script = {
                             "param(",
                             "    [string]$arg1,",
                             "    [string]$arg2",
                             ")",
                             "echo This is a sample script with parameters $arg1 $arg2"
                         },
-                Parameters = new List<RunCommandInputParameter>()
-                        {
+                Parameters = {
                             new RunCommandInputParameter("arg1","value1"),
                             new RunCommandInputParameter("arg2","value2"),
                         }
@@ -297,6 +296,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string asName = Recording.GenerateAssetName("as");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             VirtualMachine inputVM1 = null;
+            string inputVM1Name = null;
 
             bool passed = false;
             try
@@ -307,6 +307,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 var returnTwovm = await CreateVM(rg1Name, asName, storageAccountOutput, imageRef);
                 VirtualMachine vm1 = returnTwovm.Item1;
                 inputVM1 = returnTwovm.Item2;
+                inputVM1Name = returnTwovm.Item3;
                 await WaitForCompletionAsync(await VirtualMachinesOperations.StartPerformMaintenanceAsync(rg1Name, vm1.Name));
                 passed = true;
 
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Tests
             catch (Exception cex)
             {
                 passed = true;
-                string expectedMessage = $"Operation 'performMaintenance' is not allowed on VM '{inputVM1.Name}' since the Subscription of this VM" +
+                string expectedMessage = $"Operation 'performMaintenance' is not allowed on VM '{inputVM1Name}' since the Subscription of this VM" +
                     " is not eligible.";
                 Assert.IsTrue(cex.Message.Contains(expectedMessage));
             }

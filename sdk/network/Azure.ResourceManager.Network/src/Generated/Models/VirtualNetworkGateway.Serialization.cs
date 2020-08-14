@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (IpConfigurations != null)
+            if (Optional.IsCollectionDefined(IpConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
@@ -64,80 +49,65 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GatewayType != null)
+            if (Optional.IsDefined(GatewayType))
             {
                 writer.WritePropertyName("gatewayType");
                 writer.WriteStringValue(GatewayType.Value.ToString());
             }
-            if (VpnType != null)
+            if (Optional.IsDefined(VpnType))
             {
                 writer.WritePropertyName("vpnType");
                 writer.WriteStringValue(VpnType.Value.ToString());
             }
-            if (VpnGatewayGeneration != null)
+            if (Optional.IsDefined(VpnGatewayGeneration))
             {
                 writer.WritePropertyName("vpnGatewayGeneration");
                 writer.WriteStringValue(VpnGatewayGeneration.Value.ToString());
             }
-            if (EnableBgp != null)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp");
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (EnablePrivateIpAddress != null)
+            if (Optional.IsDefined(EnablePrivateIpAddress))
             {
                 writer.WritePropertyName("enablePrivateIpAddress");
                 writer.WriteBooleanValue(EnablePrivateIpAddress.Value);
             }
-            if (Active != null)
+            if (Optional.IsDefined(Active))
             {
                 writer.WritePropertyName("activeActive");
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (GatewayDefaultSite != null)
+            if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite");
                 writer.WriteObjectValue(GatewayDefaultSite);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (VpnClientConfiguration != null)
+            if (Optional.IsDefined(VpnClientConfiguration))
             {
                 writer.WritePropertyName("vpnClientConfiguration");
                 writer.WriteObjectValue(VpnClientConfiguration);
             }
-            if (BgpSettings != null)
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings");
                 writer.WriteObjectValue(BgpSettings);
             }
-            if (CustomRoutes != null)
+            if (Optional.IsDefined(CustomRoutes))
             {
                 writer.WritePropertyName("customRoutes");
                 writer.WriteObjectValue(CustomRoutes);
             }
-            if (ResourceGuid != null)
-            {
-                writer.WritePropertyName("resourceGuid");
-                writer.WriteStringValue(ResourceGuid);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (EnableDnsForwarding != null)
+            if (Optional.IsDefined(EnableDnsForwarding))
             {
                 writer.WritePropertyName("enableDnsForwarding");
                 writer.WriteBooleanValue(EnableDnsForwarding.Value);
-            }
-            if (InboundDnsForwardingEndpoint != null)
-            {
-                writer.WritePropertyName("inboundDnsForwardingEndpoint");
-                writer.WriteStringValue(InboundDnsForwardingEndpoint);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -145,92 +115,61 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGateway DeserializeVirtualNetworkGateway(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default;
-            VirtualNetworkGatewayType? gatewayType = default;
-            VpnType? vpnType = default;
-            VpnGatewayGeneration? vpnGatewayGeneration = default;
-            bool? enableBgp = default;
-            bool? enablePrivateIpAddress = default;
-            bool? activeActive = default;
-            SubResource gatewayDefaultSite = default;
-            VirtualNetworkGatewaySku sku = default;
-            VpnClientConfiguration vpnClientConfiguration = default;
-            BgpSettings bgpSettings = default;
-            AddressSpace customRoutes = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
-            bool? enableDnsForwarding = default;
-            string inboundDnsForwardingEndpoint = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<VirtualNetworkGatewayIPConfiguration>> ipConfigurations = default;
+            Optional<VirtualNetworkGatewayType> gatewayType = default;
+            Optional<VpnType> vpnType = default;
+            Optional<VpnGatewayGeneration> vpnGatewayGeneration = default;
+            Optional<bool> enableBgp = default;
+            Optional<bool> enablePrivateIpAddress = default;
+            Optional<bool> activeActive = default;
+            Optional<SubResource> gatewayDefaultSite = default;
+            Optional<VirtualNetworkGatewaySku> sku = default;
+            Optional<VpnClientConfiguration> vpnClientConfiguration = default;
+            Optional<BgpSettings> bgpSettings = default;
+            Optional<AddressSpace> customRoutes = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> enableDnsForwarding = default;
+            Optional<string> inboundDnsForwardingEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -241,157 +180,86 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("ipConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item));
-                                }
+                                array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;
                         }
                         if (property0.NameEquals("gatewayType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             gatewayType = new VirtualNetworkGatewayType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vpnType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnType = new VpnType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vpnGatewayGeneration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnGatewayGeneration = new VpnGatewayGeneration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableBgp"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableBgp = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enablePrivateIpAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enablePrivateIpAddress = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("activeActive"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             activeActive = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("gatewayDefaultSite"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             gatewayDefaultSite = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bgpSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customRoutes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableDnsForwarding"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableDnsForwarding = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("inboundDnsForwardingEndpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             inboundDnsForwardingEndpoint = property0.Value.GetString();
                             continue;
                         }
@@ -399,7 +267,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGateway(id, name, type, location, tags, etag, ipConfigurations, gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIpAddress, activeActive, gatewayDefaultSite, sku, vpnClientConfiguration, bgpSettings, customRoutes, resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint);
+            return new VirtualNetworkGateway(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIpAddress), Optional.ToNullable(activeActive), gatewayDefaultSite.Value, sku.Value, vpnClientConfiguration.Value, bgpSettings.Value, customRoutes.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value);
         }
     }
 }

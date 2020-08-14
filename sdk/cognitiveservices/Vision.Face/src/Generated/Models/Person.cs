@@ -39,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="persistedFaceIds">PersistedFaceIds of registered faces
         /// in the person. These persistedFaceIds are returned from Person -
         /// Add a Person Face, and will not expire.</param>
-        public Person(System.Guid personId, string name = default(string), string userData = default(string), IList<System.Guid> persistedFaceIds = default(IList<System.Guid>))
+        public Person(System.Guid personId, string name = default(string), string userData = default(string), IList<System.Guid?> persistedFaceIds = default(IList<System.Guid?>))
             : base(name, userData)
         {
             PersonId = personId;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Face, and will not expire.
         /// </summary>
         [JsonProperty(PropertyName = "persistedFaceIds")]
-        public IList<System.Guid> PersistedFaceIds { get; set; }
+        public IList<System.Guid?> PersistedFaceIds { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -72,9 +72,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
         }
     }
 }

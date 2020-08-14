@@ -15,22 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -43,32 +28,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula");
                 writer.WriteStringValue(Eula);
             }
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
                 writer.WriteStringValue(PrivacyStatementUri);
             }
-            if (ReleaseNoteUri != null)
+            if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
                 writer.WriteStringValue(ReleaseNoteUri);
             }
-            if (EndOfLifeDate != null)
+            if (Optional.IsDefined(EndOfLifeDate))
             {
                 writer.WritePropertyName("endOfLifeDate");
                 writer.WriteStringValue(EndOfLifeDate.Value, "O");
             }
-            if (SupportedOSType != null)
+            if (Optional.IsDefined(SupportedOSType))
             {
                 writer.WritePropertyName("supportedOSType");
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());

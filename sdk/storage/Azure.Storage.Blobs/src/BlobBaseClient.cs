@@ -2563,7 +2563,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<bool>> DeleteIfExistsInternal(
+        internal async Task<Response<bool>> DeleteIfExistsInternal(
             DeleteSnapshotsOption snapshotsOption,
             BlobRequestConditions conditions,
             bool async,
@@ -3010,7 +3010,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobProperties>> GetPropertiesInternal(
+        internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)

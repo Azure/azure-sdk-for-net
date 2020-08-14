@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 // Actual limit is 262144 bytes for a single message.
                 ServiceBusMessage message = new ServiceBusMessage(new byte[300000]);
 
-                Assert.That(async () => await sender.SendMessageAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageSizeExceeded));
+                Assert.That(async () => await sender.SendMessageAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageSizeExceeded));
             }
         }
 
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(connectionString);
 
                 ServiceBusSender sender = client.CreateSender("FakeEntity");
-                Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
             }
         }
     }

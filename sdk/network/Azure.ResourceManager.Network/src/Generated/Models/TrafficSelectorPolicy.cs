@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TrafficSelectorPolicy. </summary>
         /// <param name="localAddressRanges"> A collection of local address spaces in CIDR format. </param>
         /// <param name="remoteAddressRanges"> A collection of remote address spaces in CIDR format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localAddressRanges"/> or <paramref name="remoteAddressRanges"/> is null. </exception>
         public TrafficSelectorPolicy(IEnumerable<string> localAddressRanges, IEnumerable<string> remoteAddressRanges)
         {
             if (localAddressRanges == null)
@@ -37,8 +38,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteAddressRanges"> A collection of remote address spaces in CIDR format. </param>
         internal TrafficSelectorPolicy(IList<string> localAddressRanges, IList<string> remoteAddressRanges)
         {
-            LocalAddressRanges = localAddressRanges ?? new List<string>();
-            RemoteAddressRanges = remoteAddressRanges ?? new List<string>();
+            LocalAddressRanges = localAddressRanges;
+            RemoteAddressRanges = remoteAddressRanges;
         }
 
         /// <summary> A collection of local address spaces in CIDR format. </summary>

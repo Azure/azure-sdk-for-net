@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ContainerServiceWindowsProfile. </summary>
         /// <param name="adminUsername"> The administrator username to use for Windows VMs. </param>
         /// <param name="adminPassword"> The administrator password to use for Windows VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="adminPassword"/> is null. </exception>
         public ContainerServiceWindowsProfile(string adminUsername, string adminPassword)
         {
             if (adminUsername == null)

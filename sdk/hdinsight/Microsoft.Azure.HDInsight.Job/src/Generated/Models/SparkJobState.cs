@@ -26,6 +26,11 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkJobState class.
         /// </summary>
+        /// <param name="id">The livy id of the spark job.</param>
+        /// <param name="state">The current state of the spark job. Possible
+        /// values include: 'not_started', 'starting', 'idle', 'running',
+        /// 'busy', 'shutting_down', 'error', 'dead', 'killed', 'success',
+        /// 'recovering'</param>
         public SparkJobState(int? id = default(int?), string state = default(string))
         {
             Id = id;
@@ -39,11 +44,15 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the livy id of the spark job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the current state of the spark job. Possible values
+        /// include: 'not_started', 'starting', 'idle', 'running', 'busy',
+        /// 'shutting_down', 'error', 'dead', 'killed', 'success', 'recovering'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

@@ -118,6 +118,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the vpnServerConfigurations in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<VpnServerConfiguration> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -161,6 +162,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all the vpnServerConfigurations in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<VpnServerConfiguration> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -280,6 +282,7 @@ namespace Azure.Management.Network
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being created or updated. </param>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to create or update VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/>, or <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
         public virtual async Task<VpnServerConfigurationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vpnServerConfigurationName, VpnServerConfiguration vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -314,6 +317,7 @@ namespace Azure.Management.Network
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being created or updated. </param>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to create or update VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/>, or <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
         public virtual VpnServerConfigurationsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vpnServerConfigurationName, VpnServerConfiguration vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,6 +351,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnServerConfiguration. </param>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is null. </exception>
         public virtual async Task<VpnServerConfigurationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -376,6 +381,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnServerConfiguration. </param>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is null. </exception>
         public virtual VpnServerConfigurationsDeleteOperation StartDelete(string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

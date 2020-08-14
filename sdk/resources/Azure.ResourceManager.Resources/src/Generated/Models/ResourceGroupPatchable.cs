@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,19 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceGroupPatchable. </summary>
         public ResourceGroupPatchable()
         {
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupPatchable. </summary>
-        /// <param name="name"> The name of the resource group. </param>
-        /// <param name="properties"> The resource group properties. </param>
-        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
-        /// <param name="tags"> The tags attached to the resource group. </param>
-        internal ResourceGroupPatchable(string name, ResourceGroupProperties properties, string managedBy, IDictionary<string, string> tags)
-        {
-            Name = name;
-            Properties = properties;
-            ManagedBy = managedBy;
-            Tags = tags;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The name of the resource group. </summary>
@@ -37,6 +26,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the resource that manages this resource group. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The tags attached to the resource group. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

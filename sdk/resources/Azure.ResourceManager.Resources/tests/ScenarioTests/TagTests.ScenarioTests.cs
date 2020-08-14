@@ -92,7 +92,7 @@ namespace ResourceGroups.Tests
         {
             var tagsResource = new TagsResource(new Tags()
             {
-                TagsValue = new Dictionary<string, string> {
+                TagsValue = {
                     { "tagKey1", "tagValue1" },
                     { "tagKey2", "tagValue2" }
                 }
@@ -139,7 +139,7 @@ namespace ResourceGroups.Tests
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags()
             {
-                TagsValue = new Dictionary<string, string> {
+                TagsValue = {
                     { "tagKey1", "tagValue1" },
                     { "tagKey2", "tagValue2" }
                 }
@@ -151,7 +151,7 @@ namespace ResourceGroups.Tests
 
             var putTags = new Tags()
             {
-                TagsValue = new Dictionary<string, string> {
+                TagsValue = {
                     { "tagKey1", "tagValue3" },
                     { "tagKey3", "tagValue3" }
                 }
@@ -163,7 +163,7 @@ namespace ResourceGroups.Tests
 
                 var expectedResponse = new TagsResource(new Tags()
                 {
-                    TagsValue = new Dictionary<string, string> {
+                    TagsValue = {
                     { "tagKey1", "tagValue3" },
                     { "tagKey2", "tagValue2" },
                     { "tagKey3", "tagValue3" }
@@ -222,7 +222,7 @@ namespace ResourceGroups.Tests
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags()
             {
-                TagsValue = new Dictionary<string, string> {
+                TagsValue = {
                     { "tagKey1", "tagValue1" },
                     { "tagKey2", "tagValue2" }
                 }
@@ -269,7 +269,7 @@ namespace ResourceGroups.Tests
             // using Tags.CreateOrUpdateAtScope to create two tags initially
             var tagsResource = new TagsResource(new Tags()
             {
-                TagsValue = new Dictionary<string, string> {
+                TagsValue = {
                     { "tagKey1", "tagValue1" },
                     { "tagKey2", "tagValue2" }
                 }
@@ -306,7 +306,7 @@ namespace ResourceGroups.Tests
         public void DeleteTagsWithSubscriptionTest()
         {
             // test tags for subscription
-            Assert.IsNull(DeleteTagsTest().Result.Properties.TagsValue);
+            Assert.IsEmpty(DeleteTagsTest().Result.Properties.TagsValue);
         }
 
         /// <summary>

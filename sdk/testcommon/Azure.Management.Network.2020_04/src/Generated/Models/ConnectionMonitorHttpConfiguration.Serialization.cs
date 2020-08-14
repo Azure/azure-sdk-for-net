@@ -16,22 +16,22 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method");
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteStringValue(Path);
             }
-            if (RequestHeaders != null)
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("requestHeaders");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidStatusCodeRanges != null)
+            if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
                 writer.WritePropertyName("validStatusCodeRanges");
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PreferHttps != null)
+            if (Optional.IsDefined(PreferHttps))
             {
                 writer.WritePropertyName("preferHTTPS");
                 writer.WriteBooleanValue(PreferHttps.Value);
@@ -61,94 +61,56 @@ namespace Azure.Management.Network.Models
 
         internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
         {
-            int? port = default;
-            HttpConfigurationMethod? method = default;
-            string path = default;
-            IList<HttpHeader> requestHeaders = default;
-            IList<string> validStatusCodeRanges = default;
-            bool? preferHTTPS = default;
+            Optional<int> port = default;
+            Optional<HttpConfigurationMethod> method = default;
+            Optional<string> path = default;
+            Optional<IList<HttpHeader>> requestHeaders = default;
+            Optional<IList<string>> validStatusCodeRanges = default;
+            Optional<bool> preferHTTPS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     port = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("method"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     method = new HttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("requestHeaders"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<HttpHeader> array = new List<HttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(HttpHeader.DeserializeHttpHeader(item));
-                        }
+                        array.Add(HttpHeader.DeserializeHttpHeader(item));
                     }
                     requestHeaders = array;
                     continue;
                 }
                 if (property.NameEquals("validStatusCodeRanges"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     validStatusCodeRanges = array;
                     continue;
                 }
                 if (property.NameEquals("preferHTTPS"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     preferHTTPS = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ConnectionMonitorHttpConfiguration(port, method, path, requestHeaders, validStatusCodeRanges, preferHTTPS);
+            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS));
         }
     }
 }

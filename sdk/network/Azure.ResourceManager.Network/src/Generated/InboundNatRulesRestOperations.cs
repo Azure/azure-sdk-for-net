@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public InboundNatRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         public async Task<Response<InboundNatRuleListResult>> ListAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -85,14 +86,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
-                        }
+                        value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,6 +98,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         public Response<InboundNatRuleListResult> List(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -123,14 +118,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
-                        }
+                        value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,6 +151,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="inboundNatRuleName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -196,6 +185,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="inboundNatRuleName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -254,6 +244,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="inboundNatRuleName"/> is null. </exception>
         public async Task<Response<InboundNatRule>> GetAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -277,14 +268,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRule.DeserializeInboundNatRule(document.RootElement);
-                        }
+                        value = InboundNatRule.DeserializeInboundNatRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,6 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="inboundNatRuleName"/> is null. </exception>
         public Response<InboundNatRule> Get(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -321,14 +306,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRule.DeserializeInboundNatRule(document.RootElement);
-                        }
+                        value = InboundNatRule.DeserializeInboundNatRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -366,6 +344,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="inboundNatRuleName"/>, or <paramref name="inboundNatRuleParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -403,6 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="inboundNatRuleName"/>, or <paramref name="inboundNatRuleParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -451,6 +431,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
         public async Task<Response<InboundNatRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -474,14 +455,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
-                        }
+                        value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,6 +468,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="loadBalancerName"/> is null. </exception>
         public Response<InboundNatRuleListResult> ListNextPage(string nextLink, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -517,14 +492,7 @@ namespace Azure.ResourceManager.Network
                     {
                         InboundNatRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
-                        }
+                        value = InboundNatRuleListResult.DeserializeInboundNatRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

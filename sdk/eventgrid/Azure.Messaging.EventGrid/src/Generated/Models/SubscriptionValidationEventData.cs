@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionValidationEvent. </summary>
-    internal partial class SubscriptionValidationEventData
+    public partial class SubscriptionValidationEventData
     {
         /// <summary> Initializes a new instance of SubscriptionValidationEventData. </summary>
         internal SubscriptionValidationEventData()
         {
+        }
+
+        /// <summary> Initializes a new instance of SubscriptionValidationEventData. </summary>
+        /// <param name="validationCode"> The validation code sent by Azure Event Grid to validate an event subscription. To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
+        /// <param name="validationUrl"> The validation URL sent by Azure Event Grid (available starting version 2018-05-01-preview). To complete the validation handshake, the subscriber must either respond with the validationCode as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
+        internal SubscriptionValidationEventData(string validationCode, string validationUrl)
+        {
+            ValidationCode = validationCode;
+            ValidationUrl = validationUrl;
         }
 
         /// <summary> The validation code sent by Azure Event Grid to validate an event subscription. To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </summary>

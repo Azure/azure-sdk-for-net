@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public RestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
         {
             if (subscriptionId == null)
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Checks whether the configuration store name is available for use. </summary>
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
         public async Task<Response<NameAvailabilityStatus>> CheckNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityParameters == null)
@@ -87,14 +88,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         NameAvailabilityStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NameAvailabilityStatus.DeserializeNameAvailabilityStatus(document.RootElement);
-                        }
+                        value = NameAvailabilityStatus.DeserializeNameAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,6 +99,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Checks whether the configuration store name is available for use. </summary>
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
         public Response<NameAvailabilityStatus> CheckNameAvailability(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityParameters == null)
@@ -120,14 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         NameAvailabilityStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NameAvailabilityStatus.DeserializeNameAvailabilityStatus(document.RootElement);
-                        }
+                        value = NameAvailabilityStatus.DeserializeNameAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,14 +153,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         OperationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
-                        }
+                        value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +174,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         OperationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
-                        }
+                        value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -224,6 +198,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OperationDefinitionListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -239,14 +214,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         OperationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
-                        }
+                        value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,6 +226,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OperationDefinitionListResult> ListNextPage(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -273,14 +242,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         OperationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
-                        }
+                        value = OperationDefinitionListResult.DeserializeOperationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

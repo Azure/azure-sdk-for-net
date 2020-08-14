@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,16 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TagsObject. </summary>
         public TagsObject()
         {
-        }
-
-        /// <summary> Initializes a new instance of TagsObject. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        internal TagsObject(IDictionary<string, string> tags)
-        {
-            Tags = tags;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

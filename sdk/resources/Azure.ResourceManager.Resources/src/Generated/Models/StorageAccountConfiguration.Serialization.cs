@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName");
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (StorageAccountKey != null)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey");
                 writer.WriteStringValue(StorageAccountKey);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static StorageAccountConfiguration DeserializeStorageAccountConfiguration(JsonElement element)
         {
-            string storageAccountName = default;
-            string storageAccountKey = default;
+            Optional<string> storageAccountName = default;
+            Optional<string> storageAccountKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountKey"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountKey = property.Value.GetString();
                     continue;
                 }
             }
-            return new StorageAccountConfiguration(storageAccountName, storageAccountKey);
+            return new StorageAccountConfiguration(storageAccountName.Value, storageAccountKey.Value);
         }
     }
 }

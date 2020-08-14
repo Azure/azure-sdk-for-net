@@ -246,7 +246,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                 }
                 catch (ServiceBusException ex)
-                when (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+                when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
                 {
                     // these exceptions are expected when no messages are available
                     // so simply return and allow this to be tried again on next thread
@@ -273,6 +273,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             when (!(ex is TaskCanceledException) ||
+            // If the user manually throws a TCE, then we should log it.
             (!_sessionCancellationSource.IsCancellationRequested &&
             // Even though the _sessionCancellationSource is linked to processorCancellationToken,
             // we need to check both here in case the processor token gets cancelled before the
@@ -287,7 +288,7 @@ namespace Azure.Messaging.ServiceBus
                     // as soon as we know the session lock has been lost. Note, we don't have analogous handling
                     // for message locks in ReceiverManager, because there is only ever one thread processing a
                     // single message at one time, so cancelling the token there would serve no purpose.
-                    if (sbException.Reason == ServiceBusException.FailureReason.SessionLockLost)
+                    if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
                         _sessionCancellationSource.Cancel();
                     }

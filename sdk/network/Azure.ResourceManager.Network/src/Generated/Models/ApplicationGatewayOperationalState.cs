@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ApplicationGatewayOperationalState"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayOperationalState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

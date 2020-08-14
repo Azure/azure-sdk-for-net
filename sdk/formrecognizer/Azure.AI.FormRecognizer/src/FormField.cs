@@ -39,14 +39,26 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
             LabelData = null;
 
-            IReadOnlyList<FormElement> FormElement = fieldValue.Elements != null
-                ? ConvertTextReferences(fieldValue.Elements, readResults)
-                : new List<FormElement>();
+            // Bounding box, page and text are not returned by the service in two scenarios:
+            //   - When this field is global and not associated with a specific page (e.g. ReceiptType).
+            //   - When this field is a collection, such as a list or dictionary.
+            //
+            // In these scenarios we do not set a ValueData.
 
-            // TODO: FormEnum<T> ?
-            BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
+            if (fieldValue.BoundingBox.Count == 0 && fieldValue.Page == null && fieldValue.Text == null)
+            {
+                ValueData = null;
+            }
+            else
+            {
+                IReadOnlyList<FormElement> FormElement = ConvertTextReferences(fieldValue.Elements, readResults);
 
-            ValueData = new FieldData(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, FormElement);
+                // TODO: FormEnum<T> ?
+                BoundingBox boundingBox = new BoundingBox(fieldValue.BoundingBox);
+
+                ValueData = new FieldData(fieldValue.Text, fieldValue.Page.Value, boundingBox, FormElement);
+            }
+
             Value = new FieldValue(fieldValue, readResults);
         }
 

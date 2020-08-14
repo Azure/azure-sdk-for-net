@@ -311,11 +311,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='managedInstanceName'>
-            /// The name of the managed instance to failover.
+            /// The name of the managed instance.
             /// </param>
             /// <param name='replicaType'>
             /// The type of replica to be failed over. Possible values include: 'Primary',
@@ -333,11 +332,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='managedInstanceName'>
-            /// The name of the managed instance to failover.
+            /// The name of the managed instance.
             /// </param>
             /// <param name='replicaType'>
             /// The type of replica to be failed over. Possible values include: 'Primary',
@@ -493,11 +491,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='managedInstanceName'>
-            /// The name of the managed instance to failover.
+            /// The name of the managed instance.
             /// </param>
             /// <param name='replicaType'>
             /// The type of replica to be failed over. Possible values include: 'Primary',
@@ -515,11 +512,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='managedInstanceName'>
-            /// The name of the managed instance to failover.
+            /// The name of the managed instance.
             /// </param>
             /// <param name='replicaType'>
             /// The type of replica to be failed over. Possible values include: 'Primary',

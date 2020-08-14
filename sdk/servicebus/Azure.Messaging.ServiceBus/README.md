@@ -25,7 +25,7 @@ Use the client library for Azure Service Bus to:
 - **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
 
   You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
-  
+
   **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
@@ -330,13 +330,13 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 
 Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
 
-```csharp
+```C# Snippet:ServiceBusExceptionFailureReasonUsage
 try
 {
     // Receive messages using the receiver client
 }
-catch (ServiceBusExceptions ex) where 
-    (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+catch (ServiceBusException ex) when
+    (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
 {
     // Take action based on a service timeout
 }

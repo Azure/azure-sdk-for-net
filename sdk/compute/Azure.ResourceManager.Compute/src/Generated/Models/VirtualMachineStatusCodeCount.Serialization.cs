@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineStatusCodeCount DeserializeVirtualMachineStatusCodeCount(JsonElement element)
         {
-            string code = default;
-            int? count = default;
+            Optional<string> code = default;
+            Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("count"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     count = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VirtualMachineStatusCodeCount(code, count);
+            return new VirtualMachineStatusCodeCount(code.Value, Optional.ToNullable(count));
         }
     }
 }

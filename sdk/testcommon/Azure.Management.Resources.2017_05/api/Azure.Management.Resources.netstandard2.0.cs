@@ -389,7 +389,7 @@ namespace Azure.Management.Resources.Models
     {
         public ExportTemplateRequest() { }
         public string Options { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Resources { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Resources { get { throw null; } }
     }
     public partial class GenericResource : Azure.Management.Resources.Models.Resource
     {
@@ -464,7 +464,7 @@ namespace Azure.Management.Resources.Models
         public string Id { get { throw null; } }
         public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class ResourceGroup
@@ -475,7 +475,7 @@ namespace Azure.Management.Resources.Models
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Management.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ResourceGroupExportResult
     {
@@ -495,7 +495,7 @@ namespace Azure.Management.Resources.Models
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Management.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ResourceGroupProperties
     {
@@ -519,7 +519,7 @@ namespace Azure.Management.Resources.Models
     public partial class ResourcesMoveInfo
     {
         public ResourcesMoveInfo() { }
-        public System.Collections.Generic.IList<string> Resources { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Resources { get { throw null; } }
         public string TargetResourceGroup { get { throw null; } set { } }
     }
     public partial class Sku
