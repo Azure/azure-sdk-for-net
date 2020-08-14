@@ -1,8 +1,8 @@
 # Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus
 
-This guide is intended to assist in the migration to version 7 of the Service Bus client library from version 4. It will focus on side-by-side comparisons for similar operations between the v7 package, [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) and v4 package, [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/).
+This guide is intended to assist in the migration to version 7 of the Service Bus client library [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) from version 4 of [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/). It will focus on side-by-side comparisons for similar operations between the two packages. 
 
-Familiarity with the v4 client library is assumed. For those new to the Service Bus client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) for the v7 library rather than this guide.
+Familiarity with the `Microsoft.Azure.ServiceBus` library is assumed. For those new to the Service Bus client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) for the `Azure.Messaging.ServiceBus` library rather than this guide.
 
 ## Table of contents
 
@@ -44,16 +44,18 @@ In the interest of simplifying the API surface we've made a single top level cli
 By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can explore all available features through methods from a single client, as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, using sessions or not, you will start your applications by constructing the same client.
  
 #### Consistency
-Having similar methods to create senders, receivers and receivers for individual sessions on the same client provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows you to make less changes to your code when you want to move from sessions to non-sessions or the other way around.
+Having similarly named and structured methods to create senders, receivers and receivers for individual sessions on the same client provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows you to make less changes to your code when you want to move from sessions to non-sessions or the other way around.
  
 #### Connection Pooling
-By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs. In the previous library `Microsoft.Azure.ServiceBus`, connection sharing was implicit when using the `SessionClient`, but when using other clients, you would need to explicitly pass in a `ServiceBusConnection` object in order to share a connection. By making this connection sharing be implicit to a `ServiceBusClient` instance, we can help ensure that applications will not use multiple connections unless they explicitly opt in by creating multiple `ServiceBusClient` instances.
+By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs. In the previous library `Microsoft.Azure.ServiceBus`, connection sharing was implicit when using the `SessionClient`, but when using other clients, senders or receivers, you would need to explicitly pass in a `ServiceBusConnection` object in order to share a connection. 
+
+By making this connection sharing be implicit to a `ServiceBusClient` instance, we can help ensure that applications will not use multiple connections unless they explicitly opt in by creating multiple `ServiceBusClient` instances. The mental model of 1 client - 1 connection is more intuitive than 1 client/sender/receiver - 1 connection.
  
 
 ### Client constructors
 
-While we continue to support connection strings when constructing a client, the main difference is in using Azure Active Directory.
-We now use the new `Azure.Identity` library to share a single authentication solution between clients of different Azure services.
+While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory.
+We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
 ```cs
 // Create a ServiceBusClient that will authenticate through Active Directory
@@ -84,10 +86,10 @@ MessageSender sender = new MessageSender(connectionString, queueName);
 await sender.SendAsync(message);
 ```
 
-Now in `Azure.Messaging.ServiceBus`, we combine all the send related features under a common class `ServiceBusSender` that you can create from the top level client using the `CreateSender()` method which takes the queue or topic you want to target.
-This provides a one stop shop for all your send related needs. 
+Now in `Azure.Messaging.ServiceBus`, we combine all the send related features under a common class `ServiceBusSender` that you can create from the top level client using the `CreateSender()` method. This method takes the queue or topic you want to target.
+This way, we give you a one stop shop for all your send related needs. 
 
-We continue to support sending bytes in the message. If you are working with strings, you can now create a message directly without having to convert it to bytes first.
+We continue to support sending bytes in the message. Though, if you are working with strings, you can now create a message directly without having to convert it to bytes first.
 
 ```cs
 // create the client
@@ -103,7 +105,7 @@ ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 await sender.SendMessageAsync(message);
 ```
 
-The feature to send a list of messages in a single call was implemneted by batching all the messages into a single AMQP message and sending that to the service.
+The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender.
 To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
 
