@@ -15,52 +15,52 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountEnabled != null)
+            if (Optional.IsDefined(AccountEnabled))
             {
                 writer.WritePropertyName("accountEnabled");
                 writer.WriteBooleanValue(AccountEnabled.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (PasswordProfile != null)
+            if (Optional.IsDefined(PasswordProfile))
             {
                 writer.WritePropertyName("passwordProfile");
                 writer.WriteObjectValue(PasswordProfile);
             }
-            if (UserPrincipalName != null)
+            if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName");
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (MailNickname != null)
+            if (Optional.IsDefined(MailNickname))
             {
                 writer.WritePropertyName("mailNickname");
                 writer.WriteStringValue(MailNickname);
             }
-            if (ImmutableId != null)
+            if (Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId");
                 writer.WriteStringValue(ImmutableId);
             }
-            if (UsageLocation != null)
+            if (Optional.IsDefined(UsageLocation))
             {
                 writer.WritePropertyName("usageLocation");
                 writer.WriteStringValue(UsageLocation);
             }
-            if (GivenName != null)
+            if (Optional.IsDefined(GivenName))
             {
                 writer.WritePropertyName("givenName");
                 writer.WriteStringValue(GivenName);
             }
-            if (Surname != null)
+            if (Optional.IsDefined(Surname))
             {
                 writer.WritePropertyName("surname");
                 writer.WriteStringValue(Surname);
             }
-            if (UserType != null)
+            if (Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType");
                 writer.WriteStringValue(UserType.Value.ToString());

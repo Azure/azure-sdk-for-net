@@ -6,17 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The properties of a packet capture session. </summary>
-    public partial class PacketCaptureResultProperties : PacketCaptureParameters
+    internal partial class PacketCaptureResultProperties : PacketCaptureParameters
     {
         /// <summary> Initializes a new instance of PacketCaptureResultProperties. </summary>
         /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        public PacketCaptureResultProperties(string target, PacketCaptureStorageLocation storageLocation) : base(target, storageLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
+        internal PacketCaptureResultProperties(string target, PacketCaptureStorageLocation storageLocation) : base(target, storageLocation)
         {
             if (target == null)
             {
@@ -26,19 +26,6 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new ArgumentNullException(nameof(storageLocation));
             }
-        }
-
-        /// <summary> Initializes a new instance of PacketCaptureResultProperties. </summary>
-        /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        internal PacketCaptureResultProperties(string target, int? bytesToCapturePerPacket, int? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IList<PacketCaptureFilter> filters, ProvisioningState? provisioningState) : base(target, bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, storageLocation, filters)
-        {
-            ProvisioningState = provisioningState;
         }
 
         /// <summary> The provisioning state of the packet capture session. </summary>

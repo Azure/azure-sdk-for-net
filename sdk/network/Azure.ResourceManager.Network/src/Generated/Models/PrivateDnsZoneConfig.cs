@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,13 +16,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
         public PrivateDnsZoneConfig()
         {
+            RecordSets = new ChangeTrackingList<RecordSet>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
         /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
-        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IList<RecordSet> recordSets)
+        internal PrivateDnsZoneConfig(string name, string privateDnsZoneId, IReadOnlyList<RecordSet> recordSets)
         {
             Name = name;
             PrivateDnsZoneId = privateDnsZoneId;
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id of the private dns zone. </summary>
         public string PrivateDnsZoneId { get; set; }
         /// <summary> A collection of information regarding a recordSet, holding information to identify private resources. </summary>
-        public IList<RecordSet> RecordSets { get; }
+        public IReadOnlyList<RecordSet> RecordSets { get; }
     }
 }

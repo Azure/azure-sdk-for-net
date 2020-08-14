@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
             string path = default;
             PropertyChangeType propertyChangeType = default;
-            object before = default;
-            object after = default;
-            IReadOnlyList<WhatIfPropertyChange> children = default;
+            Optional<object> before = default;
+            Optional<object> after = default;
+            Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -34,45 +34,26 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("before"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     before = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("after"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     after = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("children"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeWhatIfPropertyChange(item));
-                        }
+                        array.Add(DeserializeWhatIfPropertyChange(item));
                     }
                     children = array;
                     continue;
                 }
             }
-            return new WhatIfPropertyChange(path, propertyChangeType, before, after, children);
+            return new WhatIfPropertyChange(path, propertyChangeType, before.Value, after.Value, Optional.ToList(children));
         }
     }
 }

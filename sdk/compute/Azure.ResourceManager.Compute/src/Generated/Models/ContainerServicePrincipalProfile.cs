@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ContainerServicePrincipalProfile. </summary>
         /// <param name="clientId"> The ID for the service principal. </param>
         /// <param name="secret"> The secret password associated with the service principal. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
         public ContainerServicePrincipalProfile(string clientId, string secret)
         {
             if (clientId == null)

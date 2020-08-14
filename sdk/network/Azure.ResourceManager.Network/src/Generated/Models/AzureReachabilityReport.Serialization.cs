@@ -35,14 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureReachabilityReportItem> array = new List<AzureReachabilityReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item));
-                        }
+                        array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item));
                     }
                     reachabilityReport = array;
                     continue;

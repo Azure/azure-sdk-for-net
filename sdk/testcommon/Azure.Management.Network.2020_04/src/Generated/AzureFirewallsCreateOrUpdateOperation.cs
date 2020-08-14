@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         AzureFirewall IOperationSource<AzureFirewall>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return AzureFirewall.DeserializeAzureFirewall(document.RootElement);
-            }
+            return AzureFirewall.DeserializeAzureFirewall(document.RootElement);
         }
 
         async ValueTask<AzureFirewall> IOperationSource<AzureFirewall>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return AzureFirewall.DeserializeAzureFirewall(document.RootElement);
-            }
+            return AzureFirewall.DeserializeAzureFirewall(document.RootElement);
         }
     }
 }

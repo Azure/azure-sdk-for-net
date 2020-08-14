@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
         {
+            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Path rules of URL path map. </summary>
-        public IList<string> Paths { get; set; }
+        public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
         public SubResource BackendAddressPool { get; set; }
         /// <summary> Backend http settings resource of URL path map path rule. </summary>

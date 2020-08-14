@@ -81,6 +81,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualRouterName"/> is null. </exception>
         public virtual AsyncPageable<VirtualRouterPeering> ListAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualRouterName"/> is null. </exception>
         public virtual Pageable<VirtualRouterPeering> List(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -178,6 +180,7 @@ namespace Azure.Management.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<VirtualRouterPeeringsDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -212,6 +215,7 @@ namespace Azure.Management.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual VirtualRouterPeeringsDeleteOperation StartDelete(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, <paramref name="peeringName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualRouterPeeringsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -286,6 +291,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualRouterName"/>, <paramref name="peeringName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualRouterPeeringsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

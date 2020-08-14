@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         internal static GalleryList DeserializeGalleryList(JsonElement element)
         {
             IReadOnlyList<Gallery> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Management.Compute.Models
                     List<Gallery> array = new List<Gallery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Gallery.DeserializeGallery(item));
-                        }
+                        array.Add(Gallery.DeserializeGallery(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new GalleryList(value, nextLink);
+            return new GalleryList(value, nextLink.Value);
         }
     }
 }

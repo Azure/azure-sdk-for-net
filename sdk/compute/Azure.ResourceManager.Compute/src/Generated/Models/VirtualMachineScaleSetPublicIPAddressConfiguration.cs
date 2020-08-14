@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetPublicIPAddressConfiguration(string name)
         {
             if (name == null)
@@ -23,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
+            IpTags = new ChangeTrackingList<VirtualMachineScaleSetIpTag>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineScaleSetIpTag> IpTags { get; set; }
+        public IList<VirtualMachineScaleSetIpTag> IpTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         public SubResource PublicIPPrefix { get; set; }
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
