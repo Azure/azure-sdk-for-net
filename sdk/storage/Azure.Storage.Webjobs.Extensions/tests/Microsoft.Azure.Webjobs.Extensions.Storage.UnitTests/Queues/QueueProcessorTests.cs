@@ -84,7 +84,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
 
             // make the message visible again so we can verify it wasn't deleted
-            await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: TimeSpan.Zero);
+            // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
+            await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, message.MessageText, visibilityTimeout: TimeSpan.Zero);
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.NotNull(message);
@@ -168,7 +169,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             QueueMessage messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             for (int i = 0; i < context.MaxDequeueCount; i++)
             {
-                await _queue.UpdateMessageAsync(messageFromCloud.MessageId, messageFromCloud.PopReceipt, visibilityTimeout: TimeSpan.FromMilliseconds(0));
+                // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
+                await _queue.UpdateMessageAsync(messageFromCloud.MessageId, messageFromCloud.PopReceipt, messageFromCloud.MessageText, visibilityTimeout: TimeSpan.FromMilliseconds(0));
                 messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             }
 

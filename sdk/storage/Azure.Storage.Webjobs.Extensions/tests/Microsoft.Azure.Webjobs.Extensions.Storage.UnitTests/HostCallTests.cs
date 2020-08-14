@@ -593,7 +593,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Theory]
-        [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
+        //[InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)] // TODO (kasobol-msft) do we need this binding?
         [InlineData("FuncWithOutByteArray", TestQueueMessage)]
         [InlineData("FuncWithOutString", TestQueueMessage)]
         [InlineData("FuncWithICollector", TestQueueMessage)]
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Theory]
-        [InlineData("FuncWithOutCloudQueueMessageNull")]
+        // [InlineData("FuncWithOutCloudQueueMessageNull")] // TODO (kasobol-msft) do we need this binding?
         [InlineData("FuncWithOutByteArrayNull")]
         [InlineData("FuncWithOutStringNull")]
         [InlineData("FuncWithICollectorNoop")]
