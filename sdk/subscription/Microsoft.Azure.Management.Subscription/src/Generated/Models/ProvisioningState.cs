@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
 {
 
     /// <summary>
-    /// Defines values for OfferType.
+    /// Defines values for ProvisioningState.
     /// </summary>
-    public static class OfferType
+    public static class ProvisioningState
     {
-        public const string MSAZR0017P = "MS-AZR-0017P";
-        public const string MSAZR0148P = "MS-AZR-0148P";
+        public const string Accepted = "Accepted";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
     }
 }
