@@ -33,7 +33,7 @@ parameters:
 jobs:
   - ${{ each platform in parameters.Platforms }}:
     - job:
-      condition: eq(eq({variables['Record']}, 'true'), eq(${{ platform.TestMode }}, 'Record'))
+      condition: eq(eq(variables['Record'], 'true'), eq(${{ platform.TestMode }}, 'Record'))
       displayName: ${{ platform.DisplayName }}
       variables:
         - template: ../variables/globals.yml
