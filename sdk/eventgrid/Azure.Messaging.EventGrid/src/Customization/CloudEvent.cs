@@ -36,10 +36,23 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudEvent"/> class.
         /// </summary>
+        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
+        public CloudEvent(object data, string source, string type) :
+            this(data, new JsonObjectSerializer(), source, type)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CloudEvent"/> class.
+        /// </summary>
         /// <param name="data"> Event data specific to the event type. </param>
-        public CloudEvent(string source, string type, object data)
+        /// <param name="dataSerializer"> Custom serializer used to serialize the payload. </param>
+        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
+        /// <param name="type"> Type of event related to the originating occurrence. </param>
+        public CloudEvent(object data, ObjectSerializer dataSerializer, string source, string type)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
@@ -48,6 +61,7 @@ namespace Azure.Messaging.EventGrid
             Source = source;
             Type = type;
             Data = data;
+            DataSerializer = dataSerializer ?? new JsonObjectSerializer();
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
@@ -57,10 +71,14 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
         public string Source { get; set; }
 
-        /// <summary>
-        /// Deserialized event data specific to the event type.
-        /// </summary>
+        /// <summary> Deserialized system event data, null if data is custom event payload. </summary>
+        public object SystemData { get; set; }
+
+        /// <summary> Deserialized event data specific to the event type. </summary>
         internal object Data { get; set; }
+
+        /// <summary> Custom serializer used to serialize the payload. </summary>
+        internal ObjectSerializer DataSerializer { get; }
 
         /// <summary> Serialized event data specific to the event type. </summary>
         internal JsonElement? SerializedData { get; set; }
@@ -106,24 +124,43 @@ namespace Azure.Messaging.EventGrid
                 cloudEventsInternal.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
             }
 
+            // Try to deserialize if system event data, otherwise set the serialized data property
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
                 if (cloudEventInternal.Type == null) // case where data/type is null?
                 {
                     cloudEventInternal.Type = "";
                 }
-                cloudEvents.Add(new CloudEvent(
+
+                CloudEvent cloudEvent = new CloudEvent(
                     cloudEventInternal.Source,
                     cloudEventInternal.Type)
                 {
                     Id = cloudEventInternal.Id,
-                    SerializedData = cloudEventInternal.Data,
-                    DataBase64 = cloudEventInternal.DataBase64,
                     Time = cloudEventInternal.Time,
+                    DataBase64 = cloudEventInternal.DataBase64,
                     DataSchema = cloudEventInternal.Dataschema,
                     DataContentType = cloudEventInternal.Datacontenttype,
                     Subject = cloudEventInternal.Subject
-                });
+                };
+
+                if (cloudEventInternal.Data.HasValue && cloudEventInternal.Data.Value.ValueKind != JsonValueKind.Null)
+                {
+                    if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
+                    {
+                        cloudEvent.SystemData = systemDeserializationFunction(cloudEventInternal.Data.Value);
+                    }
+                    else
+                    {
+                        cloudEvent.SerializedData = null;
+                    }
+                }
+                else
+                {
+                    cloudEvent.SerializedData = cloudEventInternal.Data;
+                }
+
+                cloudEvents.Add(cloudEvent);
             }
 
             return cloudEvents.ToArray();
@@ -160,8 +197,13 @@ namespace Azure.Messaging.EventGrid
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
-            if (Data == null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            if (Data != null)
             {
+                return (T)Data;
+            }
+            else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            {
+                // Try to deserialize if system event data
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
                     Data = systemDeserializationFunction(SerializedData.Value);
@@ -180,43 +222,40 @@ namespace Azure.Messaging.EventGrid
                         Data = serializer.Deserialize(dataStream, typeof(T), cancellationToken);
                     }
                 }
-                else
+                else // Data is a string/primitive
                 {
                     Data = cloudEventData;
                 }
+                return (T)Data;
             }
-            return (T)Data;
+            else // Both Data and SerializedData is null
+            {
+                return default;
+            }
         }
 
         /// <summary>
         /// Attempts to deserialize the event payload into a system event type or as binary data.
         /// </summary>
         /// <returns> Deserialized payload of the event. </returns>
-        public object GetData(CancellationToken cancellationToken = default)
+        public BinaryData GetData(CancellationToken cancellationToken = default)
         {
-            if (DataBase64 != null) // binary data case
+            if (Data != null)
             {
-                return DataBase64;
+                return BinaryData.Serialize(Data);
             }
-            if (Data == null && SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            else if (SystemData != null)
             {
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
-                {
-                    Data = systemDeserializationFunction(SerializedData.Value);
-                }
-                // If event data is not a primitive/string, return as BinaryData
-                else if (!TryGetPrimitiveFromJsonElement(SerializedData.Value, out object cloudEventData))
-                {
-                    // Reserialize JsonElement to stream
-                    MemoryStream dataStream = SerializePayloadToStream(SerializedData, new JsonObjectSerializer(), cancellationToken);
-                    Data = BinaryData.FromStream(dataStream);
-                }
-                else
-                {
-                    Data = cloudEventData;
-                }
+                return BinaryData.Serialize(SystemData);
             }
-            return Data;
+            else if (DataBase64 != null)
+            {
+                return new BinaryData(DataBase64);
+            }
+            else // data is stored as JsonElement
+            {
+                return BinaryData.FromStream(SerializePayloadToStream(SerializedData, new JsonObjectSerializer()));
+            }
         }
 
         private static MemoryStream SerializePayloadToStream<T>(T payload, ObjectSerializer serializer, CancellationToken cancellationToken = default)

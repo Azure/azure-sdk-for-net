@@ -19,11 +19,23 @@ namespace Azure.Messaging.EventGrid
     public class EventGridEvent
     {
         /// <summary> Initializes a new instance of EventGridEvent. </summary>
+        /// <param name="data"> Event data specific to the event type. </param>
+        /// <param name="subject"> A resource path relative to the topic path. </param>
+        /// <param name="eventType"> The type of the event that occurred. </param>
+        /// <param name="dataVersion"> The schema version of the data object. </param>
+        public EventGridEvent(object data, string subject, string eventType, string dataVersion) :
+            this(data, new JsonObjectSerializer(), subject, eventType, dataVersion)
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of EventGridEvent. </summary>
+        /// <param name="dataSerializer"> Custom serializer used to serialize the payload. </param>
         /// <param name="subject"> A resource path relative to the topic path. </param>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="eventType"> The type of the event that occurred. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        public EventGridEvent(string subject, object data, string eventType, string dataVersion)
+        public EventGridEvent(object data, ObjectSerializer dataSerializer, string subject, string eventType, string dataVersion)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(data, nameof(data));
@@ -34,6 +46,7 @@ namespace Azure.Messaging.EventGrid
             Data = data;
             EventType = eventType;
             DataVersion = dataVersion;
+            DataSerializer = dataSerializer ?? new JsonObjectSerializer();
         }
 
         internal EventGridEvent()
@@ -47,13 +60,19 @@ namespace Azure.Messaging.EventGrid
         public string Topic { get; set; }
 
         /// <summary> A resource path relative to the topic path. </summary>
-        public string Subject { get; set; }
+        public string Subject { get; internal set; }
+
+        /// <summary> Deserialized system event data, null if data is custom event payload. </summary>
+        public object SystemData { get; set; }
 
         /// <summary> Event data specific to the event type. </summary>
         internal object Data { get; set; }
 
         /// <summary> Serialized event data specific to the event type. </summary>
         internal JsonElement SerializedData { get; set; }
+
+        /// <summary> Custom serializer used to serialize the payload. </summary>
+        internal ObjectSerializer DataSerializer { get; }
 
         /// <summary> The type of the event that occurred. </summary>
         public string EventType { get; set; }
@@ -82,17 +101,27 @@ namespace Azure.Messaging.EventGrid
                 egEventsInternal.Add(EventGridEventInternal.DeserializeEventGridEventInternal(property));
             }
 
+            // Try to deserialize if system event data, otherwise set the serialized data property
             foreach (EventGridEventInternal egEventInternal in egEventsInternal)
             {
-                egEvents.Add(new EventGridEvent()
+                EventGridEvent egEvent = new EventGridEvent()
                 {
                     Subject = egEventInternal.Subject,
-                    SerializedData = egEventInternal.Data,
                     EventType = egEventInternal.EventType,
                     DataVersion = egEventInternal.DataVersion,
                     Id = egEventInternal.Id,
                     EventTime = egEventInternal.EventTime
-                });
+                };
+
+                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
+                {
+                    egEvent.SystemData = systemDeserializationFunction(egEventInternal.Data);
+                }
+                else
+                {
+                    egEvent.SerializedData = egEventInternal.Data;
+                }
+                egEvents.Add(egEvent);
             }
 
             return egEvents.ToArray();
@@ -129,8 +158,17 @@ namespace Azure.Messaging.EventGrid
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
-            if (Data == null)
+            if (Data != null)
             {
+                return (T)Data;
+            }
+            else if (SystemData != null)
+            {
+                return (T)SystemData;
+            }
+            else
+            {
+                // Try to deserialize if system event data
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
                 {
                     Data = systemDeserializationFunction(SerializedData);
@@ -149,39 +187,32 @@ namespace Azure.Messaging.EventGrid
                         Data = serializer.Deserialize(dataStream, typeof(T), cancellationToken);
                     }
                 }
-                else
+                else // Data is a string/primitive
                 {
                     Data = cloudEventData;
                 }
+                return (T)Data;
             }
-            return (T)Data;
         }
 
         /// <summary>
-        /// Attempts to deserialize the event payload into a system event type or as binary data.
+        /// Returns payload of the event wrapped as BinaryData.
         /// </summary>
-        /// <returns> Deserialized payload of the event. </returns>
-        public object GetData(CancellationToken cancellationToken = default)
+        /// <returns> Payload of the event wrapped as BinaryData. </returns>
+        public BinaryData GetData(CancellationToken cancellationToken = default)
         {
-            if (Data == null)
+            if (Data != null)
             {
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
-                {
-                    Data = systemDeserializationFunction(SerializedData);
-                }
-                // If event data is not a primitive/string, return as BinaryData
-                else if (!TryGetPrimitiveFromJsonElement(SerializedData, out object cloudEventData))
-                {
-                    // Reserialize JsonElement to stream
-                    MemoryStream dataStream = SerializePayloadToStream(SerializedData, new JsonObjectSerializer(), cancellationToken);
-                    Data = BinaryData.FromStream(dataStream);
-                }
-                else
-                {
-                    Data = cloudEventData;
-                }
+                return BinaryData.Serialize(Data);
             }
-            return Data;
+            else if (SystemData != null)
+            {
+                return BinaryData.Serialize(SystemData);
+            }
+            else // data is stored as JsonElement
+            {
+                return BinaryData.FromStream(SerializePayloadToStream(SerializedData, new JsonObjectSerializer()));
+            }
         }
 
         private static MemoryStream SerializePayloadToStream<T>(T payload, ObjectSerializer serializer, CancellationToken cancellationToken = default)
