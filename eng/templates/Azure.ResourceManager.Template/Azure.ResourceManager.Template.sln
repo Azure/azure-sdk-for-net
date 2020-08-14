@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FC7B9325-C8EA-4740-AB3B-723EB6549AAD}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3123B983-4452-4B29-8E9A-849867BEC1E6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Template", "src\Azure.ResourceManager.Template.csproj", "{61FB8E18-94E3-4A8F-B6B3-E765F85000F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Template.Tests", "tests\Azure.ResourceManager.Template.Tests.csproj", "{11EAD7A0-B5E6-4145-B1F1-37A2D9091E07}"
@@ -25,18 +23,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|x64.Build.0 = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Debug|x86.Build.0 = Debug|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|x64.ActiveCfg = Release|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|x64.Build.0 = Release|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|x86.ActiveCfg = Release|Any CPU
-		{3123B983-4452-4B29-8E9A-849867BEC1E6}.Release|x86.Build.0 = Release|Any CPU
 		{61FB8E18-94E3-4A8F-B6B3-E765F85000F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61FB8E18-94E3-4A8F-B6B3-E765F85000F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61FB8E18-94E3-4A8F-B6B3-E765F85000F5}.Debug|x64.ActiveCfg = Debug|Any CPU

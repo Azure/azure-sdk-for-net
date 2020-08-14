@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint");
                 writer.WriteStringValue(Thumbprint);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnServerConfigVpnClientRevokedCertificate DeserializeVpnServerConfigVpnClientRevokedCertificate(JsonElement element)
         {
-            string name = default;
-            string thumbprint = default;
+            Optional<string> name = default;
+            Optional<string> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("thumbprint"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     thumbprint = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnServerConfigVpnClientRevokedCertificate(name, thumbprint);
+            return new VpnServerConfigVpnClientRevokedCertificate(name.Value, thumbprint.Value);
         }
     }
 }

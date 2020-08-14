@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,19 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSProfile. </summary>
         public VirtualMachineScaleSetUpdateOSProfile()
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSProfile. </summary>
-        /// <param name="customData"> A base-64 encoded string of custom data. </param>
-        /// <param name="windowsConfiguration"> The Windows Configuration of the OS profile. </param>
-        /// <param name="linuxConfiguration"> The Linux Configuration of the OS profile. </param>
-        /// <param name="secrets"> The List of certificates for addition to the VM. </param>
-        internal VirtualMachineScaleSetUpdateOSProfile(string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets)
-        {
-            CustomData = customData;
-            WindowsConfiguration = windowsConfiguration;
-            LinuxConfiguration = linuxConfiguration;
-            Secrets = secrets;
+            Secrets = new ChangeTrackingList<VaultSecretGroup>();
         }
 
         /// <summary> A base-64 encoded string of custom data. </summary>
@@ -37,6 +26,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The Linux Configuration of the OS profile. </summary>
         public LinuxConfiguration LinuxConfiguration { get; set; }
         /// <summary> The List of certificates for addition to the VM. </summary>
-        public IList<VaultSecretGroup> Secrets { get; set; }
+        public IList<VaultSecretGroup> Secrets { get; }
     }
 }

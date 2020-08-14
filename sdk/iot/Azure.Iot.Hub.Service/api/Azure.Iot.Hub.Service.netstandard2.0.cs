@@ -72,6 +72,7 @@ namespace Azure.Iot.Hub.Service
         public virtual Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.CloudToDeviceMessagesClient Messages { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.ModulesClient Modules { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.QueryClient Query { get { throw null; } }
         public virtual Azure.Iot.Hub.Service.StatisticsClient Statistics { get { throw null; } }
     }
     public partial class IotHubServiceClientOptions : Azure.Core.ClientOptions
@@ -116,6 +117,12 @@ namespace Azure.Iot.Hub.Service
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> UpdateTwinAsync(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> UpdateTwins(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> UpdateTwinsAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class QueryClient
+    {
+        protected QueryClient() { }
+        public virtual Azure.Pageable<Azure.Iot.Hub.Service.Models.TwinData> Query(string query, int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.Hub.Service.Models.TwinData> QueryAsync(string query, int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StatisticsClient
     {

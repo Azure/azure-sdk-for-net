@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,11 +17,10 @@ namespace Azure.Iot.Hub.Service
     /// </summary>
     public class DevicesClient
     {
-        private const string ContinuationTokenHeader = "x-ms-continuation";
         private const string HubDeviceQuery = "select * from devices";
 
         private readonly DevicesRestClient _devicesRestClient;
-        private readonly QueryRestClient _queryRestClient;
+        private readonly QueryClient _queryClient;
 
         /// <summary>
         /// Initializes a new instance of DevicesClient.
@@ -34,15 +32,15 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Initializes a new instance of DevicesClient.
         /// <param name="devicesRestClient"> The REST client to perform device, device twin, and bulk operations. </param>
-        /// <param name="queryRestClient"> The REST client to perform query operations for the device. </param>
+        /// <param name="queryClient"> The convenience layer query client to perform query operations for the device. </param>
         /// </summary>
-        internal DevicesClient(DevicesRestClient devicesRestClient, QueryRestClient queryRestClient)
+        internal DevicesClient(DevicesRestClient devicesRestClient, QueryClient queryClient)
         {
             Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
-            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
+            Argument.AssertNotNull(queryClient, nameof(queryClient));
 
             _devicesRestClient = devicesRestClient;
-            _queryRestClient = queryRestClient;
+            _queryClient = queryClient;
         }
 
         /// <summary>
@@ -388,90 +386,29 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// List a set of device twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of device twins. To get a subset of device twins, you can use the <see cref="QueryClient.QueryAsync(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of device twins <see cref="AsyncPageable{T}"/>.</returns>
         public virtual AsyncPageable<TwinData> GetTwinsAsync(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TwinData>> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
-                    querySpecification,
-                    null,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification()
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = await _queryRestClient.GetTwinsAsync(
-                    querySpecification,
-                    nextLink,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken).ConfigureAwait(false);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.QueryAsync(HubDeviceQuery, pageSize, cancellationToken);
         }
 
         /// <summary>
         /// List a set of device twins.
         /// </summary>
+        /// <remarks>
+        /// This service request returns the full set of device twins. To get a subset of device twins, you can use the <see cref="QueryClient.Query(string, int?, CancellationToken)">query API</see> that this method uses but with additional qualifiers for selection.
+        /// </remarks>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of device twins <see cref="Pageable{T}"/>.</returns>
         public virtual Pageable<TwinData> GetTwins(int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            Page<TwinData> FirstPageFunc(int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification
-                {
-                    Query = HubDeviceQuery
-                };
-
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    null,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var querySpecification = new QuerySpecification()
-                {
-                    Query = HubDeviceQuery
-                };
-                Response<IReadOnlyList<TwinData>> response = _queryRestClient.GetTwins(
-                    querySpecification,
-                    nextLink,
-                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
-                    cancellationToken);
-
-                response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
-                return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc, pageSize);
+            return _queryClient.Query(HubDeviceQuery, pageSize, cancellationToken);
         }
 
         /// <summary>

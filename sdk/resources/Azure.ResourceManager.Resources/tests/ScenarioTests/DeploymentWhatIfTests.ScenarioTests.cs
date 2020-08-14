@@ -121,7 +121,7 @@ namespace ResourceGroups.Tests
                 Assert.AreEqual(ChangeType.Create, change.ChangeType);
                 Assert.Null(change.Before);
                 Assert.Null(change.After);
-                Assert.Null(change.Delta);
+                Assert.IsEmpty(change.Delta);
             }
         }
         [Test]
@@ -328,7 +328,7 @@ namespace ResourceGroups.Tests
                 Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                 Assert.Null(change.Before);
                 Assert.Null(change.After);
-                Assert.Null(change.Delta);
+                Assert.IsEmpty(change.Delta);
             }
         }
 

@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ApplicationDefinitionListResult DeserializeApplicationDefinitionListResult(JsonElement element)
         {
-            IReadOnlyList<ApplicationDefinition> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ApplicationDefinition>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationDefinition> array = new List<ApplicationDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationDefinition.DeserializeApplicationDefinition(item));
-                        }
+                        array.Add(ApplicationDefinition.DeserializeApplicationDefinition(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationDefinitionListResult(value, nextLink);
+            return new ApplicationDefinitionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

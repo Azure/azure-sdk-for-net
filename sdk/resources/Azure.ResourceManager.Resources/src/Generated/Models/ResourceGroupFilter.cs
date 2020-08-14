@@ -15,15 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupFilter. </summary>
-        /// <param name="tagName"> The tag name. </param>
-        /// <param name="tagValue"> The tag value. </param>
-        internal ResourceGroupFilter(string tagName, string tagValue)
-        {
-            TagName = tagName;
-            TagValue = tagValue;
-        }
-
         /// <summary> The tag name. </summary>
         public string TagName { get; }
         /// <summary> The tag value. </summary>

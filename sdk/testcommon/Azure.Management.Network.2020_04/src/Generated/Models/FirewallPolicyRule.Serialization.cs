@@ -17,12 +17,12 @@ namespace Azure.Management.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleType");
             writer.WriteStringValue(RuleType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteNumberValue(Priority.Value);
@@ -41,8 +41,8 @@ namespace Azure.Management.Network.Models
                 }
             }
             FirewallPolicyRuleType ruleType = default;
-            string name = default;
-            int? priority = default;
+            Optional<string> name = default;
+            Optional<int> priority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleType"))
@@ -52,24 +52,16 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FirewallPolicyRule(ruleType, name, priority);
+            return new FirewallPolicyRule(ruleType, name.Value, Optional.ToNullable(priority));
         }
     }
 }

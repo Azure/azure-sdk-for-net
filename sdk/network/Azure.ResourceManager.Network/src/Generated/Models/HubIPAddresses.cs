@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -13,22 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     public partial class HubIPAddresses
     {
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
-        public HubIPAddresses()
+        internal HubIPAddresses()
         {
+            PublicIPAddresses = new ChangeTrackingList<AzureFirewallPublicIPAddress>();
         }
 
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
         /// <param name="publicIPAddresses"> List of Public IP addresses associated with azure firewall. </param>
         /// <param name="privateIPAddress"> Private IP Address associated with azure firewall. </param>
-        internal HubIPAddresses(IList<AzureFirewallPublicIPAddress> publicIPAddresses, string privateIPAddress)
+        internal HubIPAddresses(IReadOnlyList<AzureFirewallPublicIPAddress> publicIPAddresses, string privateIPAddress)
         {
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> List of Public IP addresses associated with azure firewall. </summary>
-        public IList<AzureFirewallPublicIPAddress> PublicIPAddresses { get; set; }
+        public IReadOnlyList<AzureFirewallPublicIPAddress> PublicIPAddresses { get; }
         /// <summary> Private IP Address associated with azure firewall. </summary>
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIPAddress { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
         public VirtualHubRoute()
         {
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of all addressPrefixes. </summary>
-        public IList<string> AddressPrefixes { get; set; }
+        public IList<string> AddressPrefixes { get; }
         /// <summary> NextHop ip address. </summary>
         public string NextHopIpAddress { get; set; }
     }

@@ -242,6 +242,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all private link services in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<PrivateLinkService> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -285,6 +286,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all private link services in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<PrivateLinkService> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -403,6 +405,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public virtual AsyncPageable<PrivateEndpointConnection> ListPrivateEndpointConnectionsAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -451,6 +454,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public virtual Pageable<PrivateEndpointConnection> ListPrivateEndpointConnections(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -498,6 +502,7 @@ namespace Azure.Management.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -541,6 +546,7 @@ namespace Azure.Management.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServices(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -585,6 +591,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -633,6 +640,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -681,6 +689,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<PrivateLinkServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -710,6 +719,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public virtual PrivateLinkServicesDeleteOperation StartDelete(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -740,6 +750,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<PrivateLinkServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -774,6 +785,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual PrivateLinkServicesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -808,6 +820,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<PrivateLinkServicesDeletePrivateEndpointConnectionOperation> StartDeletePrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -842,6 +855,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public virtual PrivateLinkServicesDeletePrivateEndpointConnectionOperation StartDeletePrivateEndpointConnection(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

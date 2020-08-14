@@ -1,8 +1,12 @@
 # Release History
 
-## 12.3.0-preview.3 (Unreleased)
+## 12.4.0-preview.1 (Unreleased)
+
+
+## 12.3.0 (2020-08-13)
 - Fixed bug where ShareClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in ShareAccessPolicy
 - Added nullable properties, PolicyStartsOn and PolicyExpiresOn to ShareAccessPolicy
+- Added ShareFileClient.OpenWrite().
 
 ## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.

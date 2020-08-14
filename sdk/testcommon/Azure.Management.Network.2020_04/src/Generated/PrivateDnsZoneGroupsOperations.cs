@@ -81,6 +81,7 @@ namespace Azure.Management.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<PrivateDnsZoneGroup> ListAsync(string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
@@ -129,6 +130,7 @@ namespace Azure.Management.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<PrivateDnsZoneGroup> List(string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (privateEndpointName == null)
@@ -178,6 +180,7 @@ namespace Azure.Management.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual async Task<PrivateDnsZoneGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -212,6 +215,7 @@ namespace Azure.Management.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual PrivateDnsZoneGroupsDeleteOperation StartDelete(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +251,7 @@ namespace Azure.Management.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<PrivateDnsZoneGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -286,6 +291,7 @@ namespace Azure.Management.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual PrivateDnsZoneGroupsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

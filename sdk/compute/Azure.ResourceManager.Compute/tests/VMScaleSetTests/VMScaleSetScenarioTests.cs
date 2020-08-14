@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Compute.Tests
 
 
             ////TODO
-            OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Suspend);
+            OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(OrchestrationServiceNames.AutomaticRepairs, OrchestrationServiceStateAction.Suspend);
             //OrchestrationServiceStateAction orchestrationServiceStateAction = new OrchestrationServiceStateAction();
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
 
             getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
             Assert.AreEqual(OrchestrationServiceState.Suspended.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
 
-            orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Resume);
+            orchestrationServiceStateInput = new OrchestrationServiceStateInput(OrchestrationServiceNames.AutomaticRepairs, OrchestrationServiceStateAction.Resume);
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
             getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
             Assert.AreEqual(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
@@ -316,8 +316,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                {
+                Extensions = {
                     GetTestVMSSVMExtension(),
                 }
             };
