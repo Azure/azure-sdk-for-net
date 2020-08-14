@@ -4,7 +4,7 @@
 
 
 ## 12.3.0 (2020-08-13)
-- Includes all features from 12.3.0-preview.1.
+- Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
 - Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy
 - Added nullable properties, PolicyStartsOn and PolicyExpiresOn to DataLakeAccessPolicy
 - Added DataLakeFileClient.OpenWrite().
