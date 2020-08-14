@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    internal class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
         /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync"/> in the case that

@@ -70,7 +70,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{response.Value.DeviceId}', ETag: '{response.Value.Etag}'");
 
-                #endregion Snippet: IotHubCreateDeviceIdentity
+                #endregion Snippet:IotHubCreateDeviceIdentity
 
                 return response.Value;
             }

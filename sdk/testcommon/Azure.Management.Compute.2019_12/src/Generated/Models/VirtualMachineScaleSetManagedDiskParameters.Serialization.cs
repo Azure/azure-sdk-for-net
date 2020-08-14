@@ -15,12 +15,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (DiskEncryptionSet != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet");
                 writer.WriteObjectValue(DiskEncryptionSet);
@@ -30,30 +30,22 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineScaleSetManagedDiskParameters DeserializeVirtualMachineScaleSetManagedDiskParameters(JsonElement element)
         {
-            StorageAccountTypes? storageAccountType = default;
-            SubResource diskEncryptionSet = default;
+            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<SubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetManagedDiskParameters(storageAccountType, diskEncryptionSet);
+            return new VirtualMachineScaleSetManagedDiskParameters(Optional.ToNullable(storageAccountType), diskEncryptionSet.Value);
         }
     }
 }

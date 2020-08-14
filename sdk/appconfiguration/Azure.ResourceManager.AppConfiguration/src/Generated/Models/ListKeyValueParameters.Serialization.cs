@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("key");
             writer.WriteStringValue(Key);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label");
                 writer.WriteStringValue(Label);

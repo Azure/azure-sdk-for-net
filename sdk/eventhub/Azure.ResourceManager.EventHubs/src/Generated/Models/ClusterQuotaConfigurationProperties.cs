@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
         public ClusterQuotaConfigurationProperties()
         {
+            Settings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </summary>
-        public IDictionary<string, string> Settings { get; set; }
+        public IDictionary<string, string> Settings { get; }
     }
 }

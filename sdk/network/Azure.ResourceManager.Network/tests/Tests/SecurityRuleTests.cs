@@ -48,8 +48,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup()
             {
                 Location = location,
-                SecurityRules = new List<SecurityRule>()
-                {
+                SecurityRules = {
                     new SecurityRule()
                     {
                         Name = securityRule1,

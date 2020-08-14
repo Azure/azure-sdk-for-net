@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("variableName");
             writer.WriteStringValue(VariableName.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector");
                 writer.WriteStringValue(Selector);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static MatchVariable DeserializeMatchVariable(JsonElement element)
         {
             WebApplicationFirewallMatchVariable variableName = default;
-            string selector = default;
+            Optional<string> selector = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variableName"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("selector"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     selector = property.Value.GetString();
                     continue;
                 }
             }
-            return new MatchVariable(variableName, selector);
+            return new MatchVariable(variableName, selector.Value);
         }
     }
 }

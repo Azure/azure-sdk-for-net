@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SVpnGateway. </summary>
         public P2SVpnGateway()
         {
+            P2SConnectionConfigurations = new ChangeTrackingList<P2SConnectionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of P2SVpnGateway. </summary>
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
         public SubResource VirtualHub { get; set; }
         /// <summary> List of all p2s connection configurations of the gateway. </summary>
-        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; set; }
+        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the P2S VPN gateway resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The scale unit for this p2s vpn gateway. </summary>

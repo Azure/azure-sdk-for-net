@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
         /// <param name="name"> The network configuration name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetNetworkConfiguration(string name)
         {
             if (name == null)
@@ -23,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
+            IpConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }
+        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; }
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
     }

@@ -194,6 +194,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all public IP prefixes in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<PublicIPPrefix> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -237,6 +238,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all public IP prefixes in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<PublicIPPrefix> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -281,6 +283,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpPrefixName"> The name of the PublicIpPrefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpPrefixName"/> is null. </exception>
         public virtual async Task<PublicIPPrefixesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpPrefixName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +313,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpPrefixName"> The name of the PublicIpPrefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpPrefixName"/> is null. </exception>
         public virtual PublicIPPrefixesDeleteOperation StartDelete(string resourceGroupName, string publicIpPrefixName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -340,6 +344,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<PublicIPPrefixesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpPrefixName, PublicIPPrefix parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -374,6 +379,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpPrefixName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual PublicIPPrefixesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string publicIpPrefixName, PublicIPPrefix parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

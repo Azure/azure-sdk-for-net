@@ -1,5 +1,9 @@
 # Release History
 
+## 1.3.0-preview.1 (Unreleased)
+
+- Restoring Application Authentication APIs from 1.2.0-preview.6
+
 ## 1.2.0 (2020-08-10)
 
 ### Breaking Changes

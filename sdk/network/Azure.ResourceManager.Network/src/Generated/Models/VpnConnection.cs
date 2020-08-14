@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnConnection. </summary>
         public VpnConnection()
         {
+            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnection>();
         }
 
         /// <summary> Initializes a new instance of VpnConnection. </summary>
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; set; }
+        public IList<IpsecPolicy> IpsecPolicies { get; }
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableRateLimiting { get; set; }
         /// <summary> Enable internet security. </summary>
@@ -100,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the VPN connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> List of all vpn site link connections to the gateway. </summary>
-        public IList<VpnSiteLinkConnection> VpnLinkConnections { get; set; }
+        public IList<VpnSiteLinkConnection> VpnLinkConnections { get; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
     }

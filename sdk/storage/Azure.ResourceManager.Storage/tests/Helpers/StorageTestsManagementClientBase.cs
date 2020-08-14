@@ -89,10 +89,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Kind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocation;
 
-            StorageAccountCreateParameters account = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters)
-            {
-                Tags = DefaultTags,
-            };
+            StorageAccountCreateParameters account = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
+            account.Tags.InitializeFrom(DefaultTags);
+
             return account;
         }
 

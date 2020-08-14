@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         VpnClientIPsecParameters IOperationSource<VpnClientIPsecParameters>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);
-            }
+            return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);
         }
 
         async ValueTask<VpnClientIPsecParameters> IOperationSource<VpnClientIPsecParameters>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);
-            }
+            return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);
         }
     }
 }

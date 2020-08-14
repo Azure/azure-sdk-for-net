@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterfaceIpConfiguration
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceIpConfiguration. </summary>
-        public ContainerNetworkInterfaceIpConfiguration()
+        internal ContainerNetworkInterfaceIpConfiguration()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the resource. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Sub Resource type. </summary>
         public string Type { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyAssignment. </summary>
         public PolicyAssignment()
         {
+            NotScopes = new ChangeTrackingList<string>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
         }
 
         /// <summary> Initializes a new instance of PolicyAssignment. </summary>
@@ -69,9 +72,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The scope for the policy assignment. </summary>
         public string Scope { get; set; }
         /// <summary> The policy&apos;s excluded scopes. </summary>
-        public IList<string> NotScopes { get; set; }
+        public IList<string> NotScopes { get; }
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; set; }
+        public IDictionary<string, ParameterValuesValue> Parameters { get; }
         /// <summary> This message will be part of response in case of policy violation. </summary>
         public string Description { get; set; }
         /// <summary> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </summary>
