@@ -29,16 +29,16 @@ if ($NoWait)
 }
 else
 {
-    $allCompleted = $true;
     do
     {
+        $allCompleted = $true;
         $builds = az pipelines runs list @commonParameter --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
 
         foreach ($build in $builds)
         {
             if ($build.status -ne "completed")
             {
-                Write-Host "Waiting for '$($build.definition.name)' to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+                Write-Host "Waiting for '$($build.definition.name)' ($($build.status)) to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
                 $allCompleted = $false;
             }
         }

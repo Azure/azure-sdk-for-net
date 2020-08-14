@@ -6,6 +6,8 @@
         The GitHub pull request id. For example 14153
     .PARAMETER SDKs
         A set of directories under sdk to rerecord. For example iot, tables, storage
+    .PARAMETER NoCancel
+        When set doesn't cancel existing recording runs.
 
     .EXAMPLE
     .\eng\scripts\Start-DevOpsRecordings.ps1 14153 iot tables
@@ -13,23 +15,27 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$True)][int] $PR,
-    [Parameter(Mandatory=$True, ValueFromRemainingArguments=$true)][string[]]$SDKs)
+    [Parameter(Mandatory=$True, ValueFromRemainingArguments=$true)][string[]]$SDKs,
+    [switch] $NoCancel = $false)
 
 
 $invokeParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 $commonParameters =  $invokeParameter + @( "--project", "internal")
 
-$builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
-
-$cancelPatchFile = New-TemporaryFile;
-"{`"status`": `"Cancelling`"}" > $cancelPatchFile;
-
-foreach ($build in $builds)
+if (!NoCancel)
 {
-    if ($build.status -ne "completed")
+    $builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
+
+    $cancelPatchFile = New-TemporaryFile;
+    "{`"status`": `"Cancelling`"}" > $cancelPatchFile;
+
+    foreach ($build in $builds)
     {
-        Write-Warning "Cancelling existing recording run '$($build.definition.name)' before we start recordings - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
-        az devops invoke @invokeParameter --area build --resource builds --route-parameters "buildId=$($build.id)" project=internal --in-file $cancelPatchFile --http-method patch > $null;
+        if ($build.status -ne "completed")
+        {
+            Write-Warning "Cancelling existing recording run '$($build.definition.name)' before we start recordings - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+            az devops invoke @invokeParameter --area build --resource builds --route-parameters "buildId=$($build.id)" project=internal --in-file $cancelPatchFile --http-method patch > $null;
+        }
     }
 }
 
