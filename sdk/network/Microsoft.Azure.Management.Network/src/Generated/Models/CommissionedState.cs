@@ -12,11 +12,15 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyIntrusionSystemMode.
+    /// Defines values for CommissionedState.
     /// </summary>
-    public static class FirewallPolicyIntrusionSystemMode
+    public static class CommissionedState
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string Provisioning = "Provisioning";
+        public const string Provisioned = "Provisioned";
+        public const string Commissioning = "Commissioning";
+        public const string Commissioned = "Commissioned";
+        public const string Decommissioning = "Decommissioning";
+        public const string Deprovisioning = "Deprovisioning";
     }
 }
