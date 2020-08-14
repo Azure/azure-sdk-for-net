@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
         {
-            IReadOnlyList<DocumentSentiment> documents = default;
+            IReadOnlyList<DocumentSentiment_internal> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -24,10 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentSentiment> array = new List<DocumentSentiment>();
+                    List<DocumentSentiment_internal> array = new List<DocumentSentiment_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSentiment.DeserializeDocumentSentiment(item));
+                        array.Add(DocumentSentiment_internal.DeserializeDocumentSentiment_internal(item));
                     }
                     documents = array;
                     continue;

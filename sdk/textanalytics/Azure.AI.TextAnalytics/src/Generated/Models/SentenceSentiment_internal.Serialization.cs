@@ -7,17 +7,18 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceSentiment
+    internal partial struct SentenceSentiment_internal
     {
-        internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element)
+        internal static SentenceSentiment_internal DeserializeSentenceSentiment_internal(JsonElement element)
         {
             string text = default;
-            SentenceSentimentValue sentiment = default;
-            SentimentConfidenceScorePerLabel confidenceScores = default;
+            string sentiment = default;
+            SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
             Optional<IReadOnlyList<SentenceAspect>> aspects = default;
@@ -31,12 +32,12 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString().ToSentenceSentimentValue();
+                    sentiment = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = SentimentConfidenceScorePerLabel.DeserializeSentimentConfidenceScorePerLabel(property.Value);
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offset"))
@@ -70,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, Optional.ToList(aspects), Optional.ToList(opinions));
+            return new SentenceSentiment_internal(text, sentiment, confidenceScores, offset, length, Optional.ToList(aspects), Optional.ToList(opinions));
         }
     }
 }

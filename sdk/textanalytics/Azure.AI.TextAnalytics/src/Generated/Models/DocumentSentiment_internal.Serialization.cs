@@ -12,15 +12,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentSentiment
+    internal partial struct DocumentSentiment_internal
     {
-        internal static DocumentSentiment DeserializeDocumentSentiment(JsonElement element)
+        internal static DocumentSentiment_internal DeserializeDocumentSentiment_internal(JsonElement element)
         {
             string id = default;
-            DocumentSentimentValue sentiment = default;
+            TextSentiment sentiment = default;
             Optional<TextDocumentStatistics> statistics = default;
-            SentimentConfidenceScorePerLabel confidenceScores = default;
-            IReadOnlyList<SentenceSentiment> sentences = default;
+            SentimentConfidenceScores confidenceScores = default;
+            IReadOnlyList<SentenceSentiment_internal> sentences = default;
             IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString().ToDocumentSentimentValue();
+                    sentiment = property.Value.GetString().ToTextSentiment();
                     continue;
                 }
                 if (property.NameEquals("statistics"))
@@ -41,15 +41,15 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = SentimentConfidenceScorePerLabel.DeserializeSentimentConfidenceScorePerLabel(property.Value);
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sentences"))
                 {
-                    List<SentenceSentiment> array = new List<SentenceSentiment>();
+                    List<SentenceSentiment_internal> array = new List<SentenceSentiment_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceSentiment.DeserializeSentenceSentiment(item));
+                        array.Add(SentenceSentiment_internal.DeserializeSentenceSentiment_internal(item));
                     }
                     sentences = array;
                     continue;
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
+            return new DocumentSentiment_internal(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
         }
     }
 }
