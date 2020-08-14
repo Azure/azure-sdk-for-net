@@ -29,6 +29,7 @@ parameters:
 
 jobs:
   - job: "Test"
+    condition: and(ne("$(TestMode)", 'Record'), eq(variables["Record"]))
     variables:
       - template: ../variables/globals.yml
       - name: SubscriptionConfiguration
