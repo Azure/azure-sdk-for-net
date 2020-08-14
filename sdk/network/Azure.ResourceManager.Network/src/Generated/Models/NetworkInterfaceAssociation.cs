@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         internal NetworkInterfaceAssociation()
         {
+            SecurityRules = new ChangeTrackingList<SecurityRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>

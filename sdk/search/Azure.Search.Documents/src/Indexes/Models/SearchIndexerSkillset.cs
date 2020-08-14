@@ -21,7 +21,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> A list of skills in the skillset. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<SearchIndexerSkill> Skills { get; }
     }
 }

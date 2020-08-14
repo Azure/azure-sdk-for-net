@@ -48,7 +48,7 @@ namespace Azure.Iot.Hub.Service.Authentication
             // SharedAccessSignature sr=ENCODED(dh://myiothub.azure-devices.net/a/b/c?myvalue1=a)&sig=<Signature>&se=<ExpiresOnValue>[&skn=<KeyName>]
 
             var buffer = new StringBuilder();
-            buffer.Append($"{SharedAccessSignatureConstants.SharedAccessSignature} " +
+            buffer.Append($"{SharedAccessSignatureConstants.SharedAccessSignatureIdentifier} " +
                 $"{SharedAccessSignatureConstants.AudienceFieldName}={audience}" +
                 $"&{SharedAccessSignatureConstants.SignatureFieldName}={WebUtility.UrlEncode(signature)}" +
                 $"&{SharedAccessSignatureConstants.ExpiryFieldName}={WebUtility.UrlEncode(expiresOn)}");
@@ -64,7 +64,7 @@ namespace Azure.Iot.Hub.Service.Authentication
         private static string BuildExpiresOn(TimeSpan timeToLive)
         {
             DateTimeOffset expiresOn = DateTimeOffset.UtcNow.Add(timeToLive);
-            TimeSpan secondsFromBaseTime = expiresOn.Subtract(SharedAccessSignatureConstants.EpochTime);
+            TimeSpan secondsFromBaseTime = expiresOn.Subtract(SharedAccessSignatureConstants.s_epochTime);
             long seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
             return Convert.ToString(seconds, CultureInfo.InvariantCulture);
         }

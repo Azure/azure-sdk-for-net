@@ -15,42 +15,27 @@ namespace Azure.Management.Network.Models
     {
         internal static NetworkInterfaceTapConfigurationListResult DeserializeNetworkInterfaceTapConfigurationListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkInterfaceTapConfiguration> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkInterfaceTapConfiguration>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkInterfaceTapConfiguration> array = new List<NetworkInterfaceTapConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(item));
-                        }
+                        array.Add(NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceTapConfigurationListResult(value, nextLink);
+            return new NetworkInterfaceTapConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

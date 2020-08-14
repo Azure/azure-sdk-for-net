@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of DeletedShare. </summary>
         /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
         /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedShareName"/> or <paramref name="deletedShareVersion"/> is null. </exception>
         public DeletedShare(string deletedShareName, string deletedShareVersion)
         {
             if (deletedShareName == null)

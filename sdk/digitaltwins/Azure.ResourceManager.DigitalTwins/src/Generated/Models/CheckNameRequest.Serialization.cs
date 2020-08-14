@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class CheckNameRequest : IUtf8JsonSerializable
+    internal partial class CheckNameRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Compute
         ContainerService IOperationSource<ContainerService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ContainerService.DeserializeContainerService(document.RootElement);
-            }
+            return ContainerService.DeserializeContainerService(document.RootElement);
         }
 
         async ValueTask<ContainerService> IOperationSource<ContainerService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ContainerService.DeserializeContainerService(document.RootElement);
-            }
+            return ContainerService.DeserializeContainerService(document.RootElement);
         }
     }
 }

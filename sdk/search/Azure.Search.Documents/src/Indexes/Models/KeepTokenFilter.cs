@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KeepTokenFilter
     {
         /// <summary> The list of words to keep. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> KeepWords { get; }
     }
 }

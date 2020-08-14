@@ -15,15 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugResultResponse. </summary>
-        /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
-        /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
-        internal DataFlowDebugResultResponse(string status, string data)
-        {
-            Status = status;
-            Data = data;
-        }
-
         /// <summary> The run status of data preview, statistics or expression preview. </summary>
         public string Status { get; }
         /// <summary> The result data of data preview, statistics or expression preview. </summary>

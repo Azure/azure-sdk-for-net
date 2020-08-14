@@ -330,13 +330,13 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
-            await result.Content.CopyToAsync(
+            using Stream source = result.Content;
+
+            await source.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
-
-            result.Content.Dispose();
         }
 
 

@@ -16,6 +16,7 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
+        private readonly string _clientId;
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record = null;
@@ -72,7 +73,7 @@ namespace Azure.Identity
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            if (clientId is null) throw new ArgumentNullException(nameof(clientId));
+            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
@@ -87,9 +88,9 @@ namespace Azure.Identity
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
-            return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
+            return Authenticate(new TokenRequestContext(new[] { defaultScope }), cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Azure.Identity
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
             return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
         }
@@ -204,7 +205,7 @@ namespace Azure.Identity
         {
             AuthenticationResult result = await _client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
-            _record = new AuthenticationRecord(result);
+            _record = new AuthenticationRecord(result, _clientId);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

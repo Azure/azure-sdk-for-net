@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Resources.Models
         /// <summary> Initializes a new instance of ProviderListResult. </summary>
         internal ProviderListResult()
         {
+            Value = new ChangeTrackingList<Provider>();
         }
 
         /// <summary> Initializes a new instance of ProviderListResult. </summary>

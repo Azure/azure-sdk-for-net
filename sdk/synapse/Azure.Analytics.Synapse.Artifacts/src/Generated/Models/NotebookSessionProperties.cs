@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorMemory"> Amount of memory to use per executor process. </param>
         /// <param name="executorCores"> Number of cores to use for each executor. </param>
         /// <param name="numExecutors"> Number of executors to launch for this session. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="driverMemory"/> or <paramref name="executorMemory"/> is null. </exception>
         public NotebookSessionProperties(string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors)
         {
             if (driverMemory == null)

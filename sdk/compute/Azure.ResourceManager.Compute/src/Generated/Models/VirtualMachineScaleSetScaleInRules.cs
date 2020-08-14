@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRules"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineScaleSetScaleInRules(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

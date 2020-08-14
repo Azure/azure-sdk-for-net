@@ -6,6 +6,7 @@ using System.Linq;
 using System.Globalization;
 using System.Net.Http;
 using Microsoft.Rest.ClientRuntime.Tests.Resources;
+using Microsoft.Rest.ClientRuntime.Tests.Serialization;
 using Microsoft.Rest.Serialization;
 using Microsoft.Rest.TransientFaultHandling;
 using Newtonsoft.Json;
@@ -62,6 +63,102 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(zoo.Animals[1].BestFriend.GetType(), zoo2.Animals[1].BestFriend.GetType());
             Assert.Equal(zoo.Animals[1].BestFriend.BestFriend.GetType(), zoo2.Animals[1].BestFriend.BestFriend.GetType());
             Assert.Contains("dType", serializedJson);
+        }
+
+        [Fact]
+        public void PolymorphicSerializeWithPropertyConverter()
+        {
+            var dog = new Dog
+            {
+                Name = "Doug",
+                Birthday = new DateTime(2020, 2, 29),
+                LikesDogfood = true,
+            };
+
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+
+            var serializedJson = JsonConvert.SerializeObject(dog, Formatting.Indented, serializeSettings);
+
+            string dougJson = @"{
+  ""dType"": ""dog"",
+  ""likesDogfood"": true,
+  ""bestFriend"": null,
+  ""name"": ""Doug"",
+  ""birthday"": 1582934400
+}";
+            Assert.Equal(dougJson, serializedJson);
+
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Animal>("dType"));
+
+            var deserializedDog = (Dog)JsonConvert.DeserializeObject<Animal>(serializedJson, deserializeSettings);
+            Assert.Equal(dog.Birthday, deserializedDog.Birthday);
+        }
+
+        [Fact]
+        public void PolymorphicSerializeCanReadWrite()
+        {
+            var data = new OneWayConvertibleData
+            {
+                ReadConverted = "InitialRead",
+                WriteConverted = "InitialWrite",
+            };
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.Converters.Add(
+                new PolymorphicSerializeJsonConverter<OneWayConvertibleData>("dType"));
+            var serializedJson = JsonConvert.SerializeObject(data, Formatting.Indented, serializeSettings);
+
+            string dataJson = @"{
+  ""dType"": ""owcd"",
+  ""readConverted"": ""InitialRead"",
+  ""writeConverted"": ""StaticWriteOnlyJsonConverter""
+}";
+            Assert.Equal(dataJson, serializedJson);
+        }
+
+        [Fact]
+        public void PolymorphicDeserializeCanReadWrite()
+        {
+            string dataJson = @"{
+  ""dType"": ""owcd"",
+  ""readConverted"": ""InitialRead"",
+  ""writeConverted"": ""InitialWrite""
+}";
+
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<OneWayConvertibleData>("dType"));
+            var deserializedData = JsonConvert.DeserializeObject<OneWayConvertibleData>(dataJson, deserializeSettings);
+
+            Assert.Equal("StaticReadOnlyJsonConverter", deserializedData.ReadConverted);
+            Assert.Equal("InitialWrite", deserializedData.WriteConverted);
+        }
+
+        [Fact]
+        public void PolymorphicSerializeNullWithPropertyConverter()
+        {
+            var dog = new Dog
+            {
+                Name = "Doug",
+                LikesDogfood = true,
+            };
+
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+
+            var serializedJson = JsonConvert.SerializeObject(dog, Formatting.Indented, serializeSettings);
+
+            string dougJson = @"{
+  ""dType"": ""dog"",
+  ""likesDogfood"": true,
+  ""bestFriend"": null,
+  ""name"": ""Doug"",
+  ""birthday"": null
+}";
+            Assert.Equal(dougJson, serializedJson);
         }
 
         [Fact]
@@ -544,6 +641,18 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             {
                 JsonConvert.DefaultSettings = oldDefault;
             }
+        }
+
+        [JsonObject("owcd")]
+        private class OneWayConvertibleData
+        {
+            [JsonConverter(typeof(StaticReadOnlyJsonConverter))]
+            [JsonProperty("readConverted")]
+            public string ReadConverted { get; set; }
+
+            [JsonConverter(typeof(StaticWriteOnlyJsonConverter))]
+            [JsonProperty("writeConverted")]
+            public string WriteConverted { get; set; }
         }
 
         private class Model

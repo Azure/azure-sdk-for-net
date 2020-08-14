@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureFirewallListResult DeserializeAzureFirewallListResult(JsonElement element)
         {
-            IReadOnlyList<AzureFirewall> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AzureFirewall>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AzureFirewall> array = new List<AzureFirewall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AzureFirewall.DeserializeAzureFirewall(item));
-                        }
+                        array.Add(AzureFirewall.DeserializeAzureFirewall(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFirewallListResult(value, nextLink);
+            return new AzureFirewallListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

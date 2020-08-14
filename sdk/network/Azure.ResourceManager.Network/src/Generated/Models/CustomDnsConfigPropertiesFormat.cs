@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of CustomDnsConfigPropertiesFormat. </summary>
         public CustomDnsConfigPropertiesFormat()
         {
+            IpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CustomDnsConfigPropertiesFormat. </summary>
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
         public string Fqdn { get; set; }
         /// <summary> A list of private ip addresses of the private endpoint. </summary>
-        public IList<string> IpAddresses { get; set; }
+        public IList<string> IpAddresses { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkSecurityGroup. </summary>
         public NetworkSecurityGroup()
         {
+            SecurityRules = new ChangeTrackingList<SecurityRule>();
+            DefaultSecurityRules = new ChangeTrackingList<SecurityRule>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            Subnets = new ChangeTrackingList<Subnet>();
+            FlowLogs = new ChangeTrackingList<FlowLog>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroup. </summary>
@@ -31,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
-        internal NetworkSecurityGroup(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<SecurityRule> securityRules, IList<SecurityRule> defaultSecurityRules, IList<NetworkInterface> networkInterfaces, IList<Subnet> subnets, IList<FlowLog> flowLogs, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkSecurityGroup(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<SecurityRule> securityRules, IReadOnlyList<SecurityRule> defaultSecurityRules, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<Subnet> subnets, IReadOnlyList<FlowLog> flowLogs, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             SecurityRules = securityRules;
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A collection of security rules of the network security group. </summary>
-        public IList<SecurityRule> SecurityRules { get; set; }
+        public IList<SecurityRule> SecurityRules { get; }
         /// <summary> The default security rules of network security group. </summary>
-        public IList<SecurityRule> DefaultSecurityRules { get; }
+        public IReadOnlyList<SecurityRule> DefaultSecurityRules { get; }
         /// <summary> A collection of references to network interfaces. </summary>
-        public IList<NetworkInterface> NetworkInterfaces { get; }
+        public IReadOnlyList<NetworkInterface> NetworkInterfaces { get; }
         /// <summary> A collection of references to subnets. </summary>
-        public IList<Subnet> Subnets { get; }
+        public IReadOnlyList<Subnet> Subnets { get; }
         /// <summary> A collection of references to flow log resources. </summary>
-        public IList<FlowLog> FlowLogs { get; }
+        public IReadOnlyList<FlowLog> FlowLogs { get; }
         /// <summary> The resource GUID property of the network security group resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network security group resource. </summary>

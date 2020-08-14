@@ -288,9 +288,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagCondition = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    if (conditions is BlobLeaseRequestConditions leaseConditions)
                     {
-                        tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                        tagCondition = leaseConditions?.TagConditions;
                     }
 
                     if (BlobClient != null)

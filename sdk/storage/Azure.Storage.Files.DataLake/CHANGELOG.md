@@ -1,10 +1,19 @@
 # Release History
 
-## 12.3.0-preview.2 (Unreleased)
+## 12.4.0-preview.1 (Unreleased)
+
+
+## 12.3.0 (2020-08-13)
+- Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to DataLakeAccessPolicy
+- Added DataLakeFileClient.OpenWrite().
+
+## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
 - Updated DataLakeSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 - Fixed bug where DataLakeFileClient.Query() failed when query response was > ~200 MB.
 - Added DataLakeFileClient.OpenRead().
+- Fixed bug where DataLakeFileClient.Query() would buffer the query response before parsing the Avro contents.
 
 ## 12.3.0-preview.1 (2020-07-03)
 - Added support for service version 2019-12-12.

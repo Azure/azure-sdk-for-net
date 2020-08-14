@@ -1,7 +1,13 @@
 # Release History
 
-## 12.5.0-preview.6 (Unreleased)
+## 12.6.0-preview.1 (Unreleased)
 
+
+## 12.5.0 (2020-08-13)
+- This release contains bug fixes to improve quality.
+
+## 12.5.0-preview.6 (2020-07-27)
+- This release contains bug fixes to improve quality.
 
 ## 12.5.0-preview.5 (2020-07-03)
 - This release contains bug fixes to improve quality.

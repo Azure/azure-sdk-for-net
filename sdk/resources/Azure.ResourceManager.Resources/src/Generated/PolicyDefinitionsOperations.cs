@@ -450,6 +450,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the policy definitions in a given management group. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         public virtual AsyncPageable<PolicyDefinition> ListByManagementGroupAsync(string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
@@ -493,6 +494,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the policy definitions in a given management group. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         public virtual Pageable<PolicyDefinition> ListByManagementGroup(string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
                 writer.WriteStringValue(Uri);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualHardDisk DeserializeVirtualHardDisk(JsonElement element)
         {
-            string uri = default;
+            Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     uri = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualHardDisk(uri);
+            return new VirtualHardDisk(uri.Value);
         }
     }
 }

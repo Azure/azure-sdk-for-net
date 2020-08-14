@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// location depends on the parent resource.</param>
         /// <param name="tags">Azure resource tags.</param>
         /// <param name="etag">Azure resource etag.</param>
+        /// <param name="identity">Describes the managed identities for an
+        /// Azure resource.</param>
         /// <param name="typeVersion">The version of the application type as
         /// defined in the application manifest.</param>
         /// <param name="parameters">List of application parameters with
@@ -64,13 +66,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// application capacity settings.</param>
         /// <param name="metrics">List of application capacity metric
         /// description.</param>
+        /// <param name="managedIdentities">List of user assigned identities
+        /// for the application, each mapped to a friendly name.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response</param>
         /// <param name="typeName">The application type name as defined in the
         /// application manifest.</param>
-        public ApplicationResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>), string provisioningState = default(string), string typeName = default(string))
+        public ApplicationResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ManagedIdentity identity = default(ManagedIdentity), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>), IList<ApplicationUserAssignedIdentity> managedIdentities = default(IList<ApplicationUserAssignedIdentity>), string provisioningState = default(string), string typeName = default(string))
             : base(id, name, type, location, tags, etag)
         {
+            Identity = identity;
             TypeVersion = typeVersion;
             Parameters = parameters;
             UpgradePolicy = upgradePolicy;
@@ -78,6 +83,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             MaximumNodes = maximumNodes;
             RemoveApplicationCapacity = removeApplicationCapacity;
             Metrics = metrics;
+            ManagedIdentities = managedIdentities;
             ProvisioningState = provisioningState;
             TypeName = typeName;
             CustomInit();
@@ -87,6 +93,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets describes the managed identities for an Azure
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the application type as defined in the
@@ -143,6 +156,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<ApplicationMetricDescription> Metrics { get; set; }
 
         /// <summary>
+        /// Gets or sets list of user assigned identities for the application,
+        /// each mapped to a friendly name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentities")]
+        public IList<ApplicationUserAssignedIdentity> ManagedIdentities { get; set; }
+
+        /// <summary>
         /// Gets the current deployment or provisioning state, which only
         /// appears in the response
         /// </summary>
@@ -175,6 +195,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (MaximumNodes < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumNodes", 0);
+            }
+            if (ManagedIdentities != null)
+            {
+                foreach (var element in ManagedIdentities)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,18 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     internal class ShardCursor
     {
         /// <summary>
-        /// Index of the current Chunk.
+        /// The path of the current Chunk.
         /// </summary>
-        public long ChunkIndex { get; set; }
+        public string CurrentChunkPath { get; set; }
 
         /// <summary>
         /// The byte offset of the beginning of
@@ -27,11 +23,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public long EventIndex { get; set; }
 
         internal ShardCursor(
-            long chunkIndex,
+            string currentChunkPath,
             long blockOffset,
             long eventIndex)
         {
-            ChunkIndex = chunkIndex;
+            CurrentChunkPath = currentChunkPath;
             BlockOffset = blockOffset;
             EventIndex = eventIndex;
         }

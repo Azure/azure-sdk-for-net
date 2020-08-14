@@ -4,12 +4,12 @@ This folder contains tools to generate C# code from [Azure REST API specificatio
 
 ## Commands
 
-- [.\update.ps1](update.ps1) updates [sdkinfo.lock.json](sdkinfo.lock.json) using the latest commit from [Azure REST API specifications](https://github.com/Azure/azure-rest-api-specs).
-- [.\build.ps1](build.ps1) generates and builds C# code using **AutoRest** and **sdkinfo.lock.json** file. Examples
-  - `.\build.ps1 arm-cdn` generates and builds [the CDN project](../../src/SDKs/Cdn).
+- [.\update.ps1](update.ps1) updates [sdkinfo.json](sdkinfo.json) using the latest commit from [Azure REST API specifications](https://github.com/Azure/azure-rest-api-specs).
+- [.\build.ps1](build.ps1) generates and builds C# code using **AutoRest** and **sdkinfo.json** file. Examples
+  - `.\build.ps1 arm-cdn` generates and builds [the CDN project](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/cdn/Microsoft.Azure.Management.Cdn).
   - `.\build.ps1 arm-*` generates and builds all ARM projects.
 - [.\test.ps1](test.ps1) runs tests. Examples
-  - `.\test.ps1 arm-cdn` tests [the CDN project](../../src/SDKs/Cdn).
+  - `.\test.ps1 arm-cdn` tests [the CDN project](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/cdn/Microsoft.Azure.Management.Cdn).
   - `.\test.ps1 arm-*` tests all ARM projects.
 
 ## SDK Info File

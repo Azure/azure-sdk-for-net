@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of VpnSiteId. </summary>
-        /// <param name="vpnSite"> The resource-uri of the vpn-site for which config is to be fetched. </param>
-        internal VpnSiteId(string vpnSite)
-        {
-            VpnSite = vpnSite;
-        }
-
         /// <summary> The resource-uri of the vpn-site for which config is to be fetched. </summary>
         public string VpnSite { get; }
     }

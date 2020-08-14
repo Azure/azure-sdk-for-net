@@ -1,6 +1,12 @@
 # Release History
 
-## 12.4.0-preview.6 (Unreleased)
+## 12.5.0-preview.1 (Unreleased)
+
+
+## 12.4.0 (2020-08-13)
+- This preview contains bug fixes to improve quality.
+
+## 12.4.0-preview.6 (2020-07-27)
 - Updated QueueSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 
 ## 12.4.0-preview.5 (2020-07-03)
