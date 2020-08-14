@@ -91,7 +91,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     Name = activity.DisplayName,
                     Url = url,
                     // TODO: Handle activity.TagObjects
-                    Properties = AddTagsToTelemetry(activity.Tags)
+                    Properties = ExtractPropertiesFromTags(activity.Tags)
                     // TODO: Handle request.source.
                 };
 
@@ -104,7 +104,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     Id = activity.Context.SpanId.ToHexString(),
                     Success = activity.GetStatus().IsOk,
                     // TODO: Handle activity.TagObjects
-                    Properties = AddTagsToTelemetry(activity.Tags)
+                    Properties = ExtractPropertiesFromTags(activity.Tags)
                 };
 
                 if (url != null)
@@ -126,20 +126,16 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var httpTags = tags.Where(item => item.Key.StartsWith("http.", StringComparison.InvariantCulture))
                                .ToDictionary(item => item.Key, item => item.Value);
 
-            string url = null;
 
-            if (httpTags.ContainsKey(SemanticConventions.AttributeHttpUrl))
+            httpTags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url);
+            if (url != null)
             {
-                url = httpTags[SemanticConventions.AttributeHttpUrl];
-                if (url != null)
-                {
-                    return url;
-                }
+                return url;
             }
 
-            var httpScheme = httpTags.ContainsKey(SemanticConventions.AttributeHttpScheme) ? httpTags[SemanticConventions.AttributeHttpScheme] : null;
-            var httpHost = httpTags.ContainsKey(SemanticConventions.AttributeHttpHost) ? httpTags[SemanticConventions.AttributeHttpHost] : null;
-            var httpTarget = httpTags.ContainsKey(SemanticConventions.AttributeHttpTarget) ? httpTags[SemanticConventions.AttributeHttpTarget] : null;
+            httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
+            httpTags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost);
+            httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
 
             if (httpHost != null)
             {
@@ -152,7 +148,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return url;
         }
 
-        private static IDictionary<string, string> AddTagsToTelemetry(IEnumerable<KeyValuePair<string, string>> tags)
+        private static IDictionary<string, string> ExtractPropertiesFromTags(IEnumerable<KeyValuePair<string, string>> tags)
         {
             return tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture))
                                .ToDictionary(item => item.Key, item => item.Value);
