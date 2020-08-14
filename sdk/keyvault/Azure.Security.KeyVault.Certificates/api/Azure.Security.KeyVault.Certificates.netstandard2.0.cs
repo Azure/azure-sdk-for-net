@@ -69,12 +69,12 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1_Preview) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1) { }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
-            V7_1_Preview = 1,
+            V7_1 = 1,
         }
     }
     public partial class CertificateContact

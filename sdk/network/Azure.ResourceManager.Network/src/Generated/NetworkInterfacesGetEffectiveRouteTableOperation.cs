@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         EffectiveRouteListResult IOperationSource<EffectiveRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);
-            }
+            return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);
         }
 
         async ValueTask<EffectiveRouteListResult> IOperationSource<EffectiveRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);
-            }
+            return EffectiveRouteListResult.DeserializeEffectiveRouteListResult(document.RootElement);
         }
     }
 }

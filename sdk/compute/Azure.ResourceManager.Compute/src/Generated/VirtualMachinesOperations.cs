@@ -192,6 +192,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets all the virtual machines under the specified subscription for the specified location. </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<VirtualMachine> ListByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -235,6 +236,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets all the virtual machines under the specified subscription for the specified location. </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<VirtualMachine> ListByLocation(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -278,6 +280,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<VirtualMachine> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -321,6 +324,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<VirtualMachine> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -441,6 +445,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual AsyncPageable<VirtualMachineSize> ListAvailableSizesAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -474,6 +479,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual Pageable<VirtualMachineSize> ListAvailableSizes(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -508,6 +514,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualMachinesCaptureOperation> StartCaptureAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -542,6 +549,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualMachinesCaptureOperation StartCapture(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -576,6 +584,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualMachinesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, VirtualMachine parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -610,6 +619,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualMachinesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, VirtualMachine parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -644,6 +654,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Update Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualMachinesUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, VirtualMachineUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -678,6 +689,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Update Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualMachinesUpdateOperation StartUpdate(string resourceGroupName, string vmName, VirtualMachineUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -711,6 +723,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -740,6 +753,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesDeleteOperation StartDelete(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -769,6 +783,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesConvertToManagedDisksOperation> StartConvertToManagedDisksAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -798,6 +813,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesConvertToManagedDisksOperation StartConvertToManagedDisks(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -827,6 +843,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -856,6 +873,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesDeallocateOperation StartDeallocate(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -886,6 +904,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmName, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -916,6 +935,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesPowerOffOperation StartPowerOff(string resourceGroupName, string vmName, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -945,6 +965,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesReapplyOperation> StartReapplyAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -974,6 +995,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesReapplyOperation StartReapply(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1003,6 +1025,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesRestartOperation> StartRestartAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1032,6 +1055,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesRestartOperation StartRestart(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1061,6 +1085,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesStartOperation> StartStartAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1090,6 +1115,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesStartOperation StartStart(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1119,6 +1145,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1148,6 +1175,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesRedeployOperation StartRedeploy(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1178,6 +1206,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesReimageOperation> StartReimageAsync(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1208,6 +1237,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesReimageOperation StartReimage(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1237,6 +1267,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual async Task<VirtualMachinesPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1266,6 +1297,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         public virtual VirtualMachinesPerformMaintenanceOperation StartPerformMaintenance(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1296,6 +1328,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualMachinesRunCommandOperation> StartRunCommandAsync(string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1330,6 +1363,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualMachinesRunCommandOperation StartRunCommand(string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

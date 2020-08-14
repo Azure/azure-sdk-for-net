@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         ConnectionMonitorResult IOperationSource<ConnectionMonitorResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-            }
+            return ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
         }
 
         async ValueTask<ConnectionMonitorResult> IOperationSource<ConnectionMonitorResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-            }
+            return ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
         }
     }
 }

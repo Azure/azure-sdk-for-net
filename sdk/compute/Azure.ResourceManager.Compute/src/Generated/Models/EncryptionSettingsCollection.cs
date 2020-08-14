@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionSettingsCollection(bool enabled)
         {
             Enabled = enabled;
+            EncryptionSettings = new ChangeTrackingList<EncryptionSettingsElement>();
         }
 
         /// <summary> Initializes a new instance of EncryptionSettingsCollection. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object, the existing settings remain unchanged. </summary>
         public bool Enabled { get; set; }
         /// <summary> A collection of encryption settings, one for each disk volume. </summary>
-        public IList<EncryptionSettingsElement> EncryptionSettings { get; set; }
+        public IList<EncryptionSettingsElement> EncryptionSettings { get; }
         /// <summary> Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. &apos;1.0&apos; corresponds to Azure Disk Encryption with AAD app.&apos;1.1&apos; corresponds to Azure Disk Encryption. </summary>
         public string EncryptionSettingsVersion { get; set; }
     }

@@ -14,6 +14,7 @@ namespace Azure.Management.Resources.Models
     {
         /// <summary> Initializes a new instance of DeploymentExtended. </summary>
         /// <param name="name"> The name of the deployment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DeploymentExtended(string name)
         {
             if (name == null)

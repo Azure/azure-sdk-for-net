@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);

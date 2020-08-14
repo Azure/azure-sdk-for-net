@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all IpGroups in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<IpGroup> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,6 +164,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all IpGroups in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<IpGroup> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -282,6 +284,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<IpGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ipGroupsName, IpGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -316,6 +319,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual IpGroupsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string ipGroupsName, IpGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -349,6 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public virtual async Task<IpGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -378,6 +383,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is null. </exception>
         public virtual IpGroupsDeleteOperation StartDelete(string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

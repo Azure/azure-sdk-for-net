@@ -37,46 +37,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="linkedService"> Linked service resource definition. </param>
-        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedServiceResource>> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.CreateOrUpdateLinkedService");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateLinkedServiceAsync(linkedServiceName, linkedService, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="linkedService"> Linked service resource definition. </param>
-        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedServiceResource> CreateOrUpdateLinkedService(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.CreateOrUpdateLinkedService");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateLinkedService(linkedServiceName, linkedService, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a linked service. </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -107,42 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetLinkedService(linkedServiceName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.DeleteLinkedService");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteLinkedServiceAsync(linkedServiceName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.DeleteLinkedService");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteLinkedService(linkedServiceName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -223,6 +147,118 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="linkedService"> Linked service resource definition. </param>
+        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
+        public virtual async Task<LinkedServiceCreateOrUpdateLinkedServiceOperation> StartCreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (linkedService == null)
+            {
+                throw new ArgumentNullException(nameof(linkedService));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartCreateOrUpdateLinkedService");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateLinkedServiceAsync(linkedServiceName, linkedService, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new LinkedServiceCreateOrUpdateLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, linkedService, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="linkedService"> Linked service resource definition. </param>
+        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
+        public virtual LinkedServiceCreateOrUpdateLinkedServiceOperation StartCreateOrUpdateLinkedService(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (linkedService == null)
+            {
+                throw new ArgumentNullException(nameof(linkedService));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartCreateOrUpdateLinkedService");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateLinkedService(linkedServiceName, linkedService, ifMatch, cancellationToken);
+                return new LinkedServiceCreateOrUpdateLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, linkedService, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public virtual async Task<LinkedServiceDeleteLinkedServiceOperation> StartDeleteLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartDeleteLinkedService");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteLinkedServiceAsync(linkedServiceName, cancellationToken).ConfigureAwait(false);
+                return new LinkedServiceDeleteLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteLinkedServiceRequest(linkedServiceName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public virtual LinkedServiceDeleteLinkedServiceOperation StartDeleteLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartDeleteLinkedService");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteLinkedService(linkedServiceName, cancellationToken);
+                return new LinkedServiceDeleteLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteLinkedServiceRequest(linkedServiceName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

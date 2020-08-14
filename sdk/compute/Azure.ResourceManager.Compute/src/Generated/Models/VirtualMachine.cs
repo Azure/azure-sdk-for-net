@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,12 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachine. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public VirtualMachine(string location) : base(location)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            Resources = new ChangeTrackingList<VirtualMachineExtension>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachine. </summary>
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The virtual machine instance view. </param>
         /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. This element is only used for images that contain the Windows Server operating system. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; If this element is included in a request for an update, the value must match the initial value. This value cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
-        internal VirtualMachine(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, IList<VirtualMachineExtension> resources, VirtualMachineIdentity identity, IList<string> zones, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, SubResource host, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId) : base(id, name, type, location, tags)
+        internal VirtualMachine(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, IReadOnlyList<VirtualMachineExtension> resources, VirtualMachineIdentity identity, IList<string> zones, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, SubResource host, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId) : base(id, name, type, location, tags)
         {
             Plan = plan;
             Resources = resources;
@@ -78,11 +83,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
         public Plan Plan { get; set; }
         /// <summary> The virtual machine child extension resources. </summary>
-        public IList<VirtualMachineExtension> Resources { get; }
+        public IReadOnlyList<VirtualMachineExtension> Resources { get; }
         /// <summary> The identity of the virtual machine, if configured. </summary>
         public VirtualMachineIdentity Identity { get; set; }
         /// <summary> The virtual machine zones. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>

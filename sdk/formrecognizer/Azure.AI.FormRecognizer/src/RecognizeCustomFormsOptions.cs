@@ -4,7 +4,7 @@
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognize custom form method
+    /// The set of options that can be specified when calling a recognize custom forms method
     /// to configure the behavior of the request.
     /// </summary>
     public class RecognizeCustomFormsOptions

@@ -267,6 +267,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group that contains policy assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<PolicyAssignment> ListForResourceGroupAsync(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -311,6 +312,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group that contains policy assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<PolicyAssignment> ListForResourceGroup(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -359,6 +361,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public virtual AsyncPageable<PolicyAssignment> ListForResourceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -423,6 +426,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public virtual Pageable<PolicyAssignment> ListForResource(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -483,6 +487,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. A filter is required when listing policy assignments at management group scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="filter"/> is null. </exception>
         public virtual AsyncPageable<PolicyAssignment> ListForManagementGroupAsync(string managementGroupId, string filter, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
@@ -531,6 +536,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. A filter is required when listing policy assignments at management group scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="filter"/> is null. </exception>
         public virtual Pageable<PolicyAssignment> ListForManagementGroup(string managementGroupId, string filter, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)

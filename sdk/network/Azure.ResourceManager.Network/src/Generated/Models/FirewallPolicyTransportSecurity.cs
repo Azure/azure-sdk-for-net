@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
         public FirewallPolicyTransportSecurity()
         {
+            ExcludedDomains = new ChangeTrackingList<string>();
+            TrustedRootCertificates = new ChangeTrackingList<FirewallPolicyTrustedRootCertificate>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
@@ -31,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The CA used for intermediate CA generation. </summary>
         public FirewallPolicyCertificateAuthority CertificateAuthority { get; set; }
         /// <summary> List of domains which are excluded from TLS termination. </summary>
-        public IList<string> ExcludedDomains { get; set; }
+        public IList<string> ExcludedDomains { get; }
         /// <summary> Certificates which are to be trusted by the firewall. </summary>
-        public IList<FirewallPolicyTrustedRootCertificate> TrustedRootCertificates { get; set; }
+        public IList<FirewallPolicyTrustedRootCertificate> TrustedRootCertificates { get; }
     }
 }

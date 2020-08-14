@@ -7,16 +7,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"www.withoutHttp.com\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e79b3007-51e8-4b06-9327-c1adb1b9f8b2"
+          "6246416f-e06a-43bd-9bac-a08c7ff5a7c5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,16 +33,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6198f548-fc89-4867-9326-c6a302b66a7d"
+          "12dc848a-1302-40ef-acca-b07175e14fb2"
         ],
         "x-ms-client-request-id": [
-          "e79b3007-51e8-4b06-9327-c1adb1b9f8b2"
+          "6246416f-e06a-43bd-9bac-a08c7ff5a7c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -54,16 +54,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "680425fa-2f13-4169-b13d-cb9aec515732"
+          "f8d5aed1-ec53-45ab-9e60-795261eca348"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015719Z:680425fa-2f13-4169-b13d-cb9aec515732"
+          "WESTUS:20200810T233413Z:f8d5aed1-ec53-45ab-9e60-795261eca348"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:19 GMT"
+          "Mon, 10 Aug 2020 23:34:12 GMT"
         ],
         "Content-Length": [
           "114"
@@ -88,16 +88,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"https://www.notexist.com/notexist/notexist.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "787a671a-a213-48f5-9d47-6f176aa150d4"
+          "2742619c-4cf7-4d84-8855-806237255627"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -114,10 +114,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "eb93e5a5-a592-40d9-895e-eda78f15616d"
+          "b20b7147-45e9-4fd0-b1e0-5ed0be49967f"
         ],
         "x-ms-client-request-id": [
-          "787a671a-a213-48f5-9d47-6f176aa150d4"
+          "2742619c-4cf7-4d84-8855-806237255627"
         ],
         "OData-Version": [
           "4.0"
@@ -126,7 +126,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -138,16 +138,16 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "69ca4a71-f950-4e5e-9bd6-08c85d96c9e0"
+          "767f25b9-3e70-4384-a580-ffb4cdd700f5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015720Z:69ca4a71-f950-4e5e-9bd6-08c85d96c9e0"
+          "WESTUS:20200810T233415Z:767f25b9-3e70-4384-a580-ffb4cdd700f5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:20 GMT"
+          "Mon, 10 Aug 2020 23:34:14 GMT"
         ],
         "Content-Length": [
           "200"
@@ -169,16 +169,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5fd63239-a8af-4dd2-8d2c-dfb4caf58ae6"
+          "07558f8e-84c5-4e91-a313-0effacced5a6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,10 +195,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f46a8644-9459-4e5f-94a7-f51fd789915a"
+          "84195d30-5ce0-49db-b4c4-dc548cb33d60"
         ],
         "x-ms-client-request-id": [
-          "5fd63239-a8af-4dd2-8d2c-dfb4caf58ae6"
+          "07558f8e-84c5-4e91-a313-0effacced5a6"
         ],
         "OData-Version": [
           "4.0"
@@ -207,7 +207,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -219,16 +219,16 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "8ddaa1b4-9bf0-474a-8e25-ff55422cc566"
+          "82d79b6d-18a1-4e07-a705-c5cfda1bf5f4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015722Z:8ddaa1b4-9bf0-474a-8e25-ff55422cc566"
+          "WESTUS:20200810T233416Z:82d79b6d-18a1-4e07-a705-c5cfda1bf5f4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:22 GMT"
+          "Mon, 10 Aug 2020 23:34:15 GMT"
         ],
         "Content-Length": [
           "56"
@@ -250,16 +250,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://999.999.999.999/nonexist.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "81e957e1-6239-4102-8fae-432aab160981"
+          "4e3802b3-6bf7-4291-94dc-da237b4220cb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -276,16 +276,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fe9e1529-465b-499e-8a31-97ffed365f4a"
+          "d9b52cea-3b8b-4fe8-a6a4-47efbf1a70e3"
         ],
         "x-ms-client-request-id": [
-          "81e957e1-6239-4102-8fae-432aab160981"
+          "4e3802b3-6bf7-4291-94dc-da237b4220cb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -297,16 +297,16 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "86b13e75-4306-4d6a-ad1b-af4640951e3b"
+          "e1555786-b968-4b5d-b86c-f42d172627e3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015723Z:86b13e75-4306-4d6a-ad1b-af4640951e3b"
+          "WESTUS:20200810T233417Z:e1555786-b968-4b5d-b86c-f42d172627e3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:23 GMT"
+          "Mon, 10 Aug 2020 23:34:16 GMT"
         ],
         "Content-Length": [
           "114"
@@ -331,16 +331,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://192.168.1.1/nonexist.aspx\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ca8ab7f1-68d7-4d3c-98de-01ef7e8e90d2"
+          "02e22d75-1d3c-4bc0-bb3a-35ac2000e78c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -357,10 +357,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "321d5077-c4f7-4345-a370-1f579eb70ef9"
+          "308a28bf-3e9d-4f71-88d9-f9a8d8b3501f"
         ],
         "x-ms-client-request-id": [
-          "ca8ab7f1-68d7-4d3c-98de-01ef7e8e90d2"
+          "02e22d75-1d3c-4bc0-bb3a-35ac2000e78c"
         ],
         "OData-Version": [
           "4.0"
@@ -369,7 +369,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -381,16 +381,16 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "dec8be15-21d6-4857-975f-e475f5655012"
+          "1deb7bb1-f355-4aab-9bff-cd8ec4763a71"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015734Z:dec8be15-21d6-4857-975f-e475f5655012"
+          "WESTUS:20200810T233428Z:1deb7bb1-f355-4aab-9bff-cd8ec4763a71"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:33 GMT"
+          "Mon, 10 Aug 2020 23:34:27 GMT"
         ],
         "Content-Length": [
           "200"
@@ -412,16 +412,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://137.117.34.31/contact/contact.aspx\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b119ad2-a3af-40b1-be1d-626960c83d5e"
+          "d5e176ee-f091-4722-8c7a-76b05b6389e6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29017.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20161.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -438,10 +438,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6d92c114-aa6e-47e3-a58e-6daca26b0da0"
+          "c1bce992-8878-4796-aa08-5ae2cd6d0e5f"
         ],
         "x-ms-client-request-id": [
-          "4b119ad2-a3af-40b1-be1d-626960c83d5e"
+          "d5e176ee-f091-4722-8c7a-76b05b6389e6"
         ],
         "OData-Version": [
           "4.0"
@@ -450,7 +450,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -462,16 +462,16 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "cb74d461-84b3-4545-8e10-f7b15bc8158b"
+          "323abd3b-91f0-47e0-b56c-69dba11cec63"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200714T015740Z:cb74d461-84b3-4545-8e10-f7b15bc8158b"
+          "WESTUS:20200810T233429Z:323abd3b-91f0-47e0-b56c-69dba11cec63"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 14 Jul 2020 01:57:40 GMT"
+          "Mon, 10 Aug 2020 23:34:28 GMT"
         ],
         "Content-Length": [
           "56"
