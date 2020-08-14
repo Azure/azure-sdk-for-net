@@ -11,95 +11,44 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class TagProperty : IUtf8JsonSerializable
+    public partial class TagProperty
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Tag != null)
-            {
-                writer.WritePropertyName("tag");
-                writer.WriteStringValue(Tag);
-            }
-            if (Timestamp != null)
-            {
-                writer.WritePropertyName("timestamp");
-                writer.WriteStringValue(Timestamp.Value, "O");
-            }
-            if (ObjectIdentifier != null)
-            {
-                writer.WritePropertyName("objectIdentifier");
-                writer.WriteStringValue(ObjectIdentifier);
-            }
-            if (TenantId != null)
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
-            if (Upn != null)
-            {
-                writer.WritePropertyName("upn");
-                writer.WriteStringValue(Upn);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static TagProperty DeserializeTagProperty(JsonElement element)
         {
-            string tag = default;
-            DateTimeOffset? timestamp = default;
-            string objectIdentifier = default;
-            string tenantId = default;
-            string upn = default;
+            Optional<string> tag = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> objectIdentifier = default;
+            Optional<string> tenantId = default;
+            Optional<string> upn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("objectIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectIdentifier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("upn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     upn = property.Value.GetString();
                     continue;
                 }
             }
-            return new TagProperty(tag, timestamp, objectIdentifier, tenantId, upn);
+            return new TagProperty(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, tenantId.Value, upn.Value);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace ResourceGroups.Tests
 
             var result = (await client.ResourceGroups.CreateOrUpdateAsync("foo", new ResourceGroup("WestEurope")
             {
-                Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } }
+                Tags = { { "department", "finance" }, { "tagname", "tagvalue" } }
             })).Value;
 
             var request = mockTransport.Requests[0];

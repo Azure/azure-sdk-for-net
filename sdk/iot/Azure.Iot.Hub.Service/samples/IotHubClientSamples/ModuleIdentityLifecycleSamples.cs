@@ -107,10 +107,14 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Creating a new module with Id: '{moduleId}'");
 
+                #region Snippet:IotHubCreateModuleIdentity
+
                 // Call APIs to create the module identity.
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
                 SampleLogger.PrintSuccess($"Successfully created a new module identity: DeviceId: '{deviceId}', ModuleId: '{response.Value.ModuleId}', ETag: '{response.Value.Etag}'");
+
+                #endregion Snippet:IotHubCreateModuleIdentity
 
                 return response.Value;
             }
@@ -133,12 +137,16 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Listing all modules in device with Id: '{deviceId}'\n");
 
+                #region Snippet:IotHubGetModuleIdentities
+
                 Response<IReadOnlyList<ModuleIdentity>> response = await IoTHubServiceClient.Modules.GetIdentitiesAsync(deviceId);
 
                 foreach (ModuleIdentity moduleIdentity in response.Value)
                 {
                     SampleLogger.PrintSuccess($"\t- Device Id: '{moduleIdentity.DeviceId}', Module Id: '{moduleIdentity.ModuleId}', ETag: '{moduleIdentity.Etag}'");
                 }
+
+                #endregion Snippet:IotHubGetModuleIdentities
 
                 return response.Value;
             }
@@ -162,11 +170,15 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Getting module identity with Id: '{moduleId}'\n");
 
+                #region Snippet:IotHubGetModuleIdentity
+
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
 
                 ModuleIdentity moduleIdentity = response.Value;
 
                 SampleLogger.PrintSuccess($"\t- Device Id: '{moduleIdentity.DeviceId}', Module Id: '{moduleIdentity.ModuleId}', ETag: '{moduleIdentity.Etag}'");
+
+                #endregion Snippet:IotHubGetModuleIdentity
 
                 return moduleIdentity;
             }
@@ -188,6 +200,8 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
+                #region Snippet:IotHubUpdateModuleIdentity
+
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
 
                 ModuleIdentity moduleIdentity = getResponse.Value;
@@ -201,6 +215,8 @@ namespace Azure.Iot.Hub.Service.Samples
                 ModuleIdentity updatedModule = response.Value;
 
                 SampleLogger.PrintSuccess($"Successfully updated module identity: DeviceId: '{updatedModule.DeviceId}', ModuleId: '{updatedModule.ModuleId}', ManagedBy: '{updatedModule.ManagedBy}', ETag: '{updatedModule.Etag}'");
+
+                #endregion Snippet:IotHubUpdateModuleIdentity
 
                 return updatedModule;
             }
@@ -224,9 +240,13 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 Console.WriteLine($"Getting module twin with Id: '{moduleId}'");
 
+                #region Snippet:IotHubGetModuleTwin
+
                 Response<TwinData> response = await IoTHubServiceClient.Modules.GetTwinAsync(deviceId, moduleId);
 
                 SampleLogger.PrintSuccess($"\t- Module Twin: DeviceId: '{response.Value.DeviceId}', ModuleId: '{response.Value.ModuleId}', Status: '{response.Value.Status}', ETag: '{response.Value.Etag}'");
+
+                #endregion Snippet:IotHubGetModuleTwin
 
                 return response.Value;
             }
@@ -251,6 +271,9 @@ namespace Azure.Iot.Hub.Service.Samples
             try
             {
                 // Get the device module
+
+                #region Snippet:IotHubUpdateModuleTwin
+
                 Response<TwinData> getResponse = await IoTHubServiceClient.Modules.GetTwinAsync(deviceId, moduleId);
                 TwinData moduleTwin = getResponse.Value;
 
@@ -269,6 +292,8 @@ namespace Azure.Iot.Hub.Service.Samples
                     .Value;
 
                 SampleLogger.PrintSuccess($"Successfully updated module twin: DeviceId: '{updatedTwin.DeviceId}', ModuleId: '{updatedTwin.ModuleId}', desired property: [{userPropName}: '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
+
+                #endregion Snippet:IotHubUpdateModuleTwin
 
                 return updatedTwin;
             }
@@ -290,6 +315,8 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
+                #region Snippet:IotHubDeleteModuleIdentity
+
                 // Get the module identity first.
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
                 ModuleIdentity moduleIdentity = getResponse.Value;
@@ -300,6 +327,8 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity);
 
                 SampleLogger.PrintSuccess($"Successfully deleted module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}'");
+
+                #endregion Snippet:IotHubDeleteModuleIdentity
             }
             catch (Exception ex)
             {

@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of TargetRegion. </summary>
         /// <param name="name"> The name of the region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TargetRegion(string name)
         {
             if (name == null)

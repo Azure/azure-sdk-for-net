@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -32,54 +32,54 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (CustomDomain != null)
+            if (Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain");
                 writer.WriteObjectValue(CustomDomain);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (AccessTier != null)
+            if (Optional.IsDefined(AccessTier))
             {
                 writer.WritePropertyName("accessTier");
                 writer.WriteStringValue(AccessTier.Value.ToSerialString());
             }
-            if (AzureFilesIdentityBasedAuthentication != null)
+            if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication");
                 writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
             }
-            if (EnableHttpsTrafficOnly != null)
+            if (Optional.IsDefined(EnableHttpsTrafficOnly))
             {
                 writer.WritePropertyName("supportsHttpsTrafficOnly");
                 writer.WriteBooleanValue(EnableHttpsTrafficOnly.Value);
             }
-            if (IsHnsEnabled != null)
+            if (Optional.IsDefined(IsHnsEnabled))
             {
                 writer.WritePropertyName("isHnsEnabled");
                 writer.WriteBooleanValue(IsHnsEnabled.Value);
             }
-            if (LargeFileSharesState != null)
+            if (Optional.IsDefined(LargeFileSharesState))
             {
                 writer.WritePropertyName("largeFileSharesState");
                 writer.WriteStringValue(LargeFileSharesState.Value.ToString());
             }
-            if (RoutingPreference != null)
+            if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference");
                 writer.WriteObjectValue(RoutingPreference);

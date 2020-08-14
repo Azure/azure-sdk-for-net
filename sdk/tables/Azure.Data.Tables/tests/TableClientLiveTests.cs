@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Tests
             // Call CreateIfNotExists when the table does not already exists.
             var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             var tableClient = service.GetTableClient(newTableName);
-            TableItem table = await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+            TableItem table = await CosmosThrottleWrapper(async () => await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false));
 
             Assert.That(table.TableName, Is.EqualTo(newTableName));
         }
@@ -61,7 +61,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(() => tableResponses, Is.Not.Empty);
 
             // Delete the table using the TableClient method.
-            await tableClient.DeleteAsync().ConfigureAwait(false);
+            await CosmosThrottleWrapper(async () => await tableClient.DeleteAsync().ConfigureAwait(false));
 
             // Check that the table was deleted.
             tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();

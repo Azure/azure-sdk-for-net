@@ -16,24 +16,9 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteStartObject();
@@ -44,48 +29,31 @@ namespace Azure.Management.Storage.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ApproximateMessageCount != null)
-            {
-                writer.WritePropertyName("approximateMessageCount");
-                writer.WriteNumberValue(ApproximateMessageCount.Value);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static StorageQueue DeserializeStorageQueue(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            IDictionary<string, string> metadata = default;
-            int? approximateMessageCount = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<int> approximateMessageCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -95,31 +63,16 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("metadata"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
                             metadata = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("approximateMessageCount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             approximateMessageCount = property0.Value.GetInt32();
                             continue;
                         }
@@ -127,7 +80,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new StorageQueue(id, name, type, metadata, approximateMessageCount);
+            return new StorageQueue(id.Value, name.Value, type.Value, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
         }
     }
 }

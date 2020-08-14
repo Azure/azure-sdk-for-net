@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         Snapshot IOperationSource<Snapshot>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Snapshot.DeserializeSnapshot(document.RootElement);
-            }
+            return Snapshot.DeserializeSnapshot(document.RootElement);
         }
 
         async ValueTask<Snapshot> IOperationSource<Snapshot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Snapshot.DeserializeSnapshot(document.RootElement);
-            }
+            return Snapshot.DeserializeSnapshot(document.RootElement);
         }
     }
 }

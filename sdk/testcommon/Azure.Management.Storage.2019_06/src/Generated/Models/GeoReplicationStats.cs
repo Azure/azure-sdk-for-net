@@ -13,7 +13,7 @@ namespace Azure.Management.Storage.Models
     public partial class GeoReplicationStats
     {
         /// <summary> Initializes a new instance of GeoReplicationStats. </summary>
-        public GeoReplicationStats()
+        internal GeoReplicationStats()
         {
         }
 

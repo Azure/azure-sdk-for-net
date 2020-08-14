@@ -41,6 +41,7 @@ namespace Azure.Management.Storage
         /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. </summary>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<Usage> ListByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -69,6 +70,7 @@ namespace Azure.Management.Storage
         /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. </summary>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<Usage> ListByLocation(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)

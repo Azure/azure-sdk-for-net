@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ManagementLockObject(LockLevel level)
         {
             Level = level;
+            Owners = new ChangeTrackingList<ManagementLockOwner>();
         }
 
         /// <summary> Initializes a new instance of ManagementLockObject. </summary>
@@ -47,6 +49,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Notes about the lock. Maximum of 512 characters. </summary>
         public string Notes { get; set; }
         /// <summary> The owners of the lock. </summary>
-        public IList<ManagementLockOwner> Owners { get; set; }
+        public IList<ManagementLockOwner> Owners { get; }
     }
 }

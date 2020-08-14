@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,12 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of Disk. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Disk(string location) : base(location)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            ManagedByExtended = new ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
+            ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
 
         /// <summary> Initializes a new instance of Disk. </summary>
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <param name="shareInfo"> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
-        internal Disk(string id, string name, string type, string location, IDictionary<string, string> tags, string managedBy, IList<string> managedByExtended, DiskSku sku, IList<string> zones, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IList<ShareInfoElement> shareInfo) : base(id, name, type, location, tags)
+        internal Disk(string id, string name, string type, string location, IDictionary<string, string> tags, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo) : base(id, name, type, location, tags)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -78,11 +84,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A relative URI containing the ID of the VM that has the disk attached. </summary>
         public string ManagedBy { get; }
         /// <summary> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </summary>
-        public IList<string> ManagedByExtended { get; }
+        public IReadOnlyList<string> ManagedByExtended { get; }
         /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> The Logical zone list for Disk. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The time when the disk was created. </summary>
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The Operating System type. </summary>
@@ -116,6 +122,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </summary>
         public int? MaxShares { get; set; }
         /// <summary> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </summary>
-        public IList<ShareInfoElement> ShareInfo { get; }
+        public IReadOnlyList<ShareInfoElement> ShareInfo { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         public ContainerNetworkInterface()
         {
+            IpConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIpConfiguration>();
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
@@ -26,7 +28,7 @@ namespace Azure.Management.Network.Models
         /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(string id, string name, string type, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, SubResource container, IList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterface(string id, string name, string type, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, SubResource container, IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Type = type;
@@ -48,7 +50,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
         public SubResource Container { get; set; }
         /// <summary> Reference to the ip configuration on this container nic. </summary>
-        public IList<ContainerNetworkInterfaceIpConfiguration> IpConfigurations { get; }
+        public IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> IpConfigurations { get; }
         /// <summary> The provisioning state of the container network interface resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

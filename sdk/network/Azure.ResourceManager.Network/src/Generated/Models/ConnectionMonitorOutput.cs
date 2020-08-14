@@ -13,20 +13,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorOutput. </summary>
         public ConnectionMonitorOutput()
         {
-            Type = "Workspace";
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorOutput. </summary>
         /// <param name="type"> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </param>
         /// <param name="workspaceSettings"> Describes the settings for producing output into a log analytics workspace. </param>
-        internal ConnectionMonitorOutput(string type, ConnectionMonitorWorkspaceSettings workspaceSettings)
+        internal ConnectionMonitorOutput(OutputType? type, ConnectionMonitorWorkspaceSettings workspaceSettings)
         {
             Type = type;
             WorkspaceSettings = workspaceSettings;
         }
 
         /// <summary> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </summary>
-        public string Type { get; set; }
+        public OutputType? Type { get; set; }
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         public ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }
     }

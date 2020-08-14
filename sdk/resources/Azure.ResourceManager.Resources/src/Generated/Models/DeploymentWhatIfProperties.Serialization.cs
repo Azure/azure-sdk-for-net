@@ -15,33 +15,39 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (WhatIfSettings != null)
+            if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings");
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            writer.WritePropertyName("template");
-            TemplateJson.WriteTo(writer);
-            if (TemplateLink != null)
+            if (Optional.IsDefined(TemplateJson))
+            {
+                writer.WritePropertyName("template");
+                TemplateJson.WriteTo(writer);
+            }
+            if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink");
                 writer.WriteObjectValue(TemplateLink);
             }
-            writer.WritePropertyName("parameters");
-            ParametersJson.WriteTo(writer);
-            if (ParametersLink != null)
+            if (Optional.IsDefined(ParametersJson))
+            {
+                writer.WritePropertyName("parameters");
+                ParametersJson.WriteTo(writer);
+            }
+            if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink");
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode");
             writer.WriteStringValue(Mode.ToSerialString());
-            if (DebugSetting != null)
+            if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting");
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (OnErrorDeployment != null)
+            if (Optional.IsDefined(OnErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment");
                 writer.WriteObjectValue(OnErrorDeployment);
