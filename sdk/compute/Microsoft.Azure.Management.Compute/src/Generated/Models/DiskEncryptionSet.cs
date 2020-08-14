@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="encryptionType">Possible values include:
-        /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
         /// <param name="activeKey">The key vault key which is currently used
@@ -74,7 +73,6 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets possible values include:
-        /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
         /// </summary>
