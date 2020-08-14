@@ -22,7 +22,7 @@ param (
 $invokeParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 $commonParameters =  $invokeParameter + @( "--project", "internal")
 
-if (!NoCancel)
+if (!$NoCancel)
 {
     $builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
 

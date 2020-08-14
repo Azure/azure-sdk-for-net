@@ -45,8 +45,8 @@ else
 
         if (!$allCompleted)
         {
-            Write-Host "Retrying after 10 seconds"
-            Start-Sleep -s 10
+            Write-Host "Retrying after 30 seconds"
+            Start-Sleep -s 30
         }
     }
     while(!$allCompleted -or $NoWait)
