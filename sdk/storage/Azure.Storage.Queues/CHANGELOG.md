@@ -4,6 +4,7 @@
 
 
 ## 12.4.0 (2020-08-13)
+- Includes all features from 12.4.0-preview.1 through 12.4.0-preview.6.
 - This preview contains bug fixes to improve quality.
 
 ## 12.4.0-preview.6 (2020-07-27)
