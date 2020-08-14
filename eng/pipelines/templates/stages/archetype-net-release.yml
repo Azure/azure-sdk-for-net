@@ -23,12 +23,11 @@ stages:
                   artifact: ${{parameters.ArtifactName}}
                   timeoutInMinutes: 5
 
-                - ${{ each artifact in parameters.Artifacts }}:
-                  - pwsh: |
-                      New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
-                      Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
-                      Get-ChildItem $(Pipeline.Workspace)/staging
-                    displayName: Copying ${{artifact.name}} to staging directory
+                - pwsh: |
+                    New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
+                    Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/* $(Pipeline.Workspace)/staging
+                    Get-ChildItem $(Pipeline.Workspace)/staging
+                  displayName: Copying ${{parameters.ArtifactName}} to staging directory
 
                 - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
 
