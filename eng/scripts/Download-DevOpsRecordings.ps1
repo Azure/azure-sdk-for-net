@@ -31,16 +31,16 @@ do
 }
 while(!$allCompleted -or $NoWait)
 
-$PRocessedDefinitions = @();
+$ProcessedDefinitions = @();
 
 foreach ($build in $builds)
 {
     $definitionName = $build.definition.name;
-    if ($PRocessedDefinitions -contains $definitionName)
+    if ($ProcessedDefinitions -contains $definitionName)
     {
         continue;
     }
-    $PRocessedDefinitions += $definitionName;
+    $ProcessedDefinitions += $definitionName;
 
     Write-Host "Processing results from $definitionName"
     $artifacts = az pipelines runs artifact list --organization https://dev.azure.com/azure-sdk --project internal --run-id $build.id -o json --only-show-errors | ConvertFrom-Json;
@@ -59,5 +59,5 @@ foreach ($build in $builds)
     }
 }
 
-$sessionRecordsPaths = Join-Path $artifactsPath "SessionRecords"
-Copy-Item -Path $sessionRecordsPaths -Filter "*.json" -Recurse -Destination $repoRoot -Container
+$sessionRecordsPaths = Join-Path $artifactsPath "SessionRecords" "sdk"
+Copy-Item -Path $sessionRecordsPaths -Filter "*.json" -Recurse -Destination $repoRoot -Container -Force

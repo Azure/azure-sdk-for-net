@@ -10,9 +10,8 @@ foreach ($build in $builds)
 {
     if ($build.status -ne "completed")
     {
-        Write-Host "Cancelling '$($build.definition.name)' - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+        Write-Host "Cancelling existing recording run '$($build.definition.name)' before we start recordings - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
         az devops invoke --organization https://dev.azure.com/azure-sdk --area build --resource builds --route-parameters "buildId=$($build.id)" project=internal --in-file $cancelPatchFile --http-method patch -o json > $null;
-        $allCompleted = $false;
     }
 }
 
