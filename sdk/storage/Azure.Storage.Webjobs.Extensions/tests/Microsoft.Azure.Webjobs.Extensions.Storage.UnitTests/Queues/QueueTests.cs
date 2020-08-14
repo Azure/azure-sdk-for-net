@@ -199,8 +199,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var trigger = new ProgramWithTriggerAndBindingData.Poco { xyz = "abc" };
             await host.GetJobHost().CallAsync<ProgramWithTriggerAndBindingData>("Func", new
             {
-                // TODO (kasobol-msft) wtf? triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
-                triggers = JsonConvert.SerializeObject(trigger)
+                triggers = QueuesModelFactory.QueueMessage("id", "receipt", JsonConvert.SerializeObject(trigger), 0)
             });
 
             // Now peek at messages.
@@ -269,8 +268,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             await host.GetJobHost().CallAsync<ProgramWithTriggerAndCompoundBindingData>("Func", new
             {
-                // TODO (kasobol-msft) wtf? triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
-                triggers = JsonConvert.SerializeObject(trigger)
+                triggers = QueuesModelFactory.QueueMessage("id", "receipt", JsonConvert.SerializeObject(trigger), 0)
             });
 
             // Now peek at messages.

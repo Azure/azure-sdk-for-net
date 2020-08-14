@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             _parameterName = parameterName;
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
-            _converter = CreateConverter();
+            _converter = CreateConverter(_queue);
         }
 
         public Type TriggerValueType
@@ -96,10 +96,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             return contract;
         }
 
-        private static IObjectToTypeConverter<QueueMessage> CreateConverter()
+        private static IObjectToTypeConverter<QueueMessage> CreateConverter(QueueClient queue)
         {
             return new CompositeObjectToTypeConverter<QueueMessage>(
-                new OutputConverter<QueueMessage>(new IdentityConverter<QueueMessage>()));
+                new OutputConverter<QueueMessage>(new IdentityConverter<QueueMessage>()),
+                new OutputConverter<string>(new StringToStorageQueueMessageConverter(queue)));
         }
 
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)

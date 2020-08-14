@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage.Blob;
@@ -274,9 +275,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         // The message is in the second queue
                         var queue2 = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2));
 
-                        Azure.Storage.StorageException ex = await Assert.ThrowsAsync<Azure.Storage.StorageException>( // TODO (kasobol-msft) check this exception.
+                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>( // TODO (kasobol-msft) check this exception.
                             () => queue2.DeleteMessageAsync(_lastMessageId, _lastMessagePopReceipt));
-                        Assert.Equal("MessageNotFound", ex.RequestInformation.ExtendedErrorInformation.ErrorCode);
+                        Assert.Equal("MessageNotFound", ex.ErrorCode);
                     }
                 }
                 var logs = loggerProvider.GetAllLogMessages();

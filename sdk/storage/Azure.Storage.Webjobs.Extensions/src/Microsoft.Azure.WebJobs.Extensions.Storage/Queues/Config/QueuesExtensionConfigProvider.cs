@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
         // Multiple JobHost objects may share the same JobHostConfiguration.
         // But queues have per-host instance state (IMessageEnqueuedWatcher).
         // so capture that and create new binding rules per host instance.
-        private class PerHostConfig : IConverter<QueueAttribute, IAsyncCollector<string>>
+        private class PerHostConfig : IConverter<QueueAttribute, IAsyncCollector<QueueMessage>>
         {
             // Fields that the various binding funcs need to close over.
             private StorageAccountProvider _accountProvider;
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 // IStorageQueueMessage is the core testing interface
                 var binding = context.AddBindingRule<QueueAttribute>();
                 binding
-                    .AddConverter<byte[], string>(ConvertByteArrayToCloudQueueMessage)
-                    //.AddConverter<string, string>(ConvertStringToCloudQueueMessage) // TODO (kasobol-msft) is this needed ??
-                    .AddOpenConverter<OpenType.Poco, string>(ConvertPocoToCloudQueueMessage);
+                    .AddConverter<byte[], QueueMessage>(ConvertByteArrayToCloudQueueMessage)
+                    .AddConverter<string, QueueMessage>(ConvertStringToCloudQueueMessage)
+                    .AddOpenConverter<OpenType.Poco, QueueMessage>(ConvertPocoToCloudQueueMessage);
 
                 context // global converters, apply to multiple attributes.
                      .AddConverter<QueueMessage, byte[]>(ConvertCloudQueueMessageToByteArray)
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 #pragma warning disable CS0618 // Type or member is obsolete
                 binding.SetPostResolveHook(ToWriteParameterDescriptorForCollector)
 #pragma warning restore CS0618 // Type or member is obsolete
-                        .BindToCollector<string>(this);
+                        .BindToCollector<QueueMessage>(this);
 
 #pragma warning disable CS0618 // Type or member is obsolete
                 binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
@@ -102,15 +102,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
             {
                 var attr = (QueueAttribute)attrResolved;
                 var jobj = await SerializeToJobject(arg, context).ConfigureAwait(false);
-                var msg = ConvertJObjectToCloudQueueMessage(jobj);
+                var msg = ConvertJObjectToCloudQueueMessage(jobj, attr);
                 return msg;
             }
 
-            private static string ConvertJObjectToCloudQueueMessage(JObject obj/*, QueueAttribute attrResolved*/) // TODO (kasobol-msft) is this needed?
+            private static QueueMessage ConvertJObjectToCloudQueueMessage(JObject obj, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed?
             {
                 var json = obj.ToString(); // convert to JSon
-                //return ConvertStringToCloudQueueMessage(json, attrResolved);
-                return json;
+                return ConvertStringToCloudQueueMessage(json, attrResolved);
             }
 
             // Hook JObject serialization to so we can stamp the object with a causality marker.
@@ -185,17 +184,17 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 return arg.MessageText;
             }
 
-            private static string ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
+            private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
-                return Encoding.UTF8.GetString(arg);
+                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0); // TODO (kasobol-msft) should this be base64?
             }
 
-            //private static string ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed ?
-            //{
-            //    return arg;
-            //}
+            private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed ?
+            {
+                return QueuesModelFactory.QueueMessage(null, null, arg, 0);
+            }
 
-            public IAsyncCollector<string> Convert(QueueAttribute attrResolved)
+            public IAsyncCollector<QueueMessage> Convert(QueueAttribute attrResolved)
             {
                 var queue = GetQueue(attrResolved);
                 return new QueueAsyncCollector(queue, _messageEnqueuedWatcherGetter.Value);
@@ -234,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
         }
 
         // The core Async Collector for queueing messages.
-        internal class QueueAsyncCollector : IAsyncCollector<string>
+        internal class QueueAsyncCollector : IAsyncCollector<QueueMessage>
         {
             private readonly QueueClient _queue;
             private readonly IMessageEnqueuedWatcher _messageEnqueuedWatcher;
@@ -245,14 +244,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 this._messageEnqueuedWatcher = messageEnqueuedWatcher;
             }
 
-            public async Task AddAsync(string message, CancellationToken cancellationToken = default(CancellationToken))
+            public async Task AddAsync(QueueMessage message, CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (message == null)
                 {
                     throw new InvalidOperationException("Cannot enqueue a null queue message instance.");
                 }
 
-                await _queue.AddMessageAndCreateIfNotExistsAsync(message, cancellationToken).ConfigureAwait(false);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
 
                 if (_messageEnqueuedWatcher != null)
                 {
