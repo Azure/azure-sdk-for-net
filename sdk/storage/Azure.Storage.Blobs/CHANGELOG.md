@@ -1,5 +1,8 @@
 # Release History
 
+## 12.6.0-preview.1 (Unreleased)
+
+
 ## 12.5.0 (2020-08-13)
 - Added support for custom local emulator hostname for blob storage endpoints.
 - Fixed bug where BlobContainerClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in BlobAccessPolicy
