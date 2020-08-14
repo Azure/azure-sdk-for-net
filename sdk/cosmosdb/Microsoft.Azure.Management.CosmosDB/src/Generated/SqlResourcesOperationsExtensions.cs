@@ -309,6 +309,98 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateSqlDatabaseToAutoscale(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.MigrateSqlDatabaseToAutoscaleAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateSqlDatabaseToAutoscaleAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateSqlDatabaseToManualThroughput(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.MigrateSqlDatabaseToManualThroughputAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateSqlDatabaseToManualThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the SQL container under an existing Azure Cosmos DB database account.
             /// </summary>
             /// <param name='operations'>
@@ -622,6 +714,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> UpdateSqlContainerThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateSqlContainerThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateSqlContainerToAutoscale(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName)
+            {
+                return operations.MigrateSqlContainerToAutoscaleAsync(resourceGroupName, accountName, databaseName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateSqlContainerToAutoscaleAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateSqlContainerToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateSqlContainerToManualThroughput(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName)
+            {
+                return operations.MigrateSqlContainerToManualThroughputAsync(resourceGroupName, accountName, databaseName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateSqlContainerToManualThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateSqlContainerToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1472,6 +1672,98 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateSqlDatabaseToAutoscale(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.BeginMigrateSqlDatabaseToAutoscaleAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateSqlDatabaseToAutoscaleAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateSqlDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateSqlDatabaseToManualThroughput(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.BeginMigrateSqlDatabaseToManualThroughputAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateSqlDatabaseToManualThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB SQL container
             /// </summary>
             /// <param name='operations'>
@@ -1633,6 +1925,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateSqlContainerThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateSqlContainerThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateSqlContainerToAutoscale(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName)
+            {
+                return operations.BeginMigrateSqlContainerToAutoscaleAsync(resourceGroupName, accountName, databaseName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateSqlContainerToAutoscaleAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateSqlContainerToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateSqlContainerToManualThroughput(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName)
+            {
+                return operations.BeginMigrateSqlContainerToManualThroughputAsync(resourceGroupName, accountName, databaseName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB SQL container from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateSqlContainerToManualThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateSqlContainerToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
