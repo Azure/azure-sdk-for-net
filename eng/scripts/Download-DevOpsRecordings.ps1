@@ -1,35 +1,56 @@
+<#
+    .SYNOPSIS
+        Downloads recording results from CI pipelines for a particular GitHub Pull Request. Use the Start-DevOpsRecordings.ps1 do start the recording.
+        Waits for all active runs to finish.
+        
+    .PARAMETER PR
+        The GitHub pull request id. For example 14153
+
+    .PARAMETER NoWait
+        Do not wait for all runs to finish, only downloads completed runs.
+
+    .EXAMPLE
+    .\eng\scripts\Download-DevOpsRecordings.ps1 14153
+#>
 [CmdletBinding()]
 param ([Parameter(Mandatory=$True)][int] $PR, [switch] $NoWait = $false)
 
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
 $artifactsPath = Join-Path $repoRoot "artifacts"
+$commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "--project", "internal", "-o", "json", "--only-show-errors")
 
 $token = (az account get-access-token --resource=https://management.core.windows.net/ -o json | ConvertFrom-Json).accessToken
 
 Write-Host "Processing builds for PR $PR"
-$builds = az pipelines runs list --organization https://dev.azure.com/azure-sdk --tags Recording --project internal --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc -o json --only-show-errors | ConvertFrom-Json;
 
-$allCompleted = $true;
-do
+if ($NoWait)
 {
-    $builds = az pipelines runs list --organization https://dev.azure.com/azure-sdk --tags Recording --project internal --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc -o json --only-show-errors | ConvertFrom-Json;
-
-    foreach ($build in $builds)
+    $builds = az pipelines runs list @commonParameter --tags Recording --branch "refs/pull/$PR/merge" --status completed --query-order FinishTimeDesc  | ConvertFrom-Json;
+}
+else
+{
+    $allCompleted = $true;
+    do
     {
-        if ($build.status -ne "completed")
+        $builds = az pipelines runs list @commonParameter --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
+
+        foreach ($build in $builds)
         {
-            Write-Host "Waiting for '$($build.definition.name)' to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
-            $allCompleted = $false;
+            if ($build.status -ne "completed")
+            {
+                Write-Host "Waiting for '$($build.definition.name)' to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+                $allCompleted = $false;
+            }
+        }
+
+        if (!$allCompleted)
+        {
+            Write-Host "Retrying after 10 seconds"
+            Start-Sleep -s 10
         }
     }
-
-    if (!$allCompleted)
-    {
-        Write-Host "Retrying after 10 seconds"
-        Start-Sleep -s 10
-    }
+    while(!$allCompleted -or $NoWait)
 }
-while(!$allCompleted -or $NoWait)
 
 $ProcessedDefinitions = @();
 
@@ -43,7 +64,7 @@ foreach ($build in $builds)
     $ProcessedDefinitions += $definitionName;
 
     Write-Host "Processing results from $definitionName"
-    $artifacts = az pipelines runs artifact list --organization https://dev.azure.com/azure-sdk --project internal --run-id $build.id -o json --only-show-errors | ConvertFrom-Json;
+    $artifacts = az pipelines runs artifact list @commonParameter --run-id $build.id | ConvertFrom-Json;
 
     foreach ($artifact in $artifacts)
     {
