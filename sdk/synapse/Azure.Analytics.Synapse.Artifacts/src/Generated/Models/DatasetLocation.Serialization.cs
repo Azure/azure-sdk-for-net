@@ -38,6 +38,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element);
+                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element);
+                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element);
+                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element);
+                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element);
+                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element);
+                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element);
+                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
+                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
+                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
+                }
+            }
             string type = default;
             Optional<object> folderPath = default;
             Optional<object> fileName = default;
