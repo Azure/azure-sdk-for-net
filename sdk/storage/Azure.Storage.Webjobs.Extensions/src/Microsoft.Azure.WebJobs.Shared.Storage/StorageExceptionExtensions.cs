@@ -3,6 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs
@@ -559,6 +561,29 @@ namespace Microsoft.Azure.WebJobs
             }
 
             return extendedInformation.ErrorCode == "QueueNotFound";
+        }
+
+        /// <summary>
+        /// Determines whether the exception is due to a 404 Not Found error with the error code QueueNotFound.
+        /// </summary>
+        /// <param name="exception">The storage exception.</param>
+        /// <returns>
+        /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code QueueNotFound;
+        /// otherwise <see langword="false"/>.
+        /// </returns>
+        public static bool IsNotFoundQueueNotFound(this RequestFailedException exception)
+        {
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
+
+            if (exception.Status != 404)
+            {
+                return false;
+            }
+
+            return exception.ErrorCode == QueueErrorCode.QueueNotFound;
         }
 
         /// <summary>Determines whether the exception occurred despite a 200 OK response.</summary>

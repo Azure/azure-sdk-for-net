@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
@@ -29,8 +30,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
                 receipt = await queue.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 return receipt;
             }
-            catch (StorageException exception)
-            { // TODO (kasobol-msft) catch right exception
+            catch (RequestFailedException exception)
+            {
                 if (!exception.IsNotFoundQueueNotFound())
                 {
                     throw;

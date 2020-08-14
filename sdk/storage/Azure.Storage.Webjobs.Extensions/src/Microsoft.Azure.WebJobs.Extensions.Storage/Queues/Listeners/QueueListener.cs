@@ -203,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, context.ClientRequestID, count, sw.ElapsedMilliseconds);
                 }
             }
-            catch (StorageException exception)
+            catch (StorageException exception) // TODO (kasobol-msft) check this exception
             {
                 // if we get ANY errors querying the queue reset our existence check
                 // doing this on all errors rather than trying to special case not

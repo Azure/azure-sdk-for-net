@@ -538,6 +538,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
+            _mockQueue.Setup(x => x.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
             var exception = new StorageException(
                 new RequestResult
                 {
