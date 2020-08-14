@@ -1067,9 +1067,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedForm.Fields["field-2"];
-                var expectedLabelData = formIndex == 0 ? "__Tokens__1" : "Contact:";
-                var expectedValueData = formIndex == 0 ? "Vendor Registration" : "Jamie@southridgevideo.com";
+                var sampleField = recognizedForm.Fields["field-1"];
+                var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
+                var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
 
                 Assert.IsNotNull(sampleField.LabelData);
                 Assert.AreEqual(expectedLabelData, sampleField.LabelData.Text);
