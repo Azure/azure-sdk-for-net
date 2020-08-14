@@ -35,8 +35,8 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
-          /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+          dotnet pack eng/service.proj -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:PublicSign=false $(VersioningProperties) 
+          /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion) /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -48,11 +48,6 @@ jobs:
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
-      - template: ../steps/arrange-artifacts.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          Artifacts: ${{ parameters.Artifacts }}
-          ArtifactsDirectory: $(Build.ArtifactStagingDirectory)
       - task: PublishPipelineArtifact@1
         condition: succeeded()
         inputs:

@@ -141,4 +141,4 @@ Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
 
 Write-Verbose "Compress and copy HTML into the staging Area"
-Compress-Archive -Path "${DocOutHtmlDir}" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
+Compress-Archive -Path "${DocOutHtmlDir}" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
