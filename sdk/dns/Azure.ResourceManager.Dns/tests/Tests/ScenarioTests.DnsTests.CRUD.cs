@@ -10,10 +10,12 @@ using Azure.ResourceManager.Dns.Tests;
 using System.Collections.Generic;
 using System;
 using Azure.Core;
+using Azure.ResourceManager.TestFramework;
 
 namespace Azure.Management.Dns.Tests
 {
-    public partial class ScenarioTests : DnsManagementClientBase
+    [TestFixture]
+    public class ScenarioTests : DnsManagementClientBase
     {
         private string location;
         private string resourceGroup;
@@ -27,9 +29,11 @@ namespace Azure.Management.Dns.Tests
         private ChangeTrackingList<TxtRecord> dummyTxtRecords;
         private ChangeTrackingList<CaaRecord> dummyCaaRecords;
         private Dictionary<string, string> metadata;
+        private bool setupRun = false;
 
-        public ScenarioTests(bool isAsync)
-            : base(isAsync)
+
+        public ScenarioTests()
+            : base(true)
         {
             resourceGroup = null;
             location = "West US";
@@ -51,10 +55,10 @@ namespace Azure.Management.Dns.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
                 InitializeClients();
-                this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
+                this.resourceGroup = "Defualt-dns-test-12345";//Recording.GenerateAssetName("Default-Dns-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
                 var tags = new Dictionary<string, string>
@@ -63,17 +67,22 @@ namespace Azure.Management.Dns.Tests
                 };
                 aZone.ZoneType = ZoneType.Public;
                 await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, aZone);
+                setupRun = true;
 
+            }
+            else if (setupRun)
+            {
+                initNewRecord();
             }
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task CleanupResourceGroup()
         {
             await CleanupResourceGroupsAsync();
         }
 
-        [Test]
+        [TestCase, Order(1)]
         public async Task DnsCreateARecordDelete()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -83,8 +92,8 @@ namespace Azure.Management.Dns.Tests
                 {"key1", "value1"}
             };
             aZone.ZoneType = ZoneType.Public;
-            var zoneName = "azure.ameredmond.dns";
-            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
+            var zoneName = "azure.ameredmondlocal.dns";
+            await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, zoneName, aZone);
             var aRecords = new ChangeTrackingList<ARecord>
             {
               new ARecord {Ipv4Address = "127.0.0.1"}
@@ -93,16 +102,16 @@ namespace Azure.Management.Dns.Tests
             var testARecordSet = new RecordSet("test_id", recordName, "A", null, this.metadata, 3600, null, null, null, aRecords, this.dummyAaaaRecords, this.dummyMxRecords,
                                                this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
 
-            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, zoneName, "record1", RecordType.A, testARecordSet);
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, zoneName, "record1", RecordType.A, testARecordSet);
             Assert.NotNull(createRecordSetResponse);
             Console.WriteLine(createRecordSetResponse.Value.Name);
             Assert.AreEqual(createRecordSetResponse.Value.Name, recordName);
-            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, zoneName, recordName, RecordType.A);
+            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(this.resourceGroup, zoneName, recordName, RecordType.A);
             Assert.NotNull(deleteRecordSetResponse);
-            var deleteZoneResponse = await ZonesOperations.StartDeleteAsync(resourceGroup, zoneName);
+            var deleteZoneResponse = await ZonesOperations.StartDeleteAsync(this.resourceGroup, zoneName);
             Assert.NotNull(deleteZoneResponse);
         }
-        [Test]
+        [TestCase, Order(2)]
         public async Task DnsMultiRecordCreateDelete()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -112,7 +121,7 @@ namespace Azure.Management.Dns.Tests
                 {"key1", "value1"}
             };
             aZone.ZoneType = ZoneType.Public;
-            var zoneName = "azure.ameredmond2.dns";
+            var zoneName = "azure.ameredmondlocal2.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
             var AaaaRecords = new ChangeTrackingList<AaaaRecord>
             {
@@ -134,7 +143,7 @@ namespace Azure.Management.Dns.Tests
             Assert.NotNull(deleteZoneResponse);
         }
 
-        [Test]
+        [TestCase, Order(3)]
         public async Task DnsRecordSetListByResourceGroup()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -147,11 +156,12 @@ namespace Azure.Management.Dns.Tests
             var testARecordSet = new RecordSet("test_id", recordName, "Aaaa", null, this.metadata, 3600, null, null, null, this.dummyARecords, AaaaRecords, this.dummyMxRecords,
                                                this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
 
-            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.Aaaa, testARecordSet);
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.Aaaa, testARecordSet);
             Assert.NotNull(createRecordSetResponse);
             var listResponse = RecordSetsOperations.ListAllByDnsZoneAsync(this.resourceGroup, this.zoneNameForList);
             Assert.NotNull(listResponse);
             var allResults = await listResponse.ToEnumerableAsync();
+            Console.WriteLine("num is " + allResults.Count);
             Assert.True(allResults.Count == 3); //SOA and NS record should exist
             RecordSet aaaaRecord = null;
             foreach (var arecord in allResults)
@@ -164,11 +174,11 @@ namespace Azure.Management.Dns.Tests
             }
             Assert.NotNull(aaaaRecord); ;
             Assert.AreEqual(aaaaRecord.AaaaRecords[0].Ipv6Address, ipv6Addr);
-            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A);
+            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(this.resourceGroup, this.zoneNameForList, recordName, RecordType.A);
         }
 
 
-        [Test]
+        [TestCase, Order(4)]
         public async Task DnsRecordSetUpdateSoa()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -195,7 +205,7 @@ namespace Azure.Management.Dns.Tests
             var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.A);
         }
 
-        [Test]
+        [TestCase, Order(5)]
         public async Task DnsUpdateARecord()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -219,7 +229,7 @@ namespace Azure.Management.Dns.Tests
         }
 
 
-        [Test]
+        [TestCase, Order(6)]
         public async Task DnsUpdateARecordMultiRecord()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -257,7 +267,7 @@ namespace Azure.Management.Dns.Tests
         }
 
 
-        [Test]
+        [TestCase, Order(7)]
         public async Task UpdateRecordSetPreconditionFailed()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
@@ -283,7 +293,8 @@ namespace Azure.Management.Dns.Tests
             {
                 exceptionCaught = true;
             }
-            finally{
+            finally
+            {
                 Assert.True(exceptionCaught);
             }
 

@@ -33,6 +33,14 @@ namespace Azure.ResourceManager.Dns.Tests{
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }
+        protected void initNewRecord(){
+            ResourcesOperations = ResourcesManagementClient.Resources;
+            ResourceProvidersOperations = ResourcesManagementClient.Providers;
+            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            DnsManagementClient = this.GetDnsManagementClient();
+            RecordSetsOperations = DnsManagementClient.RecordSets;
+            ZonesOperations = DnsManagementClient.Zones;
+        }
 
         internal DnsManagementClient GetDnsManagementClient(){
             return CreateClient<DnsManagementClient>(this.SubscriptionId,
