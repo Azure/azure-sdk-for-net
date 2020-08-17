@@ -28,5 +28,5 @@ stages:
     ServiceDirectory: insights
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Insights
+    - name: Azure.ResourceManager.Insights
       safeName: AzureResourceManagerInsights
