@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224\",\r\n  \"name\": \"azsmnet9224\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -4324,7 +4324,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/6.0.0-preview"
+          "Microsoft.Azure.ResourceManager.Storage.StorageManagementClient/6.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -4380,7 +4380,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/6.0.0-preview"
+          "Microsoft.Azure.ResourceManager.Storage.StorageManagementClient/6.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Storage/storageAccounts/azsmnet62\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"westcentralus\",\r\n  \"name\": \"azsmnet62\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-01-22T06:35:41.1723537Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://azsmnet62.blob.core.windows.net/\",\r\n      \"file\": \"https://azsmnet62.file.core.windows.net/\",\r\n      \"queue\": \"https://azsmnet62.queue.core.windows.net/\",\r\n      \"table\": \"https://azsmnet62.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"westcentralus\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"statusOfPrimary\": \"available\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",

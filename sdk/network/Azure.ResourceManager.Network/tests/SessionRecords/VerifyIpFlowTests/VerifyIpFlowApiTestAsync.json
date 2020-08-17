@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375\",\r\n  \"name\": \"azsmnet6375\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Resources/deployments/azsmnet309\",\r\n  \"name\": \"azsmnet309\",\r\n  \"properties\": {\r\n    \"templateHash\": \"9908915175891452045\",\r\n    \"parameters\": {\r\n      \"resourceGroupName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375\"\r\n      },\r\n      \"location\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"eastus\"\r\n      },\r\n      \"virtualMachineName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728\"\r\n      },\r\n      \"virtualMachineSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Standard_DS1_v2\"\r\n      },\r\n      \"adminUsername\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"netanalytics32\"\r\n      },\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet8619\"\r\n      },\r\n      \"virtualNetworkName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375-vnet\"\r\n      },\r\n      \"routeTableName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375RT\"\r\n      },\r\n      \"networkInterfaceName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6309\"\r\n      },\r\n      \"networkSecurityGroupName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728-nsg\"\r\n      },\r\n      \"adminPassword\": {\r\n        \"type\": \"SecureString\"\r\n      },\r\n      \"storageAccountType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Premium_LRS\"\r\n      },\r\n      \"diagnosticsStorageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet9553\"\r\n      },\r\n      \"diagnosticsStorageAccountId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Microsoft.Storage/storageAccounts/azsmnet9553\"\r\n      },\r\n      \"diagnosticsStorageAccountType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Standard_LRS\"\r\n      },\r\n      \"addressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.17.3.0/24\"\r\n      },\r\n      \"subnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"default\"\r\n      },\r\n      \"subnetPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.17.3.0/24\"\r\n      },\r\n      \"publicIpAddressName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728-ip\"\r\n      },\r\n      \"publicIpAddressType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Dynamic\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2017-06-23T08:17:00.819943Z\",\r\n    \"duration\": \"PT2.5051555S\",\r\n    \"correlationId\": \"e91808ac-8ea8-4a11-af03-a7441e58b0ae\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Compute\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualMachines\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Storage\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"storageAccounts\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"routeTables\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"networkInterfaces\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"publicIpAddresses\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"networkSecurityGroups\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkInterfaces/azsmnet6309\",\r\n            \"resourceType\": \"Microsoft.Network/networkInterfaces\",\r\n            \"resourceName\": \"azsmnet6309\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet8619\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet8619\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet9553\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet9553\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet8619\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet8619\",\r\n            \"apiVersion\": \"2015-06-15\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet9553\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet9553\",\r\n            \"apiVersion\": \"2015-06-15\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Compute/virtualMachines/azsmnet6728\",\r\n        \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"resourceName\": \"azsmnet6728\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/routeTables/azsmnet6375RT\",\r\n            \"resourceType\": \"Microsoft.Network/routeTables\",\r\n            \"resourceName\": \"azsmnet6375RT\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/virtualNetworks/azsmnet6375-vnet\",\r\n        \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n        \"resourceName\": \"azsmnet6375-vnet\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/virtualNetworks/azsmnet6375-vnet\",\r\n            \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n            \"resourceName\": \"azsmnet6375-vnet\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/publicIpAddresses/azsmnet6728-ip\",\r\n            \"resourceType\": \"Microsoft.Network/publicIpAddresses\",\r\n            \"resourceName\": \"azsmnet6728-ip\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkSecurityGroups/azsmnet6728-nsg\",\r\n            \"resourceType\": \"Microsoft.Network/networkSecurityGroups\",\r\n            \"resourceName\": \"azsmnet6728-nsg\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkInterfaces/azsmnet6309\",\r\n        \"resourceType\": \"Microsoft.Network/networkInterfaces\",\r\n        \"resourceName\": \"azsmnet6309\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -133,7 +133,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -182,7 +182,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -231,7 +231,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -280,7 +280,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -329,7 +329,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -378,7 +378,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -427,7 +427,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -476,7 +476,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -525,7 +525,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -574,7 +574,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -623,7 +623,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -672,7 +672,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Resources/deployments/azsmnet309\",\r\n  \"name\": \"azsmnet309\",\r\n  \"properties\": {\r\n    \"templateHash\": \"9908915175891452045\",\r\n    \"parameters\": {\r\n      \"resourceGroupName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375\"\r\n      },\r\n      \"location\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"eastus\"\r\n      },\r\n      \"virtualMachineName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728\"\r\n      },\r\n      \"virtualMachineSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Standard_DS1_v2\"\r\n      },\r\n      \"adminUsername\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"netanalytics32\"\r\n      },\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet8619\"\r\n      },\r\n      \"virtualNetworkName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375-vnet\"\r\n      },\r\n      \"routeTableName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6375RT\"\r\n      },\r\n      \"networkInterfaceName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6309\"\r\n      },\r\n      \"networkSecurityGroupName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728-nsg\"\r\n      },\r\n      \"adminPassword\": {\r\n        \"type\": \"SecureString\"\r\n      },\r\n      \"storageAccountType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Premium_LRS\"\r\n      },\r\n      \"diagnosticsStorageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet9553\"\r\n      },\r\n      \"diagnosticsStorageAccountId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Microsoft.Storage/storageAccounts/azsmnet9553\"\r\n      },\r\n      \"diagnosticsStorageAccountType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Standard_LRS\"\r\n      },\r\n      \"addressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.17.3.0/24\"\r\n      },\r\n      \"subnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"default\"\r\n      },\r\n      \"subnetPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.17.3.0/24\"\r\n      },\r\n      \"publicIpAddressName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"azsmnet6728-ip\"\r\n      },\r\n      \"publicIpAddressType\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Dynamic\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-06-23T08:22:07.7883894Z\",\r\n    \"duration\": \"PT5M9.4736019S\",\r\n    \"correlationId\": \"e91808ac-8ea8-4a11-af03-a7441e58b0ae\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Compute\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualMachines\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Storage\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"storageAccounts\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"routeTables\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"networkInterfaces\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"publicIpAddresses\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"networkSecurityGroups\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkInterfaces/azsmnet6309\",\r\n            \"resourceType\": \"Microsoft.Network/networkInterfaces\",\r\n            \"resourceName\": \"azsmnet6309\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet8619\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet8619\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet9553\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet9553\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet8619\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet8619\",\r\n            \"apiVersion\": \"2015-06-15\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Storage/storageAccounts/azsmnet9553\",\r\n            \"resourceType\": \"Microsoft.Storage/storageAccounts\",\r\n            \"resourceName\": \"azsmnet9553\",\r\n            \"apiVersion\": \"2015-06-15\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Compute/virtualMachines/azsmnet6728\",\r\n        \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"resourceName\": \"azsmnet6728\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/routeTables/azsmnet6375RT\",\r\n            \"resourceType\": \"Microsoft.Network/routeTables\",\r\n            \"resourceName\": \"azsmnet6375RT\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/virtualNetworks/azsmnet6375-vnet\",\r\n        \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n        \"resourceName\": \"azsmnet6375-vnet\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/virtualNetworks/azsmnet6375-vnet\",\r\n            \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n            \"resourceName\": \"azsmnet6375-vnet\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/publicIpAddresses/azsmnet6728-ip\",\r\n            \"resourceType\": \"Microsoft.Network/publicIpAddresses\",\r\n            \"resourceName\": \"azsmnet6728-ip\"\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkSecurityGroups/azsmnet6728-nsg\",\r\n            \"resourceType\": \"Microsoft.Network/networkSecurityGroups\",\r\n            \"resourceName\": \"azsmnet6728-nsg\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkInterfaces/azsmnet6309\",\r\n        \"resourceType\": \"Microsoft.Network/networkInterfaces\",\r\n        \"resourceName\": \"azsmnet6309\"\r\n      }\r\n    ],\r\n    \"outputs\": {\r\n      \"adminUsername\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"netanalytics32\"\r\n      }\r\n    },\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"Microsoft.Compute/virtualMachines/azsmnet6728\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Network/networkInterfaces/azsmnet6309\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Network/networkSecurityGroups/azsmnet6728-nsg\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Network/publicIpAddresses/azsmnet6728-ip\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Network/routeTables/azsmnet6375RT\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Network/virtualNetworks/azsmnet6375-vnet\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Storage/storageAccounts/azsmnet8619\"\r\n      },\r\n      {\r\n        \"id\": \"Microsoft.Storage/storageAccounts/azsmnet9553\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -795,7 +795,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/15.0.0.0"
+          "Microsoft.Azure.ResourceManager.Compute.ComputeManagementClient/15.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"bcb23192-801c-4222-8558-de25d9e274a3\",\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_DS1_v2\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2016-Datacenter\",\r\n        \"version\": \"latest\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"azsmnet6728\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://azsmnet8619.blob.core.windows.net/vhds/azsmnet672820161217141554.vhd\"\r\n        },\r\n        \"caching\": \"ReadWrite\"\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"azsmnet6728\",\r\n      \"adminUsername\": \"netanalytics32\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Network/networkInterfaces/azsmnet6309\"\r\n        }\r\n      ]\r\n    },\r\n    \"diagnosticsProfile\": {\r\n      \"bootDiagnostics\": {\r\n        \"enabled\": true,\r\n        \"storageUri\": \"https://azsmnet9553.blob.core.windows.net/\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"eastus\",\r\n  \"id\": \"/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourceGroups/azsmnet6375/providers/Microsoft.Compute/virtualMachines/azsmnet6728\",\r\n  \"name\": \"azsmnet6728\"\r\n}",

@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a38f78b2-f840-4628-90f8-009ec9745a16/resourceGroups/azsmnet7898\",\r\n  \"name\": \"azsmnet7898\",\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -418,7 +418,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
+          "Microsoft.Azure.ResourceManager.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
       "ResponseBody": "",
@@ -479,7 +479,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
+          "Microsoft.Azure.ResourceManager.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"id\": \"/subscriptions/a38f78b2-f840-4628-90f8-009ec9745a16/resourceGroups/azsmnet7898/providers/Microsoft.Storage/storageAccounts/azsmnet567\",\r\n  \"name\": \"azsmnet567\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": [],\r\n      \"defaultAction\": \"Allow\"\r\n    },\r\n    \"trustedDirectories\": [\r\n      \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    ],\r\n    \"supportsHttpsTrafficOnly\": false,\r\n    \"encryption\": {\r\n      \"services\": {\r\n        \"file\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-05-15T08:55:32.3917432Z\"\r\n        },\r\n        \"blob\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-05-15T08:55:32.3917432Z\"\r\n        }\r\n      },\r\n      \"keySource\": \"Microsoft.Storage\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2018-05-15T08:55:32.2979913Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://azsmnet567.blob.core.windows.net/\",\r\n      \"queue\": \"https://azsmnet567.queue.core.windows.net/\",\r\n      \"table\": \"https://azsmnet567.table.core.windows.net/\",\r\n      \"file\": \"https://azsmnet567.file.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"statusOfPrimary\": \"available\"\r\n  }\r\n}",

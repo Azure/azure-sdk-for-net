@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         /// <summary>
         /// Get default resource location for a given resource type.
         /// Once all tests are moved away from depreciated version of Resource Manager, this method should be removed
-        /// and "using Microsoft.Azure.Management.Resources" should be changed to "using Microsoft.Azure.Management.ResourceManager"
+        /// and "using Microsoft.Azure.ResourceManager.Resources" should be changed to "using Microsoft.Azure.Management.ResourceManager"
         /// </summary>
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
