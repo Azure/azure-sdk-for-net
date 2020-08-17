@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for TraceProxyState.
+    /// Defines values for SkuScaleType.
     /// </summary>
-    public static class TraceProxyState
+    public static class SkuScaleType
     {
-        public const string NotAvailable = "NotAvailable";
-        public const string Failed = "Failed";
-        public const string Succeeded = "Succeeded";
-        public const string Updating = "Updating";
+        public const string None = "None";
+        public const string Manual = "Manual";
+        public const string Automatic = "Automatic";
     }
 }
