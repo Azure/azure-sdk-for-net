@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
         public ExpressRouteCircuitPeeringConfig()
         {
+            AdvertisedPublicPrefixes = new ChangeTrackingList<string>();
+            AdvertisedCommunities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
@@ -35,9 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to AdvertisedPublicPrefixes. </summary>
-        public IList<string> AdvertisedPublicPrefixes { get; set; }
+        public IList<string> AdvertisedPublicPrefixes { get; }
         /// <summary> The communities of bgp peering. Specified for microsoft peering. </summary>
-        public IList<string> AdvertisedCommunities { get; set; }
+        public IList<string> AdvertisedCommunities { get; }
         /// <summary> The advertised public prefix state of the Peering resource. </summary>
         public ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? AdvertisedPublicPrefixesState { get; }
         /// <summary> The legacy mode of the peering. </summary>

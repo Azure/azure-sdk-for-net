@@ -16,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="UserType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UserType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

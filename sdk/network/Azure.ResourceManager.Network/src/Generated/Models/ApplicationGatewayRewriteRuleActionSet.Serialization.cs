@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RequestHeaderConfigurations != null)
+            if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
             {
                 writer.WritePropertyName("requestHeaderConfigurations");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResponseHeaderConfigurations != null)
+            if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
             {
                 writer.WritePropertyName("responseHeaderConfigurations");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UrlConfiguration != null)
+            if (Optional.IsDefined(UrlConfiguration))
             {
                 writer.WritePropertyName("urlConfiguration");
                 writer.WriteObjectValue(UrlConfiguration);
@@ -46,64 +46,38 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRuleActionSet DeserializeApplicationGatewayRewriteRuleActionSet(JsonElement element)
         {
-            IList<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = default;
-            IList<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = default;
-            ApplicationGatewayUrlConfiguration urlConfiguration = default;
+            Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
+            Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
+            Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderConfigurations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
-                        }
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
                     }
                     requestHeaderConfigurations = array;
                     continue;
                 }
                 if (property.NameEquals("responseHeaderConfigurations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
-                        }
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
                     }
                     responseHeaderConfigurations = array;
                     continue;
                 }
                 if (property.NameEquals("urlConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value);
                     continue;
                 }
             }
-            return new ApplicationGatewayRewriteRuleActionSet(requestHeaderConfigurations, responseHeaderConfigurations, urlConfiguration);
+            return new ApplicationGatewayRewriteRuleActionSet(Optional.ToList(requestHeaderConfigurations), Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value);
         }
     }
 }

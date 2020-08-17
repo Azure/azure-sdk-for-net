@@ -795,8 +795,8 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateAsync();
 
             var data = GetRandomBuffer(blobSize);
-            var progressList = new List<long>();
-            var progressHandler = new Progress<long>(progress => progressList.Add(progress));
+            var progressBag = new System.Collections.Concurrent.ConcurrentBag<long>();
+            var progressHandler = new Progress<long>(progress => progressBag.Add(progress));
             var timesFaulted = 0;
 
             // Act
@@ -808,12 +808,12 @@ namespace Azure.Storage.Blobs.Test
                 () => timesFaulted++))
             {
                 await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
-                await WaitForProgressAsync(progressList, data.LongLength);
-                Assert.IsTrue(progressList.Count > 1, "Too few progress received");
+                await WaitForProgressAsync(progressBag, data.LongLength);
+                Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                if (progressList.Count > 0)
+                if (progressBag.Count > 0)
                 {
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
                 }
             }
 

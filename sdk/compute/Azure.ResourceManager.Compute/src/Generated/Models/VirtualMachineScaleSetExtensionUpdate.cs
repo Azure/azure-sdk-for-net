@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionUpdate. </summary>
         public VirtualMachineScaleSetExtensionUpdate()
         {
+            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionUpdate. </summary>
@@ -66,6 +68,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
-        public IList<string> ProvisionAfterExtensions { get; set; }
+        public IList<string> ProvisionAfterExtensions { get; }
     }
 }

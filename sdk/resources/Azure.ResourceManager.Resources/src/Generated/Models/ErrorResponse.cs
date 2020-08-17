@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -13,8 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        public ErrorResponse()
+        internal ErrorResponse()
         {
+            Details = new ChangeTrackingList<ErrorResponse>();
+            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
-        internal ErrorResponse(string code, string message, string target, IList<ErrorResponse> details, IList<ErrorAdditionalInfo> additionalInfo)
+        internal ErrorResponse(string code, string message, string target, IReadOnlyList<ErrorResponse> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
         {
             Code = code;
             Message = message;
@@ -39,8 +42,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> The error details. </summary>
-        public IList<ErrorResponse> Details { get; }
+        public IReadOnlyList<ErrorResponse> Details { get; }
         /// <summary> The error additional info. </summary>
-        public IList<ErrorAdditionalInfo> AdditionalInfo { get; }
+        public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

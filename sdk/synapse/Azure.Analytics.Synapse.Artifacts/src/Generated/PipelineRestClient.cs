@@ -128,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
-        public async Task<Response<PipelineResource>> CreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -144,12 +144,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        PipelineResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -161,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
-        public Response<PipelineResource> CreateOrUpdatePipeline(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdatePipeline(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -177,12 +173,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        PipelineResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -296,6 +288,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -319,6 +312,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -374,7 +368,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -386,12 +380,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        CreateRunResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -405,7 +395,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        public Response CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -417,12 +407,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        CreateRunResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         DiskEncryptionSet IOperationSource<DiskEncryptionSet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
-            }
+            return DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
         }
 
         async ValueTask<DiskEncryptionSet> IOperationSource<DiskEncryptionSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
-            }
+            return DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
         }
     }
 }

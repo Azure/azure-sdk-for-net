@@ -25,7 +25,7 @@ namespace Azure.Management.EventHub.Tests
                 new EHNamespace()
                 {
                     Location = location.Result,
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -44,20 +44,26 @@ namespace Azure.Management.EventHub.Tests
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
             Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location, StringComparer.CurrentCultureIgnoreCase.ToString());
-            //Create Namepsace IPRules
-            List<NWRuleSetIpRules> IPRules = new List<NWRuleSetIpRules>();
-            //TODO
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" });
-            IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" });
-            List<NWRuleSetVirtualNetworkRules> VNetRules = new List<NWRuleSetVirtualNetworkRules>();
-            //You should create Three virtualNetworks/sbehvnettest1/subnets/default(sbdefault and sbdefault01) and add EventHub to Service endpoint --youri 8.5.2020
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default") });
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault") });
-            VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01") });
-            var netWorkRuleSet =await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = DefaultAction.Deny, VirtualNetworkRules = VNetRules, IpRules = IPRules });
+
+            var netWorkRuleSet =await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName,
+                new NetworkRuleSet()
+                {
+                    DefaultAction = DefaultAction.Deny,
+                    VirtualNetworkRules =
+                    {
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default") },
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault") },
+                        new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet("/subscriptions/" + SubscriptionId + "/resourcegroups/"+ resourceGroup + "/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01") }
+                    },
+                    IpRules =
+                    {
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
+                        new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                    }
+                });
             var getNetworkRuleSet = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);
             var netWorkRuleSet1 = await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
             var getNetworkRuleSet1 = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);

@@ -15,7 +15,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (NetworkWatcherFlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(NetworkWatcherFlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration");
                 writer.WriteObjectValue(NetworkWatcherFlowAnalyticsConfiguration);
@@ -25,20 +25,16 @@ namespace Azure.Management.Network.Models
 
         internal static TrafficAnalyticsProperties DeserializeTrafficAnalyticsProperties(JsonElement element)
         {
-            TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default;
+            Optional<TrafficAnalyticsConfigurationProperties> networkWatcherFlowAnalyticsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkWatcherFlowAnalyticsConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value);
                     continue;
                 }
             }
-            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration);
+            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration.Value);
         }
     }
 }
