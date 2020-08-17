@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal class NDJsonWriter
+    internal class NDJsonWriter: IDisposable
     {
         private static readonly byte[] Separator = { (byte)'\n'};
 
@@ -31,6 +31,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             JsonWriter.Flush();
             return Stream.ToArray();
+        }
+
+        public void Dispose()
+        {
+            Stream?.Dispose();
+            JsonWriter?.Dispose();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             uri.AppendPath("/track", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new NDJsonWriter();
+            using var content = new NDJsonWriter();
             foreach (var item in body)
             {
                 content.JsonWriter.WriteObjectValue(item);
