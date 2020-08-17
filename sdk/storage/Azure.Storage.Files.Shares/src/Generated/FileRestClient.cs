@@ -6454,6 +6454,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="prevsharesnapshot">The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -6467,6 +6468,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 string sharesnapshot = default,
+                string prevsharesnapshot = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
@@ -6484,6 +6486,7 @@ namespace Azure.Storage.Files.Shares
                         resourceUri,
                         version,
                         sharesnapshot,
+                        prevsharesnapshot,
                         timeout,
                         range,
                         leaseId))
@@ -6522,6 +6525,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
+            /// <param name="prevsharesnapshot">The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -6531,6 +6535,7 @@ namespace Azure.Storage.Files.Shares
                 System.Uri resourceUri,
                 string version,
                 string sharesnapshot = default,
+                string prevsharesnapshot = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default)
@@ -6554,6 +6559,7 @@ namespace Azure.Storage.Files.Shares
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "rangelist", escapeValue: false);
                 if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
+                if (prevsharesnapshot != null) { _request.Uri.AppendQuery("prevsharesnapshot", prevsharesnapshot); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers

@@ -1748,8 +1748,13 @@ namespace Azure.Storage.Files.Shares.Test
 
             await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
 
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Range = new HttpRange(0, Constants.MB)
+            };
+
             // Act
-            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(options);
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
@@ -1764,15 +1769,18 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = test.File;
 
             ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
-            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
             {
-                LeaseId = fileLease.LeaseId
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = fileLease.LeaseId
+                }
             };
 
             // Act
-            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(
-                range: new HttpRange(0, Constants.MB),
-                conditions: conditions);
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(options);
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
@@ -1786,16 +1794,18 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
 
-            ShareFileRequestConditions conditions = new ShareFileRequestConditions
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
             {
-                LeaseId = Recording.Random.NewGuid().ToString()
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = Recording.Random.NewGuid().ToString()
+                }
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.GetRangeListAsync(
-                    range: new HttpRange(0, Constants.MB),
-                    conditions: conditions),
+                file.GetRangeListAsync(options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
@@ -1808,10 +1818,143 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Range = new HttpRange(0, Constants.MB)
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.GetRangeListAsync(range: new HttpRange(0, Constants.MB)),
+                file.GetRangeListAsync(options),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_NoRange()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                   writeType: ShareFileRangeWriteType.Update,
+                   range: range,
+                   content: stream);
+
+            // Act
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Ranges.Count());
+            Assert.AreEqual(range, response.Value.Ranges.First());
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                   writeType: ShareFileRangeWriteType.Update,
+                   range: range,
+                   content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Snapshot = snapshotResponse.Value.Snapshot
+            };
+
+            // Act
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(options);
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Ranges.Count());
+            Assert.AreEqual(range, response.Value.Ranges.First());
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_SnapshotFailed()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Snapshot = "2020-08-07T16:58:02.0000000Z"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetRangeListAsync(options),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListAsync_PreviousSnapshot()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                   writeType: ShareFileRangeWriteType.Update,
+                   range: range,
+                   content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse = await test.Share.CreateSnapshotAsync();
+
+            stream.Position = 0;
+            HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                   writeType: ShareFileRangeWriteType.Update,
+                   range: range2,
+                   content: stream);
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                PreviousSnapshot = snapshotResponse.Value.Snapshot
+            };
+
+            // Act
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(options);
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Ranges.Count());
+            Assert.AreEqual(range2, response.Value.Ranges.First());
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListAsync_PreviousSnapshotFailed()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                PreviousSnapshot = "2020-08-07T16:58:02.0000000Z"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetRangeListAsync(options),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
