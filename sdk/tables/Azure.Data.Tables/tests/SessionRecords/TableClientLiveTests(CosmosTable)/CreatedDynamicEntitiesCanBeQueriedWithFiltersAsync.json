@@ -38,7 +38,7 @@
       }
     },
     {
-      "RequestUri": "https://allkimprim.table.cosmos.azure.com/testtable7aa9j9nl?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://allkimprim.table.cosmos.azure.com/testtable7aa9j9nl?$format=application%2Fjson%3Bodata%3Dfullmetadataa",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",

@@ -18,7 +18,7 @@ namespace Azure.Core.TestFramework
 
         public TestRecording Recording { get; private set; }
 
-        public RecordedTestMode Mode { get; }
+        public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms

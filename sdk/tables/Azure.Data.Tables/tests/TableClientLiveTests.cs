@@ -135,6 +135,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
+        [RecordFallback]
         public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;
