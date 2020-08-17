@@ -30,7 +30,7 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-**NOTE:** The content is logged at the `Verbose` level, you might need to change the listener settings for content logs to appear.
+**NOTE:** The content is logged at the `Verbose` level so you might need to change the listener settings for content logs to appear.
 
 ### Changing log level
 
