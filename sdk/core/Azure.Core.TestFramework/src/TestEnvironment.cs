@@ -162,6 +162,14 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
+            return GetRecordedOptionalVariable(name, _ => { });
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// </summary>
+        protected string GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions> options)
+        {
             if (Mode == RecordedTestMode.Playback)
             {
                 return GetRecordedValue(name);
@@ -169,7 +177,10 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            SetRecordedValue(name, value);
+            var optionsInstance = new RecordedVariableOptions();
+            options(optionsInstance);
+            value = optionsInstance.Apply(value);
+            SetRecordedValue(name, value, optionsInstance);
 
             return value;
         }
@@ -180,7 +191,16 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedVariable(string name)
         {
-            var value = GetRecordedOptionalVariable(name);
+            return GetRecordedVariable(name, null);
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// Throws when variable is not found.
+        /// </summary>
+        protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
+        {
+            var value = GetRecordedOptionalVariable(name, options);
             EnsureValue(name, value);
             return value;
         }
@@ -247,7 +267,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        private void SetRecordedValue(string name, string value)
+        private void SetRecordedValue(string name, string value, RecordedVariableOptions options)
         {
             if (!Mode.HasValue)
             {
@@ -259,7 +279,7 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
             }
 
-            _recording?.SetVariable(name, value);
+            _recording?.SetVariable(name, value, options);
         }
 
         private class TestCredential : TokenCredential

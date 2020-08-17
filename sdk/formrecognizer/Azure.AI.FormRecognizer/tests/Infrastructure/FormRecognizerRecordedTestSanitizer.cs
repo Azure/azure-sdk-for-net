@@ -8,30 +8,19 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private const string SanitizedSasUri = "https://sanitized.blob.core.windows.net";
-
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
             JsonPathSanitizers.Add("$..accessToken");
             JsonPathSanitizers.Add("$..source");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
-        {
-            if (headers.ContainsKey(Constants.AuthorizationHeader))
-            {
-                headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
-            }
-
-            base.SanitizeHeaders(headers);
-        }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
         {
             return variableName switch
             {
-                FormRecognizerTestEnvironment.ApiKeyEnvironmentVariableName => SanitizeValue,
                 FormRecognizerTestEnvironment.BlobContainerSasUrlEnvironmentVariableName => SanitizedSasUri,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
