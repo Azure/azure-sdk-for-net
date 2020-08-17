@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringValueType()
         {
-            var value = "Lovelace";
+            string value = "Lovelace";
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithStringValueType(value);
 
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithInt64ValueType()
         {
-            var value = 1709;
+            long value = 1709;
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithInt64ValueType(value);
 
@@ -185,7 +185,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithFloatValueType()
         {
-            var value = 6.0221f;
+            float value = 6.0221f;
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithFloatValueType(value);
 
@@ -204,7 +204,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithDateValueType()
         {
-            var value = DateTime.UtcNow;
+            DateTime value = DateTime.UtcNow;
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithDateValueType(value);
 
@@ -223,7 +223,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithTimeValueType()
         {
-            var value = TimeSpan.FromSeconds(104717);
+            TimeSpan value = TimeSpan.FromSeconds(104717);
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithTimeValueType(value);
 
@@ -242,7 +242,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithPhoneNumberValueType()
         {
-            var value = "1500450271";
+            string value = "1500450271";
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithPhoneNumberValueType(value);
 
@@ -263,7 +263,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formField = new FormField(default, default, default, default, default);
 
-            var value = new List<FormField>() { formField };
+            List<FormField> value = new List<FormField>() { formField };
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithListValueType(value);
 
@@ -285,7 +285,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formField = new FormField(default, default, default, default, default);
 
-            var value = new Dictionary<string, FormField>() { { "", formField } };
+            Dictionary<string, FormField> value = new Dictionary<string, FormField>() { { "", formField } };
 
             var fieldValue = FormRecognizerModelFactory.FieldValueWithDictionaryValueType(value);
 
@@ -308,7 +308,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "Cardano";
             var labelData = new FieldData(default, default, default, default);
             var valueData = new FieldData(default, default, default, default);
-            var value = new FieldValue(); // TODO
+            var value = new FieldValue("Hopper");
             var confidence = 0.8854f;
 
             var formField = FormRecognizerModelFactory.FormField(name, labelData, valueData, value, confidence);
