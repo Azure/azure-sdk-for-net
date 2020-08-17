@@ -39,8 +39,6 @@
     <Compile Include="..\src\Shared\RetriableStream.cs" />
     <Compile Include="..\src\Shared\RequestRequestContent.cs" />
     <Compile Include="..\src\Shared\StreamHelperExtensions.cs" />
-    <Compile Include="..\src\Shared\StringSegment.cs" />
-    <Compile Include="..\src\Shared\StringTokenizer.cs" />
     <Compile Include="..\src\Shared\StringValues.cs" />
     <Compile Include="..\src\Shared\ThrowHelper.cs" />
     <Compile Include="..\src\Shared\ValueStopwatch.cs" />
