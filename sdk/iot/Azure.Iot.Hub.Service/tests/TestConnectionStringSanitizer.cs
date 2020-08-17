@@ -8,7 +8,7 @@ namespace Azure.Iot.Hub.Service.Tests
 {
     internal class TestConnectionStringSanitizer : RecordedTestSanitizer
     {
-        private const string FAKE_HOST = "FakeHost.net";
+        internal const string FAKE_HOST = "FakeHost.net";
 
         public override string SanitizeUri(string uri)
         {
