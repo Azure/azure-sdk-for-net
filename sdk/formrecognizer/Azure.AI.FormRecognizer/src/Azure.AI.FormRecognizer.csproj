@@ -5,7 +5,6 @@
     <Version>3.0.0-preview.2</Version>
     <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <GenerateAPIListing>false</GenerateAPIListing>
   </PropertyGroup>
 
   <ItemGroup>
