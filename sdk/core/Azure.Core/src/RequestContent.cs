@@ -78,11 +78,6 @@ namespace Azure.Core
         /// </summary>
         public abstract void Dispose();
 
-        /// <summary>
-        /// A collection of header values associated with this request content.
-        /// </summary>
-        public IDictionary<string, string>? Headers { get; set;} = null;
-
         private sealed class StreamContent : RequestContent
         {
             private const int CopyToBufferSize = 81920;

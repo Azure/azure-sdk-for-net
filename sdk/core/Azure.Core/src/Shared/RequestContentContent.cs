@@ -22,9 +22,8 @@ namespace Azure.Core
         private const string ColonSP = ": ";
         private const string CRLF = "\r\n";
         private const int DefaultHeaderAllocation = 2 * 1024;
-        private const string DefaultMediaType = "application/http";
 
-        private readonly Request request;
+        private readonly Request _request;
 
         #endregion Fields
 
@@ -34,33 +33,10 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="RequestContentContent"/> class.
         /// </summary>
         /// <param name="request">The <see cref="Request"/> instance to encapsulate.</param>
-        public RequestContentContent(Request request) : this(request, default)
-        { }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestContentContent"/> class.
-        /// </summary>
-        /// <param name="request">The <see cref="Request"/> instance to encapsulate.</param>
-        /// <param name="headers">Additional headers to apply to the request content.</param>
-        public RequestContentContent(Request request, Dictionary<string, string> headers)
+        public RequestContentContent(Request request)
         {
             Argument.AssertNotNull(request, nameof(request));
-
-            Headers = new Dictionary<string, string>
-            {
-                ["Content-Type"] = DefaultMediaType
-            };
-
-            if (headers != null)
-            {
-                foreach (var key in headers.Keys)
-                {
-                    Headers[key] = headers[key];
-                }
-            }
-
-            this.request = request;
+            this._request = request;
         }
 
         #endregion Construction
@@ -72,7 +48,7 @@ namespace Azure.Core
         /// </summary>
         public override void Dispose()
         {
-            request.Dispose();
+            _request.Dispose();
         }
 
         #endregion Dispose
@@ -86,9 +62,9 @@ namespace Azure.Core
             byte[] header = SerializeHeader();
             await stream.WriteAsync(header, 0, header.Length).ConfigureAwait(false);
 
-            if (request.Content != null)
+            if (_request.Content != null)
             {
-                await request.Content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                await _request.Content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -99,9 +75,9 @@ namespace Azure.Core
             byte[] header = SerializeHeader();
             stream.Write(header, 0, header.Length);
 
-            if (request.Content != null)
+            if (_request.Content != null)
             {
-                request.Content.WriteTo(stream, cancellationToken);
+                _request.Content.WriteTo(stream, cancellationToken);
             }
         }
 
@@ -121,13 +97,13 @@ namespace Azure.Core
             // For #2, we return true & the size of our headers + the content length
             // For #3, we return true & the size of our headers
 
-            bool hasContent = request.Content != null;
+            bool hasContent = _request.Content != null;
             length = 0;
 
             // Cases #1, #2, #3
             if (hasContent)
             {
-                if (!request!.Content!.TryComputeLength(out length))
+                if (!_request!.Content!.TryComputeLength(out length))
                 {
                     length = 0;
                     return false;
@@ -146,8 +122,8 @@ namespace Azure.Core
         {
             StringBuilder message = new StringBuilder(DefaultHeaderAllocation);
 
-            SerializeRequestLine(message, request);
-            SerializeHeaderFields(message, request.Headers);
+            SerializeRequestLine(message, _request);
+            SerializeHeaderFields(message, _request.Headers);
             message.Append(CRLF);
             return Encoding.UTF8.GetBytes(message.ToString());
         }

@@ -13,7 +13,7 @@ namespace Azure.Data.Tables
         internal static MultipartContent AddChangeset(this MultipartContent batch)
         {
             var changeset = new MultipartContent("mixed", $"changeset_{Guid.NewGuid()}");
-            batch.Add(changeset);
+            batch.Add(changeset, changeset._headers);
             return changeset;
         }
     }

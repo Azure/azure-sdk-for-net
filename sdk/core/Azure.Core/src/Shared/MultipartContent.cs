@@ -29,6 +29,7 @@ namespace Azure.Core
         private readonly List<MultipartRequestContent> _nestedContent;
         private readonly string _subtype;
         private readonly string _boundary;
+        internal readonly Dictionary<string, string> _headers;
 
         #endregion Fields
 
@@ -54,7 +55,7 @@ namespace Azure.Core
 
             // see https://www.ietf.org/rfc/rfc1521.txt page 29.
             _boundary = boundary.Contains(":") ? $"\"{boundary}\"" : boundary;
-            Headers = new Dictionary<string, string>
+            _headers = new Dictionary<string, string>
             {
                 [HttpHeader.Names.ContentType] = $"multipart/{_subtype}; boundary={_boundary}"
             };
@@ -144,16 +145,6 @@ namespace Azure.Core
             if (headers == null)
             {
                 headers = new Dictionary<string, string>();
-            }
-            if (content.Headers != null)
-            {
-                foreach (var key in content.Headers.Keys)
-                {
-                    if (!headers.ContainsKey(key))
-                    {
-                        headers[key] = content.Headers[key];
-                    }
-                }
             }
             _nestedContent.Add(new MultipartRequestContent(content, headers));
         }

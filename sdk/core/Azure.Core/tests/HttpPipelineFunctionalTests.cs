@@ -471,7 +471,7 @@ namespace Azure.Core.Tests
 
             Guid changesetGuid = Guid.NewGuid();
             var changeset = new MultipartContent(Mixed, $"changeset_{changesetGuid}");
-            content.Add(changeset);
+            content.Add(changeset, changeset._headers);
 
             var postReq1 = httpPipeline.CreateMessage().Request;
             postReq1.Method = RequestMethod.Post;
@@ -482,7 +482,7 @@ namespace Azure.Core.Tests
             postReq1.Headers.Add(DataServiceVersion, Three0);
             const string post1Body = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"1\", \"Rating\":9, \"Text\":\"Azure...\"}";
             postReq1.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post1Body));
-            changeset.Add(new RequestContentContent(postReq1, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+            changeset.Add(new RequestContentContent(postReq1), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
 
             var postReq2 = httpPipeline.CreateMessage().Request;
             postReq2.Method = RequestMethod.Post;
@@ -492,7 +492,7 @@ namespace Azure.Core.Tests
             postReq2.Headers.Add(DataServiceVersion, Three0);
             const string post2Body = "{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}";
             postReq2.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post2Body));
-            changeset.Add(new RequestContentContent(postReq2, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+            changeset.Add(new RequestContentContent(postReq2), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
 
             var patchReq = httpPipeline.CreateMessage().Request;
             patchReq.Method = RequestMethod.Patch;
@@ -503,7 +503,7 @@ namespace Azure.Core.Tests
             patchReq.Headers.Add(DataServiceVersion, Three0);
             const string patchBody = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"3\", \"Rating\":9, \"Text\":\"Azure Tables...\"}";
             patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
-            changeset.Add(new RequestContentContent(patchReq, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+            changeset.Add(new RequestContentContent(patchReq), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
 
             request.Content = content;
             using Response response = await ExecuteRequest(request, httpPipeline);

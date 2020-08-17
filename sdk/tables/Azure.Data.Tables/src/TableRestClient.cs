@@ -6,10 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
@@ -20,6 +18,7 @@ namespace Azure.Data.Tables
     {
         private const string CteHeaderName = "Content-Transfer-Encoding";
         private const string Binary = "binary";
+        private const string ApplicationHttp = "application/http";
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
         {
@@ -54,7 +53,7 @@ namespace Azure.Data.Tables
         internal void AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
-            changeset.Add(new RequestContentContent(message.Request, new Dictionary<string, string> { { CteHeaderName, Binary } }));
+            changeset.Add(new RequestContentContent(message.Request), new Dictionary<string, string> { { HttpHeader.Names.ContentType, ApplicationHttp }, { CteHeaderName, Binary } });
         }
 
         /// <summary> Insert entity in a table. </summary>
