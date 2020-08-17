@@ -134,6 +134,9 @@ $environmentText = @"
 }
 "@
 
+Write-Host "Environment variables set, this will now be encrypted. Copy these values for future reference."
+Write-Host $environmentText
+
 $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
 $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
