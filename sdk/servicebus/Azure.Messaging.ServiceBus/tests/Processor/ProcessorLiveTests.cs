@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -412,6 +413,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await taskCompletionSource.Task;
             Assert.True(exceptionReceivedHandlerCalled);
             await processor.StopProcessingAsync();
+        }
+
+        [Test]
+        public void StartStopMultipleTimes()
+        {
+            var invalidQueueName = "nonexistentqueuename";
+            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            var startTasks = new List<Task>
+            {
+                processor.StartProcessingAsync(),
+                processor.StartProcessingAsync()
+            };
+            Assert.That(
+                async () => await Task.WhenAll(startTasks),
+                Throws.InstanceOf<InvalidOperationException>());
+
+            var stopTasks = new List<Task>()
+            {
+                processor.StopProcessingAsync(),
+                processor.StopProcessingAsync()
+            };
+            Assert.That(
+                async () => await Task.WhenAll(stopTasks),
+                Throws.InstanceOf<InvalidOperationException>());
         }
 
         [Test]
