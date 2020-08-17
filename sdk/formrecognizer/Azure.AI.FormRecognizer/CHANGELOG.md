@@ -2,6 +2,9 @@
 
 ## 3.0.0-preview.2 (Unreleased)
 
+### New Features
+
+- Added `FormRecognizerModelFactory` static class to support mocking model types.
 
 ## 3.0.0-preview.1 (2020-08-11)
 
