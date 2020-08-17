@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge
     /// <summary>
     /// Static factory for the client.
     /// </summary>
-    public static class MediaServicesEdgeClientFactory
+    public static class LiveVideoAnalyticsEdgeClientFactory
     {
         /// <summary>
         /// Creates an instance of the Azure Media Services Edge for local calls within the edge hub.
