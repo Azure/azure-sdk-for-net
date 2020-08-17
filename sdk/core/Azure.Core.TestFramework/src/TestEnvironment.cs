@@ -74,7 +74,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        internal RecordedTestMode? Mode { get; set; }
+        public RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -179,9 +179,19 @@ namespace Azure.Core.TestFramework
 
             var optionsInstance = new RecordedVariableOptions();
             options(optionsInstance);
-            value = optionsInstance.Apply(value);
-            SetRecordedValue(name, value, optionsInstance);
+            var sanitizedValue = optionsInstance.Apply(value);
 
+            if (!Mode.HasValue)
+            {
+                return value;
+            }
+
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+            }
+
+            _recording?.SetVariable(name, sanitizedValue);
             return value;
         }
 
@@ -265,21 +275,6 @@ namespace Azure.Core.TestFramework
             }
 
             return _recording.GetVariable(name, null);
-        }
-
-        private void SetRecordedValue(string name, string value, RecordedVariableOptions options)
-        {
-            if (!Mode.HasValue)
-            {
-                return;
-            }
-
-            if (_recording == null)
-            {
-                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
-            }
-
-            _recording?.SetVariable(name, value, options);
         }
 
         private class TestCredential : TokenCredential
