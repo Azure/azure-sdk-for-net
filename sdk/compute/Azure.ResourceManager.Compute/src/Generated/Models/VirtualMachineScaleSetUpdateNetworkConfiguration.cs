@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
         public VirtualMachineScaleSetUpdateNetworkConfiguration()
         {
+            IpConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
         /// <summary> The virtual machine scale set IP Configuration. </summary>
-        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get; set; }
+        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get; }
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
     }

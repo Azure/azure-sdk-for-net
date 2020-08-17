@@ -16,44 +16,19 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (CreationTime != null)
-            {
-                writer.WritePropertyName("creationTime");
-                writer.WriteStringValue(CreationTime.Value, "O");
-            }
-            if (LastModifiedTime != null)
-            {
-                writer.WritePropertyName("lastModifiedTime");
-                writer.WriteStringValue(LastModifiedTime.Value, "O");
-            }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties");
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -64,40 +39,28 @@ namespace Azure.Management.Storage.Models
 
         internal static EncryptionScope DeserializeEncryptionScope(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            EncryptionScopeSource? source = default;
-            EncryptionScopeState? state = default;
-            DateTimeOffset? creationTime = default;
-            DateTimeOffset? lastModifiedTime = default;
-            EncryptionScopeKeyVaultProperties keyVaultProperties = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<EncryptionScopeSource> source = default;
+            Optional<EncryptionScopeState> state = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<EncryptionScopeKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -107,46 +70,26 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("source"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             source = new EncryptionScopeSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             state = new EncryptionScopeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("keyVaultProperties"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             keyVaultProperties = EncryptionScopeKeyVaultProperties.DeserializeEncryptionScopeKeyVaultProperties(property0.Value);
                             continue;
                         }
@@ -154,7 +97,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new EncryptionScope(id, name, type, source, state, creationTime, lastModifiedTime, keyVaultProperties);
+            return new EncryptionScope(id.Value, name.Value, type.Value, Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), keyVaultProperties.Value);
         }
     }
 }

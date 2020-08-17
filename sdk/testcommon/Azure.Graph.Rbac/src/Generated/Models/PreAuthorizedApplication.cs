@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of PreAuthorizedApplication. </summary>
         public PreAuthorizedApplication()
         {
+            Permissions = new ChangeTrackingList<PreAuthorizedApplicationPermission>();
+            Extensions = new ChangeTrackingList<PreAuthorizedApplicationExtension>();
         }
 
         /// <summary> Initializes a new instance of PreAuthorizedApplication. </summary>
@@ -31,8 +34,8 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Represents the application id. </summary>
         public string AppId { get; set; }
         /// <summary> Collection of required app permissions/entitlements from the resource application. </summary>
-        public IList<PreAuthorizedApplicationPermission> Permissions { get; set; }
+        public IList<PreAuthorizedApplicationPermission> Permissions { get; }
         /// <summary> Collection of extensions from the resource application. </summary>
-        public IList<PreAuthorizedApplicationExtension> Extensions { get; set; }
+        public IList<PreAuthorizedApplicationExtension> Extensions { get; }
     }
 }

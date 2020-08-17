@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ResultFormat != null)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat");
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of Probe. </summary>
         public Probe()
         {
+            LoadBalancingRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of Probe. </summary>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
         /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        internal Probe(string id, string name, string etag, string type, IList<SubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, ProvisioningState? provisioningState) : base(id)
+        internal Probe(string id, string name, string etag, string type, IReadOnlyList<SubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> The load balancer rules that use this probe. </summary>
-        public IList<SubResource> LoadBalancingRules { get; }
+        public IReadOnlyList<SubResource> LoadBalancingRules { get; }
         /// <summary> The protocol of the end point. If &apos;Tcp&apos; is specified, a received ACK is required for the probe to be successful. If &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
         public ProbeProtocol? Protocol { get; set; }
         /// <summary> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </summary>

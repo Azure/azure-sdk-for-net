@@ -88,8 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
+                    case "SqlPoolStoredProcedure": return SqlPoolStoredProcedureActivity.DeserializeSqlPoolStoredProcedureActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
                     case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
                     case "Until": return UntilActivity.DeserializeUntilActivity(element);
                     case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
                     case "Wait": return WaitActivity.DeserializeWaitActivity(element);

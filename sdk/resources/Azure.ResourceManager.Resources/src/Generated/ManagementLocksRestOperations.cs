@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ManagementLocksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The lock name. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> CreateOrUpdateAtResourceGroupLevelAsync(string resourceGroupName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -94,14 +95,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,6 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The lock name. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ManagementLockObject> CreateOrUpdateAtResourceGroupLevel(string resourceGroupName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -138,14 +133,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -175,6 +163,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the lock. </param>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="lockName"/> is null. </exception>
         public async Task<Response> DeleteAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,6 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the lock. </param>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="lockName"/> is null. </exception>
         public Response DeleteAtResourceGroupLevel(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -247,6 +237,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the locked resource group. </param>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="lockName"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> GetAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -266,14 +257,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -285,6 +269,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the locked resource group. </param>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="lockName"/> is null. </exception>
         public Response<ManagementLockObject> GetAtResourceGroupLevel(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -304,14 +289,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -344,6 +322,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -368,14 +347,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -388,6 +360,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ManagementLockObject> CreateOrUpdateByScope(string scope, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -412,14 +385,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -447,6 +413,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
         public async Task<Response> DeleteByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -474,6 +441,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
         public Response DeleteByScope(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -517,6 +485,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -536,14 +505,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,6 +517,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
         public Response<ManagementLockObject> GetByScope(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -574,14 +537,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,6 +584,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> Parameters for creating or updating a  management lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> CreateOrUpdateAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -668,14 +625,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -692,6 +642,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> Parameters for creating or updating a  management lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ManagementLockObject> CreateOrUpdateAtResourceLevel(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -732,14 +683,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -781,6 +725,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource with the lock to delete. </param>
         /// <param name="lockName"> The name of the lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="lockName"/> is null. </exception>
         public async Task<Response> DeleteAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -828,6 +773,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource with the lock to delete. </param>
         /// <param name="lockName"> The name of the lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="lockName"/> is null. </exception>
         public Response DeleteAtResourceLevel(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -901,6 +847,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="lockName"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> GetAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -936,14 +883,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -959,6 +899,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="lockName"/> is null. </exception>
         public Response<ManagementLockObject> GetAtResourceLevel(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -994,14 +935,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1033,6 +967,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> CreateOrUpdateAtSubscriptionLevelAsync(string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1053,14 +988,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1072,6 +1000,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ManagementLockObject> CreateOrUpdateAtSubscriptionLevel(string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1092,14 +1021,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1126,6 +1048,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> To delete management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public async Task<Response> DeleteAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1148,6 +1071,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> To delete management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public Response DeleteAtSubscriptionLevel(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1186,6 +1110,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a management lock at the subscription level. </summary>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public async Task<Response<ManagementLockObject>> GetAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1201,14 +1126,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1219,6 +1137,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a management lock at the subscription level. </summary>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public Response<ManagementLockObject> GetAtSubscriptionLevel(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
@@ -1234,14 +1153,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockObject value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
-                        }
+                        value = ManagementLockObject.DeserializeManagementLockObject(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1274,6 +1186,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListAtResourceGroupLevelAsync(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1289,14 +1202,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1308,6 +1214,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ManagementLockListResult> ListAtResourceGroupLevel(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1323,14 +1230,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1375,6 +1275,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1406,14 +1307,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1429,6 +1323,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public Response<ManagementLockListResult> ListAtResourceLevel(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1460,14 +1355,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1507,14 +1395,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1535,14 +1416,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1573,6 +1447,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListByScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -1588,14 +1463,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1607,6 +1475,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ManagementLockListResult> ListByScope(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -1622,14 +1491,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1654,6 +1516,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListAtResourceGroupLevelNextPageAsync(string nextLink, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1673,14 +1536,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1693,6 +1549,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ManagementLockListResult> ListAtResourceGroupLevelNextPage(string nextLink, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1712,14 +1569,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1748,6 +1598,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListAtResourceLevelNextPageAsync(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1783,14 +1634,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1807,6 +1651,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public Response<ManagementLockListResult> ListAtResourceLevelNextPage(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1842,14 +1687,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1873,6 +1711,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListAtSubscriptionLevelNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1888,14 +1727,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1907,6 +1739,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ManagementLockListResult> ListAtSubscriptionLevelNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1922,14 +1755,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1954,6 +1780,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1973,14 +1800,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1993,6 +1813,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ManagementLockListResult> ListByScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2012,14 +1833,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ManagementLockListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
-                        }
+                        value = ManagementLockListResult.DeserializeManagementLockListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteStringValue(Path);
             }
-            if (KeyData != null)
+            if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData");
                 writer.WriteStringValue(KeyData);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SshPublicKey DeserializeSshPublicKey(JsonElement element)
         {
-            string path = default;
-            string keyData = default;
+            Optional<string> path = default;
+            Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyData"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyData = property.Value.GetString();
                     continue;
                 }
             }
-            return new SshPublicKey(path, keyData);
+            return new SshPublicKey(path.Value, keyData.Value);
         }
     }
 }

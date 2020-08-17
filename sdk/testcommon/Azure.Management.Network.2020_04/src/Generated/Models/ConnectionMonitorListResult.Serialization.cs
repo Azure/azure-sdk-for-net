@@ -15,32 +15,21 @@ namespace Azure.Management.Network.Models
     {
         internal static ConnectionMonitorListResult DeserializeConnectionMonitorListResult(JsonElement element)
         {
-            IReadOnlyList<ConnectionMonitorResult> value = default;
+            Optional<IReadOnlyList<ConnectionMonitorResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorResult> array = new List<ConnectionMonitorResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConnectionMonitorResult.DeserializeConnectionMonitorResult(item));
-                        }
+                        array.Add(ConnectionMonitorResult.DeserializeConnectionMonitorResult(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new ConnectionMonitorListResult(value);
+            return new ConnectionMonitorListResult(Optional.ToList(value));
         }
     }
 }
