@@ -16,7 +16,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1291,7 +1291,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1348,7 +1348,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1405,7 +1405,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1462,7 +1462,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1519,7 +1519,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1570,7 +1570,7 @@
           "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.ResourceManager.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
