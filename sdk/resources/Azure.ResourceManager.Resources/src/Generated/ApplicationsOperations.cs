@@ -192,6 +192,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<Application> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -235,6 +236,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<Application> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -353,6 +355,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<ApplicationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -382,6 +385,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public virtual ApplicationsDeleteOperation StartDelete(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -412,6 +416,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ApplicationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -446,6 +451,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ApplicationsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -478,6 +484,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual async Task<ApplicationsDeleteByIdOperation> StartDeleteByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -502,6 +509,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual ApplicationsDeleteByIdOperation StartDeleteById(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -527,6 +535,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ApplicationsCreateOrUpdateByIdOperation> StartCreateOrUpdateByIdAsync(string applicationId, Application parameters, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -556,6 +565,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ApplicationsCreateOrUpdateByIdOperation StartCreateOrUpdateById(string applicationId, Application parameters, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)

@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {
-            object template = default;
-            ErrorResponse error = default;
+            Optional<object> template = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     template = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new ResourceGroupExportResult(template, error);
+            return new ResourceGroupExportResult(template.Value, error.Value);
         }
     }
 }

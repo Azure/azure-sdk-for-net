@@ -118,6 +118,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<WebApplicationFirewallPolicy> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -161,6 +162,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<WebApplicationFirewallPolicy> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -279,6 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public virtual async Task<WebApplicationFirewallPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -308,6 +311,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
         public virtual WebApplicationFirewallPoliciesDeleteOperation StartDelete(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

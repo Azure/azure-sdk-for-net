@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        public ErrorAdditionalInfo()
+        internal ErrorAdditionalInfo()
         {
         }
 

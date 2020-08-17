@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineExtensionHandlerInstanceView
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionHandlerInstanceView. </summary>
-        public VirtualMachineExtensionHandlerInstanceView()
+        internal VirtualMachineExtensionHandlerInstanceView()
         {
         }
 
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
-        public string Type { get; set; }
+        public string Type { get; }
         /// <summary> Specifies the version of the script handler. </summary>
-        public string TypeHandlerVersion { get; set; }
+        public string TypeHandlerVersion { get; }
         /// <summary> The extension handler status. </summary>
-        public InstanceViewStatus Status { get; set; }
+        public InstanceViewStatus Status { get; }
     }
 }

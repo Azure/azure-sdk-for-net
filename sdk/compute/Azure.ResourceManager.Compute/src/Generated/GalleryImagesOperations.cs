@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public virtual AsyncPageable<GalleryImage> ListByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         public virtual Pageable<GalleryImage> ListByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -179,6 +181,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
         public virtual async Task<GalleryImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImage galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -218,6 +221,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
         public virtual GalleryImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, GalleryImage galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -257,6 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
         public virtual async Task<GalleryImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -296,6 +301,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
         public virtual GalleryImagesUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -334,6 +340,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public virtual async Task<GalleryImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -368,6 +375,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
         /// <param name="galleryImageName"> The name of the gallery Image Definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public virtual GalleryImagesDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

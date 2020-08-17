@@ -208,6 +208,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public virtual AsyncPageable<ListQueue> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -258,6 +259,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public virtual Pageable<ListQueue> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

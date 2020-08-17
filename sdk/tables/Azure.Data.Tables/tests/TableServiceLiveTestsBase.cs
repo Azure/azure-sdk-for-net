@@ -249,7 +249,7 @@ namespace Azure.Data.Tables.Tests
         protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
             int retryCount = 0;
-            int delay = 500;
+            int delay = 1500;
             while (true)
             {
                 try
@@ -273,7 +273,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToCreate)
             {
-                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync<T>(entity).ConfigureAwait(false));
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync<T>(entity).ConfigureAwait(false));
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToCreate)
             {
-                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync(entity).ConfigureAwait(false));
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync(entity).ConfigureAwait(false));
             }
         }
 

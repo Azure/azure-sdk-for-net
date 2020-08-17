@@ -49,6 +49,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SessionRecords\ManagedInstanceCrudScenarioTests\" />
     <Folder Include="SessionRecords\Sql.Tests.ManagedInstanceVulnerabilityAssessmentScenarioTests\" />
     <Folder Include="SessionRecords\Sql.Tests.ServerVulnerabilityAssessmentScenarioTests\" />
   </ItemGroup>

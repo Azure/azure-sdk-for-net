@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()
         {
+            Locations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
@@ -54,6 +56,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> If true, the resource can be deleted. </summary>
         public bool? AllowDelete { get; set; }
         /// <summary> A list of locations. </summary>
-        public IList<string> Locations { get; set; }
+        public IList<string> Locations { get; }
     }
 }

@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         PacketCaptureQueryStatusResult IOperationSource<PacketCaptureQueryStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);
-            }
+            return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);
         }
 
         async ValueTask<PacketCaptureQueryStatusResult> IOperationSource<PacketCaptureQueryStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);
-            }
+            return PacketCaptureQueryStatusResult.DeserializePacketCaptureQueryStatusResult(document.RootElement);
         }
     }
 }

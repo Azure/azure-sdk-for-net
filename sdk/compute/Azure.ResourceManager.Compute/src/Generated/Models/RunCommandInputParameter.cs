@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RunCommandInputParameter. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public RunCommandInputParameter(string name, string value)
         {
             if (name == null)

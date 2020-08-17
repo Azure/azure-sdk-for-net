@@ -28,5 +28,5 @@ stages:
     ServiceDirectory: ProviderNameLowercase
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Template
+    - name: Azure.ResourceManager.Template
       safeName: AzureManagementTemplateSafeName

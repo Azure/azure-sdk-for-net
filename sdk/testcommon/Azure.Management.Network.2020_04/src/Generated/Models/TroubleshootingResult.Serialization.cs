@@ -16,62 +16,39 @@ namespace Azure.Management.Network.Models
     {
         internal static TroubleshootingResult DeserializeTroubleshootingResult(JsonElement element)
         {
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            string code = default;
-            IReadOnlyList<TroubleshootingDetails> results = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> code = default;
+            Optional<IReadOnlyList<TroubleshootingDetails>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TroubleshootingDetails> array = new List<TroubleshootingDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TroubleshootingDetails.DeserializeTroubleshootingDetails(item));
-                        }
+                        array.Add(TroubleshootingDetails.DeserializeTroubleshootingDetails(item));
                     }
                     results = array;
                     continue;
                 }
             }
-            return new TroubleshootingResult(startTime, endTime, code, results);
+            return new TroubleshootingResult(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, Optional.ToList(results));
         }
     }
 }

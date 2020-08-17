@@ -16,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of PasswordCredentialsUpdateParameters. </summary>
         /// <param name="value"> A collection of PasswordCredentials. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PasswordCredentialsUpdateParameters(IEnumerable<PasswordCredential> value)
         {
             if (value == null)
@@ -24,13 +25,6 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Value = value.ToList();
-        }
-
-        /// <summary> Initializes a new instance of PasswordCredentialsUpdateParameters. </summary>
-        /// <param name="value"> A collection of PasswordCredentials. </param>
-        internal PasswordCredentialsUpdateParameters(IList<PasswordCredential> value)
-        {
-            Value = value ?? new List<PasswordCredential>();
         }
 
         /// <summary> A collection of PasswordCredentials. </summary>

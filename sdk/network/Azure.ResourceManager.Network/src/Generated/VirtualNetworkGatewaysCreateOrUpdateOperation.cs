@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         VirtualNetworkGateway IOperationSource<VirtualNetworkGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
-            }
+            return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
         }
 
         async ValueTask<VirtualNetworkGateway> IOperationSource<VirtualNetworkGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
-            }
+            return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
         }
     }
 }
