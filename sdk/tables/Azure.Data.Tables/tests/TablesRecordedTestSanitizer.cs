@@ -9,6 +9,11 @@ namespace Azure.Data.Tables.Tests
 {
     public class TablesRecordedTestSanitizer : RecordedTestSanitizer
     {
+        public TablesRecordedTestSanitizer()
+        {
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+        }
+
         private Regex SignatureRegEx = new Regex(@"([\x0026|&|?]sig=)([\w\d%]+)", RegexOptions.Compiled);
 
         public override string SanitizeUri(string uri)

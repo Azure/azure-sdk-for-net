@@ -13,9 +13,8 @@ namespace Azure.Iot.Hub.Service.Tests
         {
         }
 
-        public string IotHubConnectionString => GetRecordedVariable(
-            TestSettings.IotHubConnectionString,
-            options => options.HasSecretConnectionStringParameter("SharedAccessKey")
-                                      .HasSecretConnectionStringParameter("HostName", TestConnectionStringSanitizer.FAKE_HOST));
+        public string IotHubConnectionString => GetRecordedVariable(TestSettings.IotHubConnectionString, options => options
+            .HasSecretConnectionStringParameter("SharedAccessKey")
+            .HasSecretConnectionStringParameter("HostName", TestConnectionStringSanitizer.FAKE_HOST));
     }
 }
