@@ -92,20 +92,6 @@ jobs:
             AZURE_TEST_MODE: "${{ coalesce(platform.TestMode, 'None') }}"
             ${{ insert }}: ${{ parameters.EnvVars }}
 
-        - ${{ if eq(platform.TestMode, 'Record') }}:
-          - task: CopyFiles@2
-            displayName: "Copy Test Recordings"
-            inputs:
-              sourceFolder: '$(Build.SourcesDirectory)'
-              contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
-              targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-
-          - task: PublishBuildArtifacts@1
-            displayName: "Publish Test Recordings"
-            inputs:
-              pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-              artifactName: SessionRecords
-
         - template: /eng/common/TestResources/remove-test-resources.yml
           parameters:
             ServiceDirectory: '${{ parameters.ServiceDirectory }}'
