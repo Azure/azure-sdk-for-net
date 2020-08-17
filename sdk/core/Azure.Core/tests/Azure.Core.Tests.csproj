@@ -27,7 +27,6 @@
     <Compile Include="..\src\Shared\BufferedReadStream.cs" />
     <Compile Include="..\src\Shared\ConnectionString.cs" />
     <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" />
-    <Compile Include="..\src\Shared\HashCodeCombiner.cs" />
     <Compile Include="..\src\Shared\KeyValueAccumulator.cs" />
     <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
@@ -38,7 +37,7 @@
     <Compile Include="..\src\Shared\MultipartReaderStream.cs" />
     <Compile Include="..\src\Shared\MultipartSection.cs" />
     <Compile Include="..\src\Shared\RetriableStream.cs" />
-    <Compile Include="..\src\Shared\RequestContentContent.cs" />
+    <Compile Include="..\src\Shared\RequestRequestContent.cs" />
     <Compile Include="..\src\Shared\StreamHelperExtensions.cs" />
     <Compile Include="..\src\Shared\StringSegment.cs" />
     <Compile Include="..\src\Shared\StringTokenizer.cs" />

@@ -53,7 +53,7 @@ namespace Azure.Data.Tables
         internal void AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
-            changeset.Add(new RequestContentContent(message.Request), new Dictionary<string, string> { { HttpHeader.Names.ContentType, ApplicationHttp }, { CteHeaderName, Binary } });
+            changeset.Add(new RequestRequestContent(message.Request), new Dictionary<string, string> { { HttpHeader.Names.ContentType, ApplicationHttp }, { CteHeaderName, Binary } });
         }
 
         /// <summary> Insert entity in a table. </summary>

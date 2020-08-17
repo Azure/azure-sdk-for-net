@@ -14,7 +14,7 @@ namespace Azure.Core
     /// <summary>
     ///  Provides a container for content encoded using multipart/form-data MIME type.
     /// </summary>
-    internal class RequestContentContent : RequestContent
+    internal class RequestRequestContent : RequestContent
     {
         #region Fields
 
@@ -30,10 +30,10 @@ namespace Azure.Core
         #region Construction
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequestContentContent"/> class.
+        /// Initializes a new instance of the <see cref="RequestRequestContent"/> class.
         /// </summary>
         /// <param name="request">The <see cref="Request"/> instance to encapsulate.</param>
-        public RequestContentContent(Request request)
+        public RequestRequestContent(Request request)
         {
             Argument.AssertNotNull(request, nameof(request));
             this._request = request;

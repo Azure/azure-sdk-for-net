@@ -743,12 +743,12 @@ namespace Azure.Core
                 {
                     return Unsafe.As<string>(this[0])?.GetHashCode() ?? Count.GetHashCode();
                 }
-                var hcc = default(HashCodeCombiner);
+                var hcc = default(HashCodeBuilder);
                 for (int i = 0; i < values.Length; i++)
                 {
                     hcc.Add(values[i]);
                 }
-                return hcc.CombinedHash;
+                return hcc.ToHashCode();
             }
             else
             {
