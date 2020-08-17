@@ -26,6 +26,7 @@ stages:
                 - pwsh: |
                     New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
                     Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/* $(Pipeline.Workspace)/staging -recurse
+                    Remove-Item -Path $(Pipeline.Workspace)/staging -Include *.docs.zip -recurse
                     Get-ChildItem $(Pipeline.Workspace)/staging -recurse
                   displayName: Copying ${{parameters.ArtifactName}} to staging directory
 
@@ -65,14 +66,9 @@ stages:
                         PackageName: ${{artifact.name}}
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
-                    - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                      parameters:
-                        SourceFolder: ${{parameters.ArtifactName}}-signed
-                        TargetFolder: ${{artifact.safeName}}
-                        FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
-                        ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                        ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                         PackageRepository: Nuget
                         ReleaseSha: $(Build.SourceVersion)
                         RepoId: Azure/azure-sdk-for-net
@@ -92,27 +88,18 @@ stages:
                   deploy:
                     steps:
                       - checkout: none
-                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                        parameters:
-                          SourceFolder: ${{parameters.ArtifactName}}-signed
-                          TargetFolder: staging
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      - pwsh: |
-                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
-                        workingDirectory: $(Pipeline.Workspace)
-                        displayName: Output Visible Artifacts
                       - task: NuGetCommand@2
                         displayName: 'Publish ${{artifact.name}} package to NuGet.org'
                         inputs:
                           command: push
-                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                           nuGetFeedType: external
                           publishFeedCredentials: Nuget.org
                       - task: NuGetCommand@2
                         displayName: 'Publish to DevOps Feed'
                         inputs:
                           command: push
-                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                           publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
           - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
@@ -131,20 +118,11 @@ stages:
                     steps:
                       - checkout: none
                       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                        parameters:
-                          SourceFolder: ${{parameters.ArtifactName}}-signed
-                          TargetFolder: staging
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      - pwsh: |
-                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
-                        workingDirectory: $(Pipeline.Workspace)
-                        displayName: Output Visible Artifacts
                       - task: MSBuild@1
                         displayName: 'Upload Symbols for ${{artifact.name}}'
                         inputs:
                           solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}} /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
             - deployment: PublicDocsMS
@@ -164,22 +142,13 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
-                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                        parameters:
-                          SourceFolder: ${{parameters.ArtifactName}}-signed
-                          TargetFolder: ${{artifact.safeName}}
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      - pwsh: |
-                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
-                        workingDirectory: $(Pipeline.Workspace)
-                        displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
                         parameters:
                           TargetVariable: "OwningGHUser"
                           ServiceDirectory: ${{parameters.ServiceDirectory}}
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
-                          ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                           PackageRepository: Nuget
                           ReleaseSha: $(Build.SourceVersion)
                           RepoId: Azure/azure-sdk-for-net
@@ -225,7 +194,7 @@ stages:
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
-                          FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
+                          FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
