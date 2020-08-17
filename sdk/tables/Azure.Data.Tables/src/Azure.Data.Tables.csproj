@@ -21,6 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Multipart\*.*" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\Multipart\BatchConstants.cs" />
+    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\Multipart\BatchErrors.cs" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

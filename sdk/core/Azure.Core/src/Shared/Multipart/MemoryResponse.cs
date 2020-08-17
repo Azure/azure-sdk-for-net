@@ -17,10 +17,13 @@ namespace Azure.Core
     /// </summary>
     internal class MemoryResponse : Response
     {
+        private const int NoStatusCode = 0;
+        private const string XmsClientRequestIdName = "x-ms-client-request-id";
+
         /// <summary>
         /// The Response <see cref="Status"/>.
         /// </summary>
-        private int _status = BatchConstants.NoStatusCode;
+        private int _status = NoStatusCode;
 
         /// <summary>
         /// The Response <see cref="ReasonPhrase"/>.
@@ -45,8 +48,8 @@ namespace Azure.Core
         /// <inheritdoc />
         public override string ClientRequestId
         {
-            get => TryGetHeader(BatchConstants.XmsClientRequestIdName, out string id) ? id : null;
-            set => SetHeader(BatchConstants.XmsClientRequestIdName, value);
+            get => TryGetHeader(XmsClientRequestIdName, out string id) ? id : null;
+            set => SetHeader(XmsClientRequestIdName, value);
         }
 
         /// <summary>

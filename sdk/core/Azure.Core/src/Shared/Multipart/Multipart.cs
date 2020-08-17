@@ -22,6 +22,19 @@ namespace Azure.Core
     /// </summary>
     internal static class Multipart
     {
+        private const int KB = 1024;
+        private const int ResponseLineSize = 4 * KB;
+        private const string MultipartContentTypePrefix = "multipart/mixed; boundary=";
+        private const string ContentIdName = "Content-ID";
+        internal static InvalidOperationException InvalidBatchContentType(string contentType) =>
+            new InvalidOperationException($"Expected {HttpHeader.Names.ContentType} to start with {MultipartContentTypePrefix} but received {contentType}");
+
+        internal static InvalidOperationException InvalidHttpStatusLine(string statusLine) =>
+            new InvalidOperationException($"Expected an HTTP status line, not {statusLine}");
+
+        internal static InvalidOperationException InvalidHttpHeaderLine(string headerLine) =>
+            new InvalidOperationException($"Expected an HTTP header line, not {headerLine}");
+
         /// <summary>
         /// Parse a multipart/mixed response body into several responses.
         /// </summary>
@@ -44,7 +57,7 @@ namespace Azure.Core
             // Get the batch boundary
             if (!GetBoundary(batchContentType, out string batchBoundary))
             {
-                throw BatchErrors.InvalidBatchContentType(batchContentType);
+                throw InvalidBatchContentType(batchContentType);
             }
 
             // Collect the responses in a dictionary (in case the Content-ID
@@ -70,7 +83,7 @@ namespace Azure.Core
                     continue;
                 }
                 // Get the Content-ID header
-                if (!section.Headers.TryGetValue(BatchConstants.ContentIdName, out string [] contentIdValues) ||
+                if (!section.Headers.TryGetValue(ContentIdName, out string [] contentIdValues) ||
                     contentIdValues.Length != 1 ||
                     !int.TryParse(contentIdValues[0], out int contentId))
                 {
@@ -96,14 +109,14 @@ namespace Azure.Core
                 }
 
                 // We're going to read the section's response body line by line
-                using var body = new BufferedReadStream(section.Body, BatchConstants.ResponseLineSize);
+                using var body = new BufferedReadStream(section.Body, ResponseLineSize);
 
                 // The first line is the status like "HTTP/1.1 202 Accepted"
                 string line = await body.ReadLineAsync(async, cancellationToken).ConfigureAwait(false);
                 string[] status = line.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
                 if (status.Length != 3)
                 {
-                    throw BatchErrors.InvalidHttpStatusLine(line);
+                    throw InvalidHttpStatusLine(line);
                 }
                 response.SetStatus(int.Parse(status[1], CultureInfo.InvariantCulture));
                 response.SetReasonPhrase(status[2]);
@@ -116,7 +129,7 @@ namespace Azure.Core
                     int splitIndex = line.IndexOf(':');
                     if (splitIndex <= 0)
                     {
-                        throw BatchErrors.InvalidHttpHeaderLine(line);
+                        throw InvalidHttpHeaderLine(line);
                     }
                     var name = line.Substring(0, splitIndex);
                     var value = line.Substring(splitIndex + 1, line.Length - splitIndex - 1).Trim();
@@ -171,8 +184,8 @@ namespace Azure.Core
             bool async,
             CancellationToken cancellationToken) =>
             async ?
-                await stream.ReadLineAsync(BatchConstants.ResponseLineSize, cancellationToken).ConfigureAwait(false) :
-                stream.ReadLine(BatchConstants.ResponseLineSize);
+                await stream.ReadLineAsync(ResponseLineSize, cancellationToken).ConfigureAwait(false) :
+                stream.ReadLine(ResponseLineSize);
 
         /// <summary>
         /// Read the next multipart section.
@@ -198,12 +211,12 @@ namespace Azure.Core
 
         private static bool GetBoundary(string contentType, out string batchBoundary)
         {
-            if (contentType == null || !contentType.StartsWith(BatchConstants.MultipartContentTypePrefix, StringComparison.Ordinal))
+            if (contentType == null || !contentType.StartsWith(MultipartContentTypePrefix, StringComparison.Ordinal))
             {
                 batchBoundary = null;
                 return false;
             }
-            batchBoundary = contentType.Substring(BatchConstants.MultipartContentTypePrefix.Length);
+            batchBoundary = contentType.Substring(MultipartContentTypePrefix.Length);
             return true;
         }
     }
