@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.Sql.Tests
 {
     public class SqlManagementTestEnvironment : TestEnvironment
     {
-        public SqlManagementTestEnvironment() : base("sqlmgmt")
+        public SqlManagementTestEnvironment() : base("sqlmanagement")
         {
         }
     }
