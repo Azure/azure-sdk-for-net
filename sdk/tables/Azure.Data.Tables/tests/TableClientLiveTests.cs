@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType, RecordedTestMode.Live /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         /// <summary>
@@ -905,7 +905,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        //[LiveOnly]
+        [LiveOnly]
         public async Task BatchInsert()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
