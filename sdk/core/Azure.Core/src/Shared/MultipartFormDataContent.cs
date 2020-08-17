@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Azure.Core
 {
@@ -70,7 +67,7 @@ namespace Azure.Core
         /// <param name="content">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(RequestContent content, string name, Dictionary<string, string>? headers)
+        public void Add(RequestContent content, string name, Dictionary<string, string> headers)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
@@ -86,7 +83,7 @@ namespace Azure.Core
         /// <param name="name">The name for the request content to add.</param>
         /// <param name="fileName">The file name for the reuest content to add to the collection.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(RequestContent content, string name, string fileName, Dictionary<string, string>? headers)
+        public void Add(RequestContent content, string name, string fileName, Dictionary<string, string> headers)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
@@ -95,7 +92,7 @@ namespace Azure.Core
             AddInternal(content, headers, name, fileName);
         }
 
-        private void AddInternal(RequestContent content, Dictionary<string, string>? headers, string? name, string? fileName)
+        private void AddInternal(RequestContent content, Dictionary<string, string> headers, string name, string fileName)
         {
             if (headers == null)
             {

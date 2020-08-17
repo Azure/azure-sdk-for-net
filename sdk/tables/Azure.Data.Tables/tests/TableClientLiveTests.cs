@@ -870,7 +870,6 @@ namespace Azure.Data.Tables.Tests
 
             await client.SetAccessPolicyAsync(tableAcl: policyToCreate);
 
-
             // Get the created policy.
 
             var policies = await client.GetAccessPolicyAsync();
@@ -901,5 +900,30 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
         }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        [LiveOnly]
+        public async Task BatchInsert()
+        {
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
+            }
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
+
+            // Create the new entities.
+
+            var responses = await client.BatchTestAsync(entitiesToCreate).ConfigureAwait(false);
+
+            foreach (var response in responses.Value)
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Created));
+            }
+            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+        }
     }
+
 }

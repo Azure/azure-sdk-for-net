@@ -81,7 +81,7 @@ namespace Azure.Core
         /// <summary>
         /// A collection of header values associated with this request content.
         /// </summary>
-        internal virtual Dictionary<string, string>? Headers { get; set; }
+        public IDictionary<string, string>? Headers { get; set;} = null;
 
         private sealed class StreamContent : RequestContent
         {
@@ -111,7 +111,8 @@ namespace Azure.Core
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         cancellationToken.ThrowIfCancellationRequested();
                         stream.Write(buffer, 0, read);
                     }

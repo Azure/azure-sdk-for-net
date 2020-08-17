@@ -3,11 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Azure.Core
 {
@@ -138,7 +139,7 @@ namespace Azure.Core
             AddInternal(content, headers);
         }
 
-        private void AddInternal(RequestContent content, Dictionary<string, string>? headers)
+        private void AddInternal(RequestContent content, Dictionary<string, string> headers)
         {
             if (headers == null)
             {

@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Azure.Core
 {
@@ -45,7 +43,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The <see cref="Request"/> instance to encapsulate.</param>
         /// <param name="headers">Additional headers to apply to the request content.</param>
-        public RequestContentContent(Request request, Dictionary<string, string>? headers)
+        public RequestContentContent(Request request, Dictionary<string, string> headers)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -86,11 +84,11 @@ namespace Azure.Core
             Argument.AssertNotNull(stream, nameof(stream));
 
             byte[] header = SerializeHeader();
-            await stream.WriteAsync(header, 0, header.Length);
+            await stream.WriteAsync(header, 0, header.Length).ConfigureAwait(false);
 
             if (request.Content != null)
             {
-                await request.Content.WriteToAsync(stream, cancellationToken);
+                await request.Content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
             }
         }
 

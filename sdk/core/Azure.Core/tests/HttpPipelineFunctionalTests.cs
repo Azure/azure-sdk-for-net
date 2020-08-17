@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
 
     [TestFixture(typeof(HttpClientTransport), true)]
     [TestFixture(typeof(HttpClientTransport), false)]
-// TODO: Uncomment after release
+    // TODO: Uncomment after release
 #if false && NETFRAMEWORK
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
@@ -445,9 +445,10 @@ namespace Azure.Core.Tests
             const string cteHeaderName = "Content-Transfer-Encoding";
             const string Binary = "binary";
             const string Mixed = "mixed";
-            const string ApplicationJsonOdata = "application/json;odata=nometadata";
+            const string ApplicationJsonOdata = "application/json; odata=nometadata";
             const string DataServiceVersion = "DataServiceVersion";
             const string Three0 = "3.0";
+            const string Host = "myaccount.table.core.windows.net";
 
             string requestBody = null;
 
@@ -474,7 +475,7 @@ namespace Azure.Core.Tests
 
             var postReq1 = httpPipeline.CreateMessage().Request;
             postReq1.Method = RequestMethod.Post;
-            const string postUri = "https://myaccount.table.core.windows.net/Blogs";
+            string postUri = $"https://{Host}/Blogs";
             postReq1.Uri.Reset(new Uri(postUri));
             postReq1.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
             postReq1.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
@@ -484,25 +485,25 @@ namespace Azure.Core.Tests
             changeset.Add(new RequestContentContent(postReq1, new Dictionary<string, string> { { cteHeaderName, Binary } }));
 
             var postReq2 = httpPipeline.CreateMessage().Request;
-            postReq1.Method = RequestMethod.Post;
-            postReq1.Uri.Reset(new Uri(postUri));
-            postReq1.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
-            postReq1.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
-            postReq1.Headers.Add(DataServiceVersion, Three0);
+            postReq2.Method = RequestMethod.Post;
+            postReq2.Uri.Reset(new Uri(postUri));
+            postReq2.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            postReq2.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            postReq2.Headers.Add(DataServiceVersion, Three0);
             const string post2Body = "{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}";
-            postReq1.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post2Body));
+            postReq2.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post2Body));
             changeset.Add(new RequestContentContent(postReq2, new Dictionary<string, string> { { cteHeaderName, Binary } }));
 
             var patchReq = httpPipeline.CreateMessage().Request;
             patchReq.Method = RequestMethod.Patch;
-            const string mergeUri = "https://myaccount.table.core.windows.net/Blogs(PartitionKey='Channel_17', RowKey='3')";
+            string mergeUri = $"https://{Host}/Blogs(PartitionKey='Channel_17',%20RowKey='3')";
             patchReq.Uri.Reset(new Uri(mergeUri));
             patchReq.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
             patchReq.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
             patchReq.Headers.Add(DataServiceVersion, Three0);
             const string patchBody = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"3\", \"Rating\":9, \"Text\":\"Azure Tables...\"}";
             patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
-            changeset.Add(new RequestContentContent(postReq2, new Dictionary<string, string> { { cteHeaderName, Binary } }));
+            changeset.Add(new RequestContentContent(patchReq, new Dictionary<string, string> { { cteHeaderName, Binary } }));
 
             request.Content = content;
             using Response response = await ExecuteRequest(request, httpPipeline);
@@ -516,9 +517,10 @@ namespace Azure.Core.Tests
 {cteHeaderName}: {Binary}
 
 POST {postUri} HTTP/1.1
-{HttpHeader.Names.ContentType}: {ApplicationJson}
-{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
-{DataServiceVersion}: {Three0};
+{HttpHeader.Names.Host}: {Host}
+{HttpHeader.Names.Accept}: {ApplicationJson}
+{DataServiceVersion}: {Three0}
+{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
 
 {post1Body}
 --changeset_{changesetGuid}
@@ -526,24 +528,27 @@ POST {postUri} HTTP/1.1
 {cteHeaderName}: {Binary}
 
 POST {postUri} HTTP/1.1
-{HttpHeader.Names.ContentType}: {ApplicationJson}
-{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
-{DataServiceVersion}: {Three0};
+{HttpHeader.Names.Host}: {Host}
+{HttpHeader.Names.Accept}: {ApplicationJson}
+{DataServiceVersion}: {Three0}
+{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
 
 {post2Body}
 --changeset_{changesetGuid}
 {HttpHeader.Names.ContentType}: application/http
 {cteHeaderName}: {Binary}
 
-MERGE {mergeUri} HTTP/1.1
-{HttpHeader.Names.ContentType}: {ApplicationJson}
-{HttpHeader.Names.Accept}: {ApplicationJsonOdata}
-{DataServiceVersion}: {Three0};
+PATCH {mergeUri} HTTP/1.1
+{HttpHeader.Names.Host}: {Host}
+{HttpHeader.Names.Accept}: {ApplicationJson}
+{DataServiceVersion}: {Three0}
+{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
 
 {patchBody}
-
 --changeset_{changesetGuid}--
---batch_{batchGuid}"));
+
+--batch_{batchGuid}--
+"));
         }
 
         private class TestOptions : ClientOptions
