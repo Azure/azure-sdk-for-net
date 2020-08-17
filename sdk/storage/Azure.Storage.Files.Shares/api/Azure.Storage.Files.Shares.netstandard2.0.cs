@@ -359,7 +359,7 @@ namespace Azure.Storage.Files.Shares.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ShareAccessTier(string value) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cold { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cool { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier Hot { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier TransactionOptimized { get { throw null; } }
         public bool Equals(Azure.Storage.Files.Shares.Models.ShareAccessTier other) { throw null; }

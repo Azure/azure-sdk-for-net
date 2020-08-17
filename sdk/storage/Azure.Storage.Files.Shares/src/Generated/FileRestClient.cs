@@ -8792,9 +8792,9 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier Hot { get; } = new ShareAccessTier(@"Hot");
 
         /// <summary>
-        /// Cold
+        /// Cool
         /// </summary>
-        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cold { get; } = new ShareAccessTier(@"Cold");
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cool { get; } = new ShareAccessTier(@"Cool");
 
         /// <summary>
         /// Determines if two <see cref="ShareAccessTier"/> values are the same.
