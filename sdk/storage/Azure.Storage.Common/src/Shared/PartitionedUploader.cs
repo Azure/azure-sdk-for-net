@@ -460,7 +460,7 @@ namespace Azure.Storage
             {
                 if (content.CanSeek)
                 {
-                    return content.Length;
+                    return content.Length - content.Position;
                 }
             }
             catch (NotSupportedException)
