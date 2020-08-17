@@ -8,4 +8,4 @@ extends:
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     EnvVars:
       # Runs live tests.
-      AZURE_IOT_TEST_MODE: Live
+      AZURE_DIGITALTWINS_TEST_MODE: Live
