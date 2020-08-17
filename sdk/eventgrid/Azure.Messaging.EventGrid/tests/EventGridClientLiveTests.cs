@@ -53,8 +53,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        $"Subject-{i}",
                         new TestPayload("name", i),
+                        $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
                         "1.0")
                     {
@@ -81,8 +81,8 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 EventGridEvent newEGEvent = new EventGridEvent(
-                    $"Subject-{i}",
                     "hello",
+                    $"Subject-{i}",
                     "Microsoft.MockPublisher.TestEvent",
                     "1.0")
                 {
@@ -227,9 +227,9 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    new TestPayload("name", i),
                     "record",
-                    "Microsoft.MockPublisher.TestEvent",
-                    new TestPayload("name", i))
+                    "Microsoft.MockPublisher.TestEvent")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
@@ -256,9 +256,9 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    "hello",
                     "record",
-                    "Microsoft.MockPublisher.TestEvent",
-                    "hello")
+                    "Microsoft.MockPublisher.TestEvent")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
@@ -326,8 +326,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        $"Subject-{i}",
                         "hello",
+                        $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
                         "1.0")
                     {
