@@ -28,5 +28,5 @@ stages:
     ServiceDirectory: dns
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Template
+    - name: Azure.ResourceManager.Dns
       safeName: AzureResourceManagerDns

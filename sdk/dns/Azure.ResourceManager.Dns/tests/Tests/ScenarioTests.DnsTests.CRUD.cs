@@ -86,14 +86,6 @@ namespace Azure.Management.Dns.Tests
         public async Task DnsCreateARecordDelete()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
-            var aZone = new Zone("Global");
-            var tags = new Dictionary<string, string>
-            {
-                {"key1", "value1"}
-            };
-            aZone.ZoneType = ZoneType.Public;
-            var zoneName = "azure.ameredmondlocal.dns";
-            await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, zoneName, aZone);
             var aRecords = new ChangeTrackingList<ARecord>
             {
               new ARecord {Ipv4Address = "127.0.0.1"}
@@ -102,17 +94,14 @@ namespace Azure.Management.Dns.Tests
             var testARecordSet = new RecordSet("test_id", recordName, "A", null, this.metadata, 3600, null, null, null, aRecords, this.dummyAaaaRecords, this.dummyMxRecords,
                                                this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
 
-            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, zoneName, "record1", RecordType.A, testARecordSet);
+            var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(this.resourceGroup, zoneNameForList, "record1", RecordType.A, testARecordSet);
             Assert.NotNull(createRecordSetResponse);
-            Console.WriteLine(createRecordSetResponse.Value.Name);
             Assert.AreEqual(createRecordSetResponse.Value.Name, recordName);
-            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(this.resourceGroup, zoneName, recordName, RecordType.A);
+            var deleteRecordSetResponse = await RecordSetsOperations.DeleteAsync(this.resourceGroup, zoneNameForList, recordName, RecordType.A);
             Assert.NotNull(deleteRecordSetResponse);
-            var deleteZoneResponse = await ZonesOperations.StartDeleteAsync(this.resourceGroup, zoneName);
-            Assert.NotNull(deleteZoneResponse);
         }
         [TestCase, Order(2)]
-        public async Task DnsMultiRecordCreateDelete()
+        public async Task DnsZoneMultiRecordCreateDelete()
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
@@ -161,7 +150,6 @@ namespace Azure.Management.Dns.Tests
             var listResponse = RecordSetsOperations.ListAllByDnsZoneAsync(this.resourceGroup, this.zoneNameForList);
             Assert.NotNull(listResponse);
             var allResults = await listResponse.ToEnumerableAsync();
-            Console.WriteLine("num is " + allResults.Count);
             Assert.True(allResults.Count == 3); //SOA and NS record should exist
             RecordSet aaaaRecord = null;
             foreach (var arecord in allResults)
