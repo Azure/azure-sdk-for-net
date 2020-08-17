@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor", "src\OpenTelemetry.Exporter.AzureMonitor.csproj", "{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing", "tests\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing.csproj", "{5FEA395B-EA8C-4196-AC8D-538C16E4EDA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.Tests.csproj", "{456CFF2C-2F8D-4E08-BCB3-86557F410508}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing", "samples\OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing.csproj", "{7B761A9F-09F5-4BBB-A940-B6B3B43B9FA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +25,14 @@ Global
 		{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FEA395B-EA8C-4196-AC8D-538C16E4EDA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FEA395B-EA8C-4196-AC8D-538C16E4EDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FEA395B-EA8C-4196-AC8D-538C16E4EDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FEA395B-EA8C-4196-AC8D-538C16E4EDA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456CFF2C-2F8D-4E08-BCB3-86557F410508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456CFF2C-2F8D-4E08-BCB3-86557F410508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456CFF2C-2F8D-4E08-BCB3-86557F410508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456CFF2C-2F8D-4E08-BCB3-86557F410508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B761A9F-09F5-4BBB-A940-B6B3B43B9FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B761A9F-09F5-4BBB-A940-B6B3B43B9FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B761A9F-09F5-4BBB-A940-B6B3B43B9FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B761A9F-09F5-4BBB-A940-B6B3B43B9FA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

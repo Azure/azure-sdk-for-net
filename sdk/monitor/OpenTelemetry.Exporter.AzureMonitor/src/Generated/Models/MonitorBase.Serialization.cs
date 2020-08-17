@@ -10,9 +10,7 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Base : IUtf8JsonSerializable
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class MonitorBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

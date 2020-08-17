@@ -7,6 +7,7 @@ using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,9 +77,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return envelope;
         }
 
-        private Base GenerateTelemetryData(Activity activity)
+        private MonitorBase GenerateTelemetryData(Activity activity)
         {
-            Base telemetry = new Base();
+            MonitorBase telemetry = new MonitorBase();
 
             var telemetryType = activity.GetTelemetryType();
             telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
@@ -86,14 +87,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration, activity.GetStatus().IsOk, activity.GetStatusCode())
+                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), activity.GetStatus().IsOk, activity.GetStatusCode())
                 {
                     Name = activity.DisplayName,
                     Url = url,
-                    // TODO: Handle activity.TagObjects
-                    Properties = ExtractPropertiesFromTags(activity.Tags)
                     // TODO: Handle request.source.
                 };
+
+                // TODO: Handle activity.TagObjects
+                ExtractPropertiesFromTags(request.Properties, activity.Tags);
 
                 telemetry.BaseData = request;
             }
@@ -102,10 +104,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
                 {
                     Id = activity.Context.SpanId.ToHexString(),
-                    Success = activity.GetStatus().IsOk,
-                    // TODO: Handle activity.TagObjects
-                    Properties = ExtractPropertiesFromTags(activity.Tags)
+                    Success = activity.GetStatus().IsOk
                 };
+
+                // TODO: Handle activity.TagObjects
+                ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
 
                 if (url != null)
                 {
@@ -148,10 +151,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return url;
         }
 
-        private static IDictionary<string, string> ExtractPropertiesFromTags(IEnumerable<KeyValuePair<string, string>> tags)
+        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
         {
-            return tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture))
-                               .ToDictionary(item => item.Key, item => item.Value);
+            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
+            {
+                destination.Add(tag);
+            }
         }
     }
 }

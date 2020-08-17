@@ -12,7 +12,7 @@ using Azure.Core;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> An instance of PageView represents a generic action on a page like a button click. It is also the base type for PageView. </summary>
-    public partial class PageViewData : Domain
+    public partial class PageViewData : MonitorDomain
     {
         /// <summary> Initializes a new instance of PageViewData. </summary>
         /// <param name="ver"> Schema version. </param>
