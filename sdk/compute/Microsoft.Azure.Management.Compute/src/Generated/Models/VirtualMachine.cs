@@ -347,19 +347,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
-        /// Gets or sets specifies that the image or disk that is being used
-        /// was licensed on-premises. This element is only used for images that
-        /// contain the Windows Server operating system.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Client
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Server
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; If this element is included in
-        /// a request for an update, the value must match the initial value.
-        /// This value cannot be updated. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Gets or sets the type of on-premises license to be used when deploying the operating system.
+        /// This only applies to Images that contain the Windows operating system, and should only be used 
+        /// when you hold valid on-premises licenses for the Compute Nodes which will be deployed. 
+        /// If omitted, no on-premises licensing discount is applied.
+        /// Possible values are: <br>
+        /// - Windows_Client 
+        /// - Windows_Server <br>
+        /// If this element is included in a request for an update, the value must match the initial value.
         /// For more information, see [Azure Hybrid Use Benefit for Windows
         /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
-        /// 2015-06-15
+        /// Minimum api-version: 2015-06-15
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
         public string LicenseType { get; set; }
