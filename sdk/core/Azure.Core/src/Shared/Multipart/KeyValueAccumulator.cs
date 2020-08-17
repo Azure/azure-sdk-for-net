@@ -14,25 +14,25 @@ namespace Azure.Core
 {
     internal struct KeyValueAccumulator
     {
-        private Dictionary<string, StringValues> _accumulator;
+        private Dictionary<string, string []> _accumulator;
         private Dictionary<string, List<string>> _expandingAccumulator;
 
         public void Append(string key, string value)
         {
             if (_accumulator == null)
             {
-                _accumulator = new Dictionary<string, StringValues>(StringComparer.OrdinalIgnoreCase);
+                _accumulator = new Dictionary<string, string []>(StringComparer.OrdinalIgnoreCase);
             }
 
-            StringValues values;
+            string[] values;
             if (_accumulator.TryGetValue(key, out values))
             {
-                if (values.Count == 0)
+                if (values.Length == 0)
                 {
                     // Marker entry for this key to indicate entry already in expanding list dictionary
                     _expandingAccumulator[key].Add(value);
                 }
-                else if (values.Count == 1)
+                else if (values.Length == 1)
                 {
                     // Second value for this key
                     _accumulator[key] = new string[] { values[0], value };
@@ -41,7 +41,7 @@ namespace Azure.Core
                 {
                     // Third value for this key
                     // Add zero count entry and move to data to expanding list dictionary
-                    _accumulator[key] = default(StringValues);
+                    _accumulator[key] = null;
 
                     if (_expandingAccumulator == null)
                     {
@@ -50,10 +50,9 @@ namespace Azure.Core
 
                     // Already 3 entries so use starting allocated as 8; then use List's expansion mechanism for more
                     var list = new List<string>(8);
-                    var array = values.ToArray();
 
-                    list.Add(array[0]);
-                    list.Add(array[1]);
+                    list.Add(values[0]);
+                    list.Add(values[1]);
                     list.Add(value);
 
                     _expandingAccumulator[key] = list;
@@ -62,7 +61,7 @@ namespace Azure.Core
             else
             {
                 // First value for this key
-                _accumulator[key] = new StringValues(value);
+                _accumulator[key] = new[] { value };
             }
 
             ValueCount++;
@@ -74,18 +73,18 @@ namespace Azure.Core
 
         public int ValueCount { get; private set; }
 
-        public Dictionary<string, StringValues> GetResults()
+        public Dictionary<string, string []> GetResults()
         {
             if (_expandingAccumulator != null)
             {
                 // Coalesce count 3+ multi-value entries into _accumulator dictionary
                 foreach (var entry in _expandingAccumulator)
                 {
-                    _accumulator[entry.Key] = new StringValues(entry.Value.ToArray());
+                    _accumulator[entry.Key] = entry.Value.ToArray();
                 }
             }
 
-            return _accumulator ?? new Dictionary<string, StringValues>(0, StringComparer.OrdinalIgnoreCase);
+            return _accumulator ?? new Dictionary<string, string []>(0, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

@@ -62,16 +62,16 @@ namespace Azure.Core
                 section = await reader.GetNextSectionAsync(async, cancellationToken).ConfigureAwait(false))
             {
                 bool contentIdFound = true;
-                if (section.Headers.TryGetValue(HttpHeader.Names.ContentType, out StringValues contentTypeValues) &&
-                        contentTypeValues.Count == 1 &&
+                if (section.Headers.TryGetValue(HttpHeader.Names.ContentType, out string [] contentTypeValues) &&
+                        contentTypeValues.Length == 1 &&
                         GetBoundary(contentTypeValues[0], out string subBoundary))
                 {
                     reader = new MultipartReader(subBoundary, section.Body);
                     continue;
                 }
                 // Get the Content-ID header
-                if (!section.Headers.TryGetValue(BatchConstants.ContentIdName, out StringValues contentIdValues) ||
-                    contentIdValues.Count != 1 ||
+                if (!section.Headers.TryGetValue(BatchConstants.ContentIdName, out string [] contentIdValues) ||
+                    contentIdValues.Length != 1 ||
                     !int.TryParse(contentIdValues[0], out int contentId))
                 {
                     // If the header wasn't found, this is either:

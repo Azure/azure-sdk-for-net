@@ -81,7 +81,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
-        /// <param name="fileName">The file name for the reuest content to add to the collection.</param>
+        /// <param name="fileName">The file name for the request content to add to the collection.</param>
         /// <param name="headers">The headers to add to the collection.</param>
         public void Add(RequestContent content, string name, string fileName, Dictionary<string, string> headers)
         {

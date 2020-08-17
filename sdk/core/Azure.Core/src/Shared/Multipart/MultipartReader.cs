@@ -87,7 +87,7 @@ namespace Azure.Core
             return new MultipartSection() { Headers = headers, Body = _currentStream, BaseStreamOffset = baseStreamOffset };
         }
 
-        private async Task<Dictionary<string, StringValues>> ReadHeadersAsync(CancellationToken cancellationToken)
+        private async Task<Dictionary<string, string []>> ReadHeadersAsync(CancellationToken cancellationToken)
         {
             int totalSize = 0;
             var accumulator = new KeyValueAccumulator();
