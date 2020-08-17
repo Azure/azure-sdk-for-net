@@ -25,8 +25,8 @@ stages:
 
                 - pwsh: |
                     New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
-                    Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/* $(Pipeline.Workspace)/staging
-                    Get-ChildItem $(Pipeline.Workspace)/staging
+                    Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/* $(Pipeline.Workspace)/staging -recurse
+                    Get-ChildItem $(Pipeline.Workspace)/staging -recurse
                   displayName: Copying ${{parameters.ArtifactName}} to staging directory
 
                 - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
