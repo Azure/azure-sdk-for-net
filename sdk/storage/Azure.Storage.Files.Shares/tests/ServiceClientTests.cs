@@ -103,6 +103,35 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [NonParallelizable]
+        public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsFalse(properties.ProtocolSettings.SmbSettings.Multichannel.Enabled);
+
+            // Act
+            properties.ProtocolSettings.SmbSettings.Multichannel.Enabled = true;
+            await service.SetPropertiesAsync(properties);
+            propertiesResponse = await service.GetPropertiesAsync();
+            properties = propertiesResponse.Value;
+
+            // Assert
+            Assert.IsTrue(properties.ProtocolSettings.SmbSettings.Multichannel.Enabled);
+
+            // Cleanup
+            properties.ProtocolSettings.SmbSettings.Multichannel.Enabled = false;
+            await service.SetPropertiesAsync(properties);
+        }
+
+        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange

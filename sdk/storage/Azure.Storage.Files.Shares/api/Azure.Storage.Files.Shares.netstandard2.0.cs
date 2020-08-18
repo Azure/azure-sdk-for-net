@@ -335,6 +335,11 @@ namespace Azure.Storage.Files.Shares.Models
         internal PermissionInfo() { }
         public string FilePermissionKey { get { throw null; } }
     }
+    public partial class ProtocolSettings
+    {
+        public ProtocolSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get { throw null; } set { } }
+    }
     public partial class ShareAccessPolicy
     {
         public ShareAccessPolicy() { }
@@ -705,6 +710,7 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics MinuteMetrics { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ProtocolSettings ProtocolSettings { get { throw null; } set { } }
     }
     public partial class ShareSignedIdentifier
     {
@@ -745,6 +751,16 @@ namespace Azure.Storage.Files.Shares.Models
         All = -1,
         None = 0,
         Metadata = 1,
+    }
+    public partial class SmbMultichannel
+    {
+        public SmbMultichannel() { }
+        public bool? Enabled { get { throw null; } set { } }
+    }
+    public partial class SmbSettings
+    {
+        public SmbSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
     }
     public partial class StorageClosedHandlesSegment
     {
