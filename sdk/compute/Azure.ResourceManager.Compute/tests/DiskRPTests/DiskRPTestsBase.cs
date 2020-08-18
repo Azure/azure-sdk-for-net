@@ -7,8 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             string encryptionKeyUri = @"https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c";
             var des = new DiskEncryptionSet(location)
             {
-                Identity = new EncryptionSetIdentity(ResourceIdentityType.SystemAssigned.ToString(), null, null),
+                Identity = new EncryptionSetIdentity(Azure.ResourceManager.Compute.Models.ResourceIdentityType.SystemAssigned.ToString(), null, null),
                 ActiveKey = new KeyVaultAndKeyReference(new SourceVault(testVaultId), encryptionKeyUri)
             };
             return des;
