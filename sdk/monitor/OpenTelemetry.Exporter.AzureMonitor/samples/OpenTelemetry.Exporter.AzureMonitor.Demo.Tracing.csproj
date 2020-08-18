@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <NoWarn>
+      ;NU5105;
+      CA1716; 
+      CA1308; 
+      CA1819; 
+      CA1710; 
+      CA1028; 
+      CA1032; 
+      CA1063; 
+      CA1066; 
+      CA1815; 
+      CA2007; 
+      CA2231; 
+      CA2225; 
+      CA1714; CS1591;AZC0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
+  </ItemGroup>
+
+</Project>
