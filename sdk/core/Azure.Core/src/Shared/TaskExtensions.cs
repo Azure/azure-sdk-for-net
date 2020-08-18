@@ -26,7 +26,7 @@ namespace Azure.Core.Pipeline
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
 #else
-            if (HasSynchronizationContext())
+            if (!task.IsCompleted && HasSynchronizationContext())
             {
                 throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
             }
@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
 #else
-            if (HasSynchronizationContext())
+            if (!task.IsCompleted && HasSynchronizationContext())
             {
                 throw new InvalidOperationException("Synchronously waiting on non-completed task isn't allowed.");
             }

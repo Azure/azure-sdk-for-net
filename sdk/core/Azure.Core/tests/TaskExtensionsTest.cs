@@ -41,6 +41,42 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TaskExtensions_TaskEnsureCompleted_CompletedInSyncContext()
+        {
+            SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
+            syncContext.Post(t => Task.CompletedTask.EnsureCompleted(), null);
+            syncContext.Dispose();
+            Assert.IsNull(syncContext.Exceptions);
+        }
+
+        [Test]
+        public void TaskExtensions_TaskOfTEnsureCompleted_CompletedInSyncContext()
+        {
+            SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
+            syncContext.Post(t => Task.FromResult(42).EnsureCompleted(), null);
+            syncContext.Dispose();
+            Assert.IsNull(syncContext.Exceptions);
+        }
+
+        [Test]
+        public void TaskExtensions_ValueTaskEnsureCompleted_CompletedInSyncContext()
+        {
+            SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
+            syncContext.Post(t => new ValueTask().EnsureCompleted(), null);
+            syncContext.Dispose();
+            Assert.IsNull(syncContext.Exceptions);
+        }
+
+        [Test]
+        public void TaskExtensions_ValueTaskOfTEnsureCompleted_CompletedInSyncContext()
+        {
+            SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
+            syncContext.Post(t => new ValueTask<int>(42).EnsureCompleted(), null);
+            syncContext.Dispose();
+            Assert.IsNull(syncContext.Exceptions);
+        }
+
+        [Test]
         public async Task TaskExtensions_TaskEnsureCompleted_NotCompletedNoSyncContext()
         {
             var tcs = new TaskCompletionSource<int>();
@@ -371,7 +407,7 @@ namespace Azure.Core.Tests
                 _task.Wait();
             }
 
-            public AggregateException Exceptions => new AggregateException(_exceptions);
+            public AggregateException Exceptions => _exceptions.Count > 0 ? new AggregateException(_exceptions) : default;
         }
     }
 }
