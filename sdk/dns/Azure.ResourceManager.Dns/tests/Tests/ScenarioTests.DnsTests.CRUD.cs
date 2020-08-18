@@ -58,7 +58,7 @@ namespace Azure.Management.Dns.Tests
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
                 InitializeClients();
-                this.resourceGroup = "Defualt-dns-test-12345";//Recording.GenerateAssetName("Default-Dns-");
+                this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
                 var tags = new Dictionary<string, string>
