@@ -332,7 +332,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ProtocolSettings
     {
         public ProtocolSettings() { }
-        public Azure.Storage.Files.Shares.Models.SMB SMB { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get { throw null; } set { } }
     }
     public partial class ShareAccessPolicy
     {
@@ -726,15 +726,15 @@ namespace Azure.Storage.Files.Shares.Models
         None = 0,
         Metadata = 1,
     }
-    public partial class SMB
-    {
-        public SMB() { }
-        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
-    }
     public partial class SmbMultichannel
     {
         public SmbMultichannel() { }
         public bool? Enabled { get { throw null; } set { } }
+    }
+    public partial class SmbSettings
+    {
+        public SmbSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
     }
     public partial class StorageClosedHandlesSegment
     {
