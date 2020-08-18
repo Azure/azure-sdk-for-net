@@ -178,7 +178,7 @@ namespace Azure.Core.TestFramework
             string value = GetOptionalVariable(name);
 
             var optionsInstance = new RecordedVariableOptions();
-            options(optionsInstance);
+            options?.Invoke(optionsInstance);
             var sanitizedValue = optionsInstance.Apply(value);
 
             if (!Mode.HasValue)

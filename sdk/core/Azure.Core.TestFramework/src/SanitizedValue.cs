@@ -6,7 +6,6 @@ namespace Azure.Core.TestFramework
     public enum SanitizedValue
     {
         Default,
-        Empty,
         Base64
     }
 }

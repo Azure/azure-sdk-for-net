@@ -19,7 +19,6 @@ namespace Azure.Core.Tests
             Environment.SetEnvironmentVariable("CORE_Base64Secret", "1");
             Environment.SetEnvironmentVariable("CORE_CustomSecret", "1");
             Environment.SetEnvironmentVariable("CORE_DefaultSecret", "1");
-            Environment.SetEnvironmentVariable("CORE_EmptySecret", "1");
             Environment.SetEnvironmentVariable("CORE_ConnectionStringWithSecret", "endpoint=1;key=2");
         }
 
@@ -68,7 +67,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", env.Base64Secret);
             Assert.AreEqual("1", env.CustomSecret);
             Assert.AreEqual("1", env.DefaultSecret);
-            Assert.AreEqual("1", env.EmptySecret);
             Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
 
             testRecording.Dispose();
@@ -78,7 +76,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
             Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
             Assert.AreEqual("Sanitized", testRecording.GetVariable("DefaultSecret", ""));
-            Assert.AreEqual("", testRecording.GetVariable("EmptySecret", ""));
             Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
         }
 
@@ -115,7 +112,6 @@ namespace Azure.Core.Tests
             public string NotRecordedValue => GetVariable("NOTRECORDED");
 
             public string Base64Secret => GetRecordedVariable("Base64Secret", option => option.IsSecret(SanitizedValue.Base64));
-            public string EmptySecret => GetRecordedVariable("EmptySecret", option => option.IsSecret(SanitizedValue.Empty));
             public string DefaultSecret => GetRecordedVariable("DefaultSecret", option => option.IsSecret(SanitizedValue.Default));
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
