@@ -2,15 +2,16 @@
 
 Run `generate.ps1` in this directory to generate the code.
 
-### AutoRest Configuration
-> see https://aka.ms/autorest
+## AutoRest Configuration
+
+> see <https://aka.ms/autorest>
 
 ``` yaml
-#when generating from local changes:
-input-file: $(this-folder)/swagger/digitaltwins.json
-
 #when generating from official source
-#require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c3dd5df2863101b56eef256b810927cdcc4e44d2/specification/digitaltwins/data-plane/readme.md
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/digitaltwins/data-plane/Microsoft.DigitalTwins/preview/2020-05-31-preview/digitaltwins.json
+
+#if you want to generate using local changes:
+#input-file: $(this-folder)/swagger/2020-05-31-preview/digitaltwins.json
 
 #azure-arm: true
 #license-header: MICROSOFT_MIT_NO_VERSION
