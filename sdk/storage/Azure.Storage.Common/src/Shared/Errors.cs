@@ -49,7 +49,7 @@ namespace Azure.Storage
 
         internal static void VerifyStreamPosition(Stream stream)
         {
-            if (stream != null && stream.CanSeek && stream.Position >= stream.Length)
+            if (stream != null && stream.CanSeek && stream.Length > 0 && stream.Position >= stream.Length)
             {
                 throw new ArgumentException($"{nameof(stream)}.{nameof(stream.Position)} must be less than {nameof(stream)}.{nameof(stream.Length)}");
             }

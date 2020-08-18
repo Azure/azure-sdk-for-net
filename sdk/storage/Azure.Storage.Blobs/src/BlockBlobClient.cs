@@ -2192,9 +2192,9 @@ namespace Azure.Storage.Blobs.Specialized
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
+                CommitPartitionedUpload = async (partitions, initalialPosition, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset - initalialPosition)),
                         args.HttpHeaders,
                         args.Metadata,
                         args.Tags,

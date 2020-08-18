@@ -4034,6 +4034,8 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            Errors.VerifyStreamPosition(content);
+
             // Try to upload the file as a single range
             Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
             var length = content.Length - content.Position;

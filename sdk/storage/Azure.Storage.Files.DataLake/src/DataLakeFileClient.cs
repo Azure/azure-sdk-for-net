@@ -4129,7 +4129,7 @@ namespace Azure.Storage.Files.DataLake
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
+                CommitPartitionedUpload = async (partitions, initialPosition, args, async, cancellationToken) =>
                 {
                     (var offset, var size) = partitions.LastOrDefault();
 
@@ -4138,7 +4138,7 @@ namespace Azure.Storage.Files.DataLake
                         args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
 
                     return await client.FlushInternal(
-                        offset + size,
+                        offset + size - initialPosition,
                         retainUncommittedData: default,
                         close: default,
                         httpHeaders: args.HttpHeaders,
