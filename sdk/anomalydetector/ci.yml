@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/anomalydetector/
 
 pr:
   branches:
@@ -19,13 +19,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/anomalydetector/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template
+    ServiceDirectory: anomalydetector
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template
-      safeName: AzureTemplate
+    - name: Azure.AI.AnomalyDetector
+      safeName: AzureAIAnomalyDetector
