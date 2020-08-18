@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
         public VpnSiteLinkConnection()
         {
+            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteLinkConnection. </summary>
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; set; }
+        public IList<IpsecPolicy> IpsecPolicies { get; }
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableRateLimiting { get; set; }
         /// <summary> Use local azure ip to initiate connection. </summary>

@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<AvailableDelegation> ListAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<AvailableDelegation> List(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)

@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         GalleryImageVersion IOperationSource<GalleryImageVersion>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
-            }
+            return GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
         }
 
         async ValueTask<GalleryImageVersion> IOperationSource<GalleryImageVersion>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
-            }
+            return GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
         }
     }
 }

@@ -60,14 +60,7 @@ namespace Azure.ResourceManager.Network
                     {
                         OperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationListResult.DeserializeOperationListResult(document.RootElement);
-                        }
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,14 +80,7 @@ namespace Azure.ResourceManager.Network
                     {
                         OperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationListResult.DeserializeOperationListResult(document.RootElement);
-                        }
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,6 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all of the available Network Rest API operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -132,14 +119,7 @@ namespace Azure.ResourceManager.Network
                     {
                         OperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationListResult.DeserializeOperationListResult(document.RootElement);
-                        }
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all of the available Network Rest API operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OperationListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -165,14 +146,7 @@ namespace Azure.ResourceManager.Network
                     {
                         OperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OperationListResult.DeserializeOperationListResult(document.RootElement);
-                        }
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

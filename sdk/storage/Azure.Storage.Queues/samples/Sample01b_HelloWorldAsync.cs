@@ -180,8 +180,8 @@ namespace Azure.Storage.Queues.Samples
         public static void IdentityAuth()
         {
             // Create a QueueClient that will authenticate through Active Directory
-            Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
-            QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
+            Uri queueUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/QUEUENAME");
+            QueueClient queue = new QueueClient(queueUri, new DefaultAzureCredential());
         }
 
         /// <summary>

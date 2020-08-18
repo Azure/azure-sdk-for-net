@@ -10,12 +10,10 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Operation result response for VaultStorageConfig
+    /// Operation result response for Vault Storage Config
     /// </summary>
     public partial class VaultStorageConfigOperationResultResponse
     {
@@ -28,38 +26,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// VaultStorageConfigOperationResultResponse class.
-        /// </summary>
-        public VaultStorageConfigOperationResultResponse(string objectType)
-        {
-            ObjectType = objectType;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "objectType")]
-        public string ObjectType { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ObjectType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectType");
-            }
-        }
     }
 }

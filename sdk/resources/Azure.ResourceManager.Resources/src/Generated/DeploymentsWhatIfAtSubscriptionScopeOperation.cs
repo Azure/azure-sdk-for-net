@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Resources
         WhatIfOperationResult IOperationSource<WhatIfOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
-            }
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
         }
 
         async ValueTask<WhatIfOperationResult> IOperationSource<WhatIfOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
-            }
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
         }
     }
 }

@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         FlowLogInformation IOperationSource<FlowLogInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
-            }
+            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
         }
 
         async ValueTask<FlowLogInformation> IOperationSource<FlowLogInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
-            }
+            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
         }
     }
 }

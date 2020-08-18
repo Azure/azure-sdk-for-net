@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceIDs. </summary>
         public VirtualMachineScaleSetVMInstanceIDs()
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceIDs. </summary>
-        /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetVMInstanceIDs(IList<string> instanceIds)
-        {
-            InstanceIds = instanceIds;
+            InstanceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </summary>
-        public IList<string> InstanceIds { get; set; }
+        public IList<string> InstanceIds { get; }
     }
 }

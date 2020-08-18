@@ -305,6 +305,7 @@ namespace Azure.Management.Resources
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to delete. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual async Task<ResourceGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -329,6 +330,7 @@ namespace Azure.Management.Resources
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to delete. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual ResourceGroupsDeleteOperation StartDelete(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

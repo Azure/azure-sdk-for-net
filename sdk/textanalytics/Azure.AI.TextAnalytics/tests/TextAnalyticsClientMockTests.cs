@@ -6,7 +6,9 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -136,6 +138,228 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("5", resultCollection[1].Id);
             Assert.AreEqual("2", resultCollection[2].Id);
             Assert.AreEqual("3", resultCollection[3].Id);
+        }
+
+        [Test]
+        public async Task DetectedLanguageNullName()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                    {
+                        ""id"": ""1"",
+                        ""detectedLanguage"": {
+                            ""name"": null,
+                            ""iso6391Name"": ""en"",
+                            ""confidenceScore"": 1
+                            },
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -07-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<DetectLanguageInput>
+            {
+                new DetectLanguageInput("1", "Hello world")
+                {
+                     CountryHint = "us",
+                }
+            };
+
+            DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
+
+            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
+            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+
+        }
+
+        [Test]
+        public async Task DetectedLanguageNullIso6391Name()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                    {
+                        ""id"": ""1"",
+                        ""detectedLanguage"": {
+                            ""name"": ""English"",
+                            ""iso6391Name"": null,
+                            ""confidenceScore"": 1
+                            },
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -07-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<DetectLanguageInput>
+            {
+                new DetectLanguageInput("1", "Hello world")
+                {
+                     CountryHint = "us",
+                }
+            };
+
+            DetectLanguageResultCollection response = await client.DetectLanguageBatchAsync(documents);
+
+            Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
+            Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
+
+        }
+
+        // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+        // We want to verify behavior is the same after code auto generated.
+        [Test]
+        public async Task AnalyzeSentimentNullText()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""neutral"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": null
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+
+            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
+        }
+
+        [Test]
+        public void AnalyzeSentimentNotSupportedSentenceSentiment()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""confusion"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": ""today is a hot day""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.AnalyzeSentimentAsync("today is a hot day"));
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentMixedSentenceSentiment()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""mixed"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": ""today is a hot day""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+
+            Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
         }
 
         private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)

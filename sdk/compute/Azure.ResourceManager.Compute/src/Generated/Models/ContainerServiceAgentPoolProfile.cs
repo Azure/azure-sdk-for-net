@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="vmSize"> Size of agent VMs. </param>
         /// <param name="dnsPrefix"> DNS prefix to be used to create the FQDN for the agent pool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dnsPrefix"/> is null. </exception>
         public ContainerServiceAgentPoolProfile(string name, int count, ContainerServiceVMSizeTypes vmSize, string dnsPrefix)
         {
             if (name == null)

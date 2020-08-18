@@ -21,8 +21,8 @@ namespace Azure.Security.KeyVault.Administration.Models
             Optional<string> roleName = default;
             Optional<string> description = default;
             Optional<string> type0 = default;
-            Optional<IReadOnlyList<KeyVaultPermission>> permissions = default;
-            Optional<IReadOnlyList<string>> assignableScopes = default;
+            Optional<IList<KeyVaultPermission>> permissions = default;
+            Optional<IList<string>> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))

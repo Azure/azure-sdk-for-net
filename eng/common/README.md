@@ -4,7 +4,7 @@ The `eng/common` directory contains engineering files that are common across the
 It should remain relatively small and only contain textual based files like scripts, configs, or templates. It
 should not contain binary files as they don't play well with git.
 
-# Updating
+## Updating
 
 Any updates to files in the `eng/common` directory should be made in the [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) repo.
 All changes made will cause a PR to created in all subscribed azure-sdk language repos which will blindly replace all contents of

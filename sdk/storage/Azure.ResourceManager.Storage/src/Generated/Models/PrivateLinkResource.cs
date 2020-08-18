@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal PrivateLinkResource(string id, string name, string type, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResource(string id, string name, string type, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -34,8 +37,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
-        public IList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; set; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

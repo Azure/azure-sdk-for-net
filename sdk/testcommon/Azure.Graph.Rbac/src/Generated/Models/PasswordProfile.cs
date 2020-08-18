@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of PasswordProfile. </summary>
         /// <param name="password"> Password. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public PasswordProfile(string password)
         {
             if (password == null)
@@ -24,18 +26,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Password = password;
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of PasswordProfile. </summary>
-        /// <param name="password"> Password. </param>
-        /// <param name="forceChangePasswordNextLogin"> Whether to force a password change on next login. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal PasswordProfile(string password, bool? forceChangePasswordNextLogin, IDictionary<string, object> additionalProperties)
-        {
-            Password = password;
-            ForceChangePasswordNextLogin = forceChangePasswordNextLogin;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Password. </summary>

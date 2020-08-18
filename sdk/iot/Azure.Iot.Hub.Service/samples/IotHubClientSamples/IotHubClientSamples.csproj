@@ -13,5 +13,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.Iot.Hub.Service.csproj" />
   </ItemGroup>
-
 </Project>
