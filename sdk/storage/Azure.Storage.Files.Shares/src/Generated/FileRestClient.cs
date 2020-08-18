@@ -8241,7 +8241,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Settings for SMB protocol.
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.SmbSettings SMB { get; set; }
+        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get; set; }
 
         /// <summary>
         /// Creates a new ProtocolSettings instance
@@ -8259,7 +8259,7 @@ namespace Azure.Storage.Files.Shares.Models
         {
             if (!skipInitialization)
             {
-                SMB = new Azure.Storage.Files.Shares.Models.SmbSettings();
+                SmbSettings = new Azure.Storage.Files.Shares.Models.SmbSettings();
             }
         }
 
@@ -8274,9 +8274,9 @@ namespace Azure.Storage.Files.Shares.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.SMB != null)
+            if (value.SmbSettings != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.SmbSettings.ToXml(value.SMB, "SMB", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.SmbSettings.ToXml(value.SmbSettings, "SMB", ""));
             }
             return _element;
         }
@@ -8294,7 +8294,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("SMB", ""));
             if (_child != null)
             {
-                _value.SMB = Azure.Storage.Files.Shares.Models.SmbSettings.FromXml(_child);
+                _value.SmbSettings = Azure.Storage.Files.Shares.Models.SmbSettings.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
