@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record. */)
+        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -308,7 +308,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
@@ -410,7 +410,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String

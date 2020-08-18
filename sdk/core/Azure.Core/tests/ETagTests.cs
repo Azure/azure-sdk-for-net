@@ -16,7 +16,6 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag(value);
             Assert.AreSame(value, eTag.ToString());
-            Assert.AreSame(value, eTag.ToString("H"));
             Assert.AreSame(value, eTag.ToString("G"));
         }
 

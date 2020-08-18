@@ -26,6 +26,26 @@ namespace Azure.Data.Tables.Tests
         public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CreateIfNotExists()
+        {
+            // Call CreateIfNotExists when the table already exists.
+            Assert.That(async () => await CosmosThrottleWrapper(async () => await client.CreateIfNotExistsAsync().ConfigureAwait(false)), Throws.Nothing);
+
+            // Call CreateIfNotExists when the table does not already exists.
+            var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            var tableClient = service.GetTableClient(newTableName);
+            TableItem table = await CosmosThrottleWrapper(async () => await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false));
+
+            Assert.That(table.TableName, Is.EqualTo(newTableName));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
         [Test]
         public async Task ValidateCreateDeleteTable()
         {
@@ -34,20 +54,23 @@ namespace Azure.Data.Tables.Tests
             var tableClient = service.GetTableClient(validTableName);
 
             // Create the table using the TableClient method.
-            await tableClient.CreateAsync().ConfigureAwait(false);
+            await CosmosThrottleWrapper(async () => await tableClient.CreateAsync().ConfigureAwait(false));
 
             // Check that the table was created.
             var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Not.Empty);
 
             // Delete the table using the TableClient method.
-            await tableClient.DeleteAsync().ConfigureAwait(false);
+            await CosmosThrottleWrapper(async () => await tableClient.DeleteAsync().ConfigureAwait(false));
 
             // Check that the table was deleted.
             tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Empty);
         }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
         [Test]
         public void ValidateSasCredentials()
         {
@@ -121,7 +144,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -510,7 +533,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create an entity.
 
-            var createdEntity = (await client.CreateEntityAsync(entitiesToCreate.First()).ConfigureAwait(false)).Value;
+            var createdEntity = (await client.AddEntityAsync(entitiesToCreate.First()).ConfigureAwait(false)).Value;
 
             Assert.That(createdEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }
@@ -805,7 +828,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.

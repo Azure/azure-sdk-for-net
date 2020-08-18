@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteCircuit IOperationSource<ExpressRouteCircuit>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-            }
+            return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCircuit> IOperationSource<ExpressRouteCircuit>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
-            }
+            return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
         }
     }
 }

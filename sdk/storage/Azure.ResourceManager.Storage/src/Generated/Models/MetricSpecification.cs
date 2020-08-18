@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of MetricSpecification. </summary>
         internal MetricSpecification()
         {
+            Dimensions = new ChangeTrackingList<Dimension>();
         }
 
         /// <summary> Initializes a new instance of MetricSpecification. </summary>

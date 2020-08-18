@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ResourceGroup. </summary>
         /// <param name="location"> The location of the resource group. It cannot be changed after the resource group has been created. It must be one of the supported Azure locations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public ResourceGroup(string location)
         {
             if (location == null)
@@ -23,6 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ResourceGroup. </summary>
@@ -57,6 +60,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the resource that manages this resource group. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The tags attached to the resource group. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

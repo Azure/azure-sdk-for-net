@@ -60,7 +60,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await client_Instrumented.CreateEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.AddEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
             Assert.That(async () => await client_Instrumented.UpsertEntityAsync<TableEntity>(null, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
             Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");

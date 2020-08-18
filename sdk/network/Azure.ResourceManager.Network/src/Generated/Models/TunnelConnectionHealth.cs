@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class TunnelConnectionHealth
     {
         /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
-        public TunnelConnectionHealth()
+        internal TunnelConnectionHealth()
         {
         }
 

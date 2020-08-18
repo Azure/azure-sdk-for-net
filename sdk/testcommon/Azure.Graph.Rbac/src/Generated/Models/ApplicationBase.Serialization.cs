@@ -15,22 +15,22 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowGuestsSignIn != null)
+            if (Optional.IsDefined(AllowGuestsSignIn))
             {
                 writer.WritePropertyName("allowGuestsSignIn");
                 writer.WriteBooleanValue(AllowGuestsSignIn.Value);
             }
-            if (AllowPassthroughUsers != null)
+            if (Optional.IsDefined(AllowPassthroughUsers))
             {
                 writer.WritePropertyName("allowPassthroughUsers");
                 writer.WriteBooleanValue(AllowPassthroughUsers.Value);
             }
-            if (AppLogoUrl != null)
+            if (Optional.IsDefined(AppLogoUrl))
             {
                 writer.WritePropertyName("appLogoUrl");
                 writer.WriteStringValue(AppLogoUrl);
             }
-            if (AppRoles != null)
+            if (Optional.IsCollectionDefined(AppRoles))
             {
                 writer.WritePropertyName("appRoles");
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AppPermissions != null)
+            if (Optional.IsCollectionDefined(AppPermissions))
             {
                 writer.WritePropertyName("appPermissions");
                 writer.WriteStartArray();
@@ -50,37 +50,37 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailableToOtherTenants != null)
+            if (Optional.IsDefined(AvailableToOtherTenants))
             {
                 writer.WritePropertyName("availableToOtherTenants");
                 writer.WriteBooleanValue(AvailableToOtherTenants.Value);
             }
-            if (ErrorUrl != null)
+            if (Optional.IsDefined(ErrorUrl))
             {
                 writer.WritePropertyName("errorUrl");
                 writer.WriteStringValue(ErrorUrl);
             }
-            if (GroupMembershipClaims != null)
+            if (Optional.IsDefined(GroupMembershipClaims))
             {
                 writer.WritePropertyName("groupMembershipClaims");
                 writer.WriteStringValue(GroupMembershipClaims.Value.ToString());
             }
-            if (Homepage != null)
+            if (Optional.IsDefined(Homepage))
             {
                 writer.WritePropertyName("homepage");
                 writer.WriteStringValue(Homepage);
             }
-            if (InformationalUrls != null)
+            if (Optional.IsDefined(InformationalUrls))
             {
                 writer.WritePropertyName("informationalUrls");
                 writer.WriteObjectValue(InformationalUrls);
             }
-            if (IsDeviceOnlyAuthSupported != null)
+            if (Optional.IsDefined(IsDeviceOnlyAuthSupported))
             {
                 writer.WritePropertyName("isDeviceOnlyAuthSupported");
                 writer.WriteBooleanValue(IsDeviceOnlyAuthSupported.Value);
             }
-            if (KeyCredentials != null)
+            if (Optional.IsCollectionDefined(KeyCredentials))
             {
                 writer.WritePropertyName("keyCredentials");
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KnownClientApplications != null)
+            if (Optional.IsCollectionDefined(KnownClientApplications))
             {
                 writer.WritePropertyName("knownClientApplications");
                 writer.WriteStartArray();
@@ -100,22 +100,22 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LogoutUrl != null)
+            if (Optional.IsDefined(LogoutUrl))
             {
                 writer.WritePropertyName("logoutUrl");
                 writer.WriteStringValue(LogoutUrl);
             }
-            if (Oauth2AllowImplicitFlow != null)
+            if (Optional.IsDefined(Oauth2AllowImplicitFlow))
             {
                 writer.WritePropertyName("oauth2AllowImplicitFlow");
                 writer.WriteBooleanValue(Oauth2AllowImplicitFlow.Value);
             }
-            if (Oauth2AllowUrlPathMatching != null)
+            if (Optional.IsDefined(Oauth2AllowUrlPathMatching))
             {
                 writer.WritePropertyName("oauth2AllowUrlPathMatching");
                 writer.WriteBooleanValue(Oauth2AllowUrlPathMatching.Value);
             }
-            if (Oauth2Permissions != null)
+            if (Optional.IsCollectionDefined(Oauth2Permissions))
             {
                 writer.WritePropertyName("oauth2Permissions");
                 writer.WriteStartArray();
@@ -125,12 +125,12 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Oauth2RequirePostResponse != null)
+            if (Optional.IsDefined(Oauth2RequirePostResponse))
             {
                 writer.WritePropertyName("oauth2RequirePostResponse");
                 writer.WriteBooleanValue(Oauth2RequirePostResponse.Value);
             }
-            if (OrgRestrictions != null)
+            if (Optional.IsCollectionDefined(OrgRestrictions))
             {
                 writer.WritePropertyName("orgRestrictions");
                 writer.WriteStartArray();
@@ -140,12 +140,12 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OptionalClaims != null)
+            if (Optional.IsDefined(OptionalClaims))
             {
                 writer.WritePropertyName("optionalClaims");
                 writer.WriteObjectValue(OptionalClaims);
             }
-            if (PasswordCredentials != null)
+            if (Optional.IsCollectionDefined(PasswordCredentials))
             {
                 writer.WritePropertyName("passwordCredentials");
                 writer.WriteStartArray();
@@ -155,7 +155,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PreAuthorizedApplications != null)
+            if (Optional.IsCollectionDefined(PreAuthorizedApplications))
             {
                 writer.WritePropertyName("preAuthorizedApplications");
                 writer.WriteStartArray();
@@ -165,17 +165,17 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicClient != null)
+            if (Optional.IsDefined(PublicClient))
             {
                 writer.WritePropertyName("publicClient");
                 writer.WriteBooleanValue(PublicClient.Value);
             }
-            if (PublisherDomain != null)
+            if (Optional.IsDefined(PublisherDomain))
             {
                 writer.WritePropertyName("publisherDomain");
                 writer.WriteStringValue(PublisherDomain);
             }
-            if (ReplyUrls != null)
+            if (Optional.IsCollectionDefined(ReplyUrls))
             {
                 writer.WritePropertyName("replyUrls");
                 writer.WriteStartArray();
@@ -185,7 +185,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequiredResourceAccess != null)
+            if (Optional.IsCollectionDefined(RequiredResourceAccess))
             {
                 writer.WritePropertyName("requiredResourceAccess");
                 writer.WriteStartArray();
@@ -195,17 +195,17 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SamlMetadataUrl != null)
+            if (Optional.IsDefined(SamlMetadataUrl))
             {
                 writer.WritePropertyName("samlMetadataUrl");
                 writer.WriteStringValue(SamlMetadataUrl);
             }
-            if (SignInAudience != null)
+            if (Optional.IsDefined(SignInAudience))
             {
                 writer.WritePropertyName("signInAudience");
                 writer.WriteStringValue(SignInAudience);
             }
-            if (WwwHomepage != null)
+            if (Optional.IsDefined(WwwHomepage))
             {
                 writer.WritePropertyName("wwwHomepage");
                 writer.WriteStringValue(WwwHomepage);

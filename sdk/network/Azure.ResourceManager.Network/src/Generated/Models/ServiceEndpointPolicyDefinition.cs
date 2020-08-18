@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinition. </summary>
         public ServiceEndpointPolicyDefinition()
         {
+            ServiceResources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinition. </summary>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Service endpoint name. </summary>
         public string Service { get; set; }
         /// <summary> A list of service resources. </summary>
-        public IList<string> ServiceResources { get; set; }
+        public IList<string> ServiceResources { get; }
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

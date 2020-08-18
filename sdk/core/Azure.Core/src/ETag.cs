@@ -17,7 +17,6 @@ namespace Azure
         private const string DefaultFormat = "G";
         private const string HeaderFormat = "H";
         private readonly string _value;
-        private readonly bool _preserveRawValue;
 
         /// <summary>
         /// Creates a new instance of <see cref="ETag"/>.
@@ -26,18 +25,6 @@ namespace Azure
         public ETag(string etag)
         {
             _value = etag;
-            _preserveRawValue = true;
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="ETag"/>.
-        /// </summary>
-        /// <param name="etag">The string value of the ETag.</param>
-        /// <param name="preserveValue">Indicates whether the value of the etag should be preserved as is rather that formatted with wrapping quotes.</param>
-        private ETag(string etag, bool preserveValue)
-        {
-            _value = etag;
-            _preserveRawValue = preserveValue;
         }
 
         /// <summary>
@@ -114,9 +101,12 @@ namespace Azure
             {
                 return "<null>";
             }
+
+            var _needsQuoateWrap = !IsValidQuotedFormat(_value);
+
             return format switch
             {
-                HeaderFormat => _preserveRawValue ? _value : $"{QuoteString}{_value}{QuoteString}",
+                HeaderFormat => _needsQuoateWrap ?  $"{QuoteString}{_value}{QuoteString}" : _value,
                 DefaultFormat => _value,
                 _ => throw new ArgumentException("Invalid format string.")
             };
@@ -128,20 +118,24 @@ namespace Azure
             {
                 return All;
             }
-            else if (!(value.StartsWith(QuoteString, StringComparison.Ordinal) || value.StartsWith(WeakETagPrefix, StringComparison.Ordinal)) ||
-                 !value.EndsWith(QuoteString, StringComparison.Ordinal))
+            else if (!IsValidQuotedFormat(value))
             {
                 throw new ArgumentException("The value should be equal to * , be wrapped in quotes, or be wrapped in quotes prefixed by W/", nameof(value));
             }
 
             if (value.StartsWith(WeakETagPrefix, StringComparison.Ordinal))
             {
-                return new ETag(value, true);
+                return new ETag(value);
             }
             else
             {
-                return new ETag(value.Trim(QuoteCharacter), false);
+                return new ETag(value.Trim(QuoteCharacter));
             }
+        }
+
+        private static bool IsValidQuotedFormat(string value) {
+            return (value.StartsWith(QuoteString, StringComparison.Ordinal) || value.StartsWith(WeakETagPrefix, StringComparison.Ordinal)) &&
+                value.EndsWith(QuoteString, StringComparison.Ordinal) || value == All._value;
         }
     }
 }

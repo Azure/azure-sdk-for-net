@@ -429,47 +429,52 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            if (ActiveReceiveTask == null)
+            bool releaseGuard = false;
+            try
             {
-                Logger.StartProcessingStart(Identifier);
-                bool releaseGuard = false;
+                await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                releaseGuard = true;
 
-                try
+                if (ActiveReceiveTask == null)
                 {
-                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                    releaseGuard = true;
-                    ValidateMessageHandler();
-                    ValidateErrorHandler();
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    Logger.StartProcessingStart(Identifier);
 
-                    InitializeReceiverManagers();
-
-                    // We expect the token source to be null, but we are playing safe.
-
-                    RunningTaskTokenSource?.Cancel();
-                    RunningTaskTokenSource?.Dispose();
-                    RunningTaskTokenSource = new CancellationTokenSource();
-
-                    // Start the main running task.
-                    ActiveReceiveTask = RunReceiveTaskAsync(RunningTaskTokenSource.Token);
-                }
-                catch (Exception exception)
-                {
-                    Logger.StartProcessingException(Identifier, exception.ToString());
-                    throw;
-                }
-                finally
-                {
-                    if (releaseGuard)
+                    try
                     {
-                        ProcessingStartStopSemaphore.Release();
+                        ValidateMessageHandler();
+                        ValidateErrorHandler();
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        InitializeReceiverManagers();
+
+                        // We expect the token source to be null, but we are playing safe.
+
+                        RunningTaskTokenSource?.Cancel();
+                        RunningTaskTokenSource?.Dispose();
+                        RunningTaskTokenSource = new CancellationTokenSource();
+
+                        // Start the main running task.
+                        ActiveReceiveTask = RunReceiveTaskAsync(RunningTaskTokenSource.Token);
                     }
+                    catch (Exception exception)
+                    {
+                        Logger.StartProcessingException(Identifier, exception.ToString());
+                        throw;
+                    }
+
+                    Logger.StartProcessingComplete(Identifier);
                 }
-                Logger.StartProcessingComplete(Identifier);
+                else
+                {
+                    throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
+                }
             }
-            else
+            finally
             {
-                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
+                if (releaseGuard)
+                {
+                    ProcessingStartStopSemaphore.Release();
+                }
             }
         }
 
@@ -554,17 +559,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusProcessor" /> will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
             {
+                await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                releaseGuard = true;
+
                 if (ActiveReceiveTask != null)
                 {
                     Logger.StopProcessingStart(Identifier);
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                    releaseGuard = true;
-
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                     // Cancel the current running task.
@@ -593,6 +597,10 @@ namespace Azure.Messaging.ServiceBus
                             cancellationToken)
                             .ConfigureAwait(false);
                     }
+                }
+                else
+                {
+                    throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
                 }
             }
             catch (Exception exception)

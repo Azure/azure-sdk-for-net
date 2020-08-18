@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-07 --csharp-sdks-folder=C:\\SwaggerSDK\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "24773c685796a5242117e316bbefef2755869bd3";
+      public static readonly String GithubCommidId = "409fc85092469bfc21153bed5b33deaeaeef3b42";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

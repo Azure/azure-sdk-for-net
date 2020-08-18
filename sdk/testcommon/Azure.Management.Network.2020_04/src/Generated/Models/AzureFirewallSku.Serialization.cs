@@ -15,12 +15,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -30,30 +30,22 @@ namespace Azure.Management.Network.Models
 
         internal static AzureFirewallSku DeserializeAzureFirewallSku(JsonElement element)
         {
-            AzureFirewallSkuName? name = default;
-            AzureFirewallSkuTier? tier = default;
+            Optional<AzureFirewallSkuName> name = default;
+            Optional<AzureFirewallSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = new AzureFirewallSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = new AzureFirewallSkuTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new AzureFirewallSku(name, tier);
+            return new AzureFirewallSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }

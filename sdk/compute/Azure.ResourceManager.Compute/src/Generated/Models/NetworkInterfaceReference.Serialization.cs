@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Primary != null)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary");
                 writer.WriteBooleanValue(Primary.Value);
@@ -33,16 +33,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static NetworkInterfaceReference DeserializeNetworkInterfaceReference(JsonElement element)
         {
-            string id = default;
-            bool? primary = default;
+            Optional<string> id = default;
+            Optional<bool> primary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -52,10 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("primary"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
@@ -63,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceReference(id, primary);
+            return new NetworkInterfaceReference(id.Value, Optional.ToNullable(primary));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorResult. </summary>
         internal ConnectionMonitorResult()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
+            TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
+            TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
+            Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorResult. </summary>

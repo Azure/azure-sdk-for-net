@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
         public PropagatedRouteTable()
         {
+            Labels = new ChangeTrackingList<string>();
+            Ids = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
@@ -27,8 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of labels. </summary>
-        public IList<string> Labels { get; set; }
+        public IList<string> Labels { get; }
         /// <summary> The list of resource ids of all the RouteTables. </summary>
-        public IList<SubResource> Ids { get; set; }
+        public IList<SubResource> Ids { get; }
     }
 }
