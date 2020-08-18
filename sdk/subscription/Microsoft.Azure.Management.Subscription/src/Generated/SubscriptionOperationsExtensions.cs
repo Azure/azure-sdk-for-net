@@ -22,48 +22,6 @@ namespace Microsoft.Azure.Management.Subscription
     public static partial class SubscriptionOperationsExtensions
     {
             /// <summary>
-            /// Creates an Azure subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            public static SubscriptionCreationResult CreateSubscriptionInEnrollmentAccount(this ISubscriptionOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body)
-            {
-                return operations.CreateSubscriptionInEnrollmentAccountAsync(enrollmentAccountName, body).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an Azure subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SubscriptionCreationResult> CreateSubscriptionInEnrollmentAccountAsync(this ISubscriptionOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// The operation to cancel a subscription
             /// </summary>
             /// <param name='operations'>
@@ -172,254 +130,169 @@ namespace Microsoft.Azure.Management.Subscription
             }
 
             /// <summary>
-            /// The operation to create a new WebDirect or EA Azure subscription.
+            /// Create Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// The name of the billing profile in the billing account for which you want
-            /// to create the subscription.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// The name of the invoice section in the billing account for which you want
-            /// to create the subscription.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='body'>
-            /// The subscription creation parameters.
             /// </param>
-            public static SubscriptionCreationResult CreateSubscription(this ISubscriptionOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, ModernSubscriptionCreationParameters body)
+            public static PutAliasResponse CreateAlias(this ISubscriptionOperations operations, string aliasName, PutAliasRequest body)
             {
-                return operations.CreateSubscriptionAsync(billingAccountName, billingProfileName, invoiceSectionName, body).GetAwaiter().GetResult();
+                return operations.CreateAliasAsync(aliasName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to create a new WebDirect or EA Azure subscription.
+            /// Create Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// The name of the billing profile in the billing account for which you want
-            /// to create the subscription.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// The name of the invoice section in the billing account for which you want
-            /// to create the subscription.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='body'>
-            /// The subscription creation parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> CreateSubscriptionAsync(this ISubscriptionOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, ModernSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PutAliasResponse> CreateAliasAsync(this ISubscriptionOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateSubscriptionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateAliasWithHttpMessagesAsync(aliasName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// The operation to create a new CSP subscription.
+            /// Get Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
-            /// <param name='customerName'>
-            /// The name of the customer.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            public static SubscriptionCreationResult CreateCspSubscription(this ISubscriptionOperations operations, string billingAccountName, string customerName, ModernCspSubscriptionCreationParameters body)
+            public static PutAliasResponse GetAlias(this ISubscriptionOperations operations, string aliasName)
             {
-                return operations.CreateCspSubscriptionAsync(billingAccountName, customerName, body).GetAwaiter().GetResult();
+                return operations.GetAliasAsync(aliasName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to create a new CSP subscription.
+            /// Get Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='customerName'>
-            /// The name of the customer.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> CreateCspSubscriptionAsync(this ISubscriptionOperations operations, string billingAccountName, string customerName, ModernCspSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PutAliasResponse> GetAliasAsync(this ISubscriptionOperations operations, string aliasName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateCspSubscriptionWithHttpMessagesAsync(billingAccountName, customerName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAliasWithHttpMessagesAsync(aliasName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates an Azure subscription
+            /// Delete Alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            public static SubscriptionCreationResult BeginCreateSubscriptionInEnrollmentAccount(this ISubscriptionOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body)
+            public static void DeleteAlias(this ISubscriptionOperations operations, string aliasName)
             {
-                return operations.BeginCreateSubscriptionInEnrollmentAccountAsync(enrollmentAccountName, body).GetAwaiter().GetResult();
+                operations.DeleteAliasAsync(aliasName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an Azure subscription
+            /// Delete Alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> BeginCreateSubscriptionInEnrollmentAccountAsync(this ISubscriptionOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAliasAsync(this ISubscriptionOperations operations, string aliasName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, null, cancellationToken).ConfigureAwait(false))
+                (await operations.DeleteAliasWithHttpMessagesAsync(aliasName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get Alias Subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static PutAliasListResult ListAlias(this ISubscriptionOperations operations)
+            {
+                return operations.ListAliasAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Alias Subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PutAliasListResult> ListAliasAsync(this ISubscriptionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAliasWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// The operation to create a new WebDirect or EA Azure subscription.
+            /// Create Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// The name of the billing profile in the billing account for which you want
-            /// to create the subscription.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// The name of the invoice section in the billing account for which you want
-            /// to create the subscription.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='body'>
-            /// The subscription creation parameters.
             /// </param>
-            public static SubscriptionCreationResult BeginCreateSubscription(this ISubscriptionOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, ModernSubscriptionCreationParameters body)
+            public static PutAliasResponse BeginCreateAlias(this ISubscriptionOperations operations, string aliasName, PutAliasRequest body)
             {
-                return operations.BeginCreateSubscriptionAsync(billingAccountName, billingProfileName, invoiceSectionName, body).GetAwaiter().GetResult();
+                return operations.BeginCreateAliasAsync(aliasName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to create a new WebDirect or EA Azure subscription.
+            /// Create Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// The name of the billing profile in the billing account for which you want
-            /// to create the subscription.
-            /// </param>
-            /// <param name='invoiceSectionName'>
-            /// The name of the invoice section in the billing account for which you want
-            /// to create the subscription.
+            /// <param name='aliasName'>
+            /// Alias Name
             /// </param>
             /// <param name='body'>
-            /// The subscription creation parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> BeginCreateSubscriptionAsync(this ISubscriptionOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, ModernSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PutAliasResponse> BeginCreateAliasAsync(this ISubscriptionOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateSubscriptionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to create a new CSP subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='customerName'>
-            /// The name of the customer.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            public static SubscriptionCreationResult BeginCreateCspSubscription(this ISubscriptionOperations operations, string billingAccountName, string customerName, ModernCspSubscriptionCreationParameters body)
-            {
-                return operations.BeginCreateCspSubscriptionAsync(billingAccountName, customerName, body).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create a new CSP subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingAccountName'>
-            /// The name of the Microsoft Customer Agreement billing account for which you
-            /// want to create the subscription.
-            /// </param>
-            /// <param name='customerName'>
-            /// The name of the customer.
-            /// </param>
-            /// <param name='body'>
-            /// The subscription creation parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SubscriptionCreationResult> BeginCreateCspSubscriptionAsync(this ISubscriptionOperations operations, string billingAccountName, string customerName, ModernCspSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateCspSubscriptionWithHttpMessagesAsync(billingAccountName, customerName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateAliasWithHttpMessagesAsync(aliasName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
