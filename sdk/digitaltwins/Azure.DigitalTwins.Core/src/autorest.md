@@ -8,7 +8,7 @@ A local copy of the official swagger documents are stored in this directory for 
 
 ## Official swagger document
 
-The official swagger specification for Azure DigitalTwins can be found [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/digitaltwins/data-plane/Microsoft.DigitalTwins).
+The official swagger specification for Azure DigitalTwins can be found [here](https://raw.githubusercontent.com/Azure/azure-rest-api-specs/97db8d1015c2780c2704fe0f55537ff1f4740140/specification/digitaltwins/data-plane/Microsoft.DigitalTwins/preview/2020-05-31-preview/digitaltwins.json).
 
 ## Code generation
 
