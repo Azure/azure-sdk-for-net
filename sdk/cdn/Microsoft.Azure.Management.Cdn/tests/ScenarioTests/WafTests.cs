@@ -21,7 +21,7 @@ namespace Cdn.Tests.ScenarioTests
 {
     public class WafTests
     {
-        [Fact(Skip = "CDN WAF features are not working for new API versions due to a known issue")]
+        [Fact()]
         public void WafPolicyLinkTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -235,7 +235,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "CDN WAF features are not working for new API versions due to a known issue")]
+        [Fact()]
         public void WafPolicyCreateOrUpdateTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -303,7 +303,7 @@ namespace Cdn.Tests.ScenarioTests
                                     MatchValue = new List<string> {
                                     "TestTrigger123"
                                     },
-                                    //Transforms = new List<String> { "Uppercase" }
+                                    Transforms = new List<String> { "Uppercase" }
                                 }
                             }
                         }
@@ -325,7 +325,8 @@ namespace Cdn.Tests.ScenarioTests
                                     MatchValue = new List<string> {
                                         "131.107.0.0/16",
                                         "167.220.0.0/16"
-                                    }
+                                    },
+                                    Transforms = new List<String>()
                                 }
                             },
                             Action = "Block"
@@ -343,8 +344,9 @@ namespace Cdn.Tests.ScenarioTests
                                     OperatorProperty = "Contains",
                                     NegateCondition = false,
                                     MatchValue = new List<string> {
-                                    "yes"
-                                    }
+                                        "yes"
+                                    },
+                                    Transforms = new List<String>()
                                 }
                             },
                             Action = "Block"
@@ -407,7 +409,7 @@ namespace Cdn.Tests.ScenarioTests
                                     MatchValue = new List<string> {
                                     "TestTrigger123"
                                     },
-                                    //Transforms = new List<String> { "Uppercase" }
+                                    Transforms = new List<String> { "Uppercase" }
                                 }
                             }
                         }
@@ -429,7 +431,8 @@ namespace Cdn.Tests.ScenarioTests
                                     MatchValue = new List<string> {
                                         "131.107.0.0/16",
                                         "167.220.0.0/16"
-                                    }
+                                    },
+                                    Transforms = new List<string>()
                                 }
                             },
                             Action = "Block"
@@ -447,8 +450,9 @@ namespace Cdn.Tests.ScenarioTests
                                     OperatorProperty = "Contains",
                                     NegateCondition = false,
                                     MatchValue = new List<string> {
-                                    "yes"
-                                    }
+                                        "yes"
+                                    },
+                                    Transforms = new List<string>()
                                 }
                             },
                             Action = "Block"
@@ -483,7 +487,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "CDN WAF features are not working for new API versions due to a known issue")]
+        [Fact()]
         public void WafPolicyDeleteTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -524,7 +528,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "CDN WAF features are not working for new API versions due to a known issue")]
+        [Fact()]
         public void WafPolicyGetListTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

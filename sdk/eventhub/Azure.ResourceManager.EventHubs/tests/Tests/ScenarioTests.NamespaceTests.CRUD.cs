@@ -71,7 +71,7 @@ namespace Azure.Management.EventHub.Tests
             // Update namespace tags and make the namespace critical
             var updateNamespaceParameter = new EHNamespace()
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                         {
                             {"tag3", "value3"},
                             {"tag4", "value4"}

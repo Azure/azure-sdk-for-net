@@ -16,19 +16,19 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (CipherSuites != null)
+            if (Optional.IsCollectionDefined(CipherSuites))
             {
                 writer.WritePropertyName("cipherSuites");
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinProtocolVersion != null)
+            if (Optional.IsDefined(MinProtocolVersion))
             {
                 writer.WritePropertyName("minProtocolVersion");
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
@@ -49,27 +49,19 @@ namespace Azure.Management.Network.Models
 
         internal static ApplicationGatewaySslPredefinedPolicy DeserializeApplicationGatewaySslPredefinedPolicy(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
-            ApplicationGatewaySslProtocol? minProtocolVersion = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
+            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -79,10 +71,6 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("cipherSuites"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -93,10 +81,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("minProtocolVersion"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             minProtocolVersion = new ApplicationGatewaySslProtocol(property0.Value.GetString());
                             continue;
                         }
@@ -104,7 +88,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslPredefinedPolicy(id, name, cipherSuites, minProtocolVersion);
+            return new ApplicationGatewaySslPredefinedPolicy(id.Value, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
         }
     }
 }

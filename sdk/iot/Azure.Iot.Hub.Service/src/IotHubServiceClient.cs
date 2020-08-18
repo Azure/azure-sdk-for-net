@@ -22,10 +22,6 @@ namespace Azure.Iot.Hub.Service
         private readonly StatisticsRestClient _statisticsRestClient;
         private readonly ConfigurationRestClient _configurationRestClient;
 
-        // IoT Hub service currently does not support OAuth tokens, so they do not have their authorization scopes defined.
-        // This value will need to be correctly populated once OAuth token support is available.
-        private static readonly string[] s_authorizationScopes = new[] { "" };
-
         /// <summary>
         /// place holder for Devices.
         /// </summary>
@@ -60,6 +56,8 @@ namespace Azure.Iot.Hub.Service
         /// place holder for Jobs
         /// </summary>
         public virtual JobsClient Jobs { get; private set; }
+
+        public virtual QueryClient Query { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IotHubServiceClient"/> class.
@@ -137,7 +135,7 @@ namespace Azure.Iot.Hub.Service
             options ??= new IotHubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, s_authorizationScopes), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new SasTokenAuthenticationPolicy(credential), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
@@ -146,8 +144,13 @@ namespace Azure.Iot.Hub.Service
             _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
 
-            Devices = new DevicesClient(_devicesRestClient, _queryRestClient);
-            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, _queryRestClient);
+            // Note that the devices and modules subclient take a reference to the Query convenience layer client. This
+            // is because they each expose a helper function that uses the query client for listing twins. By passing in
+            // the convenience layer query client rather than the protocol layer query client, we minimize rewriting the
+            // same pagination logic that now exists only in the query convenience layer client.
+            Query = new QueryClient(_queryRestClient);
+            Devices = new DevicesClient(_devicesRestClient, Query);
+            Modules = new ModulesClient(_devicesRestClient, _modulesRestClient, Query);
             Statistics = new StatisticsClient(_statisticsRestClient);
             Configurations = new ConfigurationsClient(_configurationRestClient);
 

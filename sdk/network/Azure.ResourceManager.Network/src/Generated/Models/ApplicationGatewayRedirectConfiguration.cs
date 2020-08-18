@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         public ApplicationGatewayRedirectConfiguration()
         {
+            RequestRoutingRules = new ChangeTrackingList<SubResource>();
+            UrlPathMaps = new ChangeTrackingList<SubResource>();
+            PathRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
@@ -62,10 +66,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Include query string in the redirected url. </summary>
         public bool? IncludeQueryString { get; set; }
         /// <summary> Request routing specifying redirect configuration. </summary>
-        public IList<SubResource> RequestRoutingRules { get; set; }
+        public IList<SubResource> RequestRoutingRules { get; }
         /// <summary> Url path maps specifying default redirect configuration. </summary>
-        public IList<SubResource> UrlPathMaps { get; set; }
+        public IList<SubResource> UrlPathMaps { get; }
         /// <summary> Path rules specifying redirect configuration. </summary>
-        public IList<SubResource> PathRules { get; set; }
+        public IList<SubResource> PathRules { get; }
     }
 }

@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of QueryTroubleshootingParameters. </summary>
         /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public QueryTroubleshootingParameters(string targetResourceId)
         {
             if (targetResourceId == null)

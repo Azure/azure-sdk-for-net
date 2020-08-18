@@ -11,8 +11,8 @@ param (
   [string] $baseUrl = "",
   # path to the root of the site for resolving rooted relative links, defaults to host root for http and file directory for local files
   [string] $rootUrl = "",
-  # list of http status codes count as broken links. Defaults to 404. 
-  [array] $errorStatusCodes = @(404),
+  # list of http status codes count as broken links. Defaults to 400, 401, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004
+  [array] $errorStatusCodes = @(400, 401, 404, 11001, 11004),
   # flag to allow resolving relative paths or not
   [bool] $resolveRelativeLinks = $true
 )
@@ -144,6 +144,11 @@ function CheckLink ([System.Uri]$linkUri)
     }
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__
+
+      if(!$statusCode) {
+        # Try to pull the error code from any inner SocketException we might hit
+        $statusCode = $_.Exception.InnerException.ErrorCode
+      }
 
       if ($statusCode -in $errorStatusCodes) {
         LogWarning "[$statusCode] broken link $linkUri"

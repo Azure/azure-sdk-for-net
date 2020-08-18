@@ -15,17 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        /// <summary> Initializes a new instance of GenericResourceFilter. </summary>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="tagname"> The tag name. </param>
-        /// <param name="tagvalue"> The tag value. </param>
-        internal GenericResourceFilter(string resourceType, string tagname, string tagvalue)
-        {
-            ResourceType = resourceType;
-            Tagname = tagname;
-            Tagvalue = tagvalue;
-        }
-
         /// <summary> The resource type. </summary>
         public string ResourceType { get; }
         /// <summary> The tag name. </summary>

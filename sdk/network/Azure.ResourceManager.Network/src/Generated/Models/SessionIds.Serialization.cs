@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionIdsValue != null)
+            if (Optional.IsCollectionDefined(SessionIdsValue))
             {
                 writer.WritePropertyName("sessionIds");
                 writer.WriteStartArray();

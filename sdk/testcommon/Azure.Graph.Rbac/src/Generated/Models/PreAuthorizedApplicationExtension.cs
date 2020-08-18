@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of PreAuthorizedApplicationExtension. </summary>
         public PreAuthorizedApplicationExtension()
         {
+            Conditions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PreAuthorizedApplicationExtension. </summary>
@@ -25,6 +27,6 @@ namespace Azure.Graph.Rbac.Models
         }
 
         /// <summary> The extension&apos;s conditions. </summary>
-        public IList<string> Conditions { get; set; }
+        public IList<string> Conditions { get; }
     }
 }

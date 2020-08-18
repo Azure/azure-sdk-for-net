@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.Compute.Tests
                     var vhduri = vhdContainer + string.Format("/{0}.vhd", Recording.GenerateAssetName("testvmdatadiskscenario", TestPrefix));
 
                     vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
-                    vm.StorageProfile.DataDisks = new List<DataDisk>();
                     foreach (int index in new int[] { 1, 2 })
                     {
                         var diskName = "dataDisk" + index;
@@ -91,8 +90,7 @@ namespace Azure.ResourceManager.Compute.Tests
                         VmAgent = new VirtualMachineAgentInstanceView
                         {
                             Statuses = testStatusList,
-                            ExtensionHandlers = new List<VirtualMachineExtensionHandlerInstanceView>
-                            {
+                            ExtensionHandlers = {
                                 new VirtualMachineExtensionHandlerInstanceView
                                 {
                                     Status = testStatus,
@@ -102,16 +100,14 @@ namespace Azure.ResourceManager.Compute.Tests
                             },
                             VmAgentVersion = "test"
                         },
-                        Disks = new List<DiskInstanceView>
-                        {
+                        Disks = {
                             new DiskInstanceView
                             {
                                 Statuses = testStatusList,
                                 Name = "test"
                             }
                         },
-                        Extensions = new List<VirtualMachineExtensionInstanceView>
-                        {
+                        Extensions = {
                             new VirtualMachineExtensionInstanceView
                             {
                                 Statuses = testStatusList
@@ -123,14 +119,15 @@ namespace Azure.ResourceManager.Compute.Tests
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef , addDataDiskToVM);
                 VirtualMachine vm1 = returnTwoVM.Item1;
                 inputVM = returnTwoVM.Item2;
-                var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name);
+                string inputVMName = returnTwoVM.Item3;
+                var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
                 Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                 var vm2 = getVMWithInstanceViewResponse;
                 var vmReCreateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, getVMWithInstanceViewResponse.Value.Name, getVMWithInstanceViewResponse));
 
-                await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
+                await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVMName));
 
                 passed = true;
                 Assert.True(passed);

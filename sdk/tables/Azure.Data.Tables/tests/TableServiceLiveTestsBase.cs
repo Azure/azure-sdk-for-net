@@ -249,7 +249,7 @@ namespace Azure.Data.Tables.Tests
         protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
             int retryCount = 0;
-            int delay = 500;
+            int delay = 1500;
             while (true)
             {
                 try

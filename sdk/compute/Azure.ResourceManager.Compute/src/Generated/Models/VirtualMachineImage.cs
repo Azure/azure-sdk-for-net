@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
         public VirtualMachineImage(string name, string location) : base(name, location)
         {
             if (name == null)
@@ -26,6 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            DataDiskImages = new ChangeTrackingList<DataDiskImage>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Contains the os disk image information. </summary>
         public OSDiskImage OsDiskImage { get; set; }
         /// <summary> The list of data disk images information. </summary>
-        public IList<DataDiskImage> DataDiskImages { get; set; }
+        public IList<DataDiskImage> DataDiskImages { get; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
         public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
         /// <summary> Specifies the HyperVGeneration Type. </summary>

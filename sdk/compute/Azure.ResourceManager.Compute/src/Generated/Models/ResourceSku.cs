@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ResourceSku. </summary>
         internal ResourceSku()
         {
+            Locations = new ChangeTrackingList<string>();
+            LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
+            ApiVersions = new ChangeTrackingList<string>();
+            Costs = new ChangeTrackingList<ResourceSkuCosts>();
+            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
+            Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of ResourceSku. </summary>

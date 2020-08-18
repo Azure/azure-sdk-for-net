@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of BlobRestoreRange. </summary>
         /// <param name="startRange"> Blob start range. This is inclusive. Empty means account start. </param>
         /// <param name="endRange"> Blob end range. This is exclusive. Empty means account end. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startRange"/> or <paramref name="endRange"/> is null. </exception>
         public BlobRestoreRange(string startRange, string endRange)
         {
             if (startRange == null)

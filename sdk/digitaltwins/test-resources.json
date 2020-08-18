@@ -147,7 +147,7 @@
     }
   ],
   "outputs": {
-    "DIGITALTWINS_ADT_INSTANCE_ENDPOINT_URL": {
+    "DIGITALTWINS_URL": {
       "type": "string",
       "value": "[concat('https://', reference(variables('digitalTwinInstanceResourceId'), '2020-03-01-preview').hostName)]"
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         public ExpressRouteServiceProvider()
         {
+            PeeringLocations = new ChangeTrackingList<string>();
+            BandwidthsOffered = new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
@@ -34,9 +37,9 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of peering locations. </summary>
-        public IList<string> PeeringLocations { get; set; }
+        public IList<string> PeeringLocations { get; }
         /// <summary> A list of bandwidths offered. </summary>
-        public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
+        public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; }
         /// <summary> The provisioning state of the express route service provider resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

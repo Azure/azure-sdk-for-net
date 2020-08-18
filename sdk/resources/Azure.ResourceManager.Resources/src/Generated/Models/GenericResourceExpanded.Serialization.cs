@@ -17,72 +17,42 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CreatedTime != null)
-            {
-                writer.WritePropertyName("createdTime");
-                writer.WriteStringValue(CreatedTime.Value, "O");
-            }
-            if (ChangedTime != null)
-            {
-                writer.WritePropertyName("changedTime");
-                writer.WriteStringValue(ChangedTime.Value, "O");
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy");
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -98,162 +68,99 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static GenericResourceExpanded DeserializeGenericResourceExpanded(JsonElement element)
         {
-            DateTimeOffset? createdTime = default;
-            DateTimeOffset? changedTime = default;
-            string provisioningState = default;
-            Plan plan = default;
-            object properties = default;
-            string kind = default;
-            string managedBy = default;
-            Sku sku = default;
-            Identity identity = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<string> provisioningState = default;
+            Optional<Plan> plan = default;
+            Optional<object> properties = default;
+            Optional<string> kind = default;
+            Optional<string> managedBy = default;
+            Optional<Sku> sku = default;
+            Optional<Identity> identity = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("changedTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("plan"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     plan = Plan.DeserializePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("managedBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     managedBy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = Identity.DeserializeIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new GenericResourceExpanded(id, name, type, location, tags, plan, properties, kind, managedBy, sku, identity, createdTime, changedTime, provisioningState);
+            return new GenericResourceExpanded(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }
