@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element)
         {
-            string privateLinkService = default;
+            Optional<string> privateLinkService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkService"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privateLinkService = property.Value.GetString();
                     continue;
                 }
             }
-            return new AutoApprovedPrivateLinkService(privateLinkService);
+            return new AutoApprovedPrivateLinkService(privateLinkService.Value);
         }
     }
 }

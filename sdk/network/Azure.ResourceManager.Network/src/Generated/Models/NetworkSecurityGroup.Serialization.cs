@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (SecurityRules != null)
+            if (Optional.IsCollectionDefined(SecurityRules))
             {
                 writer.WritePropertyName("securityRules");
                 writer.WriteStartArray();
@@ -64,139 +49,58 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultSecurityRules != null)
-            {
-                writer.WritePropertyName("defaultSecurityRules");
-                writer.WriteStartArray();
-                foreach (var item in DefaultSecurityRules)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (NetworkInterfaces != null)
-            {
-                writer.WritePropertyName("networkInterfaces");
-                writer.WriteStartArray();
-                foreach (var item in NetworkInterfaces)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Subnets != null)
-            {
-                writer.WritePropertyName("subnets");
-                writer.WriteStartArray();
-                foreach (var item in Subnets)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (FlowLogs != null)
-            {
-                writer.WritePropertyName("flowLogs");
-                writer.WriteStartArray();
-                foreach (var item in FlowLogs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ResourceGuid != null)
-            {
-                writer.WritePropertyName("resourceGuid");
-                writer.WriteStringValue(ResourceGuid);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static NetworkSecurityGroup DeserializeNetworkSecurityGroup(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<SecurityRule> securityRules = default;
-            IList<SecurityRule> defaultSecurityRules = default;
-            IList<NetworkInterface> networkInterfaces = default;
-            IList<Subnet> subnets = default;
-            IList<FlowLog> flowLogs = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<SecurityRule>> securityRules = default;
+            Optional<IReadOnlyList<SecurityRule>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<Subnet>> subnets = default;
+            Optional<IReadOnlyList<FlowLog>> flowLogs = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -207,124 +111,61 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("securityRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SecurityRule> array = new List<SecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SecurityRule.DeserializeSecurityRule(item));
-                                }
+                                array.Add(SecurityRule.DeserializeSecurityRule(item));
                             }
                             securityRules = array;
                             continue;
                         }
                         if (property0.NameEquals("defaultSecurityRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SecurityRule> array = new List<SecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SecurityRule.DeserializeSecurityRule(item));
-                                }
+                                array.Add(SecurityRule.DeserializeSecurityRule(item));
                             }
                             defaultSecurityRules = array;
                             continue;
                         }
                         if (property0.NameEquals("networkInterfaces"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<NetworkInterface> array = new List<NetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(NetworkInterface.DeserializeNetworkInterface(item));
-                                }
+                                array.Add(NetworkInterface.DeserializeNetworkInterface(item));
                             }
                             networkInterfaces = array;
                             continue;
                         }
                         if (property0.NameEquals("subnets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Subnet> array = new List<Subnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(Subnet.DeserializeSubnet(item));
-                                }
+                                array.Add(Subnet.DeserializeSubnet(item));
                             }
                             subnets = array;
                             continue;
                         }
                         if (property0.NameEquals("flowLogs"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<FlowLog> array = new List<FlowLog>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(FlowLog.DeserializeFlowLog(item));
-                                }
+                                array.Add(FlowLog.DeserializeFlowLog(item));
                             }
                             flowLogs = array;
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -332,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkSecurityGroup(id, name, type, location, tags, etag, securityRules, defaultSecurityRules, networkInterfaces, subnets, flowLogs, resourceGuid, provisioningState);
+            return new NetworkSecurityGroup(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

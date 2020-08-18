@@ -85,7 +85,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 shardIndex = shards.FindIndex(s => s.ShardPath == currentShardPath);
                 if (shardIndex < 0)
                 {
-                    throw new ArgumentException($"Shard {currentShardPath} not found.");
+                    // Either shard doesn't exist or cursor is pointing to end of shard. So start from beginning.
+                    shardIndex = 0;
                 }
             }
             return new Segment(

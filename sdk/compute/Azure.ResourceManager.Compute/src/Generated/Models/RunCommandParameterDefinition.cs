@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RunCommandParameterDefinition. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="type"> The run command parameter type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="type"/> is null. </exception>
         internal RunCommandParameterDefinition(string name, string type)
         {
             if (name == null)

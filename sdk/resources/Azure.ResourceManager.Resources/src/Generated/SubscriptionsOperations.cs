@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual AsyncPageable<Location> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual Pageable<Location> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

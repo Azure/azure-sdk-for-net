@@ -54,27 +54,13 @@ namespace Azure.Management.Storage
         BlobRestoreStatus IOperationSource<BlobRestoreStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
-            }
+            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
         }
 
         async ValueTask<BlobRestoreStatus> IOperationSource<BlobRestoreStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
-            }
+            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
         }
     }
 }

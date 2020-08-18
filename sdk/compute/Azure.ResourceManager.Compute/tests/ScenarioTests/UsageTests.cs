@@ -55,12 +55,13 @@ namespace Azure.ResourceManager.Compute.Tests
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef);
                 var vm1 = returnTwoVM.Item1;
                 inputVM = returnTwoVM.Item2;
+                string inputVMName = returnTwoVM.Item3;
                 // List Usages, and do weak validation to assure that some usages were returned.
                 var luResponse = await (UsageClient.ListAsync(vm1.Location)).ToEnumerableAsync();
 
                 ValidateListUsageResponse(luResponse);
 
-                await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
+                await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVMName));
             }
             catch (Exception e)
             {

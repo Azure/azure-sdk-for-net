@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
 
             // Set extension sequencing (ext2 is provisioned after ext1)
-            vmssExtProfile.Extensions[1].ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[0].Name };
+            vmssExtProfile.Extensions[1].ProvisionAfterExtensions.Add(vmssExtProfile.Extensions[0].Name);
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
                 rgName,
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             // Add a new extension to the VMSS (ext3 is provisioned after ext2)
             VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension(name: "3", publisher: "Microsoft.CPlat.Core", type: "NullLinux", version: "4.0");
-            vmssExtension.ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[1].Name };
+            vmssExtension.ProvisionAfterExtensions.Add(vmssExtProfile.Extensions[1].Name);
             var response = await WaitForCompletionAsync(await VirtualMachineScaleSetExtensionsOperations.StartCreateOrUpdateAsync(rgName, vmssName, vmssExtension.Name, vmssExtension));
             ValidateVmssExtension(vmssExtension, response.Value);
 
@@ -97,8 +97,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             return new VirtualMachineScaleSetExtensionProfile
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                {
+                Extensions = {
                     GetTestVMSSVMExtension(name: "1", publisher: "Microsoft.CPlat.Core", type: "NullSeqA", version: "2.0"),
                     GetTestVMSSVMExtension(name: "2", publisher: "Microsoft.CPlat.Core", type: "NullSeqB", version: "2.0")
                 }

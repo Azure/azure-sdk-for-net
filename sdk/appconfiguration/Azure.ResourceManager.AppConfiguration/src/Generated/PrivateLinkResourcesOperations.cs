@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual AsyncPageable<PrivateLinkResource> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual Pageable<PrivateLinkResource> ListByConfigurationStore(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

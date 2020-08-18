@@ -2222,12 +2222,17 @@ namespace Azure.Storage.Queues
                         ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
                         : messageText;
+                    QueueSendMessage queueSendMessage = null;
+                    if (messageText != default)
+                    {
+                        queueSendMessage = new QueueSendMessage { MessageText = messageText };
+                    }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
                         ClientDiagnostics,
                         Pipeline,
                         uri,
-                        message: new QueueSendMessage { MessageText = messageText },
+                        message: queueSendMessage,
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         version: Version.ToVersionString(),

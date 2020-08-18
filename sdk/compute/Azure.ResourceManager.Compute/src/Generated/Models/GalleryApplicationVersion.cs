@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersion. </summary>
         /// <param name="location"> Resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public GalleryApplicationVersion(string location) : base(location)
         {
             if (location == null)

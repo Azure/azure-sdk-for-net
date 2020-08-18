@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ObjectReplicationPolicyRule. </summary>
         /// <param name="sourceContainer"> Required. Source container name. </param>
         /// <param name="destinationContainer"> Required. Destination container name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceContainer"/> or <paramref name="destinationContainer"/> is null. </exception>
         public ObjectReplicationPolicyRule(string sourceContainer, string destinationContainer)
         {
             if (sourceContainer == null)

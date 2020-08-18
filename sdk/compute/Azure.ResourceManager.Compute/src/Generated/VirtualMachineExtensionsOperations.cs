@@ -124,6 +124,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public virtual async Task<VirtualMachineExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,6 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public virtual VirtualMachineExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,6 +204,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public virtual async Task<VirtualMachineExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -241,6 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/>, or <paramref name="extensionParameters"/> is null. </exception>
         public virtual VirtualMachineExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -279,6 +283,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine where the extension should be deleted. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public virtual async Task<VirtualMachineExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -313,6 +318,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the virtual machine where the extension should be deleted. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="vmExtensionName"/> is null. </exception>
         public virtual VirtualMachineExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

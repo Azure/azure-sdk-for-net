@@ -84,6 +84,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual AsyncPageable<PeerExpressRouteCircuitConnection> ListAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -137,6 +138,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public virtual Pageable<PeerExpressRouteCircuitConnection> List(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

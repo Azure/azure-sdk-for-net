@@ -189,6 +189,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<OAuth2PermissionGrant> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -232,6 +233,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the next page of OAuth2 permission grants. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<OAuth2PermissionGrant> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

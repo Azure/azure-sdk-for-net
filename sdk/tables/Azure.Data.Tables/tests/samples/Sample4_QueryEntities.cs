@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Samples
                 { "Price", 5.00 },
                 { "Quantity", 34 }
             };
-            tableClient.CreateEntity(entity);
+            tableClient.AddEntity(entity);
 
             var entity2 = new TableEntity(partitionKey, rowKey2)
             {
@@ -46,7 +46,7 @@ namespace Azure.Data.Tables.Samples
                 { "Price", 7.00 },
                 { "Quantity", 34 }
             };
-            tableClient.CreateEntity(entity2);
+            tableClient.AddEntity(entity2);
 
             #region Snippet:TablesSample4QueryEntitiesFilter
             Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");

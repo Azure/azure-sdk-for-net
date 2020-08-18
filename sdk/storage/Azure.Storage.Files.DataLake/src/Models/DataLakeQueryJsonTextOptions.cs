@@ -12,5 +12,9 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public class DataLakeQueryJsonTextOptions : DataLakeQueryTextOptions
     {
+        /// <summary>
+        /// Record Separator.
+        /// </summary>
+        public string RecordSeparator { get; set; }
     }
 }

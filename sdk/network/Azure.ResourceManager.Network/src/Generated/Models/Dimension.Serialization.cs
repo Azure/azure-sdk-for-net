@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Dimension DeserializeDimension(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
-            string internalName = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> internalName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("internalName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     internalName = property.Value.GetString();
                     continue;
                 }
             }
-            return new Dimension(name, displayName, internalName);
+            return new Dimension(name.Value, displayName.Value, internalName.Value);
         }
     }
 }

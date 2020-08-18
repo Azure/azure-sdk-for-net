@@ -2,9 +2,9 @@
  The Azure Identity library provides Azure Active Directory token authentication support across the Azure SDK. It provides a set of TokenCredential implementations which can be used to construct Azure SDK clients which support AAD token authentication.  
  
  This library currently supports:
-  - [Service principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
-  - [Managed identity authentication](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
-  - [User principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-sign-user-overview)
+  - [Service principal authentication](https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals)
+  - [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview)
+  - [User principal authentication](https://docs.microsoft.com/azure/active-directory/develop/scenario-web-app-sign-user-overview)
 
   [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Azure Active Directory documentation][aad_doc]
 
@@ -265,8 +265,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_sub]: https://azure.microsoft.com/free/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [package]: https://www.nuget.org/packages/Azure.Identity
-[aad_doc]: https://docs.microsoft.com/en-us/azure/active-directory/
-[aad_err_doc]: https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
+[aad_doc]: https://docs.microsoft.com/azure/active-directory/
+[aad_err_doc]: https://docs.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
