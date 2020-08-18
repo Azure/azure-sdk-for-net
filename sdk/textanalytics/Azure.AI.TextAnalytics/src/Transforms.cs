@@ -9,6 +9,8 @@ namespace Azure.AI.TextAnalytics
 {
     internal static class Transforms
     {
+        #region Common
+
         internal static TextAnalyticsError ConvertToError(TextAnalyticsError_internal error)
         {
             string errorCode = error.Code;
@@ -25,18 +27,26 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
-        internal static DetectedLanguage ConvertToDetectedLanguage(DocumentLanguage documentLanguage)
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarning_internal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
-            foreach (TextAnalyticsWarning_internal warning in documentLanguage.Warnings)
+            foreach (TextAnalyticsWarning_internal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
             }
-
-            return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
+            return warnings;
         }
 
-        internal static DetectLanguageResultCollection ConvertLanguageResult(LanguageResult results, IDictionary<string, int> idToIndexMap)
+        #endregion
+
+        #region DetectLanguage
+
+        internal static DetectedLanguage ConvertToDetectedLanguage(DocumentLanguage documentLanguage)
+        {
+            return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
+        }
+
+        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
         {
             var detectedLanguages = new List<DetectLanguageResult>();
 
@@ -56,6 +66,33 @@ namespace Azure.AI.TextAnalytics
 
             return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
         }
+
+        #endregion
+
+        #region AnalyzeSentiment
+
+        internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
+        {
+            var analyzedSentiments = new List<AnalyzeSentimentResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read sentiments
+            foreach (DocumentSentimentInternal docSentiment in results.Documents)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
+            }
+
+            analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
+
+            return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
 
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {

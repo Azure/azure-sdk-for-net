@@ -7,10 +7,10 @@
         "Content-Length": "224",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2feff2c511ac2b49a9535ed2c137bce2-eb948907f39b1743-00",
+        "traceparent": "00-7dc8667b2272c24bb232f2e3bf83a0e7-eb49deeaed181a4c-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200817.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2336fc0a08eb7d752dd471cc0bc5a23b",
         "x-ms-return-client-request-id": "true"
@@ -18,27 +18,27 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "1",
-            "text": "Pike Place Market is my favorite Seattle attraction.  We had so much fun there."
+            "text": "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.",
+            "language": "en"
           },
           {
-            "language": "es",
             "id": "2",
-            "text": "Esta comida no me gusta. Siempre que la como me enfermo."
+            "text": "Esta comida no me gusta. Siempre que la como me enfermo.",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f2d88a83-6b18-4443-a71e-a1e54f1b45d8",
+        "apim-request-id": "ddf39391-cc75-44e8-a42c-ae9864b81d50",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 06 Jul 2020 22:03:51 GMT",
+        "Date": "Mon, 17 Aug 2020 20:11:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "127"
+        "x-envoy-upstream-service-time": "1120"
       },
       "ResponseBody": {
         "statistics": {
