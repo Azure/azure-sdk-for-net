@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
-        internal FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
+        internal FieldData(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
             : base(boundingBox, pageNumber, text)
         {
             FieldElements = fieldElements;

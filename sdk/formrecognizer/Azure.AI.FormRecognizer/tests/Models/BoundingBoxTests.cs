@@ -9,35 +9,35 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="BoundingBox"/> struct.
+    /// The suite of tests for the <see cref="FieldBoundingBox"/> struct.
     /// </summary>
     public class BoundingBoxTests
     {
         [Test]
         public void IndexerThrowsWhenBoundingBoxIsDefault()
         {
-            BoundingBox boundingBox = default;
+            FieldBoundingBox boundingBox = default;
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
         [Test]
         public void IndexerThrowsWhenBoundingBoxIsEmpty()
         {
-            BoundingBox boundingBox = new BoundingBox(new List<float>());
+            FieldBoundingBox boundingBox = new FieldBoundingBox(new List<float>());
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
         [Test]
         public void ToStringDoesNotThrowWhenBoundingBoxIsDefault()
         {
-            BoundingBox boundingBox = default;
+            FieldBoundingBox boundingBox = default;
             Assert.DoesNotThrow(() => boundingBox.ToString());
         }
 
         [Test]
         public void ToStringDoesNotThrowWhenBoundingBoxIsEmpty()
         {
-            BoundingBox boundingBox = new BoundingBox(new List<float>());
+            FieldBoundingBox boundingBox = new FieldBoundingBox(new List<float>());
             Assert.DoesNotThrow(() => boundingBox.ToString());
         }
     }

@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public abstract class FormElement
     {
-        internal FormElement(BoundingBox boundingBox, int pageNumber, string text)
+        internal FormElement(FieldBoundingBox boundingBox, int pageNumber, string text)
         {
             BoundingBox = boundingBox;
             PageNumber = pageNumber;
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
         /// at <see cref="FormPage.Unit"/>.
         /// </summary>
-        public BoundingBox BoundingBox { get; }
+        public FieldBoundingBox BoundingBox { get; }
 
         /// <summary>
         /// The 1-based number of the page in which this element is present.
