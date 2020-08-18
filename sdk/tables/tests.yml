@@ -22,11 +22,11 @@ extends:
           TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.usgovcloudapi.net
           TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.us
 
-      # AzureChinaCloud
-      - ServiceDirectory: tables
-        ScenarioName: AzureChinaCloud
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
-          TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.chinacloudapi.cn
-          TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.cn
+      # # AzureChinaCloud
+      # - ServiceDirectory: tables
+      #   ScenarioName: AzureChinaCloud
+      #   SubscriptionConfiguration: $(sub-config-cn-test-resources)
+      #   EnvVars:
+      #     AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+      #     TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.chinacloudapi.cn
+      #     TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.cn
