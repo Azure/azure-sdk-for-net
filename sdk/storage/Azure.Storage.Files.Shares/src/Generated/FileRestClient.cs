@@ -8241,7 +8241,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Settings for SMB protocol.
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.SMB SMB { get; set; }
+        public Azure.Storage.Files.Shares.Models.SmbSettings SMB { get; set; }
 
         /// <summary>
         /// Creates a new ProtocolSettings instance
@@ -8259,7 +8259,7 @@ namespace Azure.Storage.Files.Shares.Models
         {
             if (!skipInitialization)
             {
-                SMB = new Azure.Storage.Files.Shares.Models.SMB();
+                SMB = new Azure.Storage.Files.Shares.Models.SmbSettings();
             }
         }
 
@@ -8276,7 +8276,7 @@ namespace Azure.Storage.Files.Shares.Models
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             if (value.SMB != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.SMB.ToXml(value.SMB, "SMB", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.SmbSettings.ToXml(value.SMB, "SMB", ""));
             }
             return _element;
         }
@@ -8294,7 +8294,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("SMB", ""));
             if (_child != null)
             {
-                _value.SMB = Azure.Storage.Files.Shares.Models.SMB.FromXml(_child);
+                _value.SMB = Azure.Storage.Files.Shares.Models.SmbSettings.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -8718,81 +8718,6 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class RawStorageFileProperties
-
-#region class SMB
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// Settings for SMB protocol.
-    /// </summary>
-    public partial class SMB
-    {
-        /// <summary>
-        /// Settings for SMB Multichannel.
-        /// </summary>
-        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get; set; }
-
-        /// <summary>
-        /// Creates a new SMB instance
-        /// </summary>
-        public SMB()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new SMB instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SMB(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                Multichannel = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a SMB instance as XML.
-        /// </summary>
-        /// <param name="value">The SMB instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SMB".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.SMB value, string name = "SMB", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Multichannel != null)
-            {
-                _element.Add(Azure.Storage.Files.Shares.Models.SmbMultichannel.ToXml(value.Multichannel, "Multichannel", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SMB instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SMB instance.</returns>
-        internal static Azure.Storage.Files.Shares.Models.SMB FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Shares.Models.SMB _value = new Azure.Storage.Files.Shares.Models.SMB(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Multichannel", ""));
-            if (_child != null)
-            {
-                _value.Multichannel = Azure.Storage.Files.Shares.Models.SmbMultichannel.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.SMB value);
-    }
-}
-#endregion class SMB
 
 #region class ShareAccessPolicy
 namespace Azure.Storage.Files.Shares.Models
@@ -11045,6 +10970,81 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class SmbMultichannel
+
+#region class SmbSettings
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Settings for SMB protocol.
+    /// </summary>
+    public partial class SmbSettings
+    {
+        /// <summary>
+        /// Settings for SMB Multichannel.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get; set; }
+
+        /// <summary>
+        /// Creates a new SmbSettings instance
+        /// </summary>
+        public SmbSettings()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SmbSettings instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SmbSettings(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Multichannel = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a SmbSettings instance as XML.
+        /// </summary>
+        /// <param name="value">The SmbSettings instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SmbSettings".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.SmbSettings value, string name = "SmbSettings", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Multichannel != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.SmbMultichannel.ToXml(value.Multichannel, "Multichannel", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SmbSettings instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SmbSettings instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.SmbSettings FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.SmbSettings _value = new Azure.Storage.Files.Shares.Models.SmbSettings(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Multichannel", ""));
+            if (_child != null)
+            {
+                _value.Multichannel = Azure.Storage.Files.Shares.Models.SmbMultichannel.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.SmbSettings value);
+    }
+}
+#endregion class SmbSettings
 
 #region class StorageClosedHandlesSegment
 namespace Azure.Storage.Files.Shares.Models
