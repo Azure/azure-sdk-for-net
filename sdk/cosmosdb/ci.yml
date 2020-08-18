@@ -28,5 +28,5 @@ stages:
     ServiceDirectory: cosmosdb
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Template
+    - name: Azure.ResourceManager.CosmosDB
       safeName: AzureResourceManagerCosmosDB
