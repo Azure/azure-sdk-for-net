@@ -7,7 +7,7 @@ namespace Azure.Learn.AppConfig.Samples
 {
     public class AppConfigClientTestEnvironment : TestEnvironment
     {
-        public AppConfigClientTestEnvironment() : base("Learn.AppConfig")
+        public AppConfigClientTestEnvironment() : base("api-learn")
         {
         }
     }
