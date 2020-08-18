@@ -2111,7 +2111,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Response<ShareFileDownloadInfo> response = await file.DownloadAsync();
 
-            var actualData = new byte[512];
+            var actualData = new byte[size - position];
             using var actualStream = new MemoryStream(actualData);
             await response.Value.Content.CopyToAsync(actualStream);
             TestHelper.AssertSequenceEqual(expectedData, actualData);
