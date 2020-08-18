@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="confidenceScores"/>, <paramref name="sentences"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentSentimentInternal(string id, TextSentiment sentiment, TextDocumentStatistics? statistics, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentimentInternal> sentences, IEnumerable<TextAnalyticsWarning_internal> warnings)
+        internal DocumentSentimentInternal(string id, TextSentiment sentiment, TextDocumentStatistics? statistics, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentimentInternal> sentences, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        internal DocumentSentimentInternal(string id, TextSentiment sentiment, TextDocumentStatistics? statistics, SentimentConfidenceScores confidenceScores, IReadOnlyList<SentenceSentimentInternal> sentences, IReadOnlyList<TextAnalyticsWarning_internal> warnings)
+        internal DocumentSentimentInternal(string id, TextSentiment sentiment, TextDocumentStatistics? statistics, SentimentConfidenceScores confidenceScores, IReadOnlyList<SentenceSentimentInternal> sentences, IReadOnlyList<TextAnalyticsWarningInternal> warnings)
         {
             Id = id;
             Sentiment = sentiment;
@@ -78,6 +78,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Sentence level sentiment analysis. </summary>
         public IReadOnlyList<SentenceSentimentInternal> Sentences { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning_internal> Warnings { get; }
+        public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
     }
 }

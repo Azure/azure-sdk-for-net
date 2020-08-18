@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("TextAnalyticsError")]
-    internal partial class TextAnalyticsError_internal
+    internal partial class TextAnalyticsErrorInternal
     {
         /// <summary> Error code as string </summary>
         [CodeGenMember("Code")]

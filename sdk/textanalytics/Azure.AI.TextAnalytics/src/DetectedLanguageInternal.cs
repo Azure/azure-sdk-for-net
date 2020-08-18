@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("DetectedLanguage")]
-    internal partial struct DetectedLanguage_internal
+    internal partial struct DetectedLanguageInternal
     {
     }
 }

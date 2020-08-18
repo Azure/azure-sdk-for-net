@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TextAnalyticsError_internal
+    internal partial class TextAnalyticsErrorInternal
     {
-        internal static TextAnalyticsError_internal DeserializeTextAnalyticsError_internal(JsonElement element)
+        internal static TextAnalyticsErrorInternal DeserializeTextAnalyticsErrorInternal(JsonElement element)
         {
             string code = default;
             string message = default;
             Optional<string> target = default;
             Optional<InnerError> innererror = default;
-            Optional<IReadOnlyList<TextAnalyticsError_internal>> details = default;
+            Optional<IReadOnlyList<TextAnalyticsErrorInternal>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,16 +44,16 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    List<TextAnalyticsError_internal> array = new List<TextAnalyticsError_internal>();
+                    List<TextAnalyticsErrorInternal> array = new List<TextAnalyticsErrorInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTextAnalyticsError_internal(item));
+                        array.Add(DeserializeTextAnalyticsErrorInternal(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new TextAnalyticsError_internal(code, message, target.Value, innererror.Value, Optional.ToList(details));
+            return new TextAnalyticsErrorInternal(code, message, target.Value, innererror.Value, Optional.ToList(details));
         }
     }
 }
