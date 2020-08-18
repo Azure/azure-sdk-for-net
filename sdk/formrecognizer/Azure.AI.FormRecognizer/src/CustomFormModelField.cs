@@ -14,6 +14,12 @@ namespace Azure.AI.FormRecognizer.Training
     [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFormModelField"/> class.
+        /// </summary>
+        /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
+        /// <param name="label">The label of this field on the form.</param>
+        /// <param name="accuracy">The estimated recognition accuracy for this field.</param>
         internal CustomFormModelField(string name, string label, float? accuracy)
         {
             Name = name;
