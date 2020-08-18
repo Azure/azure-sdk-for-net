@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentStatistics> statistics = default;
             SentimentConfidenceScores confidenceScores = default;
             IReadOnlyList<SentenceSentimentInternal> sentences = default;
-            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
+            IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -56,10 +56,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
+                    List<TextAnalyticsWarningInternal> array = new List<TextAnalyticsWarningInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
+                        array.Add(TextAnalyticsWarningInternal.DeserializeTextAnalyticsWarningInternal(item));
                     }
                     warnings = array;
                     continue;

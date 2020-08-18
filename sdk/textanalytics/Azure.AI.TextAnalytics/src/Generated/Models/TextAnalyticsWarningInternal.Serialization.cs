@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TextAnalyticsWarning_internal
+    internal partial class TextAnalyticsWarningInternal
     {
-        internal static TextAnalyticsWarning_internal DeserializeTextAnalyticsWarning_internal(JsonElement element)
+        internal static TextAnalyticsWarningInternal DeserializeTextAnalyticsWarningInternal(JsonElement element)
         {
             string code = default;
             string message = default;
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TextAnalyticsWarning_internal(code, message, targetRef.Value);
+            return new TextAnalyticsWarningInternal(code, message, targetRef.Value);
         }
     }
 }

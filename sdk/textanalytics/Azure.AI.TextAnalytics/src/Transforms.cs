@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     {
         #region Common
 
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsError_internal error)
+        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
         {
             string errorCode = error.Code;
             string message = error.Message;
@@ -27,10 +27,10 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
-        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarning_internal> internalWarnings)
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
-            foreach (TextAnalyticsWarning_internal warning in internalWarnings)
+            foreach (TextAnalyticsWarningInternal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
             }
