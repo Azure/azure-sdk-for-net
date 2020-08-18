@@ -26,6 +26,8 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkStatementRequest class.
         /// </summary>
+        /// <param name="kind">Possible values include: 'spark', 'pyspark',
+        /// 'sparkr', 'sql'</param>
         public SparkStatementRequest(string code = default(string), string kind = default(string))
         {
             Code = code;
@@ -44,6 +46,8 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include: 'spark', 'pyspark', 'sparkr',
+        /// 'sql'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

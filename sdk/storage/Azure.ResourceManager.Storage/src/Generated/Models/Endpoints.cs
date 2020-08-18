@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class Endpoints
     {
         /// <summary> Initializes a new instance of Endpoints. </summary>
-        public Endpoints()
+        internal Endpoints()
         {
         }
 
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the dfs endpoint. </summary>
         public string Dfs { get; }
         /// <summary> Gets the microsoft routing storage endpoints. </summary>
-        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; set; }
+        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; }
         /// <summary> Gets the internet routing storage endpoints. </summary>
-        public StorageAccountInternetEndpoints InternetEndpoints { get; set; }
+        public StorageAccountInternetEndpoints InternetEndpoints { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.AI.TextAnalytics
         private const string TextAnalyticsRoute = "/text/analytics/";
 
         private const string EntitiesRoute = "/entities/recognition/general";
-        private const string SentimentRoute = "/sentiment";
         private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
 
@@ -34,18 +33,6 @@ namespace Azure.AI.TextAnalytics
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
-
-        #region Analyze Sentiment
-        private static async Task<Response<AnalyzeSentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            AnalyzeSentimentResultCollection result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<AnalyzeSentimentResultCollection> CreateAnalyzeSentimentResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion  Analyze Sentiment
 
         #region Extract KeyPhrases
         private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -13,18 +14,19 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DedicatedHostAvailableCapacity
     {
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>
-        public DedicatedHostAvailableCapacity()
+        internal DedicatedHostAvailableCapacity()
         {
+            AllocatableVMs = new ChangeTrackingList<DedicatedHostAllocatableVM>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>
         /// <param name="allocatableVMs"> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </param>
-        internal DedicatedHostAvailableCapacity(IList<DedicatedHostAllocatableVM> allocatableVMs)
+        internal DedicatedHostAvailableCapacity(IReadOnlyList<DedicatedHostAllocatableVM> allocatableVMs)
         {
             AllocatableVMs = allocatableVMs;
         }
 
         /// <summary> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </summary>
-        public IList<DedicatedHostAllocatableVM> AllocatableVMs { get; set; }
+        public IReadOnlyList<DedicatedHostAllocatableVM> AllocatableVMs { get; }
     }
 }

@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityGroupNetworkInterface DeserializeSecurityGroupNetworkInterface(JsonElement element)
         {
-            string id = default;
-            SecurityRuleAssociations securityRuleAssociations = default;
+            Optional<string> id = default;
+            Optional<SecurityRuleAssociations> securityRuleAssociations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("securityRuleAssociations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value);
                     continue;
                 }
             }
-            return new SecurityGroupNetworkInterface(id, securityRuleAssociations);
+            return new SecurityGroupNetworkInterface(id.Value, securityRuleAssociations.Value);
         }
     }
 }

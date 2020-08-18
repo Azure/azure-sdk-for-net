@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             disk.DiskSizeGB = 32;
             if (useZones)
             {
-                disk.Zones = new List<string> { "1" };
+                disk.Zones.Add("1" );
             }
             disk.DiskMBpsReadWrite = 8;
             disk.DiskIopsReadWrite = 512;
@@ -66,8 +66,10 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
             // Patch
             const string tagKey = "tagKey";
-            var updatedisk = new DiskUpdate();
-            updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagValue" } };
+            var updatedisk = new DiskUpdate()
+            {
+                Tags = { { tagKey, "tagValue" } }
+            };
             updatedisk.DiskMBpsReadWrite = 9;
             updatedisk.DiskIopsReadWrite = 600;
             if (sharedDisks)

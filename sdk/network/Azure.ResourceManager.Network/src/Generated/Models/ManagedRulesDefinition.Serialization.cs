@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Exclusions != null)
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions");
                 writer.WriteStartArray();
@@ -38,27 +38,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ManagedRulesDefinition DeserializeManagedRulesDefinition(JsonElement element)
         {
-            IList<OwaspCrsExclusionEntry> exclusions = default;
+            Optional<IList<OwaspCrsExclusionEntry>> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exclusions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item));
-                        }
+                        array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item));
                     }
                     exclusions = array;
                     continue;
@@ -68,20 +57,13 @@ namespace Azure.ResourceManager.Network.Models
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
-                        }
+                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
                     }
                     managedRuleSets = array;
                     continue;
                 }
             }
-            return new ManagedRulesDefinition(exclusions, managedRuleSets);
+            return new ManagedRulesDefinition(Optional.ToList(exclusions), managedRuleSets);
         }
     }
 }

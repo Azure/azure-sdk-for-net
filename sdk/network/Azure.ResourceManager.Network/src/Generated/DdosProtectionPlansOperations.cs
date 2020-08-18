@@ -192,6 +192,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the DDoS protection plans in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<DdosProtectionPlan> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -235,6 +236,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the DDoS protection plans in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<DdosProtectionPlan> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -279,6 +281,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual async Task<DdosProtectionPlansDeleteOperation> StartDeleteAsync(string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -308,6 +311,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ddosProtectionPlanName"/> is null. </exception>
         public virtual DdosProtectionPlansDeleteOperation StartDelete(string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -338,6 +342,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosProtectionPlanName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<DdosProtectionPlansCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -372,6 +377,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ddosProtectionPlanName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual DdosProtectionPlansCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

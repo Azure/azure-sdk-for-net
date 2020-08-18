@@ -16,32 +16,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,12 +39,12 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
                 writer.WriteObjectValue(VirtualHub);
             }
-            if (Connections != null)
+            if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections");
                 writer.WriteStartArray();
@@ -69,17 +54,12 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BgpSettings != null)
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings");
                 writer.WriteObjectValue(BgpSettings);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (VpnGatewayScaleUnit != null)
+            if (Optional.IsDefined(VpnGatewayScaleUnit))
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit");
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
@@ -90,81 +70,50 @@ namespace Azure.Management.Network.Models
 
         internal static VpnGateway DeserializeVpnGateway(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource virtualHub = default;
-            IList<VpnConnection> connections = default;
-            BgpSettings bgpSettings = default;
-            ProvisioningState? provisioningState = default;
-            int? vpnGatewayScaleUnit = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> virtualHub = default;
+            Optional<IList<VpnConnection>> connections = default;
+            Optional<BgpSettings> bgpSettings = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<int> vpnGatewayScaleUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -175,58 +124,31 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("virtualHub"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualHub = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connections"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<VpnConnection> array = new List<VpnConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VpnConnection.DeserializeVpnConnection(item));
-                                }
+                                array.Add(VpnConnection.DeserializeVpnConnection(item));
                             }
                             connections = array;
                             continue;
                         }
                         if (property0.NameEquals("bgpSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vpnGatewayScaleUnit"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnGatewayScaleUnit = property0.Value.GetInt32();
                             continue;
                         }
@@ -234,7 +156,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VpnGateway(id, name, type, location, tags, etag, virtualHub, connections, bgpSettings, provisioningState, vpnGatewayScaleUnit);
+            return new VpnGateway(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualHub.Value, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit));
         }
     }
 }

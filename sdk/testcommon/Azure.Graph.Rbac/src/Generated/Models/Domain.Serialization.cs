@@ -15,38 +15,26 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static Domain DeserializeDomain(JsonElement element)
         {
-            string authenticationType = default;
-            bool? isDefault = default;
-            bool? isVerified = default;
+            Optional<string> authenticationType = default;
+            Optional<bool> isDefault = default;
+            Optional<bool> isVerified = default;
             string name = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     authenticationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isDefault"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isVerified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isVerified = property.Value.GetBoolean();
                     continue;
                 }
@@ -55,18 +43,10 @@ namespace Azure.Graph.Rbac.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Domain(authenticationType, isDefault, isVerified, name, additionalProperties);
+            return new Domain(authenticationType.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isVerified), name, additionalProperties);
         }
     }
 }

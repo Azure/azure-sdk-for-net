@@ -14,50 +14,34 @@ namespace Azure.Management.Storage.Models
     {
         internal static Usage DeserializeUsage(JsonElement element)
         {
-            UsageUnit? unit = default;
-            int? currentValue = default;
-            int? limit = default;
-            UsageName name = default;
+            Optional<UsageUnit> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            Optional<UsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     unit = property.Value.GetString().ToUsageUnit();
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     limit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }
             }
-            return new Usage(unit, currentValue, limit, name);
+            return new Usage(Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

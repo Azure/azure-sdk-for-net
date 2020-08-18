@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2AddEntity
             // Add the newly created entity.
-            tableClient.CreateEntity(entity);
+            tableClient.AddEntity(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntity
@@ -66,7 +66,7 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             // Add the newly created entity.
-            tableClient.CreateEntity(strongEntity);
+            tableClient.AddEntity(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntity
             // Delete the entity given the partition and row key.

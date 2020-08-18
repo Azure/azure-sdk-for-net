@@ -17,7 +17,7 @@ namespace Azure.Management.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-            if (Lun != null)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun");
                 writer.WriteNumberValue(Lun.Value);
@@ -28,7 +28,7 @@ namespace Azure.Management.Compute.Models
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element)
         {
             string id = default;
-            int? lun = default;
+            Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -38,15 +38,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("lun"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lun = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ImageDiskReference(id, lun);
+            return new ImageDiskReference(id, Optional.ToNullable(lun));
         }
     }
 }

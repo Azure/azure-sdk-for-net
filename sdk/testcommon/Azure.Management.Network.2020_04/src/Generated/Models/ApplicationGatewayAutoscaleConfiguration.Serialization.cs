@@ -17,7 +17,7 @@ namespace Azure.Management.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("minCapacity");
             writer.WriteNumberValue(MinCapacity);
-            if (MaxCapacity != null)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity");
                 writer.WriteNumberValue(MaxCapacity.Value);
@@ -28,7 +28,7 @@ namespace Azure.Management.Network.Models
         internal static ApplicationGatewayAutoscaleConfiguration DeserializeApplicationGatewayAutoscaleConfiguration(JsonElement element)
         {
             int minCapacity = default;
-            int? maxCapacity = default;
+            Optional<int> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"))
@@ -38,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("maxCapacity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxCapacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, maxCapacity);
+            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Optional.ToNullable(maxCapacity));
         }
     }
 }

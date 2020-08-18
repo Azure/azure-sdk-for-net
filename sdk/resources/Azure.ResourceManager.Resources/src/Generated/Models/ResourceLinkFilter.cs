@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ResourceLinkFilter. </summary>
         /// <param name="targetId"> The ID of the target resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> is null. </exception>
         internal ResourceLinkFilter(string targetId)
         {
             if (targetId == null)

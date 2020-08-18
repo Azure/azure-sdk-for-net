@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceReference>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </summary>
-        public IList<NetworkInterfaceReference> NetworkInterfaces { get; set; }
+        public IList<NetworkInterfaceReference> NetworkInterfaces { get; }
     }
 }

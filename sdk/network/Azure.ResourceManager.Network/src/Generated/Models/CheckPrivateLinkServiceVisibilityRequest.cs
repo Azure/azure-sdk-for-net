@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of CheckPrivateLinkServiceVisibilityRequest. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
-        internal CheckPrivateLinkServiceVisibilityRequest(string privateLinkServiceAlias)
-        {
-            PrivateLinkServiceAlias = privateLinkServiceAlias;
-        }
-
         /// <summary> The alias of the private link service. </summary>
         public string PrivateLinkServiceAlias { get; set; }
     }
