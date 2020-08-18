@@ -4,7 +4,7 @@
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary>
-    /// Optional properties for the import and export jobs client library.
+    /// Optional properties for import and export jobs.
     /// </summary>
     public class JobRequestOptions
     {

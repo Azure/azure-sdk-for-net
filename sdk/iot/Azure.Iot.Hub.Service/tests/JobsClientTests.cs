@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Models;
-using Castle.Core.Internal;
 using FluentAssertions;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
@@ -15,8 +12,19 @@ using NUnit.Framework;
 
 namespace Azure.Iot.Hub.Service.Tests
 {
+    /// <summary>
+    /// Test all APIs of JobsClient.
+    /// Note: The IoTHub can only run one job at a time so these tests cannot be run in parallel.
+    /// </summary>
+    /// <remarks>
+    /// All API calls are wrapped in a try catch block so we can clean up resources regardless of the test outcome.
+    /// </remarks>
+    [Parallelizable(ParallelScope.None)]
+    [Ignore("Ignore till storage is fixed for playback")]
     public class JobsClientTests : E2eTestBase
     {
+        private const int DEVICE_COUNT = 5;
+
         public JobsClientTests(bool isAsync)
             : base(isAsync)
         {
@@ -26,123 +34,107 @@ namespace Azure.Iot.Hub.Service.Tests
         public async Task Jobs_Export_Import_Lifecycle()
         {
             // setup
-            var storageAccountConnectionString = "DefaultEndpointsProtocol=https;AccountName=prmathurfu;AccountKey=HMwaBvW3z3jf6xO6xRJY1apLuLwgO6IHmboyzwD7wT9tRcuvV5HUyNZSKm5pL0XCl0CZzWZXRu4WLBWdUleIAQ==;EndpointSuffix=core.windows.net";
-            var containerName = "jobs" + Guid.NewGuid();
-            Uri containerSasUri = await GetSasUri(storageAccountConnectionString, containerName).ConfigureAwait(false);
+            string testDevicePrefix = $"jobDevice";
+            IEnumerable<DeviceIdentity> deviceIdentities = null;
 
-            IoTHubServiceClient client = GetClient();
-            //Create multiple devices and export it to blob
-            IList<DeviceIdentity> devices = await GetDevicesWrittenToBlob(client, containerSasUri, 2);
-            Assert.IsTrue(!devices.IsNullOrEmpty());
+            var containerName = "jobs" + GetRandom();
+            Uri containerSasUri = await GetSasUriAsync(containerName).ConfigureAwait(false);
 
-            //Use job import to create and provision devices on hub in mixed auth modes
-            await ImportJobs(client, containerSasUri);
+            IotHubServiceClient client = GetClient();
 
-            await cleanUp(storageAccountConnectionString, containerName);
+            try
+            {
+                //Create multiple devices.
+                deviceIdentities = BuildMultipleDevices(testDevicePrefix, DEVICE_COUNT);
+                await client.Devices.CreateIdentitiesAsync(deviceIdentities).ConfigureAwait(false);
+
+                // Export all devices to blob storage.
+                Response<JobProperties> response = await client.Jobs
+                    .CreateExportDevicesJobAsync(outputBlobContainerUri: containerSasUri, excludeKeys: false)
+                    .ConfigureAwait(false);
+
+                response.GetRawResponse().Status.Should().Be(200);
+
+                // Wait for job completion and validate result.
+                response = await WaitForJobCompletionAsync(client, response.Value.JobId).ConfigureAwait(false);
+                response.Value.Status.Should().Be(JobPropertiesStatus.Completed);
+
+                //Import all devices from storage to create and provision devices on the IoTHub.
+                var importJobRequestOptions = new ImportJobRequestOptions
+                {
+                    OutputBlobName = "Devices.txt" // default location where devices are created by blob.
+                };
+                response = await client.Jobs.CreateImportDevicesJobAsync(containerSasUri, containerSasUri, importJobRequestOptions).ConfigureAwait(false);
+
+                response.GetRawResponse().Status.Should().Be(200);
+
+                // Wait for job completion and validate result.
+                response = await WaitForJobCompletionAsync(client, response.Value.JobId).ConfigureAwait(false);
+                response.Value.Status.Should().Be(JobPropertiesStatus.Completed);
+            }
+            finally
+            {
+                await CleanupAsync(containerName, client, deviceIdentities).ConfigureAwait(false);
+            }
         }
 
-        private async Task cleanUp(String storageAccountConnectionString, String containerName)
+        private IList<DeviceIdentity> BuildMultipleDevices(string testDevicePrefix, int deviceCount)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageAccountConnectionString);
+            List<DeviceIdentity> deviceList = new List<DeviceIdentity>();
+
+            for (int i = 0; i < deviceCount; i++)
+            {
+                deviceList.Add(new DeviceIdentity { DeviceId = $"{testDevicePrefix}{GetRandom()}" });
+            }
+
+            return deviceList;
+        }
+
+        private async Task CleanupAsync(string containerName, IotHubServiceClient client, IEnumerable<DeviceIdentity> deviceIdentities)
+        {
+            // Delete container
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(TestEnvironment.StorageConnectionString);
             CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-            //delete container;
             CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
             await container.DeleteIfExistsAsync().ConfigureAwait(false);
-        }
 
-        private async Task ExportJobs(IoTHubServiceClient client, Uri containerSasUri)
-        {
-            // act
-            try
+            // Delete all devices.
+            if (deviceIdentities != null)
             {
-                Response<JobProperties> response = await client.Jobs.CreateExportDevicesJobAsync(containerSasUri, false).ConfigureAwait(false);
-                response.GetRawResponse().Status.Should().Be(200);
-                JobProperties jobProperties = response.Value;
-                await WaitForJobCompletion(response.Value, client, 5);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                //log and throw
+                await client.Devices.DeleteIdentitiesAsync(deviceIdentities).ConfigureAwait(false);
             }
         }
 
-        private async Task WaitForJobCompletion(JobProperties jobProperties, IoTHubServiceClient client, double waitTimeInSecs)
+        private async Task<Response<JobProperties>> WaitForJobCompletionAsync(IotHubServiceClient client, string jobId)
         {
             Response<JobProperties> response;
+
+            // Wait for job to complete.
             do
             {
-                response = await client.Jobs.GetImportExportJobAsync(jobProperties.JobId).ConfigureAwait(false);
-                await Task.Delay(TimeSpan.FromSeconds(waitTimeInSecs));
-            } while (!((response.Value.Status == JobPropertiesStatus.Completed) ||
-                        (response.Value.Status == JobPropertiesStatus.Failed) ||
-                        (response.Value.Status == JobPropertiesStatus.Cancelled)));
+                response = await client.Jobs.GetImportExportJobAsync(jobId).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+            } while (!IsTerminalStatus(response.Value.Status));
 
-            Assert.AreEqual(response.Value.Status, JobPropertiesStatus.Completed);
+            return response;
         }
 
-        private async Task ImportJobs(IoTHubServiceClient client, Uri containerSasUri)
+        private bool IsTerminalStatus(JobPropertiesStatus? status)
         {
-            var importJobRequestOptions = new ImportJobRequestOptions
-            {
-                OutputBlobName = "Devices.txt" // default location where devices are created by blob.
-            };
-
-            // act
-            try
-            {
-                Response<JobProperties> response = await client.Jobs.CreateImportDevicesJobAsync(containerSasUri, containerSasUri, importJobRequestOptions).ConfigureAwait(false);
-                Assert.AreEqual(response.GetRawResponse().Status, 200);
-                await WaitForJobCompletion(response.Value, client, 5);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                Assert.Fail($"Create Import failed : {ex.Message}");
-            }
+            return status == JobPropertiesStatus.Completed
+                || status == JobPropertiesStatus.Failed
+                || status == JobPropertiesStatus.Cancelled;
         }
 
-        private async Task<List<DeviceIdentity>> GetDevicesWrittenToBlob(IoTHubServiceClient client, Uri containerSasUri, int NumberOfDevices)
+        // TODO: Move to arm template so that we can run this in playback mode. There is no way to mock CloudBlobClient using Azure.Core.TestFramework.
+        private async Task<Uri> GetSasUriAsync(string containerName)
         {
-            string testDevicePrefix = $"JobsLifecycleDevice";
-
-            // Create devices
-            List<DeviceIdentity> devicesList = new List<DeviceIdentity>();
-            for (int i =0; i < NumberOfDevices; i++)
-            {
-                devicesList.Add(new DeviceIdentity { DeviceId = $"{testDevicePrefix}{GetRandom()}" });
-            }
-
-            Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devicesList).ConfigureAwait(false);
-
-            Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with errors");
-
-            // Export to store it in blob
-            await ExportJobs(client, containerSasUri);
-
-            //Delete Devices
-
-            try
-            {
-                if (devicesList != null && devicesList.Any())
-                {
-                    await client.Devices.DeleteIdentitiesAsync(devicesList, BulkIfMatchPrecondition.Unconditional);
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Delete Devices failed : {ex.Message}");
-            }
-
-            return devicesList;
-        }
-
-        private static async Task<Uri> GetSasUri(string storageAccountConnectionString, string containerName)
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageAccountConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(TestEnvironment.StorageConnectionString);
             CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer CloudBlobContainer = cloudBlobClient.GetContainerReference(containerName);
-            await CloudBlobContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
+            CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
+            await container.CreateIfNotExistsAsync().ConfigureAwait(false);
 
-            Uri containerUri = CloudBlobContainer.Uri;
+            var containerUri = container.Uri;
             var constraints = new SharedAccessBlobPolicy
             {
                 SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddHours(1),
@@ -155,9 +147,9 @@ namespace Azure.Iot.Hub.Service.Tests
                 SharedAccessStartTime = DateTimeOffset.UtcNow,
             };
 
-            string sasContainerToken = CloudBlobContainer.GetSharedAccessSignature(constraints);
-            Uri sasUri = new Uri($"{containerUri}{sasContainerToken}");
-            return sasUri;
+            string sasContainerToken = container.GetSharedAccessSignature(constraints);
+
+            return new Uri($"{containerUri}{sasContainerToken}");
         }
     }
 }
