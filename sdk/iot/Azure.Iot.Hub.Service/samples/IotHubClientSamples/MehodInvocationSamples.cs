@@ -8,80 +8,120 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service.Samples
 {
     /// <summary>
-    /// This sample shows how to query the device twins to get data.
+    /// This sample shows how to invoke a method on a device and module.
+    /// This sample requires the device sample to be running so that it can connect to the device.
     /// </summary>
-    internal class QueryTwinSamples
+    internal class MethodInvocationSamples
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        public QueryTwinSamples(IotHubServiceClient client)
+        public MethodInvocationSamples(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }
 
         public async Task RunSampleAsync()
         {
-            string deviceId = $"device{Random.Next(MaxRandomValue)}";
-            string moduleId = $"module{Random.Next(MaxRandomValue)}";
+            string deviceId = "methodSampleDeviceId";
+            string moduleId = "methodSampleModuleId";
 
-            // Create device identity.
+            // Create a DeviceIdentity.
             await CreateDeviceIdentityAsync(deviceId);
 
-            // Create module identity.
+            // Create a ModuleIdentity.
             await CreateModuleIdentityAsync(deviceId, moduleId);
 
-            // Query all the device twin.
-            await QueryDeviceTwinsAsync();
+            // Wait for user to run the device sample
+            WaitForDeviceSample(deviceId, moduleId);
 
-            // Query all the module twin.
-            await QueryModuleTwinsAsync();
+            // Invoke method on device
+            await InvokeMethodOnDeviceAsync(deviceId);
 
-            // Delete device identity.
+            // Invoke method on module
+            await InvokeMethodOnModuleAsync(deviceId, moduleId);
+
+            // Delete the device.
             await DeleteDeviceIdentityAsync(deviceId);
         }
 
-        /// <summary>
-        /// Queries for device twin data.
-        /// </summary>
-        /// <param name="query">Query to execute.</param>
-        public async Task QueryDeviceTwinsAsync()
+        public void WaitForDeviceSample(string deviceId, string moduleId)
         {
-            #region Snippet:IotHubQueryDeviceTwins
-
-            AsyncPageable<TwinData> asyncPageableResponse = IoTHubServiceClient.Query.QueryAsync("SELECT * FROM devices");
-
-            // Iterate over the twin instances in the pageable response.
-            // The "await" keyword here is required because new pages will be fetched when necessary,
-            // which involves a request to the service.
-            await foreach (TwinData twin in asyncPageableResponse)
-            {
-                Console.WriteLine($"Found device '{twin.DeviceId}'");
-            }
-
-            #endregion Snippet:IotHubQueryDeviceTwins
+            Console.WriteLine($"\nStart the device sample for device {deviceId} and module {moduleId} and press any key to continue.\n");
+            Console.ReadKey(true);
         }
 
         /// <summary>
-        /// Queries for module twin data.
+        /// Invokes a method on the module.
         /// </summary>
-        /// <param name="query">Query to execute.</param>
-        public async Task QueryModuleTwinsAsync()
+        /// <param name="deviceId">Unique identifier of the device to be updated.</param>
+        /// <param name="moduleId">Unique identifier of the module to be updated.</param>
+        public async Task InvokeMethodOnModuleAsync(string deviceId, string moduleId)
         {
-            #region Snippet:IotHubQueryModuleTwins
+            SampleLogger.PrintHeader("INVOKE REBOOT METHOD ON A MODULE");
 
-            AsyncPageable<TwinData> asyncPageableResponse = IoTHubServiceClient.Query.QueryAsync("SELECT * FROM devices.modules");
-
-            // Iterate over the twin instances in the pageable response.
-            // The "await" keyword here is required because new pages will be fetched when necessary,
-            // which involves a request to the service.
-            await foreach (TwinData twin in asyncPageableResponse)
+            try
             {
-                Console.WriteLine($"Found module {twin.ModuleId}");
-            }
+                #region Snippet:IotInvokeMethodOnModule
 
-            #endregion Snippet:IotHubQueryModuleTwins
+                var request = new CloudToDeviceMethodRequest
+                {
+                    MethodName = "reboot",
+                };
+                CloudToDeviceMethodResponse response = (await IoTHubServiceClient.Modules
+                    .InvokeMethodAsync(deviceId, moduleId, request)
+                    .ConfigureAwait(false))
+                    .Value;
+
+                SampleLogger.PrintSuccess($"\t- Method 'REBOOT' invoked on module {moduleId} of device {deviceId}");
+                SampleLogger.PrintHeader($"Status of method invocation is: {response.Status}");
+
+                #endregion Snippet:IotInvokeMethodOnModule
+            }
+            catch (Exception ex)
+            {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
+                SampleLogger.FatalError($"Failed to invoke method on module due to:\n{ex}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invokes a method on the device.
+        /// </summary>
+        /// <param name="deviceId">Unique identifier of the device to be updated.</param>
+        public async Task InvokeMethodOnDeviceAsync(string deviceId)
+        {
+            SampleLogger.PrintHeader("INVOKE REBOOT METHOD ON A DEVICE");
+
+            try
+            {
+                #region Snippet:IotInvokeMethodOnDevice
+
+                var request = new CloudToDeviceMethodRequest
+                {
+                    MethodName = "reboot",
+                };
+
+                CloudToDeviceMethodResponse response = (await IoTHubServiceClient.Devices
+                    .InvokeMethodAsync(deviceId, request)
+                    .ConfigureAwait(false))
+                    .Value;
+
+                SampleLogger.PrintSuccess($"\t- Method 'REBOOT' invoked on device {deviceId}");
+                SampleLogger.PrintHeader($"Status of method invocation is: {response.Status}");
+
+                #endregion Snippet:IotInvokeMethodOnDevice
+            }
+            catch (Exception ex)
+            {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
+                SampleLogger.FatalError($"Failed to invoke method on device due to:\n{ex.Message}");
+                throw;
+            }
         }
 
         /// <summary>
@@ -114,34 +154,6 @@ namespace Azure.Iot.Hub.Service.Samples
                 await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to create device identity due to:\n{ex}");
                 throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a device identity.
-        /// </summary>
-        /// <param name="deviceId">Unique identifier of the device.</param>
-        public async Task DeleteDeviceIdentityAsync(string deviceId)
-        {
-            SampleLogger.PrintHeader("DELETE DEVICE IDENTITY");
-
-            try
-            {
-                // Get the device identity first.
-                Response<DeviceIdentity> getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
-                DeviceIdentity deviceIdentity = getResponse.Value;
-
-                Console.WriteLine($"Deleting device identity with Id: '{deviceIdentity.DeviceId}'");
-
-                Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
-
-                SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
-            }
-            catch (Exception ex)
-            {
-                // Try to cleanup before exiting with fatal error.
-                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
-                SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
         }
 
@@ -208,6 +220,34 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Try to cleanup before exiting with fatal error.
                 await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to delete module identity due to:\n{ex}");
+            }
+        }
+
+        /// <summary>
+        /// Deletes a device identity.
+        /// </summary>
+        /// <param name="deviceId">Unique identifier of the device.</param>
+        public async Task DeleteDeviceIdentityAsync(string deviceId)
+        {
+            SampleLogger.PrintHeader("DELETE DEVICE IDENTITY");
+
+            try
+            {
+                // Get the device identity first.
+                Response<DeviceIdentity> getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
+                DeviceIdentity deviceIdentity = getResponse.Value;
+
+                Console.WriteLine($"Deleting device identity with Id: '{deviceIdentity.DeviceId}'");
+
+                Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
+
+                SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
+            }
+            catch (Exception ex)
+            {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
+                SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
         }
     }
