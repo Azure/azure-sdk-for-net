@@ -4,7 +4,6 @@
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
-using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,136 +11,6 @@ namespace Azure.Core.Tests
 {
     public class TaskExtensionsTest
     {
-        [Test]
-        public void TaskExtensions_TaskEnsureCompleted()
-        {
-            var task = Task.CompletedTask;
-            task.EnsureCompleted();
-        }
-
-        [Test]
-        public void TaskExtensions_TaskOfTEnsureCompleted()
-        {
-            var task = Task.FromResult(42);
-            Assert.AreEqual(42, task.EnsureCompleted());
-        }
-
-        [Test]
-        public void TaskExtensions_ValueTaskEnsureCompleted()
-        {
-            var task = new ValueTask();
-            task.EnsureCompleted();
-        }
-
-        [Test]
-        public void TaskExtensions_ValueTaskOfTEnsureCompleted()
-        {
-            var task = new ValueTask<int>(42);
-            Assert.AreEqual(42, task.EnsureCompleted());
-        }
-
-        [Test]
-        public async Task TaskExtensions_TaskEnsureCompleted_NotCompletedNoSyncContext()
-        {
-            var tcs = new TaskCompletionSource<int>();
-            Task task = tcs.Task;
-#if DEBUG
-            Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted());
-            await Task.CompletedTask;
-#else
-            Task runningTask = Task.Run(() => task.EnsureCompleted());
-            Assert.IsFalse(runningTask.IsCompleted);
-            tcs.SetResult(0);
-            await runningTask;
-#endif
-        }
-
-        [Test]
-        public async Task TaskExtensions_TaskOfTEnsureCompleted_NotCompletedNoSyncContext()
-        {
-            var tcs = new TaskCompletionSource<int>();
-#if DEBUG
-            Assert.Catch<InvalidOperationException>(() => tcs.Task.EnsureCompleted());
-            await Task.CompletedTask;
-#else
-            Task<int> runningTask = Task.Run(() => tcs.Task.EnsureCompleted());
-            Assert.IsFalse(runningTask.IsCompleted);
-            tcs.SetResult(42);
-            Assert.AreEqual(42, await runningTask);
-#endif
-        }
-
-        [Test]
-        public async Task TaskExtensions_ValueTaskEnsureCompleted_NotCompletedNoSyncContext()
-        {
-            var tcs = new TaskCompletionSource<int>();
-            ValueTask task = new ValueTask(tcs.Task);
-#if DEBUG
-            Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted());
-            await Task.CompletedTask;
-#else
-            Task runningTask = Task.Run(() => task.EnsureCompleted());
-            Assert.IsFalse(runningTask.IsCompleted);
-            tcs.SetResult(0);
-            await runningTask;
-#endif
-        }
-
-        [Test]
-        public async Task TaskExtensions_ValueTaskOfTEnsureCompleted_NotCompletedNoSyncContext()
-        {
-            var tcs = new TaskCompletionSource<int>();
-            ValueTask<int> task = new ValueTask<int>(tcs.Task);
-#if DEBUG
-            Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted());
-            await Task.CompletedTask;
-#else
-            Task<int> runningTask = Task.Run(() => task.EnsureCompleted());
-            Assert.IsFalse(runningTask.IsCompleted);
-            tcs.SetResult(42);
-            Assert.AreEqual(42, await runningTask);
-#endif
-        }
-
-        [Test]
-        public void TaskExtensions_TaskEnsureCompleted_NotCompletedInSyncContext()
-        {
-            using SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
-            var tcs = new TaskCompletionSource<int>();
-            Task task = tcs.Task;
-
-            syncContext.Post(t => { Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted()); }, null);
-        }
-
-        [Test]
-        public void TaskExtensions_TaskOfTEnsureCompleted_NotCompletedInSyncContext()
-        {
-            using SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
-            var tcs = new TaskCompletionSource<int>();
-
-            syncContext.Post(t => { Assert.Catch<InvalidOperationException>(() => tcs.Task.EnsureCompleted()); }, null);
-        }
-
-        [Test]
-        public void TaskExtensions_ValueTaskEnsureCompleted_NotCompletedInSyncContext()
-        {
-            using SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
-            var tcs = new TaskCompletionSource<int>();
-            ValueTask task = new ValueTask(tcs.Task);
-
-            syncContext.Post(t => { Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted()); }, null);
-        }
-
-        [Test]
-        public void TaskExtensions_ValueTaskOfTEnsureCompleted_NotCompletedInSyncContext()
-        {
-            using SingleThreadedSynchronizationContext syncContext = new SingleThreadedSynchronizationContext();
-            var tcs = new TaskCompletionSource<int>();
-            var task = new ValueTask<int>(tcs.Task);
-
-            syncContext.Post(t => { Assert.Catch<InvalidOperationException>(() => task.EnsureCompleted()); }, null);
-        }
-
         [Test]
         public void TaskExtensions_TaskWithCancellationDefault()
         {
@@ -322,56 +191,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(true, continuationCalled);
             Assert.AreEqual(true, awaiter.IsCompleted);
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult(), "Error");
-        }
-
-        private sealed class SingleThreadedSynchronizationContext : SynchronizationContext, IDisposable
-        {
-            private readonly Task _task;
-            private readonly BlockingCollection<Action> _queue;
-            private readonly ConcurrentQueue<Exception> _exceptions;
-
-            public SingleThreadedSynchronizationContext()
-            {
-                _queue = new BlockingCollection<Action>();
-                _exceptions = new ConcurrentQueue<Exception>();
-                _task = Task.Run(RunLoop);
-            }
-
-            private void RunLoop()
-            {
-                try
-                {
-                    SetSynchronizationContext(this);
-                    while (!_queue.IsCompleted)
-                    {
-                        Action action = _queue.Take();
-                        try
-                        {
-                            action();
-                        }
-                        catch (Exception e)
-                        {
-                            _exceptions.Enqueue(e);
-                        }
-                    }
-                }
-                catch (InvalidOperationException) { }
-                catch (OperationCanceledException) { }
-                finally
-                {
-                    SetSynchronizationContext(null);
-                }
-            }
-
-            public override void Post(SendOrPostCallback d, object state) => _queue.Add(() => d(state));
-
-            public void Dispose()
-            {
-                _queue.CompleteAdding();
-                _task.Wait();
-            }
-
-            public AggregateException Exceptions => new AggregateException(_exceptions);
         }
     }
 }
