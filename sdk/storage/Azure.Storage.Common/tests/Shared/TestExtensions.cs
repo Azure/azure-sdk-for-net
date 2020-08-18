@@ -103,7 +103,10 @@ namespace Azure.Storage
             string endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix,
             bool useHttps = true)
         {
-            endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            if (!string.IsNullOrEmpty(endpointSuffix))
+            {
+                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            }
             var conn = new StorageConnectionString(storageCredentials);
             if (storageCredentials == null)
             {
