@@ -12,15 +12,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct DocumentSentiment_internal
+    internal partial struct DocumentSentimentInternal
     {
-        internal static DocumentSentiment_internal DeserializeDocumentSentiment_internal(JsonElement element)
+        internal static DocumentSentimentInternal DeserializeDocumentSentimentInternal(JsonElement element)
         {
             string id = default;
             TextSentiment sentiment = default;
             Optional<TextDocumentStatistics> statistics = default;
             SentimentConfidenceScores confidenceScores = default;
-            IReadOnlyList<SentenceSentiment_internal> sentences = default;
+            IReadOnlyList<SentenceSentimentInternal> sentences = default;
             IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,10 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("sentences"))
                 {
-                    List<SentenceSentiment_internal> array = new List<SentenceSentiment_internal>();
+                    List<SentenceSentimentInternal> array = new List<SentenceSentimentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceSentiment_internal.DeserializeSentenceSentiment_internal(item));
+                        array.Add(SentenceSentimentInternal.DeserializeSentenceSentimentInternal(item));
                     }
                     sentences = array;
                     continue;
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentSentiment_internal(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
+            return new DocumentSentimentInternal(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
         }
     }
 }

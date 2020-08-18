@@ -1596,6 +1596,7 @@ namespace Azure.AI.TextAnalytics
 
         internal virtual TextDocumentInput ConvertToDocumentInput(string document, string language, int id = 0)
             => new TextDocumentInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
+
         private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> documents, string language)
             => documents.Select((document, i) => ConvertToDocumentInput(document, language, i)).ToList();
 

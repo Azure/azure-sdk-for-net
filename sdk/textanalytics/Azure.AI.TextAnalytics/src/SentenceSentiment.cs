@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
         }
 
-        internal SentenceSentiment(SentenceSentiment_internal sentenceSentiment)
+        internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment)
         {
             // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty

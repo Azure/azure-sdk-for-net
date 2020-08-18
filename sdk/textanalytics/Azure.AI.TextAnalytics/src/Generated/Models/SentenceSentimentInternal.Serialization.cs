@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct SentenceSentiment_internal
+    internal partial struct SentenceSentimentInternal
     {
-        internal static SentenceSentiment_internal DeserializeSentenceSentiment_internal(JsonElement element)
+        internal static SentenceSentimentInternal DeserializeSentenceSentimentInternal(JsonElement element)
         {
             string text = default;
             string sentiment = default;
@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentiment_internal(text, sentiment, confidenceScores, offset, length, Optional.ToList(aspects), Optional.ToList(opinions));
+            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(aspects), Optional.ToList(opinions));
         }
     }
 }

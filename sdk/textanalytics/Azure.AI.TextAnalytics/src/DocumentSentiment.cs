@@ -23,12 +23,12 @@ namespace Azure.AI.TextAnalytics
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
-        internal DocumentSentiment(DocumentSentiment_internal documentSentiment)
+        internal DocumentSentiment(DocumentSentimentInternal documentSentiment)
         {
             Sentiment = documentSentiment.Sentiment;
             ConfidenceScores = documentSentiment.ConfidenceScores;
             Sentences = ConvertToSentences(documentSentiment.Sentences);
-            Warnings = Transforms.ConvertToWarning(documentSentiment.Warnings);
+            Warnings = Transforms.ConvertToWarnings(documentSentiment.Warnings);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
-        private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentiment_internal> internalSentences)
+        private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentimentInternal> internalSentences)
         {
             var sentences = new List<SentenceSentiment>();
             foreach (var sentence in internalSentences)

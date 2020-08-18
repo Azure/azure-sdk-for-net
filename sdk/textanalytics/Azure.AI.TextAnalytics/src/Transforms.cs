@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
-        internal static List<TextAnalyticsWarning> ConvertToWarning(IReadOnlyList<TextAnalyticsWarning_internal> internalWarnings)
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarning_internal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
             foreach (TextAnalyticsWarning_internal warning in internalWarnings)
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static DetectedLanguage ConvertToDetectedLanguage(DocumentLanguage documentLanguage)
         {
-            return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarning(documentLanguage.Warnings));
+            return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
         }
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
@@ -82,7 +82,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             //Read sentiments
-            foreach (DocumentSentiment_internal docSentiment in results.Documents)
+            foreach (DocumentSentimentInternal docSentiment in results.Documents)
             {
                 analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
             }

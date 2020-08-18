@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("DocumentSentiment")]
-    internal partial struct DocumentSentiment_internal
+    internal partial struct DocumentSentimentInternal
     {
     }
 }

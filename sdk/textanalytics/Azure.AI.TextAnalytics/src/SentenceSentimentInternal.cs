@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("SentenceSentiment")]
-    internal partial struct SentenceSentiment_internal
+    internal partial struct SentenceSentimentInternal
     {
         /// <summary> The sentence text. </summary>
         public string Text { get; }
