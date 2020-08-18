@@ -424,6 +424,29 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void AnalyzeSentimentBatchWithNullIdTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeSentimentBatchAsync(documents));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchWithNullTextTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].DocumentSentiment.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
         public async Task ExtractKeyPhrasesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -576,6 +599,29 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
             Assert.IsNotNull(results.Statistics.TransactionCount);
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public void ExtractKeyPhrasesBatchWithNullIdTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ExtractKeyPhrasesBatchAsync(documents));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchWithNullTextTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents);
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].KeyPhrases.Count());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
