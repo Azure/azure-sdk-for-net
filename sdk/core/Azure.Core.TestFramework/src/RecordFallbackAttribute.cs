@@ -50,6 +50,9 @@ namespace Azure.Core.TestFramework
                     {
                         context.CurrentResult.SetResult(ResultState.Warning, "Test failed palyback, but was successfully re-recorded. Please copy updated recording to SessionFiles.");
                     }
+
+                    // revert RecordTestMode to Playback
+                    SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
                 }
                 return context.CurrentResult;
             }
