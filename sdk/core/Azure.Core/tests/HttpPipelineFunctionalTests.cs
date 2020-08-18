@@ -509,46 +509,46 @@ namespace Azure.Core.Tests
             using Response response = await ExecuteRequest(request, httpPipeline);
             Console.WriteLine(requestBody);
 
-            Assert.That(requestBody, Is.EqualTo(@$"--batch_{batchGuid}
-{HttpHeader.Names.ContentType}: multipart/mixed; boundary=changeset_{changesetGuid}
-
---changeset_{changesetGuid}
-{HttpHeader.Names.ContentType}: application/http
-{cteHeaderName}: {Binary}
-
-POST {postUri} HTTP/1.1
-{HttpHeader.Names.Host}: {Host}
-{HttpHeader.Names.Accept}: {ApplicationJson}
-{DataServiceVersion}: {Three0}
-{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
-
-{post1Body}
---changeset_{changesetGuid}
-{HttpHeader.Names.ContentType}: application/http
-{cteHeaderName}: {Binary}
-
-POST {postUri} HTTP/1.1
-{HttpHeader.Names.Host}: {Host}
-{HttpHeader.Names.Accept}: {ApplicationJson}
-{DataServiceVersion}: {Three0}
-{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
-
-{post2Body}
---changeset_{changesetGuid}
-{HttpHeader.Names.ContentType}: application/http
-{cteHeaderName}: {Binary}
-
-PATCH {mergeUri} HTTP/1.1
-{HttpHeader.Names.Host}: {Host}
-{HttpHeader.Names.Accept}: {ApplicationJson}
-{DataServiceVersion}: {Three0}
-{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}
-
-{patchBody}
---changeset_{changesetGuid}--
-
---batch_{batchGuid}--
-"));
+            Assert.That(requestBody, Is.EqualTo($"--batch_{batchGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: multipart/mixed; boundary=changeset_{changesetGuid}\r\n" +
+                $"\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"POST {postUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"\r\n" +
+                $"{post1Body}\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"POST {postUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"\r\n" +
+                $"{post2Body}\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"PATCH {mergeUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"\r\n" +
+                $"{patchBody}\r\n" +
+                $"--changeset_{changesetGuid}--\r\n" +
+                $"\r\n" +
+                $"--batch_{batchGuid}--\r\n" +
+                $""));
         }
 
         private class TestOptions : ClientOptions
