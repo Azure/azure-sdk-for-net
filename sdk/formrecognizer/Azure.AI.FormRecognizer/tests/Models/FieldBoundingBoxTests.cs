@@ -11,31 +11,31 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <summary>
     /// The suite of tests for the <see cref="FieldBoundingBox"/> struct.
     /// </summary>
-    public class BoundingBoxTests
+    public class FieldBoundingBoxTests
     {
         [Test]
-        public void IndexerThrowsWhenBoundingBoxIsDefault()
+        public void IndexerThrowsWhenFieldBoundingBoxIsDefault()
         {
             FieldBoundingBox boundingBox = default;
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
         [Test]
-        public void IndexerThrowsWhenBoundingBoxIsEmpty()
+        public void IndexerThrowsWhenFieldBoundingBoxIsEmpty()
         {
             FieldBoundingBox boundingBox = new FieldBoundingBox(new List<float>());
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
         [Test]
-        public void ToStringDoesNotThrowWhenBoundingBoxIsDefault()
+        public void ToStringDoesNotThrowWhenFieldBoundingBoxIsDefault()
         {
             FieldBoundingBox boundingBox = default;
             Assert.DoesNotThrow(() => boundingBox.ToString());
         }
 
         [Test]
-        public void ToStringDoesNotThrowWhenBoundingBoxIsEmpty()
+        public void ToStringDoesNotThrowWhenFieldBoundingBoxIsEmpty()
         {
             FieldBoundingBox boundingBox = new FieldBoundingBox(new List<float>());
             Assert.DoesNotThrow(() => boundingBox.ToString());
