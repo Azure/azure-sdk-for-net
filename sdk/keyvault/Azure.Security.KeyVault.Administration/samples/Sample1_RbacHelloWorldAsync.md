@@ -75,3 +75,4 @@ RoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(RoleAs
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

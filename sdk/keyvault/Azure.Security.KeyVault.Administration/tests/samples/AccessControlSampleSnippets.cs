@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -16,9 +16,9 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public class SampleSnippets : AccessControlTestBase
+    public class AccessControlSampleSnippets : AccessControlTestBase
     {
-        public SampleSnippets(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public AccessControlSampleSnippets(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
         [SetUp]
