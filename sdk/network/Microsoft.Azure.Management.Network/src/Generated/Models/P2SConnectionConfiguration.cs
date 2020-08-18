@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="routingConfiguration">The Routing Configuration
         /// indicating the associated and propagated route tables on this
         /// connection.</param>
+        /// <param name="enableInternetSecurity">Flag indicating whether the
+        /// enable internet security flag is turned on for the P2S Connections
+        /// or not.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// P2SConnectionConfiguration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -47,11 +50,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public P2SConnectionConfiguration(string id = default(string), AddressSpace vpnClientAddressPool = default(AddressSpace), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public P2SConnectionConfiguration(string id = default(string), AddressSpace vpnClientAddressPool = default(AddressSpace), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), bool? enableInternetSecurity = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
+            EnableInternetSecurity = enableInternetSecurity;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -76,6 +80,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routingConfiguration")]
         public RoutingConfiguration RoutingConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag indicating whether the enable internet security
+        /// flag is turned on for the P2S Connections or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
+        public bool? EnableInternetSecurity { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the P2SConnectionConfiguration
