@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual AsyncPageable<BastionShareableLink> GetBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -171,6 +172,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual Pageable<BastionShareableLink> GetBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -224,6 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="sessionIds"> The list of sessionids to disconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="sessionIds"/> is null. </exception>
         public virtual AsyncPageable<BastionSessionState> DisconnectActiveSessionsAsync(string resourceGroupName, string bastionHostName, SessionIds sessionIds, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -277,6 +280,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="sessionIds"> The list of sessionids to disconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="sessionIds"/> is null. </exception>
         public virtual Pageable<BastionSessionState> DisconnectActiveSessions(string resourceGroupName, string bastionHostName, SessionIds sessionIds, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -330,6 +334,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual async Task<ServicePutBastionShareableLinkOperation> StartPutBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -364,6 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual ServicePutBastionShareableLinkOperation StartPutBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -398,6 +404,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual async Task<ServiceDeleteBastionShareableLinkOperation> StartDeleteBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -432,6 +439,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
         public virtual ServiceDeleteBastionShareableLinkOperation StartDeleteBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -465,6 +473,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
         public virtual async Task<ServiceGetActiveSessionsOperation> StartGetActiveSessionsAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -494,6 +503,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
         public virtual ServiceGetActiveSessionsOperation StartGetActiveSessions(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -524,6 +534,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
         public virtual async Task<ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> StartGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -558,6 +569,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
         public virtual ServiceGeneratevirtualwanvpnserverconfigurationvpnprofileOperation StartGeneratevirtualwanvpnserverconfigurationvpnprofile(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

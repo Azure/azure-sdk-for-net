@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -38,7 +37,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Models we need for later
             List<Shard> shards = new List<Shard>();
             DateTimeOffset dateTime = BlobChangeFeedExtensions.ToDateTimeOffset(manifestPath).Value;
-            int shardIndex = cursor?.ShardIndex ?? 0;
 
             // Download segment manifest
             BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
@@ -65,24 +63,37 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
             }
 
-            int i = 0;
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
+                var shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
                 Shard shard = await _shardFactory.BuildShard(
                     async,
                     shardPath,
-                    cursor?.ShardCursors?[i])
+                    shardCursor)
                     .ConfigureAwait(false);
-
-                shards.Add(shard);
-                i++;
+                if (shard.HasNext())
+                {
+                    shards.Add(shard);
+                }
             }
 
+            int shardIndex = 0;
+            string currentShardPath = cursor?.CurrentShardPath;
+            if (!string.IsNullOrWhiteSpace(currentShardPath))
+            {
+                shardIndex = shards.FindIndex(s => s.ShardPath == currentShardPath);
+                if (shardIndex < 0)
+                {
+                    // Either shard doesn't exist or cursor is pointing to end of shard. So start from beginning.
+                    shardIndex = 0;
+                }
+            }
             return new Segment(
                 shards,
                 shardIndex,
-                dateTime);
+                dateTime,
+                manifestPath);
         }
     }
 }

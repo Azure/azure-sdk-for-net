@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Resources.Models
 {
@@ -16,6 +17,8 @@ namespace Azure.Management.Resources.Models
         /// <summary> Initializes a new instance of DeploymentPropertiesExtended. </summary>
         internal DeploymentPropertiesExtended()
         {
+            Providers = new ChangeTrackingList<Provider>();
+            Dependencies = new ChangeTrackingList<Dependency>();
         }
 
         /// <summary> Initializes a new instance of DeploymentPropertiesExtended. </summary>

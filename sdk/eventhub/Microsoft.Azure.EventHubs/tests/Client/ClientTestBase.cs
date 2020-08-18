@@ -12,6 +12,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
     public class ClientTestBase
     {
+        protected static string DummyConnectionString = 
+            "Endpoint=sb://mynamespace.servicebus.windows.net/;SharedAccessKeyName=keyname;SharedAccessKey=key;EntityPath=test";
+
         // Send and receive given event on given partition.
         protected async Task<EventData> SendAndReceiveEventAsync(string partitionId, EventData sendEvent, EventHubClient client)
         {

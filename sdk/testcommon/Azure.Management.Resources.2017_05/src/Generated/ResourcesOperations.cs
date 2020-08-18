@@ -204,6 +204,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<GenericResourceExpanded> ListByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -250,6 +251,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<GenericResourceExpanded> ListByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -374,6 +376,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesMoveResourcesOperation> StartMoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -403,6 +406,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesMoveResourcesOperation StartMoveResources(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -432,6 +436,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to validate for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesValidateMoveResourcesOperation> StartValidateMoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -461,6 +466,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to validate for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesValidateMoveResourcesOperation StartValidateMoveResources(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -493,6 +499,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<ResourcesDeleteOperation> StartDeleteAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -537,6 +544,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public virtual ResourcesDeleteOperation StartDelete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -582,6 +590,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to create. </param>
         /// <param name="parameters"> Parameters for creating or updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -631,6 +640,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to create. </param>
         /// <param name="parameters"> Parameters for creating or updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -680,6 +690,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to update. </param>
         /// <param name="parameters"> Parameters for updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesUpdateOperation> StartUpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -729,6 +740,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to update. </param>
         /// <param name="parameters"> Parameters for updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesUpdateOperation StartUpdate(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -773,6 +785,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual async Task<ResourcesDeleteByIdOperation> StartDeleteByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -797,6 +810,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual ResourcesDeleteByIdOperation StartDeleteById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -822,6 +836,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateOrUpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -851,6 +866,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesCreateOrUpdateByIdOperation StartCreateOrUpdateById(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -880,6 +896,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ResourcesUpdateByIdOperation> StartUpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -909,6 +926,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ResourcesUpdateByIdOperation StartUpdateById(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)

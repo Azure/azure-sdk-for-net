@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeering. </summary>
         public ExpressRouteCircuitPeering()
         {
+            Connections = new ChangeTrackingList<ExpressRouteCircuitConnection>();
+            PeeredConnections = new ChangeTrackingList<PeerExpressRouteCircuitConnection>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeering. </summary>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="expressRouteConnection"> The ExpressRoute connection. </param>
         /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
-        internal ExpressRouteCircuitPeering(string id, string name, string etag, string type, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, SubResource routeFilter, Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, ExpressRouteConnectionId expressRouteConnection, IList<ExpressRouteCircuitConnection> connections, IList<PeerExpressRouteCircuitConnection> peeredConnections) : base(id)
+        internal ExpressRouteCircuitPeering(string id, string name, string etag, string type, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, SubResource routeFilter, Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, ExpressRouteConnectionId expressRouteConnection, IList<ExpressRouteCircuitConnection> connections, IReadOnlyList<PeerExpressRouteCircuitConnection> peeredConnections) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ExpressRoute connection. </summary>
         public ExpressRouteConnectionId ExpressRouteConnection { get; set; }
         /// <summary> The list of circuit connections associated with Azure Private Peering for this circuit. </summary>
-        public IList<ExpressRouteCircuitConnection> Connections { get; set; }
+        public IList<ExpressRouteCircuitConnection> Connections { get; }
         /// <summary> The list of peered circuit connections associated with Azure Private Peering for this circuit. </summary>
-        public IList<PeerExpressRouteCircuitConnection> PeeredConnections { get; }
+        public IReadOnlyList<PeerExpressRouteCircuitConnection> PeeredConnections { get; }
     }
 }

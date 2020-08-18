@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public virtual AsyncPageable<SecurityRule> ListAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
         public virtual Pageable<SecurityRule> List(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

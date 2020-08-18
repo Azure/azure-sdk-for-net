@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         public ApplicationGatewayUrlPathMap()
         {
+            PathRules = new ChangeTrackingList<ApplicationGatewayPathRule>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Default redirect configuration resource of URL path map. </summary>
         public SubResource DefaultRedirectConfiguration { get; set; }
         /// <summary> Path rule of URL path map resource. </summary>
-        public IList<ApplicationGatewayPathRule> PathRules { get; set; }
+        public IList<ApplicationGatewayPathRule> PathRules { get; }
         /// <summary> The provisioning state of the URL path map resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

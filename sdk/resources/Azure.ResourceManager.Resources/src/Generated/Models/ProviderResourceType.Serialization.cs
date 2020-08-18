@@ -15,118 +15,66 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
-            string resourceType = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<Alias> aliases = default;
-            IReadOnlyList<string> apiVersions = default;
-            string capabilities = default;
-            IReadOnlyDictionary<string, string> properties = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<Alias>> aliases = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<string> capabilities = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     locations = array;
                     continue;
                 }
                 if (property.NameEquals("aliases"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Alias> array = new List<Alias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Alias.DeserializeAlias(item));
-                        }
+                        array.Add(Alias.DeserializeAlias(item));
                     }
                     aliases = array;
                     continue;
                 }
                 if (property.NameEquals("apiVersions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     apiVersions = array;
                     continue;
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     capabilities = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType, locations, aliases, apiVersions, capabilities, properties);
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(aliases), Optional.ToList(apiVersions), capabilities.Value, Optional.ToDictionary(properties));
         }
     }
 }

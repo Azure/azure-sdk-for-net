@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpSettings. </summary>
         public BgpSettings()
         {
+            BgpPeeringAddresses = new ChangeTrackingList<IPConfigurationBgpPeeringAddress>();
         }
 
         /// <summary> Initializes a new instance of BgpSettings. </summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The weight added to routes learned from this BGP speaker. </summary>
         public int? PeerWeight { get; set; }
         /// <summary> BGP peering address with IP configuration ID for virtual network gateway. </summary>
-        public IList<IPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; set; }
+        public IList<IPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; }
     }
 }

@@ -1,7 +1,13 @@
 # Release History
 
-## 12.3.0-preview.3 (Unreleased)
+## 12.4.0-preview.1 (Unreleased)
 
+
+## 12.3.0 (2020-08-13)
+- Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
+- Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to DataLakeAccessPolicy
+- Added DataLakeFileClient.OpenWrite().
 
 ## 12.3.0-preview.2 (2020-07-27)
 - Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.

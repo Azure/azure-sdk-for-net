@@ -15,47 +15,32 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PrivateIPAllocationMethod != null)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod");
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
                 writer.WriteObjectValue(Subnet);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress");
                 writer.WriteObjectValue(PublicIPAddress);
-            }
-            if (PrivateIPAddress != null)
-            {
-                writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -63,40 +48,28 @@ namespace Azure.Management.Network.Models
 
         internal static VirtualNetworkGatewayIPConfiguration DeserializeVirtualNetworkGatewayIPConfiguration(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            IPAllocationMethod? privateIPAllocationMethod = default;
-            SubResource subnet = default;
-            SubResource publicIPAddress = default;
-            string privateIPAddress = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<SubResource> subnet = default;
+            Optional<SubResource> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -106,46 +79,26 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("privateIPAllocationMethod"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             subnet = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicIPAddress = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -153,7 +106,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayIPConfiguration(id, name, etag, privateIPAllocationMethod, subnet, publicIPAddress, privateIPAddress, provisioningState);
+            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, etag.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, privateIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

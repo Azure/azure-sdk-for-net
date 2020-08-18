@@ -15,7 +15,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ActivePlacementGroupId != null)
+            if (Optional.IsDefined(ActivePlacementGroupId))
             {
                 writer.WritePropertyName("activePlacementGroupId");
                 writer.WriteStringValue(ActivePlacementGroupId);

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     rgName,
                     new ResourceGroup(m_location)
                     {
-                        Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                        Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
                     });
                 var stoInput = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, m_location);
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await (StorageAccountsOperations.ListByResourceGroupAsync(rgName)).ToEnumerableAsync();
         }
 
-        protected async Task<(VirtualMachine,VirtualMachine)> CreateVM(
+        protected async Task<(VirtualMachine,VirtualMachine, string)> CreateVM(
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await CreateVM(rgName, asName, storageAccount.Name, imageRef, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
         }
 
-        protected async Task<(VirtualMachine, VirtualMachine)> CreateVM(
+        protected async Task<(VirtualMachine, VirtualMachine, string)> CreateVM(
             string rgName, string asName, string storageAccountName, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     rgName,
                     new ResourceGroup(m_location)
                     {
-                        Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                        Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                     });
 
                 PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : await CreatePublicIP(rgName);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
                 string asetId = await CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
-                var inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
+                var (inputVMName, inputVM) = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
                     dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Tests
                         vmSize = VirtualMachineSizeTypes.StandardA1V2.ToString();
                     }
                     inputVM.HardwareProfile.VmSize = vmSize;
-                    inputVM.Zones = zones;
+                    inputVM.Zones.InitializeFrom(zones);
                 }
 
                 if (vmCustomizer != null)
@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.Compute.Tests
                     vmCustomizer(inputVM);
                 }
 
-                string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+                string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
 
                 VirtualMachine createOrUpdateResponse = null;
                 if (waitForCompletion)
                 {
                     // CreateOrUpdate polls for the operation completion and returns once the operation reaches a terminal state
-                    createOrUpdateResponse = (await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVM.Name, inputVM))).Value;
+                    createOrUpdateResponse = (await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVMName, inputVM))).Value;
                 }
                 else
                 {
                     // BeginCreateOrUpdate returns immediately after the request is accepted by CRP
-                    createOrUpdateResponse = (await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVM.Name, inputVM))).Value;
+                    createOrUpdateResponse = (await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVMName, inputVM))).Value;
                 }
 
-                Assert.True(createOrUpdateResponse.Name == inputVM.Name);
+                Assert.True(createOrUpdateResponse.Name == inputVMName);
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.Compute.Tests
                 //}
 
                 // The intent here is to validate that the GET response is as expected.
-                var getResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name);
+                var getResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId);
 
-                return (getResponse,inputVM);
+                return (getResponse, inputVM, inputVMName);
             }
             catch
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var publicIp = new PublicIPAddress()
             {
                 Location = m_location,
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"key", "value"}
                     },
@@ -333,21 +333,18 @@ namespace Azure.ResourceManager.Compute.Tests
                 Location = m_location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>()
-                            {
+                    AddressPrefixes = {
                                 "10.0.0.0/16",
                             }
                 },
                 DhcpOptions = !addDnsServer ? null : new DhcpOptions()
                 {
-                    DnsServers = new List<string>()
-                            {
+                    DnsServers = {
                                 "10.1.1.1",
                                 "10.1.2.4"
                             }
                 },
-                Subnets = new List<Subnet>()
-                        {
+                Subnets = {
                             new Subnet()
                             {
                                 Name = subnetName,
@@ -371,22 +368,19 @@ namespace Azure.ResourceManager.Compute.Tests
                 Location = m_location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>()
-                            {
+                    AddressPrefixes = {
                                 "10.0.0.0/16",
                             }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>()
-                            {
+                    DnsServers = {
                                 "10.1.1.1",
                                 "10.1.2.4"
                             }
                 },
             };
 
-            vnet.Subnets = new List<Subnet>();
             for (int i = 1; i <= subnetCount; i++)
             {
                 Subnet subnet = new Subnet()
@@ -424,12 +418,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = m_location,
-                Tags = new Dictionary<string, string>()
+                Tags =
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -461,12 +454,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = m_location,
-                Tags = new Dictionary<string, string>()
+                Tags =
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -590,32 +582,25 @@ namespace Azure.ResourceManager.Compute.Tests
                     Tier = ApplicationGatewayTier.Standard,
                     Capacity = 2
                 },
-                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
-                {
+                GatewayIPConfigurations = {
                     gatewayIPConfig,
                 },
-                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>()
-                {
+                FrontendIPConfigurations = {
                     frontendIPConfig,
                 },
-                FrontendPorts = new List<ApplicationGatewayFrontendPort>
-                {
+                FrontendPorts = {
                     frontendPort,
                 },
-                BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
-                {
+                BackendAddressPools = {
                     backendAddressPool,
                 },
-                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings>
-                {
+                BackendHttpSettingsCollection = {
                     backendHttpSettings,
                 },
-                HttpListeners = new List<ApplicationGatewayHttpListener>
-                {
+                HttpListeners = {
                     httpListener,
                 },
-                RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
-                {
+                RequestRoutingRules = {
                     requestRoutingRules,
                 }
             };
@@ -643,23 +628,20 @@ namespace Azure.ResourceManager.Compute.Tests
             var putLBResponse = await WaitForCompletionAsync(await LoadBalancersOperations.StartCreateOrUpdateAsync(rgName, loadBalancerName, new LoadBalancer
             {
                 Location = m_location,
-                FrontendIPConfigurations = new List<FrontendIPConfiguration>
-                {
+                FrontendIPConfigurations = {
                     new FrontendIPConfiguration
                     {
                         Name = frontendIPConfigName,
                         PublicIPAddress = publicIPAddress
                     }
                 },
-                BackendAddressPools = new List<BackendAddressPool>
-                {
+                BackendAddressPools = {
                     new BackendAddressPool
                     {
                         Name = backendAddressPoolName
                     }
                 },
-                LoadBalancingRules = new List<LoadBalancingRule>
-                {
+                LoadBalancingRules = {
                     new LoadBalancingRule
                     {
                         Name = loadBalancingRuleName,
@@ -683,8 +665,7 @@ namespace Azure.ResourceManager.Compute.Tests
                         }
                     }
                 },
-                Probes = new List<Probe>
-                {
+                Probes = {
                     new Probe
                     {
                         Port = 3389, // RDP port
@@ -705,7 +686,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Setup availability set
             var inputAvailabilitySet = new AvailabilitySet(m_location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"}
@@ -738,7 +719,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Setup ProximityPlacementGroup
             var inputProximityPlacementGroup = new ProximityPlacementGroup(location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                 {
                     {"RG", "rg"},
                     {"testTag", "1"},
@@ -761,7 +742,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await CreateProximityPlacementGroup(m_subId, rgName, ppgName, ComputeManagementClient, m_location);
         }
 
-        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
+        protected (string, VirtualMachine) CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
             string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
         {
@@ -776,74 +757,78 @@ namespace Azure.ResourceManager.Compute.Tests
                 // WriteAccelerator is only allowed on VMs with Managed disks
                 Assert.True(hasManagedDisks);
             }
-            var vm = new VirtualMachine(
-                null, Recording.GenerateAssetName("vm"),"Microsoft.Compute/virtualMachines", m_location,
-                new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } }, null,null, null, null,
-                new HardwareProfile
+
+            var storageProfile = new StorageProfile
+            {
+                ImageReference = imageRef,
+                OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                {
+                    Caching = CachingTypes.None,
+                    WriteAcceleratorEnabled = writeAcceleratorEnabled,
+                    Name = "test",
+                    Vhd = hasManagedDisks ? null : new VirtualHardDisk
+                    {
+                        Uri = osVhduri
+                    },
+                    ManagedDisk = !hasManagedDisks ? null : new ManagedDiskParameters
+                    {
+                        StorageAccountType = osDiskStorageAccountType,
+                        DiskEncryptionSet = diskEncryptionSetId == null ? null :
+                            new DiskEncryptionSetParameters()
+                            {
+                                Id = diskEncryptionSetId
+                            }
+                    }
+                }
+            };
+
+            if (hasManagedDisks)
+            {
+                storageProfile.DataDisks.Add(new DataDisk(0, DiskCreateOptionTypes.Empty)
+                {
+                    Caching = CachingTypes.None,
+                    WriteAcceleratorEnabled = writeAcceleratorEnabled,
+                    DiskSizeGB = 30,
+                    ManagedDisk = new ManagedDiskParameters()
+                    {
+                        StorageAccountType = dataDiskStorageAccountType,
+                        DiskEncryptionSet = diskEncryptionSetId == null ? null :
+                            new DiskEncryptionSetParameters()
+                            {
+                                Id = diskEncryptionSetId
+                            }
+                    }
+                });
+            }
+
+            var vm = new VirtualMachine(m_location)
+            {
+                HardwareProfile = new HardwareProfile
                 {
                     VmSize = vmSize
                 },
-                new StorageProfile
-                {
-                    ImageReference = imageRef,
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
-                    {
-                        Caching = CachingTypes.None,
-                        WriteAcceleratorEnabled = writeAcceleratorEnabled,
-                        Name = "test",
-                        Vhd = hasManagedDisks ? null : new VirtualHardDisk
-                        {
-                            Uri = osVhduri
-                        },
-                        ManagedDisk = !hasManagedDisks ? null : new ManagedDiskParameters
-                        {
-                            StorageAccountType = osDiskStorageAccountType,
-                            DiskEncryptionSet = diskEncryptionSetId == null ? null :
-                                new DiskEncryptionSetParameters()
-                                {
-                                    Id = diskEncryptionSetId
-                                }
-                        }
-                    },
-                    DataDisks = !hasManagedDisks ? null : new List<DataDisk>()
-                    {
-                        new DataDisk(0, DiskCreateOptionTypes.Empty)
-                        {
-                            Caching = CachingTypes.None,
-                            WriteAcceleratorEnabled = writeAcceleratorEnabled,
-                            DiskSizeGB = 30,
-                            ManagedDisk = new ManagedDiskParameters()
-                            {
-                                StorageAccountType = dataDiskStorageAccountType,
-                                DiskEncryptionSet = diskEncryptionSetId == null ? null :
-                                    new DiskEncryptionSetParameters()
-                                    {
-                                        Id = diskEncryptionSetId
-                                    }
-                            }
-                        }
-                    },
-                }, null,
-                new OSProfile
+                StorageProfile = storageProfile,
+                OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
                     AdminPassword = PLACEHOLDER,
                     ComputerName = ComputerName
                 },
-                new CM.NetworkProfile
+                NetworkProfile = new CM.NetworkProfile
                 {
-                    NetworkInterfaces = new List<NetworkInterfaceReference>
+                    NetworkInterfaces = {
+                        new NetworkInterfaceReference
                         {
-                            new NetworkInterfaceReference
-                            {
-                                Id = nicId
-                            }
+                            Id = nicId
                         }
-                }, null, null, null, null, null, null, null, null, null, null, null, null);
+                    }
+                },
+                Tags = { { "RG", "rg" }, { "testTag", "1" } }
+            };
             //var vm = new VirtualMachine(m_location)
             //{
             //    Location = m_location,
-            //    Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
+            //    Tags ={ { "RG", "rg" }, { "testTag", "1" } },
             //    AvailabilitySet = new Azure.ResourceManager.Compute.Models.SubResource() { Id = asetId },
             //    HardwareProfile = new HardwareProfile
             //    {
@@ -917,7 +902,7 @@ namespace Azure.ResourceManager.Compute.Tests
             }
             //typeof( Azure.ResourceManager.Compute.Models.Resource).GetProperty("Name").SetValue(vm, Recording.GenerateAssetName("vm"));
             //typeof( Azure.ResourceManager.Compute.Models.Resource).GetProperty("Type").SetValue(vm, Recording.GenerateAssetName("Microsoft.Compute/virtualMachines"));
-            return vm;
+            return (Recording.GenerateAssetName("vm"), vm);
         }
 
         protected async Task<DedicatedHostGroup> CreateDedicatedHostGroup(string rgName, string dedicatedHostGroupName)
@@ -926,12 +911,12 @@ namespace Azure.ResourceManager.Compute.Tests
                    rgName,
                    new ResourceGroup(m_location)
                    {
-                       Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                       Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
                    });
 
             DedicatedHostGroup dedicatedHostGroup = new DedicatedHostGroup(m_location)
             {
-                Zones = new List<string> { "1" },
+                Zones = { "1" },
                 PlatformFaultDomainCount = 1
             };
             return await DedicatedHostGroupsOperations.CreateOrUpdateAsync(rgName, dedicatedHostGroupName, dedicatedHostGroup);
@@ -948,14 +933,14 @@ namespace Azure.ResourceManager.Compute.Tests
             var response =await DedicatedHostsOperations.StartCreateOrUpdateAsync(rgName, dedicatedHostGroupName, dedicatedHostName,
                 new DedicatedHost(m_location, new CM.Sku() { Name= "ESv3-Type1"})
                 {
-                    Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
                 });
             //var xx = return await response.WaitForCompletionAsync()
             return await WaitForCompletionAsync(response);
             //return await DedicatedHostsClient.StartCreateOrUpdateAsync(rgName, dedicatedHostGroupName, dedicatedHostName,
             //    new DedicatedHost(m_location,new Sku() { Name= "ESv3-Type1" })
             //    {
-            //        Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+            //        Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
             //    });
         }
 

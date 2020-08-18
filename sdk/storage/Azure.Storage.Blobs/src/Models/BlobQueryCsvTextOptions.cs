@@ -13,6 +13,11 @@ namespace Azure.Storage.Blobs.Models
     public class BlobQueryCsvTextOptions : BlobQueryTextOptions
     {
         /// <summary>
+        /// Record Separator.
+        /// </summary>
+        public string RecordSeparator { get; set; }
+
+        /// <summary>
         /// Column separator.
         /// </summary>
         public string ColumnSeparator { get; set; }

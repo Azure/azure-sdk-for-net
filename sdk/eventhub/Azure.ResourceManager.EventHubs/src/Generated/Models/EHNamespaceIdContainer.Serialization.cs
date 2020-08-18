@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EHNamespaceIdContainer DeserializeEHNamespaceIdContainer(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new EHNamespaceIdContainer(id);
+            return new EHNamespaceIdContainer(id.Value);
         }
     }
 }
