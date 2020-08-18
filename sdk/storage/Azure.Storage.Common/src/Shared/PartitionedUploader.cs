@@ -412,7 +412,6 @@ namespace Azure.Storage
                 // Calling internal method for easier mocking in PartitionedUploaderTests
                 return await _commitPartitionedUploadInternal(
                     partitions,
-                    // For some reason, Upload in parallel handles offsets differently.
                     initialPosition: 0,
                     args,
                     async: true,
