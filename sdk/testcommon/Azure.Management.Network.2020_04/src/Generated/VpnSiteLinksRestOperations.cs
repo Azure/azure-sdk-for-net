@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VpnSiteLinksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -68,6 +68,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteLinkName"/> is null. </exception>
         public async Task<Response<VpnSiteLink>> GetAsync(string resourceGroupName, string vpnSiteName, string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -91,14 +92,7 @@ namespace Azure.Management.Network
                     {
                         VpnSiteLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSiteLink.DeserializeVpnSiteLink(document.RootElement);
-                        }
+                        value = VpnSiteLink.DeserializeVpnSiteLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +105,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vpnSiteName"/>, or <paramref name="vpnSiteLinkName"/> is null. </exception>
         public Response<VpnSiteLink> Get(string resourceGroupName, string vpnSiteName, string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -134,14 +129,7 @@ namespace Azure.Management.Network
                     {
                         VpnSiteLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSiteLink.DeserializeVpnSiteLink(document.RootElement);
-                        }
+                        value = VpnSiteLink.DeserializeVpnSiteLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -172,6 +160,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public async Task<Response<ListVpnSiteLinksResult>> ListByVpnSiteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -191,14 +180,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSiteLinksResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
-                        }
+                        value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,6 +192,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public Response<ListVpnSiteLinksResult> ListByVpnSite(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -229,14 +212,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSiteLinksResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
-                        }
+                        value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -261,6 +237,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
         public async Task<Response<ListVpnSiteLinksResult>> ListByVpnSiteNextPageAsync(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -284,14 +261,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSiteLinksResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
-                        }
+                        value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -304,6 +274,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
         public Response<ListVpnSiteLinksResult> ListByVpnSiteNextPage(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -327,14 +298,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSiteLinksResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
-                        }
+                        value = ListVpnSiteLinksResult.DeserializeListVpnSiteLinksResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

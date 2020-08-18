@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageQueue. </summary>
         public StorageQueue()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of StorageQueue. </summary>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </summary>
         public int? ApproximateMessageCount { get; }
     }

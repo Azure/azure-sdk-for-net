@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,21 +16,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
         public ConnectionMonitorEndpointFilter()
         {
-            Type = "Include";
+            Items = new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
         /// <param name="type"> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </param>
         /// <param name="items"> List of items in the filter. </param>
-        internal ConnectionMonitorEndpointFilter(string type, IList<ConnectionMonitorEndpointFilterItem> items)
+        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? type, IList<ConnectionMonitorEndpointFilterItem> items)
         {
             Type = type;
             Items = items;
         }
 
         /// <summary> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </summary>
-        public string Type { get; set; }
+        public ConnectionMonitorEndpointFilterType? Type { get; set; }
         /// <summary> List of items in the filter. </summary>
-        public IList<ConnectionMonitorEndpointFilterItem> Items { get; set; }
+        public IList<ConnectionMonitorEndpointFilterItem> Items { get; }
     }
 }

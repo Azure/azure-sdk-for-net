@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()
         {
+            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
+            HostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
@@ -70,10 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Custom error configurations of the HTTP listener. </summary>
-        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; set; }
+        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
         public SubResource FirewallPolicy { get; set; }
         /// <summary> List of Host names for HTTP Listener that allows special wildcard characters as well. </summary>
-        public IList<string> HostNames { get; set; }
+        public IList<string> HostNames { get; }
     }
 }

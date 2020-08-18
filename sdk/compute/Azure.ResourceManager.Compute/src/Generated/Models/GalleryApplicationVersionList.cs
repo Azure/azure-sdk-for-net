@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
         /// <param name="value"> A list of gallery Application Versions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryApplicationVersionList(IEnumerable<GalleryApplicationVersion> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionList. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </param>
         internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersion> value, string nextLink)
         {
-            Value = value ?? new List<GalleryApplicationVersion>();
+            Value = value;
             NextLink = nextLink;
         }
 

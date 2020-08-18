@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionSharedKey(string value)
         {
             if (value == null)

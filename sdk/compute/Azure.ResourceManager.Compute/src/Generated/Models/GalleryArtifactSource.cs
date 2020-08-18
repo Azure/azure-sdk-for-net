@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryArtifactSource. </summary>
         /// <param name="managedImage"> The managed artifact. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedImage"/> is null. </exception>
         internal GalleryArtifactSource(ManagedArtifact managedImage)
         {
             if (managedImage == null)

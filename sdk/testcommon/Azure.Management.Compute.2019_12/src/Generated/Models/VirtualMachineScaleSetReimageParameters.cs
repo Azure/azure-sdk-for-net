@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -15,17 +16,10 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetReimageParameters. </summary>
         public VirtualMachineScaleSetReimageParameters()
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetReimageParameters. </summary>
-        /// <param name="tempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
-        /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetReimageParameters(bool? tempDisk, IList<string> instanceIds) : base(tempDisk)
-        {
-            InstanceIds = instanceIds;
+            InstanceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </summary>
-        public IList<string> InstanceIds { get; set; }
+        public IList<string> InstanceIds { get; }
     }
 }

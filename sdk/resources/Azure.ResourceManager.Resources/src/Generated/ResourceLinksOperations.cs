@@ -226,6 +226,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual AsyncPageable<ResourceLink> ListAtSourceScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -269,6 +270,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Pageable<ResourceLink> ListAtSourceScope(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)

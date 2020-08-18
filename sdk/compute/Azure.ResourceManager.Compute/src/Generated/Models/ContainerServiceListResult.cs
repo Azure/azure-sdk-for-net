@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ContainerServiceListResult. </summary>
         internal ContainerServiceListResult()
         {
+            Value = new ChangeTrackingList<ContainerService>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceListResult. </summary>

@@ -246,6 +246,31 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void DetectLanguageBatchWithNullIdTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<DetectLanguageInput> { new DetectLanguageInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" }));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchWithNullTextTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<DetectLanguageInput> { new DetectLanguageInput("1", null) };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" });
+
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].PrimaryLanguage.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
         public async Task AnalyzeSentimentTest()
         {
             TextAnalyticsClient client = GetClient();

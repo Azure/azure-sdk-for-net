@@ -127,7 +127,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
-        public async Task<Response<LinkedServiceResource>> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (linkedServiceName == null)
             {
@@ -143,12 +143,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        LinkedServiceResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LinkedServiceResource.DeserializeLinkedServiceResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -160,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
-        public Response<LinkedServiceResource> CreateOrUpdateLinkedService(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateLinkedService(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (linkedServiceName == null)
             {
@@ -176,12 +172,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        LinkedServiceResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LinkedServiceResource.DeserializeLinkedServiceResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -295,6 +287,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -318,6 +311,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:

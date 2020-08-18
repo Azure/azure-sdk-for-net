@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of DhcpOptions. </summary>
         public DhcpOptions()
         {
+            DnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DhcpOptions. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of DNS servers IP addresses. </summary>
-        public IList<string> DnsServers { get; set; }
+        public IList<string> DnsServers { get; }
     }
 }

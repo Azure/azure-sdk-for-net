@@ -7,16 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the create packet capture operation. </summary>
-    public partial class PacketCaptureParameters
+    internal partial class PacketCaptureParameters
     {
         /// <summary> Initializes a new instance of PacketCaptureParameters. </summary>
         /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        public PacketCaptureParameters(string target, PacketCaptureStorageLocation storageLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
+        internal PacketCaptureParameters(string target, PacketCaptureStorageLocation storageLocation)
         {
             if (target == null)
             {
@@ -29,36 +31,20 @@ namespace Azure.ResourceManager.Network.Models
 
             Target = target;
             StorageLocation = storageLocation;
-        }
-
-        /// <summary> Initializes a new instance of PacketCaptureParameters. </summary>
-        /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        internal PacketCaptureParameters(string target, int? bytesToCapturePerPacket, int? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IList<PacketCaptureFilter> filters)
-        {
-            Target = target;
-            BytesToCapturePerPacket = bytesToCapturePerPacket;
-            TotalBytesPerSession = totalBytesPerSession;
-            TimeLimitInSeconds = timeLimitInSeconds;
-            StorageLocation = storageLocation;
-            Filters = filters;
+            Filters = new ChangeTrackingList<PacketCaptureFilter>();
         }
 
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>
-        public string Target { get; set; }
+        public string Target { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
-        public int? BytesToCapturePerPacket { get; set; }
+        public int? BytesToCapturePerPacket { get; }
         /// <summary> Maximum size of the capture output. </summary>
-        public int? TotalBytesPerSession { get; set; }
+        public int? TotalBytesPerSession { get; }
         /// <summary> Maximum duration of the capture session in seconds. </summary>
-        public int? TimeLimitInSeconds { get; set; }
+        public int? TimeLimitInSeconds { get; }
         /// <summary> The storage location for a packet capture session. </summary>
-        public PacketCaptureStorageLocation StorageLocation { get; set; }
+        public PacketCaptureStorageLocation StorageLocation { get; }
         /// <summary> A list of packet capture filters. </summary>
-        public IList<PacketCaptureFilter> Filters { get; set; }
+        public IReadOnlyList<PacketCaptureFilter> Filters { get; }
     }
 }

@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         GalleryApplication IOperationSource<GalleryApplication>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GalleryApplication.DeserializeGalleryApplication(document.RootElement);
-            }
+            return GalleryApplication.DeserializeGalleryApplication(document.RootElement);
         }
 
         async ValueTask<GalleryApplication> IOperationSource<GalleryApplication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GalleryApplication.DeserializeGalleryApplication(document.RootElement);
-            }
+            return GalleryApplication.DeserializeGalleryApplication(document.RootElement);
         }
     }
 }

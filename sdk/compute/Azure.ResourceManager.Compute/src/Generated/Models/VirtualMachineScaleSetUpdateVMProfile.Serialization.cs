@@ -15,42 +15,42 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OsProfile != null)
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile");
                 writer.WriteObjectValue(OsProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (ExtensionProfile != null)
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile");
                 writer.WriteObjectValue(ExtensionProfile);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile");
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (ScheduledEventsProfile != null)
+            if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile");
                 writer.WriteObjectValue(ScheduledEventsProfile);

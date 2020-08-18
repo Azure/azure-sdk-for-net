@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BastionSessionState DeserializeBastionSessionState(JsonElement element)
         {
-            string sessionId = default;
-            string message = default;
-            string state = default;
+            Optional<string> sessionId = default;
+            Optional<string> message = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionSessionState(sessionId, message, state);
+            return new BastionSessionState(sessionId.Value, message.Value, state.Value);
         }
     }
 }

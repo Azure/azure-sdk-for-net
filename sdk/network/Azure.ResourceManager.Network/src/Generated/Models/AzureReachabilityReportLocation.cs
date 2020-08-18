@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
         /// <param name="country"> The name of the country. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AzureReachabilityReportLocation(string country)
         {
             if (country == null)
