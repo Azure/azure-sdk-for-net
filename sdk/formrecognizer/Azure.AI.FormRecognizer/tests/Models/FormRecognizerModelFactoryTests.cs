@@ -33,9 +33,9 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateBoundingBox()
+        public void FormRecognizerModelFactoryCanInstantiateFieldBoundingBox()
         {
-            var boundingBox = FormRecognizerModelFactory.BoundingBox(ListOfPoints);
+            var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(ListOfPoints);
 
             CollectionAssert.AreEqual(ListOfPoints, boundingBox.Points);
         }
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryInstantiatesEmptyBoundingBoxWhenPointsListIsNull()
         {
-            var boundingBox = FormRecognizerModelFactory.BoundingBox(null);
+            var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(null);
 
             Assert.IsNotNull(boundingBox.Points);
             Assert.IsEmpty(boundingBox.Points);
