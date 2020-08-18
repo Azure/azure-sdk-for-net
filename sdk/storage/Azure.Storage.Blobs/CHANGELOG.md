@@ -1,5 +1,10 @@
 # Release History
 
+## 12.5.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
 ## 12.5.0 (2020-08-13)
 - Added support for custom local emulator hostname for blob storage endpoints.
 - Fixed bug where BlobContainerClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in BlobAccessPolicy
