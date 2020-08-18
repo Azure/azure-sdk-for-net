@@ -21,6 +21,12 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Net;
     using System.Net.Http;
 
+    /// <summary>
+    /// Role based access control provides you a way to apply granular level
+    /// policy administration down to individual resources or resource groups.
+    /// These operations enable you to manage role assignments. A role
+    /// assignment grants access to Azure Active Directory users.
+    /// </summary>
     public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
     {
         /// <summary>
@@ -49,6 +55,11 @@ namespace Microsoft.Azure.Management.Authorization
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -65,36 +76,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IClassicAdministratorsOperations.
-        /// </summary>
-        public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
-
-        /// <summary>
-        /// Gets the IGlobalAdministratorOperations.
-        /// </summary>
-        public virtual IGlobalAdministratorOperations GlobalAdministrator { get; private set; }
-
-        /// <summary>
-        /// Gets the IProviderOperationsMetadataOperations.
-        /// </summary>
-        public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
-
-        /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        public virtual IPermissionsOperations Permissions { get; private set; }
-
-        /// <summary>
-        /// Gets the IRoleDefinitionsOperations.
-        /// </summary>
-        public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
-
-        /// <summary>
-        /// Gets the IDenyAssignmentsOperations.
-        /// </summary>
-        public virtual IDenyAssignmentsOperations DenyAssignments { get; private set; }
 
         /// <summary>
         /// Gets the IRoleAssignmentsOperations.
@@ -342,14 +323,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         private void Initialize()
         {
-            ClassicAdministrators = new ClassicAdministratorsOperations(this);
-            GlobalAdministrator = new GlobalAdministratorOperations(this);
-            ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            Permissions = new PermissionsOperations(this);
-            RoleDefinitions = new RoleDefinitionsOperations(this);
-            DenyAssignments = new DenyAssignmentsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2020-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
