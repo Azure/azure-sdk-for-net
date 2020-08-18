@@ -12,7 +12,7 @@ using Azure.Core;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> Instances of Event represent structured event records that can be grouped and searched by their properties. Event data item also creates a metric of event count by name. </summary>
-    public partial class EventData : Domain
+    public partial class EventData : MonitorDomain
     {
         /// <summary> Initializes a new instance of EventData. </summary>
         /// <param name="ver"> Schema version. </param>

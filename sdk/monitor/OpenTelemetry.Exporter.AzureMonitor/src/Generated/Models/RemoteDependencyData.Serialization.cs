@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 
@@ -48,7 +47,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("duration");
-            writer.WriteStringValue(Duration.ToString(string.Empty, CultureInfo.InvariantCulture));
+            writer.WriteStringValue(Duration, "P");
             if (Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success");

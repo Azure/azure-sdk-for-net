@@ -40,28 +40,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryEnvelope> body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/v2", false);
-            uri.AppendPath("/track", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStartArray();
-            foreach (var item in body)
-            {
-                content.JsonWriter.WriteObjectValue(item);
-            }
-            content.JsonWriter.WriteEndArray();
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -45,6 +45,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <summary> Key/value collection of context properties. See ContextTagKeys for information on available properties. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Telemetry data item. </summary>
-        public Base Data { get; set; }
+        public MonitorBase Data { get; set; }
     }
 }
