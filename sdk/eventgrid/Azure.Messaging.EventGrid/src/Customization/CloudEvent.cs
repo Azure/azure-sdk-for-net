@@ -51,6 +51,23 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CloudEvent"/> class.
+        /// </summary>
+        /// <param name="data"> Event data specific to the event type. </param>
+        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
+        /// <param name="type"> Type of event related to the originating occurrence. </param>
+        public CloudEvent(BinaryData data, string source, string type)
+        {
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(type, nameof(type));
+
+            Source = source;
+            Type = type;
+            DataBase64 = data.Bytes.ToArray();
+            ExtensionAttributes = new Dictionary<string, object>();
+        }
+
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
