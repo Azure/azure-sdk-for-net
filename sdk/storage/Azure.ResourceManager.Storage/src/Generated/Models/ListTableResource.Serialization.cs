@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListTableResource DeserializeListTableResource(JsonElement element)
         {
-            IReadOnlyList<Table> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Table>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Table> array = new List<Table>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Table.DeserializeTable(item));
-                        }
+                        array.Add(Table.DeserializeTable(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListTableResource(value, nextLink);
+            return new ListTableResource(Optional.ToList(value), nextLink.Value);
         }
     }
 }

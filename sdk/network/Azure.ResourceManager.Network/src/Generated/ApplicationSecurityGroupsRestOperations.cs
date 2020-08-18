@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ApplicationSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroup>> GetAsync(string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,14 +161,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,6 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationSecurityGroupName"/> is null. </exception>
         public Response<ApplicationSecurityGroup> Get(string resourceGroupName, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -196,14 +193,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,6 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -270,6 +261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -324,6 +316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to update application security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroup>> UpdateTagsAsync(string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,14 +340,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,6 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="parameters"> Parameters supplied to update application security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ApplicationSecurityGroup> UpdateTags(string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -390,14 +377,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -432,14 +412,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,14 +432,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,6 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the application security groups in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -509,14 +476,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,6 +487,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the application security groups in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationSecurityGroupListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -542,14 +503,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -572,6 +526,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all application security groups in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -587,14 +542,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,6 +553,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all application security groups in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationSecurityGroupListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -620,14 +569,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -651,6 +593,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationSecurityGroupListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -670,14 +613,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -689,6 +625,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationSecurityGroupListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -708,14 +645,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ApplicationSecurityGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
-                        }
+                        value = ApplicationSecurityGroupListResult.DeserializeApplicationSecurityGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -97,6 +97,14 @@ namespace Microsoft.Azure.EventHubs.Tests
             TestUtility.Log("Sends done.");
         }
 
+        internal static async Task SendToPartitionAsync(EventHubClient ehClient, string partitionId, EventDataBatch batch)
+        {
+            TestUtility.Log($"Starting to send {batch.Count} messages to partition {partitionId}.");
+            var partitionSender = ehClient.CreatePartitionSender(partitionId);
+            await partitionSender.SendAsync(batch);
+            TestUtility.Log("Sends done.");
+        }
+
         internal static async Task<Dictionary<string, string>> DiscoverEndOfStreamForPartitionsAsync(EventHubClient ehClient, string[] partitionIds)
         {
             // Mark offsets in all partitions so we can attempt to receive from that point.

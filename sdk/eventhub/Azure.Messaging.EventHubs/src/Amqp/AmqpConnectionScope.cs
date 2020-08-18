@@ -854,18 +854,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   credentials.
         /// </remarks>
         ///
-        protected virtual Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
-                                                                           CbsTokenProvider tokenProvider,
-                                                                           Uri endpoint,
-                                                                           string audience,
-                                                                           string resource,
-                                                                           string[] requiredClaims,
-                                                                           TimeSpan timeout)
+        protected virtual async Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
+                                                                                 CbsTokenProvider tokenProvider,
+                                                                                 Uri endpoint,
+                                                                                 string audience,
+                                                                                 string resource,
+                                                                                 string[] requiredClaims,
+                                                                                 TimeSpan timeout)
         {
             try
             {
+                // If the connection is in the process of closing, then do not attempt to authorize but consider it an
+                // unexpected scenario that should be treated as transient.
+
+                if (connection.IsClosing())
+                {
+                     throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
+                }
+
                 var authLink = connection.Extensions.Find<AmqpCbsLink>();
-                return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+                return await authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout).ConfigureAwait(false);
             }
             catch (Exception ex) when ((ex is ObjectDisposedException) || (ex is OperationCanceledException))
             {

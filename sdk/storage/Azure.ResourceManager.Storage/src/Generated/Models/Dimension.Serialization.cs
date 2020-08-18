@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static Dimension DeserializeDimension(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
             }
-            return new Dimension(name, displayName);
+            return new Dimension(name.Value, displayName.Value);
         }
     }
 }

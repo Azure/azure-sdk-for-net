@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ReferencedPublicIpAddress
     {
         /// <summary> Initializes a new instance of ReferencedPublicIpAddress. </summary>
-        public ReferencedPublicIpAddress()
+        internal ReferencedPublicIpAddress()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The PublicIPAddress Reference. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

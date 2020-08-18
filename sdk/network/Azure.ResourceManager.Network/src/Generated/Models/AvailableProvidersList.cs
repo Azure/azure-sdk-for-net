@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
         /// <param name="countries"> List of available countries. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="countries"/> is null. </exception>
         internal AvailableProvidersList(IEnumerable<AvailableProvidersListCountry> countries)
         {
             if (countries == null)
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(countries));
             }
 
-            Countries = countries.ToArray();
+            Countries = countries.ToList();
         }
 
         /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
         /// <param name="countries"> List of available countries. </param>
         internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries)
         {
-            Countries = countries ?? new List<AvailableProvidersListCountry>();
+            Countries = countries;
         }
 
         /// <summary> List of available countries. </summary>

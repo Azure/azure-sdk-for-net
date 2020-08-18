@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="testConfigurations"> List of test configuration names. </param>
         /// <param name="sources"> List of source endpoint names. </param>
         /// <param name="destinations"> List of destination endpoint names. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testConfigurations"/>, <paramref name="sources"/>, or <paramref name="destinations"/> is null. </exception>
         public ConnectionMonitorTestGroup(string name, IEnumerable<string> testConfigurations, IEnumerable<string> sources, IEnumerable<string> destinations)
         {
             if (name == null)
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             Name = name;
             Disable = disable;
-            TestConfigurations = testConfigurations ?? new List<string>();
-            Sources = sources ?? new List<string>();
-            Destinations = destinations ?? new List<string>();
+            TestConfigurations = testConfigurations;
+            Sources = sources;
+            Destinations = destinations;
         }
 
         /// <summary> The name of the connection monitor test group. </summary>

@@ -17,7 +17,7 @@ namespace Azure.Management.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId");
             writer.WriteStringValue(TargetResourceId);
-            if (FlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration");
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
@@ -28,12 +28,12 @@ namespace Azure.Management.Network.Models
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy");
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format");
                 writer.WriteObjectValue(Format);
@@ -45,11 +45,11 @@ namespace Azure.Management.Network.Models
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
         {
             string targetResourceId = default;
-            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
+            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
             string storageId = default;
             bool enabled = default;
-            RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
+            Optional<RetentionPolicyParameters> retentionPolicy = default;
+            Optional<FlowLogFormatParameters> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -59,10 +59,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("flowAnalyticsConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value);
                     continue;
                 }
@@ -82,19 +78,11 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("retentionPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("format"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
                             continue;
                         }
@@ -102,7 +90,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration, storageId, enabled, retentionPolicy, format);
+            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value);
         }
     }
 }

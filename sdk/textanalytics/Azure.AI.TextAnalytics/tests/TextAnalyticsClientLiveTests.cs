@@ -11,16 +11,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(
-        /*TextAnalyticsClientOptions.ServiceVersion.V3_0,*/
-        TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_1)]
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
-
-        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
@@ -28,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             string apiKey = TestEnvironment.ApiKey;
             credential ??= new AzureKeyCredential(apiKey);
-            options ??= new TextAnalyticsClientOptions(_serviceVersion);
+            options ??= new TextAnalyticsClientOptions();
             return InstrumentClient (
                 new TextAnalyticsClient(
                     new Uri(TestEnvironment.Endpoint),
@@ -88,7 +82,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
-            var options = new TextAnalyticsClientOptions(_serviceVersion)
+            var options = new TextAnalyticsClientOptions()
             {
                 DefaultCountryHint = DetectLanguageInput.None
             };
@@ -248,6 +242,31 @@ namespace Azure.AI.TextAnalytics.Tests
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].PrimaryLanguage.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
+        public void DetectLanguageBatchWithNullIdTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<DetectLanguageInput> { new DetectLanguageInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" }));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchWithNullTextTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<DetectLanguageInput> { new DetectLanguageInput("1", null) };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(documents, options: new TextAnalyticsRequestOptions() { ModelVersion = "2019-10-01" });
+
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].PrimaryLanguage.GetType());
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 

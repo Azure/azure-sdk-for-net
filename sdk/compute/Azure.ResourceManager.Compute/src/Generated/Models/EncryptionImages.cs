@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of EncryptionImages. </summary>
         public EncryptionImages()
         {
+            DataDiskImages = new ChangeTrackingList<DataDiskImageEncryption>();
         }
 
         /// <summary> Initializes a new instance of EncryptionImages. </summary>
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This is the disk image encryption base class. </summary>
         public DiskImageEncryption OsDiskImage { get; set; }
         /// <summary> A list of encryption specifications for data disk images. </summary>
-        public IList<DataDiskImageEncryption> DataDiskImages { get; set; }
+        public IList<DataDiskImageEncryption> DataDiskImages { get; }
     }
 }

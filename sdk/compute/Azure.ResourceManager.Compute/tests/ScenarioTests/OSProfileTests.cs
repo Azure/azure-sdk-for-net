@@ -77,8 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 ProvisionVMAgent = true,
                 EnableAutomaticUpdates = false,
                 TimeZone = PacificStandardTime,
-                AdditionalUnattendContent = new List<AdditionalUnattendContent>
-                    {
+                AdditionalUnattendContent = {
                         new AdditionalUnattendContent
                         {
                             PassName = OOBESystem,
@@ -89,8 +88,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     },
                 WinRM = new WinRMConfiguration
                 {
-                    Listeners = new List<WinRMListener>
-                        {
+                    Listeners = {
                             new WinRMListener
                             {
                                 Protocol = ProtocolTypes.Http,
@@ -104,13 +102,11 @@ namespace Azure.ResourceManager.Compute.Tests
                         }
                 }
             };
-            osProfile.Secrets = new List<VaultSecretGroup>
-                {
+            osProfile.Secrets.Add(
                     new VaultSecretGroup
                     {
                          SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
-                         VaultCertificates = new List<VaultCertificate>
-                         {
+                         VaultCertificates = {
                              new VaultCertificate
                              {
                                  CertificateStore = "My",
@@ -118,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Tests
                              }
                          }
                     }
-                };
+                );
         }
 
         private void ValidateWinRMCustomDataAndUnattendContent(string winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
@@ -227,8 +223,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     DisablePasswordAuthentication = false,
                     Ssh = new SshConfiguration
                     {
-                        PublicKeys = new List<SshPublicKey>
-                    {
+                        PublicKeys = {
                         new SshPublicKey
                         {
                             Path = sshPath,
@@ -281,8 +276,9 @@ namespace Azure.ResourceManager.Compute.Tests
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef, vmCustomizer);
             VirtualMachine vm = returnTwoVM.Item1;
             inputVM = returnTwoVM.Item2;
+            string inputVMName = returnTwoVM.Item3;
             //var getVMWithInstanceViewResponse = await VirtualMachinesClient.GetAsync(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
-            var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name);
+            var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
             var lroResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, vm.Name, vm));

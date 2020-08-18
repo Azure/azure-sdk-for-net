@@ -57,14 +57,7 @@ namespace Azure.Management.Network
         {
             BastionShareableLinkListResult firstPageResult;
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                firstPageResult = null;
-            }
-            else
-            {
-                firstPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-            }
+            firstPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
             Page<BastionShareableLink> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
@@ -74,14 +67,7 @@ namespace Azure.Management.Network
         {
             BastionShareableLinkListResult firstPageResult;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                firstPageResult = null;
-            }
-            else
-            {
-                firstPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-            }
+            firstPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
             Page<BastionShareableLink> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
@@ -92,14 +78,7 @@ namespace Azure.Management.Network
             Response response = await _nextPageFunc(nextLink).ConfigureAwait(false);
             BastionShareableLinkListResult nextPageResult;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                nextPageResult = null;
-            }
-            else
-            {
-                nextPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-            }
+            nextPageResult = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
             return Page.FromValues(nextPageResult.Value, nextPageResult.NextLink, response);
         }
     }

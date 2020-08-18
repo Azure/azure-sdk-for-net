@@ -15,12 +15,12 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BaseBlob != null)
+            if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob");
                 writer.WriteObjectValue(BaseBlob);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot");
                 writer.WriteObjectValue(Snapshot);
@@ -30,30 +30,22 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
         {
-            ManagementPolicyBaseBlob baseBlob = default;
-            ManagementPolicySnapShot snapshot = default;
+            Optional<ManagementPolicyBaseBlob> baseBlob = default;
+            Optional<ManagementPolicySnapShot> snapshot = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseBlob"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value);
                     continue;
                 }
                 if (property.NameEquals("snapshot"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
                     continue;
                 }
             }
-            return new ManagementPolicyAction(baseBlob, snapshot);
+            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value);
         }
     }
 }

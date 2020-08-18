@@ -14,30 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element)
         {
-            Access? access = default;
-            string ruleName = default;
+            Optional<Access> access = default;
+            Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("access"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     access = new Access(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ruleName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ruleName = property.Value.GetString();
                     continue;
                 }
             }
-            return new VerificationIPFlowResult(access, ruleName);
+            return new VerificationIPFlowResult(Optional.ToNullable(access), ruleName.Value);
         }
     }
 }

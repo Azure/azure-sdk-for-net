@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public GalleryApplicationVersionPublishingProfile(UserArtifactSource source)
         {
             if (source == null)

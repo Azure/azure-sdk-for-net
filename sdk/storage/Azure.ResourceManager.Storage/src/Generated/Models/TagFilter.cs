@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
         /// <param name="op"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
         /// <param name="value"> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="op"/>, or <paramref name="value"/> is null. </exception>
         public TagFilter(string name, string op, string value)
         {
             if (name == null)

@@ -15,32 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Offer != null)
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer");
                 writer.WriteStringValue(Offer);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteStringValue(Sku);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (ExactVersion != null)
-            {
-                writer.WritePropertyName("exactVersion");
-                writer.WriteStringValue(ExactVersion);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
@@ -50,70 +45,46 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
-            string publisher = default;
-            string offer = default;
-            string sku = default;
-            string version = default;
-            string exactVersion = default;
-            string id = default;
+            Optional<string> publisher = default;
+            Optional<string> offer = default;
+            Optional<string> sku = default;
+            Optional<string> version = default;
+            Optional<string> exactVersion = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publisher = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("offer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     offer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("exactVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     exactVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new ImageReference(id, publisher, offer, sku, version, exactVersion);
+            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value);
         }
     }
 }

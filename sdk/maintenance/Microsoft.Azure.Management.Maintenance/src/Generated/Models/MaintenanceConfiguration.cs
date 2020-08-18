@@ -46,17 +46,18 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// of the maintenanceConfiguration</param>
         /// <param name="maintenanceScope">Gets or sets maintenanceScope of the
         /// configuration. Possible values include: 'All', 'Host', 'Resource',
-        /// 'InResource', 'OSImage', 'Extension', 'InGuestPatch'</param>
+        /// 'InResource', 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
+        /// 'SQLManagedInstance'</param>
         /// <param name="startDateTime">Effective start date of the maintenance
-        /// window in YYYY-MM-DD hh:mm:ss format. The start date can be set to
+        /// window in YYYY-MM-DD hh:mm format. The start date can be set to
         /// either the current date or future date. The window will be created
         /// in the time zone provided and adjusted to daylight savings
         /// according to that time zone.</param>
         /// <param name="expirationDateTime">Effective expiration date of the
-        /// maintenance window in YYYY-MM-DD hh:mm:ss format. The window will
-        /// be created in the time zone provided and adjusted to daylight
-        /// savings according to that time zone. Expiration date must be set to
-        /// a future date. If not provided, it will be set to the maximum
+        /// maintenance window in YYYY-MM-DD hh:mm format. The window will be
+        /// created in the time zone provided and adjusted to daylight savings
+        /// according to that time zone. Expiration date must be set to a
+        /// future date. If not provided, it will be set to the maximum
         /// datetime 9999-12-31 23:59:59.</param>
         /// <param name="duration">Duration of the maintenance window in HH:mm
         /// format. If not provided, default value will be used based on
@@ -82,7 +83,9 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// recurEvery: Month, recurEvery: 2Months, recurEvery: Month
         /// day23,day24, recurEvery: Month Last Sunday, recurEvery: Month
         /// Fourth Monday.</param>
-        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string), string startDateTime = default(string), string expirationDateTime = default(string), string duration = default(string), string timeZone = default(string), string recurEvery = default(string))
+        /// <param name="visibility">Gets or sets the visibility of the
+        /// configuration. Possible values include: 'Custom', 'Public'</param>
+        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string), string startDateTime = default(string), string expirationDateTime = default(string), string duration = default(string), string timeZone = default(string), string recurEvery = default(string), string visibility = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -95,6 +98,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
             Duration = duration;
             TimeZone = timeZone;
             RecurEvery = recurEvery;
+            Visibility = visibility;
             CustomInit();
         }
 
@@ -130,14 +134,14 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <summary>
         /// Gets or sets maintenanceScope of the configuration. Possible values
         /// include: 'All', 'Host', 'Resource', 'InResource', 'OSImage',
-        /// 'Extension', 'InGuestPatch'
+        /// 'Extension', 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceScope")]
         public string MaintenanceScope { get; set; }
 
         /// <summary>
         /// Gets or sets effective start date of the maintenance window in
-        /// YYYY-MM-DD hh:mm:ss format. The start date can be set to either the
+        /// YYYY-MM-DD hh:mm format. The start date can be set to either the
         /// current date or future date. The window will be created in the time
         /// zone provided and adjusted to daylight savings according to that
         /// time zone.
@@ -147,7 +151,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 
         /// <summary>
         /// Gets or sets effective expiration date of the maintenance window in
-        /// YYYY-MM-DD hh:mm:ss format. The window will be created in the time
+        /// YYYY-MM-DD hh:mm format. The window will be created in the time
         /// zone provided and adjusted to daylight savings according to that
         /// time zone. Expiration date must be set to a future date. If not
         /// provided, it will be set to the maximum datetime 9999-12-31
@@ -192,6 +196,13 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceWindow.recurEvery")]
         public string RecurEvery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visibility of the configuration. Possible values
+        /// include: 'Custom', 'Public'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.visibility")]
+        public string Visibility { get; set; }
 
     }
 }

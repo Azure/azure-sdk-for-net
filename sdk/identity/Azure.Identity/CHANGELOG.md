@@ -1,6 +1,15 @@
 # Release History
 
-## 1.2.0-preview.7 (Unreleased)
+## 1.3.0-preview.1 (Unreleased)
+
+- Restoring Application Authentication APIs from 1.2.0-preview.6
+
+## 1.2.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 1.2.0 (2020-08-10)
 
 ### Breaking Changes
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
@@ -15,6 +24,10 @@
   - Removed methods `Authenticate` and `AuthenticateAsync` from `InteractiveBrowserCredential`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `UsernamePasswordCredential`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
+
+### Fixes and improvements
+- Fixed excess errors in `DefaultAzureCredential` tracing (Issue [#10659](https://github.com/Azure/azure-sdk-for-net/issues/10659))
+- Fixed concurrency issue in `DefaultAzureCredential` (Issue [#13044](https://github.com/Azure/azure-sdk-for-net/issues/13044))
 
 
 ## 1.2.0-preview.6 (2020-07-22)

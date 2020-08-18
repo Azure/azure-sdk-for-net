@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerServiceDiagnosticsProfile. </summary>
         /// <param name="vmDiagnostics"> Profile for the container service VM diagnostic agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmDiagnostics"/> is null. </exception>
         public ContainerServiceDiagnosticsProfile(ContainerServiceVMDiagnostics vmDiagnostics)
         {
             if (vmDiagnostics == null)
