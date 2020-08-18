@@ -41,9 +41,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             FileName = fileName;
             Line = line;
         }
-
-        /// <summary> Method name. </summary>
-        public int Level { get; set; }
         /// <summary> Method name. </summary>
         public string Method { get; set; }
         /// <summary> Name of the assembly (dll, jar, etc.) containing this function. </summary>

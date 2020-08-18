@@ -10,9 +10,7 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Domain : IUtf8JsonSerializable
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class MonitorDomain : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +23,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Domain DeserializeDomain(JsonElement element)
+        internal static MonitorDomain DeserializeMonitorDomain(JsonElement element)
         {
             Optional<string> test = default;
             foreach (var property in element.EnumerateObject())
@@ -36,7 +34,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                     continue;
                 }
             }
-            return new Domain(test.Value);
+            return new MonitorDomain(test.Value);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                             }
 
                             activity?.AddTag("request.content", requestContent);
-                            activity?.AddTag("request.length", requestContent.Length.ToString());
+                            activity?.AddTag("request.length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
 
                             var echo = Encoding.UTF8.GetBytes("echo: " + requestContent);
                             context.Response.ContentEncoding = Encoding.UTF8;
@@ -127,7 +127,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                                 activity?.AddTag("http.url", url);
                                 activity?.AddTag("http.status_code", $"{response.StatusCode:D}");
 
-                                var responseContent = await response.Content.ReadAsStringAsync();
+                                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                                 activity?.AddTag("response.content", responseContent);
                                 activity?.AddTag("response.length", responseContent.Length.ToString(CultureInfo.InvariantCulture));
 

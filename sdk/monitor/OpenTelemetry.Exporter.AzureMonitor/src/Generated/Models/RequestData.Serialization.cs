@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,7 +26,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("duration");
-            writer.WriteStringValue(Duration.ToString(string.Empty, CultureInfo.InvariantCulture));
+            writer.WriteStringValue(Duration);
             writer.WritePropertyName("success");
             writer.WriteBooleanValue(Success);
             writer.WritePropertyName("responseCode");
@@ -78,7 +76,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             int ver = default;
             string id = default;
             Optional<string> name = default;
-            TimeSpan duration = default;
+            string duration = default;
             bool success = default;
             string responseCode = default;
             Optional<string> source = default;
@@ -105,7 +103,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("success"))

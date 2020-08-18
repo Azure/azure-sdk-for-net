@@ -5,11 +5,11 @@ using System.Diagnostics;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 {
-    public class Program
+    public static class DemoTrace
     {
         public static readonly ActivitySource source = new ActivitySource("DemoSource");
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             OpenTelemetry.Sdk.CreateTracerProvider(builder => builder
                                 .AddActivitySource("Samples.SampleServer")

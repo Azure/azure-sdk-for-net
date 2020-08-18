@@ -12,7 +12,7 @@ using Azure.Core;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> An instance of Remote Dependency represents an interaction of the monitored component with a remote component/service like SQL or an HTTP endpoint. </summary>
-    public partial class RemoteDependencyData : Domain
+    public partial class RemoteDependencyData : MonitorDomain
     {
         /// <summary> Initializes a new instance of RemoteDependencyData. </summary>
         /// <param name="ver"> Schema version. </param>
@@ -80,7 +80,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <summary> Indication of successfull or unsuccessfull call. </summary>
         public bool? Success { get; set; }
         /// <summary> Collection of custom properties. TODO: max key length validate. </summary>
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, string> Properties { get; }
         /// <summary> Collection of custom measurements. TODO: max key length validate. </summary>
         public IDictionary<string, double> Measurements { get; }
     }

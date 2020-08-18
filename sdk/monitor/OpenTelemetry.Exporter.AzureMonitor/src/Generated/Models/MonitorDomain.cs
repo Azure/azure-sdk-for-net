@@ -8,18 +8,16 @@
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> The abstract common base of all domains. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Domain
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class MonitorDomain
     {
-        /// <summary> Initializes a new instance of Domain. </summary>
-        public Domain()
+        /// <summary> Initializes a new instance of MonitorDomain. </summary>
+        public MonitorDomain()
         {
         }
 
-        /// <summary> Initializes a new instance of Domain. </summary>
+        /// <summary> Initializes a new instance of MonitorDomain. </summary>
         /// <param name="test"> Ignored value. </param>
-        internal Domain(string test)
+        internal MonitorDomain(string test)
         {
             Test = test;
         }

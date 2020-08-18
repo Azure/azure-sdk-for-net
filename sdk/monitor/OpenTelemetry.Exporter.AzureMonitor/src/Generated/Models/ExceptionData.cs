@@ -11,7 +11,7 @@ using Azure.Core;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> An instance of Exception represents a handled or unhandled exception that occurred during execution of the monitored application. </summary>
-    public partial class ExceptionData : Domain
+    public partial class ExceptionData : MonitorDomain
     {
         /// <summary> Initializes a new instance of ExceptionData. </summary>
         /// <param name="ver"> Schema version. </param>

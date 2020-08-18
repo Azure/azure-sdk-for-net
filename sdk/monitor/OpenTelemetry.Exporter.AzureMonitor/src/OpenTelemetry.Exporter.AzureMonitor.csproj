@@ -2,14 +2,14 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.0.0-preview.0</Version>
+    <Version>0.1.0</Version>
     <PackageTags>Azure Monitor OpenTelemetry Exporter</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-	<PackageReference Include="OpenTelemetry" Version="0.4.0-beta.2" IsImplicitlyDefined="true" />
+    <PackageReference Include="OpenTelemetry" Version="0.4.0-beta.2" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -42,7 +42,7 @@
       CA2007; 
       CA2231; 
       CA2225; 
-      CA1714; ;AZC0001;CA1812;CS0108</NoWarn>
+      CA1714; ;AZC0001;CA1812;CS0108;CA1812;CS1591;</NoWarn>
   </PropertyGroup>
 
 </Project>

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenTelemetry.Exporter.AzureMonitor.Models;
-using OpenTelemetry.Trace;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using OpenTelemetry.Exporter.AzureMonitor.Models;
+using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
@@ -70,7 +70,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 StatusCanonicalCode.Unavailable => 503,
                 StatusCanonicalCode.DataLoss => 0,
                 StatusCanonicalCode.Unauthenticated => 401,
-                _ => 200,
+                StatusCanonicalCode.Ok => 200,
+                _ => 0
             };
 
             return status.ToString(CultureInfo.InvariantCulture);

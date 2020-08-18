@@ -10,17 +10,10 @@ using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
     public class AzureMonitorTraceExporter : ActivityExporter
     {
         private readonly AzureMonitorTransmitter AzureMonitorTransmitter;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="options">test</param>
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options)
         {
             if (options == null)
