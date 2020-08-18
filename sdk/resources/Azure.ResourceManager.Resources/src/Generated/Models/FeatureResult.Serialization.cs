@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static FeatureResult DeserializeFeatureResult(JsonElement element)
         {
-            string name = default;
-            FeatureProperties properties = default;
-            string id = default;
-            string type = default;
+            Optional<string> name = default;
+            Optional<FeatureProperties> properties = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = FeatureProperties.DeserializeFeatureProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
             }
-            return new FeatureResult(name, properties, id, type);
+            return new FeatureResult(name.Value, properties.Value, id.Value, type.Value);
         }
     }
 }

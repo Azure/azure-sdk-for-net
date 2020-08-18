@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RegionalReplicationStatus
     {
         /// <summary> Initializes a new instance of RegionalReplicationStatus. </summary>
-        public RegionalReplicationStatus()
+        internal RegionalReplicationStatus()
         {
         }
 

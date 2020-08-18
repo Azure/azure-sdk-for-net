@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,28 +15,52 @@ namespace Azure.Iot.Hub.Service.Authentication
     /// </summary>
     internal class SasTokenAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly ISasTokenProvider _sasTokenProvider;
+        private readonly TimeSpan _getTokenTimeout = TimeSpan.FromSeconds(30);
+        private readonly TokenCredential _credential;
 
-        internal SasTokenAuthenticationPolicy(ISasTokenProvider sasTokenProvider)
+        internal SasTokenAuthenticationPolicy(TokenCredential credential)
         {
-            _sasTokenProvider = sasTokenProvider;
+            _credential = credential;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            AddHeaders(message);
-            ProcessNext(message, pipeline);
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            AddHeaders(message);
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            return ProcessAsync(message, pipeline, true);
         }
 
-        private void AddHeaders(HttpMessage message)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            message.Request.Headers.Add(HttpHeader.Names.Authorization, _sasTokenProvider.GetSasToken());
+            if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new InvalidOperationException("Token authentication is not permitted for non TLS protected (https) endpoints.");
+            }
+
+            await AddHeaders(message, async).ConfigureAwait(false);
+
+            if (async)
+            {
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline);
+            }
+        }
+
+        private async Task AddHeaders(HttpMessage message, bool async)
+        {
+            using var cts = new CancellationTokenSource(_getTokenTimeout);
+
+            AccessToken token = async
+                ? await _credential.GetTokenAsync(new TokenRequestContext(), cts.Token).ConfigureAwait(false)
+                : _credential.GetToken(new TokenRequestContext(), cts.Token);
+
+            message.Request.Headers.Add(HttpHeader.Names.Authorization, token.Token);
         }
     }
 }

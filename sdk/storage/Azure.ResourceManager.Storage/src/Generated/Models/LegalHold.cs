@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of LegalHold. </summary>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public LegalHold(IEnumerable<string> tags)
         {
             if (tags == null)
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal LegalHold(bool? hasLegalHold, IList<string> tags)
         {
             HasLegalHold = hasLegalHold;
-            Tags = tags ?? new List<string>();
+            Tags = tags;
         }
 
         /// <summary> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </summary>

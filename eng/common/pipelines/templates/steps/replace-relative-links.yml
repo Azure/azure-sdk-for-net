@@ -91,7 +91,7 @@ steps:
             else:
                 return match.group(0)
 
-        def replace_prefined_relative_links(match, readme_location, root_folder, build_sha, repo_id):
+        def replace_predefined_relative_links(match, readme_location, root_folder, build_sha, repo_id):
             link_path = match.group(2).strip()
 
             if is_relative_link(link_path, readme_location):
@@ -133,7 +133,7 @@ steps:
 
             content = re.sub(
                 PREDEFINED_LINK_DISCOVERY_REGEX,
-                lambda match, readme_location=readme_location, root_folder=root_folder, build_sha=build_sha, repo_id=repo_id: replace_prefined_relative_links(
+                lambda match, readme_location=readme_location, root_folder=root_folder, build_sha=build_sha, repo_id=repo_id: replace_predefined_relative_links(
                     match, readme_location, root_folder, build_sha, repo_id
                 ),
                 content,

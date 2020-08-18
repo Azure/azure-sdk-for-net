@@ -11,4 +11,7 @@ steps:
       workingDirectory: $(Build.SourcesDirectory)/${{ parameters.Directory }}
       filePath: eng/common/scripts/Verify-Links.ps1 
       arguments: >
-        -urls $(dir -r -i *.md) -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" -recursive:$false -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
+        -urls $(dir -r -i *.md) 
+        -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" 
+        -recursive: $false 
+        -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -34,6 +35,15 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 _points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoundingBox"/> structure.
+        /// </summary>
+        /// <param name="points">The sequence of points defining this <see cref="BoundingBox"/>.</param>
+        internal BoundingBox(IReadOnlyList<PointF> points)
+        {
+            _points = points?.ToArray();
         }
 
         /// <summary>

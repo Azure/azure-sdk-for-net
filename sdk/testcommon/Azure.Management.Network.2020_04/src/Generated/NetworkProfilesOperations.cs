@@ -234,6 +234,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all network profiles in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<NetworkProfile> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -277,6 +278,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all network profiles in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<NetworkProfile> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -321,6 +323,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkProfileName"> The name of the NetworkProfile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkProfileName"/> is null. </exception>
         public virtual async Task<NetworkProfilesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -350,6 +353,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkProfileName"> The name of the NetworkProfile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkProfileName"/> is null. </exception>
         public virtual NetworkProfilesDeleteOperation StartDelete(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

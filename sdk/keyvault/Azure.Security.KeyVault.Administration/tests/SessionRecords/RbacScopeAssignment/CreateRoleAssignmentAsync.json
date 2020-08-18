@@ -280,7 +280,7 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1-preview",
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -304,7 +304,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1-preview",
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -394,7 +394,7 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k/?api-version=7.1-preview",
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

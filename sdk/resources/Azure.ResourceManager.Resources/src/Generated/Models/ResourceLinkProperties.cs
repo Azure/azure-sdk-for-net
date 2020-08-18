@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ResourceLinkProperties. </summary>
         /// <param name="targetId"> The fully qualified ID of the target resource in the link. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> is null. </exception>
         public ResourceLinkProperties(string targetId)
         {
             if (targetId == null)

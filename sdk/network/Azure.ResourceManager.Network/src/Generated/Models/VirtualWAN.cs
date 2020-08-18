@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualWAN. </summary>
         public VirtualWAN()
         {
+            VirtualHubs = new ChangeTrackingList<SubResource>();
+            VpnSites = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualWAN. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
         /// <param name="typePropertiesType"> The type of the VirtualWAN. </param>
-        internal VirtualWAN(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, bool? disableVpnEncryption, IList<SubResource> virtualHubs, IList<SubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, ProvisioningState? provisioningState, string typePropertiesType) : base(id, name, type, location, tags)
+        internal VirtualWAN(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, bool? disableVpnEncryption, IReadOnlyList<SubResource> virtualHubs, IReadOnlyList<SubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, ProvisioningState? provisioningState, string typePropertiesType) : base(id, name, type, location, tags)
         {
             Etag = etag;
             DisableVpnEncryption = disableVpnEncryption;
@@ -50,9 +53,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Vpn encryption to be disabled or not. </summary>
         public bool? DisableVpnEncryption { get; set; }
         /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
-        public IList<SubResource> VirtualHubs { get; }
+        public IReadOnlyList<SubResource> VirtualHubs { get; }
         /// <summary> List of VpnSites in the VirtualWAN. </summary>
-        public IList<SubResource> VpnSites { get; }
+        public IReadOnlyList<SubResource> VpnSites { get; }
         /// <summary> True if branch to branch traffic is allowed. </summary>
         public bool? AllowBranchToBranchTraffic { get; set; }
         /// <summary> True if Vnet to Vnet traffic is allowed. </summary>

@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PassName != null)
+            if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName");
                 writer.WriteStringValue(PassName);
             }
-            if (ComponentName != null)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName");
                 writer.WriteStringValue(ComponentName);
             }
-            if (SettingName != null)
+            if (Optional.IsDefined(SettingName))
             {
                 writer.WritePropertyName("settingName");
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
                 writer.WriteStringValue(Content);
@@ -40,50 +40,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element)
         {
-            string passName = default;
-            string componentName = default;
-            SettingNames? settingName = default;
-            string content = default;
+            Optional<string> passName = default;
+            Optional<string> componentName = default;
+            Optional<SettingNames> settingName = default;
+            Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     passName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("componentName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     componentName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("settingName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     settingName = property.Value.GetString().ToSettingNames();
                     continue;
                 }
                 if (property.NameEquals("content"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     content = property.Value.GetString();
                     continue;
                 }
             }
-            return new AdditionalUnattendContent(passName, componentName, settingName, content);
+            return new AdditionalUnattendContent(passName.Value, componentName.Value, Optional.ToNullable(settingName), content.Value);
         }
     }
 }
