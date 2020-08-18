@@ -132,7 +132,7 @@ namespace Azure.Storage.Internal.Avro
         /// </summary>
         public AvroReader() { }
 
-        private async Task Initalize(bool async, CancellationToken cancellationToken = default)
+        public virtual async Task Initalize(bool async, CancellationToken cancellationToken = default)
         {
             // Four bytes, ASCII 'O', 'b', 'j', followed by 1.
             byte[] header = await AvroParser.ReadFixedBytesAsync(_headerStream, AvroConstants.InitBytes.Length, async, cancellationToken).ConfigureAwait(false);

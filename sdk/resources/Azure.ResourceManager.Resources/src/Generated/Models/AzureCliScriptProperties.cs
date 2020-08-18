@@ -7,16 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Properties of the Azure CLI script object. </summary>
-    public partial class AzureCliScriptProperties : DeploymentScriptPropertiesBase
+    internal partial class AzureCliScriptProperties : DeploymentScriptPropertiesBase
     {
         /// <summary> Initializes a new instance of AzureCliScriptProperties. </summary>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
-        public AzureCliScriptProperties(string azCliVersion, TimeSpan retentionInterval)
+        /// <exception cref="ArgumentNullException"> <paramref name="azCliVersion"/> is null. </exception>
+        internal AzureCliScriptProperties(string azCliVersion, TimeSpan retentionInterval)
         {
             if (azCliVersion == null)
             {
@@ -24,55 +26,28 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             AzCliVersion = azCliVersion;
+            SupportingScriptUris = new ChangeTrackingList<string>();
+            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
             RetentionInterval = retentionInterval;
-        }
-
-        /// <summary> Initializes a new instance of AzureCliScriptProperties. </summary>
-        /// <param name="containerSettings"> Container settings. </param>
-        /// <param name="storageAccountSettings"> Storage Account settings. </param>
-        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
-        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
-        /// <param name="status"> Contains the results of script execution. </param>
-        /// <param name="outputs"> List of script outputs. </param>
-        /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        /// <param name="primaryScriptUri"> Uri for the script. This is the entry point for the external script. </param>
-        /// <param name="supportingScriptUris"> Supporting files for the external script. </param>
-        /// <param name="scriptContent"> Script body. </param>
-        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </param>
-        /// <param name="environmentVariables"> The environment variables to pass over to the script. </param>
-        /// <param name="forceUpdateTag"> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </param>
-        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
-        /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </param>
-        internal AzureCliScriptProperties(ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IDictionary<string, object> outputs, string azCliVersion, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout) : base(containerSettings, storageAccountSettings, cleanupPreference, provisioningState, status, outputs)
-        {
-            AzCliVersion = azCliVersion;
-            PrimaryScriptUri = primaryScriptUri;
-            SupportingScriptUris = supportingScriptUris;
-            ScriptContent = scriptContent;
-            Arguments = arguments;
-            EnvironmentVariables = environmentVariables;
-            ForceUpdateTag = forceUpdateTag;
-            RetentionInterval = retentionInterval;
-            Timeout = timeout;
         }
 
         /// <summary> Azure CLI module version to be used. </summary>
-        public string AzCliVersion { get; set; }
+        public string AzCliVersion { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; set; }
+        public string PrimaryScriptUri { get; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; set; }
+        public IReadOnlyList<string> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
-        public string ScriptContent { get; set; }
+        public string ScriptContent { get; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
-        public string Arguments { get; set; }
+        public string Arguments { get; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; set; }
+        public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag { get; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </summary>
-        public TimeSpan RetentionInterval { get; set; }
+        public TimeSpan RetentionInterval { get; }
         /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? Timeout { get; }
     }
 }

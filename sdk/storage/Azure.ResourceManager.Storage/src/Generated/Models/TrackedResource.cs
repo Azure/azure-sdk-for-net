@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public TrackedResource(string location)
         {
             if (location == null)
@@ -22,6 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new ArgumentNullException(nameof(location));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
 
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
     }

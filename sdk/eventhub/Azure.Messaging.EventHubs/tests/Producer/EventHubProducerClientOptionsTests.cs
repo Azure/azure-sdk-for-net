@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
@@ -26,17 +27,38 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubProducerClientOptions
             {
+                EnableIdempotentPartitions = true,
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
             };
 
-            EventHubProducerClientOptions clone = options.Clone();
+            options.PartitionOptions.Add("0", new PartitionPublishingOptions
+            {
+                OwnerLevel = 3,
+                ProducerGroupId = 99,
+                StartingSequenceNumber = 42
+            });
+
+            var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
+            Assert.That(clone.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentPartitions), "The flag to enable idempotent publishing should have been copied.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
             Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
+            Assert.That(clone.PartitionOptions, Is.Not.SameAs(options.PartitionOptions), "The partitions options of the clone should be a copy, not the same instance.");
+            Assert.That(clone.PartitionOptions.Keys, Is.EquivalentTo(options.PartitionOptions.Keys), "The partition options of the clone should contain the same items");
+
+            foreach (var key in options.PartitionOptions.Keys)
+            {
+                Assert.That(clone.PartitionOptions[key], Is.Not.SameAs(options.PartitionOptions[key]), $"The partition options of the clone for partition: `{ key }` should be a copy, not the same instance.");
+
+                foreach (var property in typeof(PartitionPublishingOptions).GetProperties(BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance))
+                {
+                    Assert.That(property.GetValue(clone.PartitionOptions[key], null), Is.EqualTo(property.GetValue(options.PartitionOptions[key], null)), $"The partition options of the clone for partition: `{ key }` should have the same value for { property.Name }.");
+                }
+            }
         }
 
         /// <summary>

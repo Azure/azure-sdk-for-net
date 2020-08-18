@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IPConfigurationBgpPeeringAddress. </summary>
         public IPConfigurationBgpPeeringAddress()
         {
+            DefaultBgpIpAddresses = new ChangeTrackingList<string>();
+            CustomBgpIpAddresses = new ChangeTrackingList<string>();
+            TunnelIpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IPConfigurationBgpPeeringAddress. </summary>
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultBgpIpAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
         /// <param name="customBgpIpAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
         /// <param name="tunnelIpAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
-        internal IPConfigurationBgpPeeringAddress(string ipconfigurationId, IList<string> defaultBgpIpAddresses, IList<string> customBgpIpAddresses, IList<string> tunnelIpAddresses)
+        internal IPConfigurationBgpPeeringAddress(string ipconfigurationId, IReadOnlyList<string> defaultBgpIpAddresses, IList<string> customBgpIpAddresses, IReadOnlyList<string> tunnelIpAddresses)
         {
             IpconfigurationId = ipconfigurationId;
             DefaultBgpIpAddresses = defaultBgpIpAddresses;
@@ -33,10 +37,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of IP configuration which belongs to gateway. </summary>
         public string IpconfigurationId { get; set; }
         /// <summary> The list of default BGP peering addresses which belong to IP configuration. </summary>
-        public IList<string> DefaultBgpIpAddresses { get; }
+        public IReadOnlyList<string> DefaultBgpIpAddresses { get; }
         /// <summary> The list of custom BGP peering addresses which belong to IP configuration. </summary>
-        public IList<string> CustomBgpIpAddresses { get; set; }
+        public IList<string> CustomBgpIpAddresses { get; }
         /// <summary> The list of tunnel public IP addresses which belong to IP configuration. </summary>
-        public IList<string> TunnelIpAddresses { get; }
+        public IReadOnlyList<string> TunnelIpAddresses { get; }
     }
 }

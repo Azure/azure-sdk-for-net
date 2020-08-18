@@ -14,70 +14,46 @@ namespace Azure.Management.Compute.Models
     {
         internal static VirtualMachineSize DeserializeVirtualMachineSize(JsonElement element)
         {
-            string name = default;
-            int? numberOfCores = default;
-            int? osDiskSizeInMB = default;
-            int? resourceDiskSizeInMB = default;
-            int? memoryInMB = default;
-            int? maxDataDiskCount = default;
+            Optional<string> name = default;
+            Optional<int> numberOfCores = default;
+            Optional<int> osDiskSizeInMB = default;
+            Optional<int> resourceDiskSizeInMB = default;
+            Optional<int> memoryInMB = default;
+            Optional<int> maxDataDiskCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("numberOfCores"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numberOfCores = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("osDiskSizeInMB"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     osDiskSizeInMB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("resourceDiskSizeInMB"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceDiskSizeInMB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("memoryInMB"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     memoryInMB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxDataDiskCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxDataDiskCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VirtualMachineSize(name, numberOfCores, osDiskSizeInMB, resourceDiskSizeInMB, memoryInMB, maxDataDiskCount);
+            return new VirtualMachineSize(name.Value, Optional.ToNullable(numberOfCores), Optional.ToNullable(osDiskSizeInMB), Optional.ToNullable(resourceDiskSizeInMB), Optional.ToNullable(memoryInMB), Optional.ToNullable(maxDataDiskCount));
         }
     }
 }

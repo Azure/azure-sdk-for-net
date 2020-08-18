@@ -15,6 +15,10 @@
 # Extensions
 /sdk/extensions/                                @pakrym
 
+# Compute
+# PRLabel: %Compute
+/sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
+
 # Service teams
 # PRLabel: %AzConfig
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
@@ -68,7 +72,7 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @isra-fel @erich-wang @allenjzhang
+/**/*Management*/                               @allenjzhang
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
@@ -80,6 +84,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @isra-fel @erich-wang @allenjzhang
+/eng/mgmt/      @allenjzhang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

@@ -46,7 +46,7 @@ namespace ResourceGroups.Tests
             var result = await ResourceGroupsOperations.CreateOrUpdateAsync(groupName,
                 new ResourceGroup(DefaultLocation)
                 {
-                    Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
+                    Tags = { { "department", "finance" }, { "tagname", "tagvalue" } },
                 });
             var listResult = await ResourceGroupsOperations.ListAsync().ToEnumerableAsync();
             var listedGroup = listResult.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));

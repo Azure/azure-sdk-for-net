@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsRoutesTableSummaryListResult. </summary>
         internal ExpressRouteCrossConnectionsRoutesTableSummaryListResult()
         {
+            Value = new ChangeTrackingList<ExpressRouteCrossConnectionRoutesTableSummary>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsRoutesTableSummaryListResult. </summary>

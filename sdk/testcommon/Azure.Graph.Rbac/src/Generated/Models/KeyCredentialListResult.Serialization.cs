@@ -15,32 +15,21 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static KeyCredentialListResult DeserializeKeyCredentialListResult(JsonElement element)
         {
-            IReadOnlyList<KeyCredential> value = default;
+            Optional<IReadOnlyList<KeyCredential>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<KeyCredential> array = new List<KeyCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(KeyCredential.DeserializeKeyCredential(item));
-                        }
+                        array.Add(KeyCredential.DeserializeKeyCredential(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new KeyCredentialListResult(value);
+            return new KeyCredentialListResult(Optional.ToList(value));
         }
     }
 }

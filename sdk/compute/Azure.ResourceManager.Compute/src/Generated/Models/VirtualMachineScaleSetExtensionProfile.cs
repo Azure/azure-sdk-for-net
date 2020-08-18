@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionProfile. </summary>
         public VirtualMachineScaleSetExtensionProfile()
         {
+            Extensions = new ChangeTrackingList<VirtualMachineScaleSetExtension>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionProfile. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine scale set child extension resources. </summary>
-        public IList<VirtualMachineScaleSetExtension> Extensions { get; set; }
+        public IList<VirtualMachineScaleSetExtension> Extensions { get; }
     }
 }

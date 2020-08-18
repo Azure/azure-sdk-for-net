@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
@@ -59,7 +60,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
         /// <param name="additionalProperties"> . </param>
-        internal CloudEventInternal(string id, string source, object data, string dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
+        internal CloudEventInternal(string id, string source, JsonElement? data, string dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
         {
             Id = id;
             Source = source;
@@ -78,8 +79,6 @@ namespace Azure.Messaging.EventGrid.Models
         public string Id { get; set; }
         /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
         public string Source { get; set; }
-        /// <summary> Event data specific to the event type. </summary>
-        public object Data { get; set; }
         /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
         public string DataBase64 { get; set; }
         /// <summary> Type of event related to the originating occurrence. </summary>

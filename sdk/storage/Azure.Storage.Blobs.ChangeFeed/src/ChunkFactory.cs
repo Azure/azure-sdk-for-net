@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Internal.Avro;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -22,10 +24,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _avroReaderFactory = avroReaderFactory;
         }
 
-        internal virtual Chunk BuildChunk(
+        internal async virtual Task<Chunk> BuildChunk(
+            bool async,
             string chunkPath,
             long blockOffset = 0,
-            long eventIndex = 0)
+            long eventIndex = 0,
+            CancellationToken cancellationToken = default)
         {
             BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
             AvroReader avroReader;
@@ -54,10 +58,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 avroReader = _avroReaderFactory.BuildAvroReader(dataStream);
             }
 
+            await avroReader.Initalize(async, cancellationToken).ConfigureAwait(false);
+
             return new Chunk(
                 avroReader,
                 blockOffset,
-                eventIndex);
+                eventIndex,
+                chunkPath);
         }
 
         /// <summary>

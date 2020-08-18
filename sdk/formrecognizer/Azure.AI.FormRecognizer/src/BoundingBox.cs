@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,26 +18,37 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public readonly struct BoundingBox
     {
+        private readonly PointF[] _points;
+
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
             if (boundingBox.Count == 0)
             {
-                Points = null;
+                _points = Array.Empty<PointF>();
                 return;
             }
 
             int count = boundingBox.Count / 2;
 
-            Points = new PointF[count];
+            _points = new PointF[count];
             for (int i = 0; i < count; i++)
             {
-                Points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
+                _points[i] = new PointF(boundingBox[2 * i], boundingBox[(2 * i) + 1]);
             }
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BoundingBox"/> structure.
         /// </summary>
-        internal PointF[] Points { get; }
+        /// <param name="points">The sequence of points defining this <see cref="BoundingBox"/>.</param>
+        internal BoundingBox(IReadOnlyList<PointF> points)
+        {
+            _points = points?.ToArray();
+        }
+
+        /// <summary>
+        /// </summary>
+        internal PointF[] Points => _points ?? Array.Empty<PointF>();
 
         /// <summary>
         /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.

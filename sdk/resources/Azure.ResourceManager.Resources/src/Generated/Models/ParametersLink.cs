@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ParametersLink. </summary>
         /// <param name="uri"> The URI of the parameters file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ParametersLink(string uri)
         {
             if (uri == null)

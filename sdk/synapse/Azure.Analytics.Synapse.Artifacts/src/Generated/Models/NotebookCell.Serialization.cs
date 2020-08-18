@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> attachments = default;
             Optional<IList<NotebookCellOutputItem>> outputs = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cell_type"))
@@ -96,7 +96,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     outputs = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
