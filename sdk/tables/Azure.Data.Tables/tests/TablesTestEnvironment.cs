@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
         public const string PrimaryCosmosKeyEnvironmentVariableName = "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY";
         public string PrimaryCosmosAccountKey => GetRecordedVariable(PrimaryCosmosKeyEnvironmentVariableName);
         public string CosmosAccountName => GetRecordedVariable("TABLES_COSMOS_ACCOUNT_NAME");
-        public string TablesComsmosEndpointSuffix => GetOptionalVariable("TABLES_COSMOS_ENDPOINT_SUFFIX") ?? "table.cosmos.azure.com";
-        public string CosmosUri => $"https://{CosmosAccountName}.{TablesComsmosEndpointSuffix}";
+        public string TablesCosmosEndpointSuffix => GetOptionalVariable("TABLES_COSMOS_ENDPOINT_SUFFIX") ?? "table.cosmos.azure.com";
+        public string CosmosUri => $"https://{CosmosAccountName}.{TablesCosmosEndpointSuffix}";
     }
 }
