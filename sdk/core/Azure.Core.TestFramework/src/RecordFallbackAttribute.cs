@@ -67,7 +67,7 @@ namespace Azure.Core.TestFramework
 
         private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
         {
-            //TODO: Cache the reflection.
+            //TODO: Cache the reflection, or come up with a better way to get to the RecordedTestBase<TEnvironment>.Environment
             var environmentProperty = fixture.GetType().GetProperty("TestEnvironment");
             object environmetValue = environmentProperty.GetValue(fixture, null);
             var modeProperty = environmetValue.GetType().GetProperty("Mode");
