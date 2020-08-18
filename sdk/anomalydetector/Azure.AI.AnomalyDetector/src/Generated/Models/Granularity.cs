@@ -8,9 +8,7 @@
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Can only be one of yearly, monthly, weekly, daily, hourly, minutely or secondly. Granularity is used for verify whether input series is valid. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
     public enum Granularity
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary> yearly. </summary>
         Yearly,

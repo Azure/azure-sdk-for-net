@@ -12,9 +12,7 @@ using System.Linq;
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> The Request. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Request
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary> Initializes a new instance of Request. </summary>
         /// <param name="series"> Time series data points. Points should be sorted by timestamp in ascending order to match the anomaly detection result. If the data is not sorted correctly or there is duplicated timestamp, the API will not work. In such case, an error message will be returned. </param>

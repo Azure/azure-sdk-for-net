@@ -10,9 +10,7 @@ using System;
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> The Point. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Point
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary> Initializes a new instance of Point. </summary>
         /// <param name="timestamp"> Timestamp of a data point (ISO8601 format). </param>

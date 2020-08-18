@@ -10,14 +10,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary>
     /// <see cref="AnomalyDetectorClient"/> is use to connect to the Azure Cognitive Anomaly Detector Service.
     /// </summary>
+    [CodeGenClient("ServiceClient")]
     public partial class AnomalyDetectorClient
     {
-        /// <summary>Provides communication with the Anomaly Detector Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceRestClient ServiceClient;
-
-        /// <summary>Provides tools for exception creation in case of failure.</summary>
-        internal readonly ClientDiagnostics Diagnostics;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AnomalyDetectorClient"/> class.
         /// </summary>
@@ -48,9 +43,9 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Diagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -81,20 +76,9 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Diagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnomalyDetectorClient"/> class.
-        /// </summary>
-        /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
-        /// <param name="serviceClient">Provides communication with the Anomaly Detector Azure Cognitive Service through its REST API.</param>
-        internal AnomalyDetectorClient(ClientDiagnostics diagnostics, ServiceRestClient serviceClient)
-        {
-            Diagnostics = diagnostics;
-            ServiceClient = serviceClient;
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
     }
 }

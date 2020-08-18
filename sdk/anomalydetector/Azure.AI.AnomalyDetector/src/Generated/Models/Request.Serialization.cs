@@ -10,9 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Request : IUtf8JsonSerializable
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
