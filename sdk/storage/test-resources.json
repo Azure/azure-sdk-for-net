@@ -87,7 +87,7 @@
             "defaultAction": "Allow"
         },
         "versioningEnableProperties": {
-            "isVersioningEnabled": true
+            "isVersioningEnabled": false
         },
         "nullProperties": {
         },
