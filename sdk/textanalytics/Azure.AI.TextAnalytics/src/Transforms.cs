@@ -124,6 +124,39 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Recognize Entities
+
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
+            => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
+
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(DocumentEntities documentEntities)
+        {
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
+        }
+        /*
+        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var detectedLanguages = new List<DetectLanguageResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read languages
+            foreach (DocumentLanguage language in results.Documents)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
+            }
+
+            detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
+
+            return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
+        }*/
+
+        #endregion
+
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();

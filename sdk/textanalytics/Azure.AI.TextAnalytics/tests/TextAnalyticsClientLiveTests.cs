@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
@@ -804,6 +804,29 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
             Assert.IsNotNull(results.Statistics.TransactionCount);
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public void RecognizeEntitiesBatchWithNullIdTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RecognizeEntitiesBatchAsync(documents));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchWithNullTextTestAsync()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]

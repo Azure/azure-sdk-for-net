@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -17,6 +19,14 @@ namespace Azure.AI.TextAnalytics
             Category = category;
             SubCategory = subCategory;
             ConfidenceScore = score;
+        }
+
+        internal CategorizedEntity(Entity entity)
+        {
+            Text = entity.Text;
+            Category = entity.Category;
+            SubCategory = entity.Subcategory;
+            ConfidenceScore = entity.ConfidenceScore;
         }
 
         /// <summary>
