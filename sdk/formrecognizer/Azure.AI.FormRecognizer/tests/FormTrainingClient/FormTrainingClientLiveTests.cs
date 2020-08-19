@@ -23,7 +23,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
+        public FormTrainingClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -105,7 +106,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "subfolder" };
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter});
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -120,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "invalidPrefix" };
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter });
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             Assert.AreEqual("2014", ex.ErrorCode);
@@ -246,7 +247,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public void CopyModelError()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -256,7 +256,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("1002", ex.ErrorCode);
         }
 
         [Test]

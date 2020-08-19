@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Caching != null)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching");
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (WriteAcceleratorEnabled != null)
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled");
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image");
                 writer.WriteObjectValue(Image);
             }
-            if (VhdContainers != null)
+            if (Optional.IsCollectionDefined(VhdContainers))
             {
                 writer.WritePropertyName("vhdContainers");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);

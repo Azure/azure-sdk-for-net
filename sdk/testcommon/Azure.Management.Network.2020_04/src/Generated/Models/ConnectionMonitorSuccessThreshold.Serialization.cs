@@ -15,12 +15,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ChecksFailedPercent != null)
+            if (Optional.IsDefined(ChecksFailedPercent))
             {
                 writer.WritePropertyName("checksFailedPercent");
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
-            if (RoundTripTimeMs != null)
+            if (Optional.IsDefined(RoundTripTimeMs))
             {
                 writer.WritePropertyName("roundTripTimeMs");
                 writer.WriteNumberValue(RoundTripTimeMs.Value);
@@ -30,30 +30,22 @@ namespace Azure.Management.Network.Models
 
         internal static ConnectionMonitorSuccessThreshold DeserializeConnectionMonitorSuccessThreshold(JsonElement element)
         {
-            int? checksFailedPercent = default;
-            float? roundTripTimeMs = default;
+            Optional<int> checksFailedPercent = default;
+            Optional<float> roundTripTimeMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("checksFailedPercent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     checksFailedPercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("roundTripTimeMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     roundTripTimeMs = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new ConnectionMonitorSuccessThreshold(checksFailedPercent, roundTripTimeMs);
+            return new ConnectionMonitorSuccessThreshold(Optional.ToNullable(checksFailedPercent), Optional.ToNullable(roundTripTimeMs));
         }
     }
 }

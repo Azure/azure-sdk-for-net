@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             writer.WriteStringValue(IPAddressOrRange);
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
                 writer.WriteStringValue(Action);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static IPRule DeserializeIPRule(JsonElement element)
         {
             string value = default;
-            string action = default;
+            Optional<string> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("action"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     action = property.Value.GetString();
                     continue;
                 }
             }
-            return new IPRule(value, action);
+            return new IPRule(value, action.Value);
         }
     }
 }

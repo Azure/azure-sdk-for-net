@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DetailLevel != null)
+            if (Optional.IsDefined(DetailLevel))
             {
                 writer.WritePropertyName("detailLevel");
                 writer.WriteStringValue(DetailLevel);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static DebugSetting DeserializeDebugSetting(JsonElement element)
         {
-            string detailLevel = default;
+            Optional<string> detailLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detailLevel"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     detailLevel = property.Value.GetString();
                     continue;
                 }
             }
-            return new DebugSetting(detailLevel);
+            return new DebugSetting(detailLevel.Value);
         }
     }
 }

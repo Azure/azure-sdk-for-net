@@ -15,26 +15,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
         {
-            string status = default;
-            ErrorResponse error = default;
-            IReadOnlyList<WhatIfChange> changes = default;
+            Optional<string> status = default;
+            Optional<ErrorResponse> error = default;
+            Optional<IReadOnlyList<WhatIfChange>> changes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
@@ -44,21 +36,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         if (property0.NameEquals("changes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(WhatIfChange.DeserializeWhatIfChange(item));
-                                }
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
                             }
                             changes = array;
                             continue;
@@ -67,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfOperationResult(status, error, changes);
+            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes));
         }
     }
 }

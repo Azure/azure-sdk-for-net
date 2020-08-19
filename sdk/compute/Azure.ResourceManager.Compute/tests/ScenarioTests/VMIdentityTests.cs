@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     vm.Identity = new VirtualMachineIdentity();
                     vm.Identity.Type = ResourceIdentityType.SystemAssignedUserAssigned;
-                    vm.Identity.UserAssignedIdentities = new Dictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties>()
-                    {
-                        { identity, new Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties() }
-                    };
+                    vm.Identity.UserAssignedIdentities.Add(identity, new Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties());
                 };
 
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef , addUserIdentity);

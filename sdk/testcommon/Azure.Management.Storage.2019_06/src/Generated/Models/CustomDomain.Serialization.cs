@@ -17,7 +17,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (UseSubDomainName != null)
+            if (Optional.IsDefined(UseSubDomainName))
             {
                 writer.WritePropertyName("useSubDomainName");
                 writer.WriteBooleanValue(UseSubDomainName.Value);
@@ -28,7 +28,7 @@ namespace Azure.Management.Storage.Models
         internal static CustomDomain DeserializeCustomDomain(JsonElement element)
         {
             string name = default;
-            bool? useSubDomainName = default;
+            Optional<bool> useSubDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("useSubDomainName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     useSubDomainName = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new CustomDomain(name, useSubDomainName);
+            return new CustomDomain(name, Optional.ToNullable(useSubDomainName));
         }
     }
 }

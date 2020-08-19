@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -23,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Queue of the paths to Chunks we haven't processed.
         /// </summary>
-        private readonly Queue<string> _chunks;
+        private readonly Queue<BlobItem> _chunks;
 
         /// <summary>
         /// The Chunk we are currently processing.
@@ -76,7 +77,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 _currentChunk = await _chunkFactory.BuildChunk(
                     async,
-                    _chunks.Dequeue(),
+                    _chunks.Dequeue().Name,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 _chunkIndex++;
             }
@@ -89,7 +90,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public Shard(
             BlobContainerClient containerClient,
             ChunkFactory chunkFactory,
-            Queue<string> chunks,
+            Queue<BlobItem> chunks,
             Chunk currentChunk,
             long chunkIndex,
             string shardPath)

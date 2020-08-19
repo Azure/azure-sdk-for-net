@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LocalNetworkGatewayListResult DeserializeLocalNetworkGatewayListResult(JsonElement element)
         {
-            IReadOnlyList<LocalNetworkGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<LocalNetworkGateway>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<LocalNetworkGateway> array = new List<LocalNetworkGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LocalNetworkGateway.DeserializeLocalNetworkGateway(item));
-                        }
+                        array.Add(LocalNetworkGateway.DeserializeLocalNetworkGateway(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LocalNetworkGatewayListResult(value, nextLink);
+            return new LocalNetworkGatewayListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

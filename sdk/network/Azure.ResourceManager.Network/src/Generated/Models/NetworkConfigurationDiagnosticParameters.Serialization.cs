@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId");
             writer.WriteStringValue(TargetResourceId);
-            if (VerbosityLevel != null)
+            if (Optional.IsDefined(VerbosityLevel))
             {
                 writer.WritePropertyName("verbosityLevel");
                 writer.WriteStringValue(VerbosityLevel.Value.ToString());

@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of PolicySku. </summary>
         /// <param name="name"> The name of the policy sku. Possible values are A0 and A1. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicySku(string name)
         {
             if (name == null)

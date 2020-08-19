@@ -11,99 +11,42 @@ using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
-    public partial class DiskInstanceView : IUtf8JsonSerializable
+    public partial class DiskInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (EncryptionSettings != null)
-            {
-                writer.WritePropertyName("encryptionSettings");
-                writer.WriteStartArray();
-                foreach (var item in EncryptionSettings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Statuses != null)
-            {
-                writer.WritePropertyName("statuses");
-                writer.WriteStartArray();
-                foreach (var item in Statuses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DiskInstanceView DeserializeDiskInstanceView(JsonElement element)
         {
-            string name = default;
-            IList<DiskEncryptionSettings> encryptionSettings = default;
-            IList<InstanceViewStatus> statuses = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<DiskEncryptionSettings>> encryptionSettings = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("encryptionSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DiskEncryptionSettings> array = new List<DiskEncryptionSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DiskEncryptionSettings.DeserializeDiskEncryptionSettings(item));
-                        }
+                        array.Add(DiskEncryptionSettings.DeserializeDiskEncryptionSettings(item));
                     }
                     encryptionSettings = array;
                     continue;
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
-                        }
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
                     }
                     statuses = array;
                     continue;
                 }
             }
-            return new DiskInstanceView(name, encryptionSettings, statuses);
+            return new DiskInstanceView(name.Value, Optional.ToList(encryptionSettings), Optional.ToList(statuses));
         }
     }
 }

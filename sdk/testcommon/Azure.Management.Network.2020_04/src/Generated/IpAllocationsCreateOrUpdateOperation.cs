@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         IpAllocation IOperationSource<IpAllocation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return IpAllocation.DeserializeIpAllocation(document.RootElement);
-            }
+            return IpAllocation.DeserializeIpAllocation(document.RootElement);
         }
 
         async ValueTask<IpAllocation> IOperationSource<IpAllocation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return IpAllocation.DeserializeIpAllocation(document.RootElement);
-            }
+            return IpAllocation.DeserializeIpAllocation(document.RootElement);
         }
     }
 }

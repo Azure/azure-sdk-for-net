@@ -31,17 +31,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// 1,000,000
         /// people.
         /// &lt;br /&gt; After creation, use [LargePersonGroup Person -
-        /// Create](/docs/services/563879b61984550e40cbbe8d/operations/599adcba3a7b9412a4d53f40)
+        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/create)
         /// to add person into the group, and call [LargePersonGroup -
-        /// Train](/docs/services/563879b61984550e40cbbe8d/operations/599ae2d16ac60f11b48b5aa4)
+        /// Train](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/train)
         /// to get this group ready for [Face -
-        /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239).
+        /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify).
         /// &lt;br /&gt; No image will be stored. Only the person's extracted
         /// face features and userData will be stored on server until
         /// [LargePersonGroup Person -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/599ade5c6ac60f11b48b5aa2)
+        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/delete)
         /// or [LargePersonGroup -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/599adc216ac60f11b48b5a9f)
+        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/delete)
         /// is called.
         /// &lt;br/&gt;'recognitionModel' should be specified to associate with
         /// this large person group. The default value for 'recognitionModel'
@@ -53,12 +53,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// extracted by another version of recognition model.
         /// * 'recognition_01': The default recognition model for
         /// [LargePersonGroup -
-        /// Create](/docs/services/563879b61984550e40cbbe8d/operations/599acdee6ac60f11b48b5a9d).
+        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/create).
         /// All those large person groups created before 2019 March are bonded
         /// with this recognition model.
         /// * 'recognition_02': Recognition model released in 2019 March.
-        /// 'recognition_02' is recommended since its overall accuracy is
-        /// improved compared with 'recognition_01'.
+        /// * 'recognition_03': Recognition model released in 2020 May.
+        /// 'recognition_03' is recommended since its overall accuracy is
+        /// improved compared with 'recognition_01' and 'recognition_02'.
         ///
         /// Large person group quota:
         /// * Free-tier subscription quota: 1,000 large person groups.
@@ -74,7 +75,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='recognitionModel'>
-        /// Possible values include: 'recognition_01', 'recognition_02'
+        /// Possible values include: 'recognition_01', 'recognition_02',
+        /// 'recognition_03'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,7 +115,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Retrieve the information of a large person group, including its
         /// name, userData and recognitionModel. This API returns large person
         /// group information only, use [LargePersonGroup Person -
-        /// List](/docs/services/563879b61984550e40cbbe8d/operations/599adda06ac60f11b48b5aa1)
+        /// List](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/list)
         /// instead to retrieve person information under the large person
         /// group.
         ///

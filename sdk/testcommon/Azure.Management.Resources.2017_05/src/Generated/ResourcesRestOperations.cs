@@ -30,7 +30,7 @@ namespace Azure.Management.Resources
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public ResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2017-05-10")
         {
             if (subscriptionId == null)
@@ -85,6 +85,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ResourceListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -100,14 +101,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,6 +115,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ResourceListResult> ListByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -136,14 +131,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,6 +164,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -203,6 +192,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response MoveResources(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -251,6 +241,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to validate for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateMoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -279,6 +270,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to validate for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ValidateMoveResources(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
@@ -345,14 +337,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,14 +360,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -421,6 +399,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public async Task<Response> CheckExistenceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -463,6 +442,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public Response CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -529,6 +509,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -572,6 +553,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -644,6 +626,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to create. </param>
         /// <param name="parameters"> Parameters for creating or updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -692,6 +675,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to create. </param>
         /// <param name="parameters"> Parameters for creating or updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -768,6 +752,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to update. </param>
         /// <param name="parameters"> Parameters for updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -815,6 +800,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to update. </param>
         /// <param name="parameters"> Parameters for updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -885,6 +871,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public async Task<Response<GenericResource>> GetAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -916,14 +903,7 @@ namespace Azure.Management.Resources
                     {
                         GenericResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GenericResource.DeserializeGenericResource(document.RootElement);
-                        }
+                        value = GenericResource.DeserializeGenericResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -938,6 +918,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
         public Response<GenericResource> Get(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -969,14 +950,7 @@ namespace Azure.Management.Resources
                     {
                         GenericResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GenericResource.DeserializeGenericResource(document.RootElement);
-                        }
+                        value = GenericResource.DeserializeGenericResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1001,6 +975,7 @@ namespace Azure.Management.Resources
         /// <summary> Checks by ID whether a resource exists. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response> CheckExistenceByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1023,6 +998,7 @@ namespace Azure.Management.Resources
         /// <summary> Checks by ID whether a resource exists. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response CheckExistenceById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1059,6 +1035,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response> DeleteByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1082,6 +1059,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response DeleteById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1124,6 +1102,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1152,6 +1131,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateById(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1198,6 +1178,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1225,6 +1206,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
         public Response UpdateById(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1265,6 +1247,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<GenericResource>> GetByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1280,14 +1263,7 @@ namespace Azure.Management.Resources
                     {
                         GenericResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GenericResource.DeserializeGenericResource(document.RootElement);
-                        }
+                        value = GenericResource.DeserializeGenericResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1298,6 +1274,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<GenericResource> GetById(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -1313,14 +1290,7 @@ namespace Azure.Management.Resources
                     {
                         GenericResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GenericResource.DeserializeGenericResource(document.RootElement);
-                        }
+                        value = GenericResource.DeserializeGenericResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1347,6 +1317,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1366,14 +1337,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1388,6 +1352,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ResourceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1407,14 +1372,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1440,6 +1398,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ResourceListResult>> ListNextPageAsync(string nextLink, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1455,14 +1414,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1476,6 +1428,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ResourceListResult> ListNextPage(string nextLink, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1491,14 +1444,7 @@ namespace Azure.Management.Resources
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

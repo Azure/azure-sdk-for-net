@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             return new ContainerService(m_location)
             {
-                Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AgentPoolProfiles = new[] { agentPoolProfiles },
+                Tags ={ { "RG", "rg" }, { "testTag", "1" } },
+                AgentPoolProfiles = { agentPoolProfiles },
                 // Todo: DiagnosticsProfile will be available in GA
                 //DiagnosticsProfile = new ContainerServiceDiagnosticsProfile
                 //{

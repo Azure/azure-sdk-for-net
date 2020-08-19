@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LogSpecification DeserializeLogSpecification(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
-            string blobDuration = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("blobDuration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blobDuration = property.Value.GetString();
                     continue;
                 }
             }
-            return new LogSpecification(name, displayName, blobDuration);
+            return new LogSpecification(name.Value, displayName.Value, blobDuration.Value);
         }
     }
 }

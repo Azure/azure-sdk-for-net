@@ -194,6 +194,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all nat gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<NatGateway> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -237,6 +238,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all nat gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<NatGateway> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -281,6 +283,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public virtual async Task<NatGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +313,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public virtual NatGatewaysDeleteOperation StartDelete(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -340,6 +344,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<NatGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -374,6 +379,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual NatGatewaysCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

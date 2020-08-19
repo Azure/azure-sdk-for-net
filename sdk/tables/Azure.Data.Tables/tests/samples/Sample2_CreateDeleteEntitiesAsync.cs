@@ -49,7 +49,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2AddEntityAsync
             // Insert the newly created entity.
-            await client.CreateEntityAsync(entity);
+            await client.AddEntityAsync(entity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntityAsync
@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             // Add the newly created entity.
-            await client.CreateEntityAsync(strongEntity);
+            await client.AddEntityAsync(strongEntity);
 
             #region Snippet:TablesSample2DeleteEntityAsync
             // Delete the entity given the partition and row key.

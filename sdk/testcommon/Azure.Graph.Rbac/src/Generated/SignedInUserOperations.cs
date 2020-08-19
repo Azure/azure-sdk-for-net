@@ -149,6 +149,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<DirectoryObject> ListOwnedObjectsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -192,6 +193,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<DirectoryObject> ListOwnedObjectsNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
