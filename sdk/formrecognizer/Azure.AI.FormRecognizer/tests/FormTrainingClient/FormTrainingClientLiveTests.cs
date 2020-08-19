@@ -271,25 +271,6 @@ namespace Azure.AI.FormRecognizer.Tests
             var resourceId = TestEnvironment.TargetResourceId;
             var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
 
-            Console.Write($"{nameof(resourceId)}: ");
-
-            for (int i = 0; i < resourceId.Length; i++)
-            {
-                Console.Write($"{resourceId[i]}");
-            }
-
-            Console.WriteLine();
-
-            Console.WriteLine($"{nameof(wrongRegion)}: {wrongRegion}");
-            Console.Write($"{nameof(TestEnvironment.TargetResourceRegion)}: ");
-
-            for (int i = 0; i < TestEnvironment.TargetResourceRegion.Length; i++)
-            {
-                Console.Write($"{TestEnvironment.TargetResourceRegion[i]}");
-            }
-
-            Console.WriteLine();
-
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
 
