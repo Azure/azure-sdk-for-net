@@ -41,6 +41,7 @@ namespace Sql.Tests
 
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
+                string storageAccountType = "GRS";
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
@@ -51,6 +52,7 @@ namespace Sql.Tests
                     SubnetId = subnetId,
                     Tags = tags,
                     Location = location,
+                    StorageAccountType = storageAccountType
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
@@ -66,7 +68,8 @@ namespace Sql.Tests
                     Location = location,
                     DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/{1}", resourceGroup.Name, managedInstanceName),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
-                    ProxyOverride = proxyOverride
+                    ProxyOverride = proxyOverride,
+                    StorageAccountType = storageAccountType
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
@@ -77,6 +80,10 @@ namespace Sql.Tests
                 // Get second server
                 var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName2);
                 SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+
+                // Verify that storageAccountType value is correctly set
+                Assert.Equal(storageAccountType, getMI1.StorageAccountType);
+                Assert.Equal(storageAccountType, getMI2.StorageAccountType);
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
                 Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
