@@ -208,15 +208,6 @@ namespace Azure.Messaging.EventGrid
         /// <typeparam name="T"> Describing the type of the event. </typeparam>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> Deserialized payload of the event. </returns>
-        public async Task<T> GetDataAsync<T>(CancellationToken cancellationToken = default)
-            => await GetDataInternal<T>(new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Deserializes the event payload into a specified event type.
-        /// </summary>
-        /// <typeparam name="T"> Describing the type of the event. </typeparam>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> Deserialized payload of the event. </returns>
         public T GetData<T>(CancellationToken cancellationToken = default)
             => GetDataInternal<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
 
