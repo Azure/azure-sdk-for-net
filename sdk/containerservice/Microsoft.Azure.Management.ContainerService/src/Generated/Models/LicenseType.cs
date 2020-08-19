@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for LicenseType.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class LicenseType
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string None = "None";
+        public const string WindowsServer = "Windows_Server";
     }
 }

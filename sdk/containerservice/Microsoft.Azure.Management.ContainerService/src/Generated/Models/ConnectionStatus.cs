@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for ConnectionStatus.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class ConnectionStatus
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
     }
 }
