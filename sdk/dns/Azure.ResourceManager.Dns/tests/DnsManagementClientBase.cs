@@ -7,19 +7,22 @@ using Azure.Core.TestFramework;
 using Azure.Management.Resources;
 using Azure.ResourceManager.TestFramework;
 
-namespace Azure.ResourceManager.Dns.Tests{
+namespace Azure.ResourceManager.Dns.Tests
+{
 
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>{
+    public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
+    {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
         public ProvidersOperations ResourceProvidersOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
-        public RecordSetsOperations RecordSetsOperations{ get; set; }
+        public RecordSetsOperations RecordSetsOperations { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
         public ZonesOperations ZonesOperations { get; set; }
-        protected DnsManagementClientBase(bool isAsync) : base (isAsync){
+        protected DnsManagementClientBase(bool isAsync) : base(isAsync)
+        {
 
         }
         protected void InitializeClients()
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.Dns.Tests{
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }
-        protected void initNewRecord(){
+        protected void initNewRecord()
+        {
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
@@ -42,18 +46,10 @@ namespace Azure.ResourceManager.Dns.Tests{
             ZonesOperations = DnsManagementClient.Zones;
         }
 
-        internal DnsManagementClient GetDnsManagementClient(){
+        internal DnsManagementClient GetDnsManagementClient()
+        {
             return CreateClient<DnsManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential, Recording.InstrumentClientOptions(new DnsManagementClientOptions()));
         }
-
-        public async Task<string> GetLocation()
-        {
-            Console.WriteLine("calling!");
-            var res = await GetFirstUsableLocationAsync(ResourceProvidersOperations, "Microsoft.Dns", "RecordSets");
-            Console.WriteLine("done\n");
-            return res;
-        }
-
     }
 }
