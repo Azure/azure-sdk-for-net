@@ -192,8 +192,6 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableTakeWithContinuationTask()
         {
-            Assert.AreEqual("Test",Environment.GetEnvironmentVariable("TABLES_COSMOS_ENDPOINT_SUFFIX"));
-
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
             // Create the new entities.
@@ -213,8 +211,6 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableMultipleTake()
         {
-            Assert.AreEqual("Test", Environment.GetEnvironmentVariable("TABLES_COSMOS_ACCOUNT_NAME"));
-
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 10);
 
             // Create the new entities.
