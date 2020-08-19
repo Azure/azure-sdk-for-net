@@ -222,6 +222,27 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task AStartCopyModelFailsWithWrongRegion()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+
+            Console.WriteLine($"{nameof(resourceId)}: {resourceId}");
+            Console.WriteLine($"{nameof(wrongRegion)}: {wrongRegion}");
+            Console.WriteLine($"{nameof(TestEnvironment.TargetResourceRegion)}: {TestEnvironment.TargetResourceRegion}");
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
+
+            var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task CopyModel()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -260,27 +281,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(400, ex.Status);
             Assert.AreEqual("1002", ex.ErrorCode);
-        }
-
-        [Test]
-        public async Task StartCopyModelFailsWithWrongRegion()
-        {
-            var sourceClient = CreateFormTrainingClient();
-            var targetClient = CreateFormTrainingClient();
-            var resourceId = TestEnvironment.TargetResourceId;
-            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
-
-            Console.WriteLine($"{nameof(resourceId)}: {resourceId}");
-            Console.WriteLine($"{nameof(wrongRegion)}: {wrongRegion}");
-            Console.WriteLine($"{nameof(TestEnvironment.TargetResourceRegion)}: {TestEnvironment.TargetResourceRegion}");
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
-
-            var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
         }
 
         //[Test]
