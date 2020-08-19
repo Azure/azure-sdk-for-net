@@ -129,7 +129,8 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CodeCoverageArgs: /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
@@ -160,7 +161,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) $(CodeCoverageArgs)
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -175,14 +176,14 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
         displayName: ReportGenerator
         inputs:
           reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
           targetdir: '$(Build.SourcesDirectory)'
           reporttypes: Cobertura
       - task: PublishCodeCoverageResults@1
-        condition: and(succeeded(), ne(variables['CodeCoverageArgs'],''))
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
         displayName: 'Publish code coverage report'
         inputs:
           codeCoverageTool: 'Cobertura'

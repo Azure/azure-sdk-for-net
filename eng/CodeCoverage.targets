@@ -1,5 +1,13 @@
-<!-- Allows Collection of Code Coverage for Deterministic Builds-->
 <Project>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="coverlet.msbuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Allows Collection of Code Coverage for Deterministic Builds 
+    https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/DeterministicBuild.md -->
   <ItemGroup>
     <SourceRoot Include="$(NuGetPackageRoot)" />
   </ItemGroup>

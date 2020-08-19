@@ -69,15 +69,8 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Enables CodeCoverage -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageReference Include="coverlet.msbuild">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <Import Condition="'$(CodeCoverageArgs)' != ''"  Project="$(MSBuildThisFileDirectory)\DeterministicBuild.targets" />
+  <!-- Collect Code Coverage -->
+  <Import Condition="'$(CollectCoverage)' == 'true'"  Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
 
   <!-- Add StyleCop Analyzers -->
   <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
