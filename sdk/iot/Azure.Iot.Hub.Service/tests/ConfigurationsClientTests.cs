@@ -46,24 +46,23 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 // Create a twin configuration
                 Response<TwinConfiguration> createResponse =
-                    await client.Configurations.CreateOrUpdateConfigurationAsync(twinConfiguration);
+                    await client.Configurations.CreateOrUpdateConfigurationAsync(twinConfiguration).ConfigureAwait(false);
                 createdConfig = createResponse.Value;
 
                 // Get twin configuration
                 Response<TwinConfiguration> getResponse = await client.Configurations.GetConfigurationAsync(testConfigurationId).ConfigureAwait(false);
 
                 getResponse.Value.Etag.Should().BeEquivalentTo(createdConfig.Etag, "ETag value should not have changed.");
-                createdConfig = createResponse.Value;
 
                 // Update a configuration
                 createdConfig.Priority = testPriority;
                 Response<TwinConfiguration> updatedConfig = await client.Configurations.CreateOrUpdateConfigurationAsync(createdConfig, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
-                Assert.AreEqual(updatedConfig.Value.Priority, testPriority, "Priority should have been updated.");
+                updatedConfig.Value.Priority.Should().Be(testPriority, "Priority should have been updated.");
             }
             finally
             {
                 // Delete twin configuration
-                await Cleanup(client, twinConfiguration);
+                await CleanupAsync(client, twinConfiguration).ConfigureAwait(false);
             }
         }
 
@@ -74,8 +73,8 @@ namespace Azure.Iot.Hub.Service.Tests
         public async Task ConfigurationsClient_GetConfigurations()
         {
             const int configurationsCount = 5;
-            TwinConfiguration[] twinConfigurations = new TwinConfiguration[configurationsCount];
-            TwinConfiguration[] createdConfigurations = new TwinConfiguration[configurationsCount];
+            var twinConfigurations = new TwinConfiguration[configurationsCount];
+            var createdConfigurations = new TwinConfiguration[configurationsCount];
             IReadOnlyList<TwinConfiguration> listConfigurations;
             IotHubServiceClient client = GetClient();
             try
@@ -98,17 +97,17 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Compare the response ids with created configurations
                 for (int i = 0; i < configurationsCount; i++)
                 {
-                    Assert.IsTrue(twinConfigurationsIds.Contains(twinConfigurations[i].Id));
+                    twinConfigurationsIds.Should().Contain(twinConfigurations[i].Id);
                 }
             }
             finally
             {
                 for (int i = 0; i < configurationsCount; i++)
-                    await Cleanup(client, twinConfigurations[i]);
+                    await CleanupAsync(client, twinConfigurations[i]).ConfigureAwait(false);
             }
         }
 
-        private async Task Cleanup(IotHubServiceClient client, TwinConfiguration config)
+        private async Task CleanupAsync(IotHubServiceClient client, TwinConfiguration config)
         {
             // cleanup
             try
@@ -126,19 +125,17 @@ namespace Azure.Iot.Hub.Service.Tests
 
         private TwinConfiguration CreateTestConfig(string testConfigurationId)
         {
-            TwinConfiguration twinConfiguration =
+            var twinConfiguration =
                 new TwinConfiguration
                 {
                     Id = testConfigurationId
                 };
 
-            ChangeTrackingDictionary<string, object> deviceContent = new ChangeTrackingDictionary<string, object>();
-            deviceContent["properties.desired.deviceContent_key"] = "deviceContent_value-" + twinConfiguration.Id;
-
             // Labels are optional but adding here due to null check failure in deserialization
+            // Also note that we are not setting Host Platform value from Environment since that'll fail in our build pipeline
             twinConfiguration.Labels.Add("HostPlatform", "SomeValue");
             twinConfiguration.Content = new ConfigurationContent();
-            twinConfiguration.Content.DeviceContent.Add("properties.desired.deviceContent_key", "deviceContent_value-" + twinConfiguration.Id);
+            twinConfiguration.Content.DeviceContent.Add("properties.desired.deviceContent_key", $"deviceContent_value-{twinConfiguration.Id}");
 
             // Specifying '*' to target all devices
             twinConfiguration.TargetCondition = "*";
