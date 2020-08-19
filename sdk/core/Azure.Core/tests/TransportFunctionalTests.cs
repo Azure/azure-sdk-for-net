@@ -239,7 +239,7 @@ namespace Azure.Core.Tests
          [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
          public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
          {
-            Microsoft.Extensions.Primitives.StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
              using TestServer testServer = new TestServer(
                  context =>
@@ -298,7 +298,7 @@ namespace Azure.Core.Tests
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
-            Microsoft.Extensions.Primitives.StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
             using TestServer testServer = new TestServer(
                 context =>
@@ -366,7 +366,7 @@ namespace Azure.Core.Tests
                 context =>
                 {
                     context.Response.Headers.Add(headerName,
-                        new Microsoft.Extensions.Primitives.StringValues(new[]
+                        new StringValues(new[]
                         {
                             headerValue,
                             anotherHeaderValue
@@ -416,7 +416,7 @@ namespace Azure.Core.Tests
         public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
         {
 
-            Microsoft.Extensions.Primitives.StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
             using TestServer testServer = new TestServer(
                 context =>
@@ -511,7 +511,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ContentLength0WhenNoContent()
         {
-            Microsoft.Extensions.Primitives.StringValues contentLengthHeader = default;
+            StringValues contentLengthHeader = default;
             using TestServer testServer = new TestServer(
                 context =>
                 {

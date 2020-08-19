@@ -21,8 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Multipart\*.*" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\Multipart\BatchConstants.cs" />
-    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\Multipart\BatchErrors.cs" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -37,14 +35,7 @@
     <Compile Include="$(AzureCoreSharedSources)RequestRequestContent.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)StreamHelperExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ThrowHelper.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />  
   </ItemGroup>
 
-  <!-- TODO: Remove after Azure.Core ships 
-    <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-  -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

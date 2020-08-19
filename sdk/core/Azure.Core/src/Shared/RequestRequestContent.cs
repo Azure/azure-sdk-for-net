@@ -141,9 +141,9 @@ namespace Azure.Core
             message.Append("HTTP/1.1" + CRLF);
 
             // Only insert host header if not already present.
-            if (!request.Headers.TryGetValue(HttpHeader.Names.Host, out _))
+            if (!request.Headers.TryGetValue("Host", out _))
             {
-                message.Append(HttpHeader.Names.Host + ColonSP + request.Uri.Host + CRLF);
+                message.Append("Host" + ColonSP + request.Uri.Host + CRLF);
             }
         }
 
