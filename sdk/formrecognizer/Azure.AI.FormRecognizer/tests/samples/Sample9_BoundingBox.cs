@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// Units type of a recognized page can be found at <see cref="FormPage.Unit"/>.
         /// For the purpose of the sample, we will use the StartRecognizeContent capability.
         /// </summary>
-        [Test]
+        //[Test]
         public async Task BoundingBoxSample()
         {
             string endpoint = TestEnvironment.Endpoint;

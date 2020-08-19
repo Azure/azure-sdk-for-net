@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
-        [Test]
+        //[Test]
         public async Task StartTrainingEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(201);
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task GetCustomModelDoesNotNeedTrainResult()
         {
             // When a model is still being created, the "trainResult" property is

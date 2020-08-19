@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeContentOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        //[Test]
         public async Task TrainingOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
         }
 
-        [Test]
+        //[Test]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,

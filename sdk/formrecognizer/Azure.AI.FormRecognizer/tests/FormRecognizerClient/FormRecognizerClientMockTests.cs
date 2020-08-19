@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeContentSendsUserSpecifiedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/jpeg", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeContentSendsAutoDetectedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/tiff", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeContentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeReceiptsSendsUserSpecifiedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -129,7 +129,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/jpeg", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeReceiptsSendsAutoDetectedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/tiff", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeReceiptsFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
@@ -175,7 +175,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeCustomFormsSendsUserSpecifiedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -195,7 +195,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/jpeg", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeCustomFormsSendsAutoDetectedContentType()
         {
             var mockResponse = new MockResponse(202);
@@ -214,7 +214,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("image/tiff", contentType);
         }
 
-        [Test]
+        //[Test]
         public async Task StartRecognizeCustomFormsFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);

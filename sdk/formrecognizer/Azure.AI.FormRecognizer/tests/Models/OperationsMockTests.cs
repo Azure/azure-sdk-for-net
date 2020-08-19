@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             return new FormTrainingClient(fakeEndpoint, fakeCredential, options);
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeContentOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeContentOperation)}.{nameof(RecognizeContentOperation.UpdateStatus)}");
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeReceiptsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeReceiptsOperation)}.{nameof(RecognizeReceiptsOperation.UpdateStatus)}");
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeCustomFormsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(RecognizeCustomFormsOperation.UpdateStatus)}");
         }
 
-        [Test]
+        //[Test]
         public async Task TrainingOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(TrainingOperation)}.{nameof(TrainingOperation.UpdateStatus)}");
         }
 
-        [Test]
+        //[Test]
         public async Task CopyModelOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);

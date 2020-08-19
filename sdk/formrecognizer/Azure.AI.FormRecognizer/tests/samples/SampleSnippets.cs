@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Samples
     /// </summary>
     public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        //[Test]
         public void CreateFormRecognizerClient()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public void CreateFormRecognizerClientTokenCredential()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public void CreateFormTrainingClient()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeFormContentFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeReceiptFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        //[Test]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;

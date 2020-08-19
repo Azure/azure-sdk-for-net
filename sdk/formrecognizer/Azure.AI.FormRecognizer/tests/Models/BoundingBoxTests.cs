@@ -13,28 +13,28 @@ namespace Azure.AI.FormRecognizer.Tests
     /// </summary>
     public class BoundingBoxTests
     {
-        [Test]
+        //[Test]
         public void IndexerThrowsWhenBoundingBoxIsDefault()
         {
             BoundingBox boundingBox = default;
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
-        [Test]
+        //[Test]
         public void IndexerThrowsWhenBoundingBoxIsEmpty()
         {
             BoundingBox boundingBox = new BoundingBox(new List<float>());
             Assert.Throws<IndexOutOfRangeException>(() => { var _ = boundingBox[0]; });
         }
 
-        [Test]
+        //[Test]
         public void ToStringDoesNotThrowWhenBoundingBoxIsDefault()
         {
             BoundingBox boundingBox = default;
             Assert.DoesNotThrow(() => boundingBox.ToString());
         }
 
-        [Test]
+        //[Test]
         public void ToStringDoesNotThrowWhenBoundingBoxIsEmpty()
         {
             BoundingBox boundingBox = new BoundingBox(new List<float>());

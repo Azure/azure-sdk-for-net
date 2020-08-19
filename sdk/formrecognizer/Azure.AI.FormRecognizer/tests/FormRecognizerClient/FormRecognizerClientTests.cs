@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
-        [Test]
+        //[Test]
         public void ConstructorRequiresTheEndpoint()
         {
             var tokenCredential = new DefaultAzureCredential();
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
-        [Test]
+        //[Test]
         public void ConstructorRequiresTheTokenCredential()
         {
             var endpoint = new Uri("http://localhost");
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
-        [Test]
+        //[Test]
         public void ConstructorRequiresTheAzureKeyCredential()
         {
             var endpoint = new Uri("http://localhost");
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
-        [Test]
+        //[Test]
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
-        [Test]
+        //[Test]
         public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeContentRequiresTheFormFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -131,7 +131,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeContentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeContentFromUriRequiresTheFormFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -159,7 +159,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeContentFromUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -175,7 +175,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeReceiptsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeReceiptsFromUriRequiresTheReceiptFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -214,7 +214,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeReceiptsFromUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -230,7 +230,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         [TestCase(null)]
         [TestCase("")]
         public void StartRecognizeCustomFormsRequiresTheModelId(string modelId)
@@ -250,7 +250,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsRequiresTheFormFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -261,7 +261,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsValidatesTheModelIdFormat()
         {
             var client = CreateClient();
@@ -275,7 +275,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -292,7 +292,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         [TestCase(null)]
         [TestCase("")]
         public void StartRecognizeCustomFormsFromUriRequiresTheModelId(string modelId)
@@ -311,7 +311,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsFromUriRequiresTheFormFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -322,7 +322,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsFromUriValidatesTheModelIdFormat()
         {
             var client = CreateClient();
@@ -335,7 +335,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
         /// method.
         /// </summary>
-        [Test]
+        //[Test]
         public void StartRecognizeCustomFormsFromUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();

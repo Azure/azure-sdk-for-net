@@ -27,14 +27,14 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        [Test]
+        //[Test]
         public void FormTrainingClientCannotAuthenticateWithFakeApiKey()
         {
             var client = CreateFormTrainingClient(apiKey: "fakeKey");
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetAccountPropertiesAsync());
         }
 
-        [Test]
+        //[Test]
         public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormTrainingClient(useTokenCredential: true);
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, model.Errors.Count);
         }
 
-        [Test]
+        //[Test]
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task StartTrainingSucceedsWithValidPrefix()
         {
             var client = CreateFormTrainingClient();
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
         }
 
-        [Test]
+        //[Test]
         public async Task StartTrainingFailsWithInvalidPrefix()
         {
             var client = CreateFormTrainingClient();
@@ -126,7 +126,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("2014", ex.ErrorCode);
         }
 
-        [Test]
+        //[Test]
         public async Task StartTrainingError()
         {
             var client = CreateFormTrainingClient();
@@ -141,7 +141,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
-        [Test]
+        //[Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task TrainingOps(bool labeled)
@@ -210,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1022", ex.ErrorCode);
         }
 
-        [Test]
+        //[Test]
         public void DeleteModelFailsWhenModelDoesNotExist()
         {
             var client = CreateFormTrainingClient();
@@ -220,7 +220,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1022", ex.ErrorCode);
         }
 
-        [Test]
+        //[Test]
         public async Task CopyModel()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -245,7 +245,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
         }
 
-        [Test]
+        //[Test]
         public void CopyModelError()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -269,6 +269,10 @@ namespace Azure.AI.FormRecognizer.Tests
             var resourceId = TestEnvironment.TargetResourceId;
             var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
 
+            Console.WriteLine($"{nameof(resourceId)}: {resourceId}");
+            Console.WriteLine($"{nameof(wrongRegion)}: {wrongRegion}");
+            Console.WriteLine($"{nameof(TestEnvironment.TargetResourceRegion)}: {TestEnvironment.TargetResourceRegion}");
+
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
 
@@ -278,7 +282,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("ResourceResolverError", ex.ErrorCode);
         }
 
-        [Test]
+        //[Test]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateFormTrainingClient();
@@ -294,7 +298,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(region, targetAuth.Region);
         }
 
-        [Test]
+        //[Test]
         public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
             var targetClient = CreateFormTrainingClient();

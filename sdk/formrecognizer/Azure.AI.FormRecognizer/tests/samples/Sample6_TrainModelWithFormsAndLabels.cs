@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        //[Test]
         public async Task TrainModelWithFormsAndLabels()
         {
             string endpoint = TestEnvironment.Endpoint;

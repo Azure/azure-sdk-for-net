@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDetectsPdf()
         {
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDetectsPng()
         {
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptPng);
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDetectsJpeg()
         {
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDetectsLittleEndianTiff()
         {
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDetectsBigEndianTiff()
         {
             // Currently there are no big-endian TIFF files available in the test assets, so
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeCannotDetectUnknownType()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes("I am probably unknown."));
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Verifies functionality of the <see cref="StreamExtensions.TryGetContentType"/> method.
         /// </summary>
-        [Test]
+        //[Test]
         public void TryGetContentTypeDoesNotThrowForEmptyStream()
         {
             using var stream = new MemoryStream(Array.Empty<byte>());

@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// For more information see https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/overview#custom-models
 
-        [Test]
+        //[Test]
         public async Task OutputModelsTrainedWithLabels()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public async Task OutputModelsTrainedWithoutLabels()
         {
             string endpoint = TestEnvironment.Endpoint;
