@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.ResourceManager.Compute.Models;
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     resourceGroup2Name,
                     new ResourceGroup(TestEnvironment.Location)
                     {
-                        Tags ={ { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
+                        Tags = new Dictionary<string, string>() { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
                     })).Value;
 
                 AvailabilitySet inputAvailabilitySet2 = new AvailabilitySet(TestEnvironment.Location)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 resourceGroup1Name,
                 new ResourceGroup(TestEnvironment.Location)
                 {
-                    Tags ={ { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
+                    Tags = new Dictionary<string, string>() { { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });
         }
     }

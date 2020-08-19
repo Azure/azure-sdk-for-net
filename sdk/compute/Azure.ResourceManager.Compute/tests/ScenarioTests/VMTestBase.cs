@@ -8,16 +8,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using CM = Azure.ResourceManager.Compute.Models;
-using NM = Azure.Management.Network.Models;
-using Sku = Azure.Management.Storage.Models.Sku;
+using NM = Azure.ResourceManager.Network.Models;
+using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     rgName,
                     new ResourceGroup(m_location)
                     {
-                        Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                        Tags = new Dictionary<string,string>() { { rgName, Recording.UtcNow.ToString("u") } }
                     });
                 var stoInput = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, m_location);
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     rgName,
                     new ResourceGroup(m_location)
                     {
-                        Tags = { { rgName, Recording.UtcNow.ToString("u") } }
+                        Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
                     });
 
                 PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : await CreatePublicIP(rgName);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var publicIp = new PublicIPAddress()
             {
                 Location = m_location,
-                Tags =
+                Tags = new Dictionary<string, string>()
                     {
                         {"key", "value"}
                     },
@@ -333,18 +333,21 @@ namespace Azure.ResourceManager.Compute.Tests
                 Location = m_location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = {
+                    AddressPrefixes = new List<string>()
+                            {
                                 "10.0.0.0/16",
                             }
                 },
                 DhcpOptions = !addDnsServer ? null : new DhcpOptions()
                 {
-                    DnsServers = {
+                    DnsServers = new List<string>()
+                            {
                                 "10.1.1.1",
                                 "10.1.2.4"
                             }
                 },
-                Subnets = {
+                Subnets = new List<Subnet>()
+                        {
                             new Subnet()
                             {
                                 Name = subnetName,
@@ -368,19 +371,21 @@ namespace Azure.ResourceManager.Compute.Tests
                 Location = m_location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = {
+                    AddressPrefixes = new List<string>()
+                            {
                                 "10.0.0.0/16",
                             }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = {
+                    DnsServers = new List<string>()
+                            {
                                 "10.1.1.1",
                                 "10.1.2.4"
                             }
                 },
             };
-
+            vnet.Subnets = new List<Subnet>();
             for (int i = 1; i <= subnetCount; i++)
             {
                 Subnet subnet = new Subnet()
@@ -418,11 +423,12 @@ namespace Azure.ResourceManager.Compute.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = m_location,
-                Tags =
+                Tags = new Dictionary<string, string>()
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = {
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -435,7 +441,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new Azure.ResourceManager.Network.Models.PublicIPAddress() { Id = publicIPaddress };
             }
 
             var putNicResponse = await WaitForCompletionAsync(await NetworkInterfacesOperations.StartCreateOrUpdateAsync(rgName, nicname, nicParameters));
@@ -454,11 +460,12 @@ namespace Azure.ResourceManager.Compute.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = m_location,
-                Tags =
+                Tags = new Dictionary<string, string>()
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = {
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -511,14 +518,14 @@ namespace Azure.ResourceManager.Compute.Tests
             var gatewayIPConfig = new ApplicationGatewayIPConfiguration()
             {
                 Name = gatewayIPConfigName,
-                Subnet = new Azure.Management.Network.Models.SubResource { Id = subnet.Id },
+                Subnet = new Azure.ResourceManager.Network.Models.SubResource { Id = subnet.Id },
             };
 
             var frontendIPConfig = new ApplicationGatewayFrontendIPConfiguration()
             {
                 Name = frontendIPConfigName,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                Subnet = new Azure.Management.Network.Models.SubResource { Id = subnet.Id }
+                Subnet = new Azure.ResourceManager.Network.Models.SubResource { Id = subnet.Id }
             };
 
             ApplicationGatewayFrontendPort frontendPort = new ApplicationGatewayFrontendPort()
@@ -543,11 +550,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var httpListener = new ApplicationGatewayHttpListener()
             {
                 Name = httpListenerName,
-                FrontendPort = new Azure.Management.Network.Models.SubResource
+                FrontendPort = new Azure.ResourceManager.Network.Models.SubResource
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "frontendPorts", frontendPortName)
                 },
-                FrontendIPConfiguration = new Azure.Management.Network.Models.SubResource
+                FrontendIPConfiguration = new Azure.ResourceManager.Network.Models.SubResource
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "frontendIPConfigurations", frontendIPConfigName)
                 },
@@ -559,15 +566,15 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 Name = requestRoutingRuleName,
                 RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                HttpListener = new Azure.Management.Network.Models.SubResource
+                HttpListener = new Azure.ResourceManager.Network.Models.SubResource
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "httpListeners", httpListenerName)
                 },
-                BackendAddressPool = new Azure.Management.Network.Models.SubResource
+                BackendAddressPool = new Azure.ResourceManager.Network.Models.SubResource
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "backendAddressPools", backendAddressPoolName)
                 },
-                BackendHttpSettings = new Azure.Management.Network.Models.SubResource
+                BackendHttpSettings = new Azure.ResourceManager.Network.Models.SubResource
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "backendHttpSettingsCollection", backendHttpSettingsName)
                 }
@@ -582,25 +589,32 @@ namespace Azure.ResourceManager.Compute.Tests
                     Tier = ApplicationGatewayTier.Standard,
                     Capacity = 2
                 },
-                GatewayIPConfigurations = {
+                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
+                {
                     gatewayIPConfig,
                 },
-                FrontendIPConfigurations = {
+                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>()
+                {
                     frontendIPConfig,
                 },
-                FrontendPorts = {
+                FrontendPorts = new List<ApplicationGatewayFrontendPort>
+                {
                     frontendPort,
                 },
-                BackendAddressPools = {
+                BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
+                {
                     backendAddressPool,
                 },
-                BackendHttpSettingsCollection = {
+                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings>
+                {
                     backendHttpSettings,
                 },
-                HttpListeners = {
+                HttpListeners = new List<ApplicationGatewayHttpListener>
+                {
                     httpListener,
                 },
-                RequestRoutingRules = {
+                RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
+                {
                     requestRoutingRules,
                 }
             };
@@ -628,20 +642,23 @@ namespace Azure.ResourceManager.Compute.Tests
             var putLBResponse = await WaitForCompletionAsync(await LoadBalancersOperations.StartCreateOrUpdateAsync(rgName, loadBalancerName, new LoadBalancer
             {
                 Location = m_location,
-                FrontendIPConfigurations = {
+                FrontendIPConfigurations = new List<FrontendIPConfiguration>
+                {
                     new FrontendIPConfiguration
                     {
                         Name = frontendIPConfigName,
                         PublicIPAddress = publicIPAddress
                     }
                 },
-                BackendAddressPools = {
+                BackendAddressPools = new List<BackendAddressPool>
+                {
                     new BackendAddressPool
                     {
                         Name = backendAddressPoolName
                     }
                 },
-                LoadBalancingRules = {
+                LoadBalancingRules = new List<LoadBalancingRule>
+                {
                     new LoadBalancingRule
                     {
                         Name = loadBalancingRuleName,
@@ -665,7 +682,8 @@ namespace Azure.ResourceManager.Compute.Tests
                         }
                     }
                 },
-                Probes = {
+                Probes = new List<Probe>
+                {
                     new Probe
                     {
                         Port = 3389, // RDP port
@@ -911,7 +929,7 @@ namespace Azure.ResourceManager.Compute.Tests
                    rgName,
                    new ResourceGroup(m_location)
                    {
-                       Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                       Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
                    });
 
             DedicatedHostGroup dedicatedHostGroup = new DedicatedHostGroup(m_location)
