@@ -12,26 +12,12 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsClient
     {
         private const string TextAnalyticsRoute = "/text/analytics/";
-
-        private const string EntitiesRoute = "/entities/recognition/general";
         private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStatistics = "showStats";
         private const string ModelVersion = "model-version";
 
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-
-        #region Recognize Entities
-        private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            RecognizeEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion
 
         #region Linked Entities
         private static async Task<Response<RecognizeLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)

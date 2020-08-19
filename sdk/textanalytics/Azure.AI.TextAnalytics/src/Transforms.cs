@@ -133,27 +133,27 @@ namespace Azure.AI.TextAnalytics
         {
             return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
         }
-        /*
-        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
+
+        internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var detectedLanguages = new List<DetectLanguageResult>();
+            var recognizeEntities = new List<RecognizeEntitiesResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
-            //Read languages
-            foreach (DocumentLanguage language in results.Documents)
+            //Read document entities
+            foreach (DocumentEntities docEntities in results.Documents)
             {
-                detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToCategorizedEntityCollection(docEntities)));
             }
 
-            detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
-            return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
-        }*/
+            return new RecognizeEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
 
         #endregion
 
