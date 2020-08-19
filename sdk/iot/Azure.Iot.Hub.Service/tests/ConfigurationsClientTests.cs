@@ -19,8 +19,6 @@ namespace Azure.Iot.Hub.Service.Tests
     /// </summary>
     public class ConfigurationsClientTests : E2eTestBase
     {
-        private Random _random = new Random();
-
         /// <summary>
         /// All this test class does is to make sure the call comes back with a response.
         /// This test is not responsible to make sure the values that come back are accurate as that would be testing the service logic.
@@ -39,7 +37,7 @@ namespace Azure.Iot.Hub.Service.Tests
         {
             string testConfigurationId = $"configlifecycle{GetRandom()}";
             // Generate a random priority less than 100
-            int testPriority = _random.Next(100);
+            int testPriority = int.Parse(GetRandom());
             IotHubServiceClient client = GetClient();
             TwinConfiguration twinConfiguration = CreateTestConfig(testConfigurationId);
             TwinConfiguration createdConfig;
@@ -105,8 +103,8 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                for (int i = 0; i < createdConfigurations.Count(); i++)
-                    await Cleanup(client, createdConfigurations[i]);
+                for (int i = 0; i < configurationsCount; i++)
+                    await Cleanup(client, twinConfigurations[i]);
             }
         }
 
@@ -145,7 +143,7 @@ namespace Azure.Iot.Hub.Service.Tests
             // Specifying '*' to target all devices
             twinConfiguration.TargetCondition = "*";
             // Assign any integer value for priority
-            twinConfiguration.Priority = _random.Next(100);
+            twinConfiguration.Priority = int.Parse(GetRandom());
             return twinConfiguration;
         }
     }
