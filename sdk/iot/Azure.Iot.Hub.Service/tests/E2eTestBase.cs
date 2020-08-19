@@ -42,6 +42,7 @@ namespace Azure.Iot.Hub.Service.Tests
                     Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
+        /* Need to use this for playback tests to run, do not use a new instance of random */
         protected string GetRandom()
         {
             return Recording.GenerateId();
