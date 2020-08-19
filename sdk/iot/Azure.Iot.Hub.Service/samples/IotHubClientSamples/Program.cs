@@ -57,6 +57,9 @@ namespace Azure.Iot.Hub.Service.Samples
             var querySamples = new QueryTwinSamples(hubClient);
             await querySamples.RunSampleAsync();
 
+            var statisticsSample = new StatisticsSamples(hubClient);
+            await statisticsSample.RunSampleAsync();
+
             // Run samples that require the device sample to be running.
             if (options.IsDeviceSampleRunning == true)
             {
