@@ -68,7 +68,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             // TODO: Get TelemetryEnvelope name changed in swagger
             TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
             // TODO: Extract IKey from connectionstring
-            envelope.IKey = "6c49c07c-e95c-48fe-8a7b-eff230955cc5";
+            envelope.IKey = "IKey";
             // TODO: Validate if Azure SDK has common function to generate role instance
             envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 
