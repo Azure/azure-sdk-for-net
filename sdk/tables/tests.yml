@@ -10,8 +10,8 @@ extends:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
-          TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.windows.net
-          TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.com
+          STORAGE_ENDPOINT_SUFFIX: core.windows.net
+          TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.com
 
       # AzureUSGovernment
       - ServiceDirectory: tables
@@ -19,8 +19,8 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
-          TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.usgovcloudapi.net
-          TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.us
+          STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
+          TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.us
 
       # # AzureChinaCloud
       # - ServiceDirectory: tables
@@ -28,5 +28,5 @@ extends:
       #   SubscriptionConfiguration: $(sub-config-cn-test-resources)
       #   EnvVars:
       #     AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
-      #     TABLES_STORAGE_ENDPOINT_SUFFIX: table.core.chinacloudapi.cn
-      #     TABLES_COSMOS_ENDPOINT_SUFFIX: table.cosmos.azure.cn
+      #     STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
+      #     TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.cn
