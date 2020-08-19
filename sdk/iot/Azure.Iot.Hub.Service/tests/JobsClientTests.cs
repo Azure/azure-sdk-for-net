@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Models;
 using FluentAssertions;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 using NUnit.Framework;
 
 namespace Azure.Iot.Hub.Service.Tests
@@ -20,7 +18,6 @@ namespace Azure.Iot.Hub.Service.Tests
     /// All API calls are wrapped in a try catch block so we can clean up resources regardless of the test outcome.
     /// </remarks>
     [Parallelizable(ParallelScope.None)]
-    [Ignore("Ignore till storage is fixed for playback")]
     public class JobsClientTests : E2eTestBase
     {
         private const int DEVICE_COUNT = 5;
@@ -37,9 +34,6 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDevicePrefix = $"jobDevice";
             IEnumerable<DeviceIdentity> deviceIdentities = null;
 
-            var containerName = "jobs" + GetRandom();
-            Uri containerSasUri = await GetSasUriAsync(containerName).ConfigureAwait(false);
-
             IotHubServiceClient client = GetClient();
 
             try
@@ -50,7 +44,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 // Export all devices to blob storage.
                 Response<JobProperties> response = await client.Jobs
-                    .CreateExportDevicesJobAsync(outputBlobContainerUri: containerSasUri, excludeKeys: false)
+                    .CreateExportDevicesJobAsync(outputBlobContainerUri: TestEnvironment.StorageSasToken, excludeKeys: false)
                     .ConfigureAwait(false);
 
                 response.GetRawResponse().Status.Should().Be(200);
@@ -60,11 +54,9 @@ namespace Azure.Iot.Hub.Service.Tests
                 response.Value.Status.Should().Be(JobPropertiesStatus.Completed);
 
                 //Import all devices from storage to create and provision devices on the IoTHub.
-                var importJobRequestOptions = new ImportJobRequestOptions
-                {
-                    OutputBlobName = "Devices.txt" // default location where devices are created by blob.
-                };
-                response = await client.Jobs.CreateImportDevicesJobAsync(containerSasUri, containerSasUri, importJobRequestOptions).ConfigureAwait(false);
+                response = await client.Jobs
+                    .CreateImportDevicesJobAsync(TestEnvironment.StorageSasToken, TestEnvironment.StorageSasToken)
+                    .ConfigureAwait(false);
 
                 response.GetRawResponse().Status.Should().Be(200);
 
@@ -74,7 +66,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await CleanupAsync(containerName, client, deviceIdentities).ConfigureAwait(false);
+                await CleanupAsync(client, deviceIdentities).ConfigureAwait(false);
             }
         }
 
@@ -90,14 +82,8 @@ namespace Azure.Iot.Hub.Service.Tests
             return deviceList;
         }
 
-        private async Task CleanupAsync(string containerName, IotHubServiceClient client, IEnumerable<DeviceIdentity> deviceIdentities)
+        private async Task CleanupAsync(IotHubServiceClient client, IEnumerable<DeviceIdentity> deviceIdentities)
         {
-            // Delete container
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(TestEnvironment.StorageConnectionString);
-            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
-            await container.DeleteIfExistsAsync().ConfigureAwait(false);
-
             // Delete all devices.
             if (deviceIdentities != null)
             {
@@ -113,7 +99,13 @@ namespace Azure.Iot.Hub.Service.Tests
             do
             {
                 response = await client.Jobs.GetImportExportJobAsync(jobId).ConfigureAwait(false);
-                await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+
+                // We do not need to really wait when running on mocked values(Playback mode).
+                // This will speed up testing in Playback mode and the PR pipeline.
+                if (TestSettings.Instance.TestMode != Core.TestFramework.RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                }
             } while (!IsTerminalStatus(response.Value.Status));
 
             return response;
@@ -124,32 +116,6 @@ namespace Azure.Iot.Hub.Service.Tests
             return status == JobPropertiesStatus.Completed
                 || status == JobPropertiesStatus.Failed
                 || status == JobPropertiesStatus.Cancelled;
-        }
-
-        // TODO: Move to arm template so that we can run this in playback mode. There is no way to mock CloudBlobClient using Azure.Core.TestFramework.
-        private async Task<Uri> GetSasUriAsync(string containerName)
-        {
-            var storageAccount = CloudStorageAccount.Parse(TestEnvironment.StorageConnectionString);
-            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
-            await container.CreateIfNotExistsAsync().ConfigureAwait(false);
-
-            var containerUri = container.Uri;
-            var constraints = new SharedAccessBlobPolicy
-            {
-                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddHours(1),
-                Permissions = SharedAccessBlobPermissions.Read
-                    | SharedAccessBlobPermissions.Write
-                    | SharedAccessBlobPermissions.Create
-                    | SharedAccessBlobPermissions.List
-                    | SharedAccessBlobPermissions.Add
-                    | SharedAccessBlobPermissions.Delete,
-                SharedAccessStartTime = DateTimeOffset.UtcNow,
-            };
-
-            string sasContainerToken = container.GetSharedAccessSignature(constraints);
-
-            return new Uri($"{containerUri}{sasContainerToken}");
         }
     }
 }

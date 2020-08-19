@@ -19,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "90bbfc08-14a6-4ddb-a969-921fe7e3fd52"
+        "x-ms-request-id": "e15e8ce9-7f1b-4b35-98b1-f8d61a467108"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -45,17 +45,17 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "694",
+        "Content-Length": "690",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "3036c131-128f-411f-aa27-99f9043739b1"
+        "x-ms-request-id": "e59c63ec-cf05-4bce-b048-5b38b5d9073e"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceWithTwin1109223729",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MTA2NjY3NDMyNg==",
+        "deviceEtag": "MjIyOTQzNDA=",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -82,7 +82,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-08-19T22:13:19.1110885Z"
+              "$lastUpdated": "2020-08-20T00:09:07.2303954Z"
             },
             "$version": 1
           }
@@ -111,10 +111,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "457657ee-4df6-4285-9790-8f8f8e95fb73"
+        "x-ms-request-id": "1a017edf-985f-4f19-8e5e-f70839559b55"
       },
       "ResponseBody": {
         "isSuccessful": true,
