@@ -23,9 +23,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
 
             var expectedReferences = new string[]
             {
+                "Azure.Core",
+                "Azure.Storage.Queues",
                 "Microsoft.Azure.Storage.Blob",
                 "Microsoft.Azure.Storage.Common",
-                "Microsoft.Azure.Storage.Queue",
                 "Microsoft.Azure.WebJobs",
                 "Microsoft.Azure.WebJobs.Host",
                 "Microsoft.Extensions.Configuration.Abstractions",
