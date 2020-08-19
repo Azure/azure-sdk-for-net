@@ -27,18 +27,12 @@ namespace Azure.Core.GeoJson
         /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
         public GeoLine(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
-            Coordinates = coordinates.ToArray();
+            Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());;
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="index"></param>
-        public GeoPosition this[int index] => Coordinates[index];
-
-        /// <summary>
-        ///
-        /// </summary>
-        public IReadOnlyList<GeoPosition> Coordinates { get; } = null!;
+        public GeoArray<GeoPosition> Coordinates { get; }
     }
 }

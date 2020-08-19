@@ -45,17 +45,12 @@ namespace Azure.Core.GeoJson
         /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
         public GeoPoint(GeoPosition position, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
-            Position = position;
+            Coordinates = position;
         }
 
         /// <summary>
         /// Gets position of the point.
         /// </summary>
-        public GeoPosition Position { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public IReadOnlyList<GeoPosition> Coordinates { get; } = null!;
+        public GeoPosition Coordinates { get; }
     }
 }

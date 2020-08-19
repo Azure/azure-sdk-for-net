@@ -38,6 +38,7 @@ namespace Azure.Core.GeoJson
             Argument.AssertNotNull(rings, nameof(rings));
 
             Rings = rings.ToArray();
+            Coordinates = new GeoArray<GeoArray<GeoPosition>>();
         }
 
         /// <summary>
@@ -46,15 +47,8 @@ namespace Azure.Core.GeoJson
         public IReadOnlyList<GeoLine> Rings { get; }
 
         /// <summary>
-        /// Gets a
-        /// </summary>
-        /// <param name="ring"></param>
-        public GeoLine this[int ring] => Rings[ring];
-
-
-        /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<IReadOnlyList<GeoPosition>> Coordinates { get; } = null!;
+        public GeoArray<GeoArray<GeoPosition>> Coordinates { get; }
     }
 }

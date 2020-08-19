@@ -277,7 +277,7 @@ namespace Azure.Core.GeoJson
                 writer.WriteEndArray();
             }
 
-            void WritePositions(IEnumerable<GeoPosition> positions)
+            void WritePositions(GeoArray<GeoPosition> positions)
             {
                 writer.WriteStartArray();
                 foreach (var position in positions)
@@ -294,13 +294,13 @@ namespace Azure.Core.GeoJson
                 case GeoPoint point:
                     WriteType(PointType);
                     writer.WritePropertyName(CoordinatesProperty);
-                    WritePosition(point.Position);
+                    WritePosition(point.Coordinates);
                     break;
 
                 case GeoLine lineString:
                     WriteType(LineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
-                    WritePositions(lineString.Positions);
+                    WritePositions(lineString.Coordinates);
                     break;
 
                 case GeoPolygon polygon:
@@ -309,7 +309,7 @@ namespace Azure.Core.GeoJson
                     writer.WriteStartArray();
                     foreach (var ring in polygon.Rings)
                     {
-                        WritePositions(ring.Positions);
+                        WritePositions(ring.Coordinates);
                     }
 
                     writer.WriteEndArray();
@@ -321,7 +321,7 @@ namespace Azure.Core.GeoJson
                     writer.WriteStartArray();
                     foreach (var point in multiPoint.Points)
                     {
-                        WritePosition(point.Position);
+                        WritePosition(point.Coordinates);
                     }
 
                     writer.WriteEndArray();
@@ -333,7 +333,7 @@ namespace Azure.Core.GeoJson
                     writer.WriteStartArray();
                     foreach (var lineString in multiLineString.Lines)
                     {
-                        WritePositions(lineString.Positions);
+                        WritePositions(lineString.Coordinates);
                     }
 
                     writer.WriteEndArray();
@@ -348,7 +348,7 @@ namespace Azure.Core.GeoJson
                         writer.WriteStartArray();
                         foreach (var polygonRing in polygon.Rings)
                         {
-                            WritePositions(polygonRing.Positions);
+                            WritePositions(polygonRing.Coordinates);
                         }
                         writer.WriteEndArray();
                     }

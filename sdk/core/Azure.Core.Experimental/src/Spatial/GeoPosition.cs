@@ -45,6 +45,7 @@ namespace Azure.Core.GeoJson
             Longitude = longitude;
             Latitude = latitude;
             Altitude = altitude;
+            Count = altitude == null ? 2 : 3;
         }
 
 

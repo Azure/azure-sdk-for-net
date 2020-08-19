@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Positions);
+            }, polygon.Rings[0].Coordinates);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Positions);
+            }, polygon.Rings[0].Coordinates);
 
             CollectionAssert.AreEqual(new[]
             {
@@ -114,7 +114,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
-            }, polygon.Rings[1].Positions);
+            }, polygon.Rings[1].Coordinates);
         }
 
         [Test]
@@ -141,13 +141,13 @@ namespace Azure.Core.Tests
             {
                 P(0),
                 P(1)
-            }, polygon.Lines[0].Positions);
+            }, polygon.Lines[0].Coordinates);
 
             CollectionAssert.AreEqual(new[]
             {
                 P(2),
                 P(3)
-            }, polygon.Lines[1].Positions);
+            }, polygon.Lines[1].Coordinates);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Positions);
+            }, polygon.Rings[0].Coordinates);
 
             polygon = multiPolygon.Polygons[1];
             Assert.AreEqual(2, polygon.Rings.Count);
@@ -185,7 +185,7 @@ namespace Azure.Core.Tests
                 P(2),
                 P(3),
                 P(4),
-            }, polygon.Rings[0].Positions);
+            }, polygon.Rings[0].Coordinates);
 
             CollectionAssert.AreEqual(new[]
             {
@@ -194,7 +194,7 @@ namespace Azure.Core.Tests
                 P(7),
                 P(8),
                 P(9),
-            }, polygon.Rings[1].Positions);
+            }, polygon.Rings[1].Coordinates);
         }
 
         [Test]
@@ -207,8 +207,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(P(0), point.Position);
 
             var lineString = (GeoLine) collection.Geometries[1];
-            Assert.AreEqual(P(1), lineString.Positions[0]);
-            Assert.AreEqual(P(2), lineString.Positions[1]);
+            Assert.AreEqual(P(1), lineString.Coordinates[0]);
+            Assert.AreEqual(P(2), lineString.Coordinates[1]);
 
             Assert.AreEqual(2, collection.Geometries.Count);
         }

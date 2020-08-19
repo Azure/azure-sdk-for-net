@@ -59,6 +59,6 @@ namespace Azure.Core.GeoJson
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoPosition> Coordinates { get; } = null!;
+        public GeoArray<GeoArray<GeoPosition>> Coordinates { get; }
     }
 }
