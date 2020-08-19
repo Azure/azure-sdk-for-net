@@ -12,14 +12,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public string ConnectionString { get; set; }
 
-        public bool EnableRequestCollection { get; set; } = true;
-
-        public bool EnableDependencyCollection { get; set; } = true;
-
-        public bool EnableEventCollection { get; set; } = true;
-
-        public bool EnableTraceCollection { get; set; } = true;
-
         public long MaxTransmissionStorageCapacity { get; set; } = StorageCapacity;
 
         public string StorageFolder { get; set; }

@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using OpenTelemetry.Exporter.AzureMonitor.Models;
-using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +8,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using OpenTelemetry.Exporter.AzureMonitor.Models;
+using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
@@ -91,7 +91,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             var telemetryType = activity.GetTelemetryType();
             telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
-            string url = ProcessHttpTags(activity.Tags);
+            string url = GetHttpUrl(activity.Tags);
 
             if (telemetryType == TelemetryType.Request)
             {
@@ -132,7 +132,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetry;
         }
 
-        private static string ProcessHttpTags(IEnumerable<KeyValuePair<string, string>> tags)
+        private static string GetHttpUrl(IEnumerable<KeyValuePair<string, string>> tags)
         {
             var httpTags = tags.Where(item => item.Key.StartsWith("http.", StringComparison.InvariantCulture))
                                .ToDictionary(item => item.Key, item => item.Value);
@@ -144,12 +144,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return url;
             }
 
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
             httpTags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost);
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
 
             if (httpHost != null)
             {
+                httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
+                httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
                 url = httpScheme + httpHost  + httpTarget;
                 return url;
             }
