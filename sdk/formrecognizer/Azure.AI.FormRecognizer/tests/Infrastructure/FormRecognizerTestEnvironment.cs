@@ -42,9 +42,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
-        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
+        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
+        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName);
         public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
         public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
