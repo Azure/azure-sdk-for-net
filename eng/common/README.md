@@ -13,7 +13,7 @@ languages repos as they will be overwritten the next time an update is taken fro
 
 ### Workflow
 
-Starting from [these changes](https://github.com/Azure/azure-sdk-tools/commit/401dbcaa17075ceb94073b6a4d7acafce8687a5d) the 'Sync eng/common directory' PRs will be created in the language repositories once a pull request that touches the eng/common directory is submitted against the master branch. This will make it easier for changes to be tested in each individual language repo before merging the changes in the azure-sdk-tools repo. The workflow is explained bellow
+The 'Sync eng/common directory' PRs will be created in the language repositories once a pull request that touches the eng/common directory is submitted against the master branch. This will make it easier for changes to be tested in each individual language repo before merging the changes in the azure-sdk-tools repo. The workflow is explained below:
 
 1. Create a PR against Azure/azure-sdk-tools:master. This is the **Tools PR**.
 2. `azure-sdk-tools - sync - eng-common` is run automatically. It creates **Sync PRs** in each of the connected language repositories using the format `Sync eng/common directory with azure-sdk-tools for PR {Tools PR Number}`. Each **Sync PR** will contain a link back to the **Tools PR** that triggered it.
