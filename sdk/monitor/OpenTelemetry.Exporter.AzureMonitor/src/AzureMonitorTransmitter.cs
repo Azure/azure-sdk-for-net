@@ -27,6 +27,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [TelemetryType.Event] = "EventData",
         };
 
+        private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
+        {
+            [TelemetryType.Request] = "Request",
+            [TelemetryType.Dependency] = "RemoteDependency",
+            [TelemetryType.Message] = "Message",
+            [TelemetryType.Event] = "Event",
+        };
+
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
             options = exporterOptions;
@@ -41,7 +49,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             List<TelemetryEnvelope> telemetryItems = new List<TelemetryEnvelope>();
-            TelemetryEnvelope telemetryItem = null;
+            TelemetryEnvelope telemetryItem;
 
             foreach (var activity in batchActivity)
             {
@@ -58,9 +66,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private static TelemetryEnvelope GeneratePartAEnvelope(Activity activity)
         {
             // TODO: Get TelemetryEnvelope name changed in swagger
-            TelemetryEnvelope envelope = new TelemetryEnvelope(activity.DisplayName, activity.StartTimeUtc);
+            TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
             // TODO: Extract IKey from connectionstring
-            envelope.IKey = "IKey";
+            envelope.IKey = "6c49c07c-e95c-48fe-8a7b-eff230955cc5";
             // TODO: Validate if Azure SDK has common function to generate role instance
             envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 

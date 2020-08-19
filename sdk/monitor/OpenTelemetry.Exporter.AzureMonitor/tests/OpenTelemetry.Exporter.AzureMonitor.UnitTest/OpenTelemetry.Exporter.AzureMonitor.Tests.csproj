@@ -15,6 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
+    <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
   </ItemGroup>
 </Project>
