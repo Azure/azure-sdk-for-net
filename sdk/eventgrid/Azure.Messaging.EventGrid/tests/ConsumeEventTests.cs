@@ -25,14 +25,12 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             foreach (EventGridEvent egEvent in events)
             {
-                if (egEvent.SystemData != null)
+                switch (egEvent.EventType)
                 {
-                    switch (egEvent.SystemData)
-                    {
-                        case StorageBlobDeletedEventData blobDeleted:
-                            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-                            break;
-                    }
+                    case "Microsoft.Storage.BlobDeleted":
+                        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        break;
                 }
             }
         }
@@ -51,17 +49,16 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(3, events.Length);
             foreach (EventGridEvent egEvent in events)
             {
-                if (egEvent.SystemData != null)
+                switch (egEvent.EventType)
                 {
-                    switch (egEvent.SystemData)
-                    {
-                        case StorageBlobCreatedEventData blobCreated:
-                            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
-                            break;
-                        case StorageBlobDeletedEventData blobDeleted:
-                            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-                            break;
-                    }
+                    case "Microsoft.Storage.BlobCreated":
+                        StorageBlobCreatedEventData blobCreated = (StorageBlobCreatedEventData)egEvent.GetData();
+                        Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
+                        break;
+                    case "Microsoft.Storage.BlobDeleted":
+                        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        break;
                 }
             }
         }
@@ -72,11 +69,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridEvent[] events = EventGridEvent.Parse(requestContent, new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                }));
+            EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
 
@@ -84,7 +77,11 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData eventData = egEvent.GetData<ContosoItemReceivedEventData>();
+                    ContosoItemReceivedEventData eventData = egEvent.GetData<ContosoItemReceivedEventData>(new JsonObjectSerializer(
+                        new JsonSerializerOptions()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                        }));
                     Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ItemSku);
                 }
             }
@@ -95,11 +92,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": [{    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553\"  }],  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
-            EventGridEvent[] events = EventGridEvent.Parse(requestContent, new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                }));
+            EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
 
@@ -107,7 +100,11 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData[] eventData = egEvent.GetData<ContosoItemReceivedEventData[]>();
+                    ContosoItemReceivedEventData[] eventData = egEvent.GetData<ContosoItemReceivedEventData[]>(new JsonObjectSerializer(
+                        new JsonSerializerOptions()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                        }));
                     Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData[0].ItemSku);
                 }
             }
@@ -128,8 +125,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = egEvent.GetData();
-                    bool eventData = binaryEventData.Deserialize<bool>();
+                    bool eventData = (bool)egEvent.GetData();
                     Assert.True(eventData);
                 }
             }
@@ -148,8 +144,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = egEvent.GetData();
-                    string eventData = binaryEventData.Deserialize<string>();
+                    string eventData = (string)egEvent.GetData();
                     // note: binaryEventData.ToString() returns ""stringdata""?
                     Assert.AreEqual("stringdata", eventData);
                 }
@@ -193,10 +188,10 @@ namespace Azure.Messaging.EventGrid.Tests
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var eventData1 = events[0].GetData<object>();
-            BinaryData eventData2 = events[0].GetData();
+            var eventData2 = events[0].GetData();
 
             Assert.AreEqual(eventData1, null);
-            Assert.AreEqual(eventData2.Bytes, new ReadOnlyMemory<byte>());
+            Assert.AreEqual(eventData2, null);
             Assert.AreEqual(events[0].Type, "");
         }
 
@@ -208,8 +203,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             if (events[0].Type == "Test.Items.BinaryDataType")
             {
-                ReadOnlyMemory<byte> eventData = events[0].GetData().Bytes;
-                Assert.AreEqual(Convert.ToBase64String(eventData.ToArray()), "ZGF0YQ==");
+                var eventData = (byte[])events[0].GetData();
+                Assert.AreEqual(Convert.ToBase64String(eventData), "ZGF0YQ==");
             }
         }
 
@@ -220,15 +215,22 @@ namespace Azure.Messaging.EventGrid.Tests
                 "{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"data\": {    \"api\": \"PutBlockList\",    \"clientRequestId\": \"799304a4-bbc5-45b6-9849-ec2c66be800a\",    \"requestId\": \"602a88ef-0001-00e6-1233-164607000000\",    \"eTag\": \"0x8D4E44A24ABE7F1\",    \"contentType\": \"text/plain\",    \"contentLength\": 447,    \"blobType\": \"BlockBlob\",    \"url\": \"https://myaccount.blob.core.windows.net/testcontainer/file1.txt\",    \"sequencer\": \"00000000000000EB000000000000C65A\"  },\"type\":\"Microsoft.Storage.BlobCreated\",\"specversion\":\"1.0\"}," +
                 "{\"id\":\"2947780a-356b-c5a5-feb4-f5261fb2f155\",\"source\":\"Subject-1\",\"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },\"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}," +
                 "{\"id\":\"cb14e05b-50c6-67dc-cafa-f4bcff3bf520\",\"source\":\"Subject-2\",\"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },\"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\"}," +
-                "{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data_base64\": \"ZGF0YQ==\", \"type\":\"BinaryDataType\",\"specversion\":\"1.0\"}]";
+                "{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"data_base64\": \"ZGF0YQ==\",\"type\":\"BinaryDataType\",\"specversion\":\"1.0\"}," +
+                "{\"id\":\"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",\"source\":\"/contoso/items\",\"subject\": \"\",\"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"type\": \"Contoso.Items.ItemReceived\"}]";
+
+            ObjectSerializer camelCaseSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.AreEqual(4, events.Length);
+            Assert.AreEqual(5, events.Length);
             foreach (CloudEvent cloudEvent in events)
             {
-                switch (cloudEvent.SystemData, cloudEvent.Type)
+                switch (cloudEvent.GetData(), cloudEvent.Type)
                 {
                     case (StorageBlobCreatedEventData blobCreated, _):
                         Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
@@ -236,11 +238,34 @@ namespace Azure.Messaging.EventGrid.Tests
                     case (StorageBlobDeletedEventData blobDeleted, _):
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
-                    case (null, "Test.Items.BinaryDataType"):
-                        ReadOnlyMemory<byte> eventData = events[0].GetData().Bytes;
-                        Assert.AreEqual(Convert.ToBase64String(eventData.ToArray()), "ZGF0YQ==");
+                    case (BinaryData binaryData, "BinaryDataType"):
+                        Assert.AreEqual(Convert.ToBase64String(binaryData.Bytes.ToArray()), "ZGF0YQ==");
+                        break;
+                    case (BinaryData, "Contoso.Items.ItemReceived"):
+                        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
+                        Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
                         break;
                 }
+
+                //switch (cloudEvent.Type)
+                //{
+                //    case "Microsoft.Storage.BlobCreated":
+                //        StorageBlobCreatedEventData blobCreated = (StorageBlobCreatedEventData)cloudEvent.GetData();
+                //        Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
+                //        break;
+                //    case "Microsoft.Storage.BlobDeleted":
+                //        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)cloudEvent.GetData();
+                //        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                //        break;
+                //    case "BinaryDataType":
+                //        byte[] binaryData = (byte[])cloudEvent.GetData();
+                //        Assert.AreEqual(Convert.ToBase64String(binaryData), "ZGF0YQ==");
+                //        break;
+                //    case "Contoso.Items.ItemReceived":
+                //        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
+                //        Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
+                //        break;
+                //}
             }
         }
 

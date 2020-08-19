@@ -179,6 +179,21 @@ namespace Azure.Messaging.EventGrid.Tests
                 cloudEvent.Data = Enumerable.Repeat((byte) 1, 1);
                 eventsList.Add(cloudEvent);
             }
+            for (int i = 0; i < 5; i++)
+            {
+                // testing BinaryData
+                CloudEvent cloudEvent = new CloudEvent(
+                    new BinaryData(Encoding.UTF8.GetBytes("data")),
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent")
+                {
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Subject = $"Subject-{i}",
+                    Time = Recording.Now
+                };
+                eventsList.Add(cloudEvent);
+
+            }
 
             await client.SendEventsAsync(eventsList);
         }

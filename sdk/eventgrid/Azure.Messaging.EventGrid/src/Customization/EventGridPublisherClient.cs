@@ -206,6 +206,7 @@ namespace Azure.Messaging.EventGrid
                         "1.0")
                     {
                         Time = cloudEvent.Time,
+                        DataBase64 = cloudEvent.DataBase64,
                         Datacontenttype = cloudEvent.DataContentType,
                         Dataschema = cloudEvent.DataSchema,
                         Subject = cloudEvent.Subject
@@ -219,22 +220,11 @@ namespace Azure.Messaging.EventGrid
                     // The 'Data' property is optional for CloudEvents
                     if (cloudEvent.Data != null)
                     {
-                        if (cloudEvent.Data is IEnumerable<byte> enumerable)
-                        {
-                            newCloudEvent.DataBase64 = enumerable.ToArray();
-                        }
-                        else if (cloudEvent.Data is ReadOnlyMemory<byte> memory)
-                        {
-                            newCloudEvent.DataBase64 = memory.ToArray();
-                        }
-                        else
-                        {
-                            MemoryStream stream = new MemoryStream();
-                            _dataSerializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
-                            stream.Position = 0;
-                            JsonDocument data = JsonDocument.Parse(stream);
-                            newCloudEvent.Data = data.RootElement;
-                        }
+                        MemoryStream stream = new MemoryStream();
+                        _dataSerializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
+                        stream.Position = 0;
+                        JsonDocument data = JsonDocument.Parse(stream);
+                        newCloudEvent.Data = data.RootElement;
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
                 }
