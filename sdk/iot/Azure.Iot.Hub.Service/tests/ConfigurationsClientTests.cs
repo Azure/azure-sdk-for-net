@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Iot.Hub.Service.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -35,44 +37,35 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task ConfigurationsClient_ConfigurationsLifecycle()
         {
-            //{GetRandom()}
-            string testConfigurationId = "testConfiguration";
+            string testConfigurationId = $"configlifecycle{GetRandom()}";
             // Generate a random priority less than 100
             int testPriority = _random.Next(100);
             IotHubServiceClient client = GetClient();
-            TwinConfiguration configuration = null;
+            TwinConfiguration twinConfiguration = CreateTestConfig(testConfigurationId);
+            TwinConfiguration createdConfig;
 
             try
             {
                 // Create a twin configuration
-                Response<TwinConfiguration>  createResponse =
-                    await client.Configurations.CreateOrUpdateConfigurationAsync(
-                    new TwinConfiguration
-                    {
-                        Id = testConfigurationId
-                    }).ConfigureAwait(false);
-
-                configuration = createResponse.Value;
+                Response<TwinConfiguration> createResponse =
+                    await client.Configurations.CreateOrUpdateConfigurationAsync(twinConfiguration);
+                createdConfig = createResponse.Value;
 
                 // Get twin configuration
                 Response<TwinConfiguration> getResponse = await client.Configurations.GetConfigurationAsync(testConfigurationId).ConfigureAwait(false);
 
-                getResponse.Value.Etag.Should().BeEquivalentTo(configuration.Etag, "ETag value should not have changed.");
-
-                configuration = createResponse.Value;
+                getResponse.Value.Etag.Should().BeEquivalentTo(createdConfig.Etag, "ETag value should not have changed.");
+                createdConfig = createResponse.Value;
 
                 // Update a configuration
-                configuration.Priority = testPriority;
-
-                Response<TwinConfiguration> updateResponse = await client.Configurations.CreateOrUpdateConfigurationAsync(configuration, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
-
-                Assert.AreEqual(updateResponse.Value.Priority, testPriority, "Priority should have been updated.");
-
+                createdConfig.Priority = testPriority;
+                Response<TwinConfiguration> updatedConfig = await client.Configurations.CreateOrUpdateConfigurationAsync(createdConfig, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+                Assert.AreEqual(updatedConfig.Value.Priority, testPriority, "Priority should have been updated.");
             }
             finally
             {
                 // Delete twin configuration
-                await Cleanup(client, configuration);
+                await Cleanup(client, twinConfiguration);
             }
         }
 
@@ -82,64 +75,78 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task ConfigurationsClient_GetConfigurations()
         {
-            int configurationsCount = 5;
-            string[] testConfigurationIds = new string[configurationsCount];
-            for (int i = 0; i < configurationsCount; i++)
-            {
-                testConfigurationIds[i] = $"GetConfigurations{i}{GetRandom()}";
-            }
-
+            const int configurationsCount = 5;
+            TwinConfiguration[] twinConfigurations = new TwinConfiguration[configurationsCount];
+            TwinConfiguration[] createdConfigurations = new TwinConfiguration[configurationsCount];
+            IReadOnlyList<TwinConfiguration> listConfigurations;
             IotHubServiceClient client = GetClient();
-            TwinConfiguration[] configurations = null;
-
             try
             {
-                // Create a twin configuration
                 for (int i = 0; i < configurationsCount; i++)
                 {
+                    twinConfigurations[i] = CreateTestConfig($"testconfigurations{i}{GetRandom()}");
+
+                    // Create Configurations
                     Response<TwinConfiguration> createResponse =
-                    await client.Configurations.CreateOrUpdateConfigurationAsync(
-                    new TwinConfiguration
-                    {
-                        Id = testConfigurationIds[i]
-                    }).ConfigureAwait(false);
-                    configurations[i] = createResponse.Value;
+                        await client.Configurations.CreateOrUpdateConfigurationAsync(twinConfigurations[i]).ConfigureAwait(false);
+                    createdConfigurations[i] = createResponse.Value;
                 }
 
-                // List the modules on the test device
-                IReadOnlyList<TwinConfiguration> twinConfigurations = (await client.Configurations.GetConfigurationsAsync(configurationsCount).ConfigureAwait(false)).Value;
+                // List the configurations for the client
+                listConfigurations = (await client.Configurations.GetConfigurationsAsync().ConfigureAwait(false)).Value;
 
-                IEnumerable<string> twinConfigurationsIds = twinConfigurations.ToList().Select(configuration => configuration.Id);
+                IEnumerable<string> twinConfigurationsIds = listConfigurations.ToList().Select(configuration => configuration.Id);
 
-                Assert.AreEqual(configurationsCount, twinConfigurations.Count);
+                // Compare the response ids with created configurations
                 for (int i = 0; i < configurationsCount; i++)
                 {
-                    Assert.IsTrue(twinConfigurationsIds.Contains(testConfigurationIds[i]));
+                    Assert.IsTrue(twinConfigurationsIds.Contains(twinConfigurations[i].Id));
                 }
             }
             finally
             {
-                for (int i = 0; i < configurationsCount; i++)
-                {
-                   // await Cleanup(client, configurations[i]);
-                }
+                for (int i = 0; i < createdConfigurations.Count(); i++)
+                    await Cleanup(client, createdConfigurations[i]);
             }
         }
 
-        private async Task Cleanup(IotHubServiceClient client, TwinConfiguration twinConfiguration)
+        private async Task Cleanup(IotHubServiceClient client, TwinConfiguration config)
         {
             // cleanup
             try
             {
-                if (twinConfiguration != null)
+                if (config != null)
                 {
-                    await client.Configurations.DeleteConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+                    await client.Configurations.DeleteConfigurationAsync(config, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Test clean up failed: {ex.Message}");
             }
+        }
+
+        private TwinConfiguration CreateTestConfig(string testConfigurationId)
+        {
+            TwinConfiguration twinConfiguration =
+                new TwinConfiguration
+                {
+                    Id = testConfigurationId
+                };
+
+            ChangeTrackingDictionary<string, object> deviceContent = new ChangeTrackingDictionary<string, object>();
+            deviceContent["properties.desired.deviceContent_key"] = "deviceContent_value-" + twinConfiguration.Id;
+
+            // Labels are optional but adding here due to null check failure in deserialization
+            twinConfiguration.Labels.Add("HostPlatform", Environment.OSVersion.ToString());
+            twinConfiguration.Content = new ConfigurationContent();
+            twinConfiguration.Content.DeviceContent.Add("properties.desired.deviceContent_key", "deviceContent_value-" + twinConfiguration.Id);
+
+            // Specifying '*' to target all devices
+            twinConfiguration.TargetCondition = "*";
+            // Assign any integer value for priority
+            twinConfiguration.Priority = _random.Next(100);
+            return twinConfiguration;
         }
     }
 }
