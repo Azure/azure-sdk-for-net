@@ -21,11 +21,19 @@
             "metadata": {
               "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "storageAccountName": {
+            "type": "string",
+            "metadata": {
+              "description": "The storage account used to test import export jobs."
+            },
+            "defaultValue": "[toLower(resourceGroup().name)]"
         }
     },
     "variables": {
         "iotHubResourceId": "[resourceId('Microsoft.Devices/IotHubs', parameters('baseName'))]",
-        "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]"
+        "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
     },
     "resources": [
         {
@@ -55,16 +63,47 @@
                 },
                 "features": "None"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "properties": {
+              "supportsHttpsTrafficOnly": true,
+              "encryption": {
+                "services": {
+                  "file": {
+                    "keyType": "Account",
+                    "enabled": true
+                  },
+                  "blob": {
+                    "keyType": "Account",
+                    "enabled": true
+                  }
+                },
+                "keySource": "Microsoft.Storage"
+              }
+            }
         }
     ],
     "outputs": {
-        "IOT_HUB_ENDPOINT_URL": {
+        "iot_hub_endpoint_url": {
           "type": "string",
           "value": "[concat('https://', reference(variables('iotHubResourceId'), '2020-03-01').hostName)]"
         },
-        "IOT_HUB_CONNECTION_STRING":{
+        "iot_hub_connection_string":{
             "type": "string",
             "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', parameters('baseName')), '2020-03-01').hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', parameters('baseName')), '2020-03-01').value[0].primaryKey)]"
+        },
+        "storage_connection_string":{
+            "type": "string",
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountId'),'2019-06-01').keys[0].value, ';EndpointSuffix=core.windows.net')]"
         }
     }
 }
