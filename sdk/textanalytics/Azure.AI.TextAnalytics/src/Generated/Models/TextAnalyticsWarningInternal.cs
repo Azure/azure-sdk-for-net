@@ -10,13 +10,13 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TextAnalyticsWarning. </summary>
-    internal partial class TextAnalyticsWarning_internal
+    internal partial class TextAnalyticsWarningInternal
     {
-        /// <summary> Initializes a new instance of TextAnalyticsWarning_internal. </summary>
+        /// <summary> Initializes a new instance of TextAnalyticsWarningInternal. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Warning message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal TextAnalyticsWarning_internal(string code, string message)
+        internal TextAnalyticsWarningInternal(string code, string message)
         {
             if (code == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.AI.TextAnalytics.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of TextAnalyticsWarning_internal. </summary>
+        /// <summary> Initializes a new instance of TextAnalyticsWarningInternal. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        internal TextAnalyticsWarning_internal(string code, string message, string targetRef)
+        internal TextAnalyticsWarningInternal(string code, string message, string targetRef)
         {
             Code = code;
             Message = message;

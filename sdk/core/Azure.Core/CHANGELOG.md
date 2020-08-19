@@ -2,6 +2,10 @@
 
 ## 1.5.0-preview.1 (Unreleased)
 
+## 1.4.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 1.4.0 (2020-08-06)
 

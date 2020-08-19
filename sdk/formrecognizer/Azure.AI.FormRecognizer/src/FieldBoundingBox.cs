@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,11 +16,11 @@ namespace Azure.AI.FormRecognizer.Models
     /// relative to the text orientation. Units are in pixels for images and inches for PDF. The
     /// <see cref="LengthUnit"/> type of a recognized page can be found at <see cref="FormPage.Unit"/>.
     /// </summary>
-    public readonly struct BoundingBox
+    public readonly struct FieldBoundingBox
     {
         private readonly PointF[] _points;
 
-        internal BoundingBox(IReadOnlyList<float> boundingBox)
+        internal FieldBoundingBox(IReadOnlyList<float> boundingBox)
         {
             if (boundingBox.Count == 0)
             {
@@ -37,11 +38,20 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldBoundingBox"/> structure.
+        /// </summary>
+        /// <param name="points">The sequence of points defining this <see cref="FieldBoundingBox"/>.</param>
+        internal FieldBoundingBox(IReadOnlyList<PointF> points)
+        {
+            _points = points?.ToArray();
+        }
+
+        /// <summary>
         /// </summary>
         internal PointF[] Points => _points ?? Array.Empty<PointF>();
 
         /// <summary>
-        /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.
+        /// Gets one of the points that set the limits of this <see cref="FieldBoundingBox"/>.
         /// Coordinates are specified relative to the top-left of the original image, and points
         /// are ordered clockwise from the top-left corner relative to the text orientation.
         /// </summary>
@@ -50,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Models
         public PointF this[int index] => Points[index];
 
         /// <summary>
-        /// Returns string representation for <see cref="BoundingBox"/>.
+        /// Returns string representation for <see cref="FieldBoundingBox"/>.
         /// </summary>
         public override string ToString() => string.Join(",", Points.Select(p => p.ToString()).ToArray());
     }

@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         /// <summary>
-        /// This sample illustrates how to consume a Bounding Box type data that is available across the Form Recognizer library.
+        /// This sample illustrates how to consume a FieldBoundingBox type data that is available across the Form Recognizer library.
         /// A bounding box is a sequence of four <see cref="PointF"/> representing a quadrilateral that outlines
         /// an element such as a line or a word in a recognized form.
         /// Coordinates are specified relative to the top-left of the original image,
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// For the purpose of the sample, we will use the StartRecognizeContent capability.
         /// </summary>
         //[Test]
-        public async Task BoundingBoxSample()
+        public async Task FieldBoundingBoxSample()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;

@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TextAnalyticsError. </summary>
-    internal partial class TextAnalyticsError_internal
+    internal partial class TextAnalyticsErrorInternal
     {
-        /// <summary> Initializes a new instance of TextAnalyticsError_internal. </summary>
+        /// <summary> Initializes a new instance of TextAnalyticsErrorInternal. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal TextAnalyticsError_internal(string code, string message)
+        internal TextAnalyticsErrorInternal(string code, string message)
         {
             if (code == null)
             {
@@ -31,16 +31,16 @@ namespace Azure.AI.TextAnalytics.Models
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<TextAnalyticsError_internal>();
+            Details = new ChangeTrackingList<TextAnalyticsErrorInternal>();
         }
 
-        /// <summary> Initializes a new instance of TextAnalyticsError_internal. </summary>
+        /// <summary> Initializes a new instance of TextAnalyticsErrorInternal. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> Inner error contains more specific information. </param>
         /// <param name="details"> Details about specific errors that led to this reported error. </param>
-        internal TextAnalyticsError_internal(string code, string message, string target, InnerError innererror, IReadOnlyList<TextAnalyticsError_internal> details)
+        internal TextAnalyticsErrorInternal(string code, string message, string target, InnerError innererror, IReadOnlyList<TextAnalyticsErrorInternal> details)
         {
             Code = code;
             Message = message;
@@ -55,6 +55,6 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Inner error contains more specific information. </summary>
         public InnerError Innererror { get; }
         /// <summary> Details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<TextAnalyticsError_internal> Details { get; }
+        public IReadOnlyList<TextAnalyticsErrorInternal> Details { get; }
     }
 }

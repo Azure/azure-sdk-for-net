@@ -8,13 +8,13 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DetectedLanguage. </summary>
-    internal readonly partial struct DetectedLanguage_internal
+    internal readonly partial struct DetectedLanguageInternal
     {
-        /// <summary> Initializes a new instance of DetectedLanguage_internal. </summary>
+        /// <summary> Initializes a new instance of DetectedLanguageInternal. </summary>
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
-        internal DetectedLanguage_internal(string name, string iso6391Name, double confidenceScore)
+        internal DetectedLanguageInternal(string name, string iso6391Name, double confidenceScore)
         {
             Name = name;
             Iso6391Name = iso6391Name;

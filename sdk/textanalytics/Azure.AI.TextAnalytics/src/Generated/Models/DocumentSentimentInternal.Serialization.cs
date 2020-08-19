@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentSentiment
+    internal partial struct DocumentSentimentInternal
     {
-        internal static DocumentSentiment DeserializeDocumentSentiment(JsonElement element)
+        internal static DocumentSentimentInternal DeserializeDocumentSentimentInternal(JsonElement element)
         {
             string id = default;
-            DocumentSentimentValue sentiment = default;
+            TextSentiment sentiment = default;
             Optional<TextDocumentStatistics> statistics = default;
-            SentimentConfidenceScorePerLabel confidenceScores = default;
-            IReadOnlyList<SentenceSentiment> sentences = default;
-            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
+            SentimentConfidenceScores confidenceScores = default;
+            IReadOnlyList<SentenceSentimentInternal> sentences = default;
+            IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("sentiment"))
                 {
-                    sentiment = property.Value.GetString().ToDocumentSentimentValue();
+                    sentiment = property.Value.GetString().ToTextSentiment();
                     continue;
                 }
                 if (property.NameEquals("statistics"))
@@ -41,31 +41,31 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    confidenceScores = SentimentConfidenceScorePerLabel.DeserializeSentimentConfidenceScorePerLabel(property.Value);
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sentences"))
                 {
-                    List<SentenceSentiment> array = new List<SentenceSentiment>();
+                    List<SentenceSentimentInternal> array = new List<SentenceSentimentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceSentiment.DeserializeSentenceSentiment(item));
+                        array.Add(SentenceSentimentInternal.DeserializeSentenceSentimentInternal(item));
                     }
                     sentences = array;
                     continue;
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
+                    List<TextAnalyticsWarningInternal> array = new List<TextAnalyticsWarningInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
+                        array.Add(TextAnalyticsWarningInternal.DeserializeTextAnalyticsWarningInternal(item));
                     }
                     warnings = array;
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
+            return new DocumentSentimentInternal(id, sentiment, Optional.ToNullable(statistics), confidenceScores, sentences, warnings);
         }
     }
 }

@@ -5,12 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    [CodeGenModel("DocumentSentimentValue")]
-    internal enum DocumentSentimentValue
+    [CodeGenModel("DetectedLanguage")]
+    internal partial struct DetectedLanguageInternal
     {
-        Positive = 0,
-        Neutral = 1,
-        Negative = 2,
-        Mixed = 3,
     }
 }

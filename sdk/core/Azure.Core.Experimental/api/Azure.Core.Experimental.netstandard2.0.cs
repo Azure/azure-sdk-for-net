@@ -5,6 +5,7 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public BinaryData(object data, System.Type type, Azure.Core.Serialization.ObjectSerializer? serializer = null) { throw null; }
         public BinaryData(System.ReadOnlySpan<byte> data) { throw null; }
         public BinaryData(string data) { throw null; }
         public System.ReadOnlyMemory<byte> Bytes { get { throw null; } }

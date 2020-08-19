@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class SentimentConfidenceScorePerLabel
+    public partial class SentimentConfidenceScores
     {
-        internal static SentimentConfidenceScorePerLabel DeserializeSentimentConfidenceScorePerLabel(JsonElement element)
+        internal static SentimentConfidenceScores DeserializeSentimentConfidenceScores(JsonElement element)
         {
             double positive = default;
             double neutral = default;
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentConfidenceScorePerLabel(positive, neutral, negative);
+            return new SentimentConfidenceScores(positive, neutral, negative);
         }
     }
 }
