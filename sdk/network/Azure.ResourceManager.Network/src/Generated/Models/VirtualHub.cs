@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHub. </summary>
         public VirtualHub()
         {
+            VirtualNetworkConnections = new ChangeTrackingList<HubVirtualNetworkConnection>();
+            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2>();
         }
 
         /// <summary> Initializes a new instance of VirtualHub. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The securityPartnerProvider associated with this VirtualHub. </summary>
         public SubResource SecurityPartnerProvider { get; set; }
         /// <summary> List of all vnet connections with this VirtualHub. </summary>
-        public IList<HubVirtualNetworkConnection> VirtualNetworkConnections { get; set; }
+        public IList<HubVirtualNetworkConnection> VirtualNetworkConnections { get; }
         /// <summary> Address-prefix for this VirtualHub. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The routeTable associated with this virtual hub. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Security Provider name. </summary>
         public string SecurityProviderName { get; set; }
         /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
-        public IList<VirtualHubRouteTableV2> VirtualHubRouteTableV2S { get; set; }
+        public IList<VirtualHubRouteTableV2> VirtualHubRouteTableV2S { get; }
         /// <summary> The sku of this VirtualHub. </summary>
         public string Sku { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
         /// <param name="name"> The IP configuration name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetIPConfiguration(string name)
         {
             if (name == null)
@@ -23,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<SubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<SubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<SubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
@@ -60,12 +66,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups { get; set; }
+        public IList<SubResource> ApplicationSecurityGroups { get; }
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same load balancer. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+        public IList<SubResource> LoadBalancerBackendAddressPools { get; }
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same load balancer. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
+        public IList<SubResource> LoadBalancerInboundNatPools { get; }
     }
 }

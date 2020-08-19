@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ConnectionSharedKey IOperationSource<ConnectionSharedKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
-            }
+            return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
         }
 
         async ValueTask<ConnectionSharedKey> IOperationSource<ConnectionSharedKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
-            }
+            return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
         }
     }
 }

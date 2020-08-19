@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     internal static class FormContentTypeExtensions
     {

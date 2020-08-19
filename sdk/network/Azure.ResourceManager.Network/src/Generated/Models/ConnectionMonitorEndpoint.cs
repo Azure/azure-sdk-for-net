@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorEndpoint(string name)
         {
             if (name == null)

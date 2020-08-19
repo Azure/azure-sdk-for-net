@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyDefinition. </summary>
         public PolicyDefinition()
         {
+            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
         }
 
         /// <summary> Initializes a new instance of PolicyDefinition. </summary>
@@ -61,6 +63,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </summary>
         public object Metadata { get; set; }
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; set; }
+        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; }
     }
 }

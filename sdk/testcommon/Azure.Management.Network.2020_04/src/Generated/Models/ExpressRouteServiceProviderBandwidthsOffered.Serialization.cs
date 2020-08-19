@@ -15,12 +15,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OfferName != null)
+            if (Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName");
                 writer.WriteStringValue(OfferName);
             }
-            if (ValueInMbps != null)
+            if (Optional.IsDefined(ValueInMbps))
             {
                 writer.WritePropertyName("valueInMbps");
                 writer.WriteNumberValue(ValueInMbps.Value);
@@ -30,30 +30,22 @@ namespace Azure.Management.Network.Models
 
         internal static ExpressRouteServiceProviderBandwidthsOffered DeserializeExpressRouteServiceProviderBandwidthsOffered(JsonElement element)
         {
-            string offerName = default;
-            int? valueInMbps = default;
+            Optional<string> offerName = default;
+            Optional<int> valueInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     offerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("valueInMbps"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     valueInMbps = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ExpressRouteServiceProviderBandwidthsOffered(offerName, valueInMbps);
+            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Optional.ToNullable(valueInMbps));
         }
     }
 }

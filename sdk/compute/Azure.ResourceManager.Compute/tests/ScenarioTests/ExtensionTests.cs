@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Tests
                  "VMAccessAgent", "2.0", true, "{}", "{}", null, null
                 );
             //{
-            //    Tags = new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
+            //    Tags ={ { "extensionTag1", "1" }, { "extensionTag2", "2" } },
             //    Publisher = "Microsoft.Compute",
             //    //VirtualMachineExtensionType = "VMAccessAgent",
             //    TypeHandlerVersion = "2.0",
@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmExtensionUpdate = new VirtualMachineExtensionUpdate
             {
                 Tags =
-                    new Dictionary<string, string>
                     {
                         {"extensionTag1", "1"},
                         {"extensionTag2", "2"},

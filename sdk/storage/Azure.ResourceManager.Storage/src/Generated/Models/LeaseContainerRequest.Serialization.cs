@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("action");
             writer.WriteStringValue(Action.ToString());
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId");
                 writer.WriteStringValue(LeaseId);
             }
-            if (BreakPeriod != null)
+            if (Optional.IsDefined(BreakPeriod))
             {
                 writer.WritePropertyName("breakPeriod");
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
-            if (LeaseDuration != null)
+            if (Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration");
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
-            if (ProposedLeaseId != null)
+            if (Optional.IsDefined(ProposedLeaseId))
             {
                 writer.WritePropertyName("proposedLeaseId");
                 writer.WriteStringValue(ProposedLeaseId);

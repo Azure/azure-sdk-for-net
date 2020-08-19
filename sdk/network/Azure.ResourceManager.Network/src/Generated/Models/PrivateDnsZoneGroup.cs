@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateDnsZoneGroup. </summary>
         public PrivateDnsZoneGroup()
         {
+            PrivateDnsZoneConfigs = new ChangeTrackingList<PrivateDnsZoneConfig>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroup. </summary>
@@ -38,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>
-        public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get; set; }
+        public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get; }
     }
 }

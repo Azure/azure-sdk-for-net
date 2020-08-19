@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static SshPublicKeysGroupListResult DeserializeSshPublicKeysGroupListResult(JsonElement element)
         {
             IReadOnlyList<SshPublicKeyResource> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SshPublicKeyResource> array = new List<SshPublicKeyResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SshPublicKeyResource.DeserializeSshPublicKeyResource(item));
-                        }
+                        array.Add(SshPublicKeyResource.DeserializeSshPublicKeyResource(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SshPublicKeysGroupListResult(value, nextLink);
+            return new SshPublicKeysGroupListResult(value, nextLink.Value);
         }
     }
 }

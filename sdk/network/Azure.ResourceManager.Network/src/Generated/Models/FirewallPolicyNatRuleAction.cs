@@ -13,17 +13,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyNatRuleAction. </summary>
         public FirewallPolicyNatRuleAction()
         {
-            Type = "DNAT";
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyNatRuleAction. </summary>
         /// <param name="type"> The type of action. </param>
-        internal FirewallPolicyNatRuleAction(string type)
+        internal FirewallPolicyNatRuleAction(FirewallPolicyNatRuleActionType? type)
         {
             Type = type;
         }
 
         /// <summary> The type of action. </summary>
-        public string Type { get; set; }
+        public FirewallPolicyNatRuleActionType? Type { get; set; }
     }
 }

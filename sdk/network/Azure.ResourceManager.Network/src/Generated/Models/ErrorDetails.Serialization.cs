@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
         {
-            string code = default;
-            string target = default;
-            string message = default;
+            Optional<string> code = default;
+            Optional<string> target = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new ErrorDetails(code, target, message);
+            return new ErrorDetails(code.Value, target.Value, message.Value);
         }
     }
 }

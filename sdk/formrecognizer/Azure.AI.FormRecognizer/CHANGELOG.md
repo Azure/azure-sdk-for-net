@@ -1,11 +1,28 @@
 # Release History
 
-## 3.0.0-preview.1 (Unreleased)
+## 3.0.0-preview.3 (Unreleased)
+
+### Breaking changes
+
+- Renamed the model `BoundingBox` to `FieldBoundingBox`.
+
+### New Features
+
+- Added `FormRecognizerModelFactory` static class to support mocking model types.
+
+## 3.0.0-preview.2 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 3.0.0-preview.1 (2020-08-11)
 
 ### Breaking changes
 
 - The library now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
-- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.1`.
+- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize APIs.
+- Added model `TrainingOptions` to support passing configurable options to training APIs. This type now includes `TrainingFileFilter`.
 - Renamed the `FieldValue` property `Type` to `ValueType`.
 - Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
 - Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
@@ -20,6 +37,7 @@
 - Made the `TrainingFileFilter` constructor public.
 - Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
 - Fixed a bug in which the `BoundingBox` indexer and `ToString` method threw a `NullReferenceException` if it had no points ([#13971](https://github.com/Azure/azure-sdk-for-net/issues/13971)).
+- Fixed a bug in which a default `FieldValue` threw a `NullReferenceException` if `AsString` was called. The method now returns `null`.
 
 ### New Features
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
         public ManagedServiceIdentity()
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of identity used for the resource. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the virtual machine. </summary>
         public ResourceIdentityType? Type { get; set; }
         /// <summary> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get; set; }
+        public IDictionary<string, Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get; }
     }
 }

@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
         }
 
-        /// <summary> Initializes a new instance of RegenerateKeyParameters. </summary>
-        /// <param name="id"> The id of the key to regenerate. </param>
-        internal RegenerateKeyParameters(string id)
-        {
-            Id = id;
-        }
-
         /// <summary> The id of the key to regenerate. </summary>
         public string Id { get; set; }
     }
