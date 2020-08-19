@@ -41,6 +41,7 @@ namespace Azure.Iot.Hub.Service.Samples
             #endregion Snippet:IotHubServiceClientInitializeWithIotHubSasCredential
 
             // Run the samples
+
             var deviceIdentityLifecycleSamples = new DeviceIdentityLifecycleSamples(hubClient);
             await deviceIdentityLifecycleSamples.RunSampleAsync();
 
@@ -49,6 +50,20 @@ namespace Azure.Iot.Hub.Service.Samples
 
             var bulkDeviceIdentityLifecycleSamples = new BulkDeviceIdentityLifecycleSamples(hubClient);
             await bulkDeviceIdentityLifecycleSamples.RunSampleAsync();
+
+            var bulkModuledentityLifecycleSamples = new BulkModuleIdentityLifecycleSamples(hubClient);
+            await bulkModuledentityLifecycleSamples.RunSampleAsync();
+
+            var querySamples = new QueryTwinSamples(hubClient);
+            await querySamples.RunSampleAsync();
+
+            // Run samples that require the device sample to be running.
+            if (options.IsDeviceSampleRunning == true)
+            {
+                // This sample requires the device sample to be running so that it can connect to the device.
+                var methodInvocationSamples = new MethodInvocationSamples(hubClient);
+                await methodInvocationSamples.RunSampleAsync();
+            }
         }
     }
 }

@@ -37,7 +37,7 @@
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
