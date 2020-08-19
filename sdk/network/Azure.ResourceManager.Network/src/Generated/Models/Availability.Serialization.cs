@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Availability DeserializeAvailability(JsonElement element)
         {
-            string timeGrain = default;
-            string retention = default;
-            string blobDuration = default;
+            Optional<string> timeGrain = default;
+            Optional<string> retention = default;
+            Optional<string> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeGrain = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("retention"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     retention = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("blobDuration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blobDuration = property.Value.GetString();
                     continue;
                 }
             }
-            return new Availability(timeGrain, retention, blobDuration);
+            return new Availability(timeGrain.Value, retention.Value, blobDuration.Value);
         }
     }
 }

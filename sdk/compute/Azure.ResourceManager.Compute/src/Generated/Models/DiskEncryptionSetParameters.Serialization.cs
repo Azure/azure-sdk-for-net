@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskEncryptionSetParameters DeserializeDiskEncryptionSetParameters(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new DiskEncryptionSetParameters(id);
+            return new DiskEncryptionSetParameters(id.Value);
         }
     }
 }

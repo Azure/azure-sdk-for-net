@@ -16,5 +16,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

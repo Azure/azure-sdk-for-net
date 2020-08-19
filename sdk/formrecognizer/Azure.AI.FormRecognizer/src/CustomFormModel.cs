@@ -19,8 +19,35 @@ namespace Azure.AI.FormRecognizer.Training
             TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
             TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
             Submodels = ConvertToSubmodels(model);
-            TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
-            Errors = ConvertToFormRecognizerError(model.TrainResult);
+
+            // TrainResult can be null if model is not ready yet.
+
+            TrainingDocuments = model.TrainResult != null
+                ? ConvertToTrainingDocuments(model.TrainResult)
+                : new List<TrainingDocumentInfo>();
+
+            Errors = model.TrainResult?.Errors ?? new List<FormRecognizerError>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFormModel"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of this model.</param>
+        /// <param name="status">A status indicating this model's readiness for use.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
+        /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
+        /// <param name="errors">A list of errors ocurred during the training operation.</param>
+        internal CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors)
+        {
+            ModelId = modelId;
+            Status = status;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
+            Submodels = submodels;
+            TrainingDocuments = trainingDocuments;
+            Errors = errors;
         }
 
         /// <summary>
@@ -112,29 +139,16 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
-            if (trainResult?.TrainingDocuments != null)
+            foreach (var docs in trainResult.TrainingDocuments)
             {
-                foreach (var docs in trainResult?.TrainingDocuments)
-                {
-                    trainingDocs.Add(
-                        new TrainingDocumentInfo(
-                            docs.DocumentName,
-                            docs.PageCount,
-                            docs.Errors ?? new List<FormRecognizerError>(),
-                            docs.Status));
-                }
+                trainingDocs.Add(
+                    new TrainingDocumentInfo(
+                        docs.Name,
+                        docs.PageCount,
+                        docs.Errors ?? new List<FormRecognizerError>(),
+                        docs.Status));
             }
             return trainingDocs;
-        }
-
-        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult trainResult)
-        {
-            var errors = new List<FormRecognizerError>();
-            foreach (var error in trainResult?.Errors)
-            {
-                errors.Add(new FormRecognizerError(error.ErrorCode, error.Message));
-            }
-            return errors;
         }
     }
 }

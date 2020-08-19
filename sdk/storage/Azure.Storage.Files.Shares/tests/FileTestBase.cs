@@ -124,6 +124,15 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigSoftDelete.AccountKey),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_PremiumFile()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumFile.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumFile.AccountName,
+                        TestConfigPremiumFile.AccountKey),
+                    GetOptions()));
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
@@ -200,8 +209,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     AccessPolicy =
                         new ShareAccessPolicy
                         {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn =  Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rw"
                         }
                 }

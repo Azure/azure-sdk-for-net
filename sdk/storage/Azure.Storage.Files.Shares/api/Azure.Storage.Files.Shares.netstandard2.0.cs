@@ -168,16 +168,22 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileProperties>> GetPropertiesAsync(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeList(Azure.HttpRange range, Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeList(Azure.HttpRange range, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeList(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(Azure.HttpRange range, Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(Azure.HttpRange range, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.IO.Stream OpenRead(bool allowfileModifications, long position = (long)0, int? bufferSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.IO.Stream OpenRead(long position = (long)0, int? bufferSize = default(int?), Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenReadAsync(bool allowfileModifications, long position = (long)0, int? bufferSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenReadAsync(long position = (long)0, int? bufferSize = default(int?), Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.IO.Stream OpenWrite(bool overwrite, long position, Azure.Storage.Files.Shares.Models.ShareFileOpenWriteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenWriteAsync(bool overwrite, long position, Azure.Storage.Files.Shares.Models.ShareFileOpenWriteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetHttpHeaders(long? newSize = default(long?), Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetHttpHeaders(long? newSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties, string filePermission, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -329,11 +335,20 @@ namespace Azure.Storage.Files.Shares.Models
         internal PermissionInfo() { }
         public string FilePermissionKey { get { throw null; } }
     }
+    public partial class ProtocolSettings
+    {
+        public ProtocolSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get { throw null; } set { } }
+    }
     public partial class ShareAccessPolicy
     {
         public ShareAccessPolicy() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
+        public System.DateTimeOffset? PolicyExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? PolicyStartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
     public partial class ShareCorsRule
@@ -486,6 +501,14 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareFileDownloadDetails Details { get { throw null; } }
         public void Dispose() { }
     }
+    public partial class ShareFileGetRangeListOptions
+    {
+        public ShareFileGetRangeListOptions() { }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
+        public string PreviousSnapshot { get { throw null; } set { } }
+        public Azure.HttpRange? Range { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
+    }
     public partial class ShareFileHandle
     {
         internal ShareFileHandle() { }
@@ -533,6 +556,14 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LeaseId { get { throw null; } }
+    }
+    public partial class ShareFileOpenWriteOptions
+    {
+        public ShareFileOpenWriteOptions() { }
+        public long? BufferSize { get { throw null; } set { } }
+        public long? MaxSize { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions OpenConditions { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
     }
     public partial class ShareFileProperties
     {
@@ -679,6 +710,7 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics MinuteMetrics { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ProtocolSettings ProtocolSettings { get { throw null; } set { } }
     }
     public partial class ShareSignedIdentifier
     {
@@ -719,6 +751,16 @@ namespace Azure.Storage.Files.Shares.Models
         All = -1,
         None = 0,
         Metadata = 1,
+    }
+    public partial class SmbMultichannel
+    {
+        public SmbMultichannel() { }
+        public bool? Enabled { get { throw null; } set { } }
+    }
+    public partial class SmbSettings
+    {
+        public SmbSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
     }
     public partial class StorageClosedHandlesSegment
     {

@@ -94,12 +94,11 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task VerifyClientCertificateCredentialExceptionAsync(bool usePemFile)
+        public void VerifyClientCertificateCredentialException(bool usePemFile)
         {
             string expectedInnerExMessage = Guid.NewGuid().ToString();
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
-
 
             var expectedTenantId = Guid.NewGuid().ToString();
 
@@ -120,8 +119,6 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
 
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
-
-            await Task.CompletedTask;
         }
     }
 }

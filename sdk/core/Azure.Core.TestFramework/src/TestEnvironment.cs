@@ -74,7 +74,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        internal RecordedTestMode? Mode { get; set; }
+        public RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -117,6 +117,11 @@ namespace Azure.Core.TestFramework
         public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
 
         /// <summary>
+        ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedOptionalVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
         public string ClientId => GetRecordedVariable("CLIENT_ID");
@@ -157,6 +162,14 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
+            return GetRecordedOptionalVariable(name, _ => { });
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// </summary>
+        protected string GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions> options)
+        {
             if (Mode == RecordedTestMode.Playback)
             {
                 return GetRecordedValue(name);
@@ -164,8 +177,21 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            SetRecordedValue(name, value);
+            var optionsInstance = new RecordedVariableOptions();
+            options?.Invoke(optionsInstance);
+            var sanitizedValue = optionsInstance.Apply(value);
 
+            if (!Mode.HasValue)
+            {
+                return value;
+            }
+
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+            }
+
+            _recording?.SetVariable(name, sanitizedValue);
             return value;
         }
 
@@ -175,7 +201,16 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedVariable(string name)
         {
-            var value = GetRecordedOptionalVariable(name);
+            return GetRecordedVariable(name, null);
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// Throws when variable is not found.
+        /// </summary>
+        protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
+        {
+            var value = GetRecordedOptionalVariable(name, options);
             EnsureValue(name, value);
             return value;
         }
@@ -240,21 +275,6 @@ namespace Azure.Core.TestFramework
             }
 
             return _recording.GetVariable(name, null);
-        }
-
-        private void SetRecordedValue(string name, string value)
-        {
-            if (!Mode.HasValue)
-            {
-                return;
-            }
-
-            if (_recording == null)
-            {
-                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
-            }
-
-            _recording?.SetVariable(name, value);
         }
 
         private class TestCredential : TokenCredential

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         public NetworkInterface()
         {
+            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfiguration>();
+            HostedWorkloads = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hostedWorkloads"> A list of references to linked BareMetal resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network interface resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface resource. </param>
-        internal NetworkInterface(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource virtualMachine, NetworkSecurityGroup networkSecurityGroup, PrivateEndpoint privateEndpoint, IList<NetworkInterfaceIPConfiguration> ipConfigurations, IList<NetworkInterfaceTapConfiguration> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IList<string> hostedWorkloads, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkInterface(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, SubResource virtualMachine, NetworkSecurityGroup networkSecurityGroup, PrivateEndpoint privateEndpoint, IList<NetworkInterfaceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfiguration> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualMachine = virtualMachine;
@@ -64,9 +68,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         public PrivateEndpoint PrivateEndpoint { get; }
         /// <summary> A list of IPConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
+        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; }
         /// <summary> A list of TapConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceTapConfiguration> TapConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceTapConfiguration> TapConfigurations { get; }
         /// <summary> The DNS settings in network interface. </summary>
         public NetworkInterfaceDnsSettings DnsSettings { get; set; }
         /// <summary> The MAC address of the network interface. </summary>
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Indicates whether IP forwarding is enabled on this network interface. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> A list of references to linked BareMetal resources. </summary>
-        public IList<string> HostedWorkloads { get; }
+        public IReadOnlyList<string> HostedWorkloads { get; }
         /// <summary> The resource GUID property of the network interface resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network interface resource. </summary>

@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         Image IOperationSource<Image>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Image.DeserializeImage(document.RootElement);
-            }
+            return Image.DeserializeImage(document.RootElement);
         }
 
         async ValueTask<Image> IOperationSource<Image>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Image.DeserializeImage(document.RootElement);
-            }
+            return Image.DeserializeImage(document.RootElement);
         }
     }
 }

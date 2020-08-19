@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filter");
             }
-            string apiVersion = "2020-04-01";
+            string apiVersion = "2020-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

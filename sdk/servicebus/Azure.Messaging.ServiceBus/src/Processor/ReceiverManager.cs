@@ -103,7 +103,10 @@ namespace Azure.Messaging.ServiceBus
                         cancellationToken).ConfigureAwait(false);
                 }
             }
-            catch (Exception ex) when (!(ex is TaskCanceledException))
+            catch (Exception ex)
+            // If the user manually throws a TCE, then we should log it.
+            when (!(ex is TaskCanceledException) ||
+                  !cancellationToken.IsCancellationRequested)
             {
                 if (ex is ServiceBusException sbException && sbException.ProcessorErrorSource.HasValue)
                 {
@@ -201,11 +204,11 @@ namespace Azure.Messaging.ServiceBus
 
                 // if the user settled the message, or if the message or session lock was lost,
                 // do not attempt to abandon the message
-                ServiceBusException.FailureReason? failureReason = (ex as ServiceBusException)?.Reason;
+                ServiceBusFailureReason? failureReason = (ex as ServiceBusException)?.Reason;
                 if (!message.IsSettled &&
                     _receiverOptions.ReceiveMode == ReceiveMode.PeekLock &&
-                    failureReason != ServiceBusException.FailureReason.SessionLockLost &&
-                    failureReason != ServiceBusException.FailureReason.MessageLockLost)
+                    failureReason != ServiceBusFailureReason.SessionLockLost &&
+                    failureReason != ServiceBusFailureReason.MessageLockLost)
                 {
                     try
                     {
@@ -318,7 +321,7 @@ namespace Azure.Messaging.ServiceBus
             // we need to propagate this in order to dispose the session receiver
             // in the same place where we are creating them.
             var sbException = exception as ServiceBusException;
-            if (sbException?.Reason == ServiceBusException.FailureReason.SessionLockLost)
+            if (sbException?.Reason == ServiceBusFailureReason.SessionLockLost)
             {
                 sbException.ProcessorErrorSource = errorSource;
                 throw sbException;

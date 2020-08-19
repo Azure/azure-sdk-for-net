@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         public TrackedResource()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of TrackedResource. </summary>
@@ -32,6 +34,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Resource location. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

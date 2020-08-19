@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCrossConnection. </summary>
         public ExpressRouteCrossConnection()
         {
+            Peerings = new ChangeTrackingList<ExpressRouteCrossConnectionPeering>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnection. </summary>
@@ -70,6 +72,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the express route cross connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The list of peerings. </summary>
-        public IList<ExpressRouteCrossConnectionPeering> Peerings { get; set; }
+        public IList<ExpressRouteCrossConnectionPeering> Peerings { get; }
     }
 }

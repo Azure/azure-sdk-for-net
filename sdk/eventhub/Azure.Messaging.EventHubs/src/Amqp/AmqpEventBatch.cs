@@ -52,6 +52,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override long SizeInBytes => _sizeBytes;
 
         /// <summary>
+        ///   The publishing sequence number assigned to the first event in the batch at the time
+        ///   the batch was successfully published.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   The starting published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public override int? StartingPublishedSequenceNumber { get; set; }
+
+        /// <summary>
         ///   The count of events contained in the batch.
         /// </summary>
         ///

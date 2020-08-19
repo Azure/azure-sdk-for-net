@@ -18,7 +18,7 @@ namespace Azure.Graph.Rbac.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
@@ -34,9 +34,9 @@ namespace Azure.Graph.Rbac.Models
         internal static ResourceAccess DeserializeResourceAccess(JsonElement element)
         {
             string id = default;
-            string type = default;
+            Optional<string> type = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -46,25 +46,13 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ResourceAccess(id, type, additionalProperties);
+            return new ResourceAccess(id, type.Value, additionalProperties);
         }
     }
 }

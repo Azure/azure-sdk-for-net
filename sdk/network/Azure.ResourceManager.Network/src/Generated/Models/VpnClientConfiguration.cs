@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
         public VpnClientConfiguration()
         {
+            VpnClientRootCertificates = new ChangeTrackingList<VpnClientRootCertificate>();
+            VpnClientRevokedCertificates = new ChangeTrackingList<VpnClientRevokedCertificate>();
+            VpnClientProtocols = new ChangeTrackingList<VpnClientProtocol>();
+            VpnClientIpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            RadiusServers = new ChangeTrackingList<RadiusServer>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
@@ -47,19 +53,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
         public AddressSpace VpnClientAddressPool { get; set; }
         /// <summary> VpnClientRootCertificate for virtual network gateway. </summary>
-        public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; set; }
+        public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VpnClientRevokedCertificate for Virtual network gateway. </summary>
-        public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
+        public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; }
         /// <summary> VpnClientProtocols for Virtual network gateway. </summary>
-        public IList<VpnClientProtocol> VpnClientProtocols { get; set; }
+        public IList<VpnClientProtocol> VpnClientProtocols { get; }
         /// <summary> VpnClientIpsecPolicies for virtual network gateway P2S client. </summary>
-        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; set; }
+        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; }
         /// <summary> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         public string RadiusServerAddress { get; set; }
         /// <summary> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         public string RadiusServerSecret { get; set; }
         /// <summary> The radiusServers property for multiple radius server configuration. </summary>
-        public IList<RadiusServer> RadiusServers { get; set; }
+        public IList<RadiusServer> RadiusServers { get; }
         /// <summary> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
         public string AadTenant { get; set; }
         /// <summary> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>

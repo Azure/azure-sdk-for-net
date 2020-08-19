@@ -15,22 +15,22 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimarybytesIn != null)
+            if (Optional.IsDefined(PrimarybytesIn))
             {
                 writer.WritePropertyName("primarybytesIn");
                 writer.WriteNumberValue(PrimarybytesIn.Value);
             }
-            if (PrimarybytesOut != null)
+            if (Optional.IsDefined(PrimarybytesOut))
             {
                 writer.WritePropertyName("primarybytesOut");
                 writer.WriteNumberValue(PrimarybytesOut.Value);
             }
-            if (SecondarybytesIn != null)
+            if (Optional.IsDefined(SecondarybytesIn))
             {
                 writer.WritePropertyName("secondarybytesIn");
                 writer.WriteNumberValue(SecondarybytesIn.Value);
             }
-            if (SecondarybytesOut != null)
+            if (Optional.IsDefined(SecondarybytesOut))
             {
                 writer.WritePropertyName("secondarybytesOut");
                 writer.WriteNumberValue(SecondarybytesOut.Value);
@@ -40,50 +40,34 @@ namespace Azure.Management.Network.Models
 
         internal static ExpressRouteCircuitStats DeserializeExpressRouteCircuitStats(JsonElement element)
         {
-            long? primarybytesIn = default;
-            long? primarybytesOut = default;
-            long? secondarybytesIn = default;
-            long? secondarybytesOut = default;
+            Optional<long> primarybytesIn = default;
+            Optional<long> primarybytesOut = default;
+            Optional<long> secondarybytesIn = default;
+            Optional<long> secondarybytesOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primarybytesIn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primarybytesIn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("primarybytesOut"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primarybytesOut = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("secondarybytesIn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondarybytesIn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("secondarybytesOut"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondarybytesOut = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitStats(primarybytesIn, primarybytesOut, secondarybytesIn, secondarybytesOut);
+            return new ExpressRouteCircuitStats(Optional.ToNullable(primarybytesIn), Optional.ToNullable(primarybytesOut), Optional.ToNullable(secondarybytesIn), Optional.ToNullable(secondarybytesOut));
         }
     }
 }

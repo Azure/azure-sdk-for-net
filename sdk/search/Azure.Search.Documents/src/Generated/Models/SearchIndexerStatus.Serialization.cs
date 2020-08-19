@@ -28,6 +28,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("lastResult"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        lastResult = null;
+                        continue;
+                    }
                     lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
                     continue;
                 }

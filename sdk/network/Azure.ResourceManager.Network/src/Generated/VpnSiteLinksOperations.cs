@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public virtual AsyncPageable<VpnSiteLink> ListByVpnSiteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Pageable<VpnSiteLink> ListByVpnSite(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

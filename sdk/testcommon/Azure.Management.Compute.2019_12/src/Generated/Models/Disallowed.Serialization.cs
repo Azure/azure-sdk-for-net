@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DiskTypes != null)
+            if (Optional.IsCollectionDefined(DiskTypes))
             {
                 writer.WritePropertyName("diskTypes");
                 writer.WriteStartArray();
@@ -31,32 +31,21 @@ namespace Azure.Management.Compute.Models
 
         internal static Disallowed DeserializeDisallowed(JsonElement element)
         {
-            IList<string> diskTypes = default;
+            Optional<IList<string>> diskTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskTypes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     diskTypes = array;
                     continue;
                 }
             }
-            return new Disallowed(diskTypes);
+            return new Disallowed(Optional.ToList(diskTypes));
         }
     }
 }

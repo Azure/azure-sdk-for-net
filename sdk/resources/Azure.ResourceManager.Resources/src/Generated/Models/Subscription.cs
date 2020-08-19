@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Subscription. </summary>
         internal Subscription()
         {
+            ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Subscription. </summary>

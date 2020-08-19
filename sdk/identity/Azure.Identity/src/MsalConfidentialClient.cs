@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -26,7 +22,6 @@ namespace Azure.Identity
             : base()
         {
         }
-
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)

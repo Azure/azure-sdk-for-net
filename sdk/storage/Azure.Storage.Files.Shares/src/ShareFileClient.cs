@@ -4111,6 +4111,74 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
         /// List Ranges</see>.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileRangeInfo> GetRangeList(
+            ShareFileGetRangeListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            GetRangeListInternal(
+                options?.Range,
+                options?.Snapshot,
+                options?.PreviousSnapshot,
+                options?.Conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
+            ShareFileGetRangeListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await GetRangeListInternal(
+                options?.Range,
+                options?.Snapshot,
+                options?.PreviousSnapshot,
+                options?.Conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
         /// If omitted, then all ranges for the file are returned.
@@ -4131,12 +4199,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileRangeInfo> GetRangeList(
             HttpRange range,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetRangeListInternal(
                 range,
+                snapshot: default,
+                previousSnapshot: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -4173,6 +4244,8 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             GetRangeListInternal(
                 range,
+                snapshot: default,
+                previousSnapshot: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -4205,12 +4278,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetRangeListInternal(
                 range,
+                snapshot: default,
+                previousSnapshot: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -4247,6 +4323,8 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             await GetRangeListInternal(
                 range,
+                snapshot: default,
+                previousSnapshot: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -4262,6 +4340,19 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
         /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="snapshot">
+        /// Optionally specifies the share snapshot to retrieve ranges
+        /// information from. For more information on working with share snapshots,
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-share">
+        /// Create a snapshot of a share</see>.
+        /// </param>
+        /// <param name="previousSnapshot">
+        /// Specifies that the response will contain only ranges that were
+        /// changed between target file and previous snapshot.  Changed ranges
+        /// include both updated and cleared ranges. The target file may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -4283,7 +4374,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileRangeInfo>> GetRangeListInternal(
-            HttpRange range,
+            HttpRange? range,
+            string snapshot,
+            string previousSnapshot,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -4301,7 +4394,9 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         version: Version.ToVersionString(),
-                        range: range.ToString(),
+                        sharesnapshot: snapshot,
+                        prevsharesnapshot: previousSnapshot,
+                        range: range?.ToString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         cancellationToken: cancellationToken,
@@ -4750,5 +4845,189 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion ForceCloseHandles
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                if (overwrite)
+                {
+                    if (options?.MaxSize == null)
+                    {
+                        throw new ArgumentException($"{nameof(options)}.{nameof(options.MaxSize)} must be set if {nameof(overwrite)} is set to true");
+                    }
+
+                    Response<ShareFileInfo> createResponse = await CreateInternal(
+                        maxSize: options.MaxSize.Value,
+                        httpHeaders: default,
+                        metadata: default,
+                        smbProperties: default,
+                        filePermission: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    try
+                    {
+                        Response<ShareFileProperties> propertiesResponse = await GetPropertiesInternal(
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    when(ex.ErrorCode == ShareErrorCode.ResourceNotFound)
+                    {
+                        if (options?.MaxSize == null)
+                        {
+                            throw new ArgumentException($"{nameof(options)}.{nameof(options.MaxSize)} must be set if the File is being created for the first time");
+                        }
+
+                        Response<ShareFileInfo> createResponse = await CreateInternal(
+                            maxSize: options.MaxSize.Value,
+                            httpHeaders: default,
+                            metadata: default,
+                            smbProperties: default,
+                            filePermission: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                }
+
+                return new ShareFileWriteStream(
+                    fileClient: this,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
+                    position: position,
+                    conditions: options?.OpenConditions,
+                    progressHandler: options?.ProgressHandler);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
     }
 }

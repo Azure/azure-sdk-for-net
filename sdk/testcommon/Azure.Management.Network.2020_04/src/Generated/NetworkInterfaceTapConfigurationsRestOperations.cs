@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public NetworkInterfaceTapConfigurationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -68,6 +68,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="tapConfigurationName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -101,6 +102,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="tapConfigurationName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -154,6 +156,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="tapConfigurationName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -177,14 +180,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,6 +193,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="tapConfigurationName"/> is null. </exception>
         public Response<NetworkInterfaceTapConfiguration> Get(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -220,14 +217,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfiguration.DeserializeNetworkInterfaceTapConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,6 +255,7 @@ namespace Azure.Management.Network
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, <paramref name="tapConfigurationName"/>, or <paramref name="tapConfigurationParameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, NetworkInterfaceTapConfiguration tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -302,6 +293,7 @@ namespace Azure.Management.Network
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, <paramref name="tapConfigurationName"/>, or <paramref name="tapConfigurationParameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, NetworkInterfaceTapConfiguration tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -356,6 +348,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceTapConfigurationListResult>> ListAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -375,14 +368,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfigurationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,6 +380,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public Response<NetworkInterfaceTapConfigurationListResult> List(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -413,14 +400,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfigurationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -445,6 +425,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
         public async Task<Response<NetworkInterfaceTapConfigurationListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -468,14 +449,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfigurationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,6 +462,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
         public Response<NetworkInterfaceTapConfigurationListResult> ListNextPage(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -511,14 +486,7 @@ namespace Azure.Management.Network
                     {
                         NetworkInterfaceTapConfigurationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
-                        }
+                        value = NetworkInterfaceTapConfigurationListResult.DeserializeNetworkInterfaceTapConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

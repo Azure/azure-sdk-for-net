@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ExpressRoutePort IOperationSource<ExpressRoutePort>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
-            }
+            return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
         }
 
         async ValueTask<ExpressRoutePort> IOperationSource<ExpressRoutePort>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
-            }
+            return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
         }
     }
 }

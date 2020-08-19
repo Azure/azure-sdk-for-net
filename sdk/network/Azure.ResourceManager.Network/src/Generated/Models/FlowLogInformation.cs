@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
         public FlowLogInformation(string targetResourceId, string storageId, bool enabled)
         {
             if (targetResourceId == null)

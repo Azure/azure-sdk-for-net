@@ -34,10 +34,9 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
         /// detection result. If the data is not sorted correctly or there is
         /// duplicated timestamp, the API will not work. In such case, an error
         /// message will be returned.</param>
-        /// <param name="granularity">Can only be one of yearly, monthly,
-        /// weekly, daily, hourly or minutely. Granularity is used for verify
-        /// whether input series is valid. Possible values include: 'yearly',
-        /// 'monthly', 'weekly', 'daily', 'hourly', 'minutely'</param>
+        /// <param name="granularity">Possible values include: 'yearly',
+        /// 'monthly', 'weekly', 'daily', 'hourly', 'minutely',
+        /// 'secondly'</param>
         /// <param name="customInterval">Custom Interval is used to set
         /// non-standard time interval, for example, if the series is 5
         /// minutes, request can be set as {"granularity":"minutely",
@@ -78,10 +77,8 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
         public IList<Point> Series { get; set; }
 
         /// <summary>
-        /// Gets or sets can only be one of yearly, monthly, weekly, daily,
-        /// hourly or minutely. Granularity is used for verify whether input
-        /// series is valid. Possible values include: 'yearly', 'monthly',
-        /// 'weekly', 'daily', 'hourly', 'minutely'
+        /// Gets or sets possible values include: 'yearly', 'monthly',
+        /// 'weekly', 'daily', 'hourly', 'minutely', 'secondly'
         /// </summary>
         [JsonProperty(PropertyName = "granularity")]
         public Granularity Granularity { get; set; }

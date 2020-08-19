@@ -19,7 +19,7 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies5p1";
-            string partitionKey = "somePartition";
+            string partitionKey = "Stationery";
             string rowKey = "A1";
 
             var serviceClient = new TableServiceClient(
@@ -27,63 +27,43 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             serviceClient.CreateTable(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
-            try
+            #region Snippet:TablesSample5UpsertEntity
+            var entity = new TableEntity(partitionKey, rowKey)
             {
-                #region Snippet:TablesSample5UpsertEntity
-                // Get a reference to the <see cref="TableClient" /> of the table.
-                var client = serviceClient.GetTableClient(tableName);
+                {"Product", "Markers" },
+                {"Price", 5.00 },
+                {"Brand", "myCompany" }
+            };
 
-                // Make an entity.
-                var entity = new Dictionary<string, object>
-                {
-                    {"PartitionKey", partitionKey },
-                    {"RowKey", rowKey },
-                    {"Product", "Markers" },
-                    {"Price", 5.00 },
-                    {"Brand", "myCompany" }
-                };
+            // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
+            tableClient.UpsertEntity(entity);
+            #endregion
 
-                // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
-                client.UpsertEntity(entity);
+            #region Snippet:TablesSample5UpsertWithReplace
+            // Delete an entity property.
+            entity.Remove("Brand");
 
-                // Delete an entity property.
-                entity.Remove("Brand");
+            // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
+            // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
+            tableClient.UpsertEntity(entity, TableUpdateMode.Replace);
+            #endregion
 
-                // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode (which defaults to Merge if not given).
-                // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-                client.UpsertEntity(entity, TableUpdateMode.Replace);
-                #endregion
+            #region Snippet:TablesSample5UpdateEntity
+            // Get the entity to update.
+            TableEntity qEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
+            qEntity["Price"] = 7.00;
 
-                #region Snippet:TablesSample5UpdateEntity
-                // Query for entities to update.
-                Pageable<IDictionary<string, object>> queryResultsBefore = client.Query();
+            // Since no UpdateMode was passed, the request will default to Merge.
+            tableClient.UpdateEntity(qEntity, qEntity.ETag);
 
-                foreach (IDictionary<string, object> qEntity in queryResultsBefore)
-                {
-                    // Changing property of entity.
-                    qEntity["Price"] = 7.00;
+            TableEntity updatedEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
+            Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
+            Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
+            #endregion
 
-                    // Extract ETag from the entity.
-                    string eTag = qEntity["odata.etag"] as string;
-
-                    // Updating to changed entity using its generated eTag.
-                    // Since no UpdateMode was passed, the request will default to Merge.
-                    client.UpdateEntity(qEntity, eTag);
-                }
-                #endregion
-
-                Pageable<IDictionary<string, object>> queryResultsAfter = client.Query();
-                foreach (IDictionary<string, object> qEntity in queryResultsAfter)
-                {
-                    Console.WriteLine($"'Price' before updating: ${entity["Price"]}");
-                    Console.WriteLine($"'Price' after updating: ${qEntity["Price"]}");
-                }
-            }
-            finally
-            {
-                serviceClient.DeleteTable(tableName);
-            }
+            serviceClient.DeleteTable(tableName);
         }
     }
 }
