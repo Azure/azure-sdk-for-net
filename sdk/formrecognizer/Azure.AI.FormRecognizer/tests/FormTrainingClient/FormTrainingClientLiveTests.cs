@@ -221,7 +221,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1022", ex.ErrorCode);
         }
 
-        //[Test]
+        [Test]
         public async Task CopyModel()
         {
             var sourceClient = CreateFormTrainingClient();
