@@ -555,6 +555,52 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
+        /// The <see cref="Upload(Stream, CancellationToken)"/> operation
+        /// creates a new block blob or updates the content of an existing
+        /// block blob.  Updating an existing block blob overwrites any
+        /// existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="data">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="httpHeaders"></param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> UploadData(
+            BinaryData data,
+            BlobHttpHeaders httpHeaders = default,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            Upload(
+                data.ToStream(),
+                httpHeaders,
+                conditions: overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
         /// The <see cref="Upload(string, CancellationToken)"/> operation
         /// creates a new block blob or updates the content of an existing
         /// block blob.  Updating an existing block blob overwrites any
@@ -637,6 +683,50 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             UploadAsync(
                 content,
+                conditions: overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
+        /// creates a new block blob or updates the content of an existing
+        /// block blob.  Updating an existing block blob overwrites any
+        /// existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="httpHeaders"></param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response<BlobContentInfo>> UploadDataAsync(
+            BinaryData data,
+            BlobHttpHeaders httpHeaders = default,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            UploadAsync(
+                data.ToStream(),
+                httpHeaders,
                 conditions: overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
                 cancellationToken: cancellationToken);
 

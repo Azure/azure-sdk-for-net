@@ -5,6 +5,7 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public BinaryData(byte[] data) { throw null; }
         public BinaryData(object data, System.Type type, Azure.Core.Serialization.ObjectSerializer? serializer = null) { throw null; }
         public BinaryData(System.ReadOnlySpan<byte> data) { throw null; }
         public BinaryData(string data) { throw null; }
@@ -15,6 +16,7 @@ namespace Azure.Core
         public T Deserialize<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static Azure.Core.BinaryData FromMemory(byte[] data) { throw null; }
         public static Azure.Core.BinaryData FromMemory(System.ReadOnlyMemory<byte> data) { throw null; }
         public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

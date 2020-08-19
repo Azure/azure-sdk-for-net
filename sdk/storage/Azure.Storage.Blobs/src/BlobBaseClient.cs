@@ -524,6 +524,66 @@ namespace Azure.Storage.Blobs.Specialized
             await DownloadAsync(CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
+        /// The <see cref="Download()"/> operation downloads a blob from
+        /// the service, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadInfo}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadInfo.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<BlobData> DownloadData()
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Response<BlobDownloadInfo> downloadInfo = Download();
+            return Response.FromValue(
+                new BlobData(downloadInfo)
+                {
+                    Data = BinaryData.FromStream(downloadInfo.Value.Content)
+                },
+                downloadInfo.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadAsync()"/> operation downloads a blob from
+        /// the service, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadInfo}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadInfo.Content"/> contains
+        /// the blob's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<BlobData>> DownloadDataAsync()
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Response<BlobDownloadInfo> downloadInfo = await DownloadAsync().ConfigureAwait(false);
+            return Response.FromValue(
+                new BlobData(downloadInfo)
+                {
+                    Data = await BinaryData.FromStreamAsync(downloadInfo.Value.Content).ConfigureAwait(false)
+                },
+                downloadInfo.GetRawResponse());
+        }
+
+        /// <summary>
         /// The <see cref="Download(CancellationToken)"/> operation downloads
         /// a blob from the service, including its metadata and properties.
         ///

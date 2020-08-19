@@ -54,6 +54,34 @@ namespace Azure.Core
 
         /// <summary>
         /// Creates a binary data instance by wrapping the
+        /// passed in array of bytes.
+        /// </summary>
+        /// <param name="data">Byte data.</param>
+        public BinaryData(byte[] data)
+        {
+            Bytes = data;
+        }
+
+        /// <summary>
+        /// Creates a binary data instance from an object and serializes it
+        /// using the provided <see cref="ObjectSerializer"/>. If no <see cref="ObjectSerializer"/>
+        /// is specified, <see cref="JsonObjectSerializer"/> will be used.
+        /// </summary>
+        /// <param name="data">The data that will be serialized.</param>
+        /// <param name="type">The type of the data.</param>
+        /// <param name="serializer">The serializer to serialize
+        /// the data.</param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public BinaryData(object data, Type type, ObjectSerializer? serializer = default)
+        {
+            using var memoryStream = new MemoryStream();
+            serializer ??= new JsonObjectSerializer();
+            serializer.Serialize(memoryStream, data, type, CancellationToken.None);
+            Bytes = memoryStream.ToArray();
+        }
+
+        /// <summary>
+        /// Creates a binary data instance by wrapping the
         /// passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
@@ -102,7 +130,17 @@ namespace Azure.Core
             new BinaryData(data);
 
         /// <summary>
+        /// Creates a binary data instance by wrapping the passed in
+        /// byte array.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public static BinaryData FromMemory(byte[] data) =>
+            new BinaryData(data);
+
+        /// <summary>
         /// Creates a binary data instance from the specified stream.
+        /// The passed in stream is not disposed by this method.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
@@ -111,6 +149,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Creates a binary data instance from the specified stream.
+        /// The passed in stream is not disposed by this method.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
@@ -240,7 +279,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Converts the BinaryData to a stream.
+        /// Converts the BinaryData to a read-only stream.
         /// </summary>
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream() =>

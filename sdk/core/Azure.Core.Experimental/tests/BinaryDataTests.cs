@@ -34,7 +34,7 @@ namespace Azure.Core.Tests
         public void CanCreateBinaryDataUsingSpanCtor()
         {
             byte[] payload = Encoding.UTF8.GetBytes("some data");
-            BinaryData data = new BinaryData(payload);
+            BinaryData data = new BinaryData(payload.AsSpan());
 
             Assert.AreNotSame(payload, data.Bytes);
             Assert.AreNotEqual(payload, data.Bytes);
