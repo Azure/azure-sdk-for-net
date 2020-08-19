@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         {
             Dictionary<string, Type> contract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
             contract.Add("QueueTrigger", typeof(string));
-            contract.Add("DequeueCount", typeof(int));
+            contract.Add("DequeueCount", typeof(long));
             contract.Add("ExpirationTime", typeof(DateTimeOffset));
             contract.Add("Id", typeof(string));
             contract.Add("InsertionTime", typeof(DateTimeOffset));

@@ -332,7 +332,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await queue.SendMessageAsync("ignore");
 
             // Act
-            int result = await RunTriggerAsync<int>(account, typeof(BindToDequeueCountBindingDataProgram),
+            long result = await RunTriggerAsync<long>(account, typeof(BindToDequeueCountBindingDataProgram),
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -556,11 +556,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task CallQueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
-            const int expectedDequeueCount = 123;
+            const long expectedDequeueCount = 123;
             QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", expectedDequeueCount);
 
             // Act
-            int result = await CallQueueTriggerAsync<int>(message, typeof(BindToDequeueCountBindingDataProgram),
+            long result = await CallQueueTriggerAsync<long>(message, typeof(BindToDequeueCountBindingDataProgram),
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -802,9 +802,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToDequeueCountBindingDataProgram
         {
-            public static TaskCompletionSource<int> TaskSource { get; set; }
+            public static TaskCompletionSource<long> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] QueueMessage message, int dequeueCount)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, long dequeueCount)
             {
                 TaskSource.TrySetResult(dequeueCount);
             }
