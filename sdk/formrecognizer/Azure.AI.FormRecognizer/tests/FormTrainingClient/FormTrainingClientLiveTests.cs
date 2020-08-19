@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, model.Errors.Count);
         }
 
-        [Test]
+        //[Test]
         //[TestCase(true, true)]
         //[TestCase(true, false)]
         //[TestCase(false, true)]
@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
-        [Test]
+        //[Test]
         //[TestCase(true)]
         //[TestCase(false)]
         public async Task TrainingOps(bool labeled)
