@@ -136,7 +136,7 @@ namespace Azure.Iot.Hub.Service.Tests
             deviceContent["properties.desired.deviceContent_key"] = "deviceContent_value-" + twinConfiguration.Id;
 
             // Labels are optional but adding here due to null check failure in deserialization
-            twinConfiguration.Labels.Add("HostPlatform", Environment.OSVersion.ToString());
+            twinConfiguration.Labels.Add("HostPlatform", "SomeValue");
             twinConfiguration.Content = new ConfigurationContent();
             twinConfiguration.Content.DeviceContent.Add("properties.desired.deviceContent_key", "deviceContent_value-" + twinConfiguration.Id);
 
