@@ -24,12 +24,12 @@ namespace Azure.AI.FormRecognizer.Models
             new AccountProperties(customModelCount, customModelLimit);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizer.Models.BoundingBox"/> structure.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FieldBoundingBox"/> structure.
         /// </summary>
-        /// <param name="points">The sequence of points defining this <see cref="FormRecognizer.Models.BoundingBox"/>.</param>
-        /// <returns>A new <see cref="FormRecognizer.Models.BoundingBox"/> instance for mocking.</returns>
-        public static BoundingBox BoundingBox(IReadOnlyList<PointF> points) =>
-            new BoundingBox(points);
+        /// <param name="points">The sequence of points defining this <see cref="FormRecognizer.Models.FieldBoundingBox"/>.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FieldBoundingBox"/> instance for mocking.</returns>
+        public static FieldBoundingBox FieldBoundingBox(IReadOnlyList<PointF> points) =>
+            new FieldBoundingBox(points);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModel"/> class.
@@ -94,7 +94,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FieldData"/> instance for mocking.</returns>
-        public static FieldData FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
+        public static FieldData FieldData(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
         {
             fieldElements = fieldElements?.ToList();
 
@@ -193,7 +193,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="words">A list of the words that make up the line.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
-        public static FormLine FormLine(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
+        public static FormLine FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
         {
             words = words?.ToList();
 
@@ -207,7 +207,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
         /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
-        /// <param name="unit">The unit used by the width, height and <see cref="BoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
+        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
         /// <param name="lines">A list of recognized lines of text.</param>
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
@@ -277,7 +277,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this cell.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormTableCell"/> instance for mocking.</returns>
-        public static FormTableCell FormTableCell(BoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
+        public static FormTableCell FormTableCell(FieldBoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
         {
             fieldElements = fieldElements?.ToList();
 
@@ -292,7 +292,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormWord"/> instance for mocking.</returns>
-        public static FormWord FormWord(BoundingBox boundingBox, int pageNumber, string text, float confidence) =>
+        public static FormWord FormWord(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence) =>
             new FormWord(boundingBox, pageNumber, text, confidence);
 
         /// <summary>

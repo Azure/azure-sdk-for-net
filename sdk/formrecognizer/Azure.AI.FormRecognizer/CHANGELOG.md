@@ -2,6 +2,10 @@
 
 ## 3.0.0-preview.3 (Unreleased)
 
+### Breaking changes
+
+- Renamed the model `BoundingBox` to `FieldBoundingBox`.
+
 ### New Features
 
 - Added `FormRecognizerModelFactory` static class to support mocking model types.
