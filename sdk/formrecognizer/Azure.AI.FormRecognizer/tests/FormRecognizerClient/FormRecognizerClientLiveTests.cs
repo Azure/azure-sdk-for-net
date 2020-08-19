@@ -67,8 +67,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform operations.
         /// </summary>
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -159,8 +159,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -249,8 +249,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -383,8 +383,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -489,8 +489,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -597,8 +597,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -759,10 +759,10 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         //[Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
+        //[TestCase(true, true)]
+        //[TestCase(true, false)]
+        //[TestCase(false, true)]
+        //[TestCase(false, false)]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -812,8 +812,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -894,8 +894,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -975,10 +975,10 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         //[Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
+        //[TestCase(true, true)]
+        //[TestCase(true, false)]
+        //[TestCase(false, true)]
+        //[TestCase(false, false)]
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -1029,8 +1029,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        //[TestCase(true)]
+        //[TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1109,8 +1109,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        //[TestCase(true)]
+        //[TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1170,8 +1170,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeCustomFormsThrowsForDamagedFile(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient();
@@ -1197,8 +1197,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient();

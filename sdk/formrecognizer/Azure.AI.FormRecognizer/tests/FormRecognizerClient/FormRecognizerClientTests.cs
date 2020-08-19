@@ -231,8 +231,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         //[Test]
-        [TestCase(null)]
-        [TestCase("")]
+        //[TestCase(null)]
+        //[TestCase("")]
         public void StartRecognizeCustomFormsRequiresTheModelId(string modelId)
         {
             var client = CreateInstrumentedClient();
@@ -293,8 +293,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         //[Test]
-        [TestCase(null)]
-        [TestCase("")]
+        //[TestCase(null)]
+        //[TestCase("")]
         public void StartRecognizeCustomFormsFromUriRequiresTheModelId(string modelId)
         {
             var client = CreateInstrumentedClient();

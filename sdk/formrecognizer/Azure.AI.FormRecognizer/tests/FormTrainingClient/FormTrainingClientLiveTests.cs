@@ -52,10 +52,10 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
+        //[TestCase(true, true)]
+        //[TestCase(true, false)]
+        //[TestCase(false, true)]
+        //[TestCase(false, false)]
         public async Task StartTraining(bool singlePage, bool labeled)
         {
             var client = CreateFormTrainingClient();
@@ -142,8 +142,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         //[Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        //[TestCase(true)]
+        //[TestCase(false)]
         public async Task TrainingOps(bool labeled)
         {
             var client = CreateFormTrainingClient();
