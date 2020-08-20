@@ -165,6 +165,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
                 Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
             }
+
+            events[0].ExtensionAttributes.TryGetValue("key", out var value);
+            Assert.AreEqual("value", value);
         }
 
         [Test]
@@ -259,26 +262,6 @@ namespace Azure.Messaging.EventGrid.Tests
                         Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
                         break;
                 }
-
-                //switch (cloudEvent.Type)
-                //{
-                //    case "Microsoft.Storage.BlobCreated":
-                //        StorageBlobCreatedEventData blobCreated = (StorageBlobCreatedEventData)cloudEvent.GetData();
-                //        Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
-                //        break;
-                //    case "Microsoft.Storage.BlobDeleted":
-                //        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)cloudEvent.GetData();
-                //        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-                //        break;
-                //    case "BinaryDataType":
-                //        byte[] binaryData = (byte[])cloudEvent.GetData();
-                //        Assert.AreEqual(Convert.ToBase64String(binaryData), "ZGF0YQ==");
-                //        break;
-                //    case "Contoso.Items.ItemReceived":
-                //        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
-                //        Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
-                //        break;
-                //}
             }
         }
 
