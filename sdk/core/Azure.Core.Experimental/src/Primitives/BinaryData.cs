@@ -224,16 +224,16 @@ namespace Azure.Core
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="data">The data to use.</param>
+        /// <param name="serializable">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         public static async Task<BinaryData> FromObjectAsync<T>(
-            T data,
+            T serializable,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
-            await SerializeInternalAsync<T>(data, serializer, true, cancellationToken).ConfigureAwait(false);
+            await SerializeInternalAsync<T>(serializable, serializer, true, cancellationToken).ConfigureAwait(false);
 
         private static async Task<BinaryData> SerializeInternalAsync<T>(
             T data,

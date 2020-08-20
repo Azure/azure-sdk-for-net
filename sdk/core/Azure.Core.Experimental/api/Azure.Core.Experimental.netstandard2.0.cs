@@ -15,7 +15,7 @@ namespace Azure.Core
         public static Azure.Core.BinaryData FromBytes(byte[] data) { throw null; }
         public static Azure.Core.BinaryData FromBytes(System.ReadOnlyMemory<byte> data) { throw null; }
         public static Azure.Core.BinaryData FromBytes(System.ReadOnlySpan<byte> data) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromObjectAsync<T>(T data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromObjectAsync<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromObjectAsync<T>(T serializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.BinaryData FromObject<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.BinaryData FromObject<T>(T serializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
