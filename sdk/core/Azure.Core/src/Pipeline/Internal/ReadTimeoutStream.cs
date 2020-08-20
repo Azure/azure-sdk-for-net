@@ -15,19 +15,33 @@ namespace Azure.Core.Pipeline
     {
         private readonly Stream _stream;
         private TimeSpan _readTimeout;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource = null!;
 
         public ReadTimeoutStream(Stream stream, TimeSpan readTimeout)
         {
             _stream = stream;
             _readTimeout = readTimeout;
             UpdateReadTimeout();
-            _cancellationTokenSource = new CancellationTokenSource();
+            InitializeTokenSource();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return _stream.Read(buffer, offset, count);
+            var source = StartTimeout(default, out bool dispose);
+            try
+            {
+                return _stream.Read(buffer, offset, count);
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException)
+            {
+                source.Token.ThrowIfCancellationRequested();
+                throw;
+            }
+            finally
+            {
+                StopTimeout(source, dispose);
+            }
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -36,6 +50,12 @@ namespace Azure.Core.Pipeline
             try
             {
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException)
+            {
+                source.Token.ThrowIfCancellationRequested();
+                throw;
             }
             finally
             {
@@ -47,7 +67,7 @@ namespace Azure.Core.Pipeline
         {
             if (_cancellationTokenSource.IsCancellationRequested)
             {
-                _cancellationTokenSource = new CancellationTokenSource();
+                InitializeTokenSource();
             }
 
             CancellationTokenSource source;
@@ -65,6 +85,17 @@ namespace Azure.Core.Pipeline
             _cancellationTokenSource.CancelAfter(_readTimeout);
 
             return source;
+        }
+
+        private void InitializeTokenSource()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource.Token.Register(() => DisposeStream());
+        }
+
+        private void DisposeStream()
+        {
+            _stream.Dispose();
         }
 
         private void StopTimeout(CancellationTokenSource source, bool dispose)

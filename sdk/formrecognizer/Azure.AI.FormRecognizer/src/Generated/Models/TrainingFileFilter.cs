@@ -5,24 +5,10 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Filter to apply to the documents in the source path for training. </summary>
     public partial class TrainingFileFilter
     {
-
-        /// <summary> Initializes a new instance of TrainingFileFilter. </summary>
-        /// <param name="prefix"> A case-sensitive prefix string to filter documents in the source path for training. For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for training. </param>
-        /// <param name="includeSubFolders"> A flag to indicate if sub folders within the set of prefix folders will also need to be included when searching for content to be preprocessed. </param>
-        internal TrainingFileFilter(string prefix, bool? includeSubFolders)
-        {
-            Prefix = prefix;
-            IncludeSubFolders = includeSubFolders;
-        }
-
-        /// <summary> A case-sensitive prefix string to filter documents in the source path for training. For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for training. </summary>
-        public string Prefix { get; set; }
-        /// <summary> A flag to indicate if sub folders within the set of prefix folders will also need to be included when searching for content to be preprocessed. </summary>
-        public bool? IncludeSubFolders { get; set; }
     }
 }

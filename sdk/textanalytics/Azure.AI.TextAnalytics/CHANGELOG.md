@@ -1,5 +1,40 @@
 # Release History
 
+## 5.1.0-preview.1 (Unreleased)
+### Breaking changes
+- It defaults to the latest supported API version, which currently is `3.1-preview.1`.
+Note that new functionality hasn't been implemented in the client library.
+
+### New Features
+- `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+
+## 5.0.0 (2020-07-27)
+- Re-release of version `1.0.1` with updated version `5.0.0`.
+
+## 1.0.1 (2020-06-23)
+
+### Fixes
+- The document confidence scores for analyze sentiment now contains the values the Text Analytics service returns ([12889](https://github.com/Azure/azure-sdk-for-net/issues/12889)).
+- `TextAnalyticsErrorCode` casing is now pascal case instead of camel case ([12888](https://github.com/Azure/azure-sdk-for-net/issues/12888)).
+
+## 1.0.0 (2020-06-09)
+- First stable release of Azure.AI.TextAnalytics package.
+
+## 1.0.0-preview.5 (2020-05-27)
+### Breaking changes
+- Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
+- Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
+- `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
+- `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
+- `TextAnalyticsError` property `Code` has been renamed to `ErrorCode` and it is an `TextAnalyticsErrorCode` instead of a string.
+- Single operation method `RecognizeEntitiesAsync` and `RecognizeEntities` now returns a `CategorizedEntityCollection`.
+- Single operation method `ExtractKeyPhrasesAsync` and `ExtractKeyPhrases` now returns a `KeyPhraseCollection`.
+- Single operation method `RecognizeLinkedEntitiesAsync` and `RecognizeLinkedEntities` now returns a `LinkedEntityCollection`.
+
+### Added
+- Added `Text` property to `SentenceSentiment`.
+- `Warnings` property added to each document-level response object returned from the endpoints. It is a list of `TextAnalyticsWarnings`.
+
 ## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes
 - Replaced `TextAnalyticsApiKeyCredential` with `AzureKeyCredential`.

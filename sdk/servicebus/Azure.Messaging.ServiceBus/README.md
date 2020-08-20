@@ -22,9 +22,11 @@ Use the client library for Azure Service Bus to:
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating a Service Bus namespace using the Azure portal](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-create-namespace-portal). There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
-- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionality won't be available.  In order to enable these features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version#override-a-default) you want to use (8.0 or above).  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
+- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
 
-  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) without modification.  You can still run the samples if you decide to tweak them.
+  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
@@ -35,14 +37,15 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.1
+dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.4
 ```
 
-### Authenticating the client
+### Authenticate the client
 
 For the Service Bus client library to interact with a queue or topic, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating a Service Bus namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string).
 
 Once you have a connection string, you can authenticate your client with it.
+
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
@@ -53,30 +56,52 @@ To see how to authenticate using Azure.Identity, view this [example](#authentica
 
 ## Key concepts
 
-- A **Service Bus client** is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
+Once you've initialized a `ServiceBusClient`, you can interact with the primary resource types within a Service Bus Namespace, of which multiple can exist and on which actual message transmission takes place, the namespace often serving as an application container:
 
-- A **Service Bus sender** is scoped to a particular queue or topic, and is retrieved off of the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
+* [Queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#queues): Allows for Sending and Receiving of messages. Often used for point-to-point communication.
 
-- A **Service Bus receiver** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled. There are four ways of  settling messages:
+* [Topic](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#topics): As opposed to Queues, Topics are better suited to publish/subscribe scenarios. A topic can be sent to, but requires a subscription, of which there can be multiple in parallel, to consume from.
+
+* [Subscription](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions#topics-and-subscriptions): The mechanism to consume from a Topic. Each subscription is independent, and receives a copy of each message sent to the topic. Rules and Filters can be used to tailor which messages are received by a specific subscription.
+
+For more information about these resources, see [What is Azure Service Bus?](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview).
+
+To interact with these resources, one should be familiar with the following SDK concepts:
+
+- A [Service Bus client](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusclient?view=azure-dotnet-preview) is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
+
+- A [Service Bus sender](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebussender?view=azure-dotnet-preview) is scoped to a particular queue or topic, and is created using the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
+
+- A [Service Bus receiver](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusreceiver?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled after receiving them. There are four ways of settling messages:
   * Complete - causes the message to be deleted from the queue or topic.
   * Abandon - releases the receiver's lock on the message allowing for the message to be received by other receivers.
   * Defer - defers the message from being received by normal means. In order to receive deferred messages, the sequence number of the message needs to be retained.
   * DeadLetter - moves the message to the Dead Letter queue. This will prevent the message from being received again. In order to receive messages from the Dead Letter queue, a receiver scoped to the Dead Letter queue is needed.
 
-- A **Service Bus session receiver** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
+- A [Service Bus session receiver](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
 
-- A **Service Bus processor** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
+- A [Service Bus processor](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.
 
-- A **Service Bus session processor** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
+- A [Service Bus session processor](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
 ## Examples
 
-### Sending and receiving a message
+* [Send and receive a message](#send-and-receive-a-message)
+* [Send and receive a batch of messages](#send-and-receive-a-batch-of-messages)
+* [Complete a message](#complete-a-message)
+* [Abandon a message](#abandon-a-message)
+* [Defer a message](#defer-a-message)
+* [Dead letter a message](#dead-letter-a-message)
+* [Using the processor](#using-the-processor)
+* [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+* [Working with sessions](#working-with-sessions)
+* [More samples](./samples/README.md)
 
-Message sending is performed using the `ServiceBusSender`. Receiving is performed using the 
-`ServiceBusReceiver`.
+### Send and receive a message
+
+Message sending is performed using the `ServiceBusSender`. Receiving is performed using the `ServiceBusReceiver`.
 
 ```C# Snippet:ServiceBusSendAndReceive
 string connectionString = "<connection_string>";
@@ -84,62 +109,52 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
-// get a receiver that we can use to receive the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+// create a receiver that we can use to receive the message
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // get the message body as a string
-string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-### Sending and receiving a batch of messages
+### Send and receive a batch of messages
 
-We can send several messages at once using a `ServiceBusMessageBatch`. 
+There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// send the messages
+await sender.SendMessagesAsync(messages);
+```
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+```C# Snippet:ServiceBusSendAndReceiveSafeBatch
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
-
-// get a receiver that we can use to receive the messages
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
-
-// the received message is a different type as it contains some service set properties
-IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
-
-foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
-{
-    // get the message body as a string
-    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
-    Console.WriteLine(body);
-}
+await sender.SendMessagesAsync(messageBatch);
 ```
 
 ### Complete a message
+
+In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
 string connectionString = "<connection_string>";
@@ -147,42 +162,46 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
-// get a receiver that we can use to receive and settle the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+// create a receiver that we can use to receive and settle the message
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // complete the message, thereby deleting it from the service
-await receiver.CompleteAsync(receivedMessage);
+await receiver.CompleteMessageAsync(receivedMessage);
 ```
 
 ### Abandon a message
 
+Abandoning a message releases our receiver's lock, which allows the message to be received by this or other receivers.
+
 ```C# Snippet:ServiceBusAbandonMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
-await receiver.AbandonAsync(receivedMessage);
+await receiver.AbandonMessageAsync(receivedMessage);
 ```
 
 ### Defer a message
 
+Deferring a message will prevent it from being received again using the `ReceiveMessageAsync` or `ReceiveMessagesAsync` methods. Instead, there are separate methods, `ReceiveDeferredMessageAsync` and `ReceiveDeferredMessagesAsync` for receiving deferred messages.
+
 ```C# Snippet:ServiceBusDeferMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // defer the message, thereby preventing the message from being received again without using
 // the received deferred message API.
-await receiver.DeferAsync(receivedMessage);
+await receiver.DeferMessageAsync(receivedMessage);
 
 // receive the deferred message by specifying the service set sequence number of the original
 // received message
@@ -191,56 +210,22 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 
 ### Dead letter a message
 
+Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
+
 ```C# Snippet:ServiceBusDeadLetterMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterAsync(receivedMessage);
+await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
-ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
-ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
-```
-
-### Sending and receiving session messages
-
-```C# Snippet:ServiceBusSendAndReceiveSessionMessage
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
-
-// create a session message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
-{
-    SessionId = "mySessionId"
-};
-
-// send the message
-await sender.SendAsync(message);
-
-// Get a session receiver that we can use to receive the message. Since we don't specify a
-// particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(queueName);
-
-// the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
-Console.WriteLine(receivedMessage.SessionId);
-
-// we can also set arbitrary session state using this receiver
-// the state is specific to the session, and not any particular message
-await receiver.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-
-// the state can be retrieved for the session as well
-byte[] state = await receiver.GetSessionStateAsync();
+ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
+ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 ```
 
 ### Using the Processor
 
-The `ServiceBusProcessor` offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
+The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly.
 
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";
@@ -248,16 +233,16 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions
@@ -270,8 +255,8 @@ var options = new ServiceBusProcessorOptions
     MaxConcurrentCalls = 2
 };
 
-// get a processor that we can use to process the messages
-ServiceBusProcessor processor = client.GetProcessor(queueName, options);
+// create a processor that we can use to process the messages
+ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
 // since the message handler will run in a background thread, in order to prevent
 // this sample from terminating immediately, we can use a task completion source that
@@ -282,11 +267,11 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessMessageEventArgs args)
 {
-    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
+    string body = args.Message.Body.ToString();
     Console.WriteLine(body);
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
     tcs.SetResult(true);
 }
 
@@ -313,11 +298,19 @@ await processor.StopProcessingAsync();
 ### Authenticating with Azure.Identity
 
 The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
+
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
+
+### Working with Sessions
+
+[Sessions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
+
+- [Sending and receiving session messages](./samples/Sample03_SendReceiveSessions.md)
+- [Using the session processor](./samples/Sample05_SessionProcessor.md)
 
 ## Troubleshooting
 
@@ -329,39 +322,37 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 
 - `Reason` : Provides a set of well-known reasons for the failure that help to categorize and clarify the root cause.  These are intended to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal.   Some key failure reasons are:
 
-  - **Client Closed** : This occurs when an operation has been requested on a Service Bus client that has already been closed or disposed of. It is recommended to check the application code and ensure that objects from the Service Bus client library are created and closed/disposed in the intended scope.  
-
-  - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
+  - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.
 
   - **Message Lock Lost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
-  
-  - **Messagine Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
-  
+
+  - **Messaging Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
+
 Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
-```csharp
+
+```C# Snippet:ServiceBusExceptionFailureReasonUsage
 try
 {
     // Receive messages using the receiver client
 }
-catch (ServiceBusExceptions ex) where 
-    (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+catch (ServiceBusException ex) when
+    (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
 {
     // Take action based on a service timeout
 }
 ```
-  
+
 ### Other exceptions
 
 For detailed information about the failures represented by the `ServiceBusException` and other exceptions that may occur, please refer to [Service Bus messaging exceptions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-exceptions).
 
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
-deeper into the requests you're making against the service.
+You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure Service Bus client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Service Bus service. In order to help explore some of these scenarios, the Service Bus client library offers a project of samples to serve as an illustration for common scenarios. Please see the samples [README](./samples/README.md) for details.
+Beyond the introductory scenarios discussed, the Azure Service Bus client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Service Bus service. In order to help explore some of these scenarios, the Service Bus client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](./samples/README.md) for details.
 
-## Contributing  
+## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 

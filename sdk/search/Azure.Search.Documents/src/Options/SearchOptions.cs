@@ -3,18 +3,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
     [CodeGenModel("SearchRequest")]
-    public partial class SearchOptions : SearchRequestOptions
+    public partial class SearchOptions
     {
+        /// <summary>
+        /// Initializes a new instance of SearchOptions from a continuation
+        /// token to continue fetching results from a previous search.
+        /// </summary>
+        /// <param name="continuationToken">
+        /// Encapsulates the state required to fetch the next page of search
+        /// results from the index.
+        /// </param>
+        internal SearchOptions(string continuationToken) =>
+            Copy(SearchContinuationToken.Deserialize(continuationToken), this);
+
         /// <summary>
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.
@@ -148,5 +161,45 @@ namespace Azure.Search.Documents
         /// </summary>
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Shallow copy one SearchOptions instance to another.
+        /// </summary>
+        /// <param name="source">The source options.</param>
+        /// <param name="destination">The destination options.</param>
+        private static void Copy(SearchOptions source, SearchOptions destination)
+        {
+            Debug.Assert(source != null);
+            Debug.Assert(destination != null);
+
+            destination.SearchText = source.SearchText;
+            destination.Filter = source.Filter;
+            destination.HighlightFields = source.HighlightFields;
+            destination.SearchFields = source.SearchFields;
+            destination.Select = source.Select;
+            destination.Size = source.Size;
+            destination.OrderBy = source.OrderBy;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
+            destination.Facets = source.Facets;
+            destination.ScoringParameters = source.ScoringParameters;
+            destination.HighlightPostTag = source.HighlightPostTag;
+            destination.HighlightPreTag = source.HighlightPreTag;
+            destination.MinimumCoverage = source.MinimumCoverage;
+            destination.QueryType = source.QueryType;
+            destination.ScoringProfile = source.ScoringProfile;
+            destination.SearchMode = source.SearchMode;
+            destination.Skip = source.Skip;
+        }
+
+        /// <summary>
+        /// Creates a shallow copy of the SearchOptions.
+        /// </summary>
+        /// <returns>The cloned SearchOptions.</returns>
+        internal SearchOptions Clone()
+        {
+            SearchOptions clone = new SearchOptions();
+            Copy(this, clone);
+            return clone;
+        }
     }
 }

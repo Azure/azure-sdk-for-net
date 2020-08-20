@@ -28,9 +28,10 @@ namespace Azure.Identity
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private readonly CredentialPipeline _pipeline;
-        private readonly TokenCredential _credential;
         private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
+        private readonly CredentialPipeline _pipeline;
+
+        internal TokenCredential Credential { get; }
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -51,6 +52,7 @@ namespace Azure.Identity
         {
         }
 
+
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
@@ -66,15 +68,15 @@ namespace Azure.Identity
             {
                 if (clientSecret != null)
                 {
-                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
                 }
                 else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
                 }
                 else if (clientCertificatePath != null)
                 {
-                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
 
@@ -83,8 +85,7 @@ namespace Azure.Identity
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
         {
             _pipeline = pipeline;
-
-            _credential = credential;
+            Credential = credential;
         }
 
         /// <summary>
@@ -123,28 +124,22 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
-            if (_credential is null)
+            if (Credential is null)
             {
-                throw scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
             {
                 AccessToken token = async
-                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
-                    : _credential.GetToken(requestContext, cancellationToken);
+                    ? await Credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : Credential.GetToken(requestContext, cancellationToken);
 
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-                 throw scope.FailAndWrap(e);
+                 throw scope.FailWrapAndThrow(e);
             }
         }
     }

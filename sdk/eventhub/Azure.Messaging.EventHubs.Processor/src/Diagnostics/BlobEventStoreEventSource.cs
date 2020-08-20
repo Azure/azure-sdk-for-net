@@ -28,14 +28,25 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource();
+        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource(EventSourceName);
 
         /// <summary>
         ///   Prevents an instance of the <see cref="BlobEventStoreEventSource"/> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        internal BlobEventStoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected BlobEventStoreEventSource()
+        {
+        }
+
+        /// <summary>
+        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource"/> class from being created
+        ///   outside the scope of this library.  Exposed for testing purposes only.
+        /// </summary>
+        ///
+        /// <param name="eventSourceName">The name to assign to the event source.</param>
+        ///
+        private BlobEventStoreEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
@@ -43,16 +54,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
         /// </summary>
         ///
+        /// <param name="typeName">The type name for the checkpoint store.</param>
         /// <param name="accountName">The Storage account name corresponding to the associated container client.</param>
         /// <param name="containerName">The name of the associated container client.</param>
         ///
         [Event(20, Level = EventLevel.Verbose, Message = "{0} created. AccountName: '{1}'; ContainerName: '{2}'.")]
-        public virtual void BlobsCheckpointStoreCreated(string accountName,
+        public virtual void BlobsCheckpointStoreCreated(string typeName,
+                                                        string accountName,
                                                         string containerName)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, nameof(BlobsCheckpointStore), accountName ?? string.Empty, containerName ?? string.Empty);
+                WriteEvent(20, typeName, accountName ?? string.Empty, containerName ?? string.Empty);
             }
         }
 
@@ -371,7 +384,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the specific Event Hub the data is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the data is associated with.</param>
         ///
-        [Event(35, Level = EventLevel.Informational, Message = "An invalid checkpoint was found for partition: '{0}' of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  This checkpoint is not valid and will be ignored.")]
+        [Event(35, Level = EventLevel.Warning, Message = "An invalid checkpoint was found for partition: '{0}' of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  This checkpoint is not valid and will be ignored.")]
         public virtual void InvalidCheckpointFound(string partitionId,
                                                    string fullyQualifiedNamespace,
                                                    string eventHubName,

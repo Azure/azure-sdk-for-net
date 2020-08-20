@@ -5,24 +5,62 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+using System.ComponentModel;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The strings indicating what visual feature types to return. </summary>
-    public enum VisualFeature
+    public readonly partial struct VisualFeature : IEquatable<VisualFeature>
     {
-        /// <summary> adult. </summary>
-        Adult,
-        /// <summary> brands. </summary>
-        Brands,
-        /// <summary> categories. </summary>
-        Categories,
-        /// <summary> description. </summary>
-        Description,
-        /// <summary> faces. </summary>
-        Faces,
-        /// <summary> objects. </summary>
-        Objects,
-        /// <summary> tags. </summary>
-        Tags
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="VisualFeature"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VisualFeature(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AdultValue = "adult";
+        private const string BrandsValue = "brands";
+        private const string CategoriesValue = "categories";
+        private const string DescriptionValue = "description";
+        private const string FacesValue = "faces";
+        private const string ObjectsValue = "objects";
+        private const string TagsValue = "tags";
+
+        /// <summary> Visual features recognized as adult persons. </summary>
+        public static VisualFeature Adult { get; } = new VisualFeature(AdultValue);
+        /// <summary> Visual features recognized as commercial brands. </summary>
+        public static VisualFeature Brands { get; } = new VisualFeature(BrandsValue);
+        /// <summary> Categories. </summary>
+        public static VisualFeature Categories { get; } = new VisualFeature(CategoriesValue);
+        /// <summary> Description. </summary>
+        public static VisualFeature Description { get; } = new VisualFeature(DescriptionValue);
+        /// <summary> Visual features recognized as people faces. </summary>
+        public static VisualFeature Faces { get; } = new VisualFeature(FacesValue);
+        /// <summary> Visual features recognized as objects. </summary>
+        public static VisualFeature Objects { get; } = new VisualFeature(ObjectsValue);
+        /// <summary> Tags. </summary>
+        public static VisualFeature Tags { get; } = new VisualFeature(TagsValue);
+        /// <summary> Determines if two <see cref="VisualFeature"/> values are the same. </summary>
+        public static bool operator ==(VisualFeature left, VisualFeature right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VisualFeature"/> values are not the same. </summary>
+        public static bool operator !=(VisualFeature left, VisualFeature right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="VisualFeature"/>. </summary>
+        public static implicit operator VisualFeature(string value) => new VisualFeature(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VisualFeature other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(VisualFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

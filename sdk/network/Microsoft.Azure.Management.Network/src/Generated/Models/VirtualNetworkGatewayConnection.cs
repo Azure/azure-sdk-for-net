@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="connectionProtocol">Connection protocol used for this
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
+        /// <param name="dpdTimeoutSeconds">The dead peer detection timeout of
+        /// this connection in seconds.</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
         /// <param name="connectionStatus">Virtual Network Gateway connection
         /// status. Possible values include: 'Unknown', 'Connecting',
@@ -83,7 +85,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for data forwarding.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ConnectionType = connectionType;
             ConnectionProtocol = connectionProtocol;
             RoutingWeight = routingWeight;
+            DpdTimeoutSeconds = dpdTimeoutSeconds;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
             TunnelConnectionStatus = tunnelConnectionStatus;
@@ -159,6 +162,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dead peer detection timeout of this connection in
+        /// seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
+        public int? DpdTimeoutSeconds { get; set; }
 
         /// <summary>
         /// Gets or sets the IPSec shared key.
@@ -272,6 +282,18 @@ namespace Microsoft.Azure.Management.Network.Models
             if (ConnectionType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
+            }
+            if (VirtualNetworkGateway1 != null)
+            {
+                VirtualNetworkGateway1.Validate();
+            }
+            if (VirtualNetworkGateway2 != null)
+            {
+                VirtualNetworkGateway2.Validate();
+            }
+            if (LocalNetworkGateway2 != null)
+            {
+                LocalNetworkGateway2.Validate();
             }
             if (IpsecPolicies != null)
             {

@@ -1,100 +1,114 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "baseName": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "description": "The base resource name."
-            }
-        },
-        "subscriptionId": {
-            "type": "string",
-            "defaultValue": "[subscription().subscriptionId]",
-            "metadata": {
-                "description": "The subscription ID to which the application and resources belong."
-            }
-        },
-        "tenantId": {
-            "type": "string",
-            "defaultValue": "[subscription().tenantId]",
-            "metadata": {
-                "description": "The tenant ID to which the application and resources belong."
-            }
-        },
-        "testApplicationOid": {
-            "type": "string",
-            "metadata": {
-                "description": "The client OID to grant access to test resources."
-            }
-        },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location of the resources. By default, this is the same as the resource group."
-            }
-        }
-    },
-    "variables": {
-        "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-        "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419"
-    },
-    "resources": [
-      {
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, variables('serviceBusDataOwnerRoleId'))]",
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
-          "principalId": "[parameters('testApplicationOid')]",
-          "scope": "[resourceGroup().id]"
-        }
-      },
-      {
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, variables('contributorRoleId'))]",
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
-          "principalId": "[parameters('testApplicationOid')]",
-          "scope": "[resourceGroup().id]"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
       }
-    ],
-    "outputs": {
-        "SERVICE_BUS_SUBSCRIPTION": {
-            "type": "string",
-            "value": "[parameters('subscriptionId')]"
-        },
-        "SERVICE_BUS_TENANT": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "SERVICE_BUS_CLIENT": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "SERVICE_BUS_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "SERVICE_BUS_RESOURCEGROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        }
+    },
+    "subscriptionId": {
+      "type": "string",
+      "defaultValue": "[subscription().subscriptionId]",
+      "metadata": {
+        "description": "The subscription ID to which the application and resources belong."
+      }
+    },
+    "tenantId": {
+      "type": "string",
+      "defaultValue": "[subscription().tenantId]",
+      "metadata": {
+        "description": "The tenant ID to which the application and resources belong."
+      }
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    },
+    "testApplicationId": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client ID used to run tests."
+      }
+    },
+    "testApplicationSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client secret used to run tests."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resources. By default, this is the same as the resource group."
+      }
     }
+  },
+  "variables": {
+    "serviceBusNamespace": "[concat('sb-', parameters('baseName'))]",
+    "serviceBusNamespace_T1": "[concat('t1-', variables('serviceBusNamespace'))]",
+    "defaultSASKeyName": "RootManageSharedAccessKey",
+    "authRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace'), variables('defaultSASKeyName'))]",
+    "authRuleResourceId_T1": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace_T1'), variables('defaultSASKeyName'))]",
+    "sbVersion": "2017-04-01",
+    "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+    "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419"
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('sbVersion')]",
+      "name": "[variables('serviceBusNamespace')]",
+      "type": "Microsoft.ServiceBus/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "[variables('sbVersion')]",
+      "name": "[variables('serviceBusNamespace_T1')]",
+      "type": "Microsoft.ServiceBus/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, deployment().name, variables('serviceBusDataOwnerRoleId'))]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, deployment().name, variables('contributorRoleId'))]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
+    }
+  ],
+  "outputs": {
+    "SERVICEBUS_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRuleResourceId'), variables('sbVersion')).primaryConnectionString]"
+    },
+    "SERVICEBUS_T1_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRuleResourceId_T1'), variables('sbVersion')).primaryConnectionString]"
+    }
+  }
 }

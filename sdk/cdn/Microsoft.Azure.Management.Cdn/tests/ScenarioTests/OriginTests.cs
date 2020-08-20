@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.Cdn.Models;
 using Cdn.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -35,7 +36,7 @@ namespace Cdn.Tests.ScenarioTests
                 Profile createParameters = new Profile
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Sku = new Sku { Name = SkuName.StandardMicrosoft },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -46,7 +47,9 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements
-                string endpointName = TestUtilities.GenerateName("endpoint");
+                var endpointName = TestUtilities.GenerateName("endpoint");
+                var originGroupName = "origingroup1";
+                var originName = "origin1";
                 var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
@@ -56,9 +59,39 @@ namespace Cdn.Tests.ScenarioTests
                     {
                         new DeepCreatedOrigin
                         {
-                            Name = "origin1",
-                            HostName = "host1.hello.com"
+                            Name = originName,
+                            HostName = "host1.hello.com",
+                            Priority = 5,
+                            Weight = 100,
+                            PrivateLinkLocation = "EastUS",
+                            PrivateLinkResourceId = "/subscriptions/da61bba1-cbd5-438c-a738-c717a6b2d59f/resourceGroups/moeidrg/providers/Microsoft.Network/privateLinkServices/pls-east-3",
+                            PrivateLinkApprovalMessage = "This is a test request",
                         }
+                    },
+                    OriginGroups = new List<DeepCreatedOriginGroup>
+                    {
+                        new DeepCreatedOriginGroup
+                        {
+                            Name = originGroupName,
+                            HealthProbeSettings = new HealthProbeParameters
+                            {
+                                ProbeIntervalInSeconds = 60,
+                                ProbePath = "/healthz",
+                                ProbeProtocol = ProbeProtocol.Https,
+                                ProbeRequestType = HealthProbeRequestType.HEAD,
+                            },
+                            Origins = new List<ResourceReference>
+                            {
+                                new ResourceReference
+                                {
+                                    Id = $"{profile.Id}/endpoints/{endpointName}/origins/{originName}"
+                                }
+                            },
+                        }
+                    },
+                    DefaultOriginGroup = new ResourceReference
+                    {
+                        Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{originGroupName}"
                     }
                 };
 
@@ -69,7 +102,10 @@ namespace Cdn.Tests.ScenarioTests
                 {
                     HostName = "www.bing.com",
                     HttpPort = 1234,
-                    HttpsPort = 8081
+                    HttpsPort = 8081,
+                    PrivateLinkLocation = "EastUS",
+                    PrivateLinkResourceId = "/subscriptions/da61bba1-cbd5-438c-a738-c717a6b2d59f/resourceGroups/moeidrg/providers/Microsoft.Network/privateLinkServices/pls-east-2",
+                    PrivateLinkApprovalMessage = "This is a test update request",
                 };
 
                 cdnMgmtClient.Origins.Update(resourceGroupName, profileName, endpointName, "origin1", originParameters);

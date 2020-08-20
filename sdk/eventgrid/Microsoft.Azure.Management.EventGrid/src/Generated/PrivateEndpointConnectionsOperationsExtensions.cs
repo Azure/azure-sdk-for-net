@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -106,9 +106,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
             /// </param>
-            public static PrivateEndpointConnection Update(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName)
+            /// <param name='privateEndpointConnection'>
+            /// The private endpoint connection object to update.
+            /// </param>
+            public static PrivateEndpointConnection Update(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection)
             {
-                return operations.UpdateAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,7 +128,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -134,12 +137,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
             /// </param>
+            /// <param name='privateEndpointConnection'>
+            /// The private endpoint connection object to update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> UpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> UpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -159,7 +165,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -187,7 +193,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -218,7 +224,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -257,7 +263,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -302,7 +308,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -311,9 +317,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
             /// </param>
-            public static PrivateEndpointConnection BeginUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName)
+            /// <param name='privateEndpointConnection'>
+            /// The private endpoint connection object to update.
+            /// </param>
+            public static PrivateEndpointConnection BeginUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -330,7 +339,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -339,12 +348,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
             /// </param>
+            /// <param name='privateEndpointConnection'>
+            /// The private endpoint connection object to update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> BeginUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> BeginUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -364,7 +376,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain
@@ -392,7 +404,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// </param>
             /// <param name='parentType'>
             /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
             /// The name of the parent resource (namely, either, the topic name or domain

@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Consumer
@@ -85,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The position of the specified event.</returns>
         ///
         public static EventPosition FromOffset(long offset,
-                                               bool isInclusive = true) => FromOffset(offset.ToString(), isInclusive);
+                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), isInclusive);
 
         /// <summary>
         ///   Corresponds to the event in the partition having a specified sequence number associated with it.

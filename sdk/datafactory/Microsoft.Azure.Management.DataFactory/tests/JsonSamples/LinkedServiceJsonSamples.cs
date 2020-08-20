@@ -12,6 +12,27 @@ namespace DataFactory.Tests.JsonSamples
     public class LinkedServiceJsonSamples : JsonSampleCollection<LinkedServiceJsonSamples>
     {
         [JsonSample]
+        public const string AzureBlobFSLinkedService = @"
+{
+    name: ""Test-Windows-Azure-storage-account-linkedService"",
+    properties:
+    {
+        type: ""AzureBlobFS"",
+        typeProperties:
+        {
+          url: ""https://testblobfs.dfs.core.windows.net"",
+          servicePrincipalId: ""9c8b1ab1-a894-4639-8fb9-75f98a36e9ab"",
+          servicePrincipalKey: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
+          tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
+          azureCloudType: ""AzurePublic""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureStorageLinkedService = @"
 {
     name: ""Test-Windows-Azure-storage-account-linkedService"",
@@ -133,9 +154,10 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
-    }
+}
 }";
 
         [JsonSample]
@@ -156,7 +178,8 @@ namespace DataFactory.Tests.JsonSamples
                 value: ""fakeSPKey"",
                 type: ""SecureString""
             },
-            tenant: ""fakeTenant""
+            tenant: ""fakeTenant"",
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -198,7 +221,8 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -776,7 +800,8 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 value : ""fakepassword"",
                 type : ""SecureString""
-            }
+            },
+            azureCloudType: ""AzurePublic""
         }
     }
 }";
@@ -1231,6 +1256,43 @@ namespace DataFactory.Tests.JsonSamples
             apiVersion:""47.0""
         }
     }
+}";
+
+        [JsonSample]
+        public const string SalesforceMarketingCloudLinkedService = @"
+{
+    name: ""SalesforceMarketingCloudLinkedService"",
+    properties:
+    {
+        type: ""SalesforceMarketingCloud"",
+        description: ""test description"",
+        typeProperties: {
+            clientId: ""clientIdFake"",
+            clientSecret : {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceMarketingCloudConnectionPropertiesLinkedService = @"
+{
+	name: ""SalesforceMarketingCloudLinkedService"",
+	properties: {
+		type: ""SalesforceMarketingCloud"",
+		description: ""test description"",
+		typeProperties: {
+			connectionProperties: {
+				clientId: ""clientIdFake"",
+				clientSecret: {
+					value: ""some secret"",
+					type: ""SecureString""
+				}
+			}
+		}
+	}
 }";
 
         [JsonSample]
@@ -2093,6 +2155,36 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string QuickBooksConnectionPropertiesLinkedService = @"
+{
+	name: ""QuickBooksLinkedService "",
+	properties: {
+		type: ""QuickBooks"",
+		typeProperties: {
+			connectionProperties: {
+				endpoint: ""quickbooks.api.intuit.com"",
+				companyId: ""fakeCompanyId"",
+				consumerKey: ""fakeConsumerKey"",
+				consumerSecret: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				accessToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				accessTokenSecret: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				useEncryptedEndpoints: true
+			}
+		}
+	}
+}
+";
         [JsonSample]
         public const string ServiceNowLinkedService = @"
 {
@@ -2182,6 +2274,30 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string SquareConnectionPropertiesLinkedService = @"
+{
+	name: ""SquareLinkedService"",
+	properties: {
+		type: ""Square"",
+		typeProperties: {
+			connectionProperties: {
+				host: ""mystore.mysquare.com"",
+				clientId: ""clientIdFake"",
+				clientSecret: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				redirectUri: ""http://localhost:2500"",
+				useEncryptedEndpoints: true,
+				useHostVerification: true,
+				usePeerVerification: true
+			}
+		}
+	}
+}
+";
+
+        [JsonSample]
         public const string XeroLinkedService = @"
 {
     name: ""XeroLinkedService"",
@@ -2204,6 +2320,33 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string XeroConnectionPropertiesLinkedService = @"
+{
+	name: ""XeroLinkedService"",
+	properties: {
+		type: ""Xero"",
+		typeProperties: {
+			connectionProperties: {
+				host: ""api.xero.com"",
+				consumerKey: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				privateKey: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				useEncryptedEndpoints: true,
+				useHostVerification: true,
+				usePeerVerification: true
+			}
+		}
+	}
+}
+";
+
         [JsonSample]
         public const string ZohoLinkedService = @"
 {
@@ -2223,6 +2366,29 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string ZohoConnectionPropertiesLinkedService = @"
+{
+	name: ""ZohoLinkedService"",
+	properties: {
+		type: ""Zoho"",
+		typeProperties: {
+			connectionProperties: {
+				endpoint: ""crm.zoho.com/crm/private"",
+				accessToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				},
+				useEncryptedEndpoints: true,
+				useHostVerification: true,
+				usePeerVerification: true
+			}
+		}
+	}
+}
+";
+
         [JsonSample]
         public const string NetezzaLinkedService = @"
 {
@@ -2332,6 +2498,7 @@ namespace DataFactory.Tests.JsonSamples
             newClusterNumOfWorker: ""1"",
             newClusterNodeType: ""Standard_DS3_v2"",
             newClusterDriverNodeType: ""Standard_DS3_v2"",
+            newClusterLogDestination: ""dbfs:/test"",
             newClusterInitScripts: [
                 ""someScript""
             ],
@@ -2507,6 +2674,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string SapOpenHubWithMessageServerLinkedService = @"
+{
+    ""name"": ""SapBwOpenHubLinkedService"",
+    ""properties"": {
+        ""type"": ""SapOpenHub"",
+        ""typeProperties"": {
+            ""messageServer"": ""fakeserver"",
+            ""messageServerService"": ""00"",
+            ""systemId"": ""ecc"",
+            ""logonGroup"": ""fakegp"",
+            ""clientId"": ""800"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string RestLinkedService = @"
 {
     ""name"": ""RESTLinkedService"",
@@ -2519,7 +2707,8 @@ namespace DataFactory.Tests.JsonSamples
             ""password"": {
                 ""type"": ""SecureString"",
                 ""value"": ""fakepsw""
-            }
+            },
+            ""azureCloudType"": ""AzurePublic""
         }
     }
 }";
@@ -2577,6 +2766,109 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 value : ""fakeKey"",
                 type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionString = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionString"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionStringWithAccountKey = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionString"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            fileShare: ""myFileShareName"",
+            snapshot: ""2020-06-18T02:35.43""
+        }
+}
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionStringAndAccountKeyInAKV = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionStringAndAccountKeyInAKV"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            accountKey: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithSasUri = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithSasUri"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            sasUri: {
+                value : ""fakeSasUri"",
+                type : ""SecureString""
+            },
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithSasUriAndSasTokenInAKV = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithSasUriAndSasTokenInAKV"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            sasUri: {
+                value : ""fakeSasUri"",
+                type : ""SecureString""
+            },
+            sasToken: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }

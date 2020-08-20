@@ -7,15 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
-    public partial class ImageAnalysisSkill : Skill
+    public partial class ImageAnalysisSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of ImageAnalysisSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public ImageAnalysisSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
             if (inputs == null)
@@ -27,6 +29,8 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
+            VisualFeatures = new ChangeTrackingList<VisualFeature>();
+            Details = new ChangeTrackingList<ImageDetail>();
             ODataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 
@@ -50,9 +54,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> A list of visual features. </summary>
-        public IList<VisualFeature> VisualFeatures { get; set; }
-        /// <summary> A string indicating which domain-specific details to return. </summary>
-        public IList<ImageDetail> Details { get; set; }
     }
 }

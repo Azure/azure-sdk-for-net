@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class AsciiFoldingTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreserveOriginal != null)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal");
                 writer.WriteBooleanValue(PreserveOriginal.Value);
@@ -29,23 +29,19 @@ namespace Azure.Search.Documents.Models
 
         internal static AsciiFoldingTokenFilter DeserializeAsciiFoldingTokenFilter(JsonElement element)
         {
-            bool? preserveOriginal = default;
-            string odatatype = default;
+            Optional<bool> preserveOriginal = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preserveOriginal"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -54,7 +50,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new AsciiFoldingTokenFilter(odatatype, name, preserveOriginal);
+            return new AsciiFoldingTokenFilter(odataType, name, Optional.ToNullable(preserveOriginal));
         }
     }
 }

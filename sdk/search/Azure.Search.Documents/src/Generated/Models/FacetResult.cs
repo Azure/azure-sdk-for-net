@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of FacetResult. </summary>
         internal FacetResult()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of FacetResult. </summary>

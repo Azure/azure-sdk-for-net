@@ -1,54 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/languages?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages?model-version=2019-10-01\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0b830af1780a6949868d1c4534f11818-26f2a8a24f8ab945-00",
+        "traceparent": "00-413b4c8d1217264182d16ed38539df4b-ea001fec6cb1e14a-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200804.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "8991ecbfc35d63a73311d5bda7e12e07",
+        "x-ms-client-request-id": "d3aa49b9476dfffb9f773e6c1d6340a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "documents": [
           {
-            "countryHint": "us",
             "id": "1",
-            "text": "Hello world"
+            "text": "Hello world",
+            "countryHint": "us"
           },
           {
-            "countryHint": "fr",
             "id": "2",
-            "text": "Bonjour tout le monde"
+            "text": "Bonjour tout le monde",
+            "countryHint": "fr"
           },
           {
-            "countryHint": "es",
             "id": "3",
-            "text": "Hola mundo"
+            "text": "Hola mundo",
+            "countryHint": "es"
           },
           {
-            "countryHint": "us",
             "id": "4",
-            "text": ":) :( :D"
+            "text": ":) :( :D",
+            "countryHint": "us"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "51e5aa1a-776a-4449-a35e-ad53a2794c1e",
+        "apim-request-id": "a882f86f-c45e-4366-9a5a-5117e14b232c",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=4",
-        "Date": "Fri, 07 Feb 2020 19:13:30 GMT",
+        "Date": "Tue, 04 Aug 2020 21:30:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "statistics": {
@@ -60,59 +60,55 @@
         "documents": [
           {
             "id": "1",
-            "detectedLanguages": [
-              {
-                "name": "English",
-                "iso6391Name": "en",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "English",
+              "iso6391Name": "en",
+              "confidenceScore": 1.0
+            },
             "statistics": {
               "charactersCount": 11,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           },
           {
             "id": "2",
-            "detectedLanguages": [
-              {
-                "name": "French",
-                "iso6391Name": "fr",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "French",
+              "iso6391Name": "fr",
+              "confidenceScore": 1.0
+            },
             "statistics": {
               "charactersCount": 21,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           },
           {
             "id": "3",
-            "detectedLanguages": [
-              {
-                "name": "Spanish",
-                "iso6391Name": "es",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "Spanish",
+              "iso6391Name": "es",
+              "confidenceScore": 1.0
+            },
             "statistics": {
               "charactersCount": 10,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           },
           {
             "id": "4",
-            "detectedLanguages": [
-              {
-                "name": "English",
-                "iso6391Name": "en",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "(Unknown)",
+              "iso6391Name": "(Unknown)",
+              "confidenceScore": 0.0
+            },
             "statistics": {
               "charactersCount": 8,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           }
         ],
         "errors": [],
@@ -121,8 +117,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1256890253",
+    "RandomSeed": "1088584350",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

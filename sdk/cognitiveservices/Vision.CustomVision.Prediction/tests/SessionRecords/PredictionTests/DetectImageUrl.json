@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/prediction/7bbd16f5-6511-424e-81ac-e06bb54348d1/detect/iterations/Training%20Obj%20Detection%20UnitTest%20Iteration/url",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3ByZWRpY3Rpb24vN2JiZDE2ZjUtNjUxMS00MjRlLTgxYWMtZTA2YmI1NDM0OGQxL2RldGVjdC9pdGVyYXRpb25zL1RyYWluaW5nJTIwT2JqJTIwRGV0ZWN0aW9uJTIwVW5pdFRlc3QlMjBJdGVyYXRpb24vdXJs",
+      "RequestUri": "/customvision/v3.1/prediction/b5154425-001a-4204-b98a-165b4842e11c/detect/iterations/Training%20Obj%20Detection%20UnitTest%20Iteration/url",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4xL3ByZWRpY3Rpb24vYjUxNTQ0MjUtMDAxYS00MjA0LWI5OGEtMTY1YjQ4NDJlMTFjL2RldGVjdC9pdGVyYXRpb25zL1RyYWluaW5nJTIwT2JqJTIwRGV0ZWN0aW9uJTIwVW5pdFRlc3QlMjBJdGVyYXRpb24vdXJs",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.CustomVisionPredictionClient/0.15.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.CustomVisionPredictionClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,26 +23,29 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Fri, 15 Mar 2019 06:14:53 GMT"
+        "Request-Id": [
+          "6c5eeab8-28ad-4315-b0bb-8f973c2d87b6"
         ],
         "apim-request-id": [
-          "ddf8eec8-c7f3-4c7a-84dc-e9d617358d56"
+          "6c5eeab8-28ad-4315-b0bb-8f973c2d87b6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Sat, 06 Jun 2020 22:00:27 GMT"
+        ],
         "Content-Length": [
-          "1485"
+          "1013"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"ddf8eec8-c7f3-4c7a-84dc-e9d617358d56\",\r\n  \"project\": \"7bbd16f5-6511-424e-81ac-e06bb54348d1\",\r\n  \"iteration\": \"6399e204-af95-4dd3-b76a-e661fe00a536\",\r\n  \"created\": \"2019-03-15T06:14:53.0952788Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.0249909777,\r\n      \"tagId\": \"985e53b8-fac7-4a4e-a38a-6e15d3345bf1\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.351519644,\r\n        \"top\": 0.0192608833,\r\n        \"width\": 0.311661661,\r\n        \"height\": 0.7785555\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.302729517,\r\n      \"tagId\": \"985e53b8-fac7-4a4e-a38a-6e15d3345bf1\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.4764933,\r\n        \"top\": 0.001578927,\r\n        \"width\": 0.2774629,\r\n        \"height\": 0.8235794\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.281207174,\r\n      \"tagId\": \"985e53b8-fac7-4a4e-a38a-6e15d3345bf1\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.324348837,\r\n        \"top\": 0.197490185,\r\n        \"width\": 0.223425,\r\n        \"height\": 0.8024998\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.0106534744,\r\n      \"tagId\": \"985e53b8-fac7-4a4e-a38a-6e15d3345bf1\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.286553,\r\n        \"top\": 0.0,\r\n        \"width\": 0.640825748,\r\n        \"height\": 0.840964556\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.0175587833,\r\n      \"tagId\": \"82f4ce5f-4d7d-4f86-b6e7-c50f1ee6eb02\",\r\n      \"tagName\": \"scissors\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.351519644,\r\n        \"top\": 0.0192608833,\r\n        \"width\": 0.311661661,\r\n        \"height\": 0.7785555\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.4973545,\r\n      \"tagId\": \"82f4ce5f-4d7d-4f86-b6e7-c50f1ee6eb02\",\r\n      \"tagName\": \"scissors\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.5320618,\r\n        \"top\": 0.00460800529,\r\n        \"width\": 0.2191701,\r\n        \"height\": 0.8126575\r\n      }\r\n    },\r\n    {\r\n      \"probability\": 0.0822583959,\r\n      \"tagId\": \"82f4ce5f-4d7d-4f86-b6e7-c50f1ee6eb02\",\r\n      \"tagName\": \"scissors\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.324348837,\r\n        \"top\": 0.197490185,\r\n        \"width\": 0.223425,\r\n        \"height\": 0.8024998\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"6c5eeab8-28ad-4315-b0bb-8f973c2d87b6\",\r\n  \"project\": \"b5154425-001a-4204-b98a-165b4842e11c\",\r\n  \"iteration\": \"7b29298f-6ce5-406c-814c-9848ad36ad09\",\r\n  \"created\": \"2020-06-06T22:00:28.525Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.147652075,\r\n      \"tagId\": \"772ab947-756c-498c-8426-769e4752277f\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.45589155,\r\n        \"top\": 0.005559385,\r\n        \"width\": 0.3234436,\r\n        \"height\": 0.796463\r\n      },\r\n      \"tagType\": \"Regular\"\r\n    },\r\n    {\r\n      \"probability\": 0.03940205,\r\n      \"tagId\": \"772ab947-756c-498c-8426-769e4752277f\",\r\n      \"tagName\": \"fork\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.328149855,\r\n        \"top\": 0.103907406,\r\n        \"width\": 0.229946792,\r\n        \"height\": 0.8960826\r\n      },\r\n      \"tagType\": \"Regular\"\r\n    },\r\n    {\r\n      \"probability\": 0.364130855,\r\n      \"tagId\": \"82a395bf-11ed-4c52-a289-4a304b2d24d5\",\r\n      \"tagName\": \"scissors\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.45589155,\r\n        \"top\": 0.005559385,\r\n        \"width\": 0.3234436,\r\n        \"height\": 0.796463\r\n      },\r\n      \"tagType\": \"Regular\"\r\n    },\r\n    {\r\n      \"probability\": 0.147832081,\r\n      \"tagId\": \"82a395bf-11ed-4c52-a289-4a304b2d24d5\",\r\n      \"tagName\": \"scissors\",\r\n      \"boundingBox\": {\r\n        \"left\": 0.3235472,\r\n        \"top\": 0.208558351,\r\n        \"width\": 0.229876727,\r\n        \"height\": 0.786970258\r\n      },\r\n      \"tagType\": \"Regular\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

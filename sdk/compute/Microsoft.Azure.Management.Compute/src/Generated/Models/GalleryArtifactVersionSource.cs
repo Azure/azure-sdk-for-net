@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="id">The id of the gallery artifact version source. Can
         /// specify a disk uri, snapshot uri, or user image.</param>
-        public GalleryArtifactVersionSource(string id)
+        public GalleryArtifactVersionSource(string id = default(string))
         {
             Id = id;
             CustomInit();
@@ -52,18 +51,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-        }
     }
 }

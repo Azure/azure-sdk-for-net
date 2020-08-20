@@ -44,15 +44,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// storage account.</param>
         /// <param name="diskEncryptionInfo">The recovery os disk encryption
         /// information.</param>
+        /// <param name="recoveryProximityPlacementGroupId">The recovery
+        /// proximity placement group Id.</param>
         /// <param name="tfoAzureVMName">The user given name for test failover
         /// VM.</param>
-        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string tfoAzureVMName = default(string))
+        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryProximityPlacementGroupId = default(string), string tfoAzureVMName = default(string))
         {
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ManagedDiskUpdateDetails = managedDiskUpdateDetails;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
+            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             TfoAzureVMName = tfoAzureVMName;
             CustomInit();
         }
@@ -91,6 +94,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
+        public string RecoveryProximityPlacementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the user given name for test failover VM.

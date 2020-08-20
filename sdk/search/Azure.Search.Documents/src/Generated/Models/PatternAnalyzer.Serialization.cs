@@ -9,29 +9,29 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternAnalyzer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerCaseTerms != null)
+            if (Optional.IsDefined(LowerCaseTerms))
             {
                 writer.WritePropertyName("lowercase");
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
-            if (Stopwords != null)
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -50,47 +50,31 @@ namespace Azure.Search.Documents.Models
 
         internal static PatternAnalyzer DeserializePatternAnalyzer(JsonElement element)
         {
-            bool? lowercase = default;
-            string pattern = default;
-            RegexFlags? flags = default;
-            IList<string> stopwords = default;
-            string odatatype = default;
+            Optional<bool> lowercase = default;
+            Optional<string> pattern = default;
+            Optional<string> flags = default;
+            Optional<IList<string>> stopwords = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lowercase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lowercase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("pattern"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("flags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -101,7 +85,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -110,7 +94,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odatatype, name, lowercase, pattern, flags, stopwords);
+            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
         }
     }
 }

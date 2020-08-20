@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.1.0-preview.1</Version>
+    <Version>5.2.0-preview.3</Version>
+    <ApiCompatVersion>5.1.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,15 +21,6 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" />
-  </ItemGroup>
-
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Diagnostics.projitems" Label="Diagnostics" />
@@ -41,6 +32,7 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="SharedSource\Azure.Core\HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" Link="SharedSource\Azure.Core\ValueStopwatch.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

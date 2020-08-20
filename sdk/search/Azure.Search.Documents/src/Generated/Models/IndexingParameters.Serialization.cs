@@ -9,29 +9,50 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class IndexingParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BatchSize != null)
+            if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
-                writer.WriteNumberValue(BatchSize.Value);
+                if (BatchSize != null)
+                {
+                    writer.WritePropertyName("batchSize");
+                    writer.WriteNumberValue(BatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("batchSize");
+                }
             }
-            if (MaxFailedItems != null)
+            if (Optional.IsDefined(MaxFailedItems))
             {
-                writer.WritePropertyName("maxFailedItems");
-                writer.WriteNumberValue(MaxFailedItems.Value);
+                if (MaxFailedItems != null)
+                {
+                    writer.WritePropertyName("maxFailedItems");
+                    writer.WriteNumberValue(MaxFailedItems.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItems");
+                }
             }
-            if (MaxFailedItemsPerBatch != null)
+            if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
-                writer.WritePropertyName("maxFailedItemsPerBatch");
-                writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                if (MaxFailedItemsPerBatch != null)
+                {
+                    writer.WritePropertyName("maxFailedItemsPerBatch");
+                    writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItemsPerBatch");
+                }
             }
-            if (Configuration != null)
+            if (Optional.IsCollectionDefined(Configuration))
             {
                 writer.WritePropertyName("configuration");
                 writer.WriteStartObject();
@@ -47,16 +68,17 @@ namespace Azure.Search.Documents.Models
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
-            int? batchSize = default;
-            int? maxFailedItems = default;
-            int? maxFailedItemsPerBatch = default;
-            IDictionary<string, object> configuration = default;
+            Optional<int?> batchSize = default;
+            Optional<int?> maxFailedItems = default;
+            Optional<int?> maxFailedItemsPerBatch = default;
+            Optional<IDictionary<string, object>> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        batchSize = null;
                         continue;
                     }
                     batchSize = property.Value.GetInt32();
@@ -66,6 +88,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxFailedItems = null;
                         continue;
                     }
                     maxFailedItems = property.Value.GetInt32();
@@ -75,6 +98,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxFailedItemsPerBatch = null;
                         continue;
                     }
                     maxFailedItemsPerBatch = property.Value.GetInt32();
@@ -82,10 +106,6 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("configuration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -95,7 +115,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
+            return new IndexingParameters(Optional.ToNullable(batchSize), Optional.ToNullable(maxFailedItems), Optional.ToNullable(maxFailedItemsPerBatch), Optional.ToDictionary(configuration));
         }
     }
 }

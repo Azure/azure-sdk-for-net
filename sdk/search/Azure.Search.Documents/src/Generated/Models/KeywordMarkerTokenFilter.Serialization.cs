@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class KeywordMarkerTokenFilter : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase != null)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Models
         internal static KeywordMarkerTokenFilter DeserializeKeywordMarkerTokenFilter(JsonElement element)
         {
             IList<string> keywords = default;
-            bool? ignoreCase = default;
-            string odatatype = default;
+            Optional<bool> ignoreCase = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,16 +55,12 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -73,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeywordMarkerTokenFilter(odatatype, name, keywords, ignoreCase);
+            return new KeywordMarkerTokenFilter(odataType, name, keywords, Optional.ToNullable(ignoreCase));
         }
     }
 }

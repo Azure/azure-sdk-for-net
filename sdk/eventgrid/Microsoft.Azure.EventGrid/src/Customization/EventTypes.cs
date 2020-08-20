@@ -96,5 +96,20 @@ namespace Microsoft.Azure.EventGrid
         public const string StorageDirectoryCreatedEvent = "Microsoft.Storage.DirectoryCreated";
         public const string StorageDirectoryDeletedEvent = "Microsoft.Storage.DirectoryDeleted";
         public const string StorageDirectoryRenamedEvent = "Microsoft.Storage.DirectoryRenamed";
+
+        // App Service
+        public const string WebAppUpdated = "Microsoft.Web.AppUpdated";
+        public const string WebBackupOperationStarted = "Microsoft.Web.BackupOperationStarted";
+        public const string WebBackupOperationCompleted = "Microsoft.Web.BackupOperationCompleted";
+        public const string WebBackupOperationFailed = "Microsoft.Web.BackupOperationFailed";
+        public const string WebRestoreOperationStarted = "Microsoft.Web.RestoreOperationStarted";
+        public const string WebRestoreOperationCompleted = "Microsoft.Web.RestoreOperationCompleted";
+        public const string WebRestoreOperationFailed = "Microsoft.Web.RestoreOperationFailed";
+        public const string WebSlotSwapStarted = "Microsoft.Web.SlotSwapStarted";
+        public const string WebSlotSwapCompleted = "Microsoft.Web.SlotSwapCompleted";
+        public const string WebSlotSwapFailed = "Microsoft.Web.SlotSwapFailed";
+        public const string WebSlotSwapWithPreviewStarted = "Microsoft.Web.SlotSwapWithPreviewStarted";
+        public const string WebSlotSwapWithPreviewCancelled = "Microsoft.Web.SlotSwapWithPreviewCancelled";
+        public const string WebAppServicePlanUpdated = "Microsoft.Web.AppServicePlanUpdated";
     }
 }

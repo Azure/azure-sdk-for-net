@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.Guid? TenantId { get; set; }
 
         /// <summary>
-        /// Gets or sets azure Active Directory only Authentication enabled.
+        /// Gets azure Active Directory only Authentication enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureADOnlyAuthentication")]
-        public bool? AzureADOnlyAuthentication { get; set; }
+        public bool? AzureADOnlyAuthentication { get; private set; }
 
         /// <summary>
         /// Type of the sever administrator.

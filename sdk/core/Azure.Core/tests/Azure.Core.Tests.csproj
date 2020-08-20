@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);TESTFRAMEWORK;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,18 +17,19 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
     <Compile Include="..\src\Shared\ConnectionString.cs" />
-    <Compile Include="..\src\Shared\ContentTypeUtilities.cs" />
     <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" />
     <Compile Include="..\src\Shared\RetriableStream.cs" />
     <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
+    <Compile Include="..\src\Shared\ValueStopwatch.cs" />
   </ItemGroup>
 
 </Project>

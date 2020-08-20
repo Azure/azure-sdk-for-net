@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Initializes a new instance of the Scope class.
         /// </summary>
         /// <param name="scopeType">type of target scope. Possible values
-        /// include: 'ResourceGroup', 'Resource'</param>
+        /// include: 'ResourceGroup', 'Resource', 'Subscription'</param>
         /// <param name="values">list of ARM IDs of the given scope type which
         /// will be the target of the given action rule.</param>
         public Scope(string scopeType = default(string), IList<string> values = default(IList<string>))
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 
         /// <summary>
         /// Gets or sets type of target scope. Possible values include:
-        /// 'ResourceGroup', 'Resource'
+        /// 'ResourceGroup', 'Resource', 'Subscription'
         /// </summary>
         [JsonProperty(PropertyName = "scopeType")]
         public string ScopeType { get; set; }

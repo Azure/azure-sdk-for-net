@@ -5,14 +5,47 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+using System.ComponentModel;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating which split mode to perform. </summary>
-    public enum TextSplitMode
+    public readonly partial struct TextSplitMode : IEquatable<TextSplitMode>
     {
-        /// <summary> pages. </summary>
-        Pages,
-        /// <summary> sentences. </summary>
-        Sentences
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="TextSplitMode"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TextSplitMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string PagesValue = "pages";
+        private const string SentencesValue = "sentences";
+
+        /// <summary> Split the text into individual pages. </summary>
+        public static TextSplitMode Pages { get; } = new TextSplitMode(PagesValue);
+        /// <summary> Split the text into individual sentences. </summary>
+        public static TextSplitMode Sentences { get; } = new TextSplitMode(SentencesValue);
+        /// <summary> Determines if two <see cref="TextSplitMode"/> values are the same. </summary>
+        public static bool operator ==(TextSplitMode left, TextSplitMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TextSplitMode"/> values are not the same. </summary>
+        public static bool operator !=(TextSplitMode left, TextSplitMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TextSplitMode"/>. </summary>
+        public static implicit operator TextSplitMode(string value) => new TextSplitMode(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is TextSplitMode other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(TextSplitMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

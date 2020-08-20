@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
         {
             IReadOnlyList<SuggestResult> value = default;
-            double? searchcoverage = default;
+            Optional<double> searchCoverage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -31,15 +31,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@search.coverage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchcoverage = property.Value.GetDouble();
+                    searchCoverage = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new SuggestDocumentsResult(value, searchcoverage);
+            return new SuggestDocumentsResult(value, Optional.ToNullable(searchCoverage));
         }
     }
 }

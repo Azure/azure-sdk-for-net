@@ -15,6 +15,8 @@ using System.Net;
 using System.Text;
 using Xunit;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
+using ResourceIdentityType = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType;
+
 
 namespace ContainerRegistry.Tests
 {
@@ -45,7 +47,7 @@ namespace ContainerRegistry.Tests
                 checkNameRequest = registryClient.Registries.CheckNameAvailability(registryName);
                 Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal("Invalid", checkNameRequest.Reason);
-                Assert.Equal("The specified resource name is disallowed", checkNameRequest.Message);
+                Assert.Equal("The specified resource name is disallowed.", checkNameRequest.Message);
 
                 // Check name of container registry that already exists
                 registryName = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location).Name;
@@ -53,28 +55,6 @@ namespace ContainerRegistry.Tests
                 Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal("AlreadyExists", checkNameRequest.Reason);
                 Assert.Equal("The registry " + registryName + " is already in use.", checkNameRequest.Message);
-            }
-        }
-
-        [Fact]
-        public void ClassicContainerRegistryTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
-
-                // Create resource group and storage account
-                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                var storageAccount = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-
-                // Create container registry
-                var registry = ContainerRegistryTestUtilities.CreateClassicContainerRegistry(registryClient, resourceGroup, storageAccount);
-
-                ContainerRegistryCoreScenario(registryClient, resourceGroup, registry, false);
             }
         }
 
@@ -363,6 +343,149 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
+        public void ContainerRegistryTransferExportTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry and exportPipeline
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                var exportPipeline = registryClient.ExportPipelines.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrexportpipeline"),
+                    new ExportPipeline
+                    {
+                        Location = resourceGroup.Location,
+                        Identity = new IdentityProperties
+                        {
+                            Type = ResourceIdentityType.SystemAssigned
+                        },
+                        Target = new ExportPipelineTargetProperties
+                        {
+                            Type = "AzureStorageBlobContainer",
+                            Uri = "https://accountname.blob.core.windows.net/containername",
+                            KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                        }
+                    });
+
+                // Validate the created exportPipeline
+                Assert.Equal(ProvisioningState.Succeeded, exportPipeline.ProvisioningState);
+                Assert.NotNull(exportPipeline.Location);
+                Assert.NotNull(exportPipeline.Identity);
+                Assert.Equal(ResourceIdentityType.SystemAssigned, exportPipeline.Identity.Type);
+                Assert.NotNull(exportPipeline.Target);
+                Assert.Equal("AzureStorageBlobContainer", exportPipeline.Target.Type);
+                Assert.Contains(".blob.core.windows.net/", exportPipeline.Target.Uri);
+                Assert.Contains(".vault.azure.net/secrets/", exportPipeline.Target.KeyVaultUri);
+
+
+                // List exportPipelines by container registry
+                var exportPipelines = registryClient.ExportPipelines.List(resourceGroup.Name, registry.Name);
+                exportPipeline = exportPipelines.First(
+                    e => StringComparer.OrdinalIgnoreCase.Equals(e.Name, exportPipeline.Name));
+                Assert.Single(exportPipelines);
+
+                // Get the exportPipeline
+                exportPipeline = registryClient.ExportPipelines.Get(resourceGroup.Name, registry.Name, exportPipeline.Name);
+                Assert.NotNull(exportPipeline);
+
+                // Delete the exportPipeline
+                registryClient.ExportPipelines.Delete(resourceGroup.Name, registry.Name, exportPipeline.Name);
+
+                // Delete the exportPipeline again
+                registryClient.ExportPipelines.Delete(resourceGroup.Name, registry.Name, exportPipeline.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryTransferImportTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry and exportPipeline
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                var importPipeline = registryClient.ImportPipelines.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrimportpipeline"),
+                    new ImportPipeline
+                    {
+                        Location = resourceGroup.Location,
+                        Identity = new IdentityProperties
+                        {
+                            Type = ResourceIdentityType.SystemAssigned
+                        },
+                        Source = new ImportPipelineSourceProperties
+                        {
+                            Type = "AzureStorageBlobContainer",
+                            Uri = "https://accountname.blob.core.windows.net/containername",
+                            KeyVaultUri = "https://vaultname.vault.azure.net/secrets/exportsas"
+                        },
+                        Trigger = new PipelineTriggerProperties
+                        {
+                            SourceTrigger = new PipelineSourceTriggerProperties
+                            {
+                                Status = "Enabled"
+                            }
+                        }
+                    });
+
+                // Validate the created exportPipeline
+                Assert.Equal(ProvisioningState.Succeeded, importPipeline.ProvisioningState);
+                Assert.NotNull(importPipeline.Location);
+                Assert.NotNull(importPipeline.Identity);
+                Assert.Equal(ResourceIdentityType.SystemAssigned, importPipeline.Identity.Type);
+                Assert.NotNull(importPipeline.Source);
+                Assert.Equal("AzureStorageBlobContainer", importPipeline.Source.Type);
+                Assert.Contains(".blob.core.windows.net/", importPipeline.Source.Uri);
+                Assert.Contains(".vault.azure.net/secrets/", importPipeline.Source.KeyVaultUri);
+                Assert.NotNull(importPipeline.Trigger);
+                Assert.Equal("Enabled", importPipeline.Trigger.SourceTrigger.Status);
+
+
+                // List importPipelines by container registry
+                var importPipelines = registryClient.ImportPipelines.List(resourceGroup.Name, registry.Name);
+                importPipeline = importPipelines.First(
+                    i => StringComparer.OrdinalIgnoreCase.Equals(i.Name, importPipeline.Name));
+                Assert.Single(importPipelines);
+
+                // Get the importPipeline
+                importPipeline = registryClient.ImportPipelines.Get(resourceGroup.Name, registry.Name, importPipeline.Name);
+                Assert.NotNull(importPipeline);
+
+                // Delete the importPipeline
+                registryClient.ImportPipelines.Delete(resourceGroup.Name, registry.Name, importPipeline.Name);
+
+                // Delete the importPipeline again
+                registryClient.ImportPipelines.Delete(resourceGroup.Name, registry.Name, importPipeline.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
         public void ContainerRegistryTaskTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -399,8 +522,11 @@ namespace ContainerRegistry.Tests
                         status: "Enabled",
                         timeout: 600,
                         trigger: new TriggerProperties(
-                            sourceTriggers: null, 
-                            baseImageTrigger: new BaseImageTrigger(BaseImageTriggerType.Runtime, "defaultBaseimageTriggerName", TriggerStatus.Enabled))
+                            sourceTriggers: null,
+                            baseImageTrigger: new BaseImageTrigger(
+                                baseImageTriggerType: BaseImageTriggerType.Runtime, 
+                                name: "defaultBaseimageTriggerName",
+                                status: TriggerStatus.Enabled))
                         ));
 
                 Assert.NotNull(task);
@@ -419,8 +545,8 @@ namespace ContainerRegistry.Tests
                 // Schedule a run from task
                 var run1 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
                     new TaskRunRequest(
-                        task.Name,
-                        values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) }));
+                        taskId: task.Id,
+                        overrideTaskStepProperties: new OverrideTaskStepProperties(values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) })));
 
                 Assert.Equal("ca1", run1.RunId);
 
@@ -437,7 +563,7 @@ namespace ContainerRegistry.Tests
                         isPushEnabled: false,
                         noCache: true,
                         arguments: new List<Argument> { new Argument("param1", "value1", isSecret: true) },
-                        timeout: 600, 
+                        timeout: 600,
                         agentConfiguration: new AgentProperties(cpu: 2),
                         sourceLocation: "https://github.com/azure/acr-builder.git"));
 
@@ -461,7 +587,7 @@ namespace ContainerRegistry.Tests
                 string taskString =
 @"
 steps:
-  -build: . -t acb:linux-{{.Run.ID}}";
+  - build: . -t acb:linux-{{.Run.ID}}";
                 string valuesString =
 @"
 key1: value1
@@ -486,6 +612,143 @@ key2: value2
 
                 // Delete the task
                 registryClient.Tasks.Delete(resourceGroup.Name, registry.Name, task.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryAgentPoolTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var locaton = "eastus2euap";
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, locaton);
+
+                // Crete a new agentpool
+                var agentPool = registryClient.AgentPools.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrap"),
+                    new AgentPool(
+                        location: registry.Location,
+                        count: 1,
+                        tier: "S2",
+                        os: OS.Linux
+                    ));
+
+                Assert.NotNull(agentPool);
+
+                // List agentpool
+                var agentPoolList = registryClient.AgentPools.List(resourceGroup.Name, registry.Name);
+                Assert.Single(agentPoolList);
+
+                // Update agentpool
+                agentPool = registryClient.AgentPools.Update(resourceGroup.Name, registry.Name, agentPool.Name, 2);
+                Assert.Equal(2, agentPool.Count);
+
+                // Schedule a task run on the agentpool
+                string taskString =
+@"
+version: v1.1.0
+steps:
+  - cmd: docker images";
+                var run4 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
+                    new EncodedTaskRunRequest(
+                        encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
+                        agentPoolName: agentPool.Name,
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        isArchiveEnabled: false,
+                        encodedValuesContent: null,
+                        values: null,
+                        timeout: 600,
+                        sourceLocation: null));
+
+                // List runs
+                var runList = registryClient.Runs.List(resourceGroup.Name, registry.Name);
+                Assert.Single(runList);
+
+                Assert.Equal(agentPool.Name, runList.Single().AgentPoolName);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryTaskRunTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var nonDefaultLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, resourceGroup.Location);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, nonDefaultLocation);
+
+                string taskString =
+@"
+version: v1.1.0
+steps:
+  - cmd: docker images";
+
+                // Crete task
+                var taskRun = registryClient.TaskRuns.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrtaskrun"),
+                    new TaskRun(
+                        location: registry.Location,
+                        identity: new IdentityProperties {
+                            Type = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType.UserAssigned,
+                            UserAssignedIdentities = new Dictionary<string, UserIdentityProperties> {
+                                ["/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"] 
+                                    = new UserIdentityProperties()
+                            }
+                        },
+                        runRequest: new EncodedTaskRunRequest(
+                        encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        credentials: new Credentials {
+                            SourceRegistry = new SourceRegistryCredentials {
+                                LoginMode = SourceRegistryLoginMode.Default
+                            },
+                            CustomRegistries = new Dictionary<string, CustomRegistryCredentials> {
+                                ["acrsdktestregistry.azurecr.io"] = new CustomRegistryCredentials {
+                                    Identity = "84962bda-7c5e-403e-8515-5100e4ede735" // client id of acrsdktestidentity 
+                                }
+                            }
+                        },
+                        encodedValuesContent: null,
+                        values: null,
+                        timeout: 600,
+                        sourceLocation: null)));
+
+                Assert.NotNull(taskRun);
+                Assert.Equal("ca1", taskRun.RunResult.RunId);
+
+                // List task
+                var taskRunList = registryClient.TaskRuns.List(resourceGroup.Name, registry.Name);
+                Assert.Single(taskRunList);
+
+                // Delete the task
+                registryClient.TaskRuns.Delete(resourceGroup.Name, registry.Name, taskRun.Name);
 
                 // Delete the container registry
                 registryClient.Registries.Delete(resourceGroup.Name, registry.Name);

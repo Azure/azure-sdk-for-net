@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/docs(\u00273\u0027)?$select=ThisFieldDoesNotExist\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs(\u00273\u0027)?$select=ThisFieldDoesNotExist\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-f9f1388ca3091b47a381f952fd69e5d2-3963695f35bc6b4a-00",
+        "traceparent": "00-2b83db913528cc45bc3083c5f10ede01-a6891b83bd6f544e-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "c1ac8ecf967c99f1d9fe44cf54d99bb0",
         "x-ms-return-client-request-id": "true"
@@ -17,17 +18,19 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "c1ac8ecf-967c-99f1-d9fe-44cf54d99bb0",
         "Content-Language": "en",
         "Content-Length": "163",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Thu, 12 Mar 2020 00:43:47 GMT",
-        "elapsed-time": "92",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 26 Jun 2020 06:00:39 GMT",
+        "elapsed-time": "56",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "c1ac8ecf-967c-99f1-d9fe-44cf54d99bb0",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "c1ac8ecf-967c-99f1-d9fe-44cf54d99bb0"
       },
       "ResponseBody": {
         "error": {
@@ -39,7 +42,8 @@
   ],
   "Variables": {
     "RandomSeed": "1662283179",
-    "SearchIndexName": "eifefphf",
-    "SearchServiceName": "azs-net-gyqqmobj"
+    "SearchIndexName": "josgoidr",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

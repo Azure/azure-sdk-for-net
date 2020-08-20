@@ -37,15 +37,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="aliases">The aliases that are supported by this
         /// resource type.</param>
         /// <param name="apiVersions">The API version.</param>
+        /// <param name="defaultApiVersion">The default API version.</param>
+        /// <param name="apiProfiles">The API profiles for the resource
+        /// provider.</param>
         /// <param name="capabilities">The additional capabilities offered by
         /// this resource type.</param>
         /// <param name="properties">The properties.</param>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<AliasType> aliases = default(IList<AliasType>), IList<string> apiVersions = default(IList<string>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string defaultApiVersion = default(string), IList<ApiProfile> apiProfiles = default(IList<ApiProfile>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
             Aliases = aliases;
             ApiVersions = apiVersions;
+            DefaultApiVersion = defaultApiVersion;
+            ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
             CustomInit();
@@ -73,13 +78,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the aliases that are supported by this resource type.
         /// </summary>
         [JsonProperty(PropertyName = "aliases")]
-        public IList<AliasType> Aliases { get; set; }
+        public IList<Alias> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the API version.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersions")]
         public IList<string> ApiVersions { get; set; }
+
+        /// <summary>
+        /// Gets the default API version.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultApiVersion")]
+        public string DefaultApiVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the API profiles for the resource provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "apiProfiles")]
+        public IList<ApiProfile> ApiProfiles { get; private set; }
 
         /// <summary>
         /// Gets or sets the additional capabilities offered by this resource

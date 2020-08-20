@@ -9,51 +9,51 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class ImageAnalysisSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (VisualFeatures != null)
+            if (Optional.IsCollectionDefined(VisualFeatures))
             {
                 writer.WritePropertyName("visualFeatures");
                 writer.WriteStartArray();
                 foreach (var item in VisualFeatures)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (Details != null)
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details");
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
@@ -67,9 +67,9 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("outputs");
             writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -77,83 +77,59 @@ namespace Azure.Search.Documents.Models
 
         internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element)
         {
-            ImageAnalysisSkillLanguage? defaultLanguageCode = default;
-            IList<VisualFeature> visualFeatures = default;
-            IList<ImageDetail> details = default;
-            string odatatype = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<ImageAnalysisSkillLanguage> defaultLanguageCode = default;
+            Optional<IList<VisualFeature>> visualFeatures = default;
+            Optional<IList<ImageDetail>> details = default;
+            string odataType = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultLanguageCode = new ImageAnalysisSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("visualFeatures"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VisualFeature> array = new List<VisualFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVisualFeature());
+                        array.Add(new VisualFeature(item.GetString()));
                     }
                     visualFeatures = array;
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ImageDetail> array = new List<ImageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToImageDetail());
+                        array.Add(new ImageDetail(item.GetString()));
                     }
                     details = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -178,7 +154,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new ImageAnalysisSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode, visualFeatures, details);
+            return new ImageAnalysisSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToList(visualFeatures), Optional.ToList(details));
         }
     }
 }

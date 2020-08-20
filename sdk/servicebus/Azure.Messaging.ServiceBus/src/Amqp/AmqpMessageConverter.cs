@@ -1,21 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
+using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using Azure.Core;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-    using Primitives;
-    using SBMessage = ServiceBusMessage;
-
     internal static class AmqpMessageConverter
     {
         private const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
@@ -23,7 +25,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string SequenceNumberName = "x-opt-sequence-number";
         private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
         private const string LockedUntilName = "x-opt-locked-until";
-        private const string PublisherName = "x-opt-publisher";
         private const string PartitionKeyName = "x-opt-partition-key";
         private const string PartitionIdName = "x-opt-partition-id";
         private const string ViaPartitionKeyName = "x-opt-via-partition-key";
@@ -69,25 +70,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         return SBMessageToAmqpMessage(sbMessage);
                     }
-                }), firstMessage);
+                }).ToList(), firstMessage);
         }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
         /// </summary>
         ///
-        /// <param name="source">The set of messages to use as the body of the batch message.</param>
+        /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
         /// <param name="firstMessage"></param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
-            IEnumerable<AmqpMessage> source,
+            IList<AmqpMessage> batchMessages,
             SBMessage firstMessage = null)
         {
             AmqpMessage batchEnvelope;
-
-            var batchMessages = source.ToList();
 
             if (batchMessages.Count == 1)
             {
@@ -153,8 +152,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var body = new ArraySegment<byte>((sbMessage.Body.IsEmpty) ? Array.Empty<byte>() : sbMessage.Body.ToArray());
-            var amqpMessage = AmqpMessage.Create(new Data { Value = body });
+            var amqpMessage = sbMessage.ToAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
@@ -219,59 +217,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
-            if (amqpMessage == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(amqpMessage));
-            }
+            Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
-            ServiceBusReceivedMessage sbMessage;
-
-            if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
-                && amqpMessage.ValueBody.Value != null)
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-
-                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out var dotNetObject))
-                {
-                    sbMessage.BodyObject = dotNetObject;
-                }
-                else
-                {
-                    sbMessage.BodyObject = amqpMessage.ValueBody.Value;
-                }
-            }
-            else if ((amqpMessage.BodyType & SectionFlag.Data) != 0
-                && amqpMessage.DataBody != null)
-            {
-                var dataSegments = new List<byte>();
-                foreach (var data in amqpMessage.DataBody)
-                {
-                    if (data.Value is byte[] byteArrayValue)
-                    {
-                        dataSegments.AddRange(byteArrayValue);
-                    }
-                    else if (data.Value is ArraySegment<byte> arraySegmentValue)
-                    {
-                        byte[] byteArray;
-                        if (arraySegmentValue.Count == arraySegmentValue.Array.Length)
-                        {
-                            byteArray = arraySegmentValue.Array;
-                        }
-                        else
-                        {
-                            byteArray = new byte[arraySegmentValue.Count];
-                            Array.ConstrainedCopy(arraySegmentValue.Array, arraySegmentValue.Offset, byteArray, 0, arraySegmentValue.Count);
-                        }
-                        dataSegments.AddRange(byteArray);
-                    }
-                }
-                sbMessage = new ServiceBusReceivedMessage(dataSegments.ToArray());
-            }
-            else
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-            }
-
+            ServiceBusReceivedMessage sbMessage = amqpMessage.ToServiceBusReceivedMessage();
             var sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {
@@ -337,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                     {
-                        sbMessage.Properties[pair.Key.ToString()] = netObject;
+                        sbMessage.SentMessage.Properties[pair.Key.ToString()] = netObject;
                     }
                 }
             }
@@ -380,7 +328,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {
-                                sbMessage.Properties[key] = netObject;
+                                sbMessage.SentMessage.Properties[key] = netObject;
                             }
                             break;
                     }
@@ -399,118 +347,118 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        //public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
-        //{
-        //    var ruleDescriptionMap = new AmqpMap();
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
+        {
+            var ruleDescriptionMap = new AmqpMap();
 
-        //    switch (description.Filter)
-        //    {
-        //        case SqlFilter sqlFilter:
-        //            var filterMap = GetSqlFilterMap(sqlFilter);
-        //            ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
-        //            break;
-        //        case CorrelationFilter correlationFilter:
-        //            var correlationFilterMap = GetCorrelationFilterMap(correlationFilter);
-        //            ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
-        //            break;
-        //        default:
-        //            throw new NotSupportedException(
-        //                Resources.RuleFilterNotSupported.FormatForUser(
-        //                    description.Filter.GetType(),
-        //                    nameof(SqlFilter),
-        //                    nameof(CorrelationFilter)));
-        //    }
+            switch (description.Filter)
+            {
+                case SqlRuleFilter sqlRuleFilter:
+                    var filterMap = GetSqlRuleFilterMap(sqlRuleFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleFilter] = filterMap;
+                    break;
+                case CorrelationRuleFilter correlationFilter:
+                    var correlationFilterMap = GetCorrelationRuleFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationRuleFilter] = correlationFilterMap;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Resources.RuleFilterNotSupported.FormatForUser(
+                            description.Filter.GetType(),
+                            nameof(SqlRuleFilter),
+                            nameof(CorrelationRuleFilter)));
+            }
 
-        //    var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
-        //    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
-        //    ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
+            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
+            ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
 
-        //    return ruleDescriptionMap;
-        //}
+            return ruleDescriptionMap;
+        }
 
-        //public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
-        //{
-        //    var filter = GetFilter(amqpDescription.Filter);
-        //    var ruleAction = GetRuleAction(amqpDescription.Action);
+        public static RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        {
+            var filter = GetFilter(amqpDescription.Filter);
+            var ruleAction = GetRuleAction(amqpDescription.Action);
 
-        //    var ruleDescription = new RuleDescription(amqpDescription.RuleName, filter)
-        //    {
-        //        Action = ruleAction
-        //    };
+            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
+            {
+                Action = ruleAction
+            };
 
-        //    return ruleDescription;
-        //}
+            return ruleDescription;
+        }
 
-        //public static Filter GetFilter(AmqpFilterCodec amqpFilter)
-        //{
-        //    Filter filter;
+        public static RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
+        {
+            RuleFilter filter;
 
-        //    switch (amqpFilter.DescriptorCode)
-        //    {
-        //        case AmqpSqlFilterCodec.Code:
-        //            var amqpSqlFilter = (AmqpSqlFilterCodec)amqpFilter;
-        //            filter = new SqlFilter(amqpSqlFilter.Expression);
-        //            break;
+            switch (amqpFilter.DescriptorCode)
+            {
+                case AmqpSqlRuleFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlRuleFilterCodec)amqpFilter;
+                    filter = new SqlRuleFilter(amqpSqlFilter.Expression);
+                    break;
 
-        //        case AmqpTrueFilterCodec.Code:
-        //            filter = new TrueFilter();
-        //            break;
+                case AmqpTrueRuleFilterCodec.Code:
+                    filter = new TrueRuleFilter();
+                    break;
 
-        //        case AmqpFalseFilterCodec.Code:
-        //            filter = new FalseFilter();
-        //            break;
+                case AmqpFalseRuleFilterCodec.Code:
+                    filter = new FalseRuleFilter();
+                    break;
 
-        //        case AmqpCorrelationFilterCodec.Code:
-        //            var amqpCorrelationFilter = (AmqpCorrelationFilterCodec)amqpFilter;
-        //            var correlationFilter = new CorrelationFilter
-        //            {
-        //                CorrelationId = amqpCorrelationFilter.CorrelationId,
-        //                MessageId = amqpCorrelationFilter.MessageId,
-        //                To = amqpCorrelationFilter.To,
-        //                ReplyTo = amqpCorrelationFilter.ReplyTo,
-        //                Label = amqpCorrelationFilter.Label,
-        //                SessionId = amqpCorrelationFilter.SessionId,
-        //                ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
-        //                ContentType = amqpCorrelationFilter.ContentType
-        //            };
+                case AmqpCorrelationRuleFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationRuleFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationRuleFilter
+                    {
+                        CorrelationId = amqpCorrelationFilter.CorrelationId,
+                        MessageId = amqpCorrelationFilter.MessageId,
+                        To = amqpCorrelationFilter.To,
+                        ReplyTo = amqpCorrelationFilter.ReplyTo,
+                        Label = amqpCorrelationFilter.Label,
+                        SessionId = amqpCorrelationFilter.SessionId,
+                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
+                        ContentType = amqpCorrelationFilter.ContentType
+                    };
 
-        //            foreach (var property in amqpCorrelationFilter.Properties)
-        //            {
-        //                correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
-        //            }
+                    foreach (var property in amqpCorrelationFilter.Properties)
+                    {
+                        correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
+                    }
 
-        //            filter = correlationFilter;
-        //            break;
+                    filter = correlationFilter;
+                    break;
 
-        //        default:
-        //            throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
-        //    }
+                default:
+                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
+            }
 
-        //    return filter;
-        //}
+            return filter;
+        }
 
-        //static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
-        //{
-        //    RuleAction action;
+        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        {
+            RuleAction action;
 
-        //    if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
-        //    {
-        //        action = null;
-        //    }
-        //    else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
-        //    {
-        //        var amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
-        //        var sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
+            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
+            {
+                action = null;
+            }
+            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            {
+                var amqpSqlRuleAction = (AmqpSqlRuleActionCodec)amqpAction;
+                var sqlRuleAction = new SqlRuleAction(amqpSqlRuleAction.SqlExpression);
 
-        //        action = sqlAction;
-        //    }
-        //    else
-        //    {
-        //        throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
-        //    }
+                action = sqlRuleAction;
+            }
+            else
+            {
+                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
+            }
 
-        //    return action;
-        //}
+            return action;
+        }
 
         internal static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
         {
@@ -565,7 +513,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName));
                     }
                     else if (netObject is byte[] netObjectAsByteArray)
                     {
@@ -654,7 +602,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName));
                     }
                     else if (amqpObject is AmqpMap map)
                     {
@@ -703,49 +651,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new Data { Value = value };
         }
 
-        //static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
-        //{
-        //    var amqpFilterMap = new AmqpMap
-        //    {
-        //        [ManagementConstants.Properties.Expression] = sqlFilter.SqlExpression
-        //    };
-        //    return amqpFilterMap;
-        //}
+        internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
+        {
+            var amqpFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.Expression] = sqlRuleFilter.SqlExpression
+            };
+            return amqpFilterMap;
+        }
 
-        //static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
-        //{
-        //    var correlationFilterMap = new AmqpMap
-        //    {
-        //        [ManagementConstants.Properties.CorrelationId] = correlationFilter.CorrelationId,
-        //        [ManagementConstants.Properties.MessageId] = correlationFilter.MessageId,
-        //        [ManagementConstants.Properties.To] = correlationFilter.To,
-        //        [ManagementConstants.Properties.ReplyTo] = correlationFilter.ReplyTo,
-        //        [ManagementConstants.Properties.Label] = correlationFilter.Label,
-        //        [ManagementConstants.Properties.SessionId] = correlationFilter.SessionId,
-        //        [ManagementConstants.Properties.ReplyToSessionId] = correlationFilter.ReplyToSessionId,
-        //        [ManagementConstants.Properties.ContentType] = correlationFilter.ContentType
-        //    };
+        internal static AmqpMap GetCorrelationRuleFilterMap(CorrelationRuleFilter correlationRuleFilter)
+        {
+            var correlationRuleFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.CorrelationId] = correlationRuleFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationRuleFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationRuleFilter.Label,
+                [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType
+            };
 
-        //    var propertiesMap = new AmqpMap();
-        //    foreach (var property in correlationFilter.Properties)
-        //    {
-        //        propertiesMap[new MapKey(property.Key)] = property.Value;
-        //    }
+            var propertiesMap = new AmqpMap();
+            foreach (var property in correlationRuleFilter.Properties)
+            {
+                propertiesMap[new MapKey(property.Key)] = property.Value;
+            }
 
-        //    correlationFilterMap[ManagementConstants.Properties.CorrelationFilterProperties] = propertiesMap;
+            correlationRuleFilterMap[ManagementConstants.Properties.CorrelationRuleFilterProperties] = propertiesMap;
 
-        //    return correlationFilterMap;
-        //}
+            return correlationRuleFilterMap;
+        }
 
-        //static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
-        //{
-        //    AmqpMap ruleActionMap = null;
-        //    if (sqlRuleAction != null)
-        //    {
-        //        ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
-        //    }
+        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        {
+            AmqpMap ruleActionMap = null;
+            if (sqlRuleAction != null)
+            {
+                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
+            }
 
-        //    return ruleActionMap;
-        //}
+            return ruleActionMap;
+        }
     }
 }

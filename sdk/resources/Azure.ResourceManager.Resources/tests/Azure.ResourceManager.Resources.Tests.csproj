@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
+    <TestHelperProjects>;</TestHelperProjects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>SA1649</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ScenarioTests\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

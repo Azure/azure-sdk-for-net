@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class DefaultCognitiveServicesAccount : IUtf8JsonSerializable
     {
@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -27,26 +27,22 @@ namespace Azure.Search.Documents.Models
 
         internal static DefaultCognitiveServicesAccount DeserializeDefaultCognitiveServicesAccount(JsonElement element)
         {
-            string odatatype = default;
-            string description = default;
+            string odataType = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new DefaultCognitiveServicesAccount(odatatype, description);
+            return new DefaultCognitiveServicesAccount(odataType, description.Value);
         }
     }
 }

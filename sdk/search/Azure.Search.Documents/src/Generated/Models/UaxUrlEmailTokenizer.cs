@@ -7,13 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizes urls and emails as one token. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class UaxUrlEmailTokenizer : Tokenizer
+    public partial class UaxUrlEmailTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of UaxUrlEmailTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UaxUrlEmailTokenizer(string name) : base(name)
         {
             if (name == null)

@@ -14,10 +14,18 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   intended to be sent to the Event Hubs service as a single batch.
     /// </summary>
     ///
+    /// <remarks>
+    ///   The operations for this class are thread-safe and will prevent changes when
+    ///   actively being published to the Event Hubs service.
+    /// </remarks>
+    ///
     public sealed class EventDataBatch : IDisposable
     {
+        /// <summary>An object instance to use as the synchronization root for ensuring the thread-safety of operations.</summary>
+        private readonly object SyncGuard = new object();
+
         /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
-        private volatile bool _locked = false;
+        private bool _locked = false;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
@@ -32,6 +40,38 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         public long SizeInBytes => InnerBatch.SizeInBytes;
+
+        /// <summary>
+        ///   The publishing sequence number assigned to the first event in the batch at the time
+        ///   the batch was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number of the first event in the batch, if the batch was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the batch has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The starting published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public int? StartingPublishedSequenceNumber
+        {
+            get => InnerBatch.StartingPublishedSequenceNumber;
+
+            internal set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(StartingPublishedSequenceNumber));
+                }
+
+                InnerBatch.StartingPublishedSequenceNumber = value;
+            }
+        }
 
         /// <summary>
         ///   The count of events contained in the batch.
@@ -118,34 +158,50 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool TryAdd(EventData eventData)
         {
-            if (_locked)
+            lock (SyncGuard)
             {
-                throw new InvalidOperationException(Resources.EventBatchIsLocked);
-            }
+                AssertNotLocked();
 
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
-            bool added = InnerBatch.TryAdd(eventData);
+                eventData = eventData.Clone();
+                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
 
-            if (added)
-            {
-                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                var added = InnerBatch.TryAdd(eventData);
+
+                if ((added) && (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId)))
                 {
                     EventDiagnosticIdentifiers.Add(diagnosticId);
                 }
-            }
-            else if (instrumented)
-            {
-                EventDataInstrumentation.ResetEvent(eventData);
-            }
 
-            return added;
+                return added;
+            }
         }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventDataBatch" />.
         /// </summary>
         ///
-        public void Dispose() => InnerBatch.Dispose();
+        public void Dispose()
+        {
+            lock (SyncGuard)
+            {
+                AssertNotLocked();
+                InnerBatch.Dispose();
+            }
+        }
+
+        /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        internal void Clear()
+        {
+            lock (SyncGuard)
+            {
+                AssertNotLocked();
+                InnerBatch.Clear();
+            }
+        }
 
         /// <summary>
         ///   Represents the batch as an enumerable set of specific representations of an event.
@@ -170,12 +226,39 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   operation is active.
         /// </summary>
         ///
-        internal void Lock() => _locked = true;
+        internal void Lock()
+        {
+            lock (SyncGuard)
+            {
+                _locked = true;
+            }
+        }
 
         /// <summary>
         ///   Unlocks the batch, allowing new events to be added.
         /// </summary>
         ///
-        internal void Unlock() => _locked = false;
+        internal void Unlock()
+        {
+            lock (SyncGuard)
+            {
+                _locked = false;
+            }
+        }
+
+        /// <summary>
+        ///   Validates that the batch is not in a locked state, triggering an
+        ///   invalid operation if it is.
+        /// </summary>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when the batch is locked.</exception>
+        ///
+        private void AssertNotLocked()
+        {
+            if (_locked)
+            {
+                throw new InvalidOperationException(Resources.EventBatchIsLocked);
+            }
+        }
     }
 }

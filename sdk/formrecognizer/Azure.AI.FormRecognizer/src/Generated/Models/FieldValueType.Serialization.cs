@@ -17,10 +17,10 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType.Date => "date",
             FieldValueType.Time => "time",
             FieldValueType.PhoneNumber => "phoneNumber",
-            FieldValueType.Number => "number",
-            FieldValueType.Integer => "integer",
-            FieldValueType.Array => "array",
-            FieldValueType.Object => "object",
+            FieldValueType.Float => "number",
+            FieldValueType.Int64 => "integer",
+            FieldValueType.List => "array",
+            FieldValueType.Dictionary => "object",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
@@ -30,10 +30,10 @@ namespace Azure.AI.FormRecognizer.Models
             if (string.Equals(value, "date", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Date;
             if (string.Equals(value, "time", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Time;
             if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.PhoneNumber;
-            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Number;
-            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Integer;
-            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Array;
-            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Object;
+            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Float;
+            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Int64;
+            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.List;
+            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Dictionary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
         }
     }

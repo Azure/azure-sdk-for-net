@@ -14,9 +14,9 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -31,16 +31,16 @@ namespace Azure.Security.KeyVault.Keys
             V7_0 = 0,
 
             /// <summary>
-            /// The Key Vault API version 7.1-preview.
+            /// The Key Vault API version 7.1.
             /// </summary>
-            V7_1_Preview = 1,
+            V7_1 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -52,9 +52,7 @@ namespace Azure.Security.KeyVault.Keys
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public KeyClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             Version = version;
 
@@ -66,8 +64,7 @@ namespace Azure.Security.KeyVault.Keys
             return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-                ServiceVersion.V7_1_Preview => "7.1-preview",
-
+                ServiceVersion.V7_1 => "7.1",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }

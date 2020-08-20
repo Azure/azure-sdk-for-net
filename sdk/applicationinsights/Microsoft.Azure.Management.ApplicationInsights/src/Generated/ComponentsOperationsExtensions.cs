@@ -265,6 +265,13 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// <summary>
             /// Purges data in an Application Insights component by a set of user-defined
             /// filters.
+            ///
+            /// In order to manage system resources, purge requests are throttled at 50
+            /// requests per hour. You should batch the execution of purge requests by
+            /// sending a single command whose predicate includes all user identities that
+            /// require purging. Use the in operator to specify multiple identities. You
+            /// should run the query prior to using for a purge request to verify that the
+            /// results are expected.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,6 +294,13 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// <summary>
             /// Purges data in an Application Insights component by a set of user-defined
             /// filters.
+            ///
+            /// In order to manage system resources, purge requests are throttled at 50
+            /// requests per hour. You should batch the execution of purge requests by
+            /// sending a single command whose predicate includes all user identities that
+            /// require purging. Use the in operator to specify multiple identities. You
+            /// should run the query prior to using for a purge request to verify that the
+            /// results are expected.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

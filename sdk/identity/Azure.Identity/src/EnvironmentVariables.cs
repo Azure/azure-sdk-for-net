@@ -21,5 +21,6 @@ namespace Azure.Identity
 
         public static string ProgramFilesX86 => Environment.GetEnvironmentVariable("ProgramFiles(x86)");
         public static string ProgramFiles => Environment.GetEnvironmentVariable("ProgramFiles");
+        public static string AuthorityHost => Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
     }
 }

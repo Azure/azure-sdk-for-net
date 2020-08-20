@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
+    <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
+    <Version>1.3.0-preview</Version>
+    <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
+    <PackageTags>management;cosmosdb;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        Updating with the apiVersion 2020-06-01-preview azure-rest-api-specs.
+        This is for the private preview of Point in Time restore feature.
+        Includes: 
+		    Separating the DatabaseAccountCreateUpdateProperties from DatabaseAccountCreateUpdateParameters.
+		    DatabaseAccountCreateUpdateProperties has two derived classes: DefaultRequestDatabaseAccountCreateUpdateProperties and RestoreRequestDatabaseAccountCreateUpdateProperties
+		    RestoreRequestDatabaseAccountCreateUpdateProperties has RestoreParameters object which is used to define:
+		      - The source account to restore from.
+		      - The timestamp to restore the source account to.
+		      - The subset of databases and collections to restore.
+		    Introducing RestorableDatabaseAccounts, which are the database accounts(live and deleted) which can be source for a restore.
+		    Adding BackupPolicy to DatabaseAccountCreateUpdateProperties and DatabaseAccountUpdateParameters.
+		      - Accounts can be created either with ContinuousModeBackupPolicy or PeriodicModeBackupPolicy.
+		      - The backup interval and backup retention properties for a Periodic backup policy mode accounts can be updated.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

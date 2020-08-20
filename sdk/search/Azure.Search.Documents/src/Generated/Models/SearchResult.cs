@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +19,8 @@ namespace Azure.Search.Documents.Models
         internal SearchResult(double score)
         {
             Score = score;
-            AdditionalProperties = new Dictionary<string, object>();
+            Highlights = new ChangeTrackingDictionary<string, IList<string>>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SearchResult. </summary>

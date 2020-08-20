@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all token filters supported by Azure Cognitive Search. </summary>
     public readonly partial struct TokenFilterName : IEquatable<TokenFilterName>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="TokenFilterName"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TokenFilterName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -62,7 +63,7 @@ namespace Azure.Search.Documents.Models
         public static TokenFilterName Apostrophe { get; } = new TokenFilterName(ApostropheValue);
         /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the &quot;Basic Latin&quot; Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
         public static TokenFilterName AsciiFolding { get; } = new TokenFilterName(AsciiFoldingValue);
-        /// <summary> Forms bigrams of CJK terms that are generated from StandardTokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html. </summary>
+        /// <summary> Forms bigrams of CJK terms that are generated from the standard tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html. </summary>
         public static TokenFilterName CjkBigram { get; } = new TokenFilterName(CjkBigramValue);
         /// <summary> Normalizes CJK width differences. Folds fullwidth ASCII variants into the equivalent basic Latin, and half-width Katakana variants into the equivalent Kana. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKWidthFilter.html. </summary>
         public static TokenFilterName CjkWidth { get; } = new TokenFilterName(CjkWidthValue);
@@ -135,7 +136,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TokenFilterName other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(TokenFilterName other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(TokenFilterName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

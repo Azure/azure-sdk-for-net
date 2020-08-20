@@ -16,7 +16,10 @@ language: net
 root_check_enabled: True
 required_readme_sections:
   - "Azure .+ client library for .NET"
-  - ^Getting started$
+  - "^Getting started$":
+    - Install the [Pp]ackage
+    - Prerequisites
+    - Authenticate the [Cc]lient
   - ^Key concepts$
   - ^Examples$
   - ^Troubleshooting$
@@ -62,6 +65,7 @@ known_presence_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Cryptography','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Extensions','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.WebKey','#5499']
+  - ["sdk/mediaservices/Microsoft.Azure.Media.LiveVideoAnalytics.Edge", "#5499"]
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Common','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Data','#5499']
@@ -69,9 +73,6 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search','#5499']
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
-  - ['sdk/formrecognizer/Azure.AI.FormRecognizer','#5499']
-
-# List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/CHANGELOG.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging/CHANGELOG.md','#5499']
@@ -122,6 +123,8 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/core/Azure.Core/README.md', '#5499']
+  - ['sdk/core/Azure.Core.Experimental/README.md', '#5499']
   - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
@@ -136,11 +139,22 @@ known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
   - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Azure.Extensions.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
+  - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs.Batch/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs.Cryptography/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Common/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.Shares/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Queues/README.md','#11492']
+  - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
+  - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
+  - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

@@ -81,6 +81,60 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void UnRegisterFeature()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                      'name': 'Providers.Test/DONOTDELETEBETA',
+
+                      'properties': {
+
+                        'state': 'NotRegistered'
+
+                      },
+
+                      'id': '/subscriptions/fda3b6ba-8803-441c-91fb-6cc798cf6ea0/providers/Microsoft.Features/providers/Providers.Test/features/DONOTDELETEBETA',
+
+                      'type': 'Microsoft.Features/providers/features'
+                }")
+            };
+
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetFeatureClient(handler);
+
+            string resourceProviderNamespace = "Providers.Test";
+
+            string featureName = "DONOTDELETEBETA";
+
+            var registerResult = client.Features.Unregister(resourceProviderNamespace, featureName);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            //Valid payload
+            //Construct expected URL
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "/unregister?";
+            expectedUrl = expectedUrl + "api-version=2015-12-01";
+            string baseUrl = client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (expectedUrl[0] == '/')
+            {
+                expectedUrl = expectedUrl.Substring(1);
+            }
+            expectedUrl = baseUrl + "/" + expectedUrl;
+            expectedUrl = expectedUrl.Replace(" ", "%20");
+
+            Assert.Equal(expectedUrl, handler.Uri.ToString());
+        }
+
+        [Fact]
         public void GetPreviewedFeatures()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)

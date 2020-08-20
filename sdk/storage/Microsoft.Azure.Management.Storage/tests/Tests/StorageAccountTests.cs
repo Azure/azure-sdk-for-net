@@ -1664,10 +1664,14 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardGRS },
                     Kind = Kind.StorageV2,
-                    Location = "westus"
+                    Location = "eastus2euap"
                 };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 List<ManagementPolicyRule> rules = new List<ManagementPolicyRule>();
+
+                List<TagFilter> tagFileter = new List<TagFilter>();
+                tagFileter.Add(new TagFilter("tag1", "==", "value1"));
+                tagFileter.Add(new TagFilter("tag2", "==", "value2"));
                 ManagementPolicyRule rule1 = new ManagementPolicyRule()
                 {
                     Enabled = true,
@@ -1676,11 +1680,11 @@ namespace Storage.Tests
                     {
                         Actions = new ManagementPolicyAction()
                         {
-                            BaseBlob = new ManagementPolicyBaseBlob(new DateAfterModification(1000), new DateAfterModification(90), new DateAfterModification(300)),
-                            Snapshot = new ManagementPolicySnapShot(new DateAfterCreation(100))
+                            BaseBlob = new ManagementPolicyBaseBlob(new DateAfterModification(1000), new DateAfterModification(90), new DateAfterModification(300))
                         },
                         Filters = new ManagementPolicyFilter(new List<string>() { "blockBlob" },
-                            new List<string>() { "olcmtestcontainer", "testblob" }),
+                            new List<string>() { "olcmtestcontainer", "testblob" },
+                            tagFileter)
                     }
                 };
                 rules.Add(rule1);
@@ -1694,6 +1698,7 @@ namespace Storage.Tests
                         Actions = new ManagementPolicyAction()
                         {
                             BaseBlob = new ManagementPolicyBaseBlob(delete: new DateAfterModification(1000)),
+                            Snapshot = new ManagementPolicySnapShot(new DateAfterCreation(100))
                         },
                         Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
                     }
@@ -2247,6 +2252,45 @@ namespace Storage.Tests
                 Assert.Equal("testscope", es.Name);
                 Assert.Equal(EncryptionScopeState.Enabled, es.State);
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCreateUpdateWithMinTlsVersionBlobPublicAccess()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Location = "East US 2 EUAP";
+                parameters.Kind = Kind.StorageV2;
+                parameters.AllowBlobPublicAccess = false;
+                parameters.MinimumTlsVersion = MinimumTlsVersion.TLS11;
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                // Verify account settings
+                Assert.False(account.AllowBlobPublicAccess);
+                Assert.Equal(MinimumTlsVersion.TLS11, account.MinimumTlsVersion);
+
+                //Update account
+                var udpateParameters = new StorageAccountUpdateParameters();
+                udpateParameters.MinimumTlsVersion = MinimumTlsVersion.TLS12;
+                udpateParameters.AllowBlobPublicAccess = true;
+                udpateParameters.EnableHttpsTrafficOnly = true;
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, udpateParameters);
+
+                // Verify account settings
+                Assert.True(account.AllowBlobPublicAccess);
+                Assert.Equal(MinimumTlsVersion.TLS12, account.MinimumTlsVersion);
             }
         }
     }

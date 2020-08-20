@@ -1,6 +1,52 @@
 # Release History
 
-## 1.2.0-preview.1 (Unreleased)
+## 1.5.0-preview.1 (Unreleased)
+
+### Added
+- HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
+
+```xml
+ <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
+  </ItemGroup>
+```
+
+When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
+
+## 1.4.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 1.4.0 (2020-08-06)
+
+### Added
+- Added `ObjectSerializer` base class for serialization.
+- Added `IMemberNameConverter` for converting member names to serialized property names.
+- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
+
+### Fixed
+- Connection leak for retried non-buffered requests on .NET Framework.
+
+## 1.3.0 (2020-07-02)
+
+### Added
+- `HttpPipeline.CreateClientRequestIdScope` method to allow setting client request id on outgoing requests.
+
+## 1.2.2 (2020-06-04)
+
+### Bugfix
+- Retry server timeouts on .NET Framework.
+
+## 1.2.1  (2020-04-30)
+
+### Changed
+- Read client request ID value used for logging and tracing off the initial request object if available.
+
+### Bugfix
+- Fixed a bug when using Azure.Core based libraries in Blazor WebAssembly apps.
+
+## 1.2.0 (2020-04-03)
 
 ### Added
 - `AzureKeyCredential` and its respective policy.

@@ -7,15 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Text analytics entity recognition. </summary>
-    public partial class EntityRecognitionSkill : Skill
+    public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
             if (inputs == null)
@@ -27,6 +29,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
+            Categories = new ChangeTrackingList<EntityCategory>();
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
 
@@ -49,9 +52,6 @@ namespace Azure.Search.Documents.Models
             MinimumPrecision = minimumPrecision;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
-
-        /// <summary> A list of entity categories that should be extracted. </summary>
-        public IList<EntityCategory> Categories { get; set; }
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
         /// <summary> Determines whether or not to include entities which are well known but don&apos;t conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don&apos;t conform to one of the pre-defined types will not be surfaced. </summary>

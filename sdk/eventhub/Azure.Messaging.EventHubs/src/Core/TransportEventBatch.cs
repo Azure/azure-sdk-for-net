@@ -31,6 +31,25 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract long SizeInBytes { get; }
 
         /// <summary>
+        ///   The publishing sequence number assigned to the first event in the batch at the time
+        ///   the batch was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number of the first event in the batch, if the batch was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the batch has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        ///</value>
+        ///
+        /// <remarks>
+        ///   The starting published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public abstract int? StartingPublishedSequenceNumber { get; set; }
+
+        /// <summary>
         ///   The count of events contained in the batch.
         /// </summary>
         ///
@@ -46,6 +65,13 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
         public abstract bool TryAdd(EventData eventData);
+
+        /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public abstract void Clear();
 
         /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific

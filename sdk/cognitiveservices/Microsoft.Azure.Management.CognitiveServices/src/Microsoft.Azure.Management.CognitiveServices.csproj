@@ -6,12 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>7.1.0-preview</Version>
+		<Version>7.3.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Support Identity, Encryption, UserOwnedStorage.
+1) Support Sku capabilities.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>

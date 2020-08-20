@@ -9,51 +9,65 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EntityRecognitionSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Categories != null)
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories");
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (IncludeTypelessEntities != null)
+            if (Optional.IsDefined(IncludeTypelessEntities))
             {
-                writer.WritePropertyName("includeTypelessEntities");
-                writer.WriteBooleanValue(IncludeTypelessEntities.Value);
+                if (IncludeTypelessEntities != null)
+                {
+                    writer.WritePropertyName("includeTypelessEntities");
+                    writer.WriteBooleanValue(IncludeTypelessEntities.Value);
+                }
+                else
+                {
+                    writer.WriteNull("includeTypelessEntities");
+                }
             }
-            if (MinimumPrecision != null)
+            if (Optional.IsDefined(MinimumPrecision))
             {
-                writer.WritePropertyName("minimumPrecision");
-                writer.WriteNumberValue(MinimumPrecision.Value);
+                if (MinimumPrecision != null)
+                {
+                    writer.WritePropertyName("minimumPrecision");
+                    writer.WriteNumberValue(MinimumPrecision.Value);
+                }
+                else
+                {
+                    writer.WriteNull("minimumPrecision");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
@@ -67,9 +81,9 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("outputs");
             writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -77,38 +91,30 @@ namespace Azure.Search.Documents.Models
 
         internal static EntityRecognitionSkill DeserializeEntityRecognitionSkill(JsonElement element)
         {
-            IList<EntityCategory> categories = default;
-            EntityRecognitionSkillLanguage? defaultLanguageCode = default;
-            bool? includeTypelessEntities = default;
-            double? minimumPrecision = default;
-            string odatatype = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<IList<EntityCategory>> categories = default;
+            Optional<EntityRecognitionSkillLanguage> defaultLanguageCode = default;
+            Optional<bool?> includeTypelessEntities = default;
+            Optional<double?> minimumPrecision = default;
+            string odataType = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categories"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToEntityCategory());
+                        array.Add(new EntityCategory(item.GetString()));
                     }
                     categories = array;
                     continue;
                 }
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultLanguageCode = new EntityRecognitionSkillLanguage(property.Value.GetString());
                     continue;
                 }
@@ -116,6 +122,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        includeTypelessEntities = null;
                         continue;
                     }
                     includeTypelessEntities = property.Value.GetBoolean();
@@ -125,6 +132,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        minimumPrecision = null;
                         continue;
                     }
                     minimumPrecision = property.Value.GetDouble();
@@ -132,33 +140,21 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -183,7 +179,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkill(odatatype, name, description, context, inputs, outputs, categories, defaultLanguageCode, includeTypelessEntities, minimumPrecision);
+            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(includeTypelessEntities), Optional.ToNullable(minimumPrecision));
         }
     }
 }

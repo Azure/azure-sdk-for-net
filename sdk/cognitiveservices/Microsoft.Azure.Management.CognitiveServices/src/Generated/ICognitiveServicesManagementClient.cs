@@ -45,13 +45,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current
-        /// version is 2017-04-18
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -88,6 +87,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
         /// Check available SKUs.

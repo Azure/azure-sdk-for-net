@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service Environments for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all App Service Environments for a subscription.
+        /// Description for Get all App Service Environments for a
+        /// subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,7 +50,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service Environments in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all App Service Environments in a resource group.
+        /// Description for Get all App Service Environments in a resource
+        /// group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get the properties of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get the properties of an App Service Environment.
+        /// Description for Get the properties of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Create or update an App Service Environment.
+        /// Description for Create or update an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -119,7 +121,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -133,7 +135,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Delete an App Service Environment.
+        /// Description for Delete an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -152,7 +154,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -163,7 +165,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Create or update an App Service Environment.
+        /// Description for Create or update an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -180,7 +182,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -195,8 +197,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get the used, available, and total worker capacity an App Service
-        /// Environment.
+        /// Description for Get the used, available, and total worker capacity
+        /// an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -224,7 +226,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get IP addresses assigned to an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get IP addresses assigned to an App Service Environment.
+        /// Description for Get IP addresses assigned to an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -247,12 +250,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AddressResponse>> ListVipsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AddressResponse>> GetVipInfoWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Move an App Service Environment to a different VNET.
         /// </summary>
         /// <remarks>
-        /// Move an App Service Environment to a different VNET.
+        /// Description for Move an App Service Environment to a different
+        /// VNET.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -283,7 +287,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get diagnostic information for an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get diagnostic information for an App Service Environment.
+        /// Description for Get diagnostic information for an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -311,7 +316,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a diagnostics item for an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get a diagnostics item for an App Service Environment.
+        /// Description for Get a diagnostics item for an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -343,8 +349,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get the network endpoints of all inbound dependencies of an App
-        /// Service Environment.
+        /// Description for Get the network endpoints of all inbound
+        /// dependencies of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -369,77 +375,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<InboundEnvironmentEndpoint>>> GetInboundNetworkDependenciesEndpointsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get global metric definitions of an App Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get global metric definitions of an App Service Environment.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<MetricDefinition>> ListMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get global metrics of an App Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get global metrics of an App Service Environment.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='details'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name='filter'>
-        /// Return only usages/metrics specified in the filter. Filter conforms
-        /// to odata syntax. Example: $filter=(name.value eq 'Metric1' or
-        /// name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and
-        /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
-        /// duration'[Hour|Minute|Day]'.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get all multi-role pools.
         /// </summary>
         /// <remarks>
-        /// Get all multi-role pools.
+        /// Description for Get all multi-role pools.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -467,7 +406,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get properties of a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Get properties of a multi-role pool.
+        /// Description for Get properties of a multi-role pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -495,7 +434,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -512,7 +451,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -526,7 +465,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -543,7 +482,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -558,8 +497,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a specific instance of a multi-role pool
-        /// of an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a
+        /// multi-role pool of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -587,49 +526,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMultiRolePoolInstanceMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a specific instance of a multi-role pool of an App
-        /// Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a specific instance of a multi-role pool of an App
-        /// Service Environment.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='instance'>
-        /// Name of the instance in the multi-role pool.
-        /// </param>
-        /// <param name='details'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get metric definitions for a multi-role pool of an App Service
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a multi-role pool of an App Service
-        /// Environment.
+        /// Description for Get metric definitions for a multi-role pool of an
+        /// App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -654,58 +556,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMultiRoleMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a multi-role pool of an App Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a multi-role pool of an App Service Environment.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of the metrics query.
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of the metrics query.
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of the metrics query.
-        /// </param>
-        /// <param name='details'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name='filter'>
-        /// Return only usages/metrics specified in the filter. Filter conforms
-        /// to odata syntax. Example: $filter=(name.value eq 'Metric1' or
-        /// name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and
-        /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
-        /// duration'[Hour|Minute|Day]'.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get available SKUs for scaling a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Get available SKUs for scaling a multi-role pool.
+        /// Description for Get available SKUs for scaling a multi-role pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -734,8 +588,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get usage metrics for a multi-role pool of an App Service
-        /// Environment.
+        /// Description for Get usage metrics for a multi-role pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -764,8 +618,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// List all currently running operations on the App Service
-        /// Environment.
+        /// Description for List all currently running operations on the App
+        /// Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -794,8 +648,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get the network endpoints of all outbound dependencies of an App
-        /// Service Environment.
+        /// Description for Get the network endpoints of all outbound
+        /// dependencies of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -823,7 +677,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Reboot all machines in an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Reboot all machines in an App Service Environment.
+        /// Description for Reboot all machines in an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -837,7 +691,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -848,7 +702,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Resume an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Resume an App Service Environment.
+        /// Description for Resume an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -876,7 +730,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service plans in an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all App Service plans in an App Service Environment.
+        /// Description for Get all App Service plans in an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -904,7 +759,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all apps in an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all apps in an App Service Environment.
+        /// Description for Get all apps in an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -935,7 +790,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Suspend an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Suspend an App Service Environment.
+        /// Description for Suspend an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -963,7 +818,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get global usage metrics of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get global usage metrics of an App Service Environment.
+        /// Description for Get global usage metrics of an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -998,7 +854,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all worker pools of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all worker pools of an App Service Environment.
+        /// Description for Get all worker pools of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1026,7 +882,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get properties of a worker pool.
         /// </summary>
         /// <remarks>
-        /// Get properties of a worker pool.
+        /// Description for Get properties of a worker pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1057,7 +913,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a worker pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a worker pool.
+        /// Description for Create or update a worker pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1077,7 +933,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -1091,7 +947,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a worker pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a worker pool.
+        /// Description for Create or update a worker pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1111,7 +967,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -1126,8 +982,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a specific instance of a worker pool of
-        /// an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a
+        /// worker pool of an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1158,59 +1014,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListWorkerPoolInstanceMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, string instance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a specific instance of a worker pool of an App
-        /// Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a specific instance of a worker pool of an App
-        /// Service Environment.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='workerPoolName'>
-        /// Name of the worker pool.
-        /// </param>
-        /// <param name='instance'>
-        /// Name of the instance in the worker pool.
-        /// </param>
-        /// <param name='details'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name='filter'>
-        /// Return only usages/metrics specified in the filter. Filter conforms
-        /// to odata syntax. Example: $filter=(name.value eq 'Metric1' or
-        /// name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and
-        /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
-        /// duration'[Hour|Minute|Day]'.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, string instance, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get metric definitions for a worker pool of an App Service
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a worker pool of an App Service
-        /// Environment.
+        /// Description for Get metric definitions for a worker pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1238,54 +1047,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListWebWorkerMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a worker pool of a AppServiceEnvironment (App
-        /// Service Environment).
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a worker pool of a AppServiceEnvironment (App
-        /// Service Environment).
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the App Service Environment.
-        /// </param>
-        /// <param name='workerPoolName'>
-        /// Name of worker pool
-        /// </param>
-        /// <param name='details'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name='filter'>
-        /// Return only usages/metrics specified in the filter. Filter conforms
-        /// to odata syntax. Example: $filter=(name.value eq 'Metric1' or
-        /// name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and
-        /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
-        /// duration'[Hour|Minute|Day]'.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get available SKUs for scaling a worker pool.
         /// </summary>
         /// <remarks>
-        /// Get available SKUs for scaling a worker pool.
+        /// Description for Get available SKUs for scaling a worker pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1316,7 +1081,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get usage metrics for a worker pool of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get usage metrics for a worker pool of an App Service Environment.
+        /// Description for Get usage metrics for a worker pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1347,7 +1113,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Create or update an App Service Environment.
+        /// Description for Create or update an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1364,7 +1130,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -1378,7 +1144,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Delete an App Service Environment.
+        /// Description for Delete an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1397,7 +1163,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -1408,7 +1174,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Move an App Service Environment to a different VNET.
         /// </summary>
         /// <remarks>
-        /// Move an App Service Environment to a different VNET.
+        /// Description for Move an App Service Environment to a different
+        /// VNET.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1439,7 +1206,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1456,7 +1223,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -1470,7 +1237,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Resume an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Resume an App Service Environment.
+        /// Description for Resume an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1498,7 +1265,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Suspend an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Suspend an App Service Environment.
+        /// Description for Suspend an App Service Environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1526,7 +1293,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a worker pool.
         /// </summary>
         /// <remarks>
-        /// Create or update a worker pool.
+        /// Description for Create or update a worker pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1546,7 +1313,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -1560,7 +1327,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service Environments for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all App Service Environments for a subscription.
+        /// Description for Get all App Service Environments for a
+        /// subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1585,7 +1353,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service Environments in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all App Service Environments in a resource group.
+        /// Description for Get all App Service Environments in a resource
+        /// group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1611,8 +1380,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get the used, available, and total worker capacity an App Service
-        /// Environment.
+        /// Description for Get the used, available, and total worker capacity
+        /// an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1637,7 +1406,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Move an App Service Environment to a different VNET.
         /// </summary>
         /// <remarks>
-        /// Move an App Service Environment to a different VNET.
+        /// Description for Move an App Service Environment to a different
+        /// VNET.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1663,8 +1433,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get the network endpoints of all inbound dependencies of an App
-        /// Service Environment.
+        /// Description for Get the network endpoints of all inbound
+        /// dependencies of an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1686,35 +1456,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<InboundEnvironmentEndpoint>>> GetInboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get global metrics of an App Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get global metrics of an App Service Environment.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMetricsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get all multi-role pools.
         /// </summary>
         /// <remarks>
-        /// Get all multi-role pools.
+        /// Description for Get all multi-role pools.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1740,8 +1485,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a specific instance of a multi-role pool
-        /// of an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a
+        /// multi-role pool of an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1763,39 +1508,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMultiRolePoolInstanceMetricDefinitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a specific instance of a multi-role pool of an App
-        /// Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a specific instance of a multi-role pool of an App
-        /// Service Environment.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMultiRolePoolInstanceMetricsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get metric definitions for a multi-role pool of an App Service
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a multi-role pool of an App Service
-        /// Environment.
+        /// Description for Get metric definitions for a multi-role pool of an
+        /// App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1817,35 +1535,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMultiRoleMetricDefinitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a multi-role pool of an App Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a multi-role pool of an App Service Environment.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListMultiRoleMetricsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get available SKUs for scaling a multi-role pool.
         /// </summary>
         /// <remarks>
-        /// Get available SKUs for scaling a multi-role pool.
+        /// Description for Get available SKUs for scaling a multi-role pool.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1871,8 +1564,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get usage metrics for a multi-role pool of an App Service
-        /// Environment.
+        /// Description for Get usage metrics for a multi-role pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1898,8 +1591,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get the network endpoints of all outbound dependencies of an App
-        /// Service Environment.
+        /// Description for Get the network endpoints of all outbound
+        /// dependencies of an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1924,7 +1617,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Resume an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Resume an App Service Environment.
+        /// Description for Resume an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1949,7 +1642,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all App Service plans in an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all App Service plans in an App Service Environment.
+        /// Description for Get all App Service plans in an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1974,7 +1668,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all apps in an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all apps in an App Service Environment.
+        /// Description for Get all apps in an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1999,7 +1693,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Suspend an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Suspend an App Service Environment.
+        /// Description for Suspend an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2024,7 +1718,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get global usage metrics of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get global usage metrics of an App Service Environment.
+        /// Description for Get global usage metrics of an App Service
+        /// Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2049,7 +1744,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all worker pools of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get all worker pools of an App Service Environment.
+        /// Description for Get all worker pools of an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2075,8 +1770,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a specific instance of a worker pool of
-        /// an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a
+        /// worker pool of an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2098,39 +1793,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListWorkerPoolInstanceMetricDefinitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a specific instance of a worker pool of an App
-        /// Service Environment.
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a specific instance of a worker pool of an App
-        /// Service Environment.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListWorkerPoolInstanceMetricsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get metric definitions for a worker pool of an App Service
         /// Environment.
         /// </summary>
         /// <remarks>
-        /// Get metric definitions for a worker pool of an App Service
-        /// Environment.
+        /// Description for Get metric definitions for a worker pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2152,37 +1820,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListWebWorkerMetricDefinitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for a worker pool of a AppServiceEnvironment (App
-        /// Service Environment).
-        /// </summary>
-        /// <remarks>
-        /// Get metrics for a worker pool of a AppServiceEnvironment (App
-        /// Service Environment).
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceMetric>>> ListWebWorkerMetricsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get available SKUs for scaling a worker pool.
         /// </summary>
         /// <remarks>
-        /// Get available SKUs for scaling a worker pool.
+        /// Description for Get available SKUs for scaling a worker pool.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2207,7 +1848,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get usage metrics for a worker pool of an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Get usage metrics for a worker pool of an App Service Environment.
+        /// Description for Get usage metrics for a worker pool of an App
+        /// Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2232,7 +1874,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Move an App Service Environment to a different VNET.
         /// </summary>
         /// <remarks>
-        /// Move an App Service Environment to a different VNET.
+        /// Description for Move an App Service Environment to a different
+        /// VNET.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2257,7 +1900,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Resume an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Resume an App Service Environment.
+        /// Description for Resume an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2282,7 +1925,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Suspend an App Service Environment.
         /// </summary>
         /// <remarks>
-        /// Suspend an App Service Environment.
+        /// Description for Suspend an App Service Environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

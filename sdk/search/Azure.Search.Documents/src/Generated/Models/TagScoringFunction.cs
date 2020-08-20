@@ -7,29 +7,11 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores of documents with string values matching a given list of tags. </summary>
     public partial class TagScoringFunction : ScoringFunction
     {
-        /// <summary> Initializes a new instance of TagScoringFunction. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        /// <param name="parameters"> Parameter values for the tag scoring function. </param>
-        public TagScoringFunction(string fieldName, double boost, TagScoringParameters parameters) : base(fieldName, boost)
-        {
-            if (fieldName == null)
-            {
-                throw new ArgumentNullException(nameof(fieldName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            Parameters = parameters;
-            Type = "tag";
-        }
 
         /// <summary> Initializes a new instance of TagScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
@@ -44,6 +26,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameter values for the tag scoring function. </summary>
-        public TagScoringParameters Parameters { get; }
+        public TagScoringParameters Parameters { get; set; }
     }
 }

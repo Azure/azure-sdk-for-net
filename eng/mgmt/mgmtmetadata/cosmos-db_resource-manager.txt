@@ -1,14 +1,14 @@
-﻿Installing AutoRest version: latest
+﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\azure-sdk-for-net\sdk
-2019-12-27 19:34:20 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\DotnetSDK\azure-sdk-for-net\sdk
+2020-07-10 07:31:54 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      4dc4ff6b562d666782e11b66aaa5fefe3ebef399
+Commit:      298533595ae3574db4436cbc67eef38323c1a970
 AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+Requested version: v2
+Bootstrapper version:    autorest@2.0.4413

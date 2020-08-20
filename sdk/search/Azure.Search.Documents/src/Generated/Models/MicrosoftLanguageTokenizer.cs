@@ -7,13 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text using language-specific rules. </summary>
-    public partial class MicrosoftLanguageTokenizer : Tokenizer
+    public partial class MicrosoftLanguageTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of MicrosoftLanguageTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MicrosoftLanguageTokenizer(string name) : base(name)
         {
             if (name == null)

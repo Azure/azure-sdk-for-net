@@ -920,5 +920,87 @@ namespace CognitiveServices.Tests
                 }
             }
         }
+
+        [Fact]
+        public void CognitiveServicesAccountPrivateEndpointConnectionTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { 
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "Face",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // 
+                    var plResouces = cognitiveServicesMgmtClient.PrivateLinkResources.List(rgname, accountName);
+
+                    PrivateEndpointConnection pec = null;
+                    try
+                    {
+                        pec = cognitiveServicesMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, "notExistPCN");
+                    }
+                    catch { }
+                    // verify
+                    Assert.NotNull(plResouces);
+                    Assert.True(plResouces.Value.Count == 1);
+                    Assert.Equal("account", plResouces.Value[0].Properties?.GroupId);
+                    Assert.Null(pec);
+
+                }
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesAccountCapabilityTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { // create with Encryption
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "F0" },
+                        Kind = "FormRecognizer",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.Capabilities);
+                    Assert.True(account?.Properties?.Capabilities.Count > 0);
+                    Assert.True(account?.Properties?.Capabilities[0].Name.Length > 0);
+                }
+            }
+        }
     }
 }

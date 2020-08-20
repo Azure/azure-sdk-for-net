@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAdd" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var batch = new ServiceBusMessageBatch(mockBatch);
             var message = new ServiceBusMessage(new byte[] { 0x21 });
 
-            Assert.That(batch.TryAdd(message), Is.True, "The message should have been accepted.");
+            Assert.That(batch.TryAddMessage(message), Is.True, "The message should have been accepted.");
             Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(message), "The message should have been passed with delegation.");
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAdd" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -102,6 +102,72 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new ServiceBusMessageBatch(mockBatch);
+            var message = new ServiceBusMessage(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
+
+            batch.Unlock();
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The message should have been accepted after unlocking.");
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="AmqpMessageBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ClearRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new ServiceBusMessageBatch(mockBatch);
+            var messageData = new ServiceBusMessage(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.Clear(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
+
+            batch.Unlock();
+            batch.Clear();
+
+            Assert.That(mockBatch.ClearInvoked, Is.True, "The batch should have been cleared after unlocking.");
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="AmqpMessageBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void DisposeRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new ServiceBusMessageBatch(mockBatch);
+
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x21 })), Is.True, "The message should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.Dispose(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept messages when locked.");
+
+            batch.Unlock();
+            batch.Dispose();
+
+            Assert.That(mockBatch.DisposeInvoked, Is.True, "The batch should have been disposed after unlocking.");
         }
 
         /// <summary>
@@ -126,19 +192,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         private class MockTransportBatch : TransportMessageBatch
         {
             public bool DisposeInvoked = false;
+            public bool ClearInvoked = false;
             public Type AsEnumerableCalledWith = null;
             public ServiceBusMessage TryAddCalledWith = null;
 
             public override long MaxSizeInBytes { get; } = 200;
             public override long SizeInBytes { get; } = 100;
             public override int Count { get; } = 300;
+            public override void Dispose() => DisposeInvoked = true;
+            public override void Clear() => ClearInvoked = true;
 
-            public override void Dispose()
-            {
-                DisposeInvoked = true;
-            }
-
-            public override bool TryAdd(ServiceBusMessage message)
+            public override bool TryAddMessage(ServiceBusMessage message)
             {
                 TryAddCalledWith = message;
                 return true;

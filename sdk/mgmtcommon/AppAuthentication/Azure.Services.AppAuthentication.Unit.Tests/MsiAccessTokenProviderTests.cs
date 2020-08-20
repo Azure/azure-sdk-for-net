@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
         }
 
         [Theory]
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Setup the environment variables that App Service MSI would setup. 
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             string expectedAppId;
             string managedIdentityArgument;
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        /// Test response when MSI_SECRET in AppServices MSI is invalid. 
+        /// Test response when IDENTITY_HEADER in AppServices MSI is invalid. 
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Setup the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // MockMsi is being asked to act like response from App Service MSI failed (unauthorized). 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesUnauthorized);
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Setup the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesIncorrectRequest);
             HttpClient httpClient = new HttpClient(mockMsi);
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Setup the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
             HttpClient httpClient = new HttpClient(mockMsi);
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async Task AzureVmImdsTimeoutTest()
         {
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmTimeout);
             HttpClient httpClient = new HttpClient(mockMsi);
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // To simplify tests, mock as MSI App Services to skip Azure VM IDMS probe request by 
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             MockMsi mockMsi = new MockMsi(testType);
             HttpClient httpClient = new HttpClient(mockMsi);
@@ -259,9 +259,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // To simplify tests, mock as MSI App Services to skip Azure VM IDMS probe request
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
-            int timeoutInSeconds = (new Random()).Next(1,4);
+            int timeoutInSeconds = (new Random()).Next(1, 4);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiUnresponsive);
             HttpClient httpClient = new HttpClient(mockMsi);
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
                 // Setup the environment variables that App Service MSI would setup. 
                 Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-                Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+                Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
                 // MockMsi is being asked to act like response from App Service MSI suceeded. 
                 MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);

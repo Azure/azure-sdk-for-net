@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Language specific stemming filter. This token filter is implemented using Apache Lucene. </summary>
     public partial class StemmerTokenFilter : TokenFilter
@@ -15,6 +15,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of StemmerTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StemmerTokenFilter(string name, StemmerTokenFilterLanguage language) : base(name)
         {
             if (name == null)
@@ -37,6 +38,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The language to use. </summary>
-        public StemmerTokenFilterLanguage Language { get; }
+        public StemmerTokenFilterLanguage Language { get; set; }
     }
 }

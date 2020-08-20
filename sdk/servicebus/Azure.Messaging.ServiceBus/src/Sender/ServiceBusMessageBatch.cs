@@ -9,12 +9,21 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A set of <see cref="ServiceBusMessageBatch" /> with size constraints known up-front,
+    ///   A set of <see cref="ServiceBusMessage" /> with size constraints known up-front,
     ///   intended to be sent to the Queue/Topic as a single batch.
+    ///   A <see cref="ServiceBusMessageBatch"/> can be created using
+    ///   <see cref="ServiceBusSender.CreateMessageBatchAsync(System.Threading.CancellationToken)"/>.
+    ///   Messages can be added to the batch using the <see cref="TryAddMessage"/> method on the batch.
     /// </summary>
     ///
     public sealed class ServiceBusMessageBatch : IDisposable
     {
+        /// <summary>An object instance to use as the synchronization root for ensuring the thread-safety of operations.</summary>
+        private readonly object _syncGuard = new object();
+
+        /// <summary>A flag indicating that the batch is locked, such as when in use during a send batch operation.</summary>
+        private bool _locked = false;
+
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the messages in the batch as
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
@@ -59,7 +68,6 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusMessageBatch(TransportMessageBatch transportBatch)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
-
             InnerBatch = transportBatch;
         }
 
@@ -72,16 +80,41 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public bool TryAdd(ServiceBusMessage message)
+        public bool TryAddMessage(ServiceBusMessage message)
         {
-            return InnerBatch.TryAdd(message);
+            lock (_syncGuard)
+            {
+                AssertNotLocked();
+                return InnerBatch.TryAddMessage(message);
+            }
         }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusMessageBatch" />.
         /// </summary>
         ///
-        public void Dispose() => InnerBatch.Dispose();
+        public void Dispose()
+        {
+            lock (_syncGuard)
+            {
+                AssertNotLocked();
+                InnerBatch.Dispose();
+            }
+        }
+
+        /// <summary>
+        ///   Clears the batch, removing all messages and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        internal void Clear()
+        {
+            lock (_syncGuard)
+            {
+                AssertNotLocked();
+                InnerBatch.Clear();
+            }
+        }
 
         /// <summary>
         ///   Represents the batch as an enumerable set of specific representations of a message.
@@ -92,5 +125,45 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
         internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+
+        /// <summary>
+        ///   Locks the batch to prevent new messages from being added while a service
+        ///   operation is active.
+        /// </summary>
+        ///
+        internal void Lock()
+        {
+            lock (_syncGuard)
+            {
+                _locked = true;
+            }
+        }
+
+        /// <summary>
+        ///   Unlocks the batch, allowing new messages to be added.
+        /// </summary>
+        ///
+        internal void Unlock()
+        {
+            lock (_syncGuard)
+            {
+                _locked = false;
+            }
+        }
+
+        /// <summary>
+        ///   Validates that the batch is not in a locked state, triggering an
+        ///   invalid operation if it is.
+        /// </summary>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when the batch is locked.</exception>
+        ///
+        private void AssertNotLocked()
+        {
+            if (_locked)
+            {
+                throw new InvalidOperationException(Resources.MessageBatchIsLocked);
+            }
+        }
     }
 }

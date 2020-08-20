@@ -15,31 +15,27 @@ namespace Azure.Search.Documents.Models
     {
         internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
-            double? searchcoverage = default;
-            IReadOnlyList<Autocompletion> value = default;
+            Optional<double> searchCoverage = default;
+            IReadOnlyList<AutocompleteItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.coverage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchcoverage = property.Value.GetDouble();
+                    searchCoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<Autocompletion> array = new List<Autocompletion>();
+                    List<AutocompleteItem> array = new List<AutocompleteItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Autocompletion.DeserializeAutocompletion(item));
+                        array.Add(AutocompleteItem.DeserializeAutocompleteItem(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new AutocompleteResults(searchcoverage, value);
+            return new AutocompleteResults(Optional.ToNullable(searchCoverage), value);
         }
     }
 }

@@ -21,6 +21,9 @@ namespace Microsoft.Azure.Management.Monitor
               {
                 new Tuple<string, string, string>("Insights", "MetricAlerts", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "MetricAlertsStatus", "2018-03-01"),
+                new Tuple<string, string, string>("Insights", "PrivateEndpointConnections", "2019-10-17-preview"),
+                new Tuple<string, string, string>("Insights", "PrivateLinkResources", "2019-10-17-preview"),
+                new Tuple<string, string, string>("Insights", "PrivateLinkScopedResources", "2019-10-17-preview"),
                 new Tuple<string, string, string>("Insights", "VMInsights", "2018-11-27-preview"),
                 new Tuple<string, string, string>("insights", "ActionGroups", "2019-06-01"),
                 new Tuple<string, string, string>("insights", "ActivityLogAlerts", "2017-04-01"),
@@ -38,10 +41,23 @@ namespace Microsoft.Azure.Management.Monitor
                 new Tuple<string, string, string>("insights", "MetricNamespaces", "2017-12-01-preview"),
                 new Tuple<string, string, string>("insights", "Metrics", "2018-01-01"),
                 new Tuple<string, string, string>("insights", "Operations", "2015-04-01"),
+                new Tuple<string, string, string>("insights", "PrivateLinkScopeOperationStatus", "2019-10-17-preview"),
+                new Tuple<string, string, string>("insights", "PrivateLinkScopes", "2019-10-17-preview"),
                 new Tuple<string, string, string>("insights", "ScheduledQueryRules", "2018-04-16"),
                 new Tuple<string, string, string>("insights", "TenantActivityLogs", "2015-04-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/monitor/resource-manager/readme.md --csharp --version=2.0.4413 --reflect-api-versions --tag=package-2020-03 --csharp-sdks-folder=C:\\Users\\sivang\\Source\\Repos\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "fbdb37ec047a2ec3893f9f873b64b6f21f8bceeb";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

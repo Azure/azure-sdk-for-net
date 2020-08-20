@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Marks terms as keywords. This token filter is implemented using Apache Lucene. </summary>
     public partial class KeywordMarkerTokenFilter : TokenFilter
@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="keywords"> A list of words to mark as keywords. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keywords"/> is null. </exception>
         public KeywordMarkerTokenFilter(string name, IEnumerable<string> keywords) : base(name)
         {
             if (name == null)
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(keywords));
             }
 
-            Keywords = keywords.ToArray();
+            Keywords = keywords.ToList();
             ODataType = "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
         }
 
@@ -43,9 +44,6 @@ namespace Azure.Search.Documents.Models
             IgnoreCase = ignoreCase;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
         }
-
-        /// <summary> A list of words to mark as keywords. </summary>
-        public IList<string> Keywords { get; }
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
     }

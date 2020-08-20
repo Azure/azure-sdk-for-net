@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            //Nothing to validate
         }
     }
 }

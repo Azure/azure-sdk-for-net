@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// resource(s) on which the alert is created/updated. Mandatory for
         /// MultipleResourceMultipleMetricCriteria.</param>
         /// <param name="autoMitigate">the flag that indicates whether the
-        /// alert should be auto resolved or not.</param>
+        /// alert should be auto resolved or not. The default is true.</param>
         /// <param name="actions">the array of actions that are performed when
         /// the alert rule becomes active, and when an alert condition is
         /// resolved.</param>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the flag that indicates whether the alert should be
-        /// auto resolved or not.
+        /// auto resolved or not. The default is true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoMitigate")]
         public bool? AutoMitigate { get; set; }

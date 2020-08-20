@@ -207,11 +207,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public void GetSenderThrowsIfEntityNamesAreDifferent()
+        public void CreateSenderThrowsIfEntityNamesAreDifferent()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
-            Assert.That(() => client.GetSender("queueName"), Throws.InstanceOf<ArgumentException>(), "Get sender should detect multiple different entity names");
+            Assert.That(() => client.CreateSender("queueName"), Throws.InstanceOf<ArgumentException>(), "Get sender should detect multiple different entity names");
         }
 
         /// <summary>
@@ -219,13 +219,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public void GetSenderAllowsIfEntityNamesAreEqual()
+        public void CreateSenderAllowsIfEntityNamesAreEqual()
         {
             var entityName = "myQueue";
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityName }";
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
 
-            Assert.That(() => client.GetSender(entityName), Throws.Nothing, "Get sender should allow the same entity name in multiple places");
+            Assert.That(() => client.CreateSender(entityName), Throws.Nothing, "Get sender should allow the same entity name in multiple places");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        /// </summary>
+        ///
+        [Test]
+        public void ValidateClientProperties()
+        {
+            var entityName = "myQueue";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityName }";
+            ServiceBusClient client = new ServiceBusClient(fakeConnection);
+            Assert.AreEqual("not-real.servicebus.windows.net", client.FullyQualifiedNamespace);
+            Assert.IsNotNull(client.Identifier);
+            Assert.IsFalse(client.IsDisposed);
         }
 
         /// <summary>
@@ -236,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             public ServiceBusClientOptions Options =>
                typeof(ServiceBusClient)
-                  .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
+                  .GetField("_options", BindingFlags.Instance | BindingFlags.NonPublic)
                   .GetValue(this) as ServiceBusClientOptions;
 
             public ReadableOptionsMock(string connectionString,

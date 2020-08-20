@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on distance from a geographic location. </summary>
     public partial class DistanceScoringFunction : ScoringFunction
@@ -26,6 +26,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameter values for the distance scoring function. </summary>
-        public DistanceScoringParameters Parameters { get; }
+        public DistanceScoringParameters Parameters { get; set; }
     }
 }

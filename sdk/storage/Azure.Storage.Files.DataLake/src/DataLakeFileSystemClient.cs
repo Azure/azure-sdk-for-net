@@ -323,7 +323,26 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            if (directoryName.Length == 0)
+            {
+                return new DataLakeDirectoryClient(
+                    Uri.AppendToPath(directoryName),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics);
+            }
+            else
+            {
+                return new DataLakeDirectoryClient(
+                Uri,
+                directoryName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+            }
+        }
+
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
@@ -342,9 +361,14 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline as the <see cref="DataLakeFileClient"/>.
         /// </summary>
         /// <param name="fileName">The name of the directory.</param>
-        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileClient(
+                Uri,
+                fileName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -365,7 +389,9 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -435,7 +461,9 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -508,7 +536,9 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -581,7 +611,9 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -656,7 +688,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -704,7 +738,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -754,7 +790,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system for deletion if it exists. The file system and any files
         /// and directories contained within it are later deleted during garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -802,7 +840,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system for deletion if it exists. The file system and any files
         /// and directories contained within it are later deleted during garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -939,7 +979,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system. The data returned does not include the file system's
         /// list of paths.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -992,7 +1034,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system. The data returned does not include the file system's
         /// list of paths.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1046,7 +1090,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadata"/> operation sets one or more
         /// user-defined name-value pairs for the specified file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file system.
@@ -1105,7 +1151,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadataAsync"/> operation sets one or more
         /// user-defined name-value pairs for the specified file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file system.
@@ -1168,7 +1216,9 @@ namespace Azure.Storage.Files.DataLake
         /// of paths in this file system.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1213,7 +1263,9 @@ namespace Azure.Storage.Files.DataLake
         /// make multiple requests to the service while fetching all the
         /// values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1261,7 +1313,9 @@ namespace Azure.Storage.Files.DataLake
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1551,7 +1605,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the directory to delete.
@@ -1602,7 +1658,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="DeleteDirectoryAsync"/> deletes a directory in this file system.
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the directory to delete.
@@ -1834,7 +1892,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFile"/> deletes a file in this file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the file to delete.
@@ -1883,7 +1943,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFileAsync"/> deletes a file in this file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the file to delete.
@@ -1937,7 +1999,9 @@ namespace Azure.Storage.Files.DataLake
         /// permissions for this file system. The permissions indicate whether
         /// file system data may be accessed publicly.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1989,7 +2053,9 @@ namespace Azure.Storage.Files.DataLake
         /// permissions for this file system. The permissions indicate whether
         /// file system data may be accessed publicly.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -2044,7 +2110,9 @@ namespace Azure.Storage.Files.DataLake
         /// permissions for the specified file system. The permissions indicate
         /// whether file system data may be accessed publicly.
         ///
-        /// For more information, see <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
         /// </summary>
         /// <param name="accessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -2121,7 +2189,9 @@ namespace Azure.Storage.Files.DataLake
         /// permissions for the specified file system. The permissions indicate
         /// whether the file system data may be accessed publicly.
         ///
-        /// For more information, see <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
         /// </summary>
         /// <param name="accessType">
         /// Optionally specifies whether data in the file system may be accessed

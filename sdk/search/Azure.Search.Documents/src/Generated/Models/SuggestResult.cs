@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of SuggestResult. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal SuggestResult(string text)
         {
             if (text == null)
@@ -24,7 +26,7 @@ namespace Azure.Search.Documents.Models
             }
 
             Text = text;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SuggestResult. </summary>

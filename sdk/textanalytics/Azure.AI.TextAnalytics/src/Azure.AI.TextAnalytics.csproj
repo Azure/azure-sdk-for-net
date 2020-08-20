@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Microsoft Azure Cognitive Services Text Analytics Service client library</Description>
+    <Description>Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and features like Language Detection, Sentiment Analysis, Key Phrase Extraction, Named Entity Recognition, and Linked Entity Recognition.</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
-    <Version>1.0.0-preview.4</Version>
+    <Version>5.1.0-preview.1</Version>
+    <ApiCompatVersion>5.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
-    <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
-    <EnableApiCompat>false</EnableApiCompat>
-    
-    <!-- Use latest changes from Azure Core that haven't been published -->
-    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
@@ -19,17 +15,17 @@
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

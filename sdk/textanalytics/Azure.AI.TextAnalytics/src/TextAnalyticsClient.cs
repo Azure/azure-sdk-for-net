@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
@@ -18,6 +19,7 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
+        private readonly ServiceRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
@@ -102,6 +104,9 @@ namespace Azure.AI.TextAnalytics
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
+
+            // codegen
+            _serviceRestClient = new ServiceRestClient(_clientDiagnostics, _pipeline, endpoint.AbsoluteUri);
         }
 
         #region Detect Language
@@ -117,7 +122,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the
-        /// document to assist the text analytics model in predicting the language
+        /// document to assist the Text Analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -130,7 +135,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            countryHint ??= _options.DefaultCountryHint;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -138,25 +144,19 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                DetectLanguageInput[] documents = new DetectLanguageInput[] { ConvertToDetectLanguageInput(document, countryHint) };
-                using Request request = CreateDetectLanguageRequest(documents, new TextAnalyticsRequestOptions());
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
 
-                switch (response.Status)
+                Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(new LanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = result.GetRawResponse();
+
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = result[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
-                        }
-                        return Response.FromValue(result[0].PrimaryLanguage, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
+
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
             }
             catch (Exception e)
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the
-        /// document to assist the text analytics model in predicting the language
+        /// document to assist the Text Analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -189,7 +189,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            countryHint ??= _options.DefaultCountryHint;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -197,25 +198,18 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                List<DetectLanguageInput> documents = ConvertToDetectLanguageInputs(new string[] { document }, countryHint);
-                using Request request = CreateDetectLanguageRequest(documents, new TextAnalyticsRequestOptions());
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                Response<LanguageResult> result = _serviceRestClient.Languages(new LanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response response = result.GetRawResponse();
 
-                switch (response.Status)
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        DetectLanguageResultCollection result = CreateDetectLanguageResponse(response, map);
-                        if (result[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = result[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
-                        }
-                        return Response.FromValue(result[0].PrimaryLanguage, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
+
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
             }
             catch (Exception e)
             {
@@ -235,7 +229,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="documents">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the documents to assist the text analytics model in predicting
+        /// the documents to assist the Text Analytics model in predicting
         /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -251,8 +245,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
-            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
@@ -269,7 +263,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="documents">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the documents to assist the text analytics model in predicting
+        /// the documents to assist the Text Analytics model in predicting
         /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -285,8 +279,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
-            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
@@ -313,31 +307,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents);
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDetectLanguageRequest(documents, options);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,22 +335,56 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
+            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents);
 
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(LanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
             scope.Start();
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(documents, options);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
+                var response = result.GetRawResponse();
 
                 switch (response.Status)
                 {
                     case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateDetectLanguageResponse(response, map);
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
+                        return Response.FromValue(results, response);
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<DetectLanguageResultCollection> DetectLanguageBatch(LanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
+            scope.Start();
+
+            try
+            {
+                Response<LanguageResult> result = _serviceRestClient.Languages(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
+                var response = result.GetRawResponse();
+
+                switch (response.Status)
+                {
+                    case 200:
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -416,9 +424,9 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<CategorizedEntity>>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CategorizedEntityCollection>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -439,9 +447,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
+                        return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -477,9 +485,9 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<CategorizedEntity>> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<CategorizedEntityCollection> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -500,9 +508,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
+                        return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -543,7 +551,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -579,7 +587,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -610,7 +618,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -625,7 +633,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -661,7 +670,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -676,7 +685,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateRecognizeEntitiesResponse(response, map);
+                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -715,7 +725,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            language ??= _options.DefaultLanguage;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -723,25 +734,18 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                TextDocumentInput[] documents = new TextDocumentInput[] { ConvertToDocumentInput(document, language) };
-                using Request request = CreateDocumentInputRequest(documents, new TextAnalyticsRequestOptions(), SentimentRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = result.GetRawResponse();
 
-                switch (response.Status)
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
-                        }
-                        return Response.FromValue(results[0].DocumentSentiment, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
+
+                return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
             }
             catch (Exception e)
             {
@@ -773,7 +777,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            language ??= _options.DefaultLanguage;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -781,25 +786,18 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                TextDocumentInput[] documents = new TextDocumentInput[] { ConvertToDocumentInput(document, language) };
-                using Request request = CreateDocumentInputRequest(documents, new TextAnalyticsRequestOptions(), SentimentRoute);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                Response<SentimentResponse> result = _serviceRestClient.Sentiment(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response response = result.GetRawResponse();
 
-                switch (response.Status)
+                if (result.Value.Errors.Count > 0)
                 {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
-                        if (results[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
-                        }
-                        return Response.FromValue(results[0].DocumentSentiment, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                 }
+
+                return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
             }
             catch (Exception e)
             {
@@ -834,8 +832,8 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
-            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -867,7 +865,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -895,31 +893,12 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
-            scope.Start();
+            return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
 
-            try
-            {
-                using Request request = CreateDocumentInputRequest(documents, options, SentimentRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -943,22 +922,56 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
             options ??= new TextAnalyticsRequestOptions();
 
+            return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(MultiLanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
             scope.Start();
 
             try
             {
-                using Request request = CreateDocumentInputRequest(documents, options, SentimentRoute);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
+                var response = result.GetRawResponse();
 
                 switch (response.Status)
                 {
                     case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateAnalyzeSentimentResponse(response, map);
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
+                        return Response.FromValue(results, response);
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(MultiLanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
+            scope.Start();
+
+            try
+            {
+                Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
+                var response = result.GetRawResponse();
+
+                switch (response.Status)
+                {
+                    case 200:
+                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                        AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -997,9 +1010,9 @@ namespace Azure.AI.TextAnalytics
         /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyPhraseCollection>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1020,9 +1033,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
+                        return Response.FromValue((KeyPhraseCollection) results[0].KeyPhrases, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1057,9 +1070,9 @@ namespace Azure.AI.TextAnalytics
         /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<KeyPhraseCollection> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1080,9 +1093,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
+                        return Response.FromValue((KeyPhraseCollection)results[0].KeyPhrases, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1122,7 +1135,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1157,7 +1170,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1187,7 +1200,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1202,7 +1215,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        ExtractKeyPhrasesResultCollection results = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1237,7 +1251,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1252,7 +1266,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateKeyPhraseResponse(response, map);
+                        ExtractKeyPhrasesResultCollection results = CreateKeyPhraseResponse(response, map);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1290,9 +1305,9 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkedEntityCollection>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1313,9 +1328,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
+                        return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1349,9 +1364,9 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<LinkedEntity>> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<LinkedEntityCollection> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1372,9 +1387,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
+                        return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1413,7 +1428,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1447,7 +1462,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1476,7 +1491,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
@@ -1491,7 +1506,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeLinkedEntitiesResultCollection results = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1525,7 +1541,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
@@ -1540,7 +1556,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateLinkedEntityResponse(response, map);
+                        RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1566,7 +1583,8 @@ namespace Azure.AI.TextAnalytics
                 string id = item switch
                 {
                     TextDocumentInput tdi => tdi.Id,
-                    DetectLanguageInput dli => dli.Id,
+                    LanguageInput li => li.Id,
+                    MultiLanguageInput mli => mli.Id,
                     _ => throw new NotSupportedException(),
                 };
 
@@ -1582,11 +1600,23 @@ namespace Azure.AI.TextAnalytics
         private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> documents, string language)
             => documents.Select((document, i) => ConvertToDocumentInput(document, language, i)).ToList();
 
-        private DetectLanguageInput ConvertToDetectLanguageInput(string document, string countryHint, int id = 0)
-            => new DetectLanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+        private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
+            => new MultiLanguageInput($"{id}", document) { Language = language };
 
-        private List<DetectLanguageInput> ConvertToDetectLanguageInputs(IEnumerable<string> documents, string countryHint)
-            => documents.Select((document, i) => ConvertToDetectLanguageInput(document, countryHint, i)).ToList();
+        private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
+            => new MultiLanguageBatchInput(documents.Select((document, i) => ConvertToMultiLanguageInput(document, language, i)).ToList());
+
+        private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<TextDocumentInput> documents)
+            => new MultiLanguageBatchInput(documents.Select((document) => new MultiLanguageInput(document.Id, document.Text) { Language = document.Language }).ToList());
+
+        private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+
+        private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
+            => new LanguageBatchInput(documents.Select((document, i) => ConvertToLanguageInput(document, countryHint, i)).ToList());
+
+        private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
+            => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint }).ToList());
 
         private Request CreateDocumentInputRequest(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options, string route)
         {
@@ -1603,27 +1633,13 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options)
-        {
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(documents, _options.DefaultCountryHint);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(LanguagesRoute, request.Uri, options);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            return request;
-        }
-
         private IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
         {
             if (string.IsNullOrEmpty(error.Target))
                 return null;
             return new Dictionary<string, string> { { "Target", error.Target } };
         }
+
         #endregion
     }
 }

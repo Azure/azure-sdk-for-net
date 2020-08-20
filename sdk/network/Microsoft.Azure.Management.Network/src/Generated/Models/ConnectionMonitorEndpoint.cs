@@ -32,18 +32,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">The name of the connection monitor
         /// endpoint.</param>
+        /// <param name="type">The endpoint type. Possible values include:
+        /// 'AzureVM', 'AzureVNet', 'AzureSubnet', 'ExternalAddress',
+        /// 'MMAWorkspaceMachine', 'MMAWorkspaceNetwork'</param>
         /// <param name="resourceId">Resource ID of the connection monitor
         /// endpoint.</param>
         /// <param name="address">Address of the connection monitor endpoint
         /// (IP or domain name).</param>
         /// <param name="filter">Filter for sub-items within the
         /// endpoint.</param>
-        public ConnectionMonitorEndpoint(string name, string resourceId = default(string), string address = default(string), ConnectionMonitorEndpointFilter filter = default(ConnectionMonitorEndpointFilter))
+        /// <param name="scope">Endpoint scope.</param>
+        /// <param name="coverageLevel">Test coverage for the endpoint.
+        /// Possible values include: 'Default', 'Low', 'BelowAverage',
+        /// 'Average', 'AboveAverage', 'Full'</param>
+        public ConnectionMonitorEndpoint(string name, string type = default(string), string resourceId = default(string), string address = default(string), ConnectionMonitorEndpointFilter filter = default(ConnectionMonitorEndpointFilter), ConnectionMonitorEndpointScope scope = default(ConnectionMonitorEndpointScope), string coverageLevel = default(string))
         {
             Name = name;
+            Type = type;
             ResourceId = resourceId;
             Address = address;
             Filter = filter;
+            Scope = scope;
+            CoverageLevel = coverageLevel;
             CustomInit();
         }
 
@@ -57,6 +67,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the endpoint type. Possible values include: 'AzureVM',
+        /// 'AzureVNet', 'AzureSubnet', 'ExternalAddress',
+        /// 'MMAWorkspaceMachine', 'MMAWorkspaceNetwork'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets resource ID of the connection monitor endpoint.
@@ -76,6 +94,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "filter")]
         public ConnectionMonitorEndpointFilter Filter { get; set; }
+
+        /// <summary>
+        /// Gets or sets endpoint scope.
+        /// </summary>
+        [JsonProperty(PropertyName = "scope")]
+        public ConnectionMonitorEndpointScope Scope { get; set; }
+
+        /// <summary>
+        /// Gets or sets test coverage for the endpoint. Possible values
+        /// include: 'Default', 'Low', 'BelowAverage', 'Average',
+        /// 'AboveAverage', 'Full'
+        /// </summary>
+        [JsonProperty(PropertyName = "coverageLevel")]
+        public string CoverageLevel { get; set; }
 
         /// <summary>
         /// Validate the object.

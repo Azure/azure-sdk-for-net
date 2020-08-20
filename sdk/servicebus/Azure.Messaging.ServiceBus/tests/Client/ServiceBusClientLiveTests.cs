@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Client
@@ -19,36 +20,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSessions))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var sender = client.GetSender(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
                 {
-                    receiver = client.GetReceiver(scope.QueueName);
+                    receiver = client.CreateReceiver(scope.QueueName);
                 }
                 else
                 {
-                    receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
+                Assert.IsTrue(client.IsDisposed);
                 if (!useSessions)
                 {
-                    Assert.Throws<ObjectDisposedException>(() => client.GetReceiver(scope.QueueName));
-                    Assert.Throws<ObjectDisposedException>(() => client.GetReceiver(scope.QueueName, scope.QueueName));
-                    Assert.Throws<ObjectDisposedException>(() => client.GetSender(scope.QueueName));
+                    Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
+                    Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName, scope.QueueName));
+                    Assert.Throws<ObjectDisposedException>(() => client.CreateSender(scope.QueueName));
                 }
                 else
                 {
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetSessionReceiverAsync(scope.QueueName, sessionId: scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
                 }
-                Assert.Throws<ObjectDisposedException>(() => client.GetProcessor(scope.QueueName));
+                Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }
         }
 
@@ -60,36 +64,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSessions))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var sender = client.GetSender(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
                 {
-                    receiver = client.GetReceiver(scope.QueueName);
+                    receiver = client.CreateReceiver(scope.QueueName);
                 }
                 else
                 {
-                    receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 if (!useSessions)
                 {
-                    client.GetReceiver(scope.QueueName);
-                    client.GetReceiver(scope.QueueName, scope.QueueName);
-                    client.GetSender(scope.QueueName);
+                    client.CreateReceiver(scope.QueueName);
+                    client.CreateReceiver(scope.QueueName, scope.QueueName);
+                    client.CreateSender(scope.QueueName);
                 }
                 else
                 {
                     // close old receiver so we can get session lock
                     await receiver.DisposeAsync();
-                    await client.GetSessionReceiverAsync(scope.QueueName);
+                    await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                client.GetProcessor(scope.QueueName);
+                client.CreateProcessor(scope.QueueName);
             }
         }
     }

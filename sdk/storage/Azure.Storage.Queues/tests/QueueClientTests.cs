@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
@@ -1033,6 +1033,27 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
                 actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_UpdateVisibilityTimeoutOnlyPreservesContent()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message = "foo";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message)).Value;
+
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                visibilityTimeout: new TimeSpan(100));
+            var receivedMessage = (await test.Queue.ReceiveMessagesAsync(1)).Value.First();
+
+            // Assert
+            Assert.AreEqual(enqueuedMessage.MessageId, receivedMessage.MessageId);
+            Assert.AreEqual(message, receivedMessage.MessageText);
         }
     }
 }

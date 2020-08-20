@@ -1,44 +1,44 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/languages?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages?model-version=2019-10-01\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "120",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-28c5b71abb3f6a4f8240b169bacedc8c-e5d28d1a6f35b447-00",
+        "traceparent": "00-2c828417a4991746ac33caa7e6cd8e33-7ad5d6eb644f9a47-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200804.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d759043bcef28b01698260234e5c6d83",
+        "x-ms-client-request-id": "80c454ed7fad46875685f885dcdb8ef8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "documents": [
           {
-            "countryHint": "us",
             "id": "0",
-            "text": "Hello world"
+            "text": "Hello world",
+            "countryHint": "us"
           },
           {
-            "countryHint": "us",
             "id": "1",
-            "text": "This is a test"
+            "text": "This is a test",
+            "countryHint": "us"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2c09fa32-881b-49c3-b4ca-cce88d075c18",
+        "apim-request-id": "107510c8-9746-40df-9c29-51ca5eabee87",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 07 Feb 2020 19:13:30 GMT",
+        "Date": "Tue, 04 Aug 2020 21:30:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "statistics": {
@@ -50,31 +50,29 @@
         "documents": [
           {
             "id": "0",
-            "detectedLanguages": [
-              {
-                "name": "English",
-                "iso6391Name": "en",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "English",
+              "iso6391Name": "en",
+              "confidenceScore": 1.0
+            },
             "statistics": {
               "charactersCount": 11,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           },
           {
             "id": "1",
-            "detectedLanguages": [
-              {
-                "name": "English",
-                "iso6391Name": "en",
-                "score": 1.0
-              }
-            ],
+            "detectedLanguage": {
+              "name": "English",
+              "iso6391Name": "en",
+              "confidenceScore": 1.0
+            },
             "statistics": {
               "charactersCount": 14,
               "transactionsCount": 1
-            }
+            },
+            "warnings": []
           }
         ],
         "errors": [],
@@ -83,8 +81,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2092969474",
+    "RandomSeed": "1220476601",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }
