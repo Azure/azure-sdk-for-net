@@ -12,7 +12,6 @@ namespace Azure.DigitalTwins.Core.Tests
         {
         }
 
-        public string DigitalTwinHostname => GetRecordedVariable($"{TestSettings.AdtEnvironmentVariablesPrefix}_URL",
-        options => options.IsSecret(TestUrlSanitizer.FAKE_HOST));
+        public string DigitalTwinHostname => GetRecordedVariable($"{TestSettings.AdtEnvironmentVariablesPrefix}_URL", options => options.IsSecret(TestUrlSanitizer.FAKE_URL));
     }
 }

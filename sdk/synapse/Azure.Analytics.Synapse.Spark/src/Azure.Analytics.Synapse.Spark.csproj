@@ -15,6 +15,7 @@
     </NoWarn>
 
     <AssemblyName>Azure.Analytics.Synapse.Spark</AssemblyName>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
