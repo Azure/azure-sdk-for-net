@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication.</param>
         /// <param name="key">Key credential used to generate the token.</param>
         /// <param name="apiVersion">Service version to use when handling requests made with the SAS token.</param>
-        /// <returns>Returns the generated SAS token string.</returns>
+        /// <returns>The generated SAS token string.</returns>
         public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, EventGridPublisherClientOptions.ServiceVersion apiVersion = EventGridPublisherClientOptions.LatestVersion)
         {
             const char Resource = 'r';
