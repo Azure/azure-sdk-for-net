@@ -3466,7 +3466,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual Response<PathInfo> ScheduleDeletion(
+        public virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => ScheduleDeletionInternal(
@@ -3492,7 +3492,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
             => await ScheduleDeletionInternal(
