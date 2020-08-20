@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
@@ -203,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, context.ClientRequestID, count, sw.ElapsedMilliseconds);
                 }
             }
-            catch (StorageException exception) // TODO (kasobol-msft) check this exception
+            catch (RequestFailedException exception)
             {
                 // if we get ANY errors querying the queue reset our existence check
                 // doing this on all errors rather than trying to special case not
@@ -330,7 +331,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
                 await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
-            catch (StorageException ex) when (ex.IsTaskCanceled())
+            catch (StorageException ex) when (ex.IsTaskCanceled()) // TODO (kasobol-msft) check this exception
             {
                 // TaskCanceledExceptions may be wrapped in StorageException.
             }
@@ -444,7 +445,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     }
                 }
             }
-            catch (StorageException ex)
+            catch (RequestFailedException ex)
             {
                 if (ex.IsNotFoundQueueNotFound() ||
                     ex.IsConflictQueueBeingDeletedOrDisabled() ||

@@ -186,6 +186,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
+                // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
                 return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0); // TODO (kasobol-msft) should this be base64?
             }
 

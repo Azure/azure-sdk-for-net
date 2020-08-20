@@ -109,12 +109,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Fact]
         public async Task GetMetrics_HandlesStorageExceptions()
         {
-            var exception = new StorageException( // TODO (kasobol-msft) change this exception
-                new RequestResult
-                {
-                    HttpStatusCode = 500
-                },
+            var exception = new RequestFailedException(
+                500,
                 "Things are very wrong.",
+                default,
                 new Exception());
 
             _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>())).Throws(exception);
@@ -413,7 +411,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit this test if we put recordings in place, we don't use stateful message in V12")]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -539,13 +537,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         {
             CancellationToken cancellationToken = new CancellationToken();
             _mockQueue.Setup(x => x.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
-            var exception = new StorageException(
-                new RequestResult
-                {
-                    HttpStatusCode = 503
-                },
+            var exception = new RequestFailedException(
+                503,
                 string.Empty,
-                new Exception()); // TODO (kasobol-msft) change this exception
+                string.Empty,
+                new Exception());
 
             _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
 
@@ -588,12 +584,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         {
             var cancellationToken = new CancellationToken();
             _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => Response.FromValue(true, null));
-            var exception = new StorageException(
-                new RequestResult
-                {
-                    HttpStatusCode = 503
-                },
-                string.Empty, new Exception()); // TODO (kasobol-msft) change this exception
+            var exception = new RequestFailedException(
+                503,
+                string.Empty,
+                string.Empty,
+                new Exception());
             _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
 
             for (int i = 0; i < 5; i++)

@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
+using Azure;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
                 // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
                 await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, message.MessageText, visibilityTimeout: visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsBadRequestPopReceiptMismatch())
                 {
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             {
                 await _queue.DeleteMessageAsync(message.MessageId, message.PopReceipt, cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception) // TODO (kasobol-msft) switch to track 2 exceptions.
+            catch (RequestFailedException exception) // TODO (kasobol-msft) switch to track 2 exceptions.
             {
                 // For consistency, the exceptions handled here should match UpdateQueueMessageVisibilityCommand.
                 if (exception.IsBadRequestPopReceiptMismatch())

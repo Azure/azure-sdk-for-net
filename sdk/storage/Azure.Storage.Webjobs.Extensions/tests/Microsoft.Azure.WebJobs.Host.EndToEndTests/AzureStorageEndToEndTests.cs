@@ -211,7 +211,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.True(signaled, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
         public async Task BadQueueMessageE2ETests()
         {
             // This test ensures that the host does not crash on a bad message (it previously did)

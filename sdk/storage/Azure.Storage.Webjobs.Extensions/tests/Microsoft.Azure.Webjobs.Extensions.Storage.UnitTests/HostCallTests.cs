@@ -480,6 +480,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(3, messages.Count());
             QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
+            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
             Assert.Equal("test1", sortedMessages[0].MessageText);
             Assert.Equal("test2", sortedMessages[1].MessageText);
             Assert.Equal("test3", sortedMessages[2].MessageText);
