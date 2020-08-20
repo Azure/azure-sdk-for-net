@@ -393,9 +393,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
 
-            var documents = "Microsoft was founded";
-
-            CategorizedEntityCollection response = await client.RecognizeEntitiesAsync(documents);
+            CategorizedEntityCollection response = await client.RecognizeEntitiesAsync("Microsoft was founded");
 
             Assert.IsNotNull(response.FirstOrDefault().Category);
         }

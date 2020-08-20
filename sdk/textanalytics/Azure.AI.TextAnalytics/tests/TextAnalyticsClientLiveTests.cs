@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
