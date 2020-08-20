@@ -1,15 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027irggcyth\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata.metadata=none",
+        "Accept": [
+          "application/json; odata.metadata=none",
+          "application/json"
+        ],
         "api-key": "Sanitized",
-        "traceparent": "00-b313e15c0d9655439c149908059f961c-2fbf810de1df5a4d-00",
+        "traceparent": "00-7eee111dd851c94a9bd6e11a14642015-da71e0250bae794e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ba21e91c66faa803c9d44523eaf36c73",
         "x-ms-return-client-request-id": "true"
@@ -20,7 +23,7 @@
         "Cache-Control": "no-cache",
         "client-request-id": "ba21e91c-66fa-a803-c9d4-4523eaf36c73",
         "Content-Length": "0",
-        "Date": "Fri, 26 Jun 2020 06:00:39 GMT",
+        "Date": "Thu, 20 Aug 2020 18:02:29 GMT",
         "elapsed-time": "5",
         "Expires": "-1",
         "Pragma": "no-cache",
@@ -33,8 +36,8 @@
   ],
   "Variables": {
     "RandomSeed": "500232658",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "irggcyth",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-t50d8619e0b774b52"
   }
 }

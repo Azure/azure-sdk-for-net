@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general?showStats=true",
+      "RequestUri": "https://t16fb770993214e8c-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general?showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "191",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5e54b4fcbc16a04eb767f99f5d9c17a8-80a7a9035bf96646-00",
+        "traceparent": "00-e563970d89f81348b38b36a233ecf896-1fb75c68abc7c144-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ff4be27d75c93d758603df58d2422daa",
         "x-ms-return-client-request-id": "true"
@@ -31,14 +31,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5cf3a882-b3a2-4b57-9f81-6d48384dd998",
+        "apim-request-id": "45dd729f-1658-4af4-9ace-895b21a34319",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 06 Jul 2020 22:03:46 GMT",
+        "Date": "Thu, 20 Aug 2020 17:59:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "130"
+        "x-envoy-upstream-service-time": "99"
       },
       "ResponseBody": {
         "statistics": {
@@ -105,6 +105,6 @@
   "Variables": {
     "RandomSeed": "429831713",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://t16fb770993214e8c-textanalytics.cognitiveservices.azure.com"
   }
 }

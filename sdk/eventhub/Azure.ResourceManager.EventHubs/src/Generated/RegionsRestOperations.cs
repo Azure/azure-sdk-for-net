@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/regions", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

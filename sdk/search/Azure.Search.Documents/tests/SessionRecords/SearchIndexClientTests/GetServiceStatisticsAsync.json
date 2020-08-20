@@ -1,15 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/servicestats?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/servicestats?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata.metadata=minimal",
+        "Accept": [
+          "application/json; odata.metadata=minimal",
+          "application/json"
+        ],
         "api-key": "Sanitized",
-        "traceparent": "00-2e3c1328ddc50b4cb490fb5f68a8e523-6c162c238ec29f44-00",
+        "traceparent": "00-74bc36e5491bb84193d515830959bf8e-05f9fbaf2f35cf46-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "c8229c16880f099da1539c8a7c7acb40",
         "x-ms-return-client-request-id": "true"
@@ -19,10 +22,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "c8229c16-880f-099d-a153-9c8a7c7acb40",
-        "Content-Length": "544",
+        "Content-Length": "587",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 26 Jun 2020 06:27:02 GMT",
-        "elapsed-time": "256",
+        "Date": "Thu, 20 Aug 2020 18:25:24 GMT",
+        "elapsed-time": "40",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -32,14 +35,14 @@
         "x-ms-client-request-id": "c8229c16-880f-099d-a153-9c8a7c7acb40"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
+        "@odata.context": "https://azs-net-t50d8619e0b774b52.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
         "counters": {
           "documentCount": {
             "usage": 10,
             "quota": null
           },
           "indexesCount": {
-            "usage": 2,
+            "usage": 1,
             "quota": 3
           },
           "indexersCount": {
@@ -51,10 +54,14 @@
             "quota": 3
           },
           "storageSize": {
-            "usage": 37142,
+            "usage": 39165,
             "quota": 52428800
           },
           "synonymMaps": {
+            "usage": 0,
+            "quota": 3
+          },
+          "skillsetCount": {
             "usage": 0,
             "quota": 3
           }
@@ -70,8 +77,8 @@
   ],
   "Variables": {
     "RandomSeed": "1636339797",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "irggcyth",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-t50d8619e0b774b52"
   }
 }

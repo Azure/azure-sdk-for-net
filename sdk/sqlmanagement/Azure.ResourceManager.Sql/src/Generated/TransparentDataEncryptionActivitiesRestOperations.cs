@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/operationResults", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

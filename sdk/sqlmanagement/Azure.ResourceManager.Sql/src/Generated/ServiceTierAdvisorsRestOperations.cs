@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serviceTierAdvisorName, true);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -168,7 +167,6 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/serviceTierAdvisors", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

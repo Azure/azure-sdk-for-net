@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

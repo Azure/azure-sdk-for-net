@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/providers/Microsoft.EventHub/availableClusterRegions", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/providers/Microsoft.EventHub/clusters", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -186,7 +184,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -269,7 +266,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -347,7 +343,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -437,7 +432,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -515,7 +509,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/namespaces", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -592,7 +585,6 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
