@@ -55,6 +55,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/commands", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

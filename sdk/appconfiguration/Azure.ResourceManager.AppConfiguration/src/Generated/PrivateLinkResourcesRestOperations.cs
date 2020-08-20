@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -150,6 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(groupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -236,6 +238,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

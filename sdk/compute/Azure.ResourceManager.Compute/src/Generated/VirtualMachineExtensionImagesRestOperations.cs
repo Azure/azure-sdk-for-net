@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -166,6 +167,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/artifacttypes/vmextension/types", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -273,6 +275,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

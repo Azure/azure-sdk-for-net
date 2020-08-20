@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath("/providers/Microsoft.DigitalTwins/operations", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

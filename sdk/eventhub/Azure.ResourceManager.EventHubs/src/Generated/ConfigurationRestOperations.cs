@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -162,6 +163,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/quotaConfiguration/default", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

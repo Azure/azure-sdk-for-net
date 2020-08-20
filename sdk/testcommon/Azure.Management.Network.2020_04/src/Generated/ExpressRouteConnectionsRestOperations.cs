@@ -61,6 +61,7 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(putExpressRouteConnectionParameters);
             request.Content = content;
@@ -160,6 +161,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -254,6 +256,7 @@ namespace Azure.Management.Network
             uri.AppendPath(connectionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -341,6 +344,7 @@ namespace Azure.Management.Network
             uri.AppendPath("/expressRouteConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

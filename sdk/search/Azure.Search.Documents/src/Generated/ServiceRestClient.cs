@@ -64,6 +64,7 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

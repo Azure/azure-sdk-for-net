@@ -66,6 +66,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("Content-Type", "application/xml");
+            request.Headers.Add("Accept", "application/xml");
             var content = new XmlWriterContent();
             content.XmlWriter.WriteObjectValue(tableServiceProperties, "StorageServiceProperties");
             request.Content = content;
@@ -142,6 +143,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -217,6 +219,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
