@@ -238,6 +238,12 @@ directive:
     const path = $.schema["$ref"].replace(/[#].*$/, "#/definitions/QueueSendMessage");
     $.schema = {"$ref": path};
     $["x-ms-client-name"] = "message";
+- from: swagger-document
+  where: $.parameters.RequiredQueueMessage
+  transform: >
+    const path = $.schema["$ref"].replace(/[#].*$/, "#/definitions/QueueSendMessage");
+    $.schema = {"$ref": path};
+    $["x-ms-client-name"] = "message";
 ```
 
 ### DequeuedMessage
@@ -246,34 +252,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.QueueMessage) {
-        $.QueueMessage = $.DequeuedMessageItem;
-        delete $.DequeuedMessageItem;
-
-        $.QueueMessage.properties.NextVisibleOn = $.QueueMessage.properties.TimeNextVisible;
-        $.QueueMessage.properties.NextVisibleOn.xml = {"name": "TimeNextVisible"};
-        delete $.QueueMessage.properties.TimeNextVisible;
-
-        $.QueueMessage.properties.InsertedOn = $.QueueMessage.properties.InsertionTime;
-        $.QueueMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
-        delete $.QueueMessage.properties.InsertionTime;
-
-        $.QueueMessage.properties.ExpiresOn = $.QueueMessage.properties.ExpirationTime;
-        $.QueueMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
-        delete $.QueueMessage.properties.ExpirationTime;
-
-        const count = $.QueueMessage.properties.DequeueCount;
-        delete $.QueueMessage.properties.DequeueCount;
-        $.QueueMessage.properties.DequeueCount = count;
-    }
-- from: swagger-document
-  where: $.definitions.DequeuedMessagesList
-  transform: >
-    const def = $.items;
-    if (!def["$ref"].endsWith("QueueMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueMessage");
-        $.items = { "$ref": path };
-    }
+    $.DequeuedMessageItem["x-az-public"] = false;
 ```
 
 ### EnqueuedMessage

@@ -1982,12 +1982,12 @@ namespace Azure.Storage.Queues
                     {
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToQueueMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => ToQueueMessage(x)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2000,6 +2000,20 @@ namespace Azure.Storage.Queues
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
+        }
+
+        private QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem)
+        {
+            return new QueueMessage()
+            {
+                MessageId = dequeuedMessageItem.MessageId,
+                PopReceipt = dequeuedMessageItem.PopReceipt,
+                Message = new BinaryData(dequeuedMessageItem.MessageText),
+                DequeueCount = dequeuedMessageItem.DequeueCount,
+                NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
+                InsertedOn = dequeuedMessageItem.InsertionTime,
+                ExpiresOn = dequeuedMessageItem.ExpirationTime,
+            };
         }
         #endregion ReceiveMessages
 

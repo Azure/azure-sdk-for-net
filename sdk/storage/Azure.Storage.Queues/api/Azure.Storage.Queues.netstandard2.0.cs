@@ -40,11 +40,24 @@ namespace Azure.Storage.Queues
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync(int? maxMessages = default(int?), System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(Azure.Core.BinaryData message) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(Azure.Core.BinaryData message, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(Azure.Core.BinaryData message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(Azure.Core.BinaryData message) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(Azure.Core.BinaryData message, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(Azure.Core.BinaryData message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier> permissions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier> permissions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -238,7 +251,9 @@ namespace Azure.Storage.Queues.Models
         public long DequeueCount { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? InsertedOn { get { throw null; } }
+        public Azure.Core.BinaryData Message { get { throw null; } }
         public string MessageId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
         public System.DateTimeOffset? NextVisibleOn { get { throw null; } }
         public string PopReceipt { get { throw null; } }
