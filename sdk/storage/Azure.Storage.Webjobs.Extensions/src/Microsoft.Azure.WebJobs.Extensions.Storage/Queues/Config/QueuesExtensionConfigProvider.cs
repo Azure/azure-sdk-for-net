@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
                 return msg;
             }
 
-            private static QueueMessage ConvertJObjectToCloudQueueMessage(JObject obj, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed?
+            private static QueueMessage ConvertJObjectToCloudQueueMessage(JObject obj, QueueAttribute attrResolved)
             {
                 var json = obj.ToString(); // convert to JSon
                 return ConvertStringToCloudQueueMessage(json, attrResolved);
@@ -187,10 +187,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
                 // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0); // TODO (kasobol-msft) should this be base64?
+                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0);
             }
 
-            private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved) // TODO (kasobol-msft) is this needed ?
+            private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)
             {
                 return QueuesModelFactory.QueueMessage(null, null, arg, 0);
             }

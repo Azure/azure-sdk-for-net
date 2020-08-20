@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         {
             // Potential enhancement: Base64-encoded AsBytes might replay correctly when use to create a new message.
             // return _message.TryGetAsString() ?? Convert.ToBase64String(_message.AsBytes);
-            return _message.MessageText; // TODO (kasobol-msft) Base64 ??
+            return _message.MessageText; // TODO (kasobol-msft) revisit this when Base64/BinaryData is added to SDK
         }
     }
 }

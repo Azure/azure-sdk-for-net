@@ -471,7 +471,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var account = CreateFakeStorageAccount();
 
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) check this byte array binding.
+            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
 
             // Assert
             var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Fact]
-        public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) check this byte array binding.
+        public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
             var account = CreateFakeStorageAccount();
 
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Theory]
-        //[InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)] // TODO (kasobol-msft) do we need this binding?
+        [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
         [InlineData("FuncWithOutByteArray", TestQueueMessage)]
         [InlineData("FuncWithOutString", TestQueueMessage)]
         [InlineData("FuncWithICollector", TestQueueMessage)]
@@ -643,7 +643,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Theory]
-        // [InlineData("FuncWithOutCloudQueueMessageNull")] // TODO (kasobol-msft) do we need this binding?
+        [InlineData("FuncWithOutCloudQueueMessageNull")]
         [InlineData("FuncWithOutByteArrayNull")]
         [InlineData("FuncWithOutStringNull")]
         [InlineData("FuncWithICollectorNoop")]
@@ -1054,15 +1054,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class MissingQueueProgram
         {
-            /* public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out CloudQueueMessage message)
+            public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
             {
-                message = new CloudQueueMessage(TestQueueMessage);
+                message = QueuesModelFactory.QueueMessage(null, null, TestQueueMessage, 0);
             }
 
-            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out CloudQueueMessage message)
+            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
             {
                 message = null;
-            } */ // TODO (kasobol-msft) this shouldn't be valid binding?
+            }
 
             public static void FuncWithOutByteArray([Queue(OutputQueueName)] out byte[] payload)
             {

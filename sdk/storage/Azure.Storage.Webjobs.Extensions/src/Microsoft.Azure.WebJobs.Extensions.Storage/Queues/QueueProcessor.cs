@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             {
                 await _queue.DeleteMessageAsync(message.MessageId, message.PopReceipt, cancellationToken).ConfigureAwait(false);
             }
-            catch (RequestFailedException exception) // TODO (kasobol-msft) switch to track 2 exceptions.
+            catch (RequestFailedException exception)
             {
                 // For consistency, the exceptions handled here should match UpdateQueueMessageVisibilityCommand.
                 if (exception.IsBadRequestPopReceiptMismatch())

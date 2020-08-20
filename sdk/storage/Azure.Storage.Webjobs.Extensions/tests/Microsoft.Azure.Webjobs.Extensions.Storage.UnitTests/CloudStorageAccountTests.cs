@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             CloudStorageAccount realAccount = CloudStorageAccount.DevelopmentStorageAccount;
 
-            StorageAccount account = StorageAccount.New(realAccount, ""); // TODO (kasobol-msft) Check this connection string.
+            StorageAccount account = StorageAccount.New(realAccount, "");
 
             // Act
             var t = typeof(CloudStorageAccountProgram);

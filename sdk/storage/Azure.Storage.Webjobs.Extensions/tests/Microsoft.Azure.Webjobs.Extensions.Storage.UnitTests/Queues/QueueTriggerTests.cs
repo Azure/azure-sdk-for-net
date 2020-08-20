@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             {
                 message = str;
             }
-            else if (contents is byte[] bytearray) // TODO (kasobol-msft) do we event aim to support byte arrays ??
+            else if (contents is byte[] bytearray) // TODO (kasobol-msft) revisit this when we have Base64/BinaryData
             {
                 message = Encoding.UTF8.GetString(bytearray);
             }
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(content)); // TODO (kasobol-msft) Do we support this ??
+            await queue.SendMessageAsync(Convert.ToBase64String(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToStringProgram),
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Fact(Skip = "TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
-        public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData() // TODO (kasobol-msft) do we need this?
+        public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
