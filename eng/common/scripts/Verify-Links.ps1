@@ -13,6 +13,10 @@ param (
   [string] $rootUrl = "",
   # list of http status codes count as broken links. Defaults to 400, 401, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004
   [array] $errorStatusCodes = @(400, 401, 404, 11001, 11004),
+  # regex to check if the link needs to be replaced
+  [string] $branchReplaceRegex = "(https://github.com/.*/blob/)master(/.*)",
+  # the substitute branch name or SHA commit
+  [string] $branchReplacementName = "",
   # flag to allow checking against azure sdk link guidance.
   [bool] $checkLinkGuidance = $false
 )
@@ -183,6 +187,14 @@ function CheckLink ([System.Uri]$linkUri)
   return $linkValid
 }
 
+function ReplaceGithubLink([string]$originLink) {
+  if (!$branchReplacementName) {
+    return $originLink
+  }
+  $ReplacementPattern = "`${1}$branchReplacementName`$2"
+  return $originLink -replace $branchReplaceRegex, $ReplacementPattern 
+}
+
 function GetLinks([System.Uri]$pageUri)
 {
   if ($pageUri.Scheme.StartsWith("http")) {
@@ -259,6 +271,8 @@ while ($pageUrisToCheck.Count -ne 0)
   Write-Host "Found $($linkUris.Count) links on page $pageUri";
   
   foreach ($linkUri in $linkUris) {
+    $linkUri = ReplaceGithubLink $linkUri
+
     $isLinkValid = CheckLink $linkUri
     if (!$isLinkValid) {
       $script:badLinks += $linkUri

@@ -700,6 +700,94 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Checks whether the subscription is visible to private link service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the domain name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request body of CheckPrivateLinkService API call.
+            /// </param>
+            public static PrivateLinkServiceVisibility BeginCheckPrivateLinkServiceVisibility(this IPrivateLinkServicesOperations operations, string location, CheckPrivateLinkServiceVisibilityRequest parameters)
+            {
+                return operations.BeginCheckPrivateLinkServiceVisibilityAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether the subscription is visible to private link service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the domain name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request body of CheckPrivateLinkService API call.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkServiceVisibility> BeginCheckPrivateLinkServiceVisibilityAsync(this IPrivateLinkServicesOperations operations, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCheckPrivateLinkServiceVisibilityWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks whether the subscription is visible to private link service in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the domain name.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request body of CheckPrivateLinkService API call.
+            /// </param>
+            public static PrivateLinkServiceVisibility BeginCheckPrivateLinkServiceVisibilityByResourceGroup(this IPrivateLinkServicesOperations operations, string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters)
+            {
+                return operations.BeginCheckPrivateLinkServiceVisibilityByResourceGroupAsync(location, resourceGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether the subscription is visible to private link service in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the domain name.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request body of CheckPrivateLinkService API call.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkServiceVisibility> BeginCheckPrivateLinkServiceVisibilityByResourceGroupAsync(this IPrivateLinkServicesOperations operations, string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCheckPrivateLinkServiceVisibilityByResourceGroupWithHttpMessagesAsync(location, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all private link services in a resource group.
             /// </summary>
             /// <param name='operations'>

@@ -77,7 +77,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, "http://localhost", options as ITokenCacheOptions);
         }
 
         /// <summary>
