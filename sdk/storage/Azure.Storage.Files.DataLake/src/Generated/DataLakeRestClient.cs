@@ -1083,7 +1083,6 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="resource">Required only for Create File and Create Directory. The value must be "file" or "directory".</param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
-            /// <param name="blobType">Optional.  Indicates concurrent append mode</param>
             /// <param name="mode">Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix".</param>
             /// <param name="cacheControl">Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="contentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -1117,7 +1116,6 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 Azure.Storage.Files.DataLake.Models.PathResourceType? resource = default,
                 string continuation = default,
-                Azure.Storage.Files.DataLake.Models.BlobType? blobType = default,
                 Azure.Storage.Files.DataLake.Models.PathRenameMode? mode = default,
                 string cacheControl = default,
                 string contentEncoding = default,
@@ -1155,7 +1153,6 @@ namespace Azure.Storage.Files.DataLake
                         timeout,
                         resource,
                         continuation,
-                        blobType,
                         mode,
                         cacheControl,
                         contentEncoding,
@@ -1214,7 +1211,6 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="resource">Required only for Create File and Create Directory. The value must be "file" or "directory".</param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
-            /// <param name="blobType">Optional.  Indicates concurrent append mode</param>
             /// <param name="mode">Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix".</param>
             /// <param name="cacheControl">Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="contentEncoding">Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.</param>
@@ -1244,7 +1240,6 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 Azure.Storage.Files.DataLake.Models.PathResourceType? resource = default,
                 string continuation = default,
-                Azure.Storage.Files.DataLake.Models.BlobType? blobType = default,
                 Azure.Storage.Files.DataLake.Models.PathRenameMode? mode = default,
                 string cacheControl = default,
                 string contentEncoding = default,
@@ -1286,7 +1281,6 @@ namespace Azure.Storage.Files.DataLake
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (resource != null) { _request.Uri.AppendQuery("resource", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(resource.Value)); }
                 if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
-                if (blobType != null) { _request.Uri.AppendQuery("blobtype", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(blobType.Value)); }
                 if (mode != null) { _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode.Value)); }
 
                 // Add request headers
@@ -3863,186 +3857,6 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion Path.SetExpiryAsync
-
-            #region Path.ConcurrentAppendAsync
-            /// <summary>
-            /// Appends data to the file
-            /// </summary>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="body">Initial data</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="appendMode">Optional.  Indicates concurrent append mode</param>
-            /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
-            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
-            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="operationName">Operation name.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult>> ConcurrentAppendAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string version,
-                System.IO.Stream body,
-                int? timeout = default,
-                string requestId = default,
-                Azure.Storage.Files.DataLake.Models.AppendMode? appendMode = default,
-                long? contentLength = default,
-                byte[] transactionalContentHash = default,
-                bool async = true,
-                string operationName = "PathClient.ConcurrentAppend",
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
-                try
-                {
-                    _scope.AddAttribute("url", resourceUri);
-                    _scope.Start();
-                    using (Azure.Core.HttpMessage _message = ConcurrentAppendAsync_CreateMessage(
-                        pipeline,
-                        resourceUri,
-                        version,
-                        body,
-                        timeout,
-                        requestId,
-                        appendMode,
-                        contentLength,
-                        transactionalContentHash))
-                    {
-                        if (async)
-                        {
-                            // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            // Send the request synchronously through the API that blocks if we're being called via a sync path
-                            // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.Send(_message, cancellationToken);
-                        }
-                        Azure.Response _response = _message.Response;
-                        cancellationToken.ThrowIfCancellationRequested();
-                        return ConcurrentAppendAsync_CreateResponse(clientDiagnostics, _response);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    _scope.Dispose();
-                }
-            }
-
-            /// <summary>
-            /// Create the Path.ConcurrentAppendAsync request.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="body">Initial data</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="appendMode">Optional.  Indicates concurrent append mode</param>
-            /// <param name="contentLength">Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data".</param>
-            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
-            /// <returns>The Path.ConcurrentAppendAsync Message.</returns>
-            internal static Azure.Core.HttpMessage ConcurrentAppendAsync_CreateMessage(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string version,
-                System.IO.Stream body,
-                int? timeout = default,
-                string requestId = default,
-                Azure.Storage.Files.DataLake.Models.AppendMode? appendMode = default,
-                long? contentLength = default,
-                byte[] transactionalContentHash = default)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (version == null)
-                {
-                    throw new System.ArgumentNullException(nameof(version));
-                }
-                if (body == null)
-                {
-                    throw new System.ArgumentNullException(nameof(body));
-                }
-
-                // Create the request
-                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
-                Azure.Core.Request _request = _message.Request;
-
-                // Set the endpoint
-                _request.Method = Azure.Core.RequestMethod.Patch;
-                _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("action", "concurrentAppend", escapeValue: false);
-                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (appendMode != null) { _request.Uri.AppendQuery("appendmode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(appendMode.Value)); }
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", version);
-                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
-                if (contentLength != null) { _request.Headers.SetValue("Content-Length", contentLength.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
-
-                // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(body);
-
-                return _message;
-            }
-
-            /// <summary>
-            /// Create the Path.ConcurrentAppendAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The Path.ConcurrentAppendAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult> ConcurrentAppendAsync_CreateResponse(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 202:
-                    {
-                        // Create the result
-                        Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult _value = new Azure.Storage.Files.DataLake.Models.PathConcurrentAppendResult();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
-                        {
-                            _value.ClientRequestId = _header;
-                        }
-
-                        // Create the response
-                        return Response.FromValue(_value, response);
-                    }
-                    default:
-                    {
-                        // Create the result
-                        string _value;
-                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
-                        {
-                            _value = _streamReader.ReadToEnd();
-                        }
-
-                        throw _value.CreateException(clientDiagnostics, response);
-                    }
-                }
-            }
-            #endregion Path.ConcurrentAppendAsync
         }
         #endregion Path operations
     }
@@ -4112,92 +3926,6 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class AclFailedEntry
-
-#region enum AppendMode
-namespace Azure.Storage.Files.DataLake.Models
-{
-    /// <summary>
-    /// Optional.  Indicates concurrent append mode
-    /// </summary>
-    public enum AppendMode
-    {
-        /// <summary>
-        /// autoCreate
-        /// </summary>
-        AutoCreate
-    }
-}
-
-namespace Azure.Storage.Files.DataLake
-{
-    internal static partial class DataLakeRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.DataLake.Models.AppendMode value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.DataLake.Models.AppendMode.AutoCreate => "autoCreate",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.AppendMode value.")
-                };
-            }
-
-            public static Azure.Storage.Files.DataLake.Models.AppendMode ParseAppendMode(string value)
-            {
-                return value switch
-                {
-                    "autoCreate" => Azure.Storage.Files.DataLake.Models.AppendMode.AutoCreate,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.AppendMode value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum AppendMode
-
-#region enum BlobType
-namespace Azure.Storage.Files.DataLake.Models
-{
-    /// <summary>
-    /// Optional.  Indicates concurrent append mode
-    /// </summary>
-    public enum BlobType
-    {
-        /// <summary>
-        /// appendblob
-        /// </summary>
-        Appendblob
-    }
-}
-
-namespace Azure.Storage.Files.DataLake
-{
-    internal static partial class DataLakeRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.DataLake.Models.BlobType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.DataLake.Models.BlobType.Appendblob => "appendblob",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.BlobType value.")
-                };
-            }
-
-            public static Azure.Storage.Files.DataLake.Models.BlobType ParseBlobType(string value)
-            {
-                return value switch
-                {
-                    "appendblob" => Azure.Storage.Files.DataLake.Models.BlobType.Appendblob,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.BlobType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum BlobType
 
 #region class FileSystem
 namespace Azure.Storage.Files.DataLake.Models
@@ -4552,46 +4280,6 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class PathAppendDataResult
-
-#region class PathConcurrentAppendResult
-namespace Azure.Storage.Files.DataLake.Models
-{
-    /// <summary>
-    /// Path ConcurrentAppendResult
-    /// </summary>
-    public partial class PathConcurrentAppendResult
-    {
-        /// <summary>
-        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
-        /// </summary>
-        public string ClientRequestId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of PathConcurrentAppendResult instances.
-        /// You can use DataLakeModelFactory.PathConcurrentAppendResult instead.
-        /// </summary>
-        internal PathConcurrentAppendResult() { }
-    }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new PathConcurrentAppendResult instance for mocking.
-        /// </summary>
-        public static PathConcurrentAppendResult PathConcurrentAppendResult(
-            string clientRequestId)
-        {
-            return new PathConcurrentAppendResult()
-            {
-                ClientRequestId = clientRequestId,
-            };
-        }
-    }
-}
-#endregion class PathConcurrentAppendResult
 
 #region class PathCreateResult
 namespace Azure.Storage.Files.DataLake.Models
