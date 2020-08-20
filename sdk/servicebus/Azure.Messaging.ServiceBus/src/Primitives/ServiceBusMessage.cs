@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(BinaryData.FromMemory(body))
+            this(BinaryData.FromBytes(body))
         {
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Core
     ///
     /// The ownership model of the underlying bytes varies depending on how the instance is constructed:
     ///
-    /// If created using the static factory method, <see cref="FromMemory(ReadOnlyMemory{byte})"/>,
+    /// If created using the static factory method, <see cref="FromBytes(ReadOnlyMemory{byte})"/>,
     /// the passed in bytes will be wrapped, rather than copied. This is useful in scenarios where performance
     /// is critical and/or ownership of the bytes is controlled completely by the consumer, thereby allowing the
     /// enforcement of whatever ownership model is needed.
@@ -40,7 +40,7 @@ namespace Azure.Core
         /// <summary>
         /// The backing store for the <see cref="BinaryData"/> instance.
         /// </summary>
-        public ReadOnlyMemory<byte> Bytes { get; }
+        internal ReadOnlyMemory<byte> Bytes { get; }
 
         /// <summary>
         /// Creates a binary data instance by making a copy
@@ -85,7 +85,7 @@ namespace Azure.Core
         /// passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
-        private BinaryData(ReadOnlyMemory<byte> data)
+        public BinaryData(ReadOnlyMemory<byte> data)
         {
             Bytes = data;
         }
@@ -108,7 +108,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data"></param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromMemory(ReadOnlyMemory<byte> data) =>
+        public static BinaryData FromBytes(ReadOnlyMemory<byte> data) =>
+            new BinaryData(data);
+
+        /// <summary>
+        /// Creates a binary data instance by copying the passed in
+        /// <see cref="ReadOnlySpan{Byte}"/>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public static BinaryData FromBytes(ReadOnlySpan<byte> data) =>
             new BinaryData(data);
 
         /// <summary>
@@ -117,7 +126,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data"></param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData FromMemory(byte[] data) =>
+        public static BinaryData FromBytes(byte[] data) =>
             new BinaryData(data);
 
         /// <summary>
@@ -173,42 +182,42 @@ namespace Azure.Core
         /// the <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="data">The data to use.</param>
+        /// <param name="serializable">The data to use.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Serialize<T>(
-            T data,
+        public static BinaryData FromObject<T>(
+            T serializable,
             CancellationToken cancellationToken = default) =>
-            Serialize<T>(data, new JsonObjectSerializer(), cancellationToken);
+            FromObject<T>(serializable, new JsonObjectSerializer(), cancellationToken);
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data
         /// using the <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="data">The data to use.</param>
+        /// <param name="serializable">The data to use.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> SerializeAsync<T>(
-            T data,
+        public static async Task<BinaryData> FromObjectAsync<T>(
+            T serializable,
             CancellationToken cancellationToken = default) =>
-            await SerializeInternalAsync<T>(data, new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
+            await SerializeInternalAsync<T>(serializable, new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
-        /// <param name="data">The data to use.</param>
+        /// <param name="serializable">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Serialize<T>(
-            T data,
+        public static BinaryData FromObject<T>(
+            T serializable,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
-            SerializeInternalAsync<T>(data, serializer, false, cancellationToken).EnsureCompleted();
+            SerializeInternalAsync<T>(serializable, serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
@@ -220,7 +229,7 @@ namespace Azure.Core
         /// the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> SerializeAsync<T>(
+        public static async Task<BinaryData> FromObjectAsync<T>(
             T data,
             ObjectSerializer serializer,
             CancellationToken cancellationToken = default) =>
@@ -268,6 +277,13 @@ namespace Azure.Core
             new ReadOnlyMemoryStream(Bytes);
 
         /// <summary>
+        /// Gets the BinaryData as <see cref="ReadOnlyMemory{Byte}"/>.
+        /// </summary>
+        /// <returns>BinaryData as bytes.</returns>
+        public ReadOnlyMemory<byte> ToBytes() =>
+            Bytes;
+
+        /// <summary>
         /// Converts the BinaryData to the specified type using
         /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
@@ -277,7 +293,7 @@ namespace Azure.Core
         /// when deserializing the data.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+        public T ToObject<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             DeserializeInternalAsync<T>(serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -290,7 +306,7 @@ namespace Azure.Core
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
-        public async ValueTask<T> DeserializeAsync<T>(CancellationToken cancellationToken = default) =>
+        public async ValueTask<T> ToObjectAsync<T>(CancellationToken cancellationToken = default) =>
             await DeserializeInternalAsync<T>(new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -301,7 +317,7 @@ namespace Azure.Core
         /// converted to.</typeparam>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T Deserialize<T>(CancellationToken cancellationToken = default) =>
+        public T ToObject<T>(CancellationToken cancellationToken = default) =>
             DeserializeInternalAsync<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -316,7 +332,7 @@ namespace Azure.Core
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
-        public async ValueTask<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+        public async ValueTask<T> ToObjectAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             await DeserializeInternalAsync<T>(serializer, true, cancellationToken).ConfigureAwait(false);
 
         private async ValueTask<T> DeserializeInternalAsync<T>(
