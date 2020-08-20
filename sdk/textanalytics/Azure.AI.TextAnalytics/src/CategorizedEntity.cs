@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics
         internal CategorizedEntity(Entity entity)
         {
             Text = entity.Text;
-            Category = entity.Category;
+            Category = entity.Category ?? string.Empty;
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
         }
