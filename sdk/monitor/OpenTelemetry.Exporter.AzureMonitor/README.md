@@ -1,4 +1,4 @@
-# OpenTelemetry Azure Monitor Exporter
+# Azure Monitor Exporter for OpenTelemetry .NET
 
 TODO
 
