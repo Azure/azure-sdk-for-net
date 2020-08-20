@@ -1,8 +1,13 @@
 # Release History
 
+## 1.2.2 (2020-08-20)
+
+### Fixes and improvements
+- Fixed issue with `InteractiveBrowserCredential` not specifying correct redirectUrl (Issue [#13940](https://github.com/Azure/azure-sdk-for-net/issues/13940))
+
 ## 1.2.1 (2020-08-18)
 
-### Fixed
+### Fixes and improvements
 - Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 1.2.0 (2020-08-10)
