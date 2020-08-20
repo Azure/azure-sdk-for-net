@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid
         public string Topic { get; set; }
 
         /// <summary> A resource path relative to the topic path. </summary>
-        public string Subject { get; internal set; }
+        public string Subject { get; set; }
 
         /// <summary> Event data specific to the event type. </summary>
         internal object Data { get; set; }

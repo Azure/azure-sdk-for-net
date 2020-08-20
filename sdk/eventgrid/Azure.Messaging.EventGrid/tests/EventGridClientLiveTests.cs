@@ -192,7 +192,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     Time = Recording.Now
                 };
                 eventsList.Add(cloudEvent);
-
             }
 
             await client.SendEventsAsync(eventsList);
