@@ -3,11 +3,14 @@
 
 #nullable disable warnings
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -159,6 +162,124 @@ namespace Azure.Core.Tests
             await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
             var content = GetString(bytes, bytes.Length);
             Assert.That(content.Contains("<Error><Code>BlobNotFound</Code><Message>The specified blob does not exist."));
+        }
+
+        [Test]
+        public async Task SendMultipartData()
+        {
+            const string ApplicationJson = "application/json";
+            const string cteHeaderName = "Content-Transfer-Encoding";
+            const string Binary = "binary";
+            const string Mixed = "mixed";
+            const string ApplicationJsonOdata = "application/json; odata=nometadata";
+            const string DataServiceVersion = "DataServiceVersion";
+            const string Three0 = "3.0";
+            const string Host = "myaccount.table.core.windows.net";
+
+            using Request request = new MockRequest
+            {
+                Method = RequestMethod.Put
+            };
+            request.Uri.Reset(new Uri("https://foo"));
+
+            Guid batchGuid = Guid.NewGuid();
+            var content = new MultipartContent(Mixed, $"batch_{batchGuid}");
+            content.ApplyToRequest(request);
+
+            Guid changesetGuid = Guid.NewGuid();
+            var changeset = new MultipartContent(Mixed, $"changeset_{changesetGuid}");
+            content.Add(changeset, changeset._headers);
+
+            var postReq1 = new MockRequest
+            {
+                Method = RequestMethod.Post
+            };
+            string postUri = $"https://{Host}/Blogs";
+            postReq1.Uri.Reset(new Uri(postUri));
+            postReq1.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            postReq1.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            postReq1.Headers.Add(DataServiceVersion, Three0);
+            const string post1Body = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"1\", \"Rating\":9, \"Text\":\"Azure...\"}";
+            postReq1.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post1Body));
+            changeset.Add(new RequestRequestContent(postReq1), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
+
+            var postReq2 = new MockRequest
+            {
+                Method = RequestMethod.Post
+            };
+            postReq2.Uri.Reset(new Uri(postUri));
+            postReq2.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            postReq2.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            postReq2.Headers.Add(DataServiceVersion, Three0);
+            const string post2Body = "{ \"PartitionKey\":\"Channel_17\", \"RowKey\":\"2\", \"Rating\":9, \"Text\":\"Azure...\"}";
+            postReq2.Content = RequestContent.Create(Encoding.UTF8.GetBytes(post2Body));
+            changeset.Add(new RequestRequestContent(postReq2), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
+
+            var patchReq = new MockRequest
+            {
+                Method = RequestMethod.Patch
+            };
+            string mergeUri = $"https://{Host}/Blogs(PartitionKey='Channel_17',%20RowKey='3')";
+            patchReq.Uri.Reset(new Uri(mergeUri));
+            patchReq.Headers.Add(HttpHeader.Names.ContentType, ApplicationJsonOdata);
+            patchReq.Headers.Add(HttpHeader.Names.Accept, ApplicationJson);
+            patchReq.Headers.Add(DataServiceVersion, Three0);
+            const string patchBody = "{ \"PartitionKey\":\"Channel_19\", \"RowKey\":\"3\", \"Rating\":9, \"Text\":\"Azure Tables...\"}";
+            patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
+            changeset.Add(new RequestRequestContent(patchReq), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
+
+            request.Content = content;
+            var memStream = new MemoryStream();
+            await content.WriteToAsync(memStream, default);
+            memStream.Position = 0;
+            using var sr = new StreamReader(memStream, Encoding.UTF8);
+            string requestBody = sr.ReadToEnd();
+            Console.WriteLine(requestBody);
+
+
+            Assert.That(requestBody, Is.EqualTo($"--batch_{batchGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: multipart/mixed; boundary=changeset_{changesetGuid}\r\n" +
+                $"\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"POST {postUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
+                $"\r\n" +
+                $"{post1Body}\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"POST {postUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
+                $"\r\n" +
+                $"{post2Body}\r\n" +
+                $"--changeset_{changesetGuid}\r\n" +
+                $"{HttpHeader.Names.ContentType}: application/http\r\n" +
+                $"{cteHeaderName}: {Binary}\r\n" +
+                $"\r\n" +
+                $"PATCH {mergeUri} HTTP/1.1\r\n" +
+                $"{HttpHeader.Names.Host}: {Host}\r\n" +
+                $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
+                $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
+                $"{DataServiceVersion}: {Three0}\r\n" +
+                $"{HttpHeader.Names.ContentLength}: 82\r\n" +
+                $"\r\n" +
+                $"{patchBody}\r\n" +
+                $"--changeset_{changesetGuid}--\r\n" +
+                $"\r\n" +
+                $"--batch_{batchGuid}--\r\n" +
+                $""));
         }
 
         private static MemoryStream MakeStream(string text)
