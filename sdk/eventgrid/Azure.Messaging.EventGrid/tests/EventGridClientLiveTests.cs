@@ -140,6 +140,8 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    // testing byte[]
+                    Encoding.UTF8.GetBytes("data"),
                     "record",
                     "Microsoft.MockPublisher.TestEvent")
                 {
@@ -147,13 +149,13 @@ namespace Azure.Messaging.EventGrid.Tests
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                // testing byte[]
-                cloudEvent.Data = Encoding.UTF8.GetBytes("data");
                 eventsList.Add(cloudEvent);
             }
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    // testing ReadOnlyMemory<byte>
+                    new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes("data")),
                     "record",
                     "Microsoft.MockPublisher.TestEvent")
                 {
@@ -161,13 +163,13 @@ namespace Azure.Messaging.EventGrid.Tests
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                // testing ReadOnlyMemory<byte>
-                cloudEvent.Data = new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes("data"));
                 eventsList.Add(cloudEvent);
             }
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    // testing IEnumerable<byte>
+                    Enumerable.Repeat((byte)1, 1),
                     "record",
                     "Microsoft.MockPublisher.TestEvent")
                 {
@@ -175,8 +177,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                // testing IEnumerable<byte>
-                cloudEvent.Data = Enumerable.Repeat((byte) 1, 1);
                 eventsList.Add(cloudEvent);
             }
             for (int i = 0; i < 5; i++)
@@ -213,6 +213,7 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    "{\"property1\": \"abc\",  \"property2\": \"123\"}",
                     "record",
                     "Microsoft.MockPublisher.TestEvent")
                 {
@@ -220,7 +221,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     Subject = $"Subject-{i}",
                     Time = Recording.Now
                 };
-                cloudEvent.Data = "{\"property1\": \"abc\",  \"property2\": \"123\"}";
                 eventsList.Add(cloudEvent);
             }
 

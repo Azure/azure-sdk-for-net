@@ -6,7 +6,6 @@ using Azure.Core;
 using System.Text.Json;
 using Azure.Messaging.EventGrid.SystemEvents;
 using NUnit.Framework;
-using System.Collections;
 using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.Tests
@@ -125,8 +124,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    bool eventData = (bool)egEvent.GetData();
-                    Assert.True(eventData);
+                    BinaryData binaryEventData = (BinaryData)egEvent.GetData();
+                    Assert.True(binaryEventData.Deserialize<bool>());
                 }
             }
         }
@@ -144,9 +143,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    string eventData = (string)egEvent.GetData();
-                    // note: binaryEventData.ToString() returns ""stringdata""?
-                    Assert.AreEqual("stringdata", eventData);
+                    BinaryData binaryEventData = (BinaryData)egEvent.GetData();
+                    Assert.AreEqual("stringdata", binaryEventData.Deserialize<string>());
                 }
             }
         }
@@ -175,9 +173,11 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
-            var eventData = events[0].GetData<object>();
+            var eventData1 = events[0].GetData<object>();
+            var eventData2 = events[0].GetData();
 
-            Assert.AreEqual(eventData, null);
+            Assert.AreEqual(eventData1, null);
+            Assert.AreEqual(eventData2, null);
             Assert.AreEqual(events[0].Type, "");
         }
 
@@ -193,6 +193,19 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
             Assert.AreEqual(events[0].Type, "");
+        }
+
+        [Test]
+        public void ConsumeCloudEventWithStringData()
+        {
+            string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"source\":\"/contoso/items\",  \"subject\": \"\",  \"data\": \"stringdata\",  \"type\": \"Contoso.Items.ItemReceived\",  \"time\": \"2018-01-25T22:12:19.4556811Z\"}]";
+
+            CloudEvent[] events = CloudEvent.Parse(requestContent);
+
+            Assert.NotNull(events);
+            BinaryData binaryEventData = (BinaryData)events[0].GetData();
+            string eventData = binaryEventData.Deserialize<string>();
+            Assert.AreEqual("stringdata", eventData);
         }
 
         [Test]
@@ -241,7 +254,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     case (BinaryData binaryData, "BinaryDataType"):
                         Assert.AreEqual(Convert.ToBase64String(binaryData.Bytes.ToArray()), "ZGF0YQ==");
                         break;
-                    case (BinaryData, "Contoso.Items.ItemReceived"):
+                    case (BinaryData binaryData, "Contoso.Items.ItemReceived"):
                         ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
                         Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
                         break;
