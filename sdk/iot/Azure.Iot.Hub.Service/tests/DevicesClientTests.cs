@@ -198,6 +198,10 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with errors");
             }
+            catch (Exception ex)
+            {
+                var e = ex;
+            }
             finally
             {
                 await CleanupAsync(client, devices).ConfigureAwait(false);

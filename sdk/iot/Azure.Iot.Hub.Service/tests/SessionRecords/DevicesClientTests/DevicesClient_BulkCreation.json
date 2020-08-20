@@ -8,8 +8,8 @@
         "Content-Length": "707",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200819.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "68a9862b6fe1c8667b76d3578e777e8c",
         "x-ms-return-client-request-id": "true"
@@ -19,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "Date": "Wed, 19 Aug 2020 20:09:50 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "9c38a6ac-feab-4b33-adb3-1bae12811316"
+        "x-ms-request-id": "8153cbba-addc-4a50-8ba7-eb89db583c7d"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -38,8 +38,8 @@
         "Content-Length": "517",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200819.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "20389682a9ef48e296e526551fbf96dc",
         "x-ms-return-client-request-id": "true"
@@ -49,10 +49,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 22:17:06 GMT",
+        "Date": "Wed, 19 Aug 2020 20:09:50 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "74b0d2ca-c2ba-4cea-a0d2-f3e2a09e65e8"
+        "x-ms-request-id": "908375ff-9e64-4919-806e-af76121189b9"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -62,7 +62,7 @@
     }
   ],
   "Variables": {
-    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==",
     "RandomSeed": "2047780100"
   }
 }
