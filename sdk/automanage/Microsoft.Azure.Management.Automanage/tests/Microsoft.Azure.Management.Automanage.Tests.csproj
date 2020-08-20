@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>Automanage.Tests</PackageId>
+    <Description>Automanage.Tests Class Library</Description>
+    <AssemblyName>Automanage.Tests</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <RootNamespace>Microsoft.Azure.Management.Automanage.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\OperationsTests\ListOperationsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />    
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.Automanage.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="ScenarioTests\TestBase.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>    
+
+</Project>
