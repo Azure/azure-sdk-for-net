@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     case (BinaryData binaryData, "BinaryDataType"):
                         Assert.AreEqual(Convert.ToBase64String(binaryData.Bytes.ToArray()), "ZGF0YQ==");
                         break;
-                    case (BinaryData binaryData, "Contoso.Items.ItemReceived"):
+                    case (BinaryData, "Contoso.Items.ItemReceived"):
                         ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
                         Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
                         break;

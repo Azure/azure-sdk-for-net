@@ -223,31 +223,18 @@ namespace Azure.Messaging.EventGrid
             }
             else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
             {
-                // Try to deserialize if system event data
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
+                // Reserialize JsonElement to stream
+                using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
                 {
-                    Data = systemDeserializationFunction(SerializedData.Value);
-                }
-                else if (!TryGetPrimitiveFromJsonElement(SerializedData.Value, out object cloudEventData))
-                {
-                    // Reserialize JsonElement to stream
-                    using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
+                    if (async)
                     {
-                        if (async)
-                        {
-                            Data = await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            Data = serializer.Deserialize(dataStream, typeof(T), cancellationToken);
-                        }
+                        return (T)await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        return (T)serializer.Deserialize(dataStream, typeof(T), cancellationToken);
                     }
                 }
-                else // Data is a string/primitive
-                {
-                    Data = cloudEventData;
-                }
-                return (T)Data;
             }
             else // Both Data and SerializedData is null
             {
@@ -284,40 +271,6 @@ namespace Azure.Messaging.EventGrid
             serializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
             dataStream.Position = 0;
             return dataStream;
-        }
-
-        private static bool TryGetPrimitiveFromJsonElement(JsonElement jsonElement, out object elementValue)
-        {
-            elementValue = null;
-            if (jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False)
-            {
-                elementValue = jsonElement.GetBoolean();
-            }
-            else if (jsonElement.ValueKind == JsonValueKind.Number)
-            {
-                if (jsonElement.TryGetInt32(out var vali))
-                {
-                    elementValue = vali;
-                }
-                if (jsonElement.TryGetInt64(out var vall))
-                {
-                    elementValue = vall;
-                }
-                if (jsonElement.TryGetDouble(out var val))
-                {
-                    elementValue = val;
-                }
-            }
-            else if (jsonElement.ValueKind == JsonValueKind.String)
-            {
-                elementValue = jsonElement.GetString();
-            }
-            else if (jsonElement.ValueKind == JsonValueKind.Undefined)
-            {
-                elementValue = "";
-            }
-
-            return elementValue != null;
         }
     }
 }
