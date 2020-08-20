@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-18.04'
 
 variables:
-  dockerfile: ./UbuntuNetCore2Keyring/Dockerfile
+  dockerfile: ./eng/containers/UbuntuNetCore2Keyring/Dockerfile
   containerRegistry: 'azsdkengsys'
   imageRepository: 'dotnet/ubuntu_netcore2_keyring'
   imageTag: $(build.buildid)
