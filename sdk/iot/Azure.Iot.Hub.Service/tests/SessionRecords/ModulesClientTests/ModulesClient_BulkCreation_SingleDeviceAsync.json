@@ -23,16 +23,16 @@
       "ResponseHeaders": {
         "Content-Length": "621",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 22:05:30 GMT",
-        "ETag": "\u0022NDQwNDk0NDc=\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
+        "ETag": "\u0022MjgwODc1MjE0\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c56a567c-2201-4e8d-bff4-a7bbb7951ace"
+        "x-ms-request-id": "dc822826-2905-4d65-8ead-3f09f9c3d1a9"
       },
       "ResponseBody": {
         "deviceId": "bulkDevice786274361",
-        "generationId": "637335579315085857",
-        "etag": "NDQwNDk0NDc=",
+        "generationId": "637334789476327348",
+        "etag": "MjgwODc1MjE0",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -42,8 +42,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "CxDKq151gShmyqFwZXwD/ONKQYjDR2KjnYJw2MJTfwI=",
-            "secondaryKey": "V3l5aC4djdFwOY6QiSe6itWtelaIrcZpxE3COYXabp8="
+            "primaryKey": "ecfvWRa0zeSJILA04vNhJa3eespYn31mEGS8wUNhcyg=",
+            "secondaryKey": "chVf4iqNzS2\u002BDEDrpAK0giAMnjqiKJ\u002BkzoOgvBNGdIk="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -77,10 +77,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 22:05:30 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "84949017-56f2-4886-a7a5-2d0f35d55957"
+        "x-ms-request-id": "27b915ec-1a61-427e-995e-4dc6db994179"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -105,10 +105,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 20 Aug 2020 22:05:30 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "0a7b9f3d-91ae-444b-a682-48129e63c563"
+        "x-ms-request-id": "52923d98-f64e-4637-ae11-6d30d3b9f8a6"
       },
       "ResponseBody": []
     }

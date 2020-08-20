@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{B89A7445-9F90-4BEF-A2CD-E38E1C6AD1DF}") = "Azure.ResourceManager.Dns", "src\Azure.ResourceManager.Dns.csproj", "{334FB216-0D38-4370-92DB-65BC85EBFDB5}"
+EndProject
+Project("{B89A7445-9F90-4BEF-A2CD-E38E1C6AD1DF}") = "Azure.ResourceManager.Dns.Tests", "tests\Azure.ResourceManager.Dns.Tests.csproj", "{B27A3240-EDB9-4C64-ABD4-02F492C27D64}"
+EndProject
+Global
+  GlobalSection(SolutionConfigurationPlatforms) = preSolution
+    Debug|Any CPU = Debug|Any CPU
+    Debug|x64 = Debug|x64
+    Debug|x86 = Debug|x86
+    Release|Any CPU = Release|Any CPU
+    Release|x64 = Release|x64
+    Release|x86 = Release|x86
+  EndGlobalSection
+  GlobalSection(SolutionProperties) = preSolution
+    HideSolutionNode = FALSE
+  EndGlobalSection
+  GlobalSection(ProjectConfigurationPlatforms) = postSolution
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|x64.ActiveCfg = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|x64.Build.0 = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|x86.ActiveCfg = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Debug|x86.Build.0 = Debug|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|Any CPU.Build.0 = Release|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|x64.ActiveCfg = Release|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|x64.Build.0 = Release|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|x86.ActiveCfg = Release|Any CPU
+    {334FB216-0D38-4370-92DB-65BC85EBFDB5}.Release|x86.Build.0 = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|x64.ActiveCfg = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|x64.Build.0 = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|x86.ActiveCfg = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Debug|x86.Build.0 = Debug|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|Any CPU.Build.0 = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|x64.ActiveCfg = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|x64.Build.0 = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|x86.ActiveCfg = Release|Any CPU
+    {B27A3240-EDB9-4C64-ABD4-02F492C27D64}.Release|x86.Build.0 = Release|Any CPU
+  EndGlobalSection
+EndGlobal

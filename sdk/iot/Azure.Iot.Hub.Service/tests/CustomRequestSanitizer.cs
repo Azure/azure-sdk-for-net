@@ -12,6 +12,7 @@ namespace Azure.Iot.Hub.Service.Tests
     internal class CustomRequestSanitizer : RecordedTestSanitizer
     {
         internal const string FakeHost = "FakeHost.net";
+        internal const string FakeStorageUri = "https://fake.blob.core.windows.net";
 
         public CustomRequestSanitizer()
            : base()
@@ -19,6 +20,7 @@ namespace Azure.Iot.Hub.Service.Tests
             // Sanitize SAS tokens in request body
             JsonPathSanitizers.Add("outputBlobContainerUri");
             JsonPathSanitizers.Add("inputBlobContainerUri");
+            JsonPathSanitizers.Add("symmetricKey");
         }
 
         public override string SanitizeUri(string uri)
