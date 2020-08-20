@@ -2,6 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -23,8 +24,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" />
-    <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
-    <Compile Remove="..\src\Shared\Multipart\Multipart.cs" />
+    <!-- <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
+    <Compile Remove="..\src\Shared\Multipart\Multipart.cs" /> -->
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="..\src\Shared\ConnectionString.cs" />
@@ -33,7 +34,6 @@
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
     <Compile Include="..\src\Shared\RetriableStream.cs" />
     <Compile Include="..\src\Shared\RequestRequestContent.cs" />
-    <Compile Include="..\src\Shared\StreamHelperExtensions.cs" />
     <Compile Include="..\src\Shared\ValueStopwatch.cs" />
   </ItemGroup>
 

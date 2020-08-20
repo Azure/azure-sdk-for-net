@@ -7,7 +7,6 @@ using Azure.Core.Buffers;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
-using System.Collections.Generic;
 
 namespace Azure.Core
 {
