@@ -119,6 +119,7 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','#5499']
   - ['sdk/template/Azure.Template/CHANGELOG.md','#5499']
   - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
+  - ['sdk/monitor/OpenTelemetry.Exporter.AzureMonitor','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
