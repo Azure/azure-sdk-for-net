@@ -4,10 +4,10 @@ extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     AdditionalPlatforms:
-      displayName: 'Linux with keyring'
+      displayName: 'Test on Linux with keyring'
       vmImage: 'ubuntu-18.04'
       container:
-        image: azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:503925
+        image: azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:504006
         endpoint: 'azsdkengsys'
         options: -ti --cap-add=IPC_LOCK
       PreSteps:
