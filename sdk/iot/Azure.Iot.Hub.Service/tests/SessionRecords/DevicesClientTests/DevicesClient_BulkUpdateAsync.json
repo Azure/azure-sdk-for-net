@@ -21,18 +21,18 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "628",
+        "Content-Length": "632",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
-        "ETag": "\u0022MzkxNDMxODM4\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
+        "ETag": "\u0022MTAzNzk0MTkyMg==\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "db9919d8-11dc-4716-9bf3-c8e86ffadd79"
+        "x-ms-request-id": "0dbc4211-6e93-4b47-94f5-b4e8cf9f2bd4"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate1349701714",
-        "generationId": "637334719992407855",
-        "etag": "MzkxNDMxODM4",
+        "generationId": "637334789475304717",
+        "etag": "MTAzNzk0MTkyMg==",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -42,8 +42,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "OzswKmzXRSNxtYyX2t9Qg8OmWTGWnNyDrEsCrmoaeWA=",
-            "secondaryKey": "giWIuU65XgFNu0rRm/gdxwYR1RnB3JmMXba1yrv4iyw="
+            "primaryKey": "lDcCwtrNdz9p3pUv4yFXHJLLdNIaaRbSqM5toEDZssI=",
+            "secondaryKey": "LlcLLIjrFVe21Vg/vJpUENA00YVLfkEs1Ig2miJUpnk="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -80,16 +80,16 @@
       "ResponseHeaders": {
         "Content-Length": "627",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
-        "ETag": "\u0022NDYyMTMzODAx\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
+        "ETag": "\u0022MjgxOTE3NjIw\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "ea39ac53-d724-447d-92a4-32b7ada363dd"
+        "x-ms-request-id": "3b77788a-cec5-4857-a9ee-5aa41719e0ad"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate927166103",
-        "generationId": "637334719992673214",
-        "etag": "NDYyMTMzODAx",
+        "generationId": "637334789475565534",
+        "etag": "MjgxOTE3NjIw",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -99,8 +99,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "6r5\u002BahPAbhxUcAtftTJny976S\u002BCwXvQqc0EDmf8z4yg=",
-            "secondaryKey": "4Acramo/luo\u002B4jg/uw76AlFYQZFW4mmHZuMoaBClUkc="
+            "primaryKey": "IESKJHAM7zJSk2Gtp6JIrnaanOejVQyNeqmk2eLntis=",
+            "secondaryKey": "RETnFh\u002BZPDnAMoF2dcTVXBdV5K3t0e05wzaaY5nZp1k="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -119,7 +119,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "663",
+        "Content-Length": "657",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200819.1",
@@ -128,15 +128,15 @@
         "x-ms-client-request-id": "aa25f27eb7c38322ae910087acceefb6",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate1349701714\u0022,\u0022eTag\u0022:\u0022MzkxNDMxODM4\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022OzswKmzXRSNxtYyX2t9Qg8OmWTGWnNyDrEsCrmoaeWA=\u0022,\u0022secondaryKey\u0022:\u0022giWIuU65XgFNu0rRm/gdxwYR1RnB3JmMXba1yrv4iyw=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}},{\u0022id\u0022:\u0022bulkDeviceUpdate927166103\u0022,\u0022eTag\u0022:\u0022NDYyMTMzODAx\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u00226r5\\u002BahPAbhxUcAtftTJny976S\\u002BCwXvQqc0EDmf8z4yg=\u0022,\u0022secondaryKey\u0022:\u00224Acramo/luo\\u002B4jg/uw76AlFYQZFW4mmHZuMoaBClUkc=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}}]",
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate1349701714\u0022,\u0022eTag\u0022:\u0022MTAzNzk0MTkyMg==\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022lDcCwtrNdz9p3pUv4yFXHJLLdNIaaRbSqM5toEDZssI=\u0022,\u0022secondaryKey\u0022:\u0022LlcLLIjrFVe21Vg/vJpUENA00YVLfkEs1Ig2miJUpnk=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}},{\u0022id\u0022:\u0022bulkDeviceUpdate927166103\u0022,\u0022eTag\u0022:\u0022MjgxOTE3NjIw\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022IESKJHAM7zJSk2Gtp6JIrnaanOejVQyNeqmk2eLntis=\u0022,\u0022secondaryKey\u0022:\u0022RETnFh\\u002BZPDnAMoF2dcTVXBdV5K3t0e05wzaaY5nZp1k=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "befebaf8-22df-46bc-a7c0-1433a28ae595"
+        "x-ms-request-id": "df0976e5-8852-4cc5-a2f3-ed4df86e36cf"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -159,29 +159,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "622",
+        "Content-Length": "626",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
-        "ETag": "\u0022MzkxNDMxODM5\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:07 GMT",
+        "ETag": "\u0022MTAzNzk0MTkyMw==\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "b66f0104-e674-4bbe-b75d-a4e10c46cb3d"
+        "x-ms-request-id": "b5882fe9-12db-479d-92b4-f535a43326f2"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate1349701714",
-        "generationId": "637334719992407855",
-        "etag": "MzkxNDMxODM5",
+        "generationId": "637334789475304717",
+        "etag": "MTAzNzk0MTkyMw==",
         "connectionState": "Disconnected",
         "status": "disabled",
         "statusReason": null,
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
-        "statusUpdatedTime": "2020-08-19T22:13:19.3014437Z",
+        "statusUpdatedTime": "2020-08-20T00:09:07.5850248Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "OzswKmzXRSNxtYyX2t9Qg8OmWTGWnNyDrEsCrmoaeWA=",
-            "secondaryKey": "giWIuU65XgFNu0rRm/gdxwYR1RnB3JmMXba1yrv4iyw="
+            "primaryKey": "lDcCwtrNdz9p3pUv4yFXHJLLdNIaaRbSqM5toEDZssI=",
+            "secondaryKey": "LlcLLIjrFVe21Vg/vJpUENA00YVLfkEs1Ig2miJUpnk="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -211,27 +211,27 @@
       "ResponseHeaders": {
         "Content-Length": "621",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
-        "ETag": "\u0022NDYyMTMzODAy\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
+        "ETag": "\u0022MjgxOTE3NjIx\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "63e6fa44-87e2-43ca-a698-2f0366bfdb11"
+        "x-ms-request-id": "ac382d27-49fb-4bf9-ba40-6c83f3f6c0ae"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate927166103",
-        "generationId": "637334719992673214",
-        "etag": "NDYyMTMzODAy",
+        "generationId": "637334789475565534",
+        "etag": "MjgxOTE3NjIx",
         "connectionState": "Disconnected",
         "status": "disabled",
         "statusReason": null,
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
-        "statusUpdatedTime": "2020-08-19T22:13:19.2999648Z",
+        "statusUpdatedTime": "2020-08-20T00:09:07.5877359Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "6r5\u002BahPAbhxUcAtftTJny976S\u002BCwXvQqc0EDmf8z4yg=",
-            "secondaryKey": "4Acramo/luo\u002B4jg/uw76AlFYQZFW4mmHZuMoaBClUkc="
+            "primaryKey": "IESKJHAM7zJSk2Gtp6JIrnaanOejVQyNeqmk2eLntis=",
+            "secondaryKey": "RETnFh\u002BZPDnAMoF2dcTVXBdV5K3t0e05wzaaY5nZp1k="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -249,7 +249,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "160",
+        "Content-Length": "164",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200819.1",
@@ -258,15 +258,15 @@
         "x-ms-client-request-id": "8ddf33bb74c97088121fede063f0f1e8",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate1349701714\u0022,\u0022eTag\u0022:\u0022MzkxNDMxODM4\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDeviceUpdate927166103\u0022,\u0022eTag\u0022:\u0022NDYyMTMzODAx\u0022,\u0022importMode\u0022:\u0022delete\u0022}]",
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate1349701714\u0022,\u0022eTag\u0022:\u0022MTAzNzk0MTkyMg==\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDeviceUpdate927166103\u0022,\u0022eTag\u0022:\u0022MjgxOTE3NjIw\u0022,\u0022importMode\u0022:\u0022delete\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "71b722d0-f34d-4d9d-b7bb-c10720f5a799"
+        "x-ms-request-id": "441dc34e-9192-4d9f-871f-0d4284e7f90c"
       },
       "ResponseBody": {
         "isSuccessful": true,

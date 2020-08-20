@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
 
 namespace Azure.Iot.Hub.Service.Tests
@@ -13,11 +14,12 @@ namespace Azure.Iot.Hub.Service.Tests
         {
         }
 
-        public string IotHubConnectionString => GetRecordedVariable(TestSettings.IotHubConnectionString, options => options
-            .HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64)
-            .HasSecretConnectionStringParameter("HostName", CustomRequestSanitizer.FakeHost));
+        public string IotHubConnectionString => GetRecordedVariable(TestSettings.IotHubConnectionString,
+            options => options
+                .HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64)
+                .HasSecretConnectionStringParameter("HostName", CustomRequestSanitizer.FakeHost));
 
-        public string StorageConnectionString => GetRecordedVariable(TestSettings.StorageConnectionString, options => options
-            .HasSecretConnectionStringParameter("AccountKey", SanitizedValue.Base64));
+        public Uri StorageSasToken => new Uri(GetRecordedVariable(TestSettings.StorageSasToken,
+            options => options.IsSecret(CustomRequestSanitizer.FakeStorageUri)));
     }
 }

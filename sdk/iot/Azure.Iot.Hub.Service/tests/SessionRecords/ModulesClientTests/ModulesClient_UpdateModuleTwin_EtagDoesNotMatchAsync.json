@@ -22,16 +22,16 @@
       "ResponseHeaders": {
         "Content-Length": "630",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:50 GMT",
-        "ETag": "\u0022Nzc1NTM3MDY3\u0022",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
+        "ETag": "\u0022MzgzMDI4Mjcy\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "76b00918-75f8-4757-bbf0-123b6894a508"
+        "x-ms-request-id": "f95fd5dd-438e-4f13-9f99-2589b39fe117"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice796017923",
-        "generationId": "637334720302568790",
-        "etag": "Nzc1NTM3MDY3",
+        "generationId": "637334789522038275",
+        "etag": "MzgzMDI4Mjcy",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -41,8 +41,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "DSny9g/uRxkIXVeNcVaNuPQuFYOEdar/tVuHXdatpz0=",
-            "secondaryKey": "x9zrmLCGfWs2hshndouPhuCcIfTYMDfwYQp7E1/G3/E="
+            "primaryKey": "C9FUQQqe7xag0OiTZgxoJnNosi3fA9OKd0TsbdpaGS0=",
+            "secondaryKey": "5eMeRy5C7frQMklQWguQKXhE0g6B6mMCGuLoOnxPuiU="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -79,25 +79,25 @@
       "ResponseHeaders": {
         "Content-Length": "558",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:50 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "0588dbf0-9d3f-42c0-80d6-6e427f9dbf54"
+        "x-ms-request-id": "d133d692-ebdb-4cfc-b594-7ee5280e601f"
       },
       "ResponseBody": {
         "moduleId": "TwinLifecycleModule2123975924",
         "managedBy": null,
         "deviceId": "TwinLifecycleDevice796017923",
-        "generationId": "637334720308868384",
-        "etag": "MjU1NjU0MjIw",
+        "generationId": "637334789522338007",
+        "etag": "NTkyNjA2Mjkx",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00",
         "lastActivityTime": "0001-01-01T00:00:00",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "vMkuKdBVO\u002BzhLY6NhOLEdtc1vS0evUVz3jbDqwO4UNQ=",
-            "secondaryKey": "sf7g6ISs58Z8sL\u002BXJ3\u002BGsVW3G3ooSUUJlGsKTnfHkTI="
+            "primaryKey": "4mbnIGwL3bbxlvD6aXmWraTM8TjrOpybOOPPH3jxV4Y=",
+            "secondaryKey": "CyjN9rAPOyqPhNCyE0eNqHPSCOTsmRYGA\u002BIK2\u002BCc\u002Byo="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -124,16 +124,16 @@
       "ResponseHeaders": {
         "Content-Length": "582",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:50 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "684de5dc-1716-40c0-8ae5-55f32cab8e8b"
+        "x-ms-request-id": "577f96ca-469a-4c7f-adae-8dc48ecb156d"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice796017923",
         "moduleId": "TwinLifecycleModule2123975924",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MjU1NjU0MjIw",
+        "deviceEtag": "NTkyNjA2Mjkx",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -196,7 +196,7 @@
         },
         "etag": "AAAAAAAAAAE=",
         "version": 2,
-        "deviceEtag": "MjU1NjU0MjIw",
+        "deviceEtag": "NTkyNjA2Mjkx",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -209,16 +209,16 @@
       "ResponseHeaders": {
         "Content-Length": "716",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:50 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "4a194bdf-95ef-4af9-9ec1-a44a24e20b57"
+        "x-ms-request-id": "898b7dd2-6cd3-47cd-859d-cfe282842ddc"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice796017923",
         "moduleId": "TwinLifecycleModule2123975924",
         "etag": "AAAAAAAAAAI=",
-        "deviceEtag": "MjU1NjU0MjIw",
+        "deviceEtag": "NTkyNjA2Mjkx",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -234,10 +234,10 @@
           "desired": {
             "username": "userA",
             "$metadata": {
-              "$lastUpdated": "2020-08-19T22:13:50.9618635Z",
+              "$lastUpdated": "2020-08-20T00:09:12.2888345Z",
               "$lastUpdatedVersion": 2,
               "username": {
-                "$lastUpdated": "2020-08-19T22:13:50.9618635Z",
+                "$lastUpdated": "2020-08-20T00:09:12.2888345Z",
                 "$lastUpdatedVersion": 2
               }
             },
@@ -287,7 +287,7 @@
         },
         "etag": "AAAAAAAAAAE=",
         "version": 2,
-        "deviceEtag": "MjU1NjU0MjIw",
+        "deviceEtag": "NTkyNjA2Mjkx",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -300,15 +300,15 @@
       "ResponseHeaders": {
         "Content-Length": "197",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:50 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
         "iothub-errorcode": "PreconditionFailed",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "ade4866b-062e-428d-8ad6-e5081e0fa08a"
+        "x-ms-request-id": "fbc1e150-bce6-4917-ab95-0b641b30d15c"
       },
       "ResponseBody": {
         "Message": "ErrorCode:PreconditionFailed;ETag mismatch for device ID \u0027TwinLifecycleDevice796017923\u0027",
-        "ExceptionMessage": "Tracking ID:d916eeba08c845b7a31734e54d7dc5ed-TimeStamp:08/19/2020 22:13:51"
+        "ExceptionMessage": "Tracking ID:9e4f1a787cbc42efa11530102a5bb96a-TimeStamp:08/20/2020 00:09:12"
       }
     },
     {
@@ -328,10 +328,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 19 Aug 2020 22:13:59 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "bcf9edc2-4548-4c0b-9f56-e672b477b468"
+        "x-ms-request-id": "b1ccc5cb-8855-495a-8be9-0cdcf51504a8"
       },
       "ResponseBody": []
     }

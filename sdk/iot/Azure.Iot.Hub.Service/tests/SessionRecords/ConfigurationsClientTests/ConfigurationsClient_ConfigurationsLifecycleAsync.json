@@ -32,11 +32,11 @@
       "ResponseHeaders": {
         "Content-Length": "608",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
         "ETag": "\u0022MQ==\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "5203998a-4811-4be5-bc04-52d16ae0d6a6"
+        "x-ms-request-id": "cf0a41b3-82ff-4dd3-af06-27b719038239"
       },
       "ResponseBody": {
         "id": "configlifecycle410659325",
@@ -50,8 +50,8 @@
           }
         },
         "targetCondition": "*",
-        "createdTimeUtc": "2020-08-19T22:13:18.9629308Z",
-        "lastUpdatedTimeUtc": "2020-08-19T22:13:18.9629308Z",
+        "createdTimeUtc": "2020-08-20T00:09:07.1920064Z",
+        "lastUpdatedTimeUtc": "2020-08-20T00:09:07.1920064Z",
         "priority": 565659747,
         "systemMetrics": {
           "results": {},
@@ -84,11 +84,11 @@
       "ResponseHeaders": {
         "Content-Length": "608",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
         "ETag": "\u0022MQ==\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "bb14eb82-94c9-4080-9b4e-2f931fe5b6f2"
+        "x-ms-request-id": "8c9fbf1e-ac25-4d91-adef-c797b0a88acd"
       },
       "ResponseBody": {
         "id": "configlifecycle410659325",
@@ -102,8 +102,8 @@
           }
         },
         "targetCondition": "*",
-        "createdTimeUtc": "2020-08-19T22:13:18.9629308Z",
-        "lastUpdatedTimeUtc": "2020-08-19T22:13:18.9629308Z",
+        "createdTimeUtc": "2020-08-20T00:09:07.1920064Z",
+        "lastUpdatedTimeUtc": "2020-08-20T00:09:07.1920064Z",
         "priority": 565659747,
         "systemMetrics": {
           "results": {},
@@ -134,16 +134,16 @@
         "x-ms-client-request-id": "0977fd2bb1b194416684ee2cc29235d6",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022id\u0022:\u0022configlifecycle410659325\u0022,\u0022labels\u0022:{\u0022HostPlatform\u0022:\u0022SomeValue\u0022},\u0022content\u0022:{\u0022deviceContent\u0022:{\u0022properties.desired.deviceContent_key\u0022:\u0022deviceContent_value-configlifecycle410659325\u0022}},\u0022targetCondition\u0022:\u0022*\u0022,\u0022createdTimeUtc\u0022:\u00222020-08-19T22:13:18.9629308Z\u0022,\u0022lastUpdatedTimeUtc\u0022:\u00222020-08-19T22:13:18.9629308Z\u0022,\u0022priority\u0022:2082685974,\u0022systemMetrics\u0022:{\u0022results\u0022:{},\u0022queries\u0022:{\u0022targetedCount\u0022:\u0022select deviceId from devices\u0022,\u0022appliedCount\u0022:\u0022select deviceId from devices where configurations.[[configlifecycle410659325]].status = \u0027Applied\u0027\u0022}},\u0022metrics\u0022:{\u0022results\u0022:{},\u0022queries\u0022:{}},\u0022etag\u0022:\u0022MQ==\u0022}",
+      "RequestBody": "{\u0022id\u0022:\u0022configlifecycle410659325\u0022,\u0022labels\u0022:{\u0022HostPlatform\u0022:\u0022SomeValue\u0022},\u0022content\u0022:{\u0022deviceContent\u0022:{\u0022properties.desired.deviceContent_key\u0022:\u0022deviceContent_value-configlifecycle410659325\u0022}},\u0022targetCondition\u0022:\u0022*\u0022,\u0022createdTimeUtc\u0022:\u00222020-08-20T00:09:07.1920064Z\u0022,\u0022lastUpdatedTimeUtc\u0022:\u00222020-08-20T00:09:07.1920064Z\u0022,\u0022priority\u0022:2082685974,\u0022systemMetrics\u0022:{\u0022results\u0022:{},\u0022queries\u0022:{\u0022targetedCount\u0022:\u0022select deviceId from devices\u0022,\u0022appliedCount\u0022:\u0022select deviceId from devices where configurations.[[configlifecycle410659325]].status = \u0027Applied\u0027\u0022}},\u0022metrics\u0022:{\u0022results\u0022:{},\u0022queries\u0022:{}},\u0022etag\u0022:\u0022MQ==\u0022}",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "609",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
         "ETag": "\u0022Mg==\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "7d1557ba-273d-4dd9-bbef-79d5d84edd17"
+        "x-ms-request-id": "896e6ac2-9cc1-4d67-a741-b02ab74933fa"
       },
       "ResponseBody": {
         "id": "configlifecycle410659325",
@@ -157,8 +157,8 @@
           }
         },
         "targetCondition": "*",
-        "createdTimeUtc": "2020-08-19T22:13:18.9629308Z",
-        "lastUpdatedTimeUtc": "2020-08-19T22:13:19.0868438Z",
+        "createdTimeUtc": "2020-08-20T00:09:07.1920064Z",
+        "lastUpdatedTimeUtc": "2020-08-20T00:09:07.2768749Z",
         "priority": 2082685974,
         "systemMetrics": {
           "results": {},
@@ -191,10 +191,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 19 Aug 2020 22:13:18 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:06 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "e7b0750f-eb38-4973-af02-a47b801219e2"
+        "x-ms-request-id": "990cbbd5-91a2-4fa4-a12b-50d67146d2ed"
       },
       "ResponseBody": []
     }
