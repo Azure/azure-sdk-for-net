@@ -1,10 +1,17 @@
-# Azure Monitor Exporter for OpenTelemetry .NET
+# Azure Monitor Exporter client library for .NET
 
 TODO
 
 ## Getting started
 
-TODO
+### Install the package
+
+
+### Prerequisites
+
+
+### Authenticate the client
+
 
 ## Key concepts
 
