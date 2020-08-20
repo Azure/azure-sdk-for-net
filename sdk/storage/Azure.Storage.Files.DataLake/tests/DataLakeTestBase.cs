@@ -35,7 +35,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly IList<PathAccessControlItem> AccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
-
+        public readonly IList<PathAccessControlItem> ExecuteOnlyAccessControlList
+            = PathAccessControlExtensions.ParseAccessControlList("user::--x,group::--x,other::--x");
+        public readonly IList<RemovePathAccessControlItem> RemoveAccessControlList
+            = RemovePathAccessControlItem.ParseAccessControlList(
+                "mask," +
+                "default:user,default:group," +
+                "user:ec3595d6-2c17-4696-8caa-7e139758d24a,group:ec3595d6-2c17-4696-8caa-7e139758d24a," +
+                "default:user:ec3595d6-2c17-4696-8caa-7e139758d24a,default:group:ec3595d6-2c17-4696-8caa-7e139758d24a");
         public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
