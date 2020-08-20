@@ -100,7 +100,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
             _version = options.VersionString;
             _table = tableName;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             ;
         }
@@ -110,7 +110,7 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _diagnostics = diagnostics;
             _isPremiumEndpoint = isPremiumEndpoint;
         }

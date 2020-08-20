@@ -5,6 +5,3 @@ extends:
   parameters:
     ServiceDirectory: iot
     Location: westcentralus
-    EnvVars:
-      # Runs live tests.
-      AZURE_IOT_TEST_MODE: Live

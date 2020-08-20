@@ -8,14 +8,7 @@ namespace Azure.DigitalTwins.Core.Tests
 {
     internal class TestUrlSanitizer : RecordedTestSanitizer
     {
-        private const string FAKE_HOST = "fakeHost.api.wus2.digitaltwins.azure.net";
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue) =>
-            variableName switch
-            {
-                "DIGITALTWINS_URL" => SanitizeUri(environmentVariableValue),
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
+        internal const string FAKE_HOST = "https://fakeHost.api.wus2.digitaltwins.azure.net";
 
         public override string SanitizeUri(string uri)
         {

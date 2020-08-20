@@ -103,8 +103,9 @@ az deployment group create --resource-group $ResourceGroup --name $IotHubName --
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_CONNECTION_STRING.value' --output tsv
-$iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_ENDPOINT_URL.value' --output tsv
+$iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_connection_string.value' --output tsv
+$iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_endpoint_url.value' --output tsv
+$storageSasToken = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.storage_sas_token.value' --output tsv
 
 Write-Host("Set a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
@@ -128,7 +129,8 @@ Add-Type -AssemblyName System.Security
 $appSecretJsonEscaped = ConvertTo-Json $appSecret
 $environmentText = @"
 {
-    "IOT_HUB_CONNECTION_STRING": "$iotHubConnectionString"
+    "IOT_HUB_CONNECTION_STRING": "$iotHubConnectionString",
+    "STORAGE_SAS_TOKEN": "$storageSasToken"
 }
 "@
 

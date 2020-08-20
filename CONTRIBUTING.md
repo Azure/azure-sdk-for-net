@@ -195,7 +195,7 @@ string snippet = "some snippet code";
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:

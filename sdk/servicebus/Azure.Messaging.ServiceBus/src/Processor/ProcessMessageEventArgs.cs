@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="propertiesToModify"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task AbandonMessageAsync(
+        public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task CompleteMessageAsync(
+        public virtual async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="deadLetterErrorDescription"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task DeadLetterMessageAsync(
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="propertiesToModify"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task DeadLetterMessageAsync(
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="propertiesToModify"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task DeferMessageAsync(
+        public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
