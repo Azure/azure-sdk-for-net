@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B110184439?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B110184439?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "54fe6359764a230b8918c6353d55a63b",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -29,7 +29,7 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-07-28T23:41:10.1085481\u002B00:00",
+        "uploadTime": "2020-08-20T22:15:38.6501835\u002B00:00",
         "model": {
           "@id": "dtmi:example:Ward;110184439",
           "@type": "Interface",
@@ -58,13 +58,13 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B186622131?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B186622131?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "251ebb6826a081718eab4727cd9120db",
         "x-ms-return-client-request-id": "true"
@@ -74,7 +74,7 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -86,7 +86,7 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-07-28T23:42:01.9623456\u002B00:00",
+        "uploadTime": "2020-08-20T22:15:54.7718338\u002B00:00",
         "model": {
           "@id": "dtmi:example:Ward;186622131",
           "@type": "Interface",
@@ -115,13 +115,13 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B189540703?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B189540703?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c1cb1a14762925e70941824158dc77d8",
         "x-ms-return-client-request-id": "true"
@@ -131,7 +131,7 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -143,7 +143,7 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-07-28T23:48:26.7312243\u002B00:00",
+        "uploadTime": "2020-08-20T22:20:21.9112751\u002B00:00",
         "model": {
           "@id": "dtmi:example:Ward;189540703",
           "@type": "Interface",
@@ -172,66 +172,15 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B110855032?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B110855032?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "a71cb09d3cb8d38cbbcac3fbbc87a659",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "212",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:30 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "ModelNotFound",
-          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:Ward;110855032. Check that the Model ID provided is valid by doing a Model_List API call."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "567",
-        "Content-Type": "application/json; charset=utf-8",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "6f8c41de3e403644ff96e5ef3f36cfcf",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:Ward;110855032\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Ward\u0022,    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022VisitorCount\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022HandWashPercentage\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022managedRooms\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Content-Length": "225",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:30 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Ward;110855032\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-07-28T23:48:30.7037839\u002B00:00\u0022}]"
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B110855032?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "70f3cf4fb7bfdd5b3fee6eab232a4dba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -239,7 +188,7 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:48:30 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -251,9 +200,175 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-07-28T23:48:30.7037839\u002B00:00",
+        "uploadTime": "2020-08-20T22:20:35.4321365\u002B00:00",
         "model": {
           "@id": "dtmi:example:Ward;110855032",
+          "@type": "Interface",
+          "displayName": "Ward",
+          "description": "A separate partition in a building, made of rooms and hallways.",
+          "contents": [
+            {
+              "@type": "Property",
+              "name": "VisitorCount",
+              "schema": "double"
+            },
+            {
+              "@type": "Property",
+              "name": "HandWashPercentage",
+              "schema": "double"
+            },
+            {
+              "@type": "Relationship",
+              "name": "managedRooms"
+            }
+          ],
+          "@context": [
+            "dtmi:dtdl:context;2"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B194770428?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "406f8c41443eff3696e5ef3f36cfcf4f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "613",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "id": "dtmi:example:Ward;194770428",
+        "description": {
+          "en": "A separate partition in a building, made of rooms and hallways."
+        },
+        "displayName": {
+          "en": "Ward"
+        },
+        "decommissioned": false,
+        "uploadTime": "2020-08-20T22:30:20.6687807\u002B00:00",
+        "model": {
+          "@id": "dtmi:example:Ward;194770428",
+          "@type": "Interface",
+          "displayName": "Ward",
+          "description": "A separate partition in a building, made of rooms and hallways.",
+          "contents": [
+            {
+              "@type": "Property",
+              "name": "VisitorCount",
+              "schema": "double"
+            },
+            {
+              "@type": "Property",
+              "name": "HandWashPercentage",
+              "schema": "double"
+            },
+            {
+              "@type": "Relationship",
+              "name": "managedRooms"
+            }
+          ],
+          "@context": [
+            "dtmi:dtdl:context;2"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B117640165?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "b7bf70f3dd5bee3f6eab232a4dbadce7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "212",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 22:33:03 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ModelNotFound",
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:Ward;117640165. Check that the Model ID provided is valid by doing a Model_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "68ea9a795ebce56ca821579c9385fbf3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:Ward;117640165\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Ward\u0022,    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022VisitorCount\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022HandWashPercentage\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022managedRooms\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Ward;117640165\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-08-20T22:33:05.2418007\u002B00:00\u0022}]"
+    },
+    {
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B117640165?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3593ecab2799afe53052d09813d4492a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "613",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "id": "dtmi:example:Ward;117640165",
+        "description": {
+          "en": "A separate partition in a building, made of rooms and hallways."
+        },
+        "displayName": {
+          "en": "Ward"
+        },
+        "decommissioned": false,
+        "uploadTime": "2020-08-20T22:33:05.2418007\u002B00:00",
+        "model": {
+          "@id": "dtmi:example:Ward;117640165",
           "@type": "Interface",
           "displayName": "Ward",
           "description": "A separate partition in a building, made of rooms and hallways.",
