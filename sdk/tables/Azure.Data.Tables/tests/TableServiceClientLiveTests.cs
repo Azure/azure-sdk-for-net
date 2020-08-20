@@ -170,8 +170,8 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                 }
 
                 // Get the table list.

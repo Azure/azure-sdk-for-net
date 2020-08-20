@@ -224,6 +224,144 @@ namespace Azure.AI.TextAnalytics.Tests
 
         }
 
+        // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+        // We want to verify behavior is the same after code auto generated.
+        [Test]
+        public async Task AnalyzeSentimentNullText()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""neutral"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": null
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+
+            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
+        }
+
+        [Test]
+        public void AnalyzeSentimentNotSupportedSentenceSentiment()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""confusion"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": ""today is a hot day""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.AnalyzeSentimentAsync("today is a hot day"));
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentMixedSentenceSentiment()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""mixed"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": ""today is a hot day""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+
+            Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
+        }
+
         private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
         {
             json.WriteStartObject();

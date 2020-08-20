@@ -39,12 +39,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="cakSecretIdentifier">Keyvault Secret Identifier URL
         /// containing Mac security CAK key.</param>
         /// <param name="cipher">Mac security cipher. Possible values include:
-        /// 'gcm-aes-128', 'gcm-aes-256'</param>
-        public ExpressRouteLinkMacSecConfig(string cknSecretIdentifier = default(string), string cakSecretIdentifier = default(string), string cipher = default(string))
+        /// 'GcmAes256', 'GcmAes128', 'GcmAesXpn128', 'GcmAesXpn256'</param>
+        /// <param name="sciState">Sci mode enabled/disabled. Possible values
+        /// include: 'Disabled', 'Enabled'</param>
+        public ExpressRouteLinkMacSecConfig(string cknSecretIdentifier = default(string), string cakSecretIdentifier = default(string), string cipher = default(string), string sciState = default(string))
         {
             CknSecretIdentifier = cknSecretIdentifier;
             CakSecretIdentifier = cakSecretIdentifier;
             Cipher = cipher;
+            SciState = sciState;
             CustomInit();
         }
 
@@ -69,10 +72,17 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets mac security cipher. Possible values include:
-        /// 'gcm-aes-128', 'gcm-aes-256'
+        /// 'GcmAes256', 'GcmAes128', 'GcmAesXpn128', 'GcmAesXpn256'
         /// </summary>
         [JsonProperty(PropertyName = "cipher")]
         public string Cipher { get; set; }
+
+        /// <summary>
+        /// Gets or sets sci mode enabled/disabled. Possible values include:
+        /// 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "sciState")]
+        public string SciState { get; set; }
 
     }
 }

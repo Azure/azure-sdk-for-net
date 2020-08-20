@@ -4,3 +4,4 @@ https://github.com/Azure/azure-digital-twins/blob/private-preview/Documentation/
 https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins
 https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json
 https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins
+https://contoso.azureedge.net/urlsigning/test?expires=2145916800&amp;keyid:key1&amp;signature=iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=

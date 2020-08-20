@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             string id = default;
             IReadOnlyList<LinkedEntity> entities = default;
-            IReadOnlyList<TextAnalyticsWarning_internal> warnings = default;
+            IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,10 +39,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<TextAnalyticsWarning_internal> array = new List<TextAnalyticsWarning_internal>();
+                    List<TextAnalyticsWarningInternal> array = new List<TextAnalyticsWarningInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning_internal.DeserializeTextAnalyticsWarning_internal(item));
+                        array.Add(TextAnalyticsWarningInternal.DeserializeTextAnalyticsWarningInternal(item));
                     }
                     warnings = array;
                     continue;
