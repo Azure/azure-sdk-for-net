@@ -185,7 +185,7 @@ namespace Azure.Messaging.ServiceBus
         /// for.</param>
         ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
-        public ServiceBusSender CreateSender(string queueOrTopicName)
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName)
         {
             ValidateEntityName(queueOrTopicName);
 
@@ -206,7 +206,7 @@ namespace Azure.Messaging.ServiceBus
         /// this <see cref="ServiceBusSender"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
-        public ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
             ValidateSendViaEntityName(queueOrTopicName, options?.ViaQueueOrTopicName);
 
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="queueName">The queue to create a <see cref="ServiceBusReceiver"/> for.</param>
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
-        public ServiceBusReceiver CreateReceiver(string queueName)
+        public virtual ServiceBusReceiver CreateReceiver(string queueName)
         {
             ValidateEntityName(queueName);
 
@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusReceiver"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
-        public ServiceBusReceiver CreateReceiver(
+        public virtual ServiceBusReceiver CreateReceiver(
             string queueName,
             ServiceBusReceiverOptions options)
         {
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus
         /// a <see cref="ServiceBusReceiver"/> for.</param>
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
-        public ServiceBusReceiver CreateReceiver(
+        public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
             string subscriptionName)
         {
@@ -303,7 +303,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusReceiver"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
-        public ServiceBusReceiver CreateReceiver(
+        public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options)
@@ -396,7 +396,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the dead letter queue of the specified
         /// queue.</returns>
-        public ServiceBusReceiver CreateDeadLetterReceiver(
+        public virtual ServiceBusReceiver CreateDeadLetterReceiver(
             string queueName,
             ServiceBusReceiverOptions options = default)
         {
@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the dead letter queue of the specified
         /// queue.</returns>
-        public ServiceBusReceiver CreateDeadLetterReceiver(
+        public virtual ServiceBusReceiver CreateDeadLetterReceiver(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options = default)
@@ -452,7 +452,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a <see cref="ServiceBusProcessor"/> for.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
-        public ServiceBusProcessor CreateProcessor(string queueName)
+        public virtual ServiceBusProcessor CreateProcessor(string queueName)
         {
             ValidateEntityName(queueName);
 
@@ -475,7 +475,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusProcessor"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
-        public ServiceBusProcessor CreateProcessor(
+        public virtual ServiceBusProcessor CreateProcessor(
             string queueName,
             ServiceBusProcessorOptions options)
         {
@@ -501,7 +501,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusProcessor"/> for.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
-        public ServiceBusProcessor CreateProcessor(
+        public virtual ServiceBusProcessor CreateProcessor(
             string topicName,
             string subscriptionName)
         {
@@ -527,7 +527,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusProcessor"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
-        public ServiceBusProcessor CreateProcessor(
+        public virtual ServiceBusProcessor CreateProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options)
@@ -552,7 +552,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
-        public ServiceBusSessionProcessor CreateSessionProcessor(
+        public virtual ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
             ServiceBusSessionProcessorOptions options = default)
         {
@@ -577,7 +577,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
-        public ServiceBusSessionProcessor CreateSessionProcessor(
+        public virtual ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusSessionProcessorOptions options = default)
