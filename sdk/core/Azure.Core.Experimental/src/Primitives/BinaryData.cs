@@ -130,6 +130,14 @@ namespace Azure.Core
             new BinaryData(data);
 
         /// <summary>
+        /// Creates a binary data instance using the passed in string.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public static BinaryData FromString(string data) =>
+            new BinaryData(data);
+
+        /// <summary>
         /// Creates a binary data instance from the specified stream.
         /// The passed in stream is not disposed by this method.
         /// </summary>
