@@ -194,9 +194,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Cancels or deletes the job with the specified Id.
+        /// Cancels the job with the specified Id.
         /// </summary>
-        /// <param name="jobId">Id of the job to cancel or delete.</param>
+        /// <param name="jobId">Id of the job to cancel.</param>
         /// <param name="cancellationToken">Task cancellation token.</param>
         /// <returns>A response string indicating the result of cancellation.</returns>
         public virtual Response<string> CancelImportExportJob(string jobId, CancellationToken cancellationToken = default)
@@ -207,9 +207,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Cancels or deletes the job with the specified Id.
+        /// Cancels the job with the specified Id.
         /// </summary>
-        /// <param name="jobId">Id of the job to cancel or delete.</param>
+        /// <param name="jobId">Id of the job to cancel.</param>
         /// <param name="cancellationToken">Task cancellation token.</param>
         /// <returns>A response string indicating the result of cancellation.</returns>
         public virtual Task<Response<string>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken = default)
