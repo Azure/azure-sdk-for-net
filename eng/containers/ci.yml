@@ -1,10 +1,16 @@
 trigger:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - eng/containers/
 
 pool:
   vmImage: 'ubuntu-18.04'
 
 variables:
+  dockerfile: ./UbuntuNetCore2Keyring/Dockerfile
   containerRegistry: 'azsdkengsys'
   imageRepository: 'dotnet/ubuntu_netcore2_keyring'
   imageTag: $(build.buildid)
@@ -14,7 +20,7 @@ steps:
   displayName: Build Docker Image
   inputs:
     command: build
-    Dockerfile: ./Dockerfile
+    Dockerfile: $(dockerfile)
     tags: $(imageTag)
     arguments: '-t $(containerRegistry).azurecr.io/$(imageRepository):$(imageTag)'
 - task: Docker@2
