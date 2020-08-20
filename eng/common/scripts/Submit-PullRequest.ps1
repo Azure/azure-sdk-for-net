@@ -38,7 +38,8 @@ param(
 
   [Parameter(Mandatory = $true)]
   $PRTitle,
-  $PRBody = $PRTitle
+
+  $PRBody=$PRTitle
 )
 
 $headers = @{

@@ -135,6 +135,10 @@ namespace Azure.Core.Tests
             await AssertData(BinaryData.Serialize(payload));
             await AssertData(await BinaryData.SerializeAsync(payload));
 
+            await AssertData(new BinaryData(payload, typeof(TestModel)));
+            await AssertData(new BinaryData(payload, typeof(TestModel), null));
+            await AssertData(new BinaryData(payload, typeof(TestModel), serializer));
+
             async Task AssertData(BinaryData data)
             {
                 Assert.AreEqual(payload.A, data.Deserialize<TestModel>(serializer).A);

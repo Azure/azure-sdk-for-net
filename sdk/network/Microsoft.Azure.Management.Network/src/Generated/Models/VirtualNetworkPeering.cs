@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).</param>
         /// <param name="remoteAddressSpace">The reference to the remote
         /// virtual network address space.</param>
+        /// <param name="remoteBgpCommunities">The reference to the remote
+        /// virtual network's Bgp Communities.</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values include: 'Initiated', 'Connected',
         /// 'Disconnected'</param>
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
             UseRemoteGateways = useRemoteGateways;
             RemoteVirtualNetwork = remoteVirtualNetwork;
             RemoteAddressSpace = remoteAddressSpace;
+            RemoteBgpCommunities = remoteBgpCommunities;
             PeeringState = peeringState;
             ProvisioningState = provisioningState;
             Name = name;
@@ -136,6 +139,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public AddressSpace RemoteAddressSpace { get; set; }
 
         /// <summary>
+        /// Gets or sets the reference to the remote virtual network's Bgp
+        /// Communities.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remoteBgpCommunities")]
+        public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
+
+        /// <summary>
         /// Gets or sets the status of the virtual network peering. Possible
         /// values include: 'Initiated', 'Connected', 'Disconnected'
         /// </summary>
@@ -164,5 +174,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RemoteBgpCommunities != null)
+            {
+                RemoteBgpCommunities.Validate();
+            }
+        }
     }
 }
