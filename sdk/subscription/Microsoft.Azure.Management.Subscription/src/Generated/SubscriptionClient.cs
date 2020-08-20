@@ -80,11 +80,6 @@ namespace Microsoft.Azure.Management.Subscription
         public virtual ISubscriptionOperations Subscription { get; private set; }
 
         /// <summary>
-        /// Gets the ISubscriptionOperationOperations.
-        /// </summary>
-        public virtual ISubscriptionOperationOperations SubscriptionOperation { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -333,7 +328,6 @@ namespace Microsoft.Azure.Management.Subscription
             Subscriptions = new SubscriptionsOperations(this);
             Tenants = new TenantsOperations(this);
             Subscription = new SubscriptionOperations(this);
-            SubscriptionOperation = new SubscriptionOperationOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

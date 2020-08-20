@@ -62,22 +62,25 @@ namespace FullDesktop.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                const string enrollmentAccountName = "465c11a0-38c3-4ecc-92e9-996c69ae9e76";
-                const string offerType = "MS-AZR-0017P";
-                var body = new SubscriptionCreationParameters()
+                const string aliasName = "TestAlias";
+                var putAliasRequest = new PutAliasRequest()
                 {
-                    DisplayName = "TestSubscription_AzureSDK",
-                    OfferType = offerType
+                    Properties = new PutAliasRequestProperties()
+                    {
+                        DisplayName = "TestSub",
+                        Workload = Workload.Production,
+                        BillingScope = ""
+                    }
                 };
+
                 var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
-                var subscriptionResult = client.Subscription.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(
-                    enrollmentAccountName, body).ConfigureAwait(false).GetAwaiter().GetResult();
+                var subscriptionResult = client.Subscription.CreateAliasWithHttpMessagesAsync(
+                    aliasName, putAliasRequest).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.Equal(HttpStatusCode.OK, subscriptionResult.Response.StatusCode);
                 Assert.NotNull(subscriptionResult);
-                Assert.NotNull(subscriptionResult.Body.SubscriptionLink);
-                Assert.StartsWith("/subscriptions", subscriptionResult.Body.SubscriptionLink);
+                Assert.NotNull(subscriptionResult.Body.Properties.SubscriptionId);
             }
         }
 
