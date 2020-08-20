@@ -4,6 +4,11 @@
 
 - Restoring Application Authentication APIs from 1.2.0-preview.6
 
+## 1.2.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
 ## 1.2.0 (2020-08-10)
 
 ### Breaking Changes

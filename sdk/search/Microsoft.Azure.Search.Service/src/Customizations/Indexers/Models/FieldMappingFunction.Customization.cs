@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
         /// </para>
         /// <para>
         /// For details on the encoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see>.
-        /// Calling this method is the same as calling <c cref="Base64Encode(bool)"/> with <c>useHttpServerUtilityUrlTokenEncode</c> set to <c>true</c>.
+        /// Calling this method is the same as calling <see cref="Base64Encode(bool)"/> with <c>useHttpServerUtilityUrlTokenEncode</c> set to <see langword="true" />.
         /// </para>
         /// </remarks>
         /// <returns>A new field mapping function.</returns>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Search.Models
         /// </para>
         /// <para>
         /// For details on the decoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see>.
-        /// Calling this method is the same as calling <c cref="Base64Decode(bool)"/> with <c>useHttpServerUtilityUrlTokenDecode</c> set to <c>true</c>.
+        /// Calling this method is the same as calling <see cref="Base64Decode(bool)"/> with <c>useHttpServerUtilityUrlTokenDecode</c> set to <see langword="true" />.
         /// </para>
         /// </remarks>
         /// <returns>A new field mapping function.</returns>

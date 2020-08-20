@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
             Message = message;
         }
 
-        internal TextAnalyticsWarning(TextAnalyticsWarning_internal warning)
+        internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
         {
             WarningCode = warning.Code;
             Message = warning.Message;

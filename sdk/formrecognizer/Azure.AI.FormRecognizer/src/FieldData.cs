@@ -13,15 +13,16 @@ namespace Azure.AI.FormRecognizer.Models
     public class FieldData : FormElement
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldData"/> class.
         /// </summary>
-        /// <param name="formElement"></param>
-        /// <param name="pageNumber"></param>
-        /// <param name="boundingBox"></param>
-        /// <param name="text"></param>
-        internal FieldData(string text, int pageNumber, BoundingBox boundingBox, IReadOnlyList<FormElement> formElement)
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of this form element.</param>
+        /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
+        internal FieldData(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements)
             : base(boundingBox, pageNumber, text)
         {
-            FieldElements = formElement;
+            FieldElements = fieldElements;
         }
 
         /// <summary>
