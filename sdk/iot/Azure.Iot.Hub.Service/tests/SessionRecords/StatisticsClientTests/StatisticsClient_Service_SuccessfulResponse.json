@@ -4,10 +4,11 @@
       "RequestUri": "https://FakeHost.net/statistics/service?api-version=2020-03-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200819.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200820.6",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "250a4219fc90a714c03149e46eb1b343",
         "x-ms-return-client-request-id": "true"
@@ -17,10 +18,10 @@
       "ResponseHeaders": {
         "Content-Length": "26",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Aug 2020 20:09:50 GMT",
+        "Date": "Thu, 20 Aug 2020 22:05:59 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "a6d755f2-a63f-4333-878e-00e48bd02fa5"
+        "x-ms-request-id": "dd1bf363-07ed-412e-ab06-5058934ae891"
       },
       "ResponseBody": {
         "connectedDeviceCount": 0
