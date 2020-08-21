@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
 using OpenTelemetry.Trace;
 
@@ -9,9 +8,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal static class ActivityExtensions
     {
-        private static readonly string INVALID_SPAN_ID = default(ActivitySpanId).ToHexString();
-        private static readonly string INVALID_TRACE_ID = default(ActivityTraceId).ToHexString();
-
         private const string StatusCode_0 = "0";
         private const string StatusCode_200 = "200";
         private const string StatusCode_400 = "400";
@@ -25,39 +21,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private const string StatusCode_503 = "503";
         private const string StatusCode_504 = "504";
 
-        internal static string GetSpanId(this Activity activity)
-        {
-            var spanId = activity.SpanId.ToHexString();
-            if (!string.Equals(spanId, INVALID_SPAN_ID, StringComparison.Ordinal))
-            {
-                return spanId;
-            }
-
-            return string.Empty;
-        }
-
-        internal static string GetTraceId(this Activity activity)
-        {
-            var traceId = activity.TraceId.ToHexString();
-            if (!string.Equals(traceId, INVALID_TRACE_ID, StringComparison.Ordinal))
-            {
-                return traceId;
-            }
-
-            return string.Empty;
-        }
-
         internal static TelemetryType GetTelemetryType(this Activity activity)
         {
-            if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
+            var kind = activity.Kind switch
             {
-                return TelemetryType.Request;
-            }
-            else
-            {
-                // TODO: If there a need, extend for other telemetry types.
-                return TelemetryType.Dependency;
-            }
+                ActivityKind.Server => TelemetryType.Request,
+                ActivityKind.Client => TelemetryType.Dependency,
+                ActivityKind.Producer => TelemetryType.Dependency,
+                ActivityKind.Consumer => TelemetryType.Request,
+                _ => TelemetryType.Dependency
+            };
+
+            return kind;
         }
 
         // TODO: Change the return type to integer once .NET support it.
