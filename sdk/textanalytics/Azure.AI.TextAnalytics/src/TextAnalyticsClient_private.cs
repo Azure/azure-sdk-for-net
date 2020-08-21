@@ -14,7 +14,6 @@ namespace Azure.AI.TextAnalytics
         private const string TextAnalyticsRoute = "/text/analytics/";
 
         private const string EntitiesRoute = "/entities/recognition/general";
-        private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStatistics = "showStats";
@@ -33,18 +32,6 @@ namespace Azure.AI.TextAnalytics
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
-
-        #region Extract KeyPhrases
-        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            ExtractKeyPhrasesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion Extract KeyPhrases
 
         #region Linked Entities
         private static async Task<Response<RecognizeLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
