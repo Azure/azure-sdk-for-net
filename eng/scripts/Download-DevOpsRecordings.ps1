@@ -13,13 +13,35 @@
     .\eng\scripts\Download-DevOpsRecordings.ps1 14153
 #>
 [CmdletBinding()]
-param ([Parameter(Mandatory=$True)][int] $PR, [switch] $NoWait = $false)
+param (
+    [Parameter(Mandatory=$True)][int] $PR,
+    [Parameter(ValueFromRemainingArguments=$true)][string[]]$SDKs,
+    [switch] $NoWait = $false)
 
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
 $artifactsPath = Join-Path $repoRoot "artifacts"
 $commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "--project", "internal", "-o", "json", "--only-show-errors")
 
 $token = (az account get-access-token --resource=https://management.core.windows.net/ -o json | ConvertFrom-Json).accessToken
+
+function SkipBuild($build)
+{
+    write-host "checkling $($build.definition.name)"
+    if (!$SDKs)
+    {
+        return $false;
+    }
+
+    foreach ($sdk in $SDKs)
+    {
+        if ($build.definition.name -eq "net - $sdk - tests")
+        {
+            return $false;
+        }
+    }
+
+    return $true;
+}
 
 Write-Host "Processing builds for PR $PR"
 
@@ -36,10 +58,19 @@ else
 
         foreach ($build in $builds)
         {
+            if (SkipBuild($build)) { continue; }
             if ($build.status -ne "completed")
             {
-                Write-Host "Waiting for '$($build.definition.name)' ($($build.status)) to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
+                Write-Host "Waiting for '$($build.definition.name)' ($($build.status)) to finish - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"  -ForegroundColor Blue
                 $allCompleted = $false;
+            }
+            elseif ($build.result -eq "succeeded")
+            {
+                Write-Host "Completed '$($build.definition.name)' ($($build.result)) - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)" -ForegroundColor  Green
+            }
+            else
+            {
+                Write-Warning "Non-successful '$($build.definition.name)' ($($build.result)) - https://dev.azure.com/azure-sdk/internal/_build/results?buildId=$($build.id)"
             }
         }
 
@@ -56,6 +87,7 @@ $ProcessedDefinitions = @();
 
 foreach ($build in $builds)
 {
+    if (SkipBuild($build)) { continue; }
     $definitionName = $build.definition.name;
     if ($ProcessedDefinitions -contains $definitionName)
     {
