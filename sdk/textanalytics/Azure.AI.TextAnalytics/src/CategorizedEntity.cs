@@ -13,14 +13,6 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(string text, string category, string subCategory, double score)
-        {
-            Text = text;
-            Category = category;
-            SubCategory = subCategory;
-            ConfidenceScore = score;
-        }
-
         internal CategorizedEntity(Entity entity)
         {
             Text = entity.Text;
