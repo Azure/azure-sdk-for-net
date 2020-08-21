@@ -1229,15 +1229,9 @@ namespace Azure.AI.TextAnalytics
                 Response<KeyPhraseResult> result = await _serviceRestClient.KeyPhrasesAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -1256,15 +1250,9 @@ namespace Azure.AI.TextAnalytics
                 Response<KeyPhraseResult> result = _serviceRestClient.KeyPhrases(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
