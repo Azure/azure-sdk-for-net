@@ -2104,7 +2104,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    Response<IEnumerable<PeekedMessage>> response = await QueueRestClient.Messages.PeekAsync(
+                    Response<IEnumerable<PeekedMessageItem>> response = await QueueRestClient.Messages.PeekAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
@@ -2124,12 +2124,12 @@ namespace Azure.Storage.Queues
                     {
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToPeekedMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => ToPeekedMessage(x)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2142,6 +2142,18 @@ namespace Azure.Storage.Queues
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
+        }
+
+        private PeekedMessage ToPeekedMessage(PeekedMessageItem peekedMessageItem)
+        {
+            return new PeekedMessage()
+            {
+                MessageId = peekedMessageItem.MessageId,
+                DequeueCount = peekedMessageItem.DequeueCount,
+                Message = new BinaryData(peekedMessageItem.MessageText),
+                ExpiresOn = peekedMessageItem.ExpirationTime,
+                InsertedOn = peekedMessageItem.InsertionTime,
+            };
         }
         #endregion PeekMessages
 
@@ -2296,6 +2308,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
@@ -2303,7 +2316,47 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
-                messageText,
+                new BinaryData(messageText),
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual Response<UpdateReceipt> UpdateMessage(
+            string messageId,
+            string popReceipt,
+            BinaryData? message = default,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            UpdateMessageInternal(
+                message,
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2336,6 +2389,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
@@ -2343,7 +2397,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
-                messageText,
+                new BinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2358,8 +2412,48 @@ namespace Azure.Storage.Queues
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
         /// Update Message</see>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
+            string messageId,
+            string popReceipt,
+            BinaryData? message = default,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            await UpdateMessageInternal(
+                message,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="message">
+        /// Updated message.
         /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -2380,7 +2474,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
-            string messageText,
+            BinaryData? message,
             string messageId,
             string popReceipt,
             TimeSpan visibilityTimeout,
@@ -2398,14 +2492,15 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    messageText = UsingClientSideEncryption && messageText != default
-                        ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
-                        : messageText;
+                    // TODO (kasobol-msft) pass bytes to encryptor
+                    message = UsingClientSideEncryption && message.HasValue
+                        ? new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false))
+                        : message;
                     QueueSendMessage queueSendMessage = null;
-                    if (messageText != default)
+                    if (message.HasValue)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = messageText };
+                        queueSendMessage = new QueueSendMessage { MessageText = message.Value.ToString() };
                     }
 
                     return await QueueRestClient.MessageId.UpdateAsync(

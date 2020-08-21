@@ -63,14 +63,24 @@ namespace Azure.Storage.Queues
         public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier> permissions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateMessage(string messageId, string popReceipt, Azure.Core.BinaryData? message = default(Azure.Core.BinaryData?), System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateMessage(string messageId, string popReceipt, string messageText = null, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateMessageAsync(string messageId, string popReceipt, Azure.Core.BinaryData? message = default(Azure.Core.BinaryData?), System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateMessageAsync(string messageId, string popReceipt, string messageText = null, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_12_12) { }
+        public Azure.Storage.Queues.QueueClientOptions.MessageEncoding Encoding { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
+        public enum MessageEncoding
+        {
+            None = 1,
+            Base64 = 2,
+        }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
@@ -126,7 +136,9 @@ namespace Azure.Storage.Queues.Models
         public long DequeueCount { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? InsertedOn { get { throw null; } }
+        public Azure.Core.BinaryData Message { get { throw null; } }
         public string MessageId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MessageText { get { throw null; } }
     }
     public partial class QueueAccessPolicy
@@ -300,9 +312,13 @@ namespace Azure.Storage.Queues.Models
     }
     public static partial class QueuesModelFactory
     {
+        public static Azure.Storage.Queues.Models.PeekedMessage PeekedMessage(string messageId, Azure.Core.BinaryData message, long dequeueCount, System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.PeekedMessage PeekedMessage(string messageId, string messageText, long dequeueCount, System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueGeoReplication QueueGeoReplication(Azure.Storage.Queues.Models.QueueGeoReplicationStatus status, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueItem QueueItem(string name, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, Azure.Core.BinaryData message, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Queues.Models.QueueMessage QueueMessage(string messageId, string popReceipt, string messageText, long dequeueCount, System.DateTimeOffset? nextVisibleOn = default(System.DateTimeOffset?), System.DateTimeOffset? insertedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Queues.Models.QueueProperties QueueProperties(System.Collections.Generic.IDictionary<string, string> metadata, int approximateMessagesCount) { throw null; }
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }

@@ -2029,7 +2029,7 @@ namespace Azure.Storage.Queues
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Peek Messages on a Queue</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>> PeekAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessageItem>>> PeekAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2132,8 +2132,8 @@ namespace Azure.Storage.Queues
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Messages.PeekAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.PeekedMessage}}.</returns>
-            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>> PeekAsync_CreateResponse(
+            /// <returns>The Messages.PeekAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.PeekedMessageItem}}.</returns>
+            internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessageItem>> PeekAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -2144,18 +2144,18 @@ namespace Azure.Storage.Queues
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage> _value =
+                        System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessageItem> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
                                     _xml.Element(System.Xml.Linq.XName.Get("QueueMessagesList", "")).Elements(System.Xml.Linq.XName.Get("QueueMessage", "")),
-                                    Azure.Storage.Queues.Models.PeekedMessage.FromXml));
+                                    Azure.Storage.Queues.Models.PeekedMessageItem.FromXml));
 
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>>(response);
+                        return new Azure.NoBodyResponse<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessageItem>>(response);
                     }
                     default:
                     {
@@ -2655,13 +2655,13 @@ namespace Azure.Storage.Queues
 }
 #endregion enum ListQueuesIncludeType
 
-#region class PeekedMessage
+#region class PeekedMessageItem
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// The object returned in the QueueMessageList array when calling Peek Messages on a Queue
     /// </summary>
-    public partial class PeekedMessage
+    internal partial class PeekedMessageItem
     {
         /// <summary>
         /// The Id of the Message.
@@ -2669,19 +2669,14 @@ namespace Azure.Storage.Queues.Models
         public string MessageId { get; internal set; }
 
         /// <summary>
-        /// The content of the Message.
-        /// </summary>
-        public string MessageText { get; internal set; }
-
-        /// <summary>
         /// The time the Message was inserted into the Queue.
         /// </summary>
-        public System.DateTimeOffset? InsertedOn { get; internal set; }
+        public System.DateTimeOffset InsertionTime { get; internal set; }
 
         /// <summary>
         /// The time that the Message will expire and be automatically deleted.
         /// </summary>
-        public System.DateTimeOffset? ExpiresOn { get; internal set; }
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
 
         /// <summary>
         /// The number of times the message has been dequeued.
@@ -2689,80 +2684,59 @@ namespace Azure.Storage.Queues.Models
         public long DequeueCount { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of PeekedMessage instances.
-        /// You can use QueuesModelFactory.PeekedMessage instead.
+        /// The content of the Message.
         /// </summary>
-        internal PeekedMessage() { }
+        public string MessageText { get; internal set; }
 
         /// <summary>
-        /// Deserializes XML into a new PeekedMessage instance.
+        /// Prevent direct instantiation of PeekedMessageItem instances.
+        /// You can use QueuesModelFactory.PeekedMessageItem instead.
+        /// </summary>
+        internal PeekedMessageItem() { }
+
+        /// <summary>
+        /// Deserializes XML into a new PeekedMessageItem instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized PeekedMessage instance.</returns>
-        internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized PeekedMessageItem instance.</returns>
+        internal static Azure.Storage.Queues.Models.PeekedMessageItem FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
+            Azure.Storage.Queues.Models.PeekedMessageItem _value = new Azure.Storage.Queues.Models.PeekedMessageItem();
             _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
             if (_child != null)
             {
                 _value.MessageId = _child.Value;
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
-            if (_child != null)
-            {
-                _value.MessageText = _child.Value;
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
             if (_child != null)
             {
-                _value.InsertedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
             if (_child != null)
             {
-                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
             if (_child != null)
             {
                 _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessage value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new PeekedMessage instance for mocking.
-        /// </summary>
-        public static PeekedMessage PeekedMessage(
-            string messageId,
-            string messageText,
-            long dequeueCount,
-            System.DateTimeOffset? insertedOn = default,
-            System.DateTimeOffset? expiresOn = default)
-        {
-            return new PeekedMessage()
-            {
-                MessageId = messageId,
-                MessageText = messageText,
-                DequeueCount = dequeueCount,
-                InsertedOn = insertedOn,
-                ExpiresOn = expiresOn,
-            };
-        }
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessageItem value);
     }
 }
-#endregion class PeekedMessage
+#endregion class PeekedMessageItem
 
 #region class QueueAccessPolicy
 namespace Azure.Storage.Queues.Models

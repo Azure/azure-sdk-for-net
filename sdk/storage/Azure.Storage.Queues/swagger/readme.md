@@ -300,30 +300,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.PeekedMessage) {
-        $.PeekedMessage = $.PeekedMessageItem;
-        delete $.PeekedMessageItem;
-
-        $.PeekedMessage.properties.InsertedOn = $.PeekedMessage.properties.InsertionTime;
-        $.PeekedMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
-        delete $.PeekedMessage.properties.InsertionTime;
-
-        $.PeekedMessage.properties.ExpiresOn = $.PeekedMessage.properties.ExpirationTime;
-        $.PeekedMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
-        delete $.PeekedMessage.properties.ExpirationTime;
-
-        const count = $.PeekedMessage.properties.DequeueCount;
-        delete $.PeekedMessage.properties.DequeueCount;
-        $.PeekedMessage.properties.DequeueCount = count;
-    }
-- from: swagger-document
-  where: $.definitions.PeekedMessagesList
-  transform: >
-    const def = $.items;
-    if (!def["$ref"].endsWith("PeekedMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/PeekedMessage");
-        $.items = { "$ref": path };
-    }
+    $.PeekedMessageItem["x-az-public"] = false;
 ```
 
 ### ListQueuesInclude
