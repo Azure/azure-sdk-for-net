@@ -424,7 +424,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void AnalyzeSentimentBatchWithNullIdTestAsync()
+        public void AnalyzeSentimentBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
@@ -434,7 +434,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentBatchWithNullTextTestAsync()
+        public async Task AnalyzeSentimentBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
@@ -602,7 +602,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void ExtractKeyPhrasesBatchWithNullIdTestAsync()
+        public void ExtractKeyPhrasesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
@@ -612,7 +612,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task ExtractKeyPhrasesBatchWithNullTextTestAsync()
+        public async Task ExtractKeyPhrasesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
