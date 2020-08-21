@@ -55,7 +55,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-646974a3597bb84f95882054db5bb5a7-d08d96fc1f15384a-00",
@@ -85,8 +85,7 @@
         "IntTypeProperty": 1,
         "PartitionKey": "somPartition",
         "RowKey": "01",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -135,7 +134,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "678",
+        "Content-Length": "666",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-153f1bfa5fb82148a36cfac8eac0ba4e-c9a745fa75a6fd40-00",
@@ -165,8 +164,7 @@
         "IntTypeProperty": 1,
         "PartitionKey": "somPartition2",
         "RowKey": "01",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {

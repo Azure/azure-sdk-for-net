@@ -68,7 +68,7 @@
         "Date": "Thu, 20 Aug 2020 22:29:24 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "5af9b323-3406-34bd-2ab4-53ebf1ec67cd"
+        "x-ms-request-id": "fbea3d76-f93c-f73f-6201-27e091001cd4"
       },
       "ResponseBody": [
         "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 5c358491-d85a-42bb-98e3-8d046827f45d, Request URI: /apps/8b1ea712-4dfc-487e-9abf-91bcc14490f4/services/c147baaa-111c-48fc-95e8-b755505443e5/partitions/d9177690-41e2-486f-b7ca-e933272ef14d/replicas/132424089643911810p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:5af9b323-3406-34bd-2ab4-53ebf1ec67cd\\n\u0022}}}\r\n"

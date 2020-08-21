@@ -33,7 +33,7 @@
         "Location": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/Tables(\u0027testtable0b06l8rw\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2d56dc16-bdfb-a0b8-01d8-1a741de05a9c"
+        "x-ms-request-id": "e0112fa4-9099-a29f-838d-a3cfaaaf04e7"
       },
       "ResponseBody": {
         "TableName": "testtable0b06l8rw",
@@ -87,7 +87,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-20T22%3A19%3A58.6257928Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "e0112fa4-9099-a29f-838d-a3cfaaaf04e7"
+        "x-ms-request-id": "d351b53c-a60b-ffd5-0ed4-edba399bf629"
       },
       "ResponseBody": []
     },
@@ -117,7 +117,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "d351b53c-a60b-ffd5-0ed4-edba399bf629"
+        "x-ms-request-id": "a4135e9d-aadb-86d7-3cb3-aa6e1ae9f652"
       },
       "ResponseBody": {
         "value": [
@@ -168,7 +168,7 @@
         "Content-Length": "0",
         "Date": "Thu, 20 Aug 2020 22:19:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "a4135e9d-aadb-86d7-3cb3-aa6e1ae9f652"
+        "x-ms-request-id": "683733d3-878e-fe91-5a11-d2c4a2e568e7"
       },
       "ResponseBody": []
     }

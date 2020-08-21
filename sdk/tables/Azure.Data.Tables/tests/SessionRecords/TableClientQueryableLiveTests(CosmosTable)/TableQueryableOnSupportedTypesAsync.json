@@ -68,7 +68,7 @@
         "Date": "Thu, 20 Aug 2020 22:30:38 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "faa254d2-cb84-5b46-d185-6bc3dc176812"
+        "x-ms-request-id": "ae9f0f59-65f9-50a7-e391-9d1988eeb90a"
       },
       "ResponseBody": [
         "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022429\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022Message: {\\\u0022Errors\\\u0022:[\\\u0022Request rate is large. More Request Units may be needed, so no changes were made. Please retry this request later. Learn more: http://aka.ms/cosmosdb-error-429\\\u0022]}\\r\\nActivityId: 0422f26a-e423-4ab7-94a1-48778218cb66, Request URI: /apps/8b1ea712-4dfc-487e-9abf-91bcc14490f4/services/c147baaa-111c-48fc-95e8-b755505443e5/partitions/d9177690-41e2-486f-b7ca-e933272ef14d/replicas/132424089643911810p, RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.11.0 Host/64-bit MicrosoftWindowsNT/6.2.9200.0\\nRequestID:faa254d2-cb84-5b46-d185-6bc3dc176812\\n\u0022}}}\r\n"
@@ -271,7 +271,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-150877cdaa64b94eae7e55ac0d3a7469-bba506342eca6349-00",
@@ -343,8 +343,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -413,7 +412,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-40886c4bd5487148bc6efd8346ca1961-317fe7f6d3d6b44a-00",
@@ -485,8 +484,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -555,7 +553,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "1731",
+        "Content-Length": "1719",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-a62f5a8ee33ae54ea2b9cfd8c1e46ab4-bb9a73c9454a9643-00",
@@ -627,8 +625,7 @@
         "String": "0003",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -697,7 +694,7 @@
           "application/json; odata=minimalmetadata"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-06a95c0ddeafc044bd5f796e40e716dd-f17e409cda116a43-00",
@@ -769,8 +766,7 @@
         "String": "0004",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {

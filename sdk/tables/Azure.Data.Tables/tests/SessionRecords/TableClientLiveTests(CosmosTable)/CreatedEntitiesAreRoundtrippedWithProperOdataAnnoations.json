@@ -33,7 +33,7 @@
         "Location": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/Tables(\u0027testtable6nc5k2i3\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6f9cad5b-164b-8144-f941-f8ddee905627"
+        "x-ms-request-id": "e6a757aa-a444-cca6-4774-a759b91e689c"
       },
       "ResponseBody": {
         "TableName": "testtable6nc5k2i3",
@@ -88,7 +88,7 @@
         "Location": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/testtable6nc5k2i3(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e6a757aa-a444-cca6-4774-a759b91e689c"
+        "x-ms-request-id": "34268fc1-1b2e-ce7c-a713-596d800544f5"
       },
       "ResponseBody": {
         "odata.metadata": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/testtable6nc5k2i3/$metadata#testtable6nc5k2i3/@Element",
@@ -137,7 +137,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:40 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "34268fc1-1b2e-ce7c-a713-596d800544f5"
+        "x-ms-request-id": "820a7963-6d82-b6d2-06cf-27d76feac7db"
       },
       "ResponseBody": {
         "value": [
@@ -188,7 +188,7 @@
         "Content-Length": "0",
         "Date": "Thu, 20 Aug 2020 22:19:40 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "820a7963-6d82-b6d2-06cf-27d76feac7db"
+        "x-ms-request-id": "5f1b5bd9-226a-8ff8-dad8-3f304b394b41"
       },
       "ResponseBody": []
     }

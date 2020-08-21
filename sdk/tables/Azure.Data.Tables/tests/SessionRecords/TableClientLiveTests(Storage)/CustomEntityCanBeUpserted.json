@@ -23,7 +23,7 @@
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable4k2syqpc"
+        "TableName": "testtableclmmnrne"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://td29f528fe8af4d53prim.table.core.windows.net/testtable4k2syqpc(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtableclmmnrne(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": [
@@ -55,7 +55,7 @@
           "application/json"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "117",
+        "Content-Length": "105",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-90807b4a5e8e5849ae5ca2314cfc99f8-2d0f57fdd0bdfc4e-00",
@@ -72,8 +72,7 @@
         "StringTypeProperty": "This is the original",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -93,7 +92,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://td29f528fe8af4d53prim.table.core.windows.net/testtable4k2syqpc()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtableclmmnrne()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -141,7 +140,7 @@
       }
     },
     {
-      "RequestUri": "https://td29f528fe8af4d53prim.table.core.windows.net/testtable4k2syqpc(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtableclmmnrne(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": [
@@ -188,7 +187,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://td29f528fe8af4d53prim.table.core.windows.net/testtable4k2syqpc()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtableclmmnrne()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -274,8 +273,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1448417861",
-    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
-    "TABLES_STORAGE_ACCOUNT_NAME": "td29f528fe8af4d53prim"
+    "RandomSeed": "132765558",
+    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "",
+    "TABLES_STORAGE_ACCOUNT_NAME": "chrissscratch"
   }
 }

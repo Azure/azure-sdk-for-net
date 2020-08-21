@@ -33,7 +33,7 @@
         "Location": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/Tables(\u0027testtablemylg8nep\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "0a628c99-7fd7-cc02-b004-a3e34d73de56"
+        "x-ms-request-id": "361aac61-58c7-32f1-6a71-a7d24595f0fc"
       },
       "ResponseBody": {
         "TableName": "testtablemylg8nep",
@@ -65,7 +65,7 @@
         "Content-Length": "0",
         "Date": "Thu, 20 Aug 2020 22:19:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "361aac61-58c7-32f1-6a71-a7d24595f0fc"
+        "x-ms-request-id": "7557d7f2-ed2d-d984-0d80-10f7ca947acc"
       },
       "ResponseBody": []
     }

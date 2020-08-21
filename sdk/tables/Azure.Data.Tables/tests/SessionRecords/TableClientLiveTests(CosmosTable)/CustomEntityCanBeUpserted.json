@@ -33,7 +33,7 @@
         "Location": "https://td29f528fe8af4d53prim.table.cosmos.azure.com/Tables(\u0027testtable4k2syqpc\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "7039af77-780e-68f7-c240-8fdd6089e1c2"
+        "x-ms-request-id": "91841705-97ac-766d-7399-ac85f473bac4"
       },
       "ResponseBody": {
         "TableName": "testtable4k2syqpc",
@@ -49,7 +49,7 @@
           "application/json"
         ],
         "Authorization": "Sanitized",
-        "Content-Length": "117",
+        "Content-Length": "105",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-3f592cab6d391d4e964dbbb8c5ff0902-8a1a88eb35f8184d-00",
@@ -66,8 +66,7 @@
         "StringTypeProperty": "This is the original",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -76,7 +75,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:45 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-20T22%3A19%3A46.5571336Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "ac918417-6d97-7376-99ac-85f473bac456"
+        "x-ms-request-id": "e56606a3-42a7-1daa-4c90-afe3b9cb14b8"
       },
       "ResponseBody": []
     },
@@ -106,7 +105,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:45 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e56606a3-42a7-1daa-4c90-afe3b9cb14b8"
+        "x-ms-request-id": "bb9d8147-2c1a-42df-c3fc-74cc72744e86"
       },
       "ResponseBody": {
         "value": [
@@ -159,7 +158,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:45 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-20T22%3A19%3A46.7030536Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "bb9d8147-2c1a-42df-c3fc-74cc72744e86"
+        "x-ms-request-id": "83bd86cb-dc7b-d45e-da73-5f07bd92bace"
       },
       "ResponseBody": []
     },
@@ -189,7 +188,7 @@
         "Date": "Thu, 20 Aug 2020 22:19:45 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "83bd86cb-dc7b-d45e-da73-5f07bd92bace"
+        "x-ms-request-id": "f1accc98-081c-763c-2623-22aacddeabd8"
       },
       "ResponseBody": {
         "value": [
@@ -230,7 +229,7 @@
         "Content-Length": "0",
         "Date": "Thu, 20 Aug 2020 22:19:47 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "f1accc98-081c-763c-2623-22aacddeabd8"
+        "x-ms-request-id": "32182941-910e-6a3d-23c8-e1a6cdd88430"
       },
       "ResponseBody": []
     }
