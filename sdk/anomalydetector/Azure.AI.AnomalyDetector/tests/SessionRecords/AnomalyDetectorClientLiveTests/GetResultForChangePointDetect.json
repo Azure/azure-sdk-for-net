@@ -7,12 +7,12 @@
         "Content-Length": "15012",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e4cc38dcb808aa4ea19bc18b969e3cc7-afba2fe2dbe78e4d-00",
+        "traceparent": "00-5e65dd822b447943ad8076bc596bb292-27ad0276b0845842-00",
         "User-Agent": [
-          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200820.1",
+          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200821.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "cfcdbd95372898023572a2c70ea01529",
+        "x-ms-client-request-id": "5fb0a9b3920a359b69d524321534e63a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1054,11 +1054,11 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f5d96ab5-5c4b-4717-a723-11756722b7e8",
+        "apim-request-id": "a1095d16-2b58-424e-817a-620ef5850ba9",
         "Content-Length": "6887",
         "Content-Type": "application/json",
         "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
-        "Date": "Fri, 21 Aug 2020 17:13:21 GMT",
+        "Date": "Fri, 21 Aug 2020 18:14:58 GMT",
         "model-id": "60",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
@@ -1590,6 +1590,6 @@
   "Variables": {
     "ANOMALY_DETECTOR_API_KEY": "Sanitized",
     "ANOMALY_DETECTOR_ENDPOINT": "https://shivangitest.cognitiveservices.azure.com/",
-    "RandomSeed": "1109630441"
+    "RandomSeed": "2122251739"
   }
 }
