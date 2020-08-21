@@ -444,6 +444,53 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(string.Empty, response.FirstOrDefault().Matches.FirstOrDefault().Text);
         }
 
+        [Test]
+        public async Task DeserializeTextAnalyticsError()
+        {
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""0"",
+                            ""keyPhrases"": [],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [
+                        {
+                            ""id"": ""1"",
+                            ""error"": {
+                                ""code"": ""InvalidArgument"",
+                                ""message"": ""Invalid document in request."",
+                                ""innererror"": {
+                                    ""code"": ""InvalidDocument"",
+                                    ""message"": ""Document text is empty.""
+                                }
+                            }
+                        }
+                    ],
+                    ""modelVersion"": ""2020-07-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>()
+            {
+                "Something smells",
+                ""
+            };
+
+            ExtractKeyPhrasesResultCollection result = await client.ExtractKeyPhrasesBatchAsync(documents);
+            var resultError = result[1];
+            Assert.IsTrue(resultError.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
+            Assert.AreEqual("Document text is empty.", resultError.Error.Message);
+        }
+
         private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
         {
             json.WriteStartObject();

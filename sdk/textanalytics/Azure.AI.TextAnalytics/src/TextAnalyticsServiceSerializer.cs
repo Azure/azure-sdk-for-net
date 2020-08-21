@@ -16,28 +16,6 @@ namespace Azure.AI.TextAnalytics
     {
         #region Deserialize Common
 
-        internal static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
-        {
-            List<TextAnalyticsResult> errors = new List<TextAnalyticsResult>();
-
-            if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
-            {
-                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
-                {
-                    string id = default;
-
-                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
-                        id = idValue.ToString();
-                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
-                    {
-                        errors.Add(new TextAnalyticsResult(id, ReadTextAnalyticsError(errorValue)));
-                    }
-                }
-            }
-
-            return errors;
-        }
-
         internal static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
         {
             string errorCode = default;
