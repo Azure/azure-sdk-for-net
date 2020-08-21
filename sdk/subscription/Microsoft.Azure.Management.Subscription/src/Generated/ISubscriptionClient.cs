@@ -79,5 +79,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IAliasOperations.
+        /// </summary>
+        IAliasOperations Alias { get; }
+
     }
 }

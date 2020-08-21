@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Subscription
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IAliasOperations.
+        /// </summary>
+        public virtual IAliasOperations Alias { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SubscriptionClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -329,6 +334,7 @@ namespace Microsoft.Azure.Management.Subscription
             Tenants = new TenantsOperations(this);
             Subscription = new SubscriptionOperations(this);
             Operations = new Operations(this);
+            Alias = new AliasOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

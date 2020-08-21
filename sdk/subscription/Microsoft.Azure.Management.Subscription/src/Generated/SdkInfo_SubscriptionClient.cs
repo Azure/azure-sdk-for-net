@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Subscription
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Subscription", "Alias", "2020-09-01"),
                 new Tuple<string, string, string>("Subscription", "Operations", "2020-09-01"),
                 new Tuple<string, string, string>("Subscription", "Subscription", "2020-09-01"),
                 new Tuple<string, string, string>("SubscriptionClient", "Subscriptions", "2016-06-01"),
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.Subscription
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/subscription/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\github2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "a7ca142c3f0f290fdda778f26f4f1fab65f71cf9";
+      public static readonly String GithubCommidId = "1d90950c9db002ca44a56873c5a2ea3c96f533f8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
