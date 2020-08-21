@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablevpg58sjh\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "1b0428a3-dc69-2563-100d-e51e83ce2b0c"
+        "x-ms-request-id": "ac224973-86a0-bc94-bf53-2a3fe296d15e"
       },
       "ResponseBody": {
         "TableName": "testtablevpg58sjh",
@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -116,8 +116,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -137,7 +136,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -210,8 +209,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -231,7 +229,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1731",
+        "Content-Length": "1719",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -304,8 +302,7 @@
         "String": "0003",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -325,7 +322,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -398,8 +395,7 @@
         "String": "0004",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -436,7 +432,7 @@
         "Date": "Fri, 21 Aug 2020 16:25:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "cccd6054-24d1-ea05-029f-6ab2dd17d06e"
+        "x-ms-request-id": "6d32efe6-e4fb-45b9-048a-8fb8b4ef016f"
       },
       "ResponseBody": {
         "value": [
@@ -604,7 +600,7 @@
         "Date": "Fri, 21 Aug 2020 16:25:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6d32efe6-e4fb-45b9-048a-8fb8b4ef016f"
+        "x-ms-request-id": "51c0fb80-7756-17a9-827a-1772c25e5c05"
       },
       "ResponseBody": {
         "value": [
@@ -818,7 +814,7 @@
         "Date": "Fri, 21 Aug 2020 16:25:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "51c0fb80-7756-17a9-827a-1772c25e5c05"
+        "x-ms-request-id": "2d90accf-5af1-7064-a788-c746954d3613"
       },
       "ResponseBody": {
         "value": [
@@ -1031,7 +1027,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 16:25:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "2d90accf-5af1-7064-a788-c746954d3613"
+        "x-ms-request-id": "e232fb9e-7f56-6f18-451b-eb81cc4682a6"
       },
       "ResponseBody": []
     }

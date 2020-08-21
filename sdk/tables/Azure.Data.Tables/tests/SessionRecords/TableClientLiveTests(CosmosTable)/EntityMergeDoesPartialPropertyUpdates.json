@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable4bf0nn80\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "9236a22d-101a-015a-89c7-124831509a8d"
+        "x-ms-request-id": "618bebbc-4269-39d4-0424-d20d5ecbf79b"
       },
       "ResponseBody": {
         "TableName": "testtable4bf0nn80",
@@ -59,7 +59,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:53:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "618bebbc-4269-39d4-0424-d20d5ecbf79b"
+        "x-ms-request-id": "7123b967-3d31-5397-08ac-3c0ef459bcfe"
       },
       "ResponseBody": []
     }

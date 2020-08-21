@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablefg4w5djl\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "5bffaa2f-b66f-f882-867a-7207063a5924"
+        "x-ms-request-id": "744f554f-a333-1a9f-22bc-8f8fa3af4468"
       },
       "ResponseBody": {
         "TableName": "testtablefg4w5djl",
@@ -68,7 +68,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A59.2350728Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "33744f55-9fa3-221a-bc8f-8fa3af446847"
+        "x-ms-request-id": "1bc2b06f-2f33-ade3-b8f9-d91104229308"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "1bc2b06f-2f33-ade3-b8f9-d91104229308"
+        "x-ms-request-id": "3a67df7a-331d-0a8c-e439-b226f255d635"
       },
       "ResponseBody": {
         "value": [
@@ -144,7 +144,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A59.3721864Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "3a67df7a-331d-0a8c-e439-b226f255d635"
+        "x-ms-request-id": "8997c00a-0996-251c-6cc7-7aaac6081e9a"
       },
       "ResponseBody": []
     },
@@ -171,7 +171,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "8997c00a-0996-251c-6cc7-7aaac6081e9a"
+        "x-ms-request-id": "cf2987fb-2edc-3b29-24b7-36fa7cbcba63"
       },
       "ResponseBody": {
         "value": [
@@ -220,10 +220,10 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "cf2987fb-2edc-3b29-24b7-36fa7cbcba63"
+        "x-ms-request-id": "4307a322-098a-7071-c342-cd56b8e143db"
       },
       "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022UpdateConditionNotSatisfied\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022The update condition specified in the request was not satisfied.\\nRequestID:cf2987fb-2edc-3b29-24b7-36fa7cbcba63\\n\u0022}}}\r\n"
+        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022UpdateConditionNotSatisfied\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022The update condition specified in the request was not satisfied.\\nRequestID:4307a322-098a-7071-c342-cd56b8e143db\\n\u0022}}}\r\n"
       ]
     },
     {
@@ -260,7 +260,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A59.5926536Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "4307a322-098a-7071-c342-cd56b8e143db"
+        "x-ms-request-id": "6b2b181a-062c-dc59-965b-64dfd322a8af"
       },
       "ResponseBody": []
     },
@@ -287,7 +287,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:59 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6b2b181a-062c-dc59-965b-64dfd322a8af"
+        "x-ms-request-id": "2387170c-da01-f10f-16b8-0c9a60d38343"
       },
       "ResponseBody": {
         "value": [
@@ -324,7 +324,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:53:59 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "2387170c-da01-f10f-16b8-0c9a60d38343"
+        "x-ms-request-id": "64df5a73-4f91-1c37-4a2b-ad2ea5919da1"
       },
       "ResponseBody": []
     }

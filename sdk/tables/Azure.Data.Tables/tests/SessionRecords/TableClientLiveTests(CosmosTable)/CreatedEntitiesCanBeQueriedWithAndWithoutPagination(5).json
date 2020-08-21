@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablejjw24y0d\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "4919c5e9-e738-e3f2-f2a1-d2e91d8e8e09"
+        "x-ms-request-id": "016b9873-806f-bcaf-3298-8eb25af3d223"
       },
       "ResponseBody": {
         "TableName": "testtablejjw24y0d",
@@ -1062,7 +1062,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-continuation-NextPartitionKey": "{\u0022token\u0022:\u0022b1w3AOypgcsFAAAAAAAAAA==\u0022,\u0022range\u0022:{\u0022min\u0022:\u0022\u0022,\u0022max\u0022:\u0022FF\u0022}}",
         "x-ms-continuation-NextRowKey": "NA",
-        "x-ms-request-id": "de93bab3-021b-cd42-8e2e-dce7e6f947c9"
+        "x-ms-request-id": "1a4bf010-3500-bdcc-2895-098540dd549c"
       },
       "ResponseBody": {
         "value": [
@@ -1189,7 +1189,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-continuation-NextPartitionKey": "{\u0022token\u0022:\u0022b1w3AOypgcsKAAAAAAAAAA==\u0022,\u0022range\u0022:{\u0022min\u0022:\u0022\u0022,\u0022max\u0022:\u0022FF\u0022}}",
         "x-ms-continuation-NextRowKey": "NA",
-        "x-ms-request-id": "1a4bf010-3500-bdcc-2895-098540dd549c"
+        "x-ms-request-id": "4131b6cb-5bd4-ec80-9b54-22ca75c2afb4"
       },
       "ResponseBody": {
         "value": [
@@ -1316,7 +1316,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-continuation-NextPartitionKey": "{\u0022token\u0022:\u0022b1w3AOypgcsPAAAAAAAAAA==\u0022,\u0022range\u0022:{\u0022min\u0022:\u0022\u0022,\u0022max\u0022:\u0022FF\u0022}}",
         "x-ms-continuation-NextRowKey": "NA",
-        "x-ms-request-id": "4131b6cb-5bd4-ec80-9b54-22ca75c2afb4"
+        "x-ms-request-id": "836c6baf-0369-7e5a-eed5-b586f9bd8db1"
       },
       "ResponseBody": {
         "value": [
@@ -1441,7 +1441,7 @@
         "Date": "Fri, 21 Aug 2020 15:54:15 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "836c6baf-0369-7e5a-eed5-b586f9bd8db1"
+        "x-ms-request-id": "2f1c3fda-05c8-b4f4-705e-7fac12024765"
       },
       "ResponseBody": {
         "value": [
@@ -1565,7 +1565,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:54:16 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "2f1c3fda-05c8-b4f4-705e-7fac12024765"
+        "x-ms-request-id": "d4d654e6-d170-c733-5cb3-53fea5faf3de"
       },
       "ResponseBody": []
     }

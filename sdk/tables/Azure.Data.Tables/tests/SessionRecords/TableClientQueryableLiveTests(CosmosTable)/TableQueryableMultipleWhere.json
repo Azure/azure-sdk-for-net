@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablen27f4i8q\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e9a941b5-4bc8-04c9-42b9-45621cfde9b8"
+        "x-ms-request-id": "4237b5b8-a63a-3687-965b-a77ae064fc2a"
       },
       "ResponseBody": {
         "TableName": "testtablen27f4i8q",
@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -116,8 +116,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -137,7 +136,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -210,8 +209,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -248,7 +246,7 @@
         "Date": "Fri, 21 Aug 2020 16:25:52 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "9a23ad10-6edf-0e07-b973-526da34f24dd"
+        "x-ms-request-id": "30941bbd-7768-4f69-187e-a7bb4d50762d"
       },
       "ResponseBody": {
         "value": [
@@ -323,7 +321,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 16:25:52 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "30941bbd-7768-4f69-187e-a7bb4d50762d"
+        "x-ms-request-id": "326959b6-6140-5f4b-e586-b8db1530144b"
       },
       "ResponseBody": []
     }

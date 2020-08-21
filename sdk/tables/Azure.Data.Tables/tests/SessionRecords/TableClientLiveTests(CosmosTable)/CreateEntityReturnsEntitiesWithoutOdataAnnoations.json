@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablewumpudvf\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "bfe95ab7-3b73-11d9-1f9f-6b3eebdcc436"
+        "x-ms-request-id": "a7ed91a0-6b59-0428-41c8-1b5f6fc9b6ab"
       },
       "ResponseBody": {
         "TableName": "testtablewumpudvf",
