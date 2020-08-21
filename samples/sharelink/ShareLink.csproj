@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsClientLibrary)' != 'true'">
-    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+    <!-- Define properties when not generating source -->
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\..\..\sdk\core\Azure.Core\src\Shared\</AzureCoreSharedSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
-    <!-- Uses central packages versions when generating source -->
+    <!-- Define package versions when not generating source (uses central package versions) -->
     <PackageReference Update="Azure.Core" Version="1.4.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.0" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
@@ -39,7 +40,25 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
-    <Compile Include="$(AzureCoreSharedSources)AutoRest/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
+    <!-- Include required sources when not generating source -->
+    <Compile Include="$(AzureCoreSharedSources)AutoRest/**/*.cs" Link="Shared\AutoRest\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <Target Name="CopySource">
+    <Error Text="The 'Destination' property must be specified" Condition="'$(Destination)' == ''" />
+
+    <ItemGroup>
+      <!-- Collect all sources and ensure they have a relative Link metadata property -->
+      <_Source Include="@(Compile->HasMetadata('Link'))" />
+      <_Source Include="@(Compile)" Exclude="Program.cs" Condition="@(Compile->'%(Link)') == ''">
+        <Link>%(RecursiveDir)\%(Filename)%(Extension)</Link>
+      </_Source>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_Source)"
+          DestinationFiles="@(_Source->'$(Destination)\%(Link)')"
+          OverwriteReadOnlyFiles="true"
+          SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
