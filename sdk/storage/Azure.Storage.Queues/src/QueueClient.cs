@@ -121,6 +121,10 @@ namespace Azure.Storage.Queues
         /// </summary>
         private string _name;
 
+        private QueueClientOptions.MessageEncoding _messageEncoding;
+
+        internal virtual QueueClientOptions.MessageEncoding MessageEncoding => _messageEncoding;
+
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
@@ -199,6 +203,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _messageEncoding = options.Encoding;
         }
 
         /// <summary>
@@ -291,6 +296,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _messageEncoding = options.Encoding;
         }
 
         /// <summary>
@@ -315,12 +321,16 @@ namespace Azure.Storage.Queues
         /// <param name="encryptionOptions">
         /// Options for client-side encryption.
         /// </param>
+        /// <param name="messageEncoding">
+        /// The encoding of the message sent over the wire.
+        /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipeline pipeline,
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
-            ClientSideEncryptionOptions encryptionOptions)
+            ClientSideEncryptionOptions encryptionOptions,
+            QueueClientOptions.MessageEncoding messageEncoding)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -328,6 +338,7 @@ namespace Azure.Storage.Queues
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
+            _messageEncoding = messageEncoding;
         }
         #endregion ctors
 
@@ -1410,7 +1421,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SendReceipt> SendMessage(string messageText) =>
             SendMessage(
                 messageText,
@@ -1449,7 +1459,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
             await SendMessageAsync(
                 messageText,
@@ -1493,7 +1502,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SendReceipt> SendMessage(string messageText, CancellationToken cancellationToken = default) =>
             SendMessage(
                 messageText,
@@ -1540,7 +1548,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText, CancellationToken cancellationToken = default) =>
             await SendMessageAsync(messageText,
                 cancellationToken: cancellationToken,
@@ -1593,14 +1600,13 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SendReceipt> SendMessage(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             SendMessageInternal(
-                new BinaryData(messageText),
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 false, // async
@@ -1666,14 +1672,13 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             await SendMessageInternal(
-                new BinaryData(messageText),
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 true, // async
@@ -1703,7 +1708,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{SendReceipt}"/>
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(
             BinaryData message,
             TimeSpan? visibilityTimeout = default,
@@ -1744,7 +1748,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
         private async Task<Response<SendReceipt>> SendMessageInternal(
-            BinaryData message,
+            BinaryData? message,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
@@ -1760,18 +1764,20 @@ namespace Azure.Storage.Queues
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
-                    // TODO (kasobol-msft) propagete bytes to encryptor
-                    message = UsingClientSideEncryption
-                        ? new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.ToString(), async, cancellationToken).ConfigureAwait(false))
-                        : message;
+                    if (UsingClientSideEncryption)
+                    {
+                        AssertEncodingForEncryption();
+                        // TODO (kasobol-msft) propagete bytes to encryptor
+                        message = new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false));
+                    }
 
                     Response<IEnumerable<SendReceipt>> messages =
                         await QueueRestClient.Messages.EnqueueAsync(
                             ClientDiagnostics,
                             Pipeline,
                             MessagesUri,
-                            message: new QueueSendMessage { MessageText = message.ToString() }, // TODO (kasobol-msft) transformation
+                            message: new QueueSendMessage { MessageText = EncodeMessageBody(message) },
                             version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
@@ -1980,6 +1986,7 @@ namespace Azure.Storage.Queues
                     }
                     else if (UsingClientSideEncryption)
                     {
+                        AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToQueueMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
@@ -2008,7 +2015,7 @@ namespace Azure.Storage.Queues
             {
                 MessageId = dequeuedMessageItem.MessageId,
                 PopReceipt = dequeuedMessageItem.PopReceipt,
-                Message = new BinaryData(dequeuedMessageItem.MessageText),
+                Message = DecodeMessageBody(dequeuedMessageItem.MessageText),
                 DequeueCount = dequeuedMessageItem.DequeueCount,
                 NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
                 InsertedOn = dequeuedMessageItem.InsertionTime,
@@ -2122,6 +2129,7 @@ namespace Azure.Storage.Queues
                     }
                     else if (UsingClientSideEncryption)
                     {
+                        AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToPeekedMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
@@ -2150,7 +2158,7 @@ namespace Azure.Storage.Queues
             {
                 MessageId = peekedMessageItem.MessageId,
                 DequeueCount = peekedMessageItem.DequeueCount,
-                Message = new BinaryData(peekedMessageItem.MessageText),
+                Message = DecodeMessageBody(peekedMessageItem.MessageText),
                 ExpiresOn = peekedMessageItem.ExpirationTime,
                 InsertedOn = peekedMessageItem.InsertionTime,
             };
@@ -2308,7 +2316,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
@@ -2316,7 +2323,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
-                new BinaryData(messageText),
+                ToBinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2352,7 +2359,7 @@ namespace Azure.Storage.Queues
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
-            BinaryData? message = default,
+            BinaryData? message,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
@@ -2389,7 +2396,6 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
@@ -2397,7 +2403,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
-                new BinaryData(messageText),
+                ToBinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2433,7 +2439,7 @@ namespace Azure.Storage.Queues
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
-            BinaryData? message = default,
+            BinaryData? message,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
@@ -2492,15 +2498,17 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    // TODO (kasobol-msft) pass bytes to encryptor
-                    message = UsingClientSideEncryption && message.HasValue
-                        ? new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false))
-                        : message;
+                    if (UsingClientSideEncryption)
+                    {
+                        AssertEncodingForEncryption();
+                        // TODO (kasobol-msft) pass bytes to encryptor
+                        message = new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false));
+                    }
                     QueueSendMessage queueSendMessage = null;
                     if (message.HasValue)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = message.Value.ToString() };
+                        queueSendMessage = new QueueSendMessage { MessageText = EncodeMessageBody(message.Value) };
                     }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
@@ -2528,6 +2536,58 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
+
+        #region Encoding
+        private static BinaryData? ToBinaryData(string input)
+        {
+            if (input == null)
+            {
+                return default;
+            } else
+            {
+                return new BinaryData(input);
+            }
+        }
+
+        private string EncodeMessageBody(BinaryData? binaryData)
+        {
+            if (!binaryData.HasValue)
+            {
+                return null;
+            }
+            switch (_messageEncoding)
+            {
+                case QueueClientOptions.MessageEncoding.None:
+                    return binaryData.Value.ToString();
+                case QueueClientOptions.MessageEncoding.Base64:
+                    return Convert.ToBase64String(binaryData.Value.Bytes.ToArray());
+                default:
+                    throw new ArgumentException($"Unsupported message encoding {_messageEncoding}");
+            }
+        }
+
+        private BinaryData DecodeMessageBody(string messageText)
+        {
+            // TODO (kasobol-msft) nulls?
+            switch (_messageEncoding)
+            {
+                case QueueClientOptions.MessageEncoding.None:
+                    return new BinaryData(messageText);
+                case QueueClientOptions.MessageEncoding.Base64:
+                    return new BinaryData(Convert.FromBase64String(messageText));
+                default:
+                    throw new ArgumentException($"Unsupported message encoding {_messageEncoding}");
+            }
+        }
+
+        private void AssertEncodingForEncryption()
+        {
+            if (_messageEncoding != QueueClientOptions.MessageEncoding.None)
+            {
+                throw new ArgumentException("Message encoding must be None if encryption is enabled");
+            }
+        }
+        #endregion Encoding
     }
 }
 
@@ -2551,6 +2611,7 @@ namespace Azure.Storage.Queues.Specialized
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
-                clientSideEncryptionOptions);
+                clientSideEncryptionOptions,
+                client.MessageEncoding);
     }
 }
