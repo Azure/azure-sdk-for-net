@@ -9,8 +9,6 @@ namespace Azure.AI.AnomalyDetector.Tests
 {
     public class AnomalyDetectorLiveTestBase : RecordedTestBase<AnomalyDetectorTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
-
         public AnomalyDetectorLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new AnomalyDetectorRecordedTestSanitizer();

@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
 using Azure.AI.AnomalyDetector.Tests.Infrastructure;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -53,26 +51,16 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-
-            var expectedResult = new LastDetectResponse(
-                expectedValue: 809.5658016931228F,
-                isAnomaly: false,
-                isNegativeAnomaly: false,
-                isPositiveAnomaly: false,
-                lowerMargin: 40.47829008465612F,
-                period: 12,
-                suggestedWindow: 49,
-                upperMargin: 40.47829008465612F);
-
             var result = await client.LastDetectAsync(request);
-            Assert.AreEqual(expectedResult.ExpectedValue, result.Value.ExpectedValue);
-            Assert.AreEqual(expectedResult.IsAnomaly, result.Value.IsAnomaly);
-            Assert.AreEqual(expectedResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
-            Assert.AreEqual(expectedResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(expectedResult.LowerMargin, result.Value.LowerMargin);
-            Assert.AreEqual(expectedResult.Period, result.Value.Period);
-            Assert.AreEqual(expectedResult.SuggestedWindow, result.Value.SuggestedWindow);
-            Assert.AreEqual(expectedResult.UpperMargin, result.Value.UpperMargin);
+
+            Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
+            Assert.AreEqual(false, result.Value.IsAnomaly);
+            Assert.AreEqual(false, result.Value.IsNegativeAnomaly);
+            Assert.AreEqual(false, result.Value.IsPositiveAnomaly);
+            Assert.AreEqual(40.47829008465612F, result.Value.LowerMargin);
+            Assert.AreEqual(12, result.Value.Period);
+            Assert.AreEqual(49, result.Value.SuggestedWindow);
+            Assert.AreEqual(40.47829008465612F, result.Value.UpperMargin);
         }
 
         [Test]
