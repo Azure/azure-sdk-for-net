@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-a63127b358ca2849a414b731fad91b49-3ad01c415555fd4d-00",
+        "traceparent": "00-bc308b4aecc758429f36c7638891d23b-b4bf1b009e6a894f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7f6994f78369915ad38cb4d528569f63",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:15 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,8 +25,8 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A15.5902984Z\u0027\u0022",
+        "Date": "Fri, 21 Aug 2020 16:26:26 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.2264200Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable5cadadyd\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
@@ -46,13 +46,14 @@
         "Content-Length": "1675",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-3991c918e259314598859cf4440833ea-1c2515208686d54f-00",
+        "Prefer": "return-no-content",
+        "traceparent": "00-4aac019bbc9acb4abd5764bdf5a7ed5e-083450f9d5b0c445-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "955c8e7e7662c9297e43dc477ce8bc2c",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -118,63 +119,17 @@
         "Timestamp": null,
         "ETag": null
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.0368648Z\u0027\u0022",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 16:26:26 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.7393416Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
+        "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
         "x-ms-request-id": "955c8e7e-7662-c929-7e43-dc477ce8bc2c"
       },
-      "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd/$metadata#testtable5cadadyd/@Element",
-        "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.0368648Z\u0027\u0022",
-        "DateTimeOffsetN@odata.type": "Edm.DateTime",
-        "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
-        "DateTimeOffset@odata.type": "Edm.DateTime",
-        "DateTimeOffset": "2020-01-01T01:02:00.0000000Z",
-        "DateTimeN@odata.type": "Edm.DateTime",
-        "DateTimeN": "2020-01-01T01:02:00.0000000Z",
-        "DateTime@odata.type": "Edm.DateTime",
-        "DateTime": "2020-01-01T01:02:00.0000000Z",
-        "DateTimeAsString": "2020-01-01T01:02:00.0000000Z",
-        "BoolN": false,
-        "Bool": false,
-        "BoolPrimitiveN": false,
-        "BoolPrimitive": false,
-        "Binary@odata.type": "Edm.Binary",
-        "Binary": "AQIB",
-        "BinaryPrimitive@odata.type": "Edm.Binary",
-        "BinaryPrimitive": "AQIB",
-        "DoublePrimitiveN": 1.01,
-        "DoublePrimitive": 1.01,
-        "DoubleN": 1.01,
-        "Double": 1.01,
-        "DoubleInteger": 1,
-        "GuidN@odata.type": "Edm.Guid",
-        "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90001",
-        "Guid@odata.type": "Edm.Guid",
-        "Guid": "0d391d16-97f1-4b9a-be68-4cc871f90001",
-        "IntegerPrimitiveN": 1,
-        "IntegerPrimitive": 1,
-        "Int32N": 1,
-        "Int32": 1,
-        "LongPrimitiveN@odata.type": "Edm.Int64",
-        "LongPrimitiveN": "2147483648",
-        "LongPrimitive@odata.type": "Edm.Int64",
-        "LongPrimitive": "2147483648",
-        "Int64N@odata.type": "Edm.Int64",
-        "Int64N": "123456789012",
-        "Int64@odata.type": "Edm.Int64",
-        "Int64": "2147483648",
-        "String": "0001",
-        "PartitionKey": "somPartition",
-        "RowKey": "0001",
-        "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-08-19T13:14:16.0368648Z"
-      }
+      "ResponseBody": []
     },
     {
       "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
@@ -185,13 +140,14 @@
         "Content-Length": "1673",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-e854c87b2b6e3145b59b9c45101c9ac7-f9cb626d67ef5245-00",
+        "Prefer": "return-no-content",
+        "traceparent": "00-e96f2409a485c741aaf9b50b2c2949cb-bd7da166fe2abf46-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f51641b212443a771cbfd140b15f9689",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -257,63 +213,17 @@
         "Timestamp": null,
         "ETag": null
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1138696Z\u0027\u0022",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 16:26:26 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8152200Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
+        "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
         "x-ms-request-id": "f51641b2-1244-3a77-1cbf-d140b15f9689"
       },
-      "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd/$metadata#testtable5cadadyd/@Element",
-        "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1138696Z\u0027\u0022",
-        "DateTimeOffsetN@odata.type": "Edm.DateTime",
-        "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
-        "DateTimeOffset@odata.type": "Edm.DateTime",
-        "DateTimeOffset": "2020-01-01T01:03:00.0000000Z",
-        "DateTimeN@odata.type": "Edm.DateTime",
-        "DateTimeN": "2020-01-01T01:03:00.0000000Z",
-        "DateTime@odata.type": "Edm.DateTime",
-        "DateTime": "2020-01-01T01:03:00.0000000Z",
-        "DateTimeAsString": "2020-01-01T01:03:00.0000000Z",
-        "BoolN": false,
-        "Bool": true,
-        "BoolPrimitiveN": false,
-        "BoolPrimitive": true,
-        "Binary@odata.type": "Edm.Binary",
-        "Binary": "AQIC",
-        "BinaryPrimitive@odata.type": "Edm.Binary",
-        "BinaryPrimitive": "AQIC",
-        "DoublePrimitiveN": 2.02,
-        "DoublePrimitive": 2.02,
-        "DoubleN": 2.02,
-        "Double": 2.02,
-        "DoubleInteger": 2,
-        "GuidN@odata.type": "Edm.Guid",
-        "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90002",
-        "Guid@odata.type": "Edm.Guid",
-        "Guid": "0d391d16-97f1-4b9a-be68-4cc871f90002",
-        "IntegerPrimitiveN": 2,
-        "IntegerPrimitive": 2,
-        "Int32N": 2,
-        "Int32": 2,
-        "LongPrimitiveN@odata.type": "Edm.Int64",
-        "LongPrimitiveN": "2147483649",
-        "LongPrimitive@odata.type": "Edm.Int64",
-        "LongPrimitive": "2147483649",
-        "Int64N@odata.type": "Edm.Int64",
-        "Int64N": "123456789012",
-        "Int64@odata.type": "Edm.Int64",
-        "Int64": "2147483649",
-        "String": "0002",
-        "PartitionKey": "somPartition",
-        "RowKey": "0002",
-        "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-08-19T13:14:16.1138696Z"
-      }
+      "ResponseBody": []
     },
     {
       "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
@@ -324,13 +234,14 @@
         "Content-Length": "1731",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-43e8a0994033584cadaac7d33c1de4ff-346ee580ea94cd49-00",
+        "Prefer": "return-no-content",
+        "traceparent": "00-bf671f1d9ed6ec4ca7ce73628b93f425-e19a73ba9c6d054c-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "00d2bbe0ea09817a6a9f0126a71314eb",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -396,63 +307,17 @@
         "Timestamp": null,
         "ETag": null
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1891336Z\u0027\u0022",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 16:26:26 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8910984Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
+        "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
         "x-ms-request-id": "00d2bbe0-ea09-817a-6a9f-0126a71314eb"
       },
-      "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd/$metadata#testtable5cadadyd/@Element",
-        "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1891336Z\u0027\u0022",
-        "DateTimeOffsetN@odata.type": "Edm.DateTime",
-        "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
-        "DateTimeOffset@odata.type": "Edm.DateTime",
-        "DateTimeOffset": "2020-01-01T01:04:00.0000000Z",
-        "DateTimeN@odata.type": "Edm.DateTime",
-        "DateTimeN": "2020-01-01T01:04:00.0000000Z",
-        "DateTime@odata.type": "Edm.DateTime",
-        "DateTime": "2020-01-01T01:04:00.0000000Z",
-        "DateTimeAsString": "2020-01-01T01:04:00.0000000Z",
-        "BoolN": false,
-        "Bool": false,
-        "BoolPrimitiveN": false,
-        "BoolPrimitive": false,
-        "Binary@odata.type": "Edm.Binary",
-        "Binary": "AQID",
-        "BinaryPrimitive@odata.type": "Edm.Binary",
-        "BinaryPrimitive": "AQID",
-        "DoublePrimitiveN": 3.03,
-        "DoublePrimitive": 3.03,
-        "DoubleN": 3.03,
-        "Double": 3.03,
-        "DoubleInteger": 3,
-        "GuidN@odata.type": "Edm.Guid",
-        "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
-        "Guid@odata.type": "Edm.Guid",
-        "Guid": "0d391d16-97f1-4b9a-be68-4cc871f90003",
-        "IntegerPrimitiveN": 3,
-        "IntegerPrimitive": 3,
-        "Int32N": 3,
-        "Int32": 3,
-        "LongPrimitiveN@odata.type": "Edm.Int64",
-        "LongPrimitiveN": "2147483650",
-        "LongPrimitive@odata.type": "Edm.Int64",
-        "LongPrimitive": "2147483650",
-        "Int64N@odata.type": "Edm.Int64",
-        "Int64N": "123456789012",
-        "Int64@odata.type": "Edm.Int64",
-        "Int64": "2147483650",
-        "String": "0003",
-        "PartitionKey": "somPartition",
-        "RowKey": "0003",
-        "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-08-19T13:14:16.1891336Z"
-      }
+      "ResponseBody": []
     },
     {
       "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
@@ -463,13 +328,14 @@
         "Content-Length": "1673",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-b6bc767848cca54d9b86012754ca85b5-48f62fe37d36ac4a-00",
+        "Prefer": "return-no-content",
+        "traceparent": "00-98c335ba1c6bb8429954b92e1bff7ddc-637ba3d4c2165d41-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e72288cfa93f6b1f162179a2a4e9181e",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -535,63 +401,17 @@
         "Timestamp": null,
         "ETag": null
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.2648072Z\u0027\u0022",
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 16:26:26 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.9626760Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
+        "Preference-Applied": "return-no-content",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
         "x-ms-request-id": "e72288cf-a93f-6b1f-1621-79a2a4e9181e"
       },
-      "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd/$metadata#testtable5cadadyd/@Element",
-        "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.2648072Z\u0027\u0022",
-        "DateTimeOffsetN@odata.type": "Edm.DateTime",
-        "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
-        "DateTimeOffset@odata.type": "Edm.DateTime",
-        "DateTimeOffset": "2020-01-01T01:05:00.0000000Z",
-        "DateTimeN@odata.type": "Edm.DateTime",
-        "DateTimeN": "2020-01-01T01:05:00.0000000Z",
-        "DateTime@odata.type": "Edm.DateTime",
-        "DateTime": "2020-01-01T01:05:00.0000000Z",
-        "DateTimeAsString": "2020-01-01T01:05:00.0000000Z",
-        "BoolN": false,
-        "Bool": true,
-        "BoolPrimitiveN": false,
-        "BoolPrimitive": true,
-        "Binary@odata.type": "Edm.Binary",
-        "Binary": "AQIE",
-        "BinaryPrimitive@odata.type": "Edm.Binary",
-        "BinaryPrimitive": "AQIE",
-        "DoublePrimitiveN": 4.04,
-        "DoublePrimitive": 4.04,
-        "DoubleN": 4.04,
-        "Double": 4.04,
-        "DoubleInteger": 4,
-        "GuidN@odata.type": "Edm.Guid",
-        "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
-        "Guid@odata.type": "Edm.Guid",
-        "Guid": "0d391d16-97f1-4b9a-be68-4cc871f90004",
-        "IntegerPrimitiveN": 4,
-        "IntegerPrimitive": 4,
-        "Int32N": 4,
-        "Int32": 4,
-        "LongPrimitiveN@odata.type": "Edm.Int64",
-        "LongPrimitiveN": "2147483651",
-        "LongPrimitive@odata.type": "Edm.Int64",
-        "LongPrimitive": "2147483651",
-        "Int64N@odata.type": "Edm.Int64",
-        "Int64N": "123456789012",
-        "Int64@odata.type": "Edm.Int64",
-        "Int64": "2147483651",
-        "String": "0004",
-        "PartitionKey": "somPartition",
-        "RowKey": "0004",
-        "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-08-19T13:14:16.2648072Z"
-      }
+      "ResponseBody": []
     },
     {
       "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable5cadadyd()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28not%20%28RowKey%20eq%20%270001%27%29%29",
@@ -601,11 +421,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c16653adbb15c723c7958ba411519209",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -613,7 +433,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
+        "Date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
         "x-ms-request-id": "c16653ad-bb15-c723-c795-8ba411519209"
@@ -621,7 +441,7 @@
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1138696Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8152200Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -664,10 +484,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0002",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1138696Z"
+            "Timestamp": "2020-08-21T16:26:27.8152200Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1891336Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8910984Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -710,10 +530,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1891336Z"
+            "Timestamp": "2020-08-21T16:26:27.8910984Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.2648072Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.9626760Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -756,7 +576,7 @@
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.2648072Z"
+            "Timestamp": "2020-08-21T16:26:27.9626760Z"
           }
         ]
       }
@@ -769,11 +589,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2870e6aaae3d37499b67eae771d7dc81",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -781,7 +601,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
+        "Date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
         "x-ms-request-id": "2870e6aa-ae3d-3749-9b67-eae771d7dc81"
@@ -789,7 +609,7 @@
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.0368648Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.7393416Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -832,10 +652,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0001",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.0368648Z"
+            "Timestamp": "2020-08-21T16:26:27.7393416Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1138696Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8152200Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -878,10 +698,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0002",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1138696Z"
+            "Timestamp": "2020-08-21T16:26:27.8152200Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1891336Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8910984Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -924,10 +744,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1891336Z"
+            "Timestamp": "2020-08-21T16:26:27.8910984Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.2648072Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.9626760Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -970,7 +790,7 @@
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.2648072Z"
+            "Timestamp": "2020-08-21T16:26:27.9626760Z"
           }
         ]
       }
@@ -983,11 +803,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5478e28752ac14d5655a20aa1d7b59c4",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -995,7 +815,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "Date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
         "x-ms-request-id": "5478e287-52ac-14d5-655a-20aa1d7b59c4"
@@ -1003,7 +823,7 @@
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.0368648Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.7393416Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1046,10 +866,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0001",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.0368648Z"
+            "Timestamp": "2020-08-21T16:26:27.7393416Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1138696Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8152200Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1092,10 +912,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0002",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1138696Z"
+            "Timestamp": "2020-08-21T16:26:27.8152200Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.1891336Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.8910984Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1138,10 +958,10 @@
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.1891336Z"
+            "Timestamp": "2020-08-21T16:26:27.8910984Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272020-08-19T13%3A14%3A16.2648072Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A27.9626760Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1184,7 +1004,7 @@
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-08-19T13:14:16.2648072Z"
+            "Timestamp": "2020-08-21T16:26:27.9626760Z"
           }
         ]
       }
@@ -1195,13 +1015,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-737493cdb68bb847a2e2c1ae02e57ee4-06675d7393a0f242-00",
+        "traceparent": "00-1ba232f52dfd5f46aa5f6453557223c8-a4aba93a900b9943-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200819.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bef7708ff078fee0092f26aed13c56ef",
-        "x-ms-date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1209,7 +1029,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 19 Aug 2020 13:14:16 GMT",
+        "Date": "Fri, 21 Aug 2020 16:26:28 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "x-ms-request-id": "bef7708f-f078-fee0-092f-26aed13c56ef"
       },
@@ -1219,6 +1039,6 @@
   "Variables": {
     "RandomSeed": "2132388481",
     "TABLES_COSMOS_ACCOUNT_NAME": "chrissprim",
-    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": ""
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

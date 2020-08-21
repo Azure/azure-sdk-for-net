@@ -27,6 +27,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
+        private ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
@@ -289,7 +290,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The added Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<T>> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -300,11 +301,11 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.InsertEntityAsync(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -320,7 +321,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The added Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<T> AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -331,11 +332,11 @@ namespace Azure.Data.Tables
             {
                 var response = _tableOperations.InsertEntity(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
