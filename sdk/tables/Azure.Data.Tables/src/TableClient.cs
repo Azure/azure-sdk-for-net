@@ -906,6 +906,76 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// Placeholder for batch operations. This is just being used for testing.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entities"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal virtual async Task<Response<List<Response>>> BatchTestAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            scope.Start();
+            try
+            {
+                var batch = TableRestClient.CreateBatchContent();
+                var changeset = batch.AddChangeset();
+                foreach (var entity in entities)
+                {
+                    _tableOperations.AddInsertEntityRequest(
+                        changeset,
+                        _table,
+                        null,
+                        null,
+                        null,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format });
+                }
+                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Placeholder for batch operations. This is just being used for testing.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entities"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal virtual Response<List<Response>> BatchTest<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            scope.Start();
+            try
+            {
+                var batch = TableRestClient.CreateBatchContent();
+                var changeset = batch.AddChangeset();
+                foreach (var entity in entities)
+                {
+                    _tableOperations.AddInsertEntityRequest(
+                        changeset,
+                        _table,
+                        null,
+                        null,
+                        null,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format });
+                }
+                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates an Odata filter query string from the provided expression.
         /// </summary>
         /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
