@@ -11,8 +11,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <ItemGroup>
-      <!-- Project reference is necessary until the Event Hubs Core library 5.2.1-preview.1 is available in package form.-->
+  <!-- Project reference is necessary until the Event Hubs Core library 5.2.1-preview.1 is available in package form.-->
   <ItemGroup>
      <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
