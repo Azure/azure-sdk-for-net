@@ -238,6 +238,12 @@ directive:
     const path = $.schema["$ref"].replace(/[#].*$/, "#/definitions/QueueSendMessage");
     $.schema = {"$ref": path};
     $["x-ms-client-name"] = "message";
+- from: swagger-document
+  where: $.parameters.RequiredQueueMessage
+  transform: >
+    const path = $.schema["$ref"].replace(/[#].*$/, "#/definitions/QueueSendMessage");
+    $.schema = {"$ref": path};
+    $["x-ms-client-name"] = "message";
 ```
 
 ### DequeuedMessage
