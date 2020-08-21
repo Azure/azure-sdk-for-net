@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "f89a1358885c5a4d7e27bd45b3ae8b8a",
@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:37 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:26 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -35,7 +35,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "7091dd268409dfe995f799a112d9b79d",
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:37 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:26 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -63,7 +63,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "4d548383587aa8ee0c7129c7e9837488",
@@ -74,7 +74,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:37 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:26 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -88,11 +88,12 @@
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "804",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "65dcb4b44ff6b08f19c690b4b96b4e05",
@@ -103,10 +104,10 @@
       "ResponseHeaders": {
         "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;135050739\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-08-20T23:51:38.5549385\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;135050739\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-08-21T02:42:28.1287192\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin980686438?api-version=2020-05-31-preview",
@@ -116,7 +117,7 @@
         "Content-Length": "150",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "082b2ea7f63584aba3c8fc13bf17ab74",
@@ -127,13 +128,13 @@
       "ResponseHeaders": {
         "Content-Length": "659",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
-        "ETag": "W/\u002244be9c09-36fb-4b58-aae7-b8ffc590ae2e\u0022",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
+        "ETag": "W/\u0022b4339f9f-fc7e-40ad-ad77-a456c9bd31a8\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomTwin980686438",
-        "$etag": "W/\u002244be9c09-36fb-4b58-aae7-b8ffc590ae2e\u0022",
+        "$etag": "W/\u0022b4339f9f-fc7e-40ad-ad77-a456c9bd31a8\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -178,7 +179,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "255e192538db348ff4a433b3c83aefa1",
@@ -189,13 +190,13 @@
       "ResponseHeaders": {
         "Content-Length": "659",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
-        "ETag": "W/\u002244be9c09-36fb-4b58-aae7-b8ffc590ae2e\u0022",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
+        "ETag": "W/\u0022b4339f9f-fc7e-40ad-ad77-a456c9bd31a8\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomTwin980686438",
-        "$etag": "W/\u002244be9c09-36fb-4b58-aae7-b8ffc590ae2e\u0022",
+        "$etag": "W/\u0022b4339f9f-fc7e-40ad-ad77-a456c9bd31a8\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -237,12 +238,13 @@
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin980686438?api-version=2020-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "131",
         "Content-Type": "application/json; charset=utf-8",
         "If-Match": "*",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "bb2024226b57be520857c22e527bf101",
@@ -252,8 +254,8 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
-        "ETag": "W/\u0022f7184ec4-3702-46e1-a49a-0207b548a69e\u0022",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
+        "ETag": "W/\u0022cb80f455-1ec2-4a44-b386-afd2ea7c0476\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -265,7 +267,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "9f8e1c1b290d6e2a9ff71491c2f7bc68",
@@ -275,7 +277,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -287,7 +289,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "9af05bd8f0f7ba1cc6a01c837560e178",
@@ -298,7 +300,7 @@
       "ResponseHeaders": {
         "Content-Length": "270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -315,7 +317,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.7",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.8",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ab9832b24facf993f9b11c6056c1fc10",
@@ -325,14 +327,14 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 20 Aug 2020 23:51:38 GMT",
+        "Date": "Fri, 21 Aug 2020 02:42:28 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DIGITALTWINS_URL": "fakeHost.api.wus2.digitaltwins.azure.net",
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
     "RandomSeed": "976032244"
   }
 }
