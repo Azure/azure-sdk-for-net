@@ -58,6 +58,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk's size.</param>
         /// <param name="diskSizeBytes">The size of the disk in bytes. This
         /// field is read only.</param>
+        /// <param name="diskState">The state of the snapshot. Possible values
+        /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
+        /// 'ReadyToUpload', 'ActiveUpload'</param>
         /// <param name="uniqueId">Unique Guid identifying the
         /// resource.</param>
         /// <param name="encryptionSettingsCollection">Encryption settings
@@ -75,7 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -86,6 +89,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
             DiskSizeBytes = diskSizeBytes;
+            DiskState = diskState;
             UniqueId = uniqueId;
             EncryptionSettingsCollection = encryptionSettingsCollection;
             ProvisioningState = provisioningState;
@@ -154,6 +158,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskSizeBytes")]
         public long? DiskSizeBytes { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the state of the snapshot. Possible values include:
+        /// 'Unattached', 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
+        /// 'ActiveUpload'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskState")]
+        public string DiskState { get; set; }
 
         /// <summary>
         /// Gets unique Guid identifying the resource.

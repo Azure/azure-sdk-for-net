@@ -35,7 +35,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DiskEncryptionSetUpdate class.
         /// </summary>
         /// <param name="encryptionType">Possible values include:
-        /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
         /// <param name="tags">Resource tags</param>
@@ -54,7 +53,6 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets possible values include:
-        /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
         /// </summary>
