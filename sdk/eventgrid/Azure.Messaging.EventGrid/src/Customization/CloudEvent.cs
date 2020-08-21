@@ -75,9 +75,11 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
             Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(dataContentType, nameof(dataContentType));
 
             Source = source;
             Type = type;
+            DataContentType = dataContentType;
 
             if (data is IEnumerable<byte> enumerable)
             {
@@ -105,6 +107,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(dataContentType, nameof(dataContentType));
 
             Source = source;
             Type = type;
