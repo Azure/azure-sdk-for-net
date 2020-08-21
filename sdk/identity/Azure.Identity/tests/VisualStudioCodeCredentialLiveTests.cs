@@ -98,6 +98,19 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true)]
+        public void AuthenticateWithVscCredential_NoVscInstalled()
+        {
+            var cloudName = Guid.NewGuid().ToString();
+
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, default));
+
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+        }
+
+        [Test]
         public void AuthenticateWithVscCredential_NoRefreshToken()
         {
             var tenantId = TestEnvironment.TestTenantId;
