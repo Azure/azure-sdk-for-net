@@ -18,7 +18,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     {
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
-        private static readonly string SdkVersion = SdkVersionUtils.GetSdkVersion();
 
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
@@ -80,8 +79,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             // TODO: "ai.location.ip"
-
-            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersion;
+            // TODO: Handle exception
+            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
             return envelope;
         }

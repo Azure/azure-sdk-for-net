@@ -5,24 +5,32 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class SdkVersionUtils
     {
-        internal static string GetSdkVersion()
-        {
-            Version dotnetSdkVersion = GetVersion(typeof(object));
-            Version otSdkVersion = GetVersion(typeof(OpenTelemetry.Sdk));
-            Version extensionVersion = GetVersion(typeof(OpenTelemetry.Exporter.AzureMonitor.AzureMonitorTraceExporter));
+        private static string sdkVersion;
 
-            return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:ot{otSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
+        internal static string SdkVersion {
+            get
+            {
+                return sdkVersion ??= GetSdkVersion();
+            }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetSdkVersion()
+        {
+            Version dotnetSdkVersion = GetVersion(typeof(object));
+            Version otelSdkVersion = GetVersion(typeof(OpenTelemetry.Sdk));
+            Version extensionVersion = GetVersion(typeof(OpenTelemetry.Exporter.AzureMonitor.AzureMonitorTraceExporter));
+
+            return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
+        }
+
         private static Version GetVersion(Type type)
         {
+            // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
             var versionString = type.Assembly.GetCustomAttributes(false)
                                                 .OfType<AssemblyFileVersionAttribute>()
                                                 .First()
