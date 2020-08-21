@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
-    public class DocumentDBManagementTestEnvironment : TestEnvironment
+    public class CosmosDBManagementTestEnvironment : TestEnvironment
     {
-        public DocumentDBManagementTestEnvironment() : base("documentdbmgmt")
+        public CosmosDBManagementTestEnvironment() : base("cosmosdb")
         {
         }
     }
