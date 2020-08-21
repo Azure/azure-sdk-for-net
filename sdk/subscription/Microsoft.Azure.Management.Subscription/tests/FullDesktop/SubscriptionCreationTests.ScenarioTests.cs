@@ -62,20 +62,20 @@ namespace FullDesktop.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                const string aliasName = "TestAlias";
+                const string aliasName = "navyprod1";
                 var putAliasRequest = new PutAliasRequest()
                 {
                     Properties = new PutAliasRequestProperties()
                     {
                         DisplayName = "TestSub",
                         Workload = Workload.Production,
-                        BillingScope = ""
+                        BillingScope = "/providers/Microsoft.Billing/billingAccounts/4756419/enrollmentAccounts/224190"
                     }
                 };
 
                 var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
-                var subscriptionResult = client.Subscription.CreateAliasWithHttpMessagesAsync(
+                var subscriptionResult = client.Alias.CreateWithHttpMessagesAsync(
                     aliasName, putAliasRequest).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.Equal(HttpStatusCode.OK, subscriptionResult.Response.StatusCode);

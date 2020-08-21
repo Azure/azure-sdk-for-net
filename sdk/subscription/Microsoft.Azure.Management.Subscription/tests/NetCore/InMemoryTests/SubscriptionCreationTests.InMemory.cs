@@ -57,7 +57,7 @@ namespace ResourceGroups.Tests
             };
 
             var subscriptionResult = await GetSubscriptionClient(handler)
-                .Subscription.CreateAliasWithHttpMessagesAsync(Guid.NewGuid().ToString(), putAliasRequest);
+                .Alias.CreateWithHttpMessagesAsync(Guid.NewGuid().ToString(), putAliasRequest);
             Assert.NotNull(subscriptionResult);
             Assert.NotNull(subscriptionResult.Response);
             Assert.True(subscriptionResult.Response.IsSuccessStatusCode);
