@@ -22,8 +22,8 @@ pr:
     include:
     - sdk/dns/
 
-stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: dns
     ArtifactName: packages

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,43 +8,58 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Azure.Core
 {
     /// <summary>
     ///  Provides a container for content encoded using multipart/form-data MIME type.
     /// </summary>
-    internal class MultipartFormDataContent : RequestContent
+    internal class MultipartContent : RequestContent
     {
         #region Fields
 
         private const string CrLf = "\r\n";
-        private const string FormData = "form-data";
+        private const string ColonSP = ": ";
 
         private static readonly int s_crlfLength = GetEncodedLength(CrLf);
         private static readonly int s_dashDashLength = GetEncodedLength("--");
-        private static readonly int s_colonSpaceLength = GetEncodedLength(": ");
+        private static readonly int s_colonSpaceLength = GetEncodedLength(ColonSP);
 
         private readonly List<MultipartRequestContent> _nestedContent;
+        private readonly string _subtype;
         private readonly string _boundary;
+        internal readonly Dictionary<string, string> _headers;
 
         #endregion Fields
 
         #region Construction
 
-        /// <summary>
-        ///  Initializes a new instance of the <see cref="MultipartFormDataContent"/> class.
-        /// </summary>
-        public MultipartFormDataContent() : this(GetDefaultBoundary())
+        public MultipartContent()
+            : this("mixed", GetDefaultBoundary())
+        { }
+
+        public MultipartContent(string subtype)
+            : this(subtype, GetDefaultBoundary())
         { }
 
         /// <summary>
-        ///  Initializes a new instance of the <see cref="MultipartFormDataContent"/> class.
+        ///  Initializes a new instance of the <see cref="MultipartContent"/> class.
         /// </summary>
+        /// <param name="subtype">The multipart sub type.</param>
         /// <param name="boundary">The boundary string for the multipart form data content.</param>
-        public MultipartFormDataContent(string boundary)
+        public MultipartContent(string subtype, string boundary)
         {
             ValidateBoundary(boundary);
-            _boundary = boundary;
+            _subtype = subtype;
+
+            // see https://www.ietf.org/rfc/rfc1521.txt page 29.
+            _boundary = boundary.Contains(":") ? $"\"{boundary}\"" : boundary;
+            _headers = new Dictionary<string, string>
+            {
+                [HttpHeader.Names.ContentType] = $"multipart/{_subtype}; boundary={_boundary}"
+            };
+
             _nestedContent = new List<MultipartRequestContent>();
         }
 
@@ -97,7 +112,7 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         public void ApplyToRequest(Request request)
         {
-            request.Headers.Add("Content-Type", $"multipart/form-data;boundary=\"{_boundary}\"");
+            request.Headers.Add(HttpHeader.Names.ContentType, $"multipart/{_subtype}; boundary={_boundary}");
         }
 
         /// <summary>
@@ -105,10 +120,10 @@ namespace Azure.Core
         ///  get serialized to multipart/form-data MIME type.
         /// </summary>
         /// <param name="content">The Request content to add to the collection.</param>
-        public void Add(RequestContent content)
+        public virtual void Add(RequestContent content)
         {
             Argument.AssertNotNull(content, nameof(content));
-            AddInternal(content, null, null, null);
+            AddInternal(content, null);
         }
 
         /// <summary>
@@ -117,69 +132,20 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The Request content to add to the collection.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(RequestContent content, Dictionary<string, string> headers)
+        public virtual void Add(RequestContent content, Dictionary<string, string> headers)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(headers, nameof(headers));
 
-            AddInternal(content, headers, null, null);
+            AddInternal(content, headers);
         }
 
-        /// <summary>
-        ///  Add HTTP content to a collection of RequestContent objects that
-        ///  get serialized to multipart/form-data MIME type.
-        /// </summary>
-        /// <param name="content">The Request content to add to the collection.</param>
-        /// <param name="name">The name for the request content to add.</param>
-        /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(RequestContent content, string name, Dictionary<string, string>? headers)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
-
-            AddInternal(content, headers, name, null);
-        }
-
-        /// <summary>
-        ///  Add HTTP content to a collection of RequestContent objects that
-        ///  get serialized to multipart/form-data MIME type.
-        /// </summary>
-        /// <param name="content">The Request content to add to the collection.</param>
-        /// <param name="name">The name for the request content to add.</param>
-        /// <param name="fileName">The file name for the reuest content to add to the collection.</param>
-        /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(RequestContent content, string name, string fileName, Dictionary<string, string>? headers)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
-            Argument.AssertNotNullOrWhiteSpace(fileName, nameof(fileName));
-
-            AddInternal(content, headers, name, fileName);
-        }
-
-        private void AddInternal(RequestContent content, Dictionary<string, string>? headers, string? name, string? fileName)
+        private void AddInternal(RequestContent content, Dictionary<string, string> headers)
         {
             if (headers == null)
             {
                 headers = new Dictionary<string, string>();
             }
-
-            if (!headers.ContainsKey("Content-Disposition"))
-            {
-                var value = FormData;
-
-                if (name != null)
-                {
-                    value = value + "; name=" + name;
-                }
-                if (fileName != null)
-                {
-                    value = value + "; filename=" + fileName;
-                }
-
-                headers.Add("Content-Disposition", value);
-            }
-
             _nestedContent.Add(new MultipartRequestContent(content, headers));
         }
 
@@ -188,7 +154,7 @@ namespace Azure.Core
         #region Dispose
 
         /// <summary>
-        ///  Frees resources held by the <see cref="MultipartFormDataContent"/> object.
+        ///  Frees resources held by the <see cref="MultipartContent"/> object.
         /// </summary>
         public override void Dispose()
         {
@@ -197,7 +163,6 @@ namespace Azure.Core
                 content.RequestContent.Dispose();
             }
             _nestedContent.Clear();
-
         }
 
         #endregion Dispose

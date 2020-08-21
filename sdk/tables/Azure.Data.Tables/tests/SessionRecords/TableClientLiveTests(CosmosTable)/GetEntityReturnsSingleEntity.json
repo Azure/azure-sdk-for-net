@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablewh818pgf\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "de312ebd-9aaa-dd4a-d5fe-a8204e8a61d9"
+        "x-ms-request-id": "b0e97e5c-f45f-b31e-f35a-681adcf18450"
       },
       "ResponseBody": {
         "TableName": "testtablewh818pgf",
@@ -81,7 +81,7 @@
         "Date": "Tue, 18 Aug 2020 23:36:04 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-18T23%3A36%3A05.5311368Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "b0e97e5c-f45f-b31e-f35a-681adcf18450"
+        "x-ms-request-id": "7e9e21bc-3100-47c6-835b-feee7ef99ee1"
       },
       "ResponseBody": []
     },
@@ -110,7 +110,7 @@
         "ETag": "W/\u0022datetime\u00272020-08-18T23%3A36%3A05.5311368Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "7e9e21bc-3100-47c6-835b-feee7ef99ee1"
+        "x-ms-request-id": "31dd970b-07c6-c870-107e-ea50312f01e3"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablewh818pgf/$metadata#testtablewh818pgf/@Element",
@@ -155,7 +155,7 @@
         "Content-Length": "0",
         "Date": "Tue, 18 Aug 2020 23:36:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "31dd970b-07c6-c870-107e-ea50312f01e3"
+        "x-ms-request-id": "2c64577a-e2ec-2bd9-b7a2-2d03f62f35fa"
       },
       "ResponseBody": []
     }
