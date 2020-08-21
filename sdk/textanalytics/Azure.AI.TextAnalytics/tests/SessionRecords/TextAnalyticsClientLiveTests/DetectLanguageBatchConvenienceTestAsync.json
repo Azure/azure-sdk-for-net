@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t16fb770993214e8c-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages?model-version=2019-10-01\u0026showStats=false",
+      "RequestUri": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages?model-version=2019-10-01\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "177",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-aabf9be64bf4c14a91c3dffbc946938e-24a67289e71e974b-00",
+        "traceparent": "00-de5cdf31a882a64581c366b1c50a526a-a3e55341c0653b46-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.2",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "9e1f9c908de94dbf9e07c82c8e547218",
@@ -40,14 +40,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e97ec986-5ee3-4062-820f-11e7cc8f677b",
+        "apim-request-id": "ce0b8dc2-3a1b-43f4-aafa-559cb7fc8fd5",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=3",
-        "Date": "Thu, 20 Aug 2020 17:59:13 GMT",
+        "Date": "Thu, 20 Aug 2020 23:13:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
         "documents": [
@@ -87,6 +87,6 @@
   "Variables": {
     "RandomSeed": "1277759136",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t16fb770993214e8c-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com"
   }
 }
