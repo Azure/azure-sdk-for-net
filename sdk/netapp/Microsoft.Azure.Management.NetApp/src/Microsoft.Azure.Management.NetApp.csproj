@@ -9,11 +9,11 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.5.1</Version>
+    <Version>1.5.2</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.5.1 relates to NetApp Files (ANF) 2019-11-01.
+        Version 1.5.2 relates to NetApp Files (ANF) 2019-11-01.
           - Fix MountTarget property in Volume
 
         Azure NetApp Files:

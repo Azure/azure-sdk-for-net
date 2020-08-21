@@ -36,7 +36,8 @@ namespace Azure.Data.Tables
             public const string TimeStamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
-            public const string Etag = "odata.etag";
+            public const string EtagOdata = "odata.etag";
+            public const string ETag = nameof(ITableEntity.ETag);
         }
 
         internal static class Odata
