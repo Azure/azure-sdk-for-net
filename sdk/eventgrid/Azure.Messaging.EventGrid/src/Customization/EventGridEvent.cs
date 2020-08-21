@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
         /// <param name="subject"> A resource path relative to the topic path. </param>
         /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="eventType"> The type of the event that occurred. </param>
+        /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
         public EventGridEvent(object data, string subject, string eventType, string dataVersion)
         {

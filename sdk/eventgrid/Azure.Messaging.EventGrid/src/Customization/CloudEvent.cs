@@ -32,11 +32,45 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
+        /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class.
+        /// If the format and encoding of the data is not a JSON value, consider specifying the content type
+        /// of the payload in <see cref="DataContentType"/>. For example, if passing in an XML payload, the
+        /// consumer can be informed by this attribute being set to "application/xml".
+        /// If the content type is omitted, then it is implied that the data is a JSON value conforming to the
+        /// "application/json" media type. </summary>
+        /// <param name="data"> Event data specific to the event type. </param>
+        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
+        /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
+        public CloudEvent(object data, string source, string type)
+        {
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(data, nameof(data));
+
+            Source = source;
+            Type = type;
+
+            if (data is IEnumerable<byte> enumerable)
+            {
+                DataBase64 = enumerable.ToArray();
+            }
+            else if (data is ReadOnlyMemory<byte> memory)
+            {
+                DataBase64 = memory.ToArray();
+            }
+            else
+            {
+                Data = data;
+            }
+            ExtensionAttributes = new Dictionary<string, object>();
+        }
+
         /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class. </summary>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. </param>
-        public CloudEvent(object data, string source, string type)
+        /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
+        /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
+        public CloudEvent(object data, string source, string type, string dataContentType)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
@@ -65,14 +99,16 @@ namespace Azure.Messaging.EventGrid
         /// </summary>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. </param>
-        public CloudEvent(BinaryData data, string source, string type)
+        /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
+        /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified when sending binary data. </param>
+        public CloudEvent(BinaryData data, string source, string type, string dataContentType)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
 
             Source = source;
             Type = type;
+            DataContentType = dataContentType;
             DataBase64 = data.Bytes.ToArray();
             ExtensionAttributes = new Dictionary<string, object>();
         }
