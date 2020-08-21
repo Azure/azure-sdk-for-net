@@ -27,6 +27,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The prefetch count to use for the partition receiver.</summary>
         private int _prefetchCount = 300;
 
+        /// <summary>The prefetch size to use for the partition receiver.</summary>
+        private long? _prefetchSize = default;
+
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
@@ -125,6 +128,32 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing the partition receiver
+        ///   to read from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="PrefetchSize" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
+        ///
+        public long? PrefetchSize
+        {
+            get => _prefetchSize;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSize));
+                }
+                _prefetchSize = value;
+            }
+        }
+
+        /// <summary>
         ///   Indicates whether or not the reader should request information on the last enqueued event on the partition
         ///   associated with a given event, and track that information as events are read.
         /// </summary>
@@ -183,6 +212,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _defaultMaximumReceiveWaitTime = DefaultMaximumReceiveWaitTime,
                 OwnerLevel = OwnerLevel,
                 _prefetchCount = PrefetchCount,
+                _prefetchSize = PrefetchSize,
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties
             };
     }

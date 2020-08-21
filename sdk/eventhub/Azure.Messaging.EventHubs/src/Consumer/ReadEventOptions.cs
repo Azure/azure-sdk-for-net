@@ -23,6 +23,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The prefetch count to use when reading events.</summary>
         private int _prefetchCount = 300;
 
+        /// <summary>The prefetch size to use for the partition receiver.</summary>
+        private long? _prefetchSize = default;
+
         /// <summary>
         ///   When populated, the owner level indicates that a reading is intended to be performed exclusively for events in the
         ///   requested partition and for the associated consumer group.  To do so, reading will attempt to assert ownership
@@ -166,6 +169,32 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing the partition receiver
+        ///   to read from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="PrefetchSize" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
+        ///
+        public long? PrefetchSize
+        {
+            get => _prefetchSize;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSize));
+                }
+                _prefetchSize = value;
+            }
+        }
+
+        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -208,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 _maximumWaitTime = _maximumWaitTime,
                 _cacheEventCount = _cacheEventCount,
                 _prefetchCount = _prefetchCount,
+                _prefetchSize = _prefetchSize
             };
     }
 }

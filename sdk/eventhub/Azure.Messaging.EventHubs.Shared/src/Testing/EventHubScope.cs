@@ -260,7 +260,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using (var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
             {
                 var eventHub = new Eventhub(partitionCount: partitionCount);
-                eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub)).ConfigureAwait(false);
+                //eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub)).ConfigureAwait(false);
+                eventHub = await client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub).ConfigureAwait(false);
 
                 var consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
 

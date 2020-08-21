@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The prefetch count to use for the event processor.</summary>
         private int _prefetchCount = 300;
 
+        /// <summary>The prefetch size to use for the event processor.</summary>
+        private long? _prefetchSize = default;
+
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
 
@@ -128,6 +131,32 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
+            }
+        }
+
+        /// <summary>
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing the partition receiver
+        ///   to read from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="PrefetchSize" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
+        ///
+        public long? PrefetchSize
+        {
+            get => _prefetchSize;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSize));
+                }
+                _prefetchSize = value;
             }
         }
 
@@ -258,6 +287,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
                 _prefetchCount = PrefetchCount,
+                _prefetchSize = PrefetchSize,
                 _maximumWaitTime = MaximumWaitTime,
                 _loadBalancingUpdateInterval = LoadBalancingUpdateInterval,
                 _partitionOwnershipExpirationInterval = PartitionOwnershipExpirationInterval,

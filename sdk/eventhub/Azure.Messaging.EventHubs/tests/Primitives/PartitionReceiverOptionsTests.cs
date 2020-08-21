@@ -45,6 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The maximum wait time should match.");
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
             Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count should match.");
+            Assert.That(clone.PrefetchSize, Is.EqualTo(options.PrefetchSize), "The prefetch size should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "Tracking of last enqueued events should match.");
         }
 
@@ -96,6 +97,20 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountIsValidated(int count)
         {
             Assert.That(() => new PartitionReceiverOptions { PrefetchCount = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiverOptions.PrefetchSize" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void PrefetchSizeIsValidated(int count)
+        {
+            Assert.That(() => new PartitionReceiverOptions { PrefetchSize = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
     }
 }

@@ -29,7 +29,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(65),
                 CacheEventCount = 1,
-                PrefetchCount = 0
+                PrefetchCount = 0,
+                PrefetchSize = 0
             };
 
             ReadEventOptions clone = options.Clone();
@@ -40,6 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
             Assert.That(clone.CacheEventCount, Is.EqualTo(options.CacheEventCount), "The event cache count of the clone should match.");
             Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count of the clone should match.");
+            Assert.That(clone.PrefetchSize, Is.EqualTo(options.PrefetchSize), "The prefetch size of the clone should match.");
         }
 
         /// <summary>
@@ -96,6 +98,28 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountAllowsZero()
         {
             Assert.That(() => new ReadEventOptions { PrefetchCount = 0 }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ReadEventOptions.PrefetchSize" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeIsValidated()
+        {
+            Assert.That(() => new ReadEventOptions { PrefetchSize = -1 }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ReadEventOptions.PrefetchCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeAllowsZero()
+        {
+            Assert.That(() => new ReadEventOptions { PrefetchSize = 0 }, Throws.Nothing);
         }
     }
 }
