@@ -119,17 +119,13 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
-                    MemoryStream stream = new MemoryStream();
-                    if (egEvent.Data is BinaryData binaryEventData)
-                    {
-                        stream = (MemoryStream)binaryEventData.ToStream();
-                    }
-                    else
+                    JsonDocument data;
+                    using (MemoryStream stream = new MemoryStream())
                     {
                         _dataSerializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
                         stream.Position = 0;
+                        data = JsonDocument.Parse(stream);
                     }
-                    JsonDocument data = JsonDocument.Parse(stream);
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                             egEvent.Id,

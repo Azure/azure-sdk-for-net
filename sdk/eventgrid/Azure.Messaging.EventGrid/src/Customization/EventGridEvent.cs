@@ -36,23 +36,6 @@ namespace Azure.Messaging.EventGrid
             DataVersion = dataVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
-        /// <param name="subject"> A resource path relative to the topic path. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="eventType"> The type of the event that occurred. </param>
-        /// <param name="dataVersion"> The schema version of the data object. </param>
-        public EventGridEvent(BinaryData data, string subject, string eventType, string dataVersion)
-        {
-            Argument.AssertNotNull(subject, nameof(subject));
-            Argument.AssertNotNull(eventType, nameof(eventType));
-            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
-
-            Subject = subject;
-            Data = data;
-            EventType = eventType;
-            DataVersion = dataVersion;
-        }
-
         internal EventGridEvent()
         {
         }
@@ -82,10 +65,10 @@ namespace Azure.Messaging.EventGrid
         internal JsonElement SerializedData { get; set; }
 
         /// <summary> Indicates whether event was created from the Parse() method. </summary>
-        private bool CreatedFromParse { get; set; } = false;
+        internal bool CreatedFromParse { get; set; } = false;
 
         /// <summary>
-        /// Parses the event envelope given JSON-encoded events and returns an array of EventGridEvents.
+        /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, encoded in the EventGridEvent schema. </param>
         /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
@@ -93,7 +76,7 @@ namespace Azure.Messaging.EventGrid
             => Parse(requestContent.ToString());
 
         /// <summary>
-        /// Parses the event envelope given JSON-encoded events and returns an array of EventGridEvents.
+        /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, encoded in the EventGridEvent schema. </param>
         /// <returns> A list of <see cref="EventGridEvent"/>. </returns>
@@ -101,11 +84,7 @@ namespace Azure.Messaging.EventGrid
         {
             List<EventGridEventInternal> egEventsInternal = new List<EventGridEventInternal>();
             List<EventGridEvent> egEvents = new List<EventGridEvent>();
-            JsonDocument requestDocument;
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent)))
-            {
-                requestDocument = JsonDocument.Parse(stream);
-            }
+            JsonDocument requestDocument = JsonDocument.Parse(requestContent);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)

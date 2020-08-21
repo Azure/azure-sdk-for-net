@@ -113,10 +113,10 @@ namespace Azure.Messaging.EventGrid
         internal byte[] DataBase64 { get; set; }
 
         /// <summary> Indicates whether event was created from the Parse() method. </summary>
-        private bool CreatedFromParse { get; set; } = false;
+        internal bool CreatedFromParse { get; set; } = false;
 
         /// <summary>
-        /// Parses the event envelope given JSON-encoded events and returns an array of CloudEvents.
+        /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, in the CloudEvent schema. </param>
         /// <returns> A list of <see cref="CloudEvent"/>. </returns>
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid
             => Parse(requestContent.ToString());
 
         /// <summary>
-        /// Parses the event envelope given JSON-encoded events and returns an array of CloudEvents.
+        /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
         /// </summary>
         /// <param name="requestContent"> The JSON-encoded representation of either a single event or an array or events, in the CloudEvent schema. </param>
         /// <returns> A list of <see cref="CloudEvent"/>. </returns>
@@ -132,11 +132,7 @@ namespace Azure.Messaging.EventGrid
         {
             List<CloudEventInternal> cloudEventsInternal = new List<CloudEventInternal>();
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
-            JsonDocument requestDocument;
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(requestContent)))
-            {
-                requestDocument = JsonDocument.Parse(stream);
-            }
+            JsonDocument requestDocument = JsonDocument.Parse(requestContent);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
