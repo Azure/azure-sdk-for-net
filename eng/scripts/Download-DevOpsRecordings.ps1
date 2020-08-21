@@ -107,10 +107,10 @@ foreach ($build in $builds)
             Write-Host "Downloading artifact $downloadUrl to '$destination'"
             Invoke-WebRequest -Uri $downloadUrl -OutFile $destination -Headers @{Authorization="Bearer $token"}
             Expand-Archive -Path $destination -DestinationPath $artifactsPath -Force
+            
+            $sessionRecordsPaths = Join-Path $artifactsPath "SessionRecords" "sdk"
+            Copy-Item -Path $sessionRecordsPaths -Filter "*.json" -Recurse -Destination $repoRoot -Container -Force
+            Remove-Item $sessionRecordsPaths -Recurse -Force
         }
     }
 }
-
-$sessionRecordsPaths = Join-Path $artifactsPath "SessionRecords" "sdk"
-Copy-Item -Path $sessionRecordsPaths -Filter "*.json" -Recurse -Destination $repoRoot -Container -Force
-Remove-Item $sessionRecordsPaths -Recurse -Force
