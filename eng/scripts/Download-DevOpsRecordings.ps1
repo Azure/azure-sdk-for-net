@@ -26,7 +26,6 @@ $token = (az account get-access-token --resource=https://management.core.windows
 
 function SkipBuild($build)
 {
-    write-host "checkling $($build.definition.name)"
     if (!$SDKs)
     {
         return $false;
@@ -114,3 +113,4 @@ foreach ($build in $builds)
 
 $sessionRecordsPaths = Join-Path $artifactsPath "SessionRecords" "sdk"
 Copy-Item -Path $sessionRecordsPaths -Filter "*.json" -Recurse -Destination $repoRoot -Container -Force
+Remove-Item $sessionRecordsPaths -Recurse -Force

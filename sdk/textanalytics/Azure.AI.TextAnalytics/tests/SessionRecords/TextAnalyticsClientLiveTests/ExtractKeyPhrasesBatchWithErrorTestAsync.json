@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases?showStats=false",
+      "RequestUri": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f4a7d07a3b709d4387ed8c7a575b900a-8fb9b261ada32f4a-00",
+        "traceparent": "00-35ddb3332ce77d4c8fbbea7bfa22d44a-adbe346788099d45-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.2",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "fa792cb9b402586aaed41cf340711303",
         "x-ms-return-client-request-id": "true"
@@ -18,32 +18,32 @@
       "RequestBody": {
         "documents": [
           {
+            "language": "en",
             "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
-            "language": "en"
+            "text": "Microsoft was founded by Bill Gates and Paul Allen."
           },
           {
+            "language": "en",
             "id": "1",
-            "text": "",
-            "language": "en"
+            "text": ""
           },
           {
+            "language": "en",
             "id": "2",
-            "text": "My cat might need to see a veterinarian.",
-            "language": "en"
+            "text": "My cat might need to see a veterinarian."
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d41e90e2-5b15-423c-b527-8d30ddc754a3",
+        "apim-request-id": "364a9bf3-a880-46f7-ad4e-d9e3dd24f9a5",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 19 Aug 2020 03:21:03 GMT",
+        "Date": "Thu, 20 Aug 2020 23:13:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "documents": [
