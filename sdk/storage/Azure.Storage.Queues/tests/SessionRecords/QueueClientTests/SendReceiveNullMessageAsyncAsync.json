@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://emilydevtest.queue.core.windows.net/test-queue-726aa2fc-0896-f8b9-57f5-bc00b1f1a7f7",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a04cfb2fb582de489791651f35b637c0-4413445c8e258e4c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5c213259-76e5-57bc-a34f-99b3eae9e9ad",
+        "x-ms-date": "Fri, 21 Aug 2020 21:36:12 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 21:36:11 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6f05d065-2003-00d4-0d03-78e3a5000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://emilydevtest.queue.core.windows.net/test-queue-726aa2fc-0896-f8b9-57f5-bc00b1f1a7f7/messages",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "44",
+        "Content-Type": "application/xml",
+        "traceparent": "00-5981cfa0df70eb4197bb152e511a6eca-97c5e1df53c3624a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "7fa781f4-4acf-1912-eb57-3cda5e33a54e",
+        "x-ms-date": "Fri, 21 Aug 2020 21:36:12 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": "\u003CQueueMessage\u003E\u003CMessageText /\u003E\u003C/QueueMessage\u003E",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Fri, 21 Aug 2020 21:36:11 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "6f05d068-2003-00d4-0e03-78e3a5000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E78466039-741c-4b8e-b3be-2ce5c486290c\u003C/MessageId\u003E\u003CInsertionTime\u003EFri, 21 Aug 2020 21:36:12 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EFri, 28 Aug 2020 21:36:12 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAkIkmFwN41gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EFri, 21 Aug 2020 21:36:12 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://emilydevtest.queue.core.windows.net/test-queue-726aa2fc-0896-f8b9-57f5-bc00b1f1a7f7/messages",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ddc7d510ac9dfa4d8c979e6aedade3e9-a5398a4116a4e248-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "68bf0e19-6a42-aade-d74d-44c51ac6a688",
+        "x-ms-date": "Fri, 21 Aug 2020 21:36:12 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 21 Aug 2020 21:36:11 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "6f05d06e-2003-00d4-1303-78e3a5000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E78466039-741c-4b8e-b3be-2ce5c486290c\u003C/MessageId\u003E\u003CInsertionTime\u003EFri, 21 Aug 2020 21:36:12 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EFri, 28 Aug 2020 21:36:12 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAcg8NKQN41gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EFri, 21 Aug 2020 21:36:42 GMT\u003C/TimeNextVisible\u003E\u003CDequeueCount\u003E1\u003C/DequeueCount\u003E\u003CMessageText /\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://emilydevtest.queue.core.windows.net/test-queue-726aa2fc-0896-f8b9-57f5-bc00b1f1a7f7",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-df6dd856f18d9540b5205ac02234c830-a00a9593ff7da649-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4fc02392-3c74-b20b-ea8e-01178b59e8ca",
+        "x-ms-date": "Fri, 21 Aug 2020 21:36:12 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 21 Aug 2020 21:36:12 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6f05d06f-2003-00d4-1403-78e3a5000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2005983279",
+    "Storage_TestConfigDefault": "ProductionTenant\nemilydevtest\nU2FuaXRpemVk\nhttp://emilydevtest.blob.core.windows.net\nhttp://emilydevtest.file.core.windows.net\nhttp://emilydevtest.queue.core.windows.net\nhttp://emilydevtest.table.core.windows.net\n\n\n\n\nhttp://emilydevtest-secondary.blob.core.windows.net\nhttp://emilydevtest-secondary.file.core.windows.net\nhttp://emilydevtest-secondary.queue.core.windows.net\nhttp://emilydevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://emilydevtest.blob.core.windows.net/;QueueEndpoint=http://emilydevtest.queue.core.windows.net/;FileEndpoint=http://emilydevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://emilydevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://emilydevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://emilydevtest-secondary.file.core.windows.net/;AccountName=emilydevtest;AccountKey=Kg==;\nencryptionScope"
+  }
+}
