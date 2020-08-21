@@ -45,17 +45,18 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
             Assert.IsNotNull(schemaProperties.Value);
-            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
+            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
+            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
+            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
             Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+            Assert.AreEqual(schema, schemaProperties.Value.Content);
         }
 
 
         [Test]
-        public async Task CanGetSchemaViaContent()
+        public async Task CanGetSchemaId()
         {
             var client = CreateClient();
             var schemaName = "test1";
@@ -73,18 +74,19 @@ namespace Azure.Data.SchemaRegistry.Tests
 }";
 
             await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
-            var schemaProperties = await client.GetSchemaAsync(groupName, schemaName, schema, schemaType);
+            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schema, schemaType);
             Assert.IsNotNull(schemaProperties.Value);
-            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
+            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
+            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
+            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
             Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+            Assert.AreEqual(schema, schemaProperties.Value.Content);
         }
 
         [Test]
-        public async Task CanGetSchemaViaId()
+        public async Task CanGetSchema()
         {
             var client = CreateClient();
             var schemaName = "test1";
@@ -107,12 +109,13 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             var schemaProperties = await client.GetSchemaAsync(registerProperties.Value.Id);
             Assert.IsNotNull(schemaProperties.Value);
-            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
+            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
+            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
+            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
             Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+            Assert.AreEqual(schema, schemaProperties.Value.Content);
         }
     }
 }

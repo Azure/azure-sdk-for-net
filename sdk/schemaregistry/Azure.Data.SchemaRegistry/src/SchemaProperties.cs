@@ -14,8 +14,9 @@ namespace Azure.Data.SchemaRegistry
         private const char Slash = '/';
         private static readonly string[] s_groupSplitter = { "/$schemagroups/" };
 
-        internal SchemaProperties(string location, SerializationType xSchemaType, string xSchemaId, int? xSchemaVersion)
+        internal SchemaProperties(string content, string location, SerializationType xSchemaType, string xSchemaId, int? xSchemaVersion)
         {
+            Content = content;
             Id = xSchemaId;
             var groupSplit = location.Split(s_groupSplitter, StringSplitOptions.None)[1];
             var slashSplit = groupSplit.Split(Slash);
@@ -31,19 +32,24 @@ namespace Azure.Data.SchemaRegistry
         public string Id { get; }
 
         /// <summary>
+        /// The schema content of the SchemaRegistry schema.
+        /// </summary>
+        public string Content { get; }
+
+        /// <summary>
         /// The name of the schema.
         /// </summary>
-        public string Name { get; }
+        internal string Name { get; }
 
         /// <summary>
         /// The group name of the schema.
         /// </summary>
-        public string GroupName { get; }
+        internal string GroupName { get; }
 
         /// <summary>
         /// Serialization type for the schema being stored.
         /// </summary>
-        public SerializationType Type { get; }
+        internal SerializationType Type { get; }
 
         /// <summary>
         /// Version of the schema.

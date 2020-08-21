@@ -64,9 +64,8 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = await RestClient.RegisterAsync(groupName, schemaName, schemaContent, serializationType, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
@@ -85,9 +84,8 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = RestClient.Register(groupName, schemaName, schemaContent, serializationType, cancellationToken);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
@@ -99,16 +97,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Opposite of TryGet) (Find/Query/Get).
         /// </summary>
-        public virtual async Task<Response<SchemaProperties>> GetSchemaAsync(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SchemaProperties>> GetSchemaIdAsync(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
             scope.Start();
             try
             {
                 var response = await RestClient.QueryIdByContentAsync(groupName, schemaName, schemaContent, serializationType, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
@@ -120,16 +117,15 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// TODO. (Opposite of TryGet) (Find/Query/Get).
         /// </summary>
-        public virtual Response<SchemaProperties> GetSchema(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
+        public virtual Response<SchemaProperties> GetSchemaId(string groupName, string schemaName, string schemaContent, SerializationType? serializationType = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
             scope.Start();
             try
             {
                 var response = RestClient.QueryIdByContent(groupName, schemaName, schemaContent, serializationType, cancellationToken);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
@@ -148,9 +144,8 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
@@ -169,9 +164,8 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = RestClient.GetById(schemaId, cancellationToken);
-                return Response.FromValue(
-                    new SchemaProperties(response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion),
-                    response);
+                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                return Response.FromValue(properties, response);
             }
             catch (Exception e)
             {
