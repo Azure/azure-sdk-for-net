@@ -4,17 +4,13 @@
       "RequestUri": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "159",
+        "Content-Length": "207",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c8b77cbbe1198045aab28cb839b9062b-19f54b970b7b294a-00",
+        "traceparent": "00-f2c017161b561c40bc22faead20e6ac6-e0ed2fba90fd1749-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d5e2753fdde06b0a3d579c4aa1b24257",
         "x-ms-return-client-request-id": "true"
@@ -23,28 +19,31 @@
         "documents": [
           {
             "id": "0",
-            "text": "That was the best day of my life!"
+            "text": "That was the best day of my life!",
+            "language": "en"
           },
           {
             "id": "1",
-            "text": ""
+            "text": "",
+            "language": "en"
           },
           {
             "id": "2",
-            "text": "I\u0027m not sure how I feel about this product."
+            "text": "I\u0027m not sure how I feel about this product.",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "238af81d-1b90-462c-bb58-eb3196dc289f",
+        "apim-request-id": "eb7e7ee1-9035-4dde-9df0-91d00147817a",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Thu, 20 Aug 2020 23:13:00 GMT",
+        "Date": "Wed, 19 Aug 2020 03:21:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "87"
+        "x-envoy-upstream-service-time": "100"
       },
       "ResponseBody": {
         "documents": [

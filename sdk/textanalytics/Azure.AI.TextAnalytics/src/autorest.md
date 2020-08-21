@@ -39,3 +39,12 @@ directive:
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MultiLanguageInput
+  transform: >
+    $.properties.id["x-nullable"] = true;
+    $.properties.text["x-nullable"] = true;
+```
