@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="properties">Properties of the server.</param>
         /// <param name="location">The location the resource resides
         /// in.</param>
+        /// <param name="identity">The Azure Active Directory identity of the
+        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs.</param>
-        public ServerForCreate(ServerPropertiesForCreate properties, string location, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerForCreate(ServerPropertiesForCreate properties, string location, ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Identity = identity;
             Sku = sku;
             Properties = properties;
             Location = location;
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.

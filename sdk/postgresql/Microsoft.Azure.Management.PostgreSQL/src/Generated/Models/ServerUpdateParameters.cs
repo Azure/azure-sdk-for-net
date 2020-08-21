@@ -34,26 +34,38 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <summary>
         /// Initializes a new instance of the ServerUpdateParameters class.
         /// </summary>
+        /// <param name="identity">The Azure Active Directory identity of the
+        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
         /// <param name="version">The version of a server. Possible values
-        /// include: '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// include: '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for this server. Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
         /// <param name="replicationRole">The replication role of the
         /// server.</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs.</param>
-        public ServerUpdateParameters(Sku sku = default(Sku), StorageProfile storageProfile = default(StorageProfile), string administratorLoginPassword = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string replicationRole = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdateParameters(ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), StorageProfile storageProfile = default(StorageProfile), string administratorLoginPassword = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string replicationRole = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Identity = identity;
             Sku = sku;
             StorageProfile = storageProfile;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
             SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            PublicNetworkAccess = publicNetworkAccess;
             ReplicationRole = replicationRole;
             Tags = tags;
             CustomInit();
@@ -63,6 +75,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.
@@ -84,7 +102,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets the version of a server. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
@@ -95,6 +113,22 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslEnforcement")]
         public SslEnforcementEnum? SslEnforcement { get; set; }
+
+        /// <summary>
+        /// Gets or sets enforce a minimal Tls version for the server. Possible
+        /// values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// this server. Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets the replication role of the server.
