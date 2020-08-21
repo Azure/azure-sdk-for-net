@@ -56,7 +56,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -116,7 +115,6 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trigger);
             request.Content = content;
@@ -196,7 +194,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -271,7 +268,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -335,7 +331,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/subscribeToEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -397,7 +392,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/getEventSubscriptionStatus", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -467,7 +461,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/unsubscribeFromEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -529,7 +522,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -589,7 +581,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -646,7 +637,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
