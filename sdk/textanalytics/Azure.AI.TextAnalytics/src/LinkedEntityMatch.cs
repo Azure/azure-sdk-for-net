@@ -15,8 +15,10 @@ namespace Azure.AI.TextAnalytics
     {
         internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
         {
-            ConfidenceScore = confidenceScore;
+            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
             Text = text ?? string.Empty;
+            ConfidenceScore = confidenceScore;
             Offset = offset;
             Length = length;
         }
