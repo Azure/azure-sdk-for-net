@@ -398,6 +398,52 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(response.FirstOrDefault().Category);
         }
 
+        [Test]
+        public async Task RecognizeLinkedEntitiesNullText()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""0"",
+                            ""entities"": [
+                                {
+                                    ""name"": ""Microsoft"",
+                                    ""matches"": [
+                                        {
+                                            ""text"": null,
+                                            ""offset"": 0,
+                                            ""length"": 9,
+                                            ""confidenceScore"": 0.26
+                                        }
+                                    ],
+                                    ""language"": ""en"",
+                                    ""id"": ""Microsoft"",
+                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                    ""dataSource"": ""Wikipedia""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020-02-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = "Microsoft was founded";
+
+            LinkedEntityCollection response = await client.RecognizeLinkedEntitiesAsync(documents);
+
+            Assert.AreEqual(string.Empty, response.FirstOrDefault().Matches.FirstOrDefault().Text);
+        }
+
         private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
         {
             json.WriteStartObject();

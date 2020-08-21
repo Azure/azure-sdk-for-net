@@ -321,7 +321,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
-            return new LinkedEntity(name, dataSourceEntityId, language, dataSource, url, matches);
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url.AbsoluteUri, dataSource);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
         public static LinkedEntityMatch LinkedEntityMatch(string text, double score)
         {
-            return new LinkedEntityMatch(text, score);
+            return new LinkedEntityMatch(score, text, default, default);
         }
 
         /// <summary>

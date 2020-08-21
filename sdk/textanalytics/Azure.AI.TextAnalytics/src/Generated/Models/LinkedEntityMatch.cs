@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The LinkedEntity. </summary>
-    public readonly partial struct LinkedEntity
+    /// <summary> The Match. </summary>
+    public readonly partial struct LinkedEntityMatch
     {
     }
 }
