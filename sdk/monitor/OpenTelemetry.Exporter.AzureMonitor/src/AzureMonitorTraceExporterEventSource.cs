@@ -15,7 +15,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [NonEvent]
         public void ConfigurationStringParseWarning(string message)
         {
-            if (this.IsEnabled(EventLevel.Warning, (EventKeywords)(-1)))
+            if (this.IsEnabled(EventLevel.Warning, EventKeywords.All))
             {
                 this.WarnToParseConfigurationString(message);
             }
@@ -24,7 +24,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [NonEvent]
         public void SdkVersionCreateFailed(Exception ex)
         {
-            if (this.IsEnabled(EventLevel.Warning, (EventKeywords)(-1)))
+            if (this.IsEnabled(EventLevel.Warning, EventKeywords.All))
             {
                 this.WarnSdkVersionCreateException(ex.ToInvariantString());
             }

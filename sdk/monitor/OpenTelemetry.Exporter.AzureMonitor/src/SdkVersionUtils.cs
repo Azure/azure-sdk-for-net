@@ -45,11 +45,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             try
             {
-            // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
-            versionString = type.Assembly.GetCustomAttributes(false)
-                                                .OfType<AssemblyFileVersionAttribute>()
-                                                .First()
-                                                .Version;
+                // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
+                versionString = type.Assembly.GetCustomAttributes(false)
+                                                    .OfType<AssemblyFileVersionAttribute>()
+                                                    .First()
+                                                    .Version;
             }
             catch (Exception ex)
             {
