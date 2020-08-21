@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "fdc6e542e37e5e08c973bcea091afcd3",
         "x-ms-return-client-request-id": "true"
@@ -15,13 +15,13 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "623",
+        "Content-Length": "4188",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:51:02 GMT",
+        "Date": "Fri, 21 Aug 2020 01:54:18 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "fdc6e542e37e5e08c973bcea091afcd3",
-        "x-ms-request-id": "b5dc358e-42eb-4e15-83d6-421b05e4c7a1"
+        "x-ms-request-id": "9733316a-8a46-46be-9bbf-9fa1723c4622"
       },
       "ResponseBody": {
         "value": [
@@ -52,7 +52,129 @@
                   }
                 }
               ],
-              "annotations": []
+              "annotations": [],
+              "lastPublishTime": "2020-05-11T03:42:44Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_8572",
+            "name": "dongwwa_pipeline_8572",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "300020f3-0000-0100-0000-5efb3f8b0000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T13:35:07Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_6637",
+            "name": "dongwwa_pipeline_6637",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "30003ef4-0000-0100-0000-5efb3fa20000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T13:35:30Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_5633",
+            "name": "dongwwa_pipeline_5633",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "300009ff-0000-0100-0000-5efb407e0000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T13:39:10Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_7898",
+            "name": "dongwwa_pipeline_7898",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "3100f414-0000-0100-0000-5efb42930000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T13:48:03Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_1795",
+            "name": "dongwwa_pipeline_1795",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "3100f714-0000-0100-0000-5efb42930000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T13:48:03Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_6157",
+            "name": "dongwwa_pipeline_6157",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "3100578a-0000-0100-0000-5efb507b0000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T14:47:23Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_8864",
+            "name": "dongwwa_pipeline_8864",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "3100068c-0000-0100-0000-5efb50af0000",
+            "properties": {
+              "description": "testDescription",
+              "activities": [],
+              "parameters": {
+                "dongwwatest": {
+                  "type": "Array"
+                }
+              },
+              "lastPublishTime": "2020-06-30T14:48:15Z"
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/MyPipeline",
+            "name": "MyPipeline",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "09002406-0000-0100-0000-5f3f29400000",
+            "properties": {
+              "lastPublishTime": "2020-08-21T01:54:08Z"
             }
           }
         ]
@@ -63,10 +185,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-549b977b582fd3488336d659caaf181e-1ddb1eda104c4249-00",
+        "traceparent": "00-14ae01ac3f3a56459f0caaca956a349b-29495c4ce23b9149-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "6be4bf56645b387ef2a76c787d751108",
         "x-ms-return-client-request-id": "true"
@@ -75,9 +197,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "611",
+        "Content-Length": "652",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:51:02 GMT",
+        "Date": "Fri, 21 Aug 2020 01:54:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -87,8 +209,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "6be4bf56645b387ef2a76c787d751108",
-        "x-ms-correlation-request-id": "32332c07-2395-427f-80d7-e5d1284a3642",
-        "x-ms-request-id": "db89207e-e33d-40d3-98db-0d52273ee7db",
+        "x-ms-correlation-request-id": "6f5a1255-e2ca-4d68-b7b2-05343cce9089",
+        "x-ms-request-id": "9a03ab1c-68ff-41dd-8ae3-aeaf6848c524",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -117,9 +239,403 @@
               }
             }
           ],
-          "annotations": []
+          "annotations": [],
+          "lastPublishTime": "2020-05-11T03:42:44Z"
         },
         "etag": "4200191d-0000-0100-0000-5eb8c9b40000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_8572?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6722449ed897d740a85255d45647c43f-777c5b6980eebc47-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "12029322d074c422233f038cde1a41df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "12029322d074c422233f038cde1a41df",
+        "x-ms-correlation-request-id": "0f3c71c0-e7b0-4aed-af33-2dde0b05bcc8",
+        "x-ms-request-id": "fdb69f1c-0b69-4248-8637-1ad3f2ea86a7",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_8572",
+        "name": "dongwwa_pipeline_8572",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T13:35:07Z"
+        },
+        "etag": "300020f3-0000-0100-0000-5efb3f8b0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_6637?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fcef7a19b9896e498a3b28733c084813-48fc095204f5c143-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "8014551f9366de1e678d0ad7778fe154",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8014551f9366de1e678d0ad7778fe154",
+        "x-ms-correlation-request-id": "78d67741-b33c-4e3e-ad67-a2d33e55b8b3",
+        "x-ms-request-id": "7019ad9e-0787-4370-8221-b1d4d91b0437",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_6637",
+        "name": "dongwwa_pipeline_6637",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T13:35:30Z"
+        },
+        "etag": "30003ef4-0000-0100-0000-5efb3fa20000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_5633?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a15db855bb07f24ca50eda2c903dfb6d-07c3e0aa88f06440-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "76c8b462e918855f9c20471b60f159d7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "76c8b462e918855f9c20471b60f159d7",
+        "x-ms-correlation-request-id": "6317f1c7-1ae7-4055-9224-47fc686fd854",
+        "x-ms-request-id": "c37a820b-c0a5-4694-8a2e-16ce5febbc0b",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_5633",
+        "name": "dongwwa_pipeline_5633",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T13:39:10Z"
+        },
+        "etag": "300009ff-0000-0100-0000-5efb407e0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_7898?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-de532e959962eb4dad0211780488fee7-9713ee405e7d9942-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "27598d6591608fa17423abe6c54b4d93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "27598d6591608fa17423abe6c54b4d93",
+        "x-ms-correlation-request-id": "e4859317-bbfd-4799-a393-b3d77857da09",
+        "x-ms-request-id": "27fd5eec-1364-42fb-a468-56cd573388fa",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_7898",
+        "name": "dongwwa_pipeline_7898",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T13:48:03Z"
+        },
+        "etag": "3100f414-0000-0100-0000-5efb42930000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_1795?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0ef077df97e9c48b478aa3334ee2fb4-f7a3717bbe0a3846-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2a2aaf5ecb5235c6f68ee3454b027d76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2a2aaf5ecb5235c6f68ee3454b027d76",
+        "x-ms-correlation-request-id": "d1af73fb-b02f-4b16-bf93-46a12e2a1fa6",
+        "x-ms-request-id": "abaef04c-6d46-4d78-802a-7ffd1a413d04",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_1795",
+        "name": "dongwwa_pipeline_1795",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T13:48:03Z"
+        },
+        "etag": "3100f714-0000-0100-0000-5efb42930000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_6157?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f8158598a1246c4d8972151b61a4bddb-f496218bd2fbf544-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e9713333b936d0f3123901f43e79c051",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:19 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e9713333b936d0f3123901f43e79c051",
+        "x-ms-correlation-request-id": "7e441d87-4f12-4d36-bfb2-fda7f8c512cc",
+        "x-ms-request-id": "f507578c-e77d-48c8-a5f1-1d89a6091bea",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_6157",
+        "name": "dongwwa_pipeline_6157",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T14:47:23Z"
+        },
+        "etag": "3100578a-0000-0100-0000-5efb507b0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/dongwwa_pipeline_8864?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-505815690731a44a9548651603884b8b-2b760f9d51bda542-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "b1bdb4d32fc69984c62331d2ae5b4372",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b1bdb4d32fc69984c62331d2ae5b4372",
+        "x-ms-correlation-request-id": "af94b69b-47ee-406c-ac1c-1776c5d6fbd1",
+        "x-ms-request-id": "7493665b-9c9a-44ce-b0e5-2dbff846ff73",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/dongwwa_pipeline_8864",
+        "name": "dongwwa_pipeline_8864",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "description": "testDescription",
+          "activities": [],
+          "parameters": {
+            "dongwwatest": {
+              "type": "Array"
+            }
+          },
+          "lastPublishTime": "2020-06-30T14:48:15Z"
+        },
+        "etag": "3100068c-0000-0100-0000-5efb50af0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/MyPipeline?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-bc91f1fcc8321a47a38f6f14cbfcb877-5c96634caa2b0c4d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "91b234a663d9a45cbc591719cad2f67c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "338",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:54:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "91b234a663d9a45cbc591719cad2f67c",
+        "x-ms-correlation-request-id": "cc8f5ba5-8df4-4db8-822e-cd3164ac83fe",
+        "x-ms-request-id": "ed5eee9a-a956-44ec-8c5b-5cc10c60a6da",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/MyPipeline",
+        "name": "MyPipeline",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "lastPublishTime": "2020-08-21T01:54:08Z"
+        },
+        "etag": "09002406-0000-0100-0000-5f3f29400000"
       }
     }
   ],

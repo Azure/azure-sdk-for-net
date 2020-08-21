@@ -1,0 +1,280 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "4ca5e4e26d4da61b2ae657a3a1808a3c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2037",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 02:20:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "4ca5e4e26d4da61b2ae657a3a1808a3c",
+        "x-ms-request-id": "87c0eb44-7a70-4297-9787-b46baa624b16"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/testsynapseworkspace-WorkspaceDefaultStorage",
+            "name": "testsynapseworkspace-WorkspaceDefaultStorage",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "4500110d-0000-0100-0000-5df21ebd0000",
+            "properties": {
+              "type": "AzureBlobFS",
+              "typeProperties": {
+                "url": "https://newzzyadlsgen2.dfs.core.windows.net"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/testsynapseworkspace-WorkspaceDefaultSqlServer",
+            "name": "testsynapseworkspace-WorkspaceDefaultSqlServer",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "4500400d-0000-0100-0000-5df21ec50000",
+            "properties": {
+              "type": "AzureSqlDW",
+              "typeProperties": {
+                "connectionString": "Data Source=tcp:testsynapseworkspace.database.windows.net,1433;Initial Catalog=@{linkedService().DBName}"
+              },
+              "parameters": {
+                "DBName": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/MyLinkedService1",
+            "name": "MyLinkedService1",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "41001c1c-0000-0100-0000-5f1fe64d0000",
+            "properties": {
+              "type": "CosmosDbMongoDbApi",
+              "typeProperties": {
+                "connectionString": "mongodb://yuwwang-consmosdb-account-mongo:@yuwwang-consmosdb-account-mongo.documents.azure.com:10255/?ssl=true;replicaSet=globaldb",
+                "database": "yuwwang-mongo-db1"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/MyLinkedService",
+            "name": "MyLinkedService",
+            "type": "Microsoft.Synapse/workspaces/linkedservices",
+            "etag": "0900d20a-0000-0100-0000-5f3f2f480000",
+            "properties": {
+              "type": "AzureDataLakeStore",
+              "typeProperties": {
+                "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/testsynapseworkspace-WorkspaceDefaultStorage?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d9f6b2a7dd7a8e4abee98bf919537661-c2342280cda6534b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "cc9a74f165c22a2e2ca0bca1b7aac1a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "467",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 02:20:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cc9a74f165c22a2e2ca0bca1b7aac1a7",
+        "x-ms-correlation-request-id": "5ce4e0fc-172c-4222-b9db-cb43ad2d993d",
+        "x-ms-request-id": "dc763a9e-99ea-46bb-9bc7-3499744a8a16",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/testsynapseworkspace-WorkspaceDefaultStorage",
+        "name": "testsynapseworkspace-WorkspaceDefaultStorage",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "AzureBlobFS",
+          "typeProperties": {
+            "url": "https://newzzyadlsgen2.dfs.core.windows.net"
+          }
+        },
+        "etag": "4500110d-0000-0100-0000-5df21ebd0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/testsynapseworkspace-WorkspaceDefaultSqlServer?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ac4023d4b176574e81c51435ae247868-57f4533cbb0bb04e-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "bb1c8e63396c81404e8e0f6fe74fd80f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "586",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 02:20:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bb1c8e63396c81404e8e0f6fe74fd80f",
+        "x-ms-correlation-request-id": "c4be2651-2887-4240-b7a9-292b816bbc6d",
+        "x-ms-request-id": "955c07ef-3fc9-487a-a77d-ad2610a8d8b5",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/testsynapseworkspace-WorkspaceDefaultSqlServer",
+        "name": "testsynapseworkspace-WorkspaceDefaultSqlServer",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "AzureSqlDW",
+          "typeProperties": {
+            "connectionString": "Data Source=tcp:testsynapseworkspace.database.windows.net,1433;Initial Catalog=@{linkedService().DBName}"
+          },
+          "parameters": {
+            "DBName": {
+              "type": "String"
+            }
+          }
+        },
+        "etag": "4500400d-0000-0100-0000-5df21ec50000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/MyLinkedService1?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8236bb0ee70c6d4b893caa6acba4193e-6d059b56a952f74e-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "3e890f0f2af97d1ab67b20acb079ee80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "549",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 02:20:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3e890f0f2af97d1ab67b20acb079ee80",
+        "x-ms-correlation-request-id": "595420d1-2c4b-4407-a0b4-7f43277cb6cd",
+        "x-ms-request-id": "4384c7b2-66ff-4ae3-8045-f17c90718b63",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/MyLinkedService1",
+        "name": "MyLinkedService1",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "CosmosDbMongoDbApi",
+          "typeProperties": {
+            "connectionString": "mongodb://yuwwang-consmosdb-account-mongo:@yuwwang-consmosdb-account-mongo.documents.azure.com:10255/?ssl=true;replicaSet=globaldb",
+            "database": "yuwwang-mongo-db1"
+          }
+        },
+        "etag": "41001c1c-0000-0100-0000-5f1fe64d0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/MyLinkedService?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6ad30b2e15d4aa458915f9092f73d6eb-3f68fd3b0359974d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "123faf24cf63b7d033197d3456be43dc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "420",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 02:20:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "123faf24cf63b7d033197d3456be43dc",
+        "x-ms-correlation-request-id": "025f96ed-e025-4bc1-8499-bfa83bb24b2d",
+        "x-ms-request-id": "b4ea7db9-08fe-426e-adb3-c7fc6e22c786",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/MyLinkedService",
+        "name": "MyLinkedService",
+        "type": "Microsoft.Synapse/workspaces/linkedservices",
+        "properties": {
+          "type": "AzureDataLakeStore",
+          "typeProperties": {
+            "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
+          }
+        },
+        "etag": "0900d20a-0000-0100-0000-5f3f2f480000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "709390330"
+  }
+}

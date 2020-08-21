@@ -8,48 +8,48 @@ using NUnit.Framework;
 namespace Azure.Analytics.Synapse.Tests.Artifacts
 {
     /// <summary>
-    /// The suite of tests for the <see cref="PipelineClient"/> class.
+    /// The suite of tests for the <see cref="TriggerClient"/> class.
     /// </summary>
     /// <remarks>
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class PipelineClientLiveTests : ArtifactsClientTestBase
+    public class TriggerClientLiveTests : ArtifactsClientTestBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineClientLiveTests"/> class.
+        /// Initializes a new instance of the <see cref="TriggerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public PipelineClientLiveTests(bool isAsync) : base(isAsync)
+        public TriggerClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task TestGetPipeline()
+        public async Task TestGetTrigger()
         {
-            await foreach (var expectedPipeline in PipelineClient.GetPipelinesByWorkspaceAsync())
+            await foreach (var expectedTrigger in TriggerClient.GetTriggersByWorkspaceAsync())
             {
-                PipelineResource actualPipeline = await PipelineClient.GetPipelineAsync(expectedPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Name, actualPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
+                TriggerResource actualTrigger = await TriggerClient.GetTriggerAsync(expectedTrigger.Name);
+                Assert.AreEqual(expectedTrigger.Name, actualTrigger.Name);
+                Assert.AreEqual(expectedTrigger.Id, actualTrigger.Id);
             }
         }
 
         [Test]
-        public async Task TestCreatePipeline()
+        public async Task TestCreateTrigger()
         {
-            var operation = await PipelineClient.StartCreateOrUpdatePipelineAsync("MyPipeline", new PipelineResource());
+            var operation = await TriggerClient.StartCreateOrUpdateTriggerAsync("MyTrigger", new TriggerResource(new Trigger()));
             while (!operation.HasValue)
             {
                 operation.UpdateStatus();
             }
-            Assert.AreEqual("MyPipeline", operation.Value.Name);
+            Assert.AreEqual("MyTrigger", operation.Value.Name);
         }
 
         [Test]
-        public async Task TestDeletePipeline()
+        public async Task TestDeleteTrigger()
         {
-            var operation = await PipelineClient.StartDeletePipelineAsync("MyPipeline");
+            var operation = await TriggerClient.StartDeleteTriggerAsync("MyTrigger");
             while (!operation.HasValue)
             {
                 operation.UpdateStatus();

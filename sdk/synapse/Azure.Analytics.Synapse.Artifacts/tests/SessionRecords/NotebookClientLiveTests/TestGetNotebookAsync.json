@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "765dcd98fbeb2794bc56547da66ebf7d",
         "x-ms-return-client-request-id": "true"
@@ -15,25 +15,297 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2425",
+        "Content-Length": "6291",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:45:11 GMT",
+        "Date": "Fri, 21 Aug 2020 01:46:50 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "765dcd98fbeb2794bc56547da66ebf7d",
-        "x-ms-request-id": "252645df-52f1-4258-9a4f-efe51e81d444"
+        "x-ms-request-id": "9be61a9e-40db-4f9e-9db3-0223ce028b1f"
       },
-      "ResponseBody": "{\u0022value\u0022:[{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1\u0022,\u0022name\u0022:\u0022Notebook 1\u0022,\u0022type\u0022:\u0022Microsoft.Synapse/workspaces/notebooks\u0022,\u0022etag\u0022:\u002210003327-0000-0100-0000-5e031adb0000\u0022,\u0022properties\u0022:{\u0022nbformat\u0022:4,\u0022nbformat_minor\u0022:2,\u0022bigDataPool\u0022:{\u0022referenceName\u0022:\u0022testsparkpool\u0022,\u0022type\u0022:\u0022BigDataPoolReference\u0022},\u0022sessionProperties\u0022:{\u0022driverMemory\u0022:\u002228g\u0022,\u0022driverCores\u0022:4,\u0022executorMemory\u0022:\u002228g\u0022,\u0022executorCores\u0022:4,\u0022numExecutors\u0022:1},\u0022metadata\u0022:{\u0022language_info\u0022:{\u0022name\u0022:\u0022python\u0022},\u0022a365ComputeOptions\u0022:{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool\u0022,\u0022name\u0022:\u0022testsparkpool\u0022,\u0022type\u0022:\u0022Spark\u0022,\u0022endpoint\u0022:\u0022https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool\u0022,\u0022auth\u0022:{\u0022type\u0022:\u0022AAD\u0022,\u0022authResource\u0022:\u0022https://dev.azuresynapse.net\u0022},\u0022sparkVersion\u0022:\u00222.4\u0022,\u0022nodeCount\u0022:41,\u0022cores\u0022:8,\u0022memory\u0022:56,\u0022extraHeader\u0022:{}}},\u0022cells\u0022:[{\u0022cell_type\u0022:\u0022code\u0022,\u0022metadata\u0022:{},\u0022source\u0022:[\u0022print(\\\u0022hello from portal\\\u0022)\u0022],\u0022attachments\u0022:{},\u0022outputs\u0022:[],\u0022execution_count\u0022:null}]}},{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaTestNotebook\u0022,\u0022name\u0022:\u0022dongwwaTestNotebook\u0022,\u0022type\u0022:\u0022Microsoft.Synapse/workspaces/notebooks\u0022,\u0022etag\u0022:\u00220100d5a0-0000-0100-0000-5ecba4720000\u0022,\u0022properties\u0022:{\u0022nbformat\u0022:4,\u0022nbformat_minor\u0022:2,\u0022sessionProperties\u0022:{\u0022driverMemory\u0022:\u002228g\u0022,\u0022driverCores\u0022:4,\u0022executorMemory\u0022:\u002228g\u0022,\u0022executorCores\u0022:4,\u0022numExecutors\u0022:2},\u0022metadata\u0022:{\u0022language_info\u0022:{\u0022name\u0022:\u0022python\u0022},\u0022sessionKeepAliveTimeout\u0022:30},\u0022cells\u0022:[{\u0022cell_type\u0022:\u0022code\u0022,\u0022metadata\u0022:{},\u0022source\u0022:[\u0022print(\u0027hello\u0027)\u0022],\u0022attachments\u0022:{},\u0022outputs\u0022:[],\u0022execution_count\u0022:null}]}},{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaNb2\u0022,\u0022name\u0022:\u0022dongwwaNb2\u0022,\u0022type\u0022:\u0022Microsoft.Synapse/workspaces/notebooks\u0022,\u0022etag\u0022:\u00220100f6a0-0000-0100-0000-5ecba61e0000\u0022,\u0022properties\u0022:{\u0022nbformat\u0022:4,\u0022nbformat_minor\u0022:2,\u0022sessionProperties\u0022:{\u0022driverMemory\u0022:\u002228g\u0022,\u0022driverCores\u0022:4,\u0022executorMemory\u0022:\u002228g\u0022,\u0022executorCores\u0022:4,\u0022numExecutors\u0022:2},\u0022metadata\u0022:{\u0022language_info\u0022:{\u0022name\u0022:\u0022python\u0022},\u0022sessionKeepAliveTimeout\u0022:30},\u0022cells\u0022:[]}}]}"
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1",
+            "name": "Notebook 1",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "10003327-0000-0100-0000-5e031adb0000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "bigDataPool": {
+                "referenceName": "testsparkpool",
+                "type": "BigDataPoolReference"
+              },
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 1
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "a365ComputeOptions": {
+                  "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool",
+                  "name": "testsparkpool",
+                  "type": "Spark",
+                  "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool",
+                  "auth": {
+                    "type": "AAD",
+                    "authResource": "https://dev.azuresynapse.net"
+                  },
+                  "sparkVersion": "2.4",
+                  "nodeCount": 41,
+                  "cores": 8,
+                  "memory": 56,
+                  "extraHeader": {}
+                }
+              },
+              "cells": [
+                {
+                  "cell_type": "code",
+                  "metadata": {},
+                  "source": [
+                    "print(\u0022hello from portal\u0022)"
+                  ],
+                  "attachments": {},
+                  "outputs": [],
+                  "execution_count": null
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaTestNotebook",
+            "name": "dongwwaTestNotebook",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "0100d5a0-0000-0100-0000-5ecba4720000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "sessionKeepAliveTimeout": 30
+              },
+              "cells": [
+                {
+                  "cell_type": "code",
+                  "metadata": {},
+                  "source": [
+                    "print(\u0027hello\u0027)"
+                  ],
+                  "attachments": {},
+                  "outputs": [],
+                  "execution_count": null
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaNb2",
+            "name": "dongwwaNb2",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "1100d8f9-0000-0100-0000-5f1560de0000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "bigDataPool": {
+                "referenceName": "testportal",
+                "type": "BigDataPoolReference"
+              },
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 3
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "a365ComputeOptions": {
+                  "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+                  "name": "testportal",
+                  "type": "Spark",
+                  "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+                  "auth": {
+                    "type": "AAD",
+                    "authResource": "https://dev.azuresynapse.net"
+                  },
+                  "sparkVersion": "2.4",
+                  "nodeCount": 3,
+                  "cores": 8,
+                  "memory": 56,
+                  "extraHeader": {}
+                },
+                "sessionKeepAliveTimeout": 15
+              },
+              "cells": []
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwanb23",
+            "name": "dongwwanb23",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "5f0005d3-0000-0100-0000-5f06bc3e0000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "bigDataPool": {
+                "referenceName": "testportal",
+                "type": "BigDataPoolReference"
+              },
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "a365ComputeOptions": {
+                  "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+                  "name": "testportal",
+                  "type": "Spark",
+                  "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+                  "auth": {
+                    "type": "AAD",
+                    "authResource": "https://dev.azuresynapse.net"
+                  },
+                  "sparkVersion": "2.4",
+                  "nodeCount": 3,
+                  "cores": 8,
+                  "memory": 56,
+                  "extraHeader": {}
+                },
+                "sessionKeepAliveTimeout": 30
+              },
+              "cells": []
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwatestnb1446",
+            "name": "dongwwatestnb1446",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "5f0029d3-0000-0100-0000-5f06bd6a0000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 2
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "sessionKeepAliveTimeout": 30
+              },
+              "cells": []
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaCreateNbwithCell",
+            "name": "dongwwaCreateNbwithCell",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "00009f60-0000-0100-0000-5f116cc60000",
+            "properties": {
+              "description": "test",
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "bigDataPool": {
+                "referenceName": "testportal",
+                "type": "BigDataPoolReference"
+              },
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 1
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "a365ComputeOptions": {
+                  "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+                  "name": "testportal",
+                  "type": "Spark",
+                  "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+                  "auth": {
+                    "type": "AAD",
+                    "authResource": "https://dev.azuresynapse.net"
+                  },
+                  "sparkVersion": "2.4",
+                  "nodeCount": 3,
+                  "cores": 8,
+                  "memory": 56,
+                  "extraHeader": {}
+                },
+                "sessionKeepAliveTimeout": 30
+              },
+              "cells": [
+                {
+                  "cell_type": "code",
+                  "metadata": {},
+                  "source": [
+                    "print(\u0027hello\u0027)"
+                  ],
+                  "attachments": {},
+                  "outputs": [],
+                  "execution_count": null
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/MyNotebook",
+            "name": "MyNotebook",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "0900da04-0000-0100-0000-5f3f27820000",
+            "properties": {
+              "metadata": {
+                "language_info": {
+                  "name": "Python"
+                }
+              },
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "cells": []
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/Notebook%201?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-94c04f9ff271a2489a13db47e7333e9f-cb8fecc87ad37e49-00",
+        "traceparent": "00-c72890cb0e5f73429c5d3b312d102384-6d30e9944629604d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "8fac1d1f3467c3a7c68b0cee7d692513",
         "x-ms-return-client-request-id": "true"
@@ -44,7 +316,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:45:11 GMT",
+        "Date": "Fri, 21 Aug 2020 01:46:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -54,21 +326,73 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "8fac1d1f3467c3a7c68b0cee7d692513",
-        "x-ms-correlation-request-id": "98ef2347-39c9-46dc-8601-a59b0cc20940",
-        "x-ms-request-id": "649b1210-7ece-416f-a596-976d919b427a",
+        "x-ms-correlation-request-id": "ecc2373c-13b3-4803-a2bb-d289b740697b",
+        "x-ms-request-id": "c8fd7cc4-efa0-4259-916b-a791720cff23",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1\u0022,\u0022name\u0022:\u0022Notebook 1\u0022,\u0022type\u0022:\u0022Microsoft.Synapse/workspaces/notebooks\u0022,\u0022properties\u0022:{\u0022nbformat\u0022:4,\u0022nbformat_minor\u0022:2,\u0022bigDataPool\u0022:{\u0022referenceName\u0022:\u0022testsparkpool\u0022,\u0022type\u0022:\u0022BigDataPoolReference\u0022},\u0022sessionProperties\u0022:{\u0022driverMemory\u0022:\u002228g\u0022,\u0022driverCores\u0022:4,\u0022executorMemory\u0022:\u002228g\u0022,\u0022executorCores\u0022:4,\u0022numExecutors\u0022:1},\u0022metadata\u0022:{\u0022language_info\u0022:{\u0022name\u0022:\u0022python\u0022},\u0022a365ComputeOptions\u0022:{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool\u0022,\u0022name\u0022:\u0022testsparkpool\u0022,\u0022type\u0022:\u0022Spark\u0022,\u0022endpoint\u0022:\u0022https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool\u0022,\u0022auth\u0022:{\u0022type\u0022:\u0022AAD\u0022,\u0022authResource\u0022:\u0022https://dev.azuresynapse.net\u0022},\u0022sparkVersion\u0022:\u00222.4\u0022,\u0022nodeCount\u0022:41,\u0022cores\u0022:8,\u0022memory\u0022:56,\u0022extraHeader\u0022:{}}},\u0022cells\u0022:[{\u0022cell_type\u0022:\u0022code\u0022,\u0022metadata\u0022:{},\u0022source\u0022:[\u0022print(\\\u0022hello from portal\\\u0022)\u0022],\u0022attachments\u0022:{},\u0022outputs\u0022:[],\u0022execution_count\u0022:null}]},\u0022etag\u0022:\u002210003327-0000-0100-0000-5e031adb0000\u0022}"
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1",
+        "name": "Notebook 1",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "bigDataPool": {
+            "referenceName": "testsparkpool",
+            "type": "BigDataPoolReference"
+          },
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 1
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "a365ComputeOptions": {
+              "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool",
+              "name": "testsparkpool",
+              "type": "Spark",
+              "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool",
+              "auth": {
+                "type": "AAD",
+                "authResource": "https://dev.azuresynapse.net"
+              },
+              "sparkVersion": "2.4",
+              "nodeCount": 41,
+              "cores": 8,
+              "memory": 56,
+              "extraHeader": {}
+            }
+          },
+          "cells": [
+            {
+              "cell_type": "code",
+              "metadata": {},
+              "source": [
+                "print(\u0022hello from portal\u0022)"
+              ],
+              "attachments": {},
+              "outputs": [],
+              "execution_count": null
+            }
+          ]
+        },
+        "etag": "10003327-0000-0100-0000-5e031adb0000"
+      }
     },
     {
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/dongwwaTestNotebook?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-349203ec89f56842bb8fc3efe5791085-72125645c4782040-00",
+        "traceparent": "00-b3f252c43ca7674eab39c73cb37004e1-0088c65fe842104c-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "0a2d2b55c619c1c6a5e590fbfec3543a",
         "x-ms-return-client-request-id": "true"
@@ -79,7 +403,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "666",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:45:11 GMT",
+        "Date": "Fri, 21 Aug 2020 01:46:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -89,21 +413,55 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "0a2d2b55c619c1c6a5e590fbfec3543a",
-        "x-ms-correlation-request-id": "09659443-44b5-45b6-9443-60b3ce5ed763",
-        "x-ms-request-id": "bfdfc370-77f1-4eea-880c-43cdcadd2353",
+        "x-ms-correlation-request-id": "1d208da7-90a3-4ee0-90ca-59e260a8f241",
+        "x-ms-request-id": "3e0487bf-e3cd-422d-8662-3e025b528216",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaTestNotebook\u0022,\u0022name\u0022:\u0022dongwwaTestNotebook\u0022,\u0022type\u0022:\u0022Microsoft.Synapse/workspaces/notebooks\u0022,\u0022properties\u0022:{\u0022nbformat\u0022:4,\u0022nbformat_minor\u0022:2,\u0022sessionProperties\u0022:{\u0022driverMemory\u0022:\u002228g\u0022,\u0022driverCores\u0022:4,\u0022executorMemory\u0022:\u002228g\u0022,\u0022executorCores\u0022:4,\u0022numExecutors\u0022:2},\u0022metadata\u0022:{\u0022language_info\u0022:{\u0022name\u0022:\u0022python\u0022},\u0022sessionKeepAliveTimeout\u0022:30},\u0022cells\u0022:[{\u0022cell_type\u0022:\u0022code\u0022,\u0022metadata\u0022:{},\u0022source\u0022:[\u0022print(\u0027hello\u0027)\u0022],\u0022attachments\u0022:{},\u0022outputs\u0022:[],\u0022execution_count\u0022:null}]},\u0022etag\u0022:\u00220100d5a0-0000-0100-0000-5ecba4720000\u0022}"
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaTestNotebook",
+        "name": "dongwwaTestNotebook",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "sessionKeepAliveTimeout": 30
+          },
+          "cells": [
+            {
+              "cell_type": "code",
+              "metadata": {},
+              "source": [
+                "print(\u0027hello\u0027)"
+              ],
+              "attachments": {},
+              "outputs": [],
+              "execution_count": null
+            }
+          ]
+        },
+        "etag": "0100d5a0-0000-0100-0000-5ecba4720000"
+      }
     },
     {
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/dongwwaNb2?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-d74dd0d5fc0dcc43836687ca8551d9f4-1f0ea5b2cfa54e44-00",
+        "traceparent": "00-43abb4143e00904082719e4308f653da-c17ecc3198291547-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "271e15196f6b6498269aaf5feea6a952",
         "x-ms-return-client-request-id": "true"
@@ -112,9 +470,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "533",
+        "Content-Length": "1099",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 05:45:11 GMT",
+        "Date": "Fri, 21 Aug 2020 01:46:51 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -124,13 +482,167 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "271e15196f6b6498269aaf5feea6a952",
-        "x-ms-correlation-request-id": "73d36d3c-4eb0-455b-9a28-a12e8b43424d",
-        "x-ms-request-id": "91ddedf3-65d1-4bc6-896b-d91a1e37ea1e",
+        "x-ms-correlation-request-id": "9ecbaf03-bda2-40bd-9463-e3b321e3c878",
+        "x-ms-request-id": "031d0499-8804-4994-8559-0f89edb551fa",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaNb2",
         "name": "dongwwaNb2",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "bigDataPool": {
+            "referenceName": "testportal",
+            "type": "BigDataPoolReference"
+          },
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 3
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "a365ComputeOptions": {
+              "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+              "name": "testportal",
+              "type": "Spark",
+              "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+              "auth": {
+                "type": "AAD",
+                "authResource": "https://dev.azuresynapse.net"
+              },
+              "sparkVersion": "2.4",
+              "nodeCount": 3,
+              "cores": 8,
+              "memory": 56,
+              "extraHeader": {}
+            },
+            "sessionKeepAliveTimeout": 15
+          },
+          "cells": []
+        },
+        "etag": "1100d8f9-0000-0100-0000-5f1560de0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/dongwwanb23?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-60aeeef3b9a06c4d9d99194504eea4f9-c972391398e60645-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "7a284130b540596357ebea81a3abc502",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1101",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:46:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7a284130b540596357ebea81a3abc502",
+        "x-ms-correlation-request-id": "e53f21e4-31e1-4538-883c-bc5658a2eeaa",
+        "x-ms-request-id": "ae4762fb-388a-4f31-ac78-cedf50364cbb",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwanb23",
+        "name": "dongwwanb23",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "bigDataPool": {
+            "referenceName": "testportal",
+            "type": "BigDataPoolReference"
+          },
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 2
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "a365ComputeOptions": {
+              "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+              "name": "testportal",
+              "type": "Spark",
+              "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+              "auth": {
+                "type": "AAD",
+                "authResource": "https://dev.azuresynapse.net"
+              },
+              "sparkVersion": "2.4",
+              "nodeCount": 3,
+              "cores": 8,
+              "memory": 56,
+              "extraHeader": {}
+            },
+            "sessionKeepAliveTimeout": 30
+          },
+          "cells": []
+        },
+        "etag": "5f0005d3-0000-0100-0000-5f06bc3e0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/dongwwatestnb1446?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-abdad6fa5719ef409f7937ec19e8bdc2-d40f3b9b2dce874b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "68d4d137fe4be5a893c9e47f1667d3fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "547",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:46:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "68d4d137fe4be5a893c9e47f1667d3fe",
+        "x-ms-correlation-request-id": "697a3e96-e4fc-470b-8dba-7fbb5bad7551",
+        "x-ms-request-id": "14537b40-643b-4d10-8446-0ec457175fba",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwatestnb1446",
+        "name": "dongwwatestnb1446",
         "type": "Microsoft.Synapse/workspaces/notebooks",
         "properties": {
           "nbformat": 4,
@@ -150,7 +662,146 @@
           },
           "cells": []
         },
-        "etag": "0100f6a0-0000-0100-0000-5ecba61e0000"
+        "etag": "5f0029d3-0000-0100-0000-5f06bd6a0000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/dongwwaCreateNbwithCell?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-dfa3695297662f4bbbe1acc8f464abe1-40411f74d2011740-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "bdcb3d3cd99b64fab1c4d07f8516c07a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1261",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:46:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bdcb3d3cd99b64fab1c4d07f8516c07a",
+        "x-ms-correlation-request-id": "784ff20e-49f2-4cf3-abdd-47a296595e3d",
+        "x-ms-request-id": "64231de0-3a7c-413b-98cb-9a63488a3f96",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/dongwwaCreateNbwithCell",
+        "name": "dongwwaCreateNbwithCell",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "description": "test",
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "bigDataPool": {
+            "referenceName": "testportal",
+            "type": "BigDataPoolReference"
+          },
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 1
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "a365ComputeOptions": {
+              "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testportal",
+              "name": "testportal",
+              "type": "Spark",
+              "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testportal",
+              "auth": {
+                "type": "AAD",
+                "authResource": "https://dev.azuresynapse.net"
+              },
+              "sparkVersion": "2.4",
+              "nodeCount": 3,
+              "cores": 8,
+              "memory": 56,
+              "extraHeader": {}
+            },
+            "sessionKeepAliveTimeout": 30
+          },
+          "cells": [
+            {
+              "cell_type": "code",
+              "metadata": {},
+              "source": [
+                "print(\u0027hello\u0027)"
+              ],
+              "attachments": {},
+              "outputs": [],
+              "execution_count": null
+            }
+          ]
+        },
+        "etag": "00009f60-0000-0100-0000-5f116cc60000"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/notebooks/MyNotebook?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6f49af1a78ea554798894fa6afc99fd9-02149fb58711904d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "1c28add440d132079843e677d1e443f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "387",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 01:46:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1c28add440d132079843e677d1e443f0",
+        "x-ms-correlation-request-id": "3d64006b-fe1a-48e6-b079-4dbe8c2fde90",
+        "x-ms-request-id": "732be452-f10e-49f0-bcfb-d08ea9a13638",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/MyNotebook",
+        "name": "MyNotebook",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "metadata": {
+            "language_info": {
+              "name": "Python"
+            }
+          },
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "cells": []
+        },
+        "etag": "0900da04-0000-0100-0000-5f3f27820000"
       }
     }
   ],
