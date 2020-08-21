@@ -31,11 +31,11 @@ namespace Microsoft.Migrate.Models
         /// <summary>
         /// Initializes a new instance of the CommitRequest class.
         /// </summary>
-        /// <param name="moveResources">Gets or sets the list of move resources
-        /// ARM id's.</param>
-        /// <param name="validateOnly">Gets or sets the list of resource Id's,
+        /// <param name="moveResources">Gets or sets the list of resource Id's,
         /// by default it accepts move resource id's unless the input type is
         /// switched via moveResourceInputType property.</param>
+        /// <param name="validateOnly">Gets or sets a value indicating whether
+        /// the operation needs to only run pre-requisite.</param>
         /// <param name="moveResourceInputType">Possible values include:
         /// 'MoveResourceId', 'MoveResourceSourceId'</param>
         public CommitRequest(IList<string> moveResources, bool? validateOnly = default(bool?), string moveResourceInputType = default(string))
@@ -52,15 +52,16 @@ namespace Microsoft.Migrate.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of resource Id's, by default it accepts move
-        /// resource id's unless the input type is switched via
-        /// moveResourceInputType property.
+        /// Gets or sets a value indicating whether the operation needs to only
+        /// run pre-requisite.
         /// </summary>
         [JsonProperty(PropertyName = "validateOnly")]
         public bool? ValidateOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of move resources ARM id's.
+        /// Gets or sets the list of resource Id's, by default it accepts move
+        /// resource id's unless the input type is switched via
+        /// moveResourceInputType property.
         /// </summary>
         [JsonProperty(PropertyName = "moveResources")]
         public IList<string> MoveResources { get; set; }

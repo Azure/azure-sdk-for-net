@@ -21,12 +21,17 @@ namespace Microsoft.Migrate
     /// </summary>
     public static partial class MoveCollectionsOperationsExtensions
     {
+            /// <summary>
+            /// Creates or updates a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -35,12 +40,17 @@ namespace Microsoft.Migrate
                 return operations.CreateAsync(resourceGroupName, moveCollectionName, body).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Creates or updates a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -55,12 +65,17 @@ namespace Microsoft.Migrate
                 }
             }
 
+            /// <summary>
+            /// Updates a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -69,12 +84,17 @@ namespace Microsoft.Migrate
                 return operations.UpdateAsync(resourceGroupName, moveCollectionName, body).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Updates a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -89,24 +109,34 @@ namespace Microsoft.Migrate
                 }
             }
 
+            /// <summary>
+            /// Deletes a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static OperationStatus Delete(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName)
             {
                 return operations.DeleteAsync(resourceGroupName, moveCollectionName).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Deletes a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -119,24 +149,34 @@ namespace Microsoft.Migrate
                 }
             }
 
+            /// <summary>
+            /// Gets the move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static MoveCollection Get(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName)
             {
                 return operations.GetAsync(resourceGroupName, moveCollectionName).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets the move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -161,8 +201,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -183,8 +225,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -210,8 +254,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -231,8 +277,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -259,8 +307,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -281,8 +331,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -309,8 +361,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -331,8 +385,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -355,8 +411,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static OperationStatus ResolveDependencies(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName)
             {
@@ -371,8 +429,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -386,10 +446,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all MoveCollections.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the MoveCollections in the subscription.
+            /// Get all the Move Collections in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -400,10 +460,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all MoveCollections.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the MoveCollections in the subscription.
+            /// Get all the Move Collections in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -420,15 +480,16 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all projects.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the projects in the resource group.
+            /// Get all the Move Collections in the resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             public static IPage<MoveCollection> ListMoveCollectionsByResourceGroup(this IMoveCollectionsOperations operations, string resourceGroupName)
             {
@@ -436,15 +497,16 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all projects.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the projects in the resource group.
+            /// Get all the Move Collections in the resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -457,24 +519,34 @@ namespace Microsoft.Migrate
                 }
             }
 
+            /// <summary>
+            /// Deletes a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static OperationStatus BeginDelete(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName)
             {
                 return operations.BeginDeleteAsync(resourceGroupName, moveCollectionName).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Deletes a move collection.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -499,8 +571,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -521,8 +595,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -548,8 +624,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -569,8 +647,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -597,8 +677,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -619,8 +701,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -647,8 +731,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -669,8 +755,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -693,8 +781,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static OperationStatus BeginResolveDependencies(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName)
             {
@@ -709,8 +799,10 @@ namespace Microsoft.Migrate
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -724,10 +816,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all MoveCollections.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the MoveCollections in the subscription.
+            /// Get all the Move Collections in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -741,10 +833,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all MoveCollections.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the MoveCollections in the subscription.
+            /// Get all the Move Collections in the subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -764,10 +856,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all projects.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the projects in the resource group.
+            /// Get all the Move Collections in the resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -781,10 +873,10 @@ namespace Microsoft.Migrate
             }
 
             /// <summary>
-            /// Get all projects.
+            /// Get all Move Collections.
             /// </summary>
             /// <remarks>
-            /// Get all the projects in the resource group.
+            /// Get all the Move Collections in the resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

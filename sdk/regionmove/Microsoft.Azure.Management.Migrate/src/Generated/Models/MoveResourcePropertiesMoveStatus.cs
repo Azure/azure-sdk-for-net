@@ -12,6 +12,9 @@ namespace Microsoft.Migrate.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Defines the move resource status.
+    /// </summary>
     public partial class MoveResourcePropertiesMoveStatus : MoveResourceStatus
     {
         /// <summary>

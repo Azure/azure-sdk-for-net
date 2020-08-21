@@ -21,24 +21,34 @@ namespace Microsoft.Migrate
     /// </summary>
     public static partial class UnresolvedDependenciesOperationsExtensions
     {
+            /// <summary>
+            /// Gets a list of unresolved dependencies.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             public static UnresolvedDependencyCollection Get(this IUnresolvedDependenciesOperations operations, string resourceGroupName, string moveCollectionName)
             {
                 return operations.GetAsync(resourceGroupName, moveCollectionName).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets a list of unresolved dependencies.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
             /// </param>
             /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

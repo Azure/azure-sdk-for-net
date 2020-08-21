@@ -14,7 +14,7 @@ namespace Microsoft.Migrate.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the dependency of the move resource.
+    /// Defines the dependency override of the move resource.
     /// </summary>
     public partial class MoveResourceDependencyOverride
     {

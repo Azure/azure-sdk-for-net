@@ -43,11 +43,13 @@ namespace Microsoft.Migrate.Models
         /// settings.</param>
         /// <param name="sourceResourceSettings">Gets or sets the source
         /// resource settings.</param>
+        /// <param name="moveStatus">Defines the move resource status.</param>
         /// <param name="dependsOn">Gets or sets the move resource
         /// dependencies.</param>
         /// <param name="dependsOnOverrides">Gets or sets the move resource
         /// dependencies overrides.</param>
-        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), MoveResourcePropertiesSourceResourceSettings sourceResourceSettings = default(MoveResourcePropertiesSourceResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), MoveResourceError errors = default(MoveResourceError))
+        /// <param name="errors">Defines the move resource errors.</param>
+        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), MoveResourcePropertiesSourceResourceSettings sourceResourceSettings = default(MoveResourcePropertiesSourceResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), MoveResourcePropertiesErrors errors = default(MoveResourcePropertiesErrors))
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -105,6 +107,7 @@ namespace Microsoft.Migrate.Models
         public MoveResourcePropertiesSourceResourceSettings SourceResourceSettings { get; private set; }
 
         /// <summary>
+        /// Gets defines the move resource status.
         /// </summary>
         [JsonProperty(PropertyName = "moveStatus")]
         public MoveResourcePropertiesMoveStatus MoveStatus { get; private set; }
@@ -122,9 +125,10 @@ namespace Microsoft.Migrate.Models
         public IList<MoveResourceDependencyOverride> DependsOnOverrides { get; set; }
 
         /// <summary>
+        /// Gets defines the move resource errors.
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
-        public MoveResourceError Errors { get; set; }
+        public MoveResourcePropertiesErrors Errors { get; private set; }
 
     }
 }

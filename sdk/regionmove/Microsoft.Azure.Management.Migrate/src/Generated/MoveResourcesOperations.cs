@@ -51,9 +51,14 @@ namespace Microsoft.Migrate
         /// </summary>
         public RegionMoveServiceAPIClient Client { get; private set; }
 
+        /// <summary>
+        /// Lists the Move Resources in the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -254,11 +259,17 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Creates or updates a Move Resource in the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='moveResourceName'>
+        /// The Move Resource Name.
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -275,11 +286,17 @@ namespace Microsoft.Migrate
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Deletes a Move Resource from the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='moveResourceName'>
+        /// The Move Resource Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -294,11 +311,17 @@ namespace Microsoft.Migrate
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Gets the Move Resource.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='moveResourceName'>
+        /// The Move Resource Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -493,11 +516,17 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Creates or updates a Move Resource in the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='moveResourceName'>
+        /// The Move Resource Name.
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -707,11 +736,17 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Deletes a Move Resource from the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='moveResourceName'>
+        /// The Move Resource Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -906,6 +941,9 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Lists the Move Resources in the move collection.
+        /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

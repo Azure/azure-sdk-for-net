@@ -50,9 +50,14 @@ namespace Microsoft.Migrate
         /// </summary>
         public RegionMoveServiceAPIClient Client { get; private set; }
 
+        /// <summary>
+        /// Gets a list of unresolved dependencies.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

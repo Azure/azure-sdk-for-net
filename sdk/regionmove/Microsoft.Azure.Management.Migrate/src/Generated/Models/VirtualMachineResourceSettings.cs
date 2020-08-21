@@ -37,7 +37,8 @@ namespace Microsoft.Migrate.Models
         /// <param name="targetAvailabilityZone">Gets or sets the target
         /// availability zone. Possible values include: '1', '2', '3',
         /// 'NA'</param>
-        /// <param name="targetVmSize">Gets or sets the target vm size.</param>
+        /// <param name="targetVmSize">Gets or sets the target virtual machine
+        /// size.</param>
         /// <param name="targetAvailabilitySetId">Gets or sets the target
         /// availability set id for virtual machines not in an availability set
         /// at source.</param>
@@ -63,7 +64,7 @@ namespace Microsoft.Migrate.Models
         public string TargetAvailabilityZone { get; set; }
 
         /// <summary>
-        /// Gets or sets the target vm size.
+        /// Gets or sets the target virtual machine size.
         /// </summary>
         [JsonProperty(PropertyName = "targetVmSize")]
         public string TargetVmSize { get; set; }

@@ -23,9 +23,14 @@ namespace Microsoft.Migrate
     /// </summary>
     public partial interface IUnresolvedDependenciesOperations
     {
+        /// <summary>
+        /// Gets a list of unresolved dependencies.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

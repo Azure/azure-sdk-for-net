@@ -23,9 +23,14 @@ namespace Microsoft.Migrate
     /// </summary>
     public partial interface IMoveCollectionsOperations
     {
+        /// <summary>
+        /// Creates or updates a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -45,9 +50,14 @@ namespace Microsoft.Migrate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<MoveCollection>> CreateWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, MoveCollection body = default(MoveCollection), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -67,9 +77,14 @@ namespace Microsoft.Migrate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<MoveCollection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, UpdateMoveCollectionRequest body = default(UpdateMoveCollectionRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,9 +102,14 @@ namespace Microsoft.Migrate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -116,8 +136,10 @@ namespace Microsoft.Migrate
         /// client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -146,8 +168,10 @@ namespace Microsoft.Migrate
         /// with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -176,8 +200,10 @@ namespace Microsoft.Migrate
         /// with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -206,8 +232,10 @@ namespace Microsoft.Migrate
         /// client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -232,8 +260,10 @@ namespace Microsoft.Migrate
         /// moveResources in the move collection.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -252,10 +282,10 @@ namespace Microsoft.Migrate
         /// </exception>
         Task<AzureOperationResponse<OperationStatus>> ResolveDependenciesWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all MoveCollections.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the MoveCollections in the subscription.
+        /// Get all the Move Collections in the subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -274,12 +304,13 @@ namespace Microsoft.Migrate
         /// </exception>
         Task<AzureOperationResponse<IPage<MoveCollection>>> ListMoveCollectionsBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all projects.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the projects in the resource group.
+        /// Get all the Move Collections in the resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -297,9 +328,14 @@ namespace Microsoft.Migrate
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<MoveCollection>>> ListMoveCollectionsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -326,8 +362,10 @@ namespace Microsoft.Migrate
         /// client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -356,8 +394,10 @@ namespace Microsoft.Migrate
         /// with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -386,8 +426,10 @@ namespace Microsoft.Migrate
         /// with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -416,8 +458,10 @@ namespace Microsoft.Migrate
         /// client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -442,8 +486,10 @@ namespace Microsoft.Migrate
         /// moveResources in the move collection.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -462,10 +508,10 @@ namespace Microsoft.Migrate
         /// </exception>
         Task<AzureOperationResponse<OperationStatus>> BeginResolveDependenciesWithHttpMessagesAsync(string resourceGroupName, string moveCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all MoveCollections.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the MoveCollections in the subscription.
+        /// Get all the Move Collections in the subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -487,10 +533,10 @@ namespace Microsoft.Migrate
         /// </exception>
         Task<AzureOperationResponse<IPage<MoveCollection>>> ListMoveCollectionsBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all projects.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the projects in the resource group.
+        /// Get all the Move Collections in the resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

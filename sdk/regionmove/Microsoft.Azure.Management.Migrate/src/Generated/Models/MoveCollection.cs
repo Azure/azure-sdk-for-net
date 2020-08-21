@@ -39,7 +39,7 @@ namespace Microsoft.Migrate.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The geo-location where the resource
-        /// lives</param>
+        /// lives.</param>
         public MoveCollection(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Identity identity = default(Identity), MoveCollectionProperties properties = default(MoveCollectionProperties))
         {
             Id = id;
@@ -82,7 +82,7 @@ namespace Microsoft.Migrate.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the geo-location where the resource lives
+        /// Gets or sets the geo-location where the resource lives.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

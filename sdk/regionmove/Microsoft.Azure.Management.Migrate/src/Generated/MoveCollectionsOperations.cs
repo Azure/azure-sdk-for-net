@@ -50,9 +50,14 @@ namespace Microsoft.Migrate
         /// </summary>
         public RegionMoveServiceAPIClient Client { get; private set; }
 
+        /// <summary>
+        /// Creates or updates a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -268,9 +273,14 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Updates a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -468,9 +478,14 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Deletes a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -485,9 +500,14 @@ namespace Microsoft.Migrate
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Gets the move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -685,8 +705,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -711,8 +733,10 @@ namespace Microsoft.Migrate
         /// the client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -738,8 +762,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -765,8 +791,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -788,8 +816,10 @@ namespace Microsoft.Migrate
         /// the move collection.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -805,10 +835,10 @@ namespace Microsoft.Migrate
         }
 
         /// <summary>
-        /// Get all MoveCollections.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the MoveCollections in the subscription.
+        /// Get all the Move Collections in the subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -986,12 +1016,13 @@ namespace Microsoft.Migrate
         }
 
         /// <summary>
-        /// Get all projects.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the projects in the resource group.
+        /// Get all the Move Collections in the resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1174,9 +1205,14 @@ namespace Microsoft.Migrate
             return _result;
         }
 
+        /// <summary>
+        /// Deletes a move collection.
+        /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1374,8 +1410,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -1581,8 +1619,10 @@ namespace Microsoft.Migrate
         /// the client can call operation with validateOnly property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -1789,8 +1829,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -1997,8 +2039,10 @@ namespace Microsoft.Migrate
         /// property set to true.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -2201,8 +2245,10 @@ namespace Microsoft.Migrate
         /// the move collection.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// The Resource Group Name.
         /// </param>
         /// <param name='moveCollectionName'>
+        /// The Move Collection Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2392,10 +2438,10 @@ namespace Microsoft.Migrate
         }
 
         /// <summary>
-        /// Get all MoveCollections.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the MoveCollections in the subscription.
+        /// Get all the Move Collections in the subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2568,10 +2614,10 @@ namespace Microsoft.Migrate
         }
 
         /// <summary>
-        /// Get all projects.
+        /// Get all Move Collections.
         /// </summary>
         /// <remarks>
-        /// Get all the projects in the resource group.
+        /// Get all the Move Collections in the resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
