@@ -807,7 +807,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void RecognizeEntitiesBatchWithNullIdTestAsync()
+        public void RecognizeEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
@@ -817,7 +817,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeEntitiesBatchWithNullTextTestAsync()
+        public async Task RecognizeEntitiesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
