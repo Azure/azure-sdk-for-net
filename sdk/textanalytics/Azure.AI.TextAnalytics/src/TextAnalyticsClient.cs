@@ -1529,9 +1529,6 @@ namespace Azure.AI.TextAnalytics
             return map;
         }
 
-        internal virtual TextDocumentInput ConvertToDocumentInput(string document, string language, int id = 0)
-            => new TextDocumentInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
-
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
             => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage};
 
