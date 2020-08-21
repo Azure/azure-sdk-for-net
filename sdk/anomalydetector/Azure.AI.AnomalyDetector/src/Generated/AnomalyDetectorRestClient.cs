@@ -189,7 +189,7 @@ namespace Azure.AI.AnomalyDetector
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/anomalydetector/v1.0", false);
-            uri.AppendPath("/timeseries/changePoint/detect", false);
+            uri.AppendPath("/timeseries/changepoint/detect", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
