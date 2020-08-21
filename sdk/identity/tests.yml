@@ -7,7 +7,7 @@ extends:
       DisplayName: 'Test on Linux with keyring'
       OSVmImage: "ubuntu-18.04"
       Container:
-        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:504006'
+        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:504600'
         endpoint: 'azsdkengsys'
         options: -ti --cap-add=IPC_LOCK
       PreSteps:
