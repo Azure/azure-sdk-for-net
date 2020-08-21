@@ -1,0 +1,9 @@
+{
+   "type" : "record",
+    "namespace" : "TestSchema",
+    "name" : "Employee",
+    "fields" : [
+        { "name" : "Name" , "type" : "string" },
+        { "name" : "Age", "type" : "int" }
+    ]
+}

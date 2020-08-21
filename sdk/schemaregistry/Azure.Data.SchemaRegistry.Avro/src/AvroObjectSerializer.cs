@@ -12,7 +12,7 @@ using Avro.File;
 using Avro.Generic;
 using Azure.Core.Serialization;
 
-namespace Azure.Data.SchemaRegistry
+namespace Azure.Data.SchemaRegistry.Avro
 {
     /// <summary>
     /// A <see cref="AvroObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
@@ -43,6 +43,12 @@ namespace Azure.Data.SchemaRegistry
 
         //    //// TODO: Consider using WeakReference cache to allow the GC to collect if the JsonObjectSerialized is held for a long duration.
         //    //_cache = new ConcurrentDictionary<MemberInfo, string?>();
+        //}
+
+
+        //private void Map(object value)
+        //{
+        //    if (value is Schema.Type.Array)
         //}
 
         /// <inheritdoc />
