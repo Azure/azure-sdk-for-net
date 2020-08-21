@@ -100,6 +100,14 @@ namespace Azure.Messaging.EventGrid.Tests
                     break;
             }
         }
+
+        [Test]
+        public void EGEventGetDataThrowsWhenCalledWithoutParse()
+        {
+            EventGridEvent egEvent = new EventGridEvent(new ContosoItemReceivedEventData(), "", "Contoso.Items.ItemReceived", "1");
+            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
         #endregion
 
         #region Custom event tests
@@ -1420,6 +1428,14 @@ namespace Azure.Messaging.EventGrid.Tests
                         break;
                 }
             }
+        }
+
+        [Test]
+        public void CloudEventGetDataThrowsWhenCalledWithoutParse()
+        {
+            CloudEvent egEvent = new CloudEvent(new ContosoItemReceivedEventData(), "", "Contoso.Items.ItemReceived");
+            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(),
+                Throws.InstanceOf<InvalidOperationException>());
         }
         #endregion
 
