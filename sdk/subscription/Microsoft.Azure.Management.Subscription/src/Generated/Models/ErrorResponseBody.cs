@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// The created subscription object.
+    /// Error response indicates that the service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
-    public partial class SubscriptionCreationResult
+    public partial class ErrorResponseBody
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionCreationResult class.
+        /// Initializes a new instance of the ErrorResponseBody class.
         /// </summary>
-        public SubscriptionCreationResult()
+        public ErrorResponseBody()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionCreationResult class.
+        /// Initializes a new instance of the ErrorResponseBody class.
         /// </summary>
-        /// <param name="subscriptionLink">The link to the new subscription.
-        /// Use this link to check the status of subscription creation
-        /// operation.</param>
-        public SubscriptionCreationResult(string subscriptionLink = default(string))
+        /// <param name="error">The details of the error.</param>
+        public ErrorResponseBody(ErrorResponse error = default(ErrorResponse))
         {
-            SubscriptionLink = subscriptionLink;
+            Error = error;
             CustomInit();
         }
 
@@ -44,11 +43,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the link to the new subscription. Use this link to
-        /// check the status of subscription creation operation.
+        /// Gets or sets the details of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionLink")]
-        public string SubscriptionLink { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; set; }
 
     }
 }
