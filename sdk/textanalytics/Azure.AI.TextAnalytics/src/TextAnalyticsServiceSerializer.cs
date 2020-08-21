@@ -16,6 +16,11 @@ namespace Azure.AI.TextAnalytics
     {
         // TODO (pri 2): make the deserializer version resilient
 
+        private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
+        {
+            return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();
+        }
+
         #region Serialize Inputs
 
         private static readonly JsonEncodedText s_documents = JsonEncodedText.Encode("documents");
@@ -198,97 +203,6 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion Deserialize Common
-
-        #region Recognize Entities
-
-        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
-        }
-
-        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content, IDictionary<string, int> idToIndexMap)
-        {
-            using JsonDocument json = JsonDocument.Parse(content, default);
-            JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
-        }
-
-        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<RecognizeEntitiesResult>();
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
-
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
-            }
-
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-            {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    collection.Add(ReadRecognizeEntityResult(documentElement));
-                }
-            }
-
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
-        }
-
-        private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
-        {
-            return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();
-        }
-
-        private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
-        {
-            List<CategorizedEntity> entities = new List<CategorizedEntity>();
-            List<TextAnalyticsWarning> warnings = default;
-
-            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
-            {
-                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
-                {
-                    entities.Add(ReadCategorizedEntity(entityElement));
-                }
-            }
-
-            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
-            {
-                warnings = ReadDocumentWarnings(warningsValue);
-            }
-
-            return new RecognizeEntitiesResult(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement),
-                new CategorizedEntityCollection(entities, warnings));
-        }
-
-        private static CategorizedEntity ReadCategorizedEntity(JsonElement entityElement)
-        {
-            string text = default;
-            string category = default;
-            string subcategory = default;
-            double confidenceScore = default;
-
-            if (entityElement.TryGetProperty("text", out JsonElement textValue))
-                text = textValue.GetString();
-            if (entityElement.TryGetProperty("category", out JsonElement typeValue))
-                category = typeValue.ToString();
-            if (entityElement.TryGetProperty("subcategory", out JsonElement subTypeValue))
-                subcategory = subTypeValue.ToString();
-            if (entityElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
-                scoreValue.TryGetDouble(out confidenceScore);
-
-            return new CategorizedEntity(text, category, subcategory, confidenceScore);
-        }
-
-        #endregion Recognize Entities
 
         #region Linked Entities
 

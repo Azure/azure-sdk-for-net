@@ -807,6 +807,29 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizeEntitiesBatchWithNullIdTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RecognizeEntitiesBatchAsync(documents));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchWithNullTextTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
+            Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
