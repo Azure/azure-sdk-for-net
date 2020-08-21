@@ -807,7 +807,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Until PR is merged https://github.com/Azure/azure-sdk-for-net/pull/14366")]
         public void RecognizeEntitiesBatchWithNullIdTestAsync()
         {
             TextAnalyticsClient client = GetClient();
@@ -818,7 +817,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Until PR is merged https://github.com/Azure/azure-sdk-for-net/pull/14366")]
         public async Task RecognizeEntitiesBatchWithNullTextTestAsync()
         {
             TextAnalyticsClient client = GetClient();
