@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtabletr1vmqwu\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "df862949-36af-3d02-ac28-657f46df4c16"
+        "x-ms-request-id": "e01e060a-04c4-4201-6379-414cf07bd84c"
       },
       "ResponseBody": {
         "TableName": "testtabletr1vmqwu",
@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-190b96af17fee9439873ae16a8279f28-d000b67b079d0046-00",
@@ -115,8 +115,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -126,7 +125,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtabletr1vmqwu(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e01e060a-04c4-4201-6379-414cf07bd84c"
+        "x-ms-request-id": "95c5df51-09bd-680b-c7fe-1f17e635f0d5"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtabletr1vmqwu/$metadata#testtabletr1vmqwu/@Element",
@@ -182,7 +181,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-b3866038e7bfbf4fb6470e373c3fc14b-93a53601522cb140-00",
@@ -254,8 +253,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -265,7 +263,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtabletr1vmqwu(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "95c5df51-09bd-680b-c7fe-1f17e635f0d5"
+        "x-ms-request-id": "c0ee0adb-2508-44b3-2744-7b35f5b64c30"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtabletr1vmqwu/$metadata#testtabletr1vmqwu/@Element",
@@ -338,7 +336,7 @@
         "Date": "Wed, 19 Aug 2020 13:13:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "c0ee0adb-2508-44b3-2744-7b35f5b64c30"
+        "x-ms-request-id": "662d1950-b71a-0158-fab5-19c5e5ea5c2d"
       },
       "ResponseBody": {
         "value": [
@@ -459,7 +457,7 @@
         "Content-Length": "0",
         "Date": "Wed, 19 Aug 2020 13:13:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "662d1950-b71a-0158-fab5-19c5e5ea5c2d"
+        "x-ms-request-id": "e5706b89-188c-2c43-2c80-6d798dd57310"
       },
       "ResponseBody": []
     }

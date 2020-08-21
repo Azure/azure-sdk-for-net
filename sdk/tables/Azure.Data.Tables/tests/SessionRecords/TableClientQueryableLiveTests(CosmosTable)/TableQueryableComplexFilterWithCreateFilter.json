@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-8b63d2fa442fbd4d840380cf02e41b67-dcc1e855fc020a41-00",
@@ -115,8 +115,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -182,7 +181,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-2c77c43b721ff646b048b989462992d6-f65e52e5d9b2b044-00",
@@ -254,8 +253,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -321,7 +319,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1731",
+        "Content-Length": "1719",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-0a7d2992eee646449dcfbdbfa6e73d13-8f2cbd30aa913541-00",
@@ -393,8 +391,7 @@
         "String": "0003",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -460,7 +457,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-9cbc94809ab96447813608ad6ca85fe5-1d808f0195cc104f-00",
@@ -532,8 +529,7 @@
         "String": "0004",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {

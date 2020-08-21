@@ -49,7 +49,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "117",
+        "Content-Length": "105",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-f56286808e16a44aaeecca12288fd113-01e145ffe01f4446-00",
@@ -66,8 +66,7 @@
         "StringTypeProperty": "This is the original",
         "PartitionKey": "somPartition",
         "RowKey": "1",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {

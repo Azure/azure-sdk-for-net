@@ -49,7 +49,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-796d0f64ef3400468bf99d87b0354680-d223bfcba656974c-00",
@@ -79,8 +79,7 @@
         "IntTypeProperty": 1,
         "PartitionKey": "somPartition",
         "RowKey": "01",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -126,7 +125,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-3fc98c272dbcd44296a76faa58c4c133-12ebac5c38229343-00",
@@ -156,8 +155,7 @@
         "IntTypeProperty": 2,
         "PartitionKey": "somPartition",
         "RowKey": "02",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -203,7 +201,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-68ac1b7caf060d459f7128f08931ce9c-b93b72903a579f4d-00",
@@ -233,8 +231,7 @@
         "IntTypeProperty": 3,
         "PartitionKey": "somPartition",
         "RowKey": "03",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -280,7 +277,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-16056d80bceff540bf09f5cb7fc3c73b-dc84a065df0f6645-00",
@@ -310,8 +307,7 @@
         "IntTypeProperty": 4,
         "PartitionKey": "somPartition",
         "RowKey": "04",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -357,7 +353,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-8f7263174be5ee4cbd34320f9f18e04d-d747c655e4e14949-00",
@@ -387,8 +383,7 @@
         "IntTypeProperty": 5,
         "PartitionKey": "somPartition",
         "RowKey": "05",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -434,7 +429,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-fb84650cc6c9df42a10ba1c795bb0817-a50fee88efa1574e-00",
@@ -464,8 +459,7 @@
         "IntTypeProperty": 6,
         "PartitionKey": "somPartition",
         "RowKey": "06",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -511,7 +505,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-9e726adff9ce1547a74bd17c73ae69c6-72a8b37cfd7be544-00",
@@ -541,8 +535,7 @@
         "IntTypeProperty": 7,
         "PartitionKey": "somPartition",
         "RowKey": "07",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -588,7 +581,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-12ddd421c314b34abaf3b5c811fe6116-f03c764f0547d442-00",
@@ -618,8 +611,7 @@
         "IntTypeProperty": 8,
         "PartitionKey": "somPartition",
         "RowKey": "08",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -665,7 +657,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-d94e5236155e17429d2af8c801ab0ca6-149a1fb41c5de64f-00",
@@ -695,8 +687,7 @@
         "IntTypeProperty": 9,
         "PartitionKey": "somPartition",
         "RowKey": "09",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -742,7 +733,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-b9b79a9d484af247a5efba89c5af4f4b-c68eea5865cc7542-00",
@@ -772,8 +763,7 @@
         "IntTypeProperty": 10,
         "PartitionKey": "somPartition",
         "RowKey": "10",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {

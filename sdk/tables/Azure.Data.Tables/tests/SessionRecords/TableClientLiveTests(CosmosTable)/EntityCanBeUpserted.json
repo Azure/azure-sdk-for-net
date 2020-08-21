@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable0d5myo2r\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "73962def-bd44-fec8-6760-fb621a7dfdec"
+        "x-ms-request-id": "e4936c7e-3a19-7b74-1be6-4db399df5754"
       },
       "ResponseBody": {
         "TableName": "testtable0d5myo2r",
@@ -68,7 +68,7 @@
         "Date": "Tue, 18 Aug 2020 23:35:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-18T23%3A35%3A59.1286792Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "19e4936c-743a-1b7b-e64d-b399df575476"
+        "x-ms-request-id": "2b4dc4b7-073d-6d19-7cf8-8cebf3b948e6"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "Date": "Tue, 18 Aug 2020 23:35:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2b4dc4b7-073d-6d19-7cf8-8cebf3b948e6"
+        "x-ms-request-id": "abb21dae-c8fe-b9b5-1b57-5e7015658709"
       },
       "ResponseBody": {
         "value": [
@@ -144,7 +144,7 @@
         "Date": "Tue, 18 Aug 2020 23:35:58 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-18T23%3A35%3A59.2773640Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "abb21dae-c8fe-b9b5-1b57-5e7015658709"
+        "x-ms-request-id": "b863eba7-c0af-6540-7a77-9c41e78f282d"
       },
       "ResponseBody": []
     },
@@ -171,7 +171,7 @@
         "Date": "Tue, 18 Aug 2020 23:35:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "b863eba7-c0af-6540-7a77-9c41e78f282d"
+        "x-ms-request-id": "c2ebcc05-a8a5-ee77-0f93-10e6a9a85817"
       },
       "ResponseBody": {
         "value": [
@@ -208,7 +208,7 @@
         "Content-Length": "0",
         "Date": "Tue, 18 Aug 2020 23:35:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "c2ebcc05-a8a5-ee77-0f93-10e6a9a85817"
+        "x-ms-request-id": "07448371-8f55-ed37-dd4c-31872b73d28b"
       },
       "ResponseBody": []
     }

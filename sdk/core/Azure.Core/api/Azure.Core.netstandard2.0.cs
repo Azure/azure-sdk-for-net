@@ -34,7 +34,9 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ETag left, Azure.ETag right) { throw null; }
         public static bool operator !=(Azure.ETag left, Azure.ETag right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public string ToString(string format) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpRange : System.IEquatable<Azure.HttpRange>

@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablet55fm4or\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "faa254d2-cb84-5b46-d185-6bc3dc176812"
+        "x-ms-request-id": "ae9f0f59-65f9-50a7-e391-9d1988eeb90a"
       },
       "ResponseBody": {
         "TableName": "testtablet55fm4or",
@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-dfb471739616484e96620401f655cdf8-ab14f4d53b2a5141-00",
@@ -115,8 +115,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -126,7 +125,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "ae9f0f59-65f9-50a7-e391-9d1988eeb90a"
+        "x-ms-request-id": "3a1edb11-948f-1ca3-e0e9-3d37e2ceb34c"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or/$metadata#testtablet55fm4or/@Element",
@@ -182,7 +181,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-614580b851d01744a306927e8402adfc-e3308f9bd8766042-00",
@@ -254,8 +253,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -265,7 +263,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "3a1edb11-948f-1ca3-e0e9-3d37e2ceb34c"
+        "x-ms-request-id": "b76d06c6-4d0e-6de4-ad51-17f22e2dd2e3"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or/$metadata#testtablet55fm4or/@Element",
@@ -321,7 +319,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1731",
+        "Content-Length": "1719",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-7dbac587c233ef4eaa8e40c8da2a2e53-7ec121a891eec945-00",
@@ -393,8 +391,7 @@
         "String": "0003",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -404,7 +401,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "b76d06c6-4d0e-6de4-ad51-17f22e2dd2e3"
+        "x-ms-request-id": "01b260cc-2ef9-c483-6b83-ce0f276f6e15"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or/$metadata#testtablet55fm4or/@Element",
@@ -460,7 +457,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "traceparent": "00-02fb6fe8bd188b479779ec9cd1911e5e-5861721f941ff743-00",
@@ -532,8 +529,7 @@
         "String": "0004",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -543,7 +539,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "01b260cc-2ef9-c483-6b83-ce0f276f6e15"
+        "x-ms-request-id": "815350dd-0281-c3fc-f6b0-8d3d7db1eeb3"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablet55fm4or/$metadata#testtablet55fm4or/@Element",
@@ -616,7 +612,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:13 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "815350dd-0281-c3fc-f6b0-8d3d7db1eeb3"
+        "x-ms-request-id": "816b5a17-b11c-9753-83a8-4c8b7fd5463d"
       },
       "ResponseBody": {
         "value": [
@@ -738,7 +734,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:13 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "816b5a17-b11c-9753-83a8-4c8b7fd5463d"
+        "x-ms-request-id": "dd1501e3-50d9-ca62-64ee-0b48a14546ba"
       },
       "ResponseBody": {
         "value": [
@@ -814,7 +810,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:13 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "dd1501e3-50d9-ca62-64ee-0b48a14546ba"
+        "x-ms-request-id": "cdf71b94-ec04-2cf9-fdbb-fed8b6704421"
       },
       "ResponseBody": {
         "value": [
@@ -936,7 +932,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "cdf71b94-ec04-2cf9-fdbb-fed8b6704421"
+        "x-ms-request-id": "7c5a4f6a-109b-c6d9-f7a1-1d2da60af63d"
       },
       "ResponseBody": {
         "value": [
@@ -1058,7 +1054,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "7c5a4f6a-109b-c6d9-f7a1-1d2da60af63d"
+        "x-ms-request-id": "63f69261-78dd-f639-07e8-e01e528913f4"
       },
       "ResponseBody": {
         "value": [
@@ -1180,7 +1176,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "63f69261-78dd-f639-07e8-e01e528913f4"
+        "x-ms-request-id": "52dde9a9-caeb-831e-4131-d563cfcb85f2"
       },
       "ResponseBody": {
         "value": [
@@ -1302,7 +1298,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "52dde9a9-caeb-831e-4131-d563cfcb85f2"
+        "x-ms-request-id": "2477c0c5-e079-f244-1563-74b330bb746e"
       },
       "ResponseBody": {
         "value": [
@@ -1424,7 +1420,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2477c0c5-e079-f244-1563-74b330bb746e"
+        "x-ms-request-id": "bc83298d-a42d-9752-7372-22aba2d6263b"
       },
       "ResponseBody": {
         "value": [
@@ -1546,7 +1542,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "bc83298d-a42d-9752-7372-22aba2d6263b"
+        "x-ms-request-id": "9158ed63-ef12-c97a-a5eb-3c87556a5385"
       },
       "ResponseBody": {
         "value": [
@@ -1668,7 +1664,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "9158ed63-ef12-c97a-a5eb-3c87556a5385"
+        "x-ms-request-id": "a6d566bc-c847-21c5-6ee0-b006be984f3f"
       },
       "ResponseBody": {
         "value": [
@@ -1790,7 +1786,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a6d566bc-c847-21c5-6ee0-b006be984f3f"
+        "x-ms-request-id": "434f383d-e262-9d5c-aeba-174267ca4108"
       },
       "ResponseBody": {
         "value": [
@@ -1912,7 +1908,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "434f383d-e262-9d5c-aeba-174267ca4108"
+        "x-ms-request-id": "3bee9c1f-8000-9af3-2837-23313f730a0c"
       },
       "ResponseBody": {
         "value": [
@@ -2034,7 +2030,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "3bee9c1f-8000-9af3-2837-23313f730a0c"
+        "x-ms-request-id": "1d4afc9b-101b-da23-0a38-f88db082b9a3"
       },
       "ResponseBody": {
         "value": [
@@ -2156,7 +2152,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "1d4afc9b-101b-da23-0a38-f88db082b9a3"
+        "x-ms-request-id": "21e6a79f-13a9-bc3f-44b5-1a2bbf2a5e3a"
       },
       "ResponseBody": {
         "value": [
@@ -2232,7 +2228,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "21e6a79f-13a9-bc3f-44b5-1a2bbf2a5e3a"
+        "x-ms-request-id": "6ba60ab0-2380-0fed-7914-31c88766e9a5"
       },
       "ResponseBody": {
         "value": [
@@ -2308,7 +2304,7 @@
         "Date": "Wed, 19 Aug 2020 13:14:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ba60ab0-2380-0fed-7914-31c88766e9a5"
+        "x-ms-request-id": "9892807d-e98d-8863-bd8d-d865f5f71bdf"
       },
       "ResponseBody": {
         "value": [
@@ -2429,7 +2425,7 @@
         "Content-Length": "0",
         "Date": "Wed, 19 Aug 2020 13:14:15 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "9892807d-e98d-8863-bd8d-d865f5f71bdf"
+        "x-ms-request-id": "a5ddbdda-4ddb-7b23-b9d7-a894e27735de"
       },
       "ResponseBody": []
     }

@@ -30,7 +30,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablewumpudvf\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "bfe95ab7-3b73-11d9-1f9f-6b3eebdcc436"
+        "x-ms-request-id": "a7ed91a0-6b59-0428-41c8-1b5f6fc9b6ab"
       },
       "ResponseBody": {
         "TableName": "testtablewumpudvf",
@@ -82,7 +82,7 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/testtablewumpudvf(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a7ed91a0-6b59-0428-41c8-1b5f6fc9b6ab"
+        "x-ms-request-id": "109cd4bd-fd2c-9af1-81df-623db5a39e5d"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablewumpudvf/$metadata#testtablewumpudvf/@Element",
@@ -127,7 +127,7 @@
         "Content-Length": "0",
         "Date": "Tue, 18 Aug 2020 23:35:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "109cd4bd-fd2c-9af1-81df-623db5a39e5d"
+        "x-ms-request-id": "cbbb2a3e-7f5c-4b98-32e5-7daa1f79a255"
       },
       "ResponseBody": []
     }
