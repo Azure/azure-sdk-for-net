@@ -13,13 +13,13 @@ namespace Automanage.Tests.ScenarioTests
     using Xunit;
     using Xunit.Abstractions;
 
-    public class ConfigurationProfilesAssignmentsTests : TestBase
+    public class ConfigurationProfilePreferencesTests : TestBase
     {
         private RecordedDelegatingHandler handler;
         private string vmName = "mynewamvmVM2";
         private string vmID = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/mynewamvmVM_group/providers/Microsoft.Compute/virtualMachines/mynewamvmVM2";
         private string automanageAccountId = "/subscriptions/cdd53a71-7d81-493d-bce6-224fec7223a9/resourceGroups/AMVM-SubLib-017_group/providers/Microsoft.Automanage/accounts/AMVM-SubLib-017-ABP";
-        public ConfigurationProfilesAssignmentsTests()
+        public ConfigurationProfilePreferencesTests()
             : base()
         {
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
@@ -27,54 +27,48 @@ namespace Automanage.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesListAssignmentsGetsExpectedProfile()
+        public async Task ConfigurationProfilesPreferencesListsPreferences()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))
             {
                 var automanageClient = GetAutomanagementClient(context, handler);
-                //var actual2 = await automanageClient.ConfigurationProfileAssignments.ListWithHttpMessagesAsync("DeluxeTest");                          
-                var actual = automanageClient.ConfigurationProfileAssignments.List("DeluxeTest");
+                var actual = automanageClient.ConfigurationProfilePreferences.ListByResourceGroup("MYNEWAMVM3");
                 Assert.NotNull(actual);                
             }
         }
 
         [Fact]
-        //[Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesAssignmentsCreatesProfile()
+        [Trait("Category", "Scenario")]
+        public async Task ConfigurationProfilesPreferencesGetReturnsExpectedPreferences()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))
             {
                 var automanageClient = GetAutomanagementClient(context, handler);
-
-                //create new ProfileAssignment
-                var expectedProfile = GetAConfigurationProfileAssignment();
-                var actual = automanageClient.ConfigurationProfileAssignments.BeginCreateOrUpdateAsync(
-                    configurationProfileAssignmentName: expectedProfile.Name,
-                    parameters: expectedProfile, 
-                    resourceGroupName: "mynewamvmVM_group", 
-                    vmName: vmName) ;                
-
+                var actual = automanageClient.ConfigurationProfilePreferences.Get("MyNewCustomPrefs", "MYNEWAMVM3");
                 Assert.NotNull(actual);
             }
         }
 
-        private ConfigurationProfileAssignment GetAConfigurationProfileAssignment()
+        private ConfigurationProfilePreference GetAConfigurationProfilePreferenceObject()
         {
-            var assignmentProperties = new ConfigurationProfileAssignmentProperties(
-                configurationProfile: "Azure Best Practices - Prod",
-                targetId: vmID,
-                accountId: automanageAccountId,
-                configurationProfilePreferenceId: null, //change to the ARM id of a preference object to test preference application
-                provisioningStatus: null,
-                compliance: null);
+            var customAntiMalwareProps = new ConfigurationProfilePreferenceAntiMalware(
+                enableRealTimeProtection: "True",
+                exclusions: new[] { "C:\\temp", "notepad.exe" },
+                scanType: "Quick",
+                scanDay: "1",
+                scanTimeInMinutes: "360");
+            var vmBackupProps = new ConfigurationProfilePreferenceVmBackup("Pacific Standard Time", 14, null, null);
+
+            var preferenceProperties = new ConfigurationProfilePreferenceProperties(
+                vmBackup: vmBackupProps, antiMalware: customAntiMalwareProps);
             
-            var thisAssignment = new ConfigurationProfileAssignment(
+            var thisAssignment = new ConfigurationProfilePreference(
                 id: null,
                 name: "default",
-                location: "East US 2",
-                properties: assignmentProperties);
+                location: "West US 2",
+                properties: preferenceProperties);
             return thisAssignment;
         }
     }

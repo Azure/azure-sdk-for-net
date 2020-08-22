@@ -58,13 +58,13 @@ namespace Automanage.Tests.ScenarioTests
 
             };
 
-            string expectedProvider = "Microsoft.Automanage";
+            string expectedProvider = "Microsoft Automanage";
 
             var enumerator = operationListResult.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Operation current = enumerator.Current;
-                Assert.True(supportedOperations.Contains(current.Name));
+                Assert.Contains(current.Name, supportedOperations);
                 Assert.Equal(expectedProvider, current.Display.Provider);
             }
         }

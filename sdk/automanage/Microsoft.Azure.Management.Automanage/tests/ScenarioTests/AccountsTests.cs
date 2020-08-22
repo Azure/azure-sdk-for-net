@@ -33,11 +33,23 @@ namespace Automanage.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(thisType))
             {
                 var automanageClient = GetAutomanagementClient(context, handler);
-
-                var actual = automanageClient.Accounts.Get("AMVM-SubLib-017-ABP", "AMVM-SubLib-017_group");
-
+                var t = automanageClient.Accounts.ListByResourceGroup("myNewAmVm3");
+                var actual = automanageClient.Accounts.Get("AMVM-SubLib-017-ABP", "AMVM-SubLib-017_group");                
                 Assert.NotNull(actual);                
             }
-        }       
+        }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void AccountsOperationsListsReturnsAllAccounts()
+        {
+            var thisType = this.GetType();
+            using (MockContext context = MockContext.Start(thisType))
+            {
+                var automanageClient = GetAutomanagementClient(context, handler);
+                var list = automanageClient.Accounts.ListByResourceGroup("myNewAmVm3");                
+                Assert.NotNull(list);
+            }
+        }
     }
 }
