@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ShareLink.Models;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {

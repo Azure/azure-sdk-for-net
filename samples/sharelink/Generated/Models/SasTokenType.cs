@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ShareLink.Models
+namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The type of SAS token the SAS definition will create. </summary>
     public readonly partial struct SasTokenType : IEquatable<SasTokenType>

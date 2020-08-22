@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Storage.Models;
-using ShareLink.Models;
 
 namespace Azure.Security.KeyVault.Storage
 {

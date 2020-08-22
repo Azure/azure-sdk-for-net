@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using ShareLink.Models;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {

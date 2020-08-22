@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ShareLink.Models
+namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
     public readonly partial struct DeletionRecoveryLevel : IEquatable<DeletionRecoveryLevel>

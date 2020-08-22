@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using ShareLink.Models;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
