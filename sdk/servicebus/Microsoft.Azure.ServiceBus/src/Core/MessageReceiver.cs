@@ -54,7 +54,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         int prefetchCount;
         long lastPeekedSequenceNumber;
         MessageReceivePump receivePump;
+        // Cancellation token to cancel the message pump. Once this is fired, all future message handling operations registered by application will be
+        // cancelled. 
         CancellationTokenSource receivePumpCancellationTokenSource;
+        // Cancellation token to cancel the inflight message handling operations registered by application in the message pump. 
+        CancellationTokenSource runningTaskCancellationTokenSource;
 
         /// <summary>
         /// Creates a new MessageReceiver from a <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -1038,6 +1042,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     this.receivePumpCancellationTokenSource.Cancel();
                     this.receivePumpCancellationTokenSource.Dispose();
+                    // For back-compatibility 
+                    this.runningTaskCancellationTokenSource.Cancel();
+                    this.runningTaskCancellationTokenSource.Dispose();
                     this.receivePump = null;
                 }
             }
@@ -1314,7 +1321,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+                this.runningTaskCancellationTokenSource = new CancellationTokenSource();
+                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token, this.runningTaskCancellationTokenSource.Token);
             }
 
             try
