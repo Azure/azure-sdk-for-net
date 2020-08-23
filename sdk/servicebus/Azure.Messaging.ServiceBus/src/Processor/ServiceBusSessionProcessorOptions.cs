@@ -14,11 +14,7 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusSessionProcessorOptions
     {
-        /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
-        /// from a local cache rather than waiting on a service request.
-        /// </summary>
+        /// <inheritdoc cref="ServiceBusProcessorOptions.PrefetchCount"/>
         public int PrefetchCount
         {
             get
@@ -34,23 +30,25 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether
-        /// the processor should automatically complete messages
-        /// after the callback has completed processing.
+        /// <summary>Gets or sets a value that indicates whether the processor
+        /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/> event handler has
+        /// completed processing successfully.
         /// The default value is true.</summary>
-        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
+        /// <value>true to complete the message automatically on successful execution of the event handler; otherwise, false.</value>
         public bool AutoComplete { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This value should be
+        /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value should be
         /// greater than the queue's LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        /// <value>The maximum duration during which session locks are automatically renewed.</value>
+        /// <remarks>The session lock renewal can continue for sometime in the background
+        /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -64,9 +62,13 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
+        /// <remarks>If no message is returned for a call
+        /// to Receive, a new session will be requested by the processor.
+        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
+        /// more often than necessary.</remarks>
         public TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -115,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
-        /// An optional list of session IDs to scope
+        /// Gets or sets an optional list of session IDs to scope
         /// the <see cref="ServiceBusSessionProcessor"/> to. If left
         /// blank, the processor will not be limited to any specific
         /// session IDs.
