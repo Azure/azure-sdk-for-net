@@ -9,8 +9,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The set of options that can be specified when creating a
-    /// <see cref="ServiceBusSessionProcessor" />
-    /// to configure its behavior.
+    /// <see cref="ServiceBusSessionProcessor" /> to configure its behavior.
     /// </summary>
     public class ServiceBusSessionProcessorOptions
     {
@@ -29,21 +28,22 @@ namespace Azure.Messaging.ServiceBus
         }
         private int _prefetchCount = 0;
 
-        /// <summary>
-        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
-        /// </summary>
+        /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>Gets or sets a value that indicates whether the processor
-        /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/> event handler has
-        /// completed processing successfully.
-        /// The default value is true.</summary>
-        /// <value>true to complete the message automatically on successful execution of the event handler; otherwise, false.</value>
+        /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
+        /// event handler has completed processing successfully.
+        /// The default value is true.
+        /// </summary>
+        ///
+        /// <value>true to complete the message automatically on successful execution of the event handler;
+        /// otherwise, false.</value>
         public bool AutoComplete { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value should be
-        /// greater than the queue's LockDuration Property.
+        /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
+        /// should be greater than the queue's LockDuration Property.
         /// </summary>
         ///
         /// <value>The maximum duration during which session locks are automatically renewed.</value>
@@ -62,13 +62,16 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// Gets or sets the maximum amount of time to wait for each Receive call using the processor's underlying
+        /// receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
+        ///
         /// <remarks>If no message is returned for a call
         /// to Receive, a new session will be requested by the processor.
         /// Hence, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.</remarks>
+        /// more often than necessary.
+        /// </remarks>
         public TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -85,8 +88,11 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan? _maxReceiveWaitTime;
 
-        /// <summary>Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
-        /// The default value is 8.</summary>
+        /// <summary>
+        /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
+        /// The default value is 8.
+        /// </summary>
+        ///
         /// <value>The maximum number of concurrent sessions to process.</value>
         public int MaxConcurrentSessions
         {
@@ -100,9 +106,12 @@ namespace Azure.Messaging.ServiceBus
         }
         private int _maxConcurrentSessions = 8;
 
-        /// <summary>Gets or sets the maximum number of calls to the callback the processor should initiate per session.
+        /// <summary>
+        /// Gets or sets the maximum number of calls to the callback the processor should initiate per session.
         /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
-        /// The default value is 1.</summary>
+        /// The default value is 1.
+        /// </summary>
+        ///
         /// <value>The maximum number of concurrent calls to the callback for each session that is being processed.</value>
         public int MaxConcurrentCallsPerSession
         {

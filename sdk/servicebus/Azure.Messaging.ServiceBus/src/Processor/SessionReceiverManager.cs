@@ -11,16 +11,13 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a thread-safe abstraction around a single session receiver
-    /// that threads spawned by the <see cref="ServiceBusSessionProcessor"/> use
-    /// to receive and process messages.
-    /// If <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/> > 1,
-    /// there may be multiple threads using the same
-    /// <see cref="SessionReceiverManager"/>. The manager will delegate to the
-    /// user provided callbacks and handle automatic locking of sessions.
-    /// The receiver instance will only be closed when no other threads are using it,
-    /// or when the user has called <see
-    /// cref="ServiceBusSessionProcessor.StopProcessingAsync"/>.
+    /// Represents a thread-safe abstraction around a single session receiver that threads spawned
+    /// by the <see cref="ServiceBusSessionProcessor"/> use to receive and process messages.
+    /// If <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/> > 1, there may be
+    /// multiple threads using the same <see cref="SessionReceiverManager"/>. The manager will delegate
+    /// to the user provided callbacks and handle automatic locking of sessions.
+    /// The receiver instance will only be closed when no other threads are using it, or when the user
+    /// has called <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable.
     // Doesn't own _concurrentAcceptSessionsSemaphore

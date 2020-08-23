@@ -139,9 +139,8 @@ namespace Azure.Messaging.ServiceBus
         public TimeSpan MaxAutoLockRenewalDuration { get; }
 
         /// <summary>
-        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
-        ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
         internal int MaxConcurrentSessions { get; }
         internal int MaxConcurrentCallsPerSession { get; }
@@ -152,7 +151,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
@@ -248,7 +247,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
@@ -257,7 +255,6 @@ namespace Azure.Messaging.ServiceBus
         /// or Subscription.
         /// Implementation is mandatory.
         /// </summary>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessMessageEventArgs, Task> ProcessMessageAsync
@@ -295,7 +292,6 @@ namespace Azure.Messaging.ServiceBus
         /// The handler responsible for processing messages received from the Queue
         /// or Subscription. Implementation is mandatory.
         /// </summary>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionMessageEventArgs, Task> ProcessSessionMessageAsync
@@ -330,7 +326,6 @@ namespace Azure.Messaging.ServiceBus
         /// this processor is running.
         /// Implementation is mandatory.
         /// </summary>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
