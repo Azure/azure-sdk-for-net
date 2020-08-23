@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     /// The <see cref="ServiceBusSessionProcessor"/> provides an abstraction around a set of <see cref="ServiceBusSessionReceiver"/> that
     /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
     /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusSessionProcessorOptions)"/>.
-    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// The message handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
@@ -52,16 +52,19 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The maximum duration during which session locks are automatically renewed.</value>
         ///
         /// <remarks>The session lock renewal can continue for sometime in the background
-        /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
+        /// after completion of message and result in a few false SessionLockLost exceptions temporarily.
+        /// </remarks>
         public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
 
         /// <summary>Gets the maximum number of sessions that will be processed concurrently by the processor.
         /// The default value is 8.</summary>
         public int MaxConcurrentSessions => _innerProcessor.MaxConcurrentSessions;
 
-        /// <summary>Gets the maximum number of calls to the callback the processor will initiate per session.
+        /// <summary>
+        /// Gets the maximum number of calls to the callback the processor will initiate per session.
         /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
-        /// The default value is 1.</summary>
+        /// The default value is 1.
+        /// </summary>
         public int MaxConcurrentCallsPerSession => _innerProcessor.MaxConcurrentCallsPerSession;
 
         /// <inheritdoc cref="ServiceBusProcessor.FullyQualifiedNamespace"/>

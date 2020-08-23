@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
     /// The <see cref="ServiceBusProcessor"/> provides an abstraction around a set of <see cref="ServiceBusReceiver"/> that
     /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />. It is constructed by calling
     /// <see cref="ServiceBusClient.CreateProcessor(string, ServiceBusProcessorOptions)"/>.
-    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// The message handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
@@ -105,10 +105,10 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusConnection _connection;
 
         /// <summary>Gets the maximum number of concurrent calls to the
-        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
+        /// <see cref="ProcessMessageAsync"/> message handler the processor should initiate.
         /// </summary>
         ///
-        /// <value>The maximum number of concurrent calls to the event handler.</value>
+        /// <value>The maximum number of concurrent calls to the message handler.</value>
         public int MaxConcurrentCalls { get; }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
-        /// complete messages after the event handler has completed processing. If the
-        /// event handler triggers an exception, the message will not be automatically
+        /// complete messages after the message handler has completed processing. If the
+        /// message handler triggers an exception, the message will not be automatically
         /// completed.
         /// </summary>
         ///

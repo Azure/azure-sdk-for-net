@@ -39,11 +39,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether the processor
-        /// should automatically complete messages after the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> event handler has
-        /// completed processing successfully.
-        /// The default value is true.</summary>
-        /// <value>true to complete the message automatically on successful execution of the event handler; otherwise, false.</value>
+        /// <summary>
+        /// Gets or sets a value that indicates whether the processor
+        /// should automatically complete messages after the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> handler has
+        /// completed processing. If the message handler triggers an exception, the message will not be automatically completed.
+        /// The default value is true.
+        /// </summary>
+        ///
+        /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.</value>
         public bool AutoComplete { get; set; } = true;
 
         /// <summary>
@@ -89,7 +92,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the
         /// message handler the processor should initiate.
-        /// The default is 1.</summary>
+        /// The default is 1.
+        /// </summary>
+        ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
         public int MaxConcurrentCalls
         {

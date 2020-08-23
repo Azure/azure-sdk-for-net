@@ -33,8 +33,8 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
-        /// event handler has completed processing successfully.
-        /// The default value is true.
+        /// handler has completed processing. If the message handler triggers an exception,
+        /// the message will not be automatically completed. The default value is true.
         /// </summary>
         ///
         /// <value>true to complete the message automatically on successful execution of the event handler;
@@ -107,12 +107,12 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentSessions = 8;
 
         /// <summary>
-        /// Gets or sets the maximum number of calls to the callback the processor should initiate per session.
-        /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// Gets or sets the maximum number of concurrent calls to the message handler the processor should initiate per session.
+        /// Thus the total number of concurrent calls will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
         /// The default value is 1.
         /// </summary>
         ///
-        /// <value>The maximum number of concurrent calls to the callback for each session that is being processed.</value>
+        /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
         public int MaxConcurrentCallsPerSession
         {
             get => _maxConcurrentCallsPerSessions;
@@ -148,7 +148,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
@@ -157,7 +156,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
