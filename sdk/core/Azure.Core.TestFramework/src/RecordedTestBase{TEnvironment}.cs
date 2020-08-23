@@ -3,7 +3,7 @@
 
 namespace Azure.Core.TestFramework
 {
-    public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment: TestEnvironment, new()
+    public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
     {
         protected RecordedTestBase(bool isAsync) : base(isAsync)
         {
@@ -19,6 +19,9 @@ namespace Azure.Core.TestFramework
 
         public override void StartTestRecording()
         {
+            // Set the TestEnviironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
+            TestEnvironment.Mode = Mode;
+
             base.StartTestRecording();
             TestEnvironment.SetRecording(Recording);
         }

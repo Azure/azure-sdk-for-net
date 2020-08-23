@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
@@ -9,7 +10,7 @@ using NUnit.Framework.Internal.Commands;
 namespace Azure.Core.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class RecordFallbackAttribute : Attribute, IWrapSetUpTearDown
+    public class AutoRerecordingTestAttribute : TestAttribute, IWrapSetUpTearDown
     {
         public TestCommand Wrap(TestCommand command)
         {
@@ -48,7 +49,7 @@ namespace Azure.Core.TestFramework
                     // If the recording succeeded, set a warning result.
                     if (!IsTestFailed(context))
                     {
-                        context.CurrentResult.SetResult(ResultState.Warning, "Test failed palyback, but was successfully re-recorded. Please copy updated recording to SessionFiles.");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed palyback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
                     }
 
                     // revert RecordTestMode to Playback
@@ -70,11 +71,6 @@ namespace Azure.Core.TestFramework
 
         private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
         {
-            //TODO: Cache the reflection, or come up with a better way to get to the RecordedTestBase<TEnvironment>.Environment
-            var environmentProperty = fixture.GetType().GetProperty("TestEnvironment");
-            object environmetValue = environmentProperty.GetValue(fixture, null);
-            var modeProperty = environmetValue.GetType().GetProperty("Mode");
-            modeProperty.SetValue(environmetValue, mode);
             fixture.Mode = mode;
         }
     }

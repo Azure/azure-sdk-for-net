@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreateIfNotExists()
         {
             // Call CreateIfNotExists when the table already exists.
@@ -46,7 +46,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task ValidateCreateDeleteTable()
         {
             // Get the TableClient of a table that hasn't been created yet.
@@ -71,7 +71,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public void ValidateSasCredentials()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -111,7 +111,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task CreatedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
@@ -134,8 +134,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
-        [RecordFallback]
+        [AutoRerecordingTest]
         public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;
@@ -158,7 +157,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;
@@ -178,7 +177,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task EntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -216,7 +215,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task EntityUpdateRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -272,7 +271,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task EntityMergeRespectsEtag()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -333,7 +332,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task EntityMergeDoesPartialPropertyUpdates()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -405,7 +404,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task EntityDeleteRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -465,7 +464,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreatedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -496,7 +495,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task UpsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -527,7 +526,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreateEntityReturnsEntitiesWithoutOdataAnnoations()
         {
             List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
@@ -542,7 +541,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task QueryReturnsEntitiesWithoutOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -562,7 +561,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task CreatedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
@@ -585,7 +584,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreatedCustomEntitiesCanBeQueriedWithFilters()
         {
             List<TestEntity> entityResults;
@@ -605,7 +604,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CustomEntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -643,7 +642,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CustomEntityUpdateRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -699,7 +698,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CustomEntityMergeRespectsEtag()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -759,7 +758,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CustomEntityDeleteRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -818,7 +817,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task CreatedCustomEntitiesAreRoundtrippedProprly()
         {
             List<TestEntity> entityResults;
@@ -854,7 +853,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -886,7 +885,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [AutoRerecordingTest]
         public async Task GetEntityReturnsSingleEntity()
         {
             TableEntity entityResults;
