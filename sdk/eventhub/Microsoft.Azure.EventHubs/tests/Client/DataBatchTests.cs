@@ -79,12 +79,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var partitionSender = default(PartitionSender);
 
                 try
                 {
-                    var partitions = await this.GetPartitionsAsync(ehClient);
-                    var partitionId = partitions[new Random().Next(partitions.Length)];
-                    var partitionSender = ehClient.CreatePartitionSender(partitionId);
+                    var partitions = await GetPartitionsAsync(ehClient);
+                    var partitionId = partitions[new Random().Next(partitions.Length)];                    
+                    partitionSender = ehClient.CreatePartitionSender(partitionId);
                     
                     var batchOptions = new BatchOptions()
                     {
