@@ -62,6 +62,194 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection has learned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            public static PeerRouteList ListLearnedRoutes(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName)
+            {
+                return operations.ListLearnedRoutesAsync(resourceGroupName, hubName, connectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection has learned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PeerRouteList> ListLearnedRoutesAsync(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListLearnedRoutesWithHttpMessagesAsync(resourceGroupName, hubName, connectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection is advertising to
+            /// the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            public static PeerRouteList ListAdvertisedRoutes(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName)
+            {
+                return operations.ListAdvertisedRoutesAsync(resourceGroupName, hubName, connectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection is advertising to
+            /// the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PeerRouteList> ListAdvertisedRoutesAsync(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, hubName, connectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection has learned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            public static PeerRouteList BeginListLearnedRoutes(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName)
+            {
+                return operations.BeginListLearnedRoutesAsync(resourceGroupName, hubName, connectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection has learned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PeerRouteList> BeginListLearnedRoutesAsync(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListLearnedRoutesWithHttpMessagesAsync(resourceGroupName, hubName, connectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection is advertising to
+            /// the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            public static PeerRouteList BeginListAdvertisedRoutes(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName)
+            {
+                return operations.BeginListAdvertisedRoutesAsync(resourceGroupName, hubName, connectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a list of routes the virtual hub bgp connection is advertising to
+            /// the specified peer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the virtual hub.
+            /// </param>
+            /// <param name='connectionName'>
+            /// The name of the virtual hub bgp connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PeerRouteList> BeginListAdvertisedRoutesAsync(this IVirtualHubBgpConnectionsOperations operations, string resourceGroupName, string hubName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, hubName, connectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the details of all VirtualHubBgpConnections.
             /// </summary>
             /// <param name='operations'>
