@@ -18,13 +18,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            /*if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                InitializeClients();
-                await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
-                    CosmosDBTestUtilities.Location,
-                    Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix));
-            }*/
             InitializeClients();
             await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 CosmosDBTestUtilities.Location,
