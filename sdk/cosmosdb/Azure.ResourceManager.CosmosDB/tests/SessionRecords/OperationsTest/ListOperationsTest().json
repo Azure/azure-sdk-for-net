@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-7c2ac41de0f19c42b4d56a30c38d622c-5ac0e33e38ad234c-00",
+        "traceparent": "00-a8fae217d1f8b34fb57a9d6766809c0b-c4a76569a4d74049-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.CosmosDB.Tests/1.0.0-dev.20200824.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
@@ -23,15 +23,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "189",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 24 Aug 2020 23:27:31 GMT",
+        "Date": "Mon, 24 Aug 2020 23:50:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "895a68d4-ea40-4534-a073-8d94a5498f5b",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "895a68d4-ea40-4534-a073-8d94a5498f5b",
-        "x-ms-routing-request-id": "WESTUS2:20200824T232731Z:895a68d4-ea40-4534-a073-8d94a5498f5b"
+        "x-ms-correlation-request-id": "64f02a2f-6180-42c5-a298-64af6798bef2",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "64f02a2f-6180-42c5-a298-64af6798bef2",
+        "x-ms-routing-request-id": "WESTUS2:20200824T235023Z:64f02a2f-6180-42c5-a298-64af6798bef2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DefaultCosmosDB597",
@@ -61,16 +61,16 @@
         "Content-Length": "137157",
         "Content-Location": "https://management.documents.azure.com:450/providers/Microsoft.DocumentDB/operations?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 24 Aug 2020 23:27:32 GMT",
+        "Date": "Mon, 24 Aug 2020 23:50:24 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3eaa3385-959b-4a1d-bf1e-cc0cc3b733d7",
+        "x-ms-correlation-request-id": "abc3a093-168f-42ff-b5dc-e673c7442372",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "3eaa3385-959b-4a1d-bf1e-cc0cc3b733d7",
-        "x-ms-routing-request-id": "WESTUS2:20200824T232733Z:3eaa3385-959b-4a1d-bf1e-cc0cc3b733d7"
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "abc3a093-168f-42ff-b5dc-e673c7442372",
+        "x-ms-routing-request-id": "WESTUS2:20200824T235024Z:abc3a093-168f-42ff-b5dc-e673c7442372"
       },
       "ResponseBody": {
         "value": [
