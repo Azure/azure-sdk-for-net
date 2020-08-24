@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Migrate.Tests", "tests\Microsoft.Azure.Management.Migrate.Tests.csproj", "{27EFA488-E3C5-4D97-BBF3-138AF1326F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Migrate.RegionMove.Tests", "tests\Microsoft.Azure.Management.Migrate.RegionMove.Tests.csproj", "{27EFA488-E3C5-4D97-BBF3-138AF1326F93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Migrate", "src\Microsoft.Azure.Management.Migrate.csproj", "{AFB3A468-8CCF-4A64-B14B-43B1BF7FDD4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Migrate.RegionMove", "src\Microsoft.Azure.Management.Migrate.RegionMove.csproj", "{AFB3A468-8CCF-4A64-B14B-43B1BF7FDD4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
