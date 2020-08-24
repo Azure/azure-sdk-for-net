@@ -8,10 +8,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// A lightweight abstraction for a payload of bytes. This type integrates with <see cref="ObjectSerializer"/>
