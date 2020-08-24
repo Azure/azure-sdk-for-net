@@ -33,7 +33,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="message">The message to be processed.</param>
         /// <param name="receiver">The receiver instance that can be used to perform message settlement.</param>
-        /// <param name = "cancellationToken" > The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
+        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
         public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
         {
