@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-0893c5faabd2ce4bab76a60b7d548272-3a635128745e584a-00",
+        "traceparent": "00-16a5aa5b5203434fb6fabb22a9733ccf-61403b065bce1e4d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200818.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "24150bb7c0511832d88ed2fba1dae3f4",
-        "x-ms-date": "Tue, 18 Aug 2020 23:35:56 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 15:53:52 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,12 +25,12 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 18 Aug 2020 23:35:56 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-18T23%3A35%3A56.5688840Z\u0027\u0022",
+        "Date": "Fri, 21 Aug 2020 15:53:52 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A52.6370312Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablel1upyyea\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "24150bb7-c051-1832-d88e-d2fba1dae3f4"
+        "x-ms-request-id": "e297f812-641b-f934-2f48-8ee8e1e07531"
       },
       "ResponseBody": {
         "TableName": "testtablel1upyyea",
@@ -43,13 +43,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2bc4c2dad5049e438f5b1841620c1977-d760ba344b907a43-00",
+        "traceparent": "00-f4f7738039f529429395903cd57cb9b2-a809b97479c5e44d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200818.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e297f812641bf9342f488ee8e1e07531",
-        "x-ms-date": "Tue, 18 Aug 2020 23:35:57 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 15:53:53 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -57,9 +57,9 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 18 Aug 2020 23:35:56 GMT",
+        "Date": "Fri, 21 Aug 2020 15:53:53 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "e297f812-641b-f934-2f48-8ee8e1e07531"
+        "x-ms-request-id": "45235252-1723-57fe-122f-05374d8124fb"
       },
       "ResponseBody": []
     }
@@ -67,6 +67,6 @@
   "Variables": {
     "RandomSeed": "274204635",
     "TABLES_COSMOS_ACCOUNT_NAME": "chrissprim",
-    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": ""
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

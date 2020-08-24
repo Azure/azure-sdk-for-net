@@ -237,7 +237,7 @@ namespace Azure.Core.Tests
          [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
          public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
          {
-             StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
              using TestServer testServer = new TestServer(
                  context =>
