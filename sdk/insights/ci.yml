@@ -22,8 +22,8 @@ pr:
     include:
     - sdk/insights/
 
-stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: insights
     ArtifactName: packages
