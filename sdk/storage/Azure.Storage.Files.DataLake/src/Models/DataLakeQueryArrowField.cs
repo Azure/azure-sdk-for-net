@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Describe a field in <see cref="BlobQueryArrowOptions"/>.
+    /// Describe a field in <see cref="DataLakeQueryArrowOptions"/>.
     /// </summary>
-    public class BlobQueryArrowField
+    public class DataLakeQueryArrowField
     {
         /// <summary>
         /// The type of the field. Required.
         /// </summary>
-        public BlobQueryArrowFieldType Type { get; set; }
+        public DataLakeQueryArrowFieldType Type { get; set; }
 
         /// <summary>
         /// The name of the field.  Optional.
@@ -19,12 +19,12 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The precision of the field.  Required if Type is <see cref="BlobQueryArrowFieldType.Decimal"/>.
+        /// The precision of the field.  Required if Type is <see cref="DataLakeQueryArrowFieldType.Decimal"/>.
         /// </summary>
         public int Precision { get; set; }
 
         /// <summary>
-        /// The scale of the field.  Required if Type is <see cref="BlobQueryArrowFieldType.Decimal"/>.
+        /// The scale of the field.  Required if Type is <see cref="DataLakeQueryArrowFieldType.Decimal"/>.
         /// </summary>
         public int Scale { get; set; }
     }

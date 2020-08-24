@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// The type of a <see cref="BlobQueryArrowField"/>.
+    /// The type of a <see cref="DataLakeQueryArrowField"/>.
     /// </summary>
-    public enum BlobQueryArrowFieldType
+    public enum DataLakeQueryArrowFieldType
     {
 #pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
