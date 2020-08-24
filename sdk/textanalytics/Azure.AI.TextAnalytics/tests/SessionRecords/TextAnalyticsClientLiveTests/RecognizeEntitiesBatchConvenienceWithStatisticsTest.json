@@ -7,10 +7,10 @@
         "Content-Length": "191",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5e54b4fcbc16a04eb767f99f5d9c17a8-80a7a9035bf96646-00",
+        "traceparent": "00-61a4cd04e56d464b863dac5ded3ec519-93848c094636424f-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200819.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ff4be27d75c93d758603df58d2422daa",
         "x-ms-return-client-request-id": "true"
@@ -18,27 +18,27 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "1",
-            "text": "My cat and my dog might need to see a veterinarian."
+            "text": "My cat and my dog might need to see a veterinarian.",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5cf3a882-b3a2-4b57-9f81-6d48384dd998",
+        "apim-request-id": "1875be0b-ca28-4350-99a4-97af294ca24d",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 06 Jul 2020 22:03:46 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "130"
+        "x-envoy-upstream-service-time": "76"
       },
       "ResponseBody": {
         "statistics": {
