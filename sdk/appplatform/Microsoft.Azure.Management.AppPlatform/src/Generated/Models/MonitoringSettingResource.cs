@@ -14,33 +14,31 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Deployment resource payload
+    /// Monitoring Setting resource
     /// </summary>
-    public partial class DeploymentResource : ProxyResource
+    public partial class MonitoringSettingResource : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the DeploymentResource class.
+        /// Initializes a new instance of the MonitoringSettingResource class.
         /// </summary>
-        public DeploymentResource()
+        public MonitoringSettingResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeploymentResource class.
+        /// Initializes a new instance of the MonitoringSettingResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="properties">Properties of the Deployment
+        /// <param name="properties">Properties of the Monitoring Setting
         /// resource</param>
-        /// <param name="sku">Sku of the Deployment resource</param>
-        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), DeploymentResourceProperties properties = default(DeploymentResourceProperties), Sku sku = default(Sku))
+        public MonitoringSettingResource(string id = default(string), string name = default(string), string type = default(string), MonitoringSettingProperties properties = default(MonitoringSettingProperties))
             : base(id, name, type)
         {
             Properties = properties;
-            Sku = sku;
             CustomInit();
         }
 
@@ -50,16 +48,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the Deployment resource
+        /// Gets or sets properties of the Monitoring Setting resource
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DeploymentResourceProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets sku of the Deployment resource
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public MonitoringSettingProperties Properties { get; set; }
 
     }
 }

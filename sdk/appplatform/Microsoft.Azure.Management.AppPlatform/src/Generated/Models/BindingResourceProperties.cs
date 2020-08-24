@@ -64,16 +64,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the bound resource
+        /// Gets the name of the bound resource
         /// </summary>
         [JsonProperty(PropertyName = "resourceName")]
-        public string ResourceName { get; set; }
+        public string ResourceName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the standard Azure resource type of the bound resource
+        /// Gets the standard Azure resource type of the bound resource
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public string ResourceType { get; set; }
+        public string ResourceType { get; private set; }
 
         /// <summary>
         /// Gets or sets the Azure resource id of the bound resource
