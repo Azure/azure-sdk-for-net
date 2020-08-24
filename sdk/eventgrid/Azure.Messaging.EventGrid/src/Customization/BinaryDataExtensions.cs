@@ -32,15 +32,8 @@ namespace Azure.Messaging.EventGrid
                 DataVersion = egEventInternal.DataVersion,
                 Id = egEventInternal.Id,
                 EventTime = egEventInternal.EventTime,
-                SerializedData = egEventInternal.Data,
-                CreatedFromParse = true
+                SerializedData = egEventInternal.Data
             };
-
-            // Try to eagerly deserialize if system event data
-            if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
-            {
-                egEvent.Data = systemDeserializationFunction(egEventInternal.Data);
-            }
 
             return egEvent;
         }
@@ -72,8 +65,7 @@ namespace Azure.Messaging.EventGrid
                 DataSchema = cloudEventInternal.Dataschema,
                 DataContentType = cloudEventInternal.Datacontenttype,
                 Subject = cloudEventInternal.Subject,
-                SerializedData = cloudEventInternal.Data,
-                CreatedFromParse = true
+                SerializedData = cloudEventInternal.Data
             };
 
             if (cloudEventInternal.AdditionalProperties != null)
@@ -82,12 +74,6 @@ namespace Azure.Messaging.EventGrid
                 {
                     cloudEvent.ExtensionAttributes.Add(kvp.Key, kvp.Value);
                 }
-            }
-
-            // Try to eagerly deserialize if system event data
-            if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
-            {
-                cloudEvent.Data = systemDeserializationFunction(cloudEventInternal.Data.Value);
             }
 
             return cloudEvent;

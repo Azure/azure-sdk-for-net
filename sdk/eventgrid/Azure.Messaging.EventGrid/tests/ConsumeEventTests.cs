@@ -104,8 +104,14 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void EGEventGetDataThrowsWhenCalledWithoutParse()
         {
+            var customSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
             EventGridEvent egEvent = new EventGridEvent(new ContosoItemReceivedEventData(), "", "Contoso.Items.ItemReceived", "1");
-            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(),
+            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(customSerializer),
                 Throws.InstanceOf<InvalidOperationException>());
         }
         #endregion
@@ -1433,8 +1439,14 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void CloudEventGetDataThrowsWhenCalledWithoutParse()
         {
-            CloudEvent egEvent = new CloudEvent(new ContosoItemReceivedEventData(), "", "Contoso.Items.ItemReceived");
-            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(),
+            var customSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+            CloudEvent egEvent = new CloudEvent("", "Contoso.Items.ItemReceived", new ContosoItemReceivedEventData());
+            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(customSerializer),
                 Throws.InstanceOf<InvalidOperationException>());
         }
         #endregion

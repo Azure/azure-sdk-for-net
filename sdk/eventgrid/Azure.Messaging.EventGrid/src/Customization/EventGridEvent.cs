@@ -64,8 +64,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Serialized event data specific to the event type. </summary>
         internal JsonElement SerializedData { get; set; }
 
-        /// <summary> Indicates whether event was created from the Parse() method. </summary>
-        internal bool CreatedFromParse { get; set; } = false;
+        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
@@ -108,15 +107,9 @@ namespace Azure.Messaging.EventGrid
                     DataVersion = egEventInternal.DataVersion,
                     Id = egEventInternal.Id,
                     EventTime = egEventInternal.EventTime,
-                    SerializedData = egEventInternal.Data,
-                    CreatedFromParse = true
+                    SerializedData = egEventInternal.Data
                 };
 
-                // Try to eagerly deserialize if system event data
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(egEventInternal.EventType, out Func<JsonElement, object> systemDeserializationFunction))
-                {
-                    egEvent.Data = systemDeserializationFunction(egEventInternal.Data);
-                }
                 egEvents.Add(egEvent);
             }
 
@@ -133,7 +126,14 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public async Task<T> GetDataAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
-            => await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+        {
+            if (Data != null)
+            {
+                throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from EventGridEvent.Parse(), " +
+                    "as event data should already be deserialized and the custom deserializer will not be used.");
+            }
+            return await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deserializes the event payload into a specified event type <see cref="ObjectSerializer"/>.
@@ -145,7 +145,14 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public T GetData<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
-            => GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+        {
+            if (Data != null)
+            {
+                throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from EventGridEvent.Parse(), " +
+                    "as event data should already be deserialized and the custom deserializer will not be used.");
+            }
+            return GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+        }
 
         /// <summary>
         /// Deserializes the event payload into a specified event type <see cref="JsonObjectSerializer"/>.
@@ -156,25 +163,23 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public T GetData<T>(CancellationToken cancellationToken = default)
-            => GetDataInternal<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
+            => GetDataInternal<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
-            if (!CreatedFromParse)
-            {
-                throw new InvalidOperationException("Cannot call GetData<T>() method if event was not created from EventGridEvent.Parse()");
-            }
-
             Argument.AssertNotNull(serializer, nameof(serializer));
 
             if (Data != null)
             {
                 return (T)Data;
             }
+            else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+            {
+                return (T)systemDeserializationFunction(SerializedData);
+            }
             else
             {
-                // Reserialize JsonElement to stream
-                using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, new JsonObjectSerializer(), cancellationToken))
+                using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
                 {
                     if (async)
                     {
@@ -203,15 +208,20 @@ namespace Azure.Messaging.EventGrid
             {
                 return Data;
             }
-
-            // Reserialize JsonElement to stream
-            return BinaryData.FromStream(SerializePayloadToStream(SerializedData, new JsonObjectSerializer()));
+            else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+            {
+                return systemDeserializationFunction(SerializedData);
+            }
+            else
+            {
+                return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
+            }
         }
 
-        private static MemoryStream SerializePayloadToStream(object payload, ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
         {
             MemoryStream dataStream = new MemoryStream();
-            serializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
+            s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
             dataStream.Position = 0;
             return dataStream;
         }

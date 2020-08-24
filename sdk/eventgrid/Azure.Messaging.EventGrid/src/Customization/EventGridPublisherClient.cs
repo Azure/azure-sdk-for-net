@@ -120,11 +120,18 @@ namespace Azure.Messaging.EventGrid
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
                     JsonDocument data;
-                    using (MemoryStream stream = new MemoryStream())
+                    if (egEvent.Data is BinaryData binaryEventData)
                     {
-                        _dataSerializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
-                        stream.Position = 0;
-                        data = JsonDocument.Parse(stream);
+                        data = JsonDocument.Parse(binaryEventData);
+                    }
+                    else
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            _dataSerializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
+                            stream.Position = 0;
+                            data = JsonDocument.Parse(stream);
+                        }
                     }
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
@@ -214,6 +221,7 @@ namespace Azure.Messaging.EventGrid
                     }
 
                     // The 'Data' property is optional for CloudEvents
+                    // Additionally, if the type of data is binary, 'Data' will not be populated (data will be stored in 'DataBase64' instead)
                     if (cloudEvent.Data != null)
                     {
                         MemoryStream stream = new MemoryStream();

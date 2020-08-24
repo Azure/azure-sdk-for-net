@@ -140,10 +140,10 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
                     // testing byte[]
                     Encoding.UTF8.GetBytes("data"),
-                    "record",
-                    "Microsoft.MockPublisher.TestEvent",
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -155,10 +155,10 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
                     // testing ReadOnlyMemory<byte>
                     new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes("data")),
-                    "record",
-                    "Microsoft.MockPublisher.TestEvent",
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -170,10 +170,10 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 5; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
-                    // testing IEnumerable<byte>
-                    Enumerable.Repeat((byte)1, 1),
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
+                    // testing IEnumerable<byte>
+                    Enumerable.Repeat((byte)1, 1),
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -186,9 +186,9 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 // testing BinaryData
                 CloudEvent cloudEvent = new CloudEvent(
-                    new BinaryData(Encoding.UTF8.GetBytes("data")),
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
+                    new BinaryData(Encoding.UTF8.GetBytes("data")),
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -216,9 +216,9 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
-                    "{\"property1\": \"abc\",  \"property2\": \"123\"}",
                     "record",
-                    "Microsoft.MockPublisher.TestEvent")
+                    "Microsoft.MockPublisher.TestEvent",
+                    "{\"property1\": \"abc\",  \"property2\": \"123\"}")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
@@ -245,9 +245,9 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
-                    new TestPayload("name", i),
                     "record",
-                    "Microsoft.MockPublisher.TestEvent")
+                    "Microsoft.MockPublisher.TestEvent",
+                    new TestPayload("name", i))
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
@@ -274,9 +274,9 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 CloudEvent cloudEvent = new CloudEvent(
-                    "hello",
                     "record",
-                    "Microsoft.MockPublisher.TestEvent")
+                    "Microsoft.MockPublisher.TestEvent",
+                    "hello")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,44 +37,15 @@ namespace Azure.Messaging.EventGrid
         /// consumer can be informed by this attribute being set to "application/xml".
         /// If the content type is omitted, then it is implied that the data is a JSON value conforming to the
         /// "application/json" media type. </summary>
-        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
-        public CloudEvent(object data, string source, string type)
-        {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(data, nameof(data));
-
-            Source = source;
-            Type = type;
-
-            if (data is IEnumerable<byte> enumerable)
-            {
-                DataBase64 = enumerable.ToArray();
-            }
-            else if (data is ReadOnlyMemory<byte> memory)
-            {
-                DataBase64 = memory.ToArray();
-            }
-            else
-            {
-                Data = data;
-            }
-            ExtensionAttributes = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class. </summary>
         /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
-        public CloudEvent(object data, string source, string type, string dataContentType)
+        public CloudEvent(string source, string type, object data, string dataContentType = null)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(dataContentType, nameof(dataContentType));
 
             Source = source;
             Type = type;
@@ -99,15 +69,14 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudEvent"/> class.
         /// </summary>
-        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
+        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified when sending binary data. </param>
-        public CloudEvent(BinaryData data, string source, string type, string dataContentType)
+        public CloudEvent(string source, string type, BinaryData data, string dataContentType = null)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(dataContentType, nameof(dataContentType));
 
             Source = source;
             Type = type;
@@ -151,8 +120,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
         internal byte[] DataBase64 { get; set; }
 
-        /// <summary> Indicates whether event was created from the Parse() method. </summary>
-        internal bool CreatedFromParse { get; set; } = false;
+        private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
@@ -204,8 +172,7 @@ namespace Azure.Messaging.EventGrid
                     DataSchema = cloudEventInternal.Dataschema,
                     DataContentType = cloudEventInternal.Datacontenttype,
                     Subject = cloudEventInternal.Subject,
-                    SerializedData = cloudEventInternal.Data,
-                    CreatedFromParse = true
+                    SerializedData = cloudEventInternal.Data
                 };
 
                 if (cloudEventInternal.AdditionalProperties != null)
@@ -214,12 +181,6 @@ namespace Azure.Messaging.EventGrid
                     {
                         cloudEvent.ExtensionAttributes.Add(kvp.Key, kvp.Value);
                     }
-                }
-
-                // Try to eagerly deserialize if system event data
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(cloudEventInternal.Type, out Func<JsonElement, object> systemDeserializationFunction))
-                {
-                    cloudEvent.Data = systemDeserializationFunction(cloudEventInternal.Data.Value);
                 }
 
                 cloudEvents.Add(cloudEvent);
@@ -238,7 +199,14 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public async Task<T> GetDataAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
-            => await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+        {
+            if (Data != null)
+            {
+                throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from CloudEvent.Parse(), " +
+                    "as event data should already be deserialized and the custom deserializer will not be used.");
+            }
+            return await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deserializes the event payload into a specified event type using the provided <see cref="ObjectSerializer"/>.
@@ -250,7 +218,14 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public T GetData<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
-            => GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+        {
+            if (Data != null)
+            {
+                throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from CloudEvent.Parse(), " +
+                    "as event data should already be deserialized and the custom deserializer will not be used.");
+            }
+            return GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+        }
 
         /// <summary>
         /// Deserializes the event payload into a specified event type using the <see cref="JsonObjectSerializer"/>.
@@ -261,15 +236,10 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
         public T GetData<T>(CancellationToken cancellationToken = default)
-            => GetDataInternal<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
+            => GetDataInternal<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
-            if (!CreatedFromParse)
-            {
-                throw new InvalidOperationException("Cannot call GetData<T>() method if event was not created from CloudEvent.Parse()");
-            }
-
             Argument.AssertNotNull(serializer, nameof(serializer));
 
             if (Data != null)
@@ -278,16 +248,23 @@ namespace Azure.Messaging.EventGrid
             }
             else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
             {
-                // Reserialize JsonElement to stream
-                using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
+                // Try to deserialize to system event
+                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
-                    if (async)
+                    return (T)systemDeserializationFunction(SerializedData.Value);
+                }
+                else
+                {
+                    using (MemoryStream dataStream = SerializePayloadToStream(SerializedData, cancellationToken))
                     {
-                        return (T)await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        return (T)serializer.Deserialize(dataStream, typeof(T), cancellationToken);
+                        if (async)
+                        {
+                            return (T)await serializer.DeserializeAsync(dataStream, typeof(T), cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            return (T)serializer.Deserialize(dataStream, typeof(T), cancellationToken);
+                        }
                     }
                 }
             }
@@ -316,8 +293,16 @@ namespace Azure.Messaging.EventGrid
                 }
                 else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
                 {
-                    // Return serialized event data as BinaryData
-                    return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
+                    // Try to deserialize to system event
+                    if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
+                    {
+                        return systemDeserializationFunction(SerializedData.Value);
+                    }
+                    else
+                    {
+                        // Return serialized event data as BinaryData
+                        return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
+                    }
                 }
             }
             return Data;
@@ -326,8 +311,7 @@ namespace Azure.Messaging.EventGrid
         private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
         {
             MemoryStream dataStream = new MemoryStream();
-            ObjectSerializer serializer = new JsonObjectSerializer();
-            serializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
+            s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);
             dataStream.Position = 0;
             return dataStream;
         }
