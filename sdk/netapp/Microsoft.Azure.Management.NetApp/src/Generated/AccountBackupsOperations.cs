@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.NetApp
     using System.Threading.Tasks;
 
     /// <summary>
-    /// NetAppResourceOperations operations.
+    /// AccountBackupsOperations operations.
     /// </summary>
-    internal partial class NetAppResourceOperations : IServiceOperations<AzureNetAppFilesManagementClient>, INetAppResourceOperations
+    internal partial class AccountBackupsOperations : IServiceOperations<AzureNetAppFilesManagementClient>, IAccountBackupsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the NetAppResourceOperations class.
+        /// Initializes a new instance of the AccountBackupsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal NetAppResourceOperations(AzureNetAppFilesManagementClient client)
+        internal AccountBackupsOperations(AzureNetAppFilesManagementClient client)
         {
             if (client == null)
             {
@@ -51,26 +51,16 @@ namespace Microsoft.Azure.Management.NetApp
         public AzureNetAppFilesManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Check resource name availability
+        /// List Backups for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Check if a resource name is available.
+        /// List all Backups for a Netapp Account
         /// </remarks>
-        /// <param name='location'>
-        /// The location
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
-        /// Resource name to verify.
-        /// </param>
-        /// <param name='type'>
-        /// Resource type used for verification. Possible values include:
-        /// 'Microsoft.NetApp/netAppAccounts',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-        /// </param>
-        /// <param name='resourceGroup'>
-        /// Resource group name.
+        /// <param name='accountName'>
+        /// The name of the NetApp account
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -93,38 +83,38 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupsList>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (location == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "type");
-            }
-            if (resourceGroup == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
-            }
-            ResourceNameAvailabilityRequest body = new ResourceNameAvailabilityRequest();
-            if (name != null || type != null || resourceGroup != null)
-            {
-                body.Name = name;
-                body.Type = type;
-                body.ResourceGroup = resourceGroup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -133,16 +123,17 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -155,7 +146,7 @@ namespace Microsoft.Azure.Management.NetApp
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -186,12 +177,6 @@ namespace Microsoft.Azure.Management.NetApp
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -247,7 +232,7 @@ namespace Microsoft.Azure.Management.NetApp
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CheckAvailabilityResponse>();
+            var _result = new AzureOperationResponse<BackupsList>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -260,7 +245,7 @@ namespace Microsoft.Azure.Management.NetApp
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckAvailabilityResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BackupsList>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -280,26 +265,19 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Check file path availability
+        /// Get Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Check if a file path is available.
+        /// Get Backup for a Netapp Account
         /// </remarks>
-        /// <param name='location'>
-        /// The location
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
-        /// Resource name to verify.
+        /// <param name='accountName'>
+        /// The name of the NetApp account
         /// </param>
-        /// <param name='type'>
-        /// Resource type used for verification. Possible values include:
-        /// 'Microsoft.NetApp/netAppAccounts',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-        /// </param>
-        /// <param name='resourceGroup'>
-        /// Resource group name.
+        /// <param name='backupName'>
+        /// The name of the backup
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -322,38 +300,42 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Backup>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string backupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (location == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (backupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "backupName");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "type");
-            }
-            if (resourceGroup == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
-            }
-            ResourceNameAvailabilityRequest body = new ResourceNameAvailabilityRequest();
-            if (name != null || type != null || resourceGroup != null)
-            {
-                body.Name = name;
-                body.Type = type;
-                body.ResourceGroup = resourceGroup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -362,16 +344,19 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("backupName", backupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckFilePathAvailability", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{backupName}", System.Uri.EscapeDataString(backupName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -384,7 +369,7 @@ namespace Microsoft.Azure.Management.NetApp
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -415,12 +400,6 @@ namespace Microsoft.Azure.Management.NetApp
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -476,7 +455,7 @@ namespace Microsoft.Azure.Management.NetApp
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CheckAvailabilityResponse>();
+            var _result = new AzureOperationResponse<Backup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -489,7 +468,7 @@ namespace Microsoft.Azure.Management.NetApp
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckAvailabilityResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Backup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -509,26 +488,47 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Check quota availability
+        /// Delete Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Check if a quota is available.
+        /// Delete Backup for a Netapp Account
         /// </remarks>
-        /// <param name='location'>
-        /// The location
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
-        /// Name of the resource to verify.
+        /// <param name='accountName'>
+        /// The name of the NetApp account
         /// </param>
-        /// <param name='type'>
-        /// Resource type used for verification. Possible values include:
-        /// 'Microsoft.NetApp/netAppAccounts',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// <param name='backupName'>
+        /// The name of the backup
         /// </param>
-        /// <param name='resourceGroup'>
-        /// Resource group name.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string backupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, backupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete Backup for a Netapp Account
+        /// </summary>
+        /// <remarks>
+        /// Delete Backup for a Netapp Account
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the NetApp account
+        /// </param>
+        /// <param name='backupName'>
+        /// The name of the backup
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -539,9 +539,6 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -551,38 +548,42 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckQuotaAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string backupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (location == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (backupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "backupName");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "type");
-            }
-            if (resourceGroup == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
-            }
-            QuotaAvailabilityRequest body = new QuotaAvailabilityRequest();
-            if (name != null || type != null || resourceGroup != null)
-            {
-                body.Name = name;
-                body.Type = type;
-                body.ResourceGroup = resourceGroup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -591,16 +592,19 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("backupName", backupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckQuotaAvailability", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{backupName}", System.Uri.EscapeDataString(backupName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -613,7 +617,7 @@ namespace Microsoft.Azure.Management.NetApp
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -644,12 +648,6 @@ namespace Microsoft.Azure.Management.NetApp
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -670,7 +668,7 @@ namespace Microsoft.Azure.Management.NetApp
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -705,30 +703,12 @@ namespace Microsoft.Azure.Management.NetApp
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CheckAvailabilityResponse>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckAvailabilityResponse>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
