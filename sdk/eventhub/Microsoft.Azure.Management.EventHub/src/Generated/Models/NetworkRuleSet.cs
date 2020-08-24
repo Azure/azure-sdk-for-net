@@ -37,13 +37,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="trustedServiceAccessEnabled">Value that indicates
+        /// whether Trusted Service Access is Enabled or not.</param>
         /// <param name="defaultAction">Default Action for Network Rule Set.
         /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="virtualNetworkRules">List VirtualNetwork Rules</param>
         /// <param name="ipRules">List of IpRules</param>
-        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>))
+        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>))
             : base(id, name, type)
         {
+            TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
             IpRules = ipRules;
@@ -54,6 +57,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets value that indicates whether Trusted Service Access is
+        /// Enabled or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedServiceAccessEnabled")]
+        public bool? TrustedServiceAccessEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets default Action for Network Rule Set. Possible values
