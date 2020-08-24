@@ -916,7 +916,7 @@ namespace Azure.Data.Tables
 
         public virtual TablesBatch CreateBatch()
         {
-            return new TablesBatch(_table, _tableOperations, _format, _diagnostics);
+            return new TablesBatch(_table, _tableOperations, _format);
         }
 
         internal static string Bind(Expression expression)

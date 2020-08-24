@@ -15,15 +15,16 @@ namespace Azure.Data.Tables
     public class TablesBatch
     {
         private readonly TableRestClient _tableOperations;
-        private string _table;
-        private ClientDiagnostics _diagnostics;
+        private readonly TableRestClient _batchOperations;
+        private readonly string _table;
+        private readonly ClientDiagnostics _diagnostics;
         private MultipartContent _changeset;
-        private OdataMetadataFormat _format;
-        private ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
+        private readonly OdataMetadataFormat _format;
+        private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
         internal MultipartContent _batch;
         internal Guid _batchGuid = default;
         internal Guid _changesetGuid = default;
-        internal ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage> AddMessages = new ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage>();
+        internal ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage> _addMessages = new ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TablesBatch"/> class.
@@ -31,13 +32,13 @@ namespace Azure.Data.Tables
         /// <param name="table"></param>
         /// <param name="tableOperations"></param>
         /// <param name="format"></param>
-        /// <param name="diagnostics"></param>
-        internal TablesBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format, ClientDiagnostics diagnostics)
+        internal TablesBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
         {
             _table = table;
             _tableOperations = tableOperations;
+            _diagnostics = _tableOperations.clientDiagnostics;
+            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _format = format;
-            _diagnostics = diagnostics;
             _batch = TableRestClient.CreateBatchContent(_batchGuid);
             _changeset = _batch.AddChangeset(_changesetGuid);
         }
@@ -99,7 +100,7 @@ namespace Azure.Data.Tables
                 var changeset = batch.AddChangeset(_changesetGuid);
                 foreach (var entity in entities)
                 {
-                    AddMessages[(entity.PartitionKey, entity.RowKey)] = _tableOperations.AddInsertEntityRequest(
+                    _addMessages[(entity.PartitionKey, entity.RowKey)] = _batchOperations.AddInsertEntityRequest(
                         changeset,
                         _table,
                         null,
@@ -134,7 +135,7 @@ namespace Azure.Data.Tables
                 var changeset = batch.AddChangeset(_changesetGuid);
                 foreach (var entity in entities)
                 {
-                    _tableOperations.AddInsertEntityRequest(
+                    _batchOperations.AddInsertEntityRequest(
                         changeset,
                         _table,
                         null,
@@ -150,6 +151,27 @@ namespace Azure.Data.Tables
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Creates a pipeline to use for processing sub-operations before they
+        /// are combined into a single multipart request.
+        /// </summary>
+        /// <returns>A pipeline to use for processing sub-operations.</returns>
+        private static HttpPipeline CreateBatchPipeline()
+        {
+            // Configure the options to use minimal policies
+            var options = new TableClientOptions();
+            options.Diagnostics.IsLoggingEnabled = false;
+            options.Diagnostics.IsTelemetryEnabled = false;
+            options.Diagnostics.IsDistributedTracingEnabled = false;
+            options.Retry.MaxRetries = 0;
+
+            // Use an empty transport so requests aren't sent
+            options.Transport = new MemoryTransport();
+
+            // Use the same authentication mechanism
+            return HttpPipelineBuilder.Build(options);
         }
     }
 }

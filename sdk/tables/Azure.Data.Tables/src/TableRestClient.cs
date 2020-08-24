@@ -20,6 +20,10 @@ namespace Azure.Data.Tables
         private const string Binary = "binary";
         private const string ApplicationHttp = "application/http";
 
+        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
+        internal string endpoint => url;
+        internal string clientVersion => version;
+
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
         {
             var message = _pipeline.CreateMessage();

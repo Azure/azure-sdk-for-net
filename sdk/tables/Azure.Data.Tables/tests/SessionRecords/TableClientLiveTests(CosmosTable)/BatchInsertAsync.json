@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-97d850d802de9c4e99d9a93c68c6ed4e-b0ced77f2e24b840-00",
+        "traceparent": "00-7cfcc5e08a11b9408e4cef12c055530e-555b69a07fc03d49-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200824.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2feb6250c3e845e5bcf673c3089e1184",
-        "x-ms-date": "Mon, 24 Aug 2020 14:02:02 GMT",
+        "x-ms-date": "Mon, 24 Aug 2020 17:35:20 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,8 +25,8 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 24 Aug 2020 14:02:02 GMT",
-        "ETag": "W/\u0022datetime\u00272020-08-24T14%3A02%3A02.1656584Z\u0027\u0022",
+        "Date": "Mon, 24 Aug 2020 17:35:20 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-24T17%3A35%3A20.2926600Z\u0027\u0022",
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablevow3hh4b\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
@@ -43,13 +43,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-33a5b712ae641143b8f24a90d115017d-b36881283b44ba44-00",
+        "traceparent": "00-2e184941c57bec49bdc7a8b0ef40666e-f8f1f615663ba442-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200824.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "328662617c2d5963129edea4927b093b",
-        "x-ms-date": "Mon, 24 Aug 2020 14:02:02 GMT",
+        "x-ms-date": "Mon, 24 Aug 2020 17:35:21 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -57,7 +57,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 24 Aug 2020 14:02:02 GMT",
+        "Date": "Mon, 24 Aug 2020 17:35:20 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "x-ms-request-id": "32866261-7c2d-5963-129e-dea4927b093b"
       },
