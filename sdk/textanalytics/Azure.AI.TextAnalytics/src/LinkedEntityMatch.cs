@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -8,12 +10,15 @@ namespace Azure.AI.TextAnalytics
     /// the linked entity, or well-known item, that the Text Analytics model
     /// identified.
     /// </summary>
-    public readonly struct LinkedEntityMatch
+    [CodeGenModel("Match")]
+    public readonly partial struct LinkedEntityMatch
     {
-        internal LinkedEntityMatch(string text, double score)
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
         {
-            Text = text;
-            ConfidenceScore = score;
+            ConfidenceScore = confidenceScore;
+            Text = text ?? string.Empty;
+            Offset = offset;
+            Length = length;
         }
 
         /// <summary>
@@ -26,5 +31,10 @@ namespace Azure.AI.TextAnalytics
         /// substring matches the corresponding linked entity.
         /// </summary>
         public double ConfidenceScore { get; }
-    }
+
+        /// <summary> Start position for the entity match text. </summary>
+        private int Offset { get; }
+        /// <summary> Length for the entity match text. </summary>
+        private int Length { get; }
+}
 }

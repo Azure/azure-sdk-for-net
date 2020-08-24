@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class Match
+    public partial struct LinkedEntityMatch
     {
-        internal static Match DeserializeMatch(JsonElement element)
+        internal static LinkedEntityMatch DeserializeLinkedEntityMatch(JsonElement element)
         {
             double confidenceScore = default;
             string text = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new Match(confidenceScore, text, offset, length);
+            return new LinkedEntityMatch(confidenceScore, text, offset, length);
         }
     }
 }
