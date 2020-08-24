@@ -7,10 +7,10 @@
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6254c99688b9064aa7ba897ba887dc8b-3c1bd250ee9de64f-00",
+        "traceparent": "00-002fea5b1c1e8f41b0113f617c4a0a45-a33e2d05b0159142-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "8bcd93f72d672956da7ad3b4de42f9cb",
         "x-ms-return-client-request-id": "true"
@@ -18,27 +18,27 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "1",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
           },
           {
-            "language": "es",
             "id": "2",
-            "text": "Mi perro y mi gato tienen que ir al veterinario."
+            "text": "Mi perro y mi gato tienen que ir al veterinario.",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9833f5da-407e-4e75-86d2-6eb02fd5a66a",
+        "apim-request-id": "6d57311a-d882-4e6a-88ff-da9e30137657",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 06 Jul 2020 22:03:54 GMT",
+        "Date": "Wed, 19 Aug 2020 02:51:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "9"
       },
       "ResponseBody": {
         "statistics": {
@@ -76,7 +76,7 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-07-01"
       }
     }
   ],

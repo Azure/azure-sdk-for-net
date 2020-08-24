@@ -37,7 +37,7 @@
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
@@ -72,7 +72,8 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @allenjzhang
+/**/*Management*/                               @allenjzhang  @m-nash @markcowl
+/**/Azure.ResourceManager*/                     @allenjzhang  @m-nash @markcowl
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
@@ -84,6 +85,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @allenjzhang
+/eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

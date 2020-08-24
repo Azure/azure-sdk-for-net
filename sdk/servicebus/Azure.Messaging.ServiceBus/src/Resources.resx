@@ -294,4 +294,7 @@
   <data name="SendViaCannotBeUsedWithEntityInConnectionString" xml:space="preserve">
     <value>When sending via a different entity, an entity path is not allowed to specified in the connection string.</value>
   </data>
+  <data name="MessageProcessorIsNotRunning" xml:space="preserve">
+    <value>The message processor is not currently running. It needs to be started before it can be stopped.</value>
+  </data>
 </root>

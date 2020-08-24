@@ -797,6 +797,7 @@ namespace Azure.DigitalTwins.Core
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             request.Content = new StringRequestContent(patchDocument);
             return message;
         }
@@ -815,6 +816,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (relationship != null)
             {
                 request.Content = new StringRequestContent(relationship);
@@ -836,6 +838,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (patchDocument != null)
             {
                 request.Content = new StringRequestContent(patchDocument);
@@ -861,6 +864,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (ifMatch != null)
             {
                 request.Headers.Add(IfMatchHeaderKey, ifMatch);
@@ -890,6 +894,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (telemetry != null)
             {
                 request.Content = new StringRequestContent(telemetry);
@@ -917,6 +922,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (telemetry != null)
             {
                 request.Content = new StringRequestContent(telemetry);

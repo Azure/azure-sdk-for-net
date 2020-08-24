@@ -27,6 +27,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
+        private ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
@@ -100,7 +101,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
             _version = options.VersionString;
             _table = tableName;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             ;
         }
@@ -110,7 +111,7 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _diagnostics = diagnostics;
             _isPremiumEndpoint = isPremiumEndpoint;
         }
@@ -287,9 +288,9 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The added Table entity.</returns>
+        /// <returns>A <see cref="Response"/> containing headers such as ETag.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<T>> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -300,11 +301,11 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.InsertEntityAsync(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -318,9 +319,9 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The added Table entity.</returns>
+        /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<T> AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -331,11 +332,11 @@ namespace Azure.Data.Tables
             {
                 var response = _tableOperations.InsertEntity(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -517,12 +518,13 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -533,7 +535,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -543,7 +545,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -568,12 +570,13 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity<T>(T entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -584,7 +587,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -594,7 +597,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -774,7 +777,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -785,7 +788,7 @@ namespace Azure.Data.Tables
                 return await _tableOperations.DeleteEntityAsync(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: ifMatch,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -805,7 +808,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response DeleteEntity(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
+        public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -816,7 +819,7 @@ namespace Azure.Data.Tables
                 return _tableOperations.DeleteEntity(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: ifMatch,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
             }
@@ -895,6 +898,76 @@ namespace Azure.Data.Tables
             try
             {
                 return _tableOperations.SetAccessPolicy(_table, tableAcl: tableAcl, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Placeholder for batch operations. This is just being used for testing.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entities"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal virtual async Task<Response<List<Response>>> BatchTestAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            scope.Start();
+            try
+            {
+                var batch = TableRestClient.CreateBatchContent();
+                var changeset = batch.AddChangeset();
+                foreach (var entity in entities)
+                {
+                    _tableOperations.AddInsertEntityRequest(
+                        changeset,
+                        _table,
+                        null,
+                        null,
+                        null,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format });
+                }
+                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Placeholder for batch operations. This is just being used for testing.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entities"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal virtual Response<List<Response>> BatchTest<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            scope.Start();
+            try
+            {
+                var batch = TableRestClient.CreateBatchContent();
+                var changeset = batch.AddChangeset();
+                foreach (var entity in entities)
+                {
+                    _tableOperations.AddInsertEntityRequest(
+                        changeset,
+                        _table,
+                        null,
+                        null,
+                        null,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format });
+                }
+                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken);
             }
             catch (Exception ex)
             {

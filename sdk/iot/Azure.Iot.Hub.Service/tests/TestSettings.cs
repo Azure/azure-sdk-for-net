@@ -17,6 +17,8 @@ namespace Azure.Iot.Hub.Service.Tests
     {
         public const string IotHubEnvironmentVariablesPrefix = "IOT";
         public const string IotHubConnectionString = "IOT_HUB_CONNECTION_STRING";
+        public const string StorageSasToken = "STORAGE_SAS_TOKEN";
+        public const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
         public static TestSettings Instance { get; private set; }
 
@@ -57,6 +59,16 @@ namespace Azure.Iot.Hub.Service.Tests
 
             // This will set the values from the above config files into the TestSettings Instance.
             Instance = config.Get<TestSettings>();
+
+            // Override the test mode if the test mode environment variable was specified.
+            string testModeEnvVariable = Environment.GetEnvironmentVariable(TestModeEnvVariable);
+            if (!string.IsNullOrEmpty(testModeEnvVariable))
+            {
+                Instance.TestMode = (RecordedTestMode)Enum.Parse(
+                    typeof(RecordedTestMode),
+                    testModeEnvVariable);
+            }
+
             Instance.WorkingDirectory = workingDirectory;
         }
     }

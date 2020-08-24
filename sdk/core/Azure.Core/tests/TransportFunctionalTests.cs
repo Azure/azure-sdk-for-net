@@ -20,9 +20,7 @@ namespace Azure.Core.Tests
 {
     [TestFixture(typeof(HttpClientTransport), true)]
     [TestFixture(typeof(HttpClientTransport), false)]
-
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
 #endif
@@ -239,7 +237,7 @@ namespace Azure.Core.Tests
          [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
          public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
          {
-             StringValues httpHeaderValues;
+            StringValues httpHeaderValues;
 
              using TestServer testServer = new TestServer(
                  context =>

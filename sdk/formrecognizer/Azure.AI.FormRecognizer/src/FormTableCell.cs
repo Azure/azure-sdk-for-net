@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormTableCell : FormElement
     {
         internal FormTableCell(DataTableCell dataTableCell, IReadOnlyList<ReadResult> readResults, int pageNumber)
-            : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
+            : base(new FieldBoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
         {
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
@@ -23,6 +23,33 @@ namespace Azure.AI.FormRecognizer.Models
             FieldElements = dataTableCell.Elements != null
                 ? FormField.ConvertTextReferences(dataTableCell.Elements, readResults)
                 : new List<FormElement>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormTableCell"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of this form element.</param>
+        /// <param name="columnIndex">The column index of the cell.</param>
+        /// <param name="rowIndex">The row index of the cell.</param>
+        /// <param name="columnSpan">The number of columns spanned by this cell.</param>
+        /// <param name="rowSpan">The number of rows spanned by this cell.</param>
+        /// <param name="isHeader"><c>true</c> if this cell is a header cell. Otherwise, <c>false</c>.</param>
+        /// <param name="isFooter"><c>true</c> if this cell is a footer cell. Otherwise, <c>false</c>.</param>
+        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
+        /// <param name="fieldElements">A list of references to the field elements constituting this cell.</param>
+        internal FormTableCell(FieldBoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
+            : base(boundingBox, pageNumber, text)
+        {
+            ColumnIndex = columnIndex;
+            RowIndex = rowIndex;
+            ColumnSpan = columnSpan;
+            RowSpan = rowSpan;
+            IsHeader = isHeader;
+            IsFooter = isFooter;
+            Confidence = confidence;
+            FieldElements = fieldElements;
         }
 
         /// <summary>

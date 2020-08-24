@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Search.Serialization.Internal
 {
     /// <summary>
-    /// Provides access to custom <c cref="JsonConverter">JsonConverter</c> instances used by the Azure
+    /// Provides access to custom <see cref="JsonConverter" /> instances used by the Azure
     /// Search .NET SDK. For test purposes only.
     /// </summary>
     /// <remarks>
@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Search.Serialization.Internal
     {
         /// <summary>
         /// Creates a new converter that converts between dates serialized in ISO 8601 format in JSON strings and
-        /// <c cref="System.DateTime">System.DateTime</c> instances.
+        /// <see cref="System.DateTime" /> instances.
         /// </summary>
         /// <returns>A JSON converter.</returns>
         public static JsonConverter CreateDateTimeConverter() => new Iso8601DateTimeConverter();
 
         /// <summary>
         /// Creates a new converter that deserializes JSON objects and arrays to .NET types instead
-        /// of <c cref="JObject">JObject</c> and <c cref="JArray">JArray</c>.
+        /// of <see cref="JObject" /> and <see cref="JArray" />.
         /// </summary>
         /// <returns>A JSON converter.</returns>
         public static JsonConverter CreateDocumentConverter() => new DocumentConverter();
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Search.Serialization.Internal
 
         /// <summary>
         /// Creates a new converter that converts between
-        /// <c cref="GeographyPoint">Microsoft.Spatial.GeographyPoint</c> objects and Geo-JSON points.
+        /// <see cref="GeographyPoint" /> objects and Geo-JSON points.
         /// </summary>
         /// <returns>A JSON converter.</returns>
         public static JsonConverter CreateGeoJsonPointConverter() => new GeoJsonPointConverter();

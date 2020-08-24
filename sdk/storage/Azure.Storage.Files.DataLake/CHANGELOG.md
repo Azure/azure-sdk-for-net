@@ -3,6 +3,9 @@
 ## 12.4.0-preview.1 (Unreleased)
 - Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.
 
+## 12.3.1 (2020-08-18)
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
 ## 12.3.0 (2020-08-13)
 - Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.
 - Fixed bug where DataLakeFileSystemClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in DataLakeAccessPolicy

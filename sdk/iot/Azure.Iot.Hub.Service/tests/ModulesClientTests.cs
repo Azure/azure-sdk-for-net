@@ -46,11 +46,14 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create a device to house the module
-                device = (await client.Devices.CreateOrUpdateIdentityAsync(
-                    new DeviceIdentity
-                    {
-                        DeviceId = testDeviceId
-                    })).Value;
+                device = (await client.Devices
+                    .CreateOrUpdateIdentityAsync(
+                        new DeviceIdentity
+                        {
+                            DeviceId = testDeviceId
+                        })
+                    .ConfigureAwait(false))
+                    .Value;
 
                 // Create a module on the device
                 Response<ModuleIdentity> createResponse = await client.Modules.CreateOrUpdateIdentityAsync(
@@ -87,7 +90,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -108,14 +111,14 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 // Create a device
                 device = (await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false)).Value;
 
                 // Create a module on that device
                 module = (await client.Modules.CreateOrUpdateIdentityAsync(
-                    new Models.ModuleIdentity
+                    new ModuleIdentity
                     {
                         DeviceId = testDeviceId,
                         ModuleId = testModuleId
@@ -149,7 +152,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -171,14 +174,14 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 // Create a device
                 device = (await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false)).Value;
 
                 // Create a module on that device. Note that this implicitly creates the module twin
                 module = (await client.Modules.CreateOrUpdateIdentityAsync(
-                    new Models.ModuleIdentity
+                    new ModuleIdentity
                     {
                         DeviceId = testDeviceId,
                         ModuleId = testModuleId
@@ -204,7 +207,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -226,14 +229,14 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 // Create a device
                 device = (await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false)).Value;
 
                 // Create a module on that device. Note that this implicitly creates the module twin
                 module = (await client.Modules.CreateOrUpdateIdentityAsync(
-                    new Models.ModuleIdentity
+                    new ModuleIdentity
                     {
                         DeviceId = testDeviceId,
                         ModuleId = testModuleId
@@ -272,7 +275,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -293,11 +296,14 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create a device to house the modules
-                device = (await client.Devices.CreateOrUpdateIdentityAsync(
-                    new DeviceIdentity
-                    {
-                        DeviceId = testDeviceId
-                    })).Value;
+                device = (await client.Devices
+                    .CreateOrUpdateIdentityAsync(
+                        new DeviceIdentity
+                        {
+                            DeviceId = testDeviceId
+                        })
+                    .ConfigureAwait(false))
+                    .Value;
 
                 // Create the modules on the device
                 for (int i = 0; i < moduleCount; i++)
@@ -325,7 +331,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -352,11 +358,14 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create a device to house the modules
-                device = (await serviceClient.Devices.CreateOrUpdateIdentityAsync(
-                    new DeviceIdentity
-                    {
-                        DeviceId = testDeviceId
-                    })).Value;
+                device = (await serviceClient.Devices
+                    .CreateOrUpdateIdentityAsync(
+                        new DeviceIdentity
+                        {
+                            DeviceId = testDeviceId
+                        })
+                    .ConfigureAwait(false))
+                    .Value;
 
                 // Create the module on the device
                 module = (await serviceClient.Modules.CreateOrUpdateIdentityAsync(
@@ -377,7 +386,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 // These two methods are part of our track 1 device client. When the test fixture runs when isAsync = true,
                 // these methods work. When isAsync = false, these methods silently don't work.
-                await moduleClient.OpenAsync();
+                await moduleClient.OpenAsync().ConfigureAwait(false);
                 await moduleClient.SetMethodHandlerAsync(
                     expectedMethodName,
                     (methodRequest, userContext) =>
@@ -406,7 +415,7 @@ namespace Azure.Iot.Hub.Service.Tests
                     await moduleClient.CloseAsync().ConfigureAwait(false);
                 }
 
-                await Cleanup(serviceClient, device);
+                await CleanupAsync(serviceClient, device).ConfigureAwait(false);
             }
         }
 
@@ -432,7 +441,7 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create single device to house these bulk modules
-                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity).ConfigureAwait(false);
 
                 // Create modules in bulk on that device
                 Response<BulkRegistryOperationResponse> createResponse = await client.Modules.CreateIdentitiesAsync(moduleIdentities).ConfigureAwait(false);
@@ -441,7 +450,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, deviceIdentity);
+                await CleanupAsync(client, deviceIdentity).ConfigureAwait(false);
             }
         }
 
@@ -476,7 +485,7 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create devices to house these bulk modules
-                await client.Devices.CreateIdentitiesAsync(deviceIdentities);
+                await client.Devices.CreateIdentitiesAsync(deviceIdentities).ConfigureAwait(false);
 
                 // Create modules in bulk on those devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Modules.CreateIdentitiesAsync(moduleIdentities).ConfigureAwait(false);
@@ -485,7 +494,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, deviceIdentities);
+                await CleanupAsync(client, deviceIdentities).ConfigureAwait(false);
             }
         }
 
@@ -512,7 +521,7 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // Create the device to house two modules
-                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity).ConfigureAwait(false);
 
                 AuthenticationMechanismType initialAuthenticationType = AuthenticationMechanismType.Sas;
                 AuthenticationMechanismType updatedAuthenticationType = AuthenticationMechanismType.SelfSigned;
@@ -551,13 +560,13 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Verify that each module successfully updated its authentication field
                 foreach (ModuleIdentity module in listOfModulesToUpdate)
                 {
-                    var updatedModule = (await client.Modules.GetIdentityAsync(module.DeviceId, module.ModuleId)).Value;
+                    var updatedModule = (await client.Modules.GetIdentityAsync(module.DeviceId, module.ModuleId).ConfigureAwait(false)).Value;
                     updatedModule.Authentication.Type.Should().Be(updatedAuthenticationType, "Module should have been updated");
                 }
             }
             finally
             {
-                await Cleanup(client, deviceIdentity);
+                await CleanupAsync(client, deviceIdentity).ConfigureAwait(false);
             }
         }
 
@@ -585,7 +594,7 @@ namespace Azure.Iot.Hub.Service.Tests
             try
             {
                 // We first create a single device to house these bulk modules.
-                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+                await client.Devices.CreateOrUpdateIdentityAsync(deviceIdentity).ConfigureAwait(false);
 
                 // Create a single module on that device that will be used to cause a conflict later
                 await client.Modules.CreateOrUpdateIdentityAsync(
@@ -608,7 +617,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, deviceIdentity);
+                await CleanupAsync(client, deviceIdentity).ConfigureAwait(false);
             }
         }
 
@@ -654,7 +663,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, deviceIdentity);
+                await CleanupAsync(client, deviceIdentity).ConfigureAwait(false);
             }
         }
 
@@ -712,7 +721,7 @@ namespace Azure.Iot.Hub.Service.Tests
                         break;
                     }
 
-                    await Task.Delay(_queryRetryInterval);
+                    await Task.Delay(_queryRetryInterval).ConfigureAwait(false);
                 }
 
                 matchesFound.Should().Be(BULK_MODULE_COUNT, "Timed out waiting for all the bulk created modules to be query-able." +
@@ -720,7 +729,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, deviceIdentity);
+                await CleanupAsync(client, deviceIdentity).ConfigureAwait(false);
             }
         }
 
@@ -763,13 +772,13 @@ namespace Azure.Iot.Hub.Service.Tests
             return moduleList;
         }
 
-        private async Task Cleanup(IotHubServiceClient client, IEnumerable<DeviceIdentity> devices)
+        private async Task CleanupAsync(IotHubServiceClient client, IEnumerable<DeviceIdentity> devices)
         {
             try
             {
                 if (devices != null && devices.Any())
                 {
-                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional);
+                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -778,7 +787,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
-        private async Task Cleanup(IotHubServiceClient client, DeviceIdentity device)
+        private async Task CleanupAsync(IotHubServiceClient client, DeviceIdentity device)
         {
             // cleanup
             try

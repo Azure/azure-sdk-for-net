@@ -7,10 +7,10 @@
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e87a24df6387864ead8668287cdfa8aa-10f310f3889b6142-00",
+        "traceparent": "00-9cfae216b4db5f4696d54e2a794ccaf7-9930693d6fcff245-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "da4f4c09c1ccf4abd40e06f7e9d06313",
         "x-ms-return-client-request-id": "true"
@@ -18,22 +18,22 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "afc0bc77-4d9c-4205-9e7e-bc0f2a3ec6bf",
+        "apim-request-id": "2c427adc-3a3f-4b27-aac6-6064af4a34ee",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Mon, 06 Jul 2020 22:03:47 GMT",
+        "Date": "Fri, 21 Aug 2020 02:45:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "x-envoy-upstream-service-time": "80"
       },
       "ResponseBody": {
         "documents": [
