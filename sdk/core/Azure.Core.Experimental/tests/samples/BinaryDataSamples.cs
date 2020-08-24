@@ -32,7 +32,7 @@ namespace Azure.Core.Experimental.Tests.samples
             // when using the ReadOnlySpan constructor the underlying data is copied.
             var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
 
-            // when using the FromMemory method, the data is wrapped
+            // when using the static factory method, the data is wrapped
             data = BinaryData.FromBytes(bytes);
 
             // there is an implicit cast defined for ReadOnlyMemory<byte>
