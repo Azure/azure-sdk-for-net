@@ -15,9 +15,6 @@ param (
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
-    [ValidatePattern('^[-\w\._\(\)]+$')]
-    [string] $ResourceGroupName,
-
     [Parameter(Mandatory = $true)]
     [string] $ServiceDirectory,
 
@@ -118,7 +115,6 @@ $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
 $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
-$environmentVariables = @{}
 
 Write-Verbose "Checking for '$templateFileName' files under '$root'"
 Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
@@ -198,18 +194,14 @@ $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
     $ServiceDirectory
 }
 
-if ($CI) { 
-  $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
-  Write-Verbose "Generated base name '$BaseName' for CI build"
-}
+# Format the resource group name based on resource group naming recommendations and limitations.
+$resourceGroupName = if ($CI) {
+    $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
+    Write-Verbose "Generated base name '$BaseName' for CI build"
 
-$ResourceGroupName = if ($ResourceGroupName) {
-  $ResourceGroupName
-} elseif ($CI) {
-  # Format the resource group name based on resource group naming recommendations and limitations.
-  "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
+    "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
 } else {
-  "rg-$BaseName"
+    "rg-$BaseName"
 }
 
 # Tag the resource group to be deleted after a certain number of hours if specified.
@@ -233,14 +225,13 @@ if ($CI) {
     }
 
     # Set the resource group name variable.
-    Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
-    Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
-    $environmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
+    Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $resourceGroupName"
+    Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$resourceGroupName"
 }
 
-Log "Creating resource group '$ResourceGroupName' in location '$Location'"
+Log "Creating resource group '$resourceGroupName' in location '$Location'"
 $resourceGroup = Retry {
-    New-AzResourceGroup -Name "$ResourceGroupName" -Location $Location -Tag $tags -Force:$Force
+    New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
 }
 
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
@@ -304,7 +295,7 @@ foreach ($templateFile in $templateFiles) {
     $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
     if (Test-Path $preDeploymentScript) {
         Log "Invoking pre-deployment script '$preDeploymentScript'"
-        &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
+        &$preDeploymentScript -ResourceGroupName $resourceGroupName @PSBoundParameters
     }
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
@@ -373,7 +364,6 @@ foreach ($templateFile in $templateFiles) {
         foreach ($key in $deploymentOutputs.Keys)
         {
             $value = $deploymentOutputs[$key]
-            $environmentVariables[$key] = $value
 
             if ($CI) {
                 # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
@@ -396,13 +386,11 @@ foreach ($templateFile in $templateFiles) {
     $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
     if (Test-Path $postDeploymentScript) {
         Log "Invoking post-deployment script '$postDeploymentScript'"
-        &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+        &$postDeploymentScript -ResourceGroupName $resourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
     }
 }
 
 $exitActions.Invoke()
-
-return $environmentVariables
 
 <#
 .SYNOPSIS
@@ -433,10 +421,6 @@ the ARM template. See also https://docs.microsoft.com/azure/architecture/best-pr
 
 Note: The value specified for this parameter will be overriden and generated
 by New-TestResources.ps1 if $CI is specified.
-
-.PARAMETER ResourceGroupName
-Set this value to deploy directly to a Resource Group that has already been
-created.
 
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories

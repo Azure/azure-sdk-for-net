@@ -14,7 +14,7 @@ param (
   # list of http status codes count as broken links. Defaults to 400, 401, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004
   [array] $errorStatusCodes = @(400, 401, 404, 11001, 11004),
   # regex to check if the link needs to be replaced
-  [string] $branchReplaceRegex = "^(https://github.com/.*/(?:blob|tree)/)master(/.*)$",
+  [string] $branchReplaceRegex = "(https://github.com/.*/blob/)master(/.*)",
   # the substitute branch name or SHA commit
   [string] $branchReplacementName = "",
   # flag to allow checking against azure sdk link guidance.
@@ -59,18 +59,6 @@ function LogWarning
   else
   {
     Write-Warning "$args"
-  }
-}
-
-function LogError
-{
-  if ($devOpsLogging)
-  {
-    Write-Host "##vso[task.logissue type=error]$args"
-  }
-  else
-  {
-    Write-Error "$args"
   }
 }
 
@@ -135,9 +123,6 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 function CheckLink ([System.Uri]$linkUri)
 {
   if ($checkedLinks.ContainsKey($linkUri)) { 
-    if (!$checkedLinks[$linkUri]) {
-      LogWarning "broken link $linkUri"
-    }
     return $checkedLinks[$linkUri] 
   }
 
@@ -260,6 +245,7 @@ if ($PSVersionTable.PSVersion.Major -lt 6)
 {
   LogWarning "Some web requests will not work in versions of PS earlier then 6. You are running version $($PSVersionTable.PSVersion)."
 }
+$badLinks = @();
 $ignoreLinks = @();
 if (Test-Path $ignoreLinksFile)
 {
@@ -268,7 +254,6 @@ if (Test-Path $ignoreLinksFile)
 
 $checkedPages = @{};
 $checkedLinks = @{};
-$badLinks = @{};
 $pageUrisToCheck = new-object System.Collections.Queue
 
 foreach ($url in $urls) {
@@ -284,12 +269,13 @@ while ($pageUrisToCheck.Count -ne 0)
 
   $linkUris = GetLinks $pageUri
   Write-Host "Found $($linkUris.Count) links on page $pageUri";
-  $badLinksPerPage = @();
+  
   foreach ($linkUri in $linkUris) {
     $linkUri = ReplaceGithubLink $linkUri
+
     $isLinkValid = CheckLink $linkUri
-    if (!$isLinkValid -and !$badLinksPerPage.Contains($linkUri)) {
-      $badLinksPerPage += $linkUri
+    if (!$isLinkValid) {
+      $script:badLinks += $linkUri
     }
     if ($recursive -and $isLinkValid) {
       if ($linkUri.ToString().StartsWith($baseUrl) -and !$checkedPages.ContainsKey($linkUri)) {
@@ -297,25 +283,9 @@ while ($pageUrisToCheck.Count -ne 0)
       }
     }
   }
-  if ($badLinksPerPage.Count -gt 0) {
-    $badLinks[$pageUri] = $badLinksPerPage
-  }
 }
 
-if ($badLinks.Count -gt 0) {
-  Write-Host "Summary of broken links:"
-}
-foreach ($pageLink in $badLinks.Keys) {
-  Write-Host "'$pageLink' has $($badLinks[$pageLink].Count) broken link(s):"
-  foreach ($brokenLink in $badLinks[$pageLink]) {
-    Write-Host "  $brokenLink"
-  }
-}
+Write-Host "Found $($checkedLinks.Count) links with $($badLinks.Count) broken"
+$badLinks | ForEach-Object { Write-Host "  $_" }
 
-if ($badLinks.Count -gt 0) {
-  LogError "Found $($checkedLinks.Count) links with $($badLinks.Count) page(s) broken."
-} 
-else {
-  Write-Host "Found $($checkedLinks.Count) links. No broken links found."
-}
 exit $badLinks.Count
