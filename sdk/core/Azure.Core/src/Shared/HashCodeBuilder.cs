@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+#nullable enable
+
 namespace Azure.Core
 {
     /// <summary>
@@ -13,7 +15,6 @@ namespace Azure.Core
     /// </summary>
     internal struct HashCodeBuilder
     {
-
         private static readonly uint s_seed = GenerateGlobalSeed();
 
         private const uint Prime1 = 2654435761U;
