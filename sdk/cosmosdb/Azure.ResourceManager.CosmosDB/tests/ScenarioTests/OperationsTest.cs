@@ -7,17 +7,24 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
-    [TestFixture]
+    [RunFrequency(RunTestFrequency.Manually)]
     public class OperationsTest : CosmosDBManagementClientBase
     {
-        public OperationsTest()
-            : base(true)
+        public OperationsTest(bool isAsync)
+            : base(isAsync)
         {
         }
 
         [SetUp]
         public async Task ClearAndInitialize()
         {
+            /*if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                InitializeClients();
+                await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
+                    CosmosDBTestUtilities.Location,
+                    Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix));
+            }*/
             InitializeClients();
             await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 CosmosDBTestUtilities.Location,
